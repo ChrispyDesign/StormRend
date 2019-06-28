@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum Neighbour
 {
-    UP,
+    UP = 0,
     RIGHT,
     DOWN,
     LEFT
@@ -28,6 +28,7 @@ public class Node : MonoBehaviour
     }
 
     public void SetUnitOnTop(Transform _unit) { m_unitOnTop = _unit; }
+    public void SetNeighbours(Node[] _neighbours) { m_neighbours = _neighbours; }
 
     List<Node> GetNeighbours()
     {
