@@ -27,7 +27,6 @@ public class EnemyTurn : State
     /// </summary>
     public override void Enter()
     {
-        Debug.Log("Enemy Turn Start");
         m_timer = 0;
     }
 
@@ -50,6 +49,5 @@ public class EnemyTurn : State
     /// </summary>
     public override void Exit()
     {
-        Debug.Log("Enemy Turn End");
     }
 }

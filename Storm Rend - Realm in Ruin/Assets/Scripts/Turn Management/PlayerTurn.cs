@@ -17,7 +17,6 @@ public class PlayerTurn : State
     /// </summary>
     public override void Enter()
     {
-        Debug.Log("Player Turn Start");
         m_turnTimer = 0;
     }
 
@@ -35,8 +34,6 @@ public class PlayerTurn : State
     /// </summary>
     public override void Exit()
     {
-        Debug.Log("Player Turn End");
-
         // update longest turn
         if (m_turnTimer > m_longestTurn)
             m_longestTurn = m_turnTimer;

@@ -40,16 +40,18 @@ public class CameraRaycaster : MonoBehaviour
         RaycastHit raycastHit;
 
         // perform raycast
-        if (Physics.Raycast(ray, out raycastHit))
-        {
-            GameObject hitObject = raycastHit.collider.gameObject;
+        Physics.Raycast(ray, out raycastHit);
+        GameObject hitObject = null;
 
-            if (m_hoveredObject != hitObject)
-                Hover(hitObject); // new hovered object
+        if (raycastHit.collider != null)
+            hitObject = raycastHit.collider.gameObject;
 
-            if (Input.GetMouseButtonDown(0) && m_selectedObject != hitObject)
-                Select(hitObject); // select (left click)
-        }
+        if (m_hoveredObject != hitObject)
+            Hover(hitObject); // new hovered object
+
+        if (Input.GetMouseButtonDown(0))
+            Select(hitObject); // select (left click)
+        
     }
 
     /// <summary>
@@ -60,18 +62,28 @@ public class CameraRaycaster : MonoBehaviour
     {
         if (m_unhoveredObject != m_hoveredObject)
         {
-            m_unhoveredObject = m_hoveredObject; // store unhovered object
+            // store unhovered object
+            m_unhoveredObject = m_hoveredObject; 
 
-            IHoverable unhoveredClickable = m_unhoveredObject.GetComponent<IHoverable>();
-            if (unhoveredClickable != null)
-                unhoveredClickable.OnUnhover();
+            // unhovered object can be null, so perform safety check
+            if (m_unhoveredObject)
+            {
+                IHoverable unhoveredClickable = m_unhoveredObject.GetComponent<IHoverable>();
+                if (unhoveredClickable != null)
+                    unhoveredClickable.OnUnhover(); // call unhover on unhovered object
+            }
         }
 
-        m_hoveredObject = hitObject; // store hovered object
+        // store hovered object
+        m_hoveredObject = hitObject;
 
-        IHoverable hoveredClickable = m_hoveredObject.GetComponent<IHoverable>();
-        if (hoveredClickable != null)
-            hoveredClickable.OnHover();
+        // hovered object can be null, so perform safety check
+        if (m_hoveredObject)
+        {
+            IHoverable hoveredClickable = m_hoveredObject.GetComponent<IHoverable>();
+            if (hoveredClickable != null)
+                hoveredClickable.OnHover(); // call hover on hovered object
+        }
     }
 
     /// <summary>
@@ -82,17 +94,27 @@ public class CameraRaycaster : MonoBehaviour
     {
         if (m_deselectedObject != m_selectedObject)
         {
-            m_deselectedObject = m_selectedObject; // store deselected object
+            // store deselected object
+            m_deselectedObject = m_selectedObject;
 
-            ISelectable deselectedClickable = m_deselectedObject.GetComponent<ISelectable>();
-            if (deselectedClickable != null)
-                deselectedClickable.OnDeselect();
+            // deselected object can be null, so perform safety check
+            if (m_deselectedObject)
+            {
+                ISelectable deselectedClickable = m_deselectedObject.GetComponent<ISelectable>();
+                if (deselectedClickable != null)
+                    deselectedClickable.OnDeselect(); // call deselect on deselected object
+            }
         }
 
-        m_selectedObject = hitObject; // store hit object
+        // store hit object
+        m_selectedObject = hitObject;
 
-        ISelectable selectedClickable = m_selectedObject.GetComponent<ISelectable>();
-        if (selectedClickable != null)
-            selectedClickable.OnSelect();
+        // selected object can be null, so perform safety check
+        if (m_selectedObject)
+        {
+            ISelectable selectedClickable = m_selectedObject.GetComponent<ISelectable>();
+            if (selectedClickable != null)
+                selectedClickable.OnSelect(); // call select on selected object
+        }
     }
 }

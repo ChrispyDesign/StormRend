@@ -23,6 +23,11 @@ public class CameraInput : MonoBehaviour
     void Update()
     {
         if (m_cameraZoom != null)
-            m_cameraZoom.StartZoom(Input.mouseScrollDelta.y * 5, 5);
+        {
+            if (Input.mouseScrollDelta.y > 0)
+                m_cameraZoom.StartZoom(-1, 5);
+            else if (Input.mouseScrollDelta.y < 0)
+                m_cameraZoom.StartZoom(1, 5);
+        }
     }
 }

@@ -1,34 +1,133 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
 public class CameraZoom : MonoBehaviour
 {
-    private Camera m_camera;
-    
-    //[SerializeField] private float m_minZoom = 5;
-    //[SerializeField] private float m_maxZoom = 20;
-    private Vector3 m_desiredPosition;
+    [Header("Zoom Speed")]
+    [SerializeField] private float m_zoomSpeed = 1;
 
+    [Header("Zoom Anchors")]
+    [SerializeField] private Transform m_near;
+    [SerializeField] private Transform m_far;
+    [SerializeField] private int m_nearFarSteps = 5;
+
+    private List<GameObject> m_anchors = new List<GameObject>();
+    private int m_currentStep;
+
+    private Camera m_camera;
+    private Vector3 m_desiredPosition;
+    
     /// <summary>
-    /// cache camera component
+    /// 
     /// </summary>
     void Start()
     {
+        // cache camera reference
         m_camera = GetComponent<Camera>();
+        m_desiredPosition = transform.position;
+
+        // create anchors/step positions
+        CreateAnchors();
+
+        // jump to closest anchor on startup
+        GameObject closestAnchor = GetClosestAnchor(m_camera.transform.position);
+        m_currentStep = m_anchors.IndexOf(closestAnchor);
+        transform.position = closestAnchor.transform.position;
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="delta"></param>
-    /// <param name="lerpTime"></param>
-    public void StartZoom(float delta, float zoomSpeed)
+    private void Update()
     {
+        // get current position and speed
         Vector3 currentPosition = m_camera.transform.position;
-        if (delta != 0)
-            m_desiredPosition = currentPosition + m_camera.transform.forward * delta;
+        float speed = m_zoomSpeed * Time.deltaTime;
 
-        m_camera.transform.position = Vector3.Lerp(currentPosition, m_desiredPosition, zoomSpeed * Time.deltaTime);
+        // update position
+        m_camera.transform.position = Vector3.Lerp(currentPosition, m_desiredPosition, speed);
+
+        // update current step based off the closest anchor to the desired position
+        GameObject closestAnchor = GetClosestAnchor(m_desiredPosition);
+        m_currentStep = m_anchors.IndexOf(closestAnchor);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void CreateAnchors()
+    {
+        // add near to list
+        m_anchors.Add(m_near.gameObject);
+
+        for (int i = 1; i <= m_nearFarSteps; i++)
+        {
+            float percentage = i / ((float)m_nearFarSteps + 1);
+            Vector3 near = m_near.position;
+            Vector3 far = m_far.position;
+
+            // create empty transform
+            GameObject step = new GameObject();
+            step.transform.SetParent(m_camera.transform.parent);
+
+            // adjust transform values
+            step.transform.position = Vector3.Lerp(near, far, percentage);
+            step.transform.rotation = transform.rotation;
+
+            // add step to list
+            m_anchors.Add(step);
+        }
+
+        // add far to list
+        m_anchors.Add(m_far.gameObject);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="step"></param>
+    /// <param name="lerpTime"></param>
+    public void StartZoom(int step, float zoomSpeed)
+    {
+        m_currentStep += step;
+        m_currentStep = Mathf.Clamp(m_currentStep, 0, m_nearFarSteps + 1);
+        
+        m_desiredPosition = m_anchors[m_currentStep].transform.position;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="transform"></param>
+    public void ZoomTo(Transform transform)
+    {
+        m_desiredPosition = transform.position;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    private GameObject GetClosestAnchor(Vector3 source)
+    {
+        GameObject closestAnchor = null;
+        float minDistance = Mathf.Infinity;
+
+        for (int i = 0; i < m_anchors.Count; i++)
+        {
+            GameObject anchor = m_anchors[i];
+
+            float distance = Vector3.Distance(source, anchor.transform.position);
+
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closestAnchor = anchor;
+            }
+        }
+
+        return closestAnchor;
     }
 }
