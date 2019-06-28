@@ -6,26 +6,28 @@ using UnityEngine;
 public class Grid 
 {
     public Node[,] m_nodes;
-    public int m_gridWorlodSize;
-    public Transform m_prefab;
+
+    private Transform m_parent;
     
-    public Grid()
+    public Grid(Transform _prefab, int _worldSize, Transform _parent)
     {
-        m_nodes = new Node[m_gridWorlodSize, m_gridWorlodSize];
-        CreateGrid();
+        m_parent = _parent;
+        CreateGrid(_prefab, _worldSize);
     }
 
-    void CreateGrid()
+    void CreateGrid(Transform _prefab, int _size)
     {
-        for (int x = 0; x < m_gridWorlodSize; x++)
+        m_nodes = new Node[_size, _size];
+        for (int x = 0; x < _size; x++)
         {
-            for (int y = 0; y < m_gridWorlodSize; y++)
+            for (int y = 0; y < _size; y++)
             {
                 Vector3 pos = new Vector3(
-                                            -(m_gridWorlodSize / 2) + x,
+                                            -(_size / 2) + x,
                                             0.0f,
-                                            -(m_gridWorlodSize / 2) + y);
-                m_nodes[x, y] = new Node(null, pos, new Vector2Int(x, y), NodeType.WALKABLE, m_prefab);
+                                            -(_size / 2) + y);
+                Transform tile = GameObject.Instantiate(_prefab, pos, Quaternion.identity, m_parent);
+                m_nodes[x, y] = tile.GetComponent<Node>().SetNodeVariables(pos, new Vector2Int(x, y), NodeType.WALKABLE);
             }
         }
     }

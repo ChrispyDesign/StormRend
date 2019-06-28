@@ -10,23 +10,24 @@ public enum Neighbour
     LEFT
 }
 
-public class Node
+public class Node : MonoBehaviour
 {
-    public Transform m_unitOnTop;
-    public Node[] m_neighbours;
-    public Vector3 m_position;
-    public Vector2Int m_coordinate;
-    public NodeType m_nodeType;
+    [SerializeField] private Transform m_unitOnTop;
+    [SerializeField] private Node[] m_neighbours;
+    [SerializeField] private Vector3 m_position;
+    [SerializeField] private Vector2Int m_coordinate;
+    [SerializeField] private NodeType m_nodeType;
 
-    public Node(Transform _unitOnTop, Vector3 _pos, Vector2Int _coordinate, NodeType _nodeType, Transform _prefab)
+    public Node SetNodeVariables(Vector3 _pos, Vector2Int _coordinate, NodeType _nodeType)
     {
-        m_unitOnTop = _unitOnTop;
         m_neighbours = new Node[4];
         m_position = _pos;
         m_coordinate = _coordinate;
         m_nodeType = _nodeType;
-        GameObject.Instantiate(_prefab, m_position, Quaternion.identity);
+        return this;
     }
+
+    public void SetUnitOnTop(Transform _unit) { m_unitOnTop = _unit; }
 
     List<Node> GetNeighbours()
     {
