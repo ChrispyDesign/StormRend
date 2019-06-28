@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -38,7 +39,12 @@ public class BlizzardManager : MonoBehaviour
 
                 // cache reference to the node's animator
                 Animator animator = blizzardNode.GetComponent<Animator>();
-                animator.SetTrigger("Notify"); // do juicy notify animation
+
+                if (i == m_blizzardMeter.Length - 1)
+                    PrepareBlizzard();
+                else
+                    animator.SetTrigger("NotifyOnce"); // notify once
+
                 return;
             }
         }
@@ -57,7 +63,28 @@ public class BlizzardManager : MonoBehaviour
     {
         // iterate over blizzard toggles
         for (int i = 0; i < m_blizzardMeter.Length; i++)
-            m_blizzardMeter[i].isOn = false; // toggle off
+        {
+            // get blizzard toggle
+            Toggle blizzardNode = m_blizzardMeter[i];
+            blizzardNode.isOn = false; // toggle off
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void PrepareBlizzard()
+    {
+        // iterate over blizzard toggles
+        for (int i = 0; i < m_blizzardMeter.Length; i++)
+        {
+            // get blizzard toggle
+            Toggle blizzardNode = m_blizzardMeter[i];
+
+            // cache reference to the node's animator
+            Animator animator = blizzardNode.GetComponent<Animator>();
+            animator.SetTrigger("NotifyLoop"); // play notification loop
+        }
     }
 
     /// <summary>
