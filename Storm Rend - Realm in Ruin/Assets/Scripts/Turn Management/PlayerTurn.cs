@@ -26,8 +26,6 @@ public class PlayerTurn : State
     /// </summary>
     public override void Stay(StateMachine stateMachine)
     {
-        Debug.Log("Player Turn");
-
         // increment turn timer
         m_turnTimer += Time.deltaTime;
     }

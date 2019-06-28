@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Class responsible for transitioning from player to enemy turn and vice versa. Also responsible for
-/// ensuring turn transitions aren't called innappropriately
+/// ensuring turn transitions aren't called inappropriately
 /// </summary>
 [RequireComponent(typeof(StateMachine))]
 public class TurnManager : MonoBehaviour
@@ -11,6 +11,9 @@ public class TurnManager : MonoBehaviour
     // relevant UI
     [SerializeField] private Button m_proceedTurnButton;
 
+    // blizzard functionality
+    private BlizzardManager m_blizzardManager;
+    
     // state machine for managing turns
     private StateMachine m_stateMachine;
 
@@ -30,6 +33,9 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     void Start()
     {
+        // attempt to find blizzard manager
+        m_blizzardManager = FindObjectOfType<BlizzardManager>();
+
         // cache state machine reference
         m_stateMachine = GetComponent<StateMachine>();
 
@@ -46,6 +52,10 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     public void PlayerTurn()
     {
+        // if a blizzard manager exists, increment it's counter at the start of each turn
+        if (m_blizzardManager)
+            m_blizzardManager.IncrementBlizzardMeter();
+
         // enable proceed button
         m_proceedTurnButton.interactable = true;
 

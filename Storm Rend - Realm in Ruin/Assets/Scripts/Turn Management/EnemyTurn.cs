@@ -10,7 +10,7 @@ public class EnemyTurn : State
     [SerializeField] private TurnManager m_turnManager;
 
     // enemy turn timer
-    [SerializeField] private float m_enemyTurnTime = 5;
+    [SerializeField] private float m_enemyTurnTime = 0.5f;
     private float m_timer;
 
     /// <summary>
@@ -36,8 +36,6 @@ public class EnemyTurn : State
     /// </summary>
     public override void Stay(StateMachine stateMachine)
     {
-        Debug.Log("Enemy Turn");
-
         while (m_timer < m_enemyTurnTime)
         {
             m_timer += Time.deltaTime;
