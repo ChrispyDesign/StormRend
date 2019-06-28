@@ -10,13 +10,13 @@ public enum Neighbour
     LEFT
 }
 
-public class Node : MonoBehaviour
+public class Node : MonoBehaviour, IHoverable, ISelectable
 {
     [SerializeField] private Transform m_unitOnTop;
     [SerializeField] private Node[] m_neighbours;
     [SerializeField] private Vector3 m_position;
     [SerializeField] private Vector2Int m_coordinate;
-    [SerializeField] private NodeType m_nodeType;
+    public NodeType m_nodeType;
 
     public Node SetNodeVariables(Vector3 _pos, Vector2Int _coordinate, NodeType _nodeType)
     {
@@ -42,5 +42,25 @@ public class Node : MonoBehaviour
             neighbours.Add(node);
         }
         return neighbours;
+    }
+
+    public void OnHover()
+    {
+        
+    }
+
+    public void OnUnhover()
+    {
+
+    }
+
+    public void OnSelect()
+    {
+
+    }
+
+    public void OnDeselect()
+    {
+
     }
 }
