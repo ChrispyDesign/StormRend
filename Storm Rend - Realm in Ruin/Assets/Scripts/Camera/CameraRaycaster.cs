@@ -62,14 +62,14 @@ public class CameraRaycaster : MonoBehaviour
         {
             m_unhoveredObject = m_hoveredObject; // store unhovered object
 
-            IClickable unhoveredClickable = m_unhoveredObject.GetComponent<IClickable>();
+            IHoverable unhoveredClickable = m_unhoveredObject.GetComponent<IHoverable>();
             if (unhoveredClickable != null)
                 unhoveredClickable.OnUnhover();
         }
 
         m_hoveredObject = hitObject; // store hovered object
 
-        IClickable hoveredClickable = m_hoveredObject.GetComponent<IClickable>();
+        IHoverable hoveredClickable = m_hoveredObject.GetComponent<IHoverable>();
         if (hoveredClickable != null)
             hoveredClickable.OnHover();
     }
@@ -84,14 +84,14 @@ public class CameraRaycaster : MonoBehaviour
         {
             m_deselectedObject = m_selectedObject; // store deselected object
 
-            IClickable deselectedClickable = m_deselectedObject.GetComponent<IClickable>();
+            ISelectable deselectedClickable = m_deselectedObject.GetComponent<ISelectable>();
             if (deselectedClickable != null)
                 deselectedClickable.OnDeselect();
         }
 
         m_selectedObject = hitObject; // store hit object
 
-        IClickable selectedClickable = m_selectedObject.GetComponent<IClickable>();
+        ISelectable selectedClickable = m_selectedObject.GetComponent<ISelectable>();
         if (selectedClickable != null)
             selectedClickable.OnSelect();
     }
