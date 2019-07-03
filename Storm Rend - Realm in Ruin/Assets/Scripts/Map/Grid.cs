@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//[CreateAssetMenu(fileName = "Grid")]
 public class Grid 
 {
     public Node[,] m_nodes;
@@ -32,6 +31,7 @@ public class Grid
                                             0.0f,
                                             -(m_gridSize / 2) + y * m_nodeSize);
                 Transform tile = GameObject.Instantiate(_prefab, pos, Quaternion.identity, m_parent);
+                tile.name = "(" + x + ", " + y + ")";
                 m_nodes[x, y] = tile.GetComponent<Node>().SetNodeVariables(pos, new Vector2Int(x, y), m_gridData.rows[x].row[y]);
             }
         }
