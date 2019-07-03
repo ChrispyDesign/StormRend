@@ -60,6 +60,7 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
     public void OnHover()
     {
         transform.GetComponent<MeshRenderer>().material.color = Color.red;
+
     }
 
     public void OnUnhover()
