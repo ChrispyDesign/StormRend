@@ -10,27 +10,20 @@ public class UIManager : MonoBehaviour
     [Header("Other UI Managers")]
     [SerializeField] private GloryManager m_gloryManager;
     [SerializeField] private BlizzardManager m_blizzardManager;
-
-    [Header("Unit Avatars")]
-    [SerializeField] private RectTransform m_berserkerAvatar;
-    [SerializeField] private RectTransform m_valkyrieAvatar;
-    [SerializeField] private RectTransform m_sageAvatar;
-    [SerializeField] private float m_focusedScalar = 1.5f;
+    [SerializeField] private UIAvatarSelector m_avatarSelector;
 
     [Header("Ability Panel")]
     [SerializeField] private Text m_ability;
-    [SerializeField] private Text m_level1;
-    [SerializeField] private Text m_level2;
-    [SerializeField] private Text m_level3;
-
-    private Vector2 m_defaultAvatarSize;
-    private Vector2 m_focussedAvatarSize;
+    [SerializeField] private Text m_descriptionLevel1;
+    [SerializeField] private Text m_descriptionLevel2;
+    [SerializeField] private Text m_descriptionLevel3;
 
     #region getters
 
     public static UIManager GetInstance() { return m_instance; }
     public GloryManager GetGloryManager() { return m_gloryManager; }
     public BlizzardManager GetBlizzardManager() { return m_blizzardManager; }
+    public UIAvatarSelector GetAvatarSelector() { return m_avatarSelector; }
 
     #endregion
     
@@ -41,37 +34,13 @@ public class UIManager : MonoBehaviour
     {
         m_instance = this;
 
-        Debug.Assert(m_blizzardManager != null, "Blizzard Manager not assigned to UI Manager!");
-        Debug.Assert(m_gloryManager != null, "Glory Manager not assigned to UI Manager!");
-
-        m_defaultAvatarSize = m_berserkerAvatar.rect.size;
-        m_focussedAvatarSize = m_defaultAvatarSize * m_focusedScalar;
+        Debug.Assert(m_blizzardManager, "Blizzard Manager not assigned to UI Manager!");
+        Debug.Assert(m_gloryManager, "Glory Manager not assigned to UI Manager!");
+        Debug.Assert(m_avatarSelector, "Avatar Manager not assigned to UI Manager!");
     }
 
     public void SelectAbility()
     {
 
-    }
-
-    public void SelectPlayerUnit(PlayerUnit playerUnit)
-    {
-        m_berserkerAvatar.sizeDelta = m_defaultAvatarSize;
-        m_valkyrieAvatar.sizeDelta = m_defaultAvatarSize;
-        m_sageAvatar.sizeDelta = m_defaultAvatarSize;
-
-        switch (playerUnit.GetUnitType())
-        {
-            case UnitType.Berserker:
-                m_berserkerAvatar.sizeDelta = m_focussedAvatarSize;
-                break;
-
-            case UnitType.Valkyrie:
-                m_valkyrieAvatar.sizeDelta = m_focussedAvatarSize;
-                break;
-
-            case UnitType.Sage:
-                m_sageAvatar.sizeDelta = m_focussedAvatarSize;
-                break;
-        }
     }
 }

@@ -23,7 +23,7 @@ public class PlayerUnit : Unit
     {
         base.OnSelect();
 
-        UIManager.GetInstance().SelectPlayerUnit(this);
+        UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(this);
     }
 
     public override void OnDeselect()

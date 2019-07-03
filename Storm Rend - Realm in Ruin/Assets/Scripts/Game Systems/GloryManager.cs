@@ -45,7 +45,7 @@ public class GloryManager : MonoBehaviour
         UpdateGloryMeter();
 
         // do other stuffs here
-        // clean animations
+
     }
 
     /// <summary>
