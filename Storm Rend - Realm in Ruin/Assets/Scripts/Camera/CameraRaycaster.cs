@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// camera raycasting script responsible for hovering/selecting objects in the scene
+/// </summary>
 [RequireComponent(typeof(Camera))]
 public class CameraRaycaster : MonoBehaviour
 {
     private Camera m_camera;
 
+    // stored hover/selection objects
     private static GameObject m_hoveredObject;
     private static GameObject m_unhoveredObject;
     private static GameObject m_selectedObject;
@@ -19,20 +23,24 @@ public class CameraRaycaster : MonoBehaviour
 
     #endregion
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// cache camera component on start
+    /// </summary>
     void Start()
     {
         m_camera = GetComponent<Camera>();
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// perform raycast on every frame
+    /// </summary>
     void Update()
     {
         PerformRaycast();
     }
 
     /// <summary>
-    /// 
+    /// raycast function which uses mouse input to hover/select objects
     /// </summary>
     private void PerformRaycast()
     {
@@ -55,9 +63,9 @@ public class CameraRaycaster : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// hover function which tracks hovered and unhovered objects, using the IHoverable interface
     /// </summary>
-    /// <param name="hitObject"></param>
+    /// <param name="hitObject">the object that was hit, can be null</param>
     private void Hover(GameObject hitObject)
     {
         if (m_unhoveredObject != m_hoveredObject)
@@ -87,12 +95,12 @@ public class CameraRaycaster : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// select function which tracks selected and deselected objects, using the ISelectable interface
     /// </summary>
-    /// <param name="hitObject"></param>
+    /// <param name="hitObject">the object that was hit, can be null</param>
     private void Select(GameObject hitObject)
     {
-        if (m_deselectedObject != m_selectedObject)
+        if (m_deselectedObject != m_selectedObject && hitObject != m_selectedObject)
         {
             // store deselected object
             m_deselectedObject = m_selectedObject;

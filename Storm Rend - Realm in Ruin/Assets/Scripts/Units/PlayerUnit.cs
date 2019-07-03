@@ -2,17 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum UnitType
+{
+    Berserker,
+    Valkyrie,
+    Sage
+}
+
 public class PlayerUnit : Unit
 {
-    [SerializeField] private Camera m_camera;
-    [SerializeField] private Transform m_cameraAnchor;
+    [SerializeField] private UnitType m_unitType;
+
+    #region getters
+
+    public UnitType GetUnitType() { return m_unitType; }
+
+    #endregion
 
     public override void OnSelect()
     {
         base.OnSelect();
 
-        CameraZoom zoom = m_camera.GetComponent<CameraZoom>();
-        zoom.ZoomTo(m_cameraAnchor);
+        UIManager.GetInstance().SelectPlayerUnit(this);
     }
 
     public override void OnDeselect()

@@ -9,8 +9,8 @@ public class CameraZoom : MonoBehaviour
     [SerializeField] private float m_zoomSpeed = 1;
 
     [Header("Zoom Anchors")]
-    [SerializeField] private Transform m_near;
-    [SerializeField] private Transform m_far;
+    [SerializeField] private Transform m_near = null;
+    [SerializeField] private Transform m_far = null;
     [SerializeField] private int m_nearFarSteps = 5;
 
     private List<GameObject> m_anchors = new List<GameObject>();

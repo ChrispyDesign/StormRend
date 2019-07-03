@@ -12,7 +12,7 @@ public class Grass : MonoBehaviour
         int rand = Random.Range(0, 360);                                                                    //Sets a random Number
         transform.rotation = Quaternion.Euler(0, rand, 0);                                                  //Rotates The Tuft Randomly
 
-
+        
         grassTuft.GetComponent<Renderer>().material.SetFloat("_Speed", Random.Range(speed.x, speed.y));     //Randomises the speed of the grass sway
 
         rand = Random.Range(0, 2);                                                                          //Sets a random Number

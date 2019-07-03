@@ -3,21 +3,29 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// blizzard class responsible for managing the blizzard meter and performing blizzards
-/// when necessary
+/// blizzard class responsible for incrementing and decrementing the blizzard meter and performing blizzards when necessary
 /// </summary>
 public class BlizzardManager : MonoBehaviour
 {
+    // blizzard meter
+    [Tooltip("Blizzard meter transform, contains toggle child elements")]
+    [SerializeField] private Transform m_blizzardMeter;
+
     // group of blizzard toggles
-    private Toggle[] m_blizzardMeter;
+    private Toggle[] m_blizzardNodes;
+    private int m_blizzardCount = 0;
 
     /// <summary>
-    /// constructor which caches references to toggle UI elements
+    /// caches references to blizzard nodes
     /// </summary>
     private void Start()
     {
-        // cache references to child toggles
-        m_blizzardMeter = GetComponentsInChildren<Toggle>();
+        Debug.Assert(m_blizzardMeter != null, "Blizzard meter not assigned to Blizzard Manager!");
+
+        if (m_blizzardMeter != null)
+            m_blizzardNodes = m_blizzardMeter.GetComponentsInChildren<Toggle>();
+
+        m_blizzardCount = 0;
     }
 
     /// <summary>
@@ -26,34 +34,28 @@ public class BlizzardManager : MonoBehaviour
     /// </summary>
     public void IncrementBlizzardMeter()
     {
-        // iterate over blizzard toggles
-        for (int i = 0; i < m_blizzardMeter.Length; i++)
+        // all blizzard nodes are toggled, start blizzard
+        if (m_blizzardCount == m_blizzardNodes.Length)
         {
-            // get blizzard toggle
-            Toggle blizzardNode = m_blizzardMeter[i];
-            
-            // untoggled blizzard node found
-            if (!blizzardNode.isOn)
-            {
-                blizzardNode.isOn = true; // toggle on
-
-                // cache reference to the node's animator
-                Animator animator = blizzardNode.GetComponent<Animator>();
-
-                if (i == m_blizzardMeter.Length - 1)
-                    PrepareBlizzard();
-                else
-                    animator.SetTrigger("NotifyOnce"); // notify once
-
-                return;
-            }
+            ExecuteBlizzard(); // start blizzard
+            ResetBlizzardMeter(); // reset blizzard meter
+            return;
         }
 
-        // all blizzard nodes are toggled, start blizzard
-        ExecuteBlizzard();
+        // get blizzard toggle
+        Toggle blizzardNode = m_blizzardNodes[m_blizzardCount];
+        blizzardNode.isOn = true; // toggle on
 
-        // reset blizzard meter
-        ResetBlizzardMeter();
+        // increment
+        m_blizzardCount++;
+
+        // cache reference to the node's animator
+        Animator animator = blizzardNode.GetComponent<Animator>();
+        
+        if (m_blizzardCount == m_blizzardNodes.Length)
+            PrepareBlizzard();
+        else
+            animator.SetTrigger("NotifyOnce"); // notify once
     }
 
     /// <summary>
@@ -62,12 +64,14 @@ public class BlizzardManager : MonoBehaviour
     public void ResetBlizzardMeter()
     {
         // iterate over blizzard toggles
-        for (int i = 0; i < m_blizzardMeter.Length; i++)
+        for (int i = 0; i < m_blizzardNodes.Length; i++)
         {
             // get blizzard toggle
-            Toggle blizzardNode = m_blizzardMeter[i];
+            Toggle blizzardNode = m_blizzardNodes[i];
             blizzardNode.isOn = false; // toggle off
         }
+        
+        m_blizzardCount = 0;
     }
 
     /// <summary>
@@ -76,10 +80,10 @@ public class BlizzardManager : MonoBehaviour
     private void PrepareBlizzard()
     {
         // iterate over blizzard toggles
-        for (int i = 0; i < m_blizzardMeter.Length; i++)
+        for (int i = 0; i < m_blizzardNodes.Length; i++)
         {
             // get blizzard toggle
-            Toggle blizzardNode = m_blizzardMeter[i];
+            Toggle blizzardNode = m_blizzardNodes[i];
 
             // cache reference to the node's animator
             Animator animator = blizzardNode.GetComponent<Animator>();
