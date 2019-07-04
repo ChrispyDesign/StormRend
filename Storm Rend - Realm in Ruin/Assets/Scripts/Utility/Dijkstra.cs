@@ -18,7 +18,7 @@ public class Dijkstra : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void FindValidMoves(Node _startNode, int allowedTiles)
+    public void FindValidMoves(Node _startNode, int allowedTiles, System.Type unitTypeToIgnore)
     {
         // If there is already a path clear it
         if (m_validMoves.Count > 0)
@@ -47,6 +47,12 @@ public class Dijkstra : MonoBehaviour
             {
                 if (neighbour.m_nodeType == NodeType.BLOCKED || neighbour.m_nodeType == NodeType.EMPTY)
                     continue;
+
+                Unit neighbourOnTop = neighbour.GetUnitOnTop();
+
+                if (neighbourOnTop)
+                    if (neighbourOnTop.GetType() == unitTypeToIgnore)
+                        continue;
 
                 if (!m_checkedNodes.Contains(neighbour))
                     m_checkedNodes.Add(neighbour);

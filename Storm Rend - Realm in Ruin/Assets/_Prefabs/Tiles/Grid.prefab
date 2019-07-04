@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5934445798658001405}
   - component: {fileID: 5934445798658001404}
+  - component: {fileID: 303820826}
+  - component: {fileID: 303820827}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -66,3 +68,40 @@ MonoBehaviour:
     - row: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   m_tilePrefab: {fileID: 4758049521519935278, guid: 930b7bb8e3e520d44909828a5da98ccd,
     type: 3}
+--- !u!114 &303820826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5934445798658001394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 187ca8d55d198564eb248e6802de2661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_validMoves: []
+  m_checkedNodes: []
+  m_DebugPath: 0
+--- !u!114 &303820827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5934445798658001394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cc85d0e431db4d46b863c97f70e840d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_spawns:
+  - m_spawnCoords: {x: 8, y: 8}
+    m_prefab: {fileID: 3548118422344968317, guid: 62b9958ccea777041bab85b6a8546cee,
+      type: 3}
+  - m_spawnCoords: {x: 7, y: 7}
+    m_prefab: {fileID: 9170626605241666374, guid: 7cfdd50ed7683664abb47d888fdcc75e,
+      type: 3}
+  - m_spawnCoords: {x: 12, y: 9}
+    m_prefab: {fileID: 9108019807441497518, guid: 9b2ddff21ff764c4383bac507ca99f07,
+      type: 3}

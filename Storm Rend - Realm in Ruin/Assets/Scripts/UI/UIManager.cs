@@ -11,12 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GloryManager m_gloryManager;
     [SerializeField] private BlizzardManager m_blizzardManager;
     [SerializeField] private UIAvatarSelector m_avatarSelector;
-
-    [Header("Ability Panel")]
-    [SerializeField] private Text m_ability;
-    [SerializeField] private Text m_descriptionLevel1;
-    [SerializeField] private Text m_descriptionLevel2;
-    [SerializeField] private Text m_descriptionLevel3;
+    [SerializeField] private UIAbilityManager m_abilityManager;
 
     #region getters
 
@@ -24,6 +19,7 @@ public class UIManager : MonoBehaviour
     public GloryManager GetGloryManager() { return m_gloryManager; }
     public BlizzardManager GetBlizzardManager() { return m_blizzardManager; }
     public UIAvatarSelector GetAvatarSelector() { return m_avatarSelector; }
+    public UIAbilityManager GetAbilityManager() { return m_abilityManager; }
 
     #endregion
     

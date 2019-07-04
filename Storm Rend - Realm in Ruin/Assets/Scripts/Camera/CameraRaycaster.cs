@@ -6,6 +6,8 @@
 [RequireComponent(typeof(Camera))]
 public class CameraRaycaster : MonoBehaviour
 {
+    [SerializeField] private LayerMask m_layerMask;
+
     private Camera m_camera;
 
     // stored hover/selection objects
@@ -48,7 +50,7 @@ public class CameraRaycaster : MonoBehaviour
         RaycastHit raycastHit;
 
         // perform raycast
-        Physics.Raycast(ray, out raycastHit);
+        Physics.Raycast(ray, out raycastHit, Mathf.Infinity, m_layerMask);
         GameObject hitObject = null;
 
         if (raycastHit.collider != null)

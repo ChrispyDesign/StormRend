@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 {
     [SerializeField] private MeshRenderer m_meshRenderer = null;
-    [SerializeField] private bool m_debug;
 
     public Vector2Int m_coordinates;
 
@@ -22,6 +21,8 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 
     #endregion
 
+    public Node GetCurrentNode() { return Grid.GetNodeFromCoords(m_coordinates); }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,37 +35,48 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 
     }
 
+    public void MoveTo(Node node)
+    {
+        GetCurrentNode().SetUnitOnTop(null);
+        node.SetUnitOnTop(this);
+
+        m_coordinates = node.GetCoordinates();
+        transform.position = node.GetNodePosition();
+        Player.SetCurrentPlayer(null);
+    }
+
     public virtual void OnSelect()
     {
-        if(m_debug)
-            m_meshRenderer.material.color = Color.blue;
-
-        Dijkstra.Instance.FindValidMoves(Grid.GetNodeFromCoords(m_coordinates), GetMove());
         List<Node> nodes = Dijkstra.Instance.m_validMoves;
+
         foreach (Node node in nodes)
         {
+            if (node.GetUnitOnTop())
+                continue;
+
             node.transform.GetComponent<MeshRenderer>().material.color = Color.red;
             node.m_selected = true;
         }
+        
+        Color materialColour = m_meshRenderer.material.color;
+        m_meshRenderer.material.color = new Color(materialColour.r, materialColour.g, materialColour.b, 0.5f);
     }
 
     public virtual void OnDeselect()
     {
-        if (m_debug)
-            m_meshRenderer.material.color = Color.white;
-
         Grid.GetNodeFromCoords(m_coordinates).OnDeselect();
+
+        Color materialColour = m_meshRenderer.material.color;
+        m_meshRenderer.material.color = new Color(materialColour.r, materialColour.g, materialColour.b, 1);
     }
 
     public virtual void OnHover()
     {
-        if (m_debug)
-            m_meshRenderer.material.color = Color.green;
+
     }
     
     public virtual void OnUnhover()
     {
-        if (m_debug)
-            m_meshRenderer.material.color = Color.white;
+
     }
 }

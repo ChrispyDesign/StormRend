@@ -15,7 +15,6 @@ public class SpawnManager : MonoBehaviour
                         spawnPoint.m_spawnCoords.y);
 
             Vector3 pos = node.GetNodePosition();
-            pos.y += 2;
 
             Transform go = Instantiate(
                 spawnPoint.m_prefab,

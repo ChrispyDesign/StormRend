@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class EnemyUnit : Unit
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void OnSelect()
     {
+        Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetMove(), typeof(PlayerUnit));
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        base.OnSelect();
     }
 }

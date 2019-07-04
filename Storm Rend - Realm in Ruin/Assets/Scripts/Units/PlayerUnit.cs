@@ -23,16 +23,18 @@ public class PlayerUnit : Unit
 
     public override void OnSelect()
     {
+        Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetMove(), typeof(EnemyUnit));
+
         UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(this);
+        UIManager.GetInstance().GetAbilityManager().SelectPlayerUnit(this);
         Player.SetCurrentPlayer(this);
         base.OnSelect();
     }
 
     public override void OnDeselect()
     {
-        Grid.GetNodeFromCoords(m_coordinates).OnDeselect();
         UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(null);
-        Player.SetCurrentPlayer(null);
+        UIManager.GetInstance().GetAbilityManager().SelectPlayerUnit(null);
         base.OnDeselect();
     }
 

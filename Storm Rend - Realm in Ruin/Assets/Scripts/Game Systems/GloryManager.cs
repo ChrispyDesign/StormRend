@@ -13,8 +13,14 @@ public class GloryManager : MonoBehaviour
     [SerializeField] private Transform m_gloryMeter;
 
     // group of glory toggles
-    private Toggle[] m_gloryNodes;
-    private int m_gloryCount = 0;
+    private static Toggle[] m_gloryNodes;
+    private static int m_gloryCount = 0;
+
+    #region getters
+
+    public static int GetGloryCount() { return m_gloryCount; }
+
+    #endregion
 
     /// <summary>
     /// caches references to glory nodes
@@ -33,7 +39,7 @@ public class GloryManager : MonoBehaviour
     /// use this function to gain glory!
     /// </summary>
     /// <param name="value">the amount of glory to gain</param>
-    public void GainGlory(int value)
+    public static void GainGlory(int value)
     {
         // increment
         m_gloryCount += value;
@@ -53,7 +59,7 @@ public class GloryManager : MonoBehaviour
     /// </summary>
     /// <param name="value">the amount of glory to spend</param>
     /// <returns>false if there isn't enough glory, true if the glory was spent successfully</returns>
-    public bool SpendGlory(int value)
+    public static bool SpendGlory(int value)
     {
         if (m_gloryCount - value < 0)
             return false; // not enough glory
@@ -73,7 +79,7 @@ public class GloryManager : MonoBehaviour
     /// <summary>
     /// updates the UI toggle elements of the glory meter to match the amount of glory
     /// </summary>
-    private void UpdateGloryMeter()
+    private static void UpdateGloryMeter()
     {
         // iterate through all glory nodes and turn on/off the relevant nodes
         for (int i = 0; i < m_gloryNodes.Length; i++)

@@ -41,7 +41,9 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
     }
 
     #region GettersAndSetters
-
+    
+    public Unit GetUnitOnTop() { return m_unitOnTop; }
+    public Vector2Int GetCoordinates() { return m_coordinate; }
     public Vector3 GetNodePosition() { return m_position; }
 
     public void SetUnitOnTop(Unit _unit) { m_unitOnTop = _unit; }
@@ -66,7 +68,6 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
     public void OnHover()
     {
         transform.GetComponent<MeshRenderer>().material.color = Color.red;
-
     }
 
     public void OnUnhover()
@@ -77,13 +78,16 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
 
     public void OnSelect()
     {
-        if (m_unitOnTop != null)
+        PlayerUnit currentSelectedUnit = Player.GetCurrentPlayer();
+
+        if (currentSelectedUnit)
         {
-            if (m_unitOnTop.transform.GetComponent<PlayerUnit>() != null)
+            List<Node> nodes = Dijkstra.Instance.m_validMoves;
+
+            if (nodes.Contains(this) && !m_unitOnTop)
             {
-                Player.SetCurrentPlayer(m_unitOnTop as PlayerUnit);
+                currentSelectedUnit.MoveTo(this);
             }
-            m_unitOnTop.OnSelect();
         }
     }
 

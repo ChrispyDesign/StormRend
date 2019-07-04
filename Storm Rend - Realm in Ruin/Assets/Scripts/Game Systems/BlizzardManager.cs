@@ -13,7 +13,13 @@ public class BlizzardManager : MonoBehaviour
 
     // group of blizzard toggles
     private Toggle[] m_blizzardNodes;
-    private int m_blizzardCount = 0;
+    private static int m_blizzardCount = 0;
+
+    #region getters
+
+    public static int GetBlizzardCount() { return m_blizzardCount; }
+
+    #endregion
 
     /// <summary>
     /// caches references to blizzard nodes
