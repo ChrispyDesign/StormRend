@@ -4,14 +4,16 @@ using UnityEngine;
 
 public enum UnitType
 {
-    Berserker,
-    Valkyrie,
-    Sage
+    BERSERKER = 0,
+    VALKYRIE,
+    SAGE,
+
+    COUNT
 }
 
 public class PlayerUnit : Unit
 {
-    [SerializeField] private UnitType m_unitType;
+    [SerializeField] private UnitType m_unitType = UnitType.BERSERKER;
 
     #region getters
 
@@ -21,13 +23,16 @@ public class PlayerUnit : Unit
 
     public override void OnSelect()
     {
-        base.OnSelect();
-
         UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(this);
+        Player.SetCurrentPlayer(this);
+        base.OnSelect();
     }
 
     public override void OnDeselect()
     {
+        Grid.GetNodeFromCoords(m_coordinates).OnDeselect();
+        UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(null);
+        Player.SetCurrentPlayer(null);
         base.OnDeselect();
     }
 

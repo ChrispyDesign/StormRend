@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Grid 
 {
-    public Node[,] m_nodes;
+    public static Node[,] m_nodes;
 
     private Transform m_parent;
     private int m_nodeSize;
@@ -63,4 +63,7 @@ public class Grid
 
         return neighbours;
     }
+
+    public static Node GetNodeFromCoords(int _x, int _y) { return m_nodes[_x, _y]; }
+    public static Node GetNodeFromCoords(Vector2Int _coords) { return m_nodes[_coords.x, _coords.y]; }
 }

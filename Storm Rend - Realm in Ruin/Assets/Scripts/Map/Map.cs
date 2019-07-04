@@ -23,7 +23,7 @@ public class Map : MonoBehaviour
 
     [SerializeField] private Transform m_tilePrefab;
 
-    private void Start()
+    private void Awake()
     {
         Transform parent = new GameObject("Tiles").transform;
         parent.parent = this.transform;
