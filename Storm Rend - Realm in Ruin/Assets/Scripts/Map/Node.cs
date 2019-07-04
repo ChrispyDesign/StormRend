@@ -12,17 +12,17 @@ public enum Neighbour
 
 public class Node : MonoBehaviour, IHoverable, ISelectable
 {
-    [SerializeField] private Transform m_unitOnTop;
+    [SerializeField] private Unit m_unitOnTop;
     [SerializeField] private Node[] m_neighbours;
     [SerializeField] private Vector3 m_position;
     [SerializeField] private Vector2Int m_coordinate;
 
-    private bool m_selected = false;
+    public bool m_selected = false;
 
     public NodeType m_nodeType;
-
     public Node m_parent;
     public int m_nGCost, m_nHCost;
+
     public int m_nFCost
     {
         get
@@ -40,8 +40,14 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
         return this;
     }
 
-    public void SetUnitOnTop(Transform _unit) { m_unitOnTop = _unit; }
+    #region GettersAndSetters
+
+    public Vector3 GetNodePosition() { return m_position; }
+
+    public void SetUnitOnTop(Unit _unit) { m_unitOnTop = _unit; }
     public void SetNeighbours(Node[] _neighbours) { m_neighbours = _neighbours; }
+
+    #endregion
 
     public List<Node> GetNeighbours()
     {
@@ -71,17 +77,13 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
 
     public void OnSelect()
     {
-        if (!m_selected)
+        if (m_unitOnTop != null)
         {
-            m_selected = true;
-            Dijkstra.Instance.FindValidMoves(this, 2);
-            List<Node> nodes = Dijkstra.Instance.m_validMoves;
-
-            foreach (Node n in nodes)
+            if (m_unitOnTop.transform.GetComponent<PlayerUnit>() != null)
             {
-                n.transform.GetComponent<MeshRenderer>().material.color = Color.red;
-                n.m_selected = true;
+                Player.SetCurrentPlayer(m_unitOnTop as PlayerUnit);
             }
+            m_unitOnTop.OnSelect();
         }
     }
 
@@ -89,10 +91,10 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
     {
         m_selected = false;
         List<Node> nodes = Dijkstra.Instance.m_validMoves;
-        foreach (Node n in nodes)
+        foreach (Node node in nodes)
         {
-            n.transform.GetComponent<MeshRenderer>().material.color = Color.black;
-            n.m_selected = false;
+            node.transform.GetComponent<MeshRenderer>().material.color = Color.black;
+            node.m_selected = false;
         }
     }
 }

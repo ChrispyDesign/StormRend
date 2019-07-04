@@ -32,17 +32,20 @@ public class UIAvatarSelector : MonoBehaviour
         m_valkyrieAvatar.sizeDelta = m_defaultAvatarSize;
         m_sageAvatar.sizeDelta = m_defaultAvatarSize;
 
+        if (playerUnit == null)
+            return;
+
         switch (playerUnit.GetUnitType())
         {
-            case UnitType.Berserker:
+            case UnitType.BERSERKER:
                 m_berserkerAvatar.sizeDelta = m_focussedAvatarSize;
                 break;
 
-            case UnitType.Valkyrie:
+            case UnitType.VALKYRIE:
                 m_valkyrieAvatar.sizeDelta = m_focussedAvatarSize;
                 break;
 
-            case UnitType.Sage:
+            case UnitType.SAGE:
                 m_sageAvatar.sizeDelta = m_focussedAvatarSize;
                 break;
         }

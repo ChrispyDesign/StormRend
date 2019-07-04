@@ -65,15 +65,13 @@ public class Dijkstra : MonoBehaviour
 
             if (currentNode.m_nGCost > 0 && currentNode.m_nGCost <= allowedTiles)
                 m_validMoves.Add(currentNode);
-            i++;
-            if (i > 19)
-                return;
+           
         }
 
-        foreach (Node n in m_checkedNodes)
+        foreach (Node node in m_checkedNodes)
         {
-            n.m_nHCost = 0;
-            n.m_nGCost = 0;
+            node.m_nHCost = 0;
+            node.m_nGCost = 0;
         }
     }
 }
