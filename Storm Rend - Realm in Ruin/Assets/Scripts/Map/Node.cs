@@ -73,7 +73,7 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
     public void OnUnhover()
     {
         if (!m_selected)
-            transform.GetComponent<MeshRenderer>().material.color = Color.black;
+            transform.GetComponent<MeshRenderer>().material.color = Color.white;
     }
 
     public void OnSelect()
@@ -86,7 +86,23 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
 
             if (nodes.Contains(this) && !m_unitOnTop)
             {
-                currentSelectedUnit.MoveTo(this);
+                if (currentSelectedUnit.GetAlreadyMoved())
+                {
+                    currentSelectedUnit.GetMoveCommand().SetCoordinates(m_coordinate);
+                    currentSelectedUnit.GetMoveCommand().Execute();
+                }
+                else
+                {
+                    currentSelectedUnit.SetMoveCommand(new MoveCommand(
+                                                           currentSelectedUnit,
+                                                           m_coordinate));
+                    MoveCommand temp = currentSelectedUnit.GetMoveCommand();
+                    temp.Execute();
+
+                    CommandManager.m_moves.Add(temp);
+                }
+
+                Debug.Log(CommandManager.m_moves.Count);
             }
         }
     }
@@ -97,7 +113,7 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
         List<Node> nodes = Dijkstra.Instance.m_validMoves;
         foreach (Node node in nodes)
         {
-            node.transform.GetComponent<MeshRenderer>().material.color = Color.black;
+            node.transform.GetComponent<MeshRenderer>().material.color = Color.white;
             node.m_selected = false;
         }
     }

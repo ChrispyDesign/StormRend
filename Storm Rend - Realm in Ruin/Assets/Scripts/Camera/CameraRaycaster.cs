@@ -7,8 +7,6 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(Camera))]
 public class CameraRaycaster : MonoBehaviour
 {
-    [SerializeField] private LayerMask m_layerMaskUI;
-
     private Camera m_camera;
 
     // stored hover/selection objects

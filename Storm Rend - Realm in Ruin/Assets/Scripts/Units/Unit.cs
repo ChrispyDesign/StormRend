@@ -35,13 +35,13 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 
     }
 
-    public void MoveTo(Node node)
+    public void MoveTo(Node _moveToNode)
     {
         GetCurrentNode().SetUnitOnTop(null);
-        node.SetUnitOnTop(this);
+        _moveToNode.SetUnitOnTop(this);
 
-        m_coordinates = node.GetCoordinates();
-        transform.position = node.GetNodePosition();
+        m_coordinates = _moveToNode.GetCoordinates();
+        transform.position = _moveToNode.GetNodePosition();
         Player.SetCurrentPlayer(null);
     }
 
