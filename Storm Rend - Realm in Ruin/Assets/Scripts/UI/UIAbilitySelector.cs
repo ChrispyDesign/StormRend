@@ -3,22 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIAbilityManager : MonoBehaviour
+/// <summary>
+/// 
+/// </summary>
+public class UIAbilitySelector : MonoBehaviour
 {
-    [Header("Ability Panels")]
-    [SerializeField] private GameObject m_abilityPanel;
-    [SerializeField] private GameObject m_abilityInfoPanel;
+    // panel for activation/deactivation
+    [Header("Ability Button Panel")]
+    [SerializeField] private GameObject m_buttonPanel;
 
+    // ability buttons, passive, ability 1/2
     [Header("Ability Buttons")]
     [SerializeField] private Button m_passiveAbility;
     [SerializeField] private Transform m_ability1;
     [SerializeField] private Transform m_ability2;
 
+    // helper variables
     private Button[] m_abilityButtons1;
     private Button[] m_abilityButtons2;
 
     /// <summary>
-    /// 
+    /// cache button components
     /// </summary>
     void Start()
     {
@@ -26,31 +31,34 @@ public class UIAbilityManager : MonoBehaviour
         m_abilityButtons2 = m_ability2.GetComponentsInChildren<Button>();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Insert))
-            GloryManager.GainGlory(1);
-    }
-
     /// <summary>
-    /// 
+    /// when a player is selected, display the relevant ability elements
     /// </summary>
     /// <param name="playerUnit"></param>
     public void SelectPlayerUnit(PlayerUnit playerUnit)
     {
         if (playerUnit == null)
         {
-            m_abilityPanel.SetActive(false);
+            m_buttonPanel.SetActive(false);
             return;
         }
 
-        m_abilityPanel.SetActive(true);
-
+        m_buttonPanel.SetActive(true);
+        
         Ability[] abilities = playerUnit.GetAbilities();
-        DisplayAbility(m_abilityButtons1, abilities[0]);
-        DisplayAbility(m_abilityButtons2, abilities[1]);
+
+        if (abilities.Length == 2)
+        {
+            DisplayAbility(m_abilityButtons1, abilities[0]);
+            DisplayAbility(m_abilityButtons2, abilities[1]);
+        }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="buttons"></param>
+    /// <param name="ability"></param>
     private void DisplayAbility(Button[] buttons, Ability ability)
     {
         for (int i = 0; i < buttons.Length; i++)
@@ -65,15 +73,5 @@ public class UIAbilityManager : MonoBehaviour
             else
                 abilityButton.interactable = false;
         }
-    }
-
-    public void HoverAbility()
-    {
-        m_abilityInfoPanel.SetActive(true);
-    }
-
-    public void UnhoverAbility()
-    {
-        m_abilityInfoPanel.SetActive(false);
     }
 }

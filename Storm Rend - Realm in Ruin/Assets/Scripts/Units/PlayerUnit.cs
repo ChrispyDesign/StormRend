@@ -45,7 +45,7 @@ public class PlayerUnit : Unit
         Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetMove(), typeof(EnemyUnit));
 
         UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(this);
-        UIManager.GetInstance().GetAbilityManager().SelectPlayerUnit(this);
+        UIManager.GetInstance().GetAbilitySelector().SelectPlayerUnit(this);
         Player.SetCurrentPlayer(this);
         base.OnSelect();
     }
@@ -53,7 +53,7 @@ public class PlayerUnit : Unit
     public override void OnDeselect()
     {
         UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(null);
-        UIManager.GetInstance().GetAbilityManager().SelectPlayerUnit(null);
+        UIManager.GetInstance().GetAbilitySelector().SelectPlayerUnit(null);
         base.OnDeselect();
     }
 
