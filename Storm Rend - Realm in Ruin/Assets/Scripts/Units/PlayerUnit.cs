@@ -35,8 +35,12 @@ public class PlayerUnit : Unit
         foreach (ICommand command in CommandManager.m_moves)
         {
             MoveCommand move = command as MoveCommand;
+            
             if (move.m_unit == this)
             {
+                if (Grid.GetNodeFromCoords(move.GetOrigCoordinates()).GetUnitOnTop() != null)
+                    return;
+
                 move.Undo();
                 alreadyMoved = true;
             }

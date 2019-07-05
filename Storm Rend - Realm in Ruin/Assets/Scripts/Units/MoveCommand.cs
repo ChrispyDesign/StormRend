@@ -12,6 +12,8 @@ public class MoveCommand : ICommand
 
     public void SetCoordinates(Vector2Int _coords) { m_coords = _coords; }
 
+    public Vector2Int GetOrigCoordinates() { return m_origCoords; }
+
     #endregion
 
     public MoveCommand(Unit _unit, int _x, int _y)

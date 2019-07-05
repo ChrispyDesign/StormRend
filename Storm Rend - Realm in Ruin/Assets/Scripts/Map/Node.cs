@@ -101,8 +101,6 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
 
                     CommandManager.m_moves.Add(temp);
                 }
-
-                Debug.Log(CommandManager.m_moves.Count);
             }
         }
     }

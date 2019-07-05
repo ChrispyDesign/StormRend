@@ -17,17 +17,17 @@ public enum NodeType
 public class Map : MonoBehaviour
 {
     [SerializeField] private Grid m_grid;
-    [SerializeField] private int m_gridWorlodSize;
-    [SerializeField] private int nodeSize;
-    [SerializeField] private TileData m_gridData;
-
+    [SerializeField] private int m_gridWorldSize;
+    [SerializeField] private int m_nodeSize;
     [SerializeField] private Transform m_tilePrefab;
+
+    private TileData m_gridData;
 
     private void Awake()
     {
         Transform parent = new GameObject("Tiles").transform;
         parent.parent = this.transform;
-        m_grid = new Grid(m_tilePrefab, m_gridWorlodSize, nodeSize, parent, m_gridData);
+        m_grid = new Grid(m_tilePrefab, m_gridWorldSize, m_nodeSize, parent, m_gridData);
     }
 }
 
@@ -42,4 +42,3 @@ public class TileData
 
     public rowData[] rows = new rowData[17];
 }
-

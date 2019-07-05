@@ -9,6 +9,7 @@ public class Grid
     private Transform m_parent;
     private int m_nodeSize;
     private int m_gridSize;
+    Vector2Int v;
     private TileData m_gridData;
     
     public Grid(Transform _prefab, int _worldSize, int _nodeSize, Transform _parent, TileData _gridData)
@@ -32,7 +33,7 @@ public class Grid
                                             -(m_gridSize / 2) + y * m_nodeSize);
                 Transform tile = GameObject.Instantiate(_prefab, pos, Quaternion.identity, m_parent);
                 tile.name = "(" + x + ", " + y + ")";
-                m_nodes[x, y] = tile.GetComponent<Node>().SetNodeVariables(pos, new Vector2Int(x, y), m_gridData.rows[x].row[y]);
+                m_nodes[x, y] = tile.GetComponent<Node>().SetNodeVariables(pos, new Vector2Int(x, y), NodeType.WALKABLE);
             }
         }
 
