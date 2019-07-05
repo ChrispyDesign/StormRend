@@ -7,8 +7,6 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(Camera))]
 public class CameraRaycaster : MonoBehaviour
 {
-    [SerializeField] private LayerMask m_layerMaskUI;
-
     private Camera m_camera;
 
     // stored hover/selection objects
@@ -54,6 +52,7 @@ public class CameraRaycaster : MonoBehaviour
         Physics.Raycast(ray, out raycastHit);
         GameObject hitObject = null;
         
+        // disallow raycasting if UI objects are selected/hovered
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 

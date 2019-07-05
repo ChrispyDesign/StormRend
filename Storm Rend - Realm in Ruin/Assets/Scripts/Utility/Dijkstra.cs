@@ -18,7 +18,7 @@ public class Dijkstra : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void FindValidMoves(Node _startNode, int allowedTiles, System.Type unitTypeToIgnore)
+    public void FindValidMoves(Node _startNode, int allowedTiles, System.Type blockedUnits)
     {
         // If there is already a path clear it
         if (m_validMoves.Count > 0)
@@ -29,7 +29,7 @@ public class Dijkstra : MonoBehaviour
 
         // Add our starting point on the openlist
         queue.Enqueue(_startNode);
-        int i = 0;
+
         while (queue.Count > 0)
         {
             // Initialise the current node to openlist's first node and remove it from the openlist
@@ -51,7 +51,7 @@ public class Dijkstra : MonoBehaviour
                 Unit neighbourOnTop = neighbour.GetUnitOnTop();
 
                 if (neighbourOnTop)
-                    if (neighbourOnTop.GetType() == unitTypeToIgnore)
+                    if (neighbourOnTop.GetType() == blockedUnits)
                         continue;
 
                 if (!m_checkedNodes.Contains(neighbour))
