@@ -2,42 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FuriousSwing : Ability
+public class Provoke : Ability
 {
     public override void CastImmediately(AbilityLevel abilityLevel)
     {
         switch (abilityLevel)
         {
             case AbilityLevel.LEVEL_1:
-                DoDamage(2);
-                GloryManager.GainGlory(1);
+                Aggro();
+                Retaliate(1);
                 break;
 
             case AbilityLevel.LEVEL_2:
                 if (GloryManager.SpendGlory(m_effectLevels[1].m_gloryRequirement))
                 {
-                    DoDamage(2);
-                    RefreshActions();
+                    Aggro();
+                    Retaliate(2);
                 }
                 break;
 
             case AbilityLevel.LEVEL_3:
                 if (GloryManager.SpendGlory(m_effectLevels[2].m_gloryRequirement))
                 {
-                    DoDamage(4);
-                    RefreshActions();
+                    Aggro();
+                    GainRune();
                 }
                 break;
         }
     }
 
-    private void DoDamage(int damage)
+    private void Aggro()
     {
-        Debug.Log("Doing " + damage + " damage");
+        Debug.Log("Gained Aggro");
     }
 
-    private void RefreshActions()
+    private void Retaliate(int damage)
     {
-        Debug.Log("Refreshing actions");
+        Debug.Log("Gained " + damage + " Retaliate");
+    }
+
+    private void GainRune()
+    {
+        Debug.Log("Gained Rune");
     }
 }

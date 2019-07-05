@@ -26,6 +26,12 @@ public class UIAbilityManager : MonoBehaviour
         m_abilityButtons2 = m_ability2.GetComponentsInChildren<Button>();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Insert))
+            GloryManager.GainGlory(1);
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -40,6 +46,25 @@ public class UIAbilityManager : MonoBehaviour
 
         m_abilityPanel.SetActive(true);
 
+        Ability[] abilities = playerUnit.GetAbilities();
+        DisplayAbility(m_abilityButtons1, abilities[0]);
+        DisplayAbility(m_abilityButtons2, abilities[1]);
+    }
+
+    private void DisplayAbility(Button[] buttons, Ability ability)
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            Button abilityButton = buttons[i];
+            AbilityLevelInfo levelInfo = ability.GetLevel(i);
+
+            abilityButton.image.sprite = levelInfo.m_abilityIcon;
+
+            if (GloryManager.GetGloryCount() >= levelInfo.m_gloryRequirement)
+                abilityButton.interactable = true;
+            else
+                abilityButton.interactable = false;
+        }
     }
 
     public void HoverAbility()

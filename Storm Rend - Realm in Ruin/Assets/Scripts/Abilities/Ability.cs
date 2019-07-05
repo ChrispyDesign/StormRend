@@ -7,6 +7,7 @@ public struct AbilityLevelInfo
 {
     [TextArea]
     public string m_abilityEffect;
+    public Sprite m_abilityIcon;
     public int m_gloryRequirement;
 }
 
@@ -26,10 +27,13 @@ public enum ExecutionOrder
 public abstract class Ability : MonoBehaviour
 {
     [SerializeField] private string m_abilityName;
-    [SerializeField] protected AbilityLevelInfo m_effectLevel1;
-    [SerializeField] protected AbilityLevelInfo m_effectLevel2;
-    [SerializeField] protected AbilityLevelInfo m_effectLevel3;
-    
+    [SerializeField] protected AbilityLevelInfo[] m_effectLevels;
+
+    #region getters
+
+    public AbilityLevelInfo GetLevel(int level) { return m_effectLevels[level]; }
+
+    #endregion
+
     public abstract void CastImmediately(AbilityLevel abilityLevel);
-    public abstract void CastDelayed(ExecutionOrder executionOrder, int turnDelay, int level = 1);
 }

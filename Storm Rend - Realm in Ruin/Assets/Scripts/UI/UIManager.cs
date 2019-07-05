@@ -15,7 +15,6 @@ public class UIManager : MonoBehaviour
 
     #region getters
 
-    public static UIManager GetInstance() { return m_instance; }
     public GloryManager GetGloryManager() { return m_gloryManager; }
     public BlizzardManager GetBlizzardManager() { return m_blizzardManager; }
     public UIAvatarSelector GetAvatarSelector() { return m_avatarSelector; }
@@ -28,15 +27,22 @@ public class UIManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-        m_instance = this;
-
         Debug.Assert(m_blizzardManager, "Blizzard Manager not assigned to UI Manager!");
         Debug.Assert(m_gloryManager, "Glory Manager not assigned to UI Manager!");
         Debug.Assert(m_avatarSelector, "Avatar Manager not assigned to UI Manager!");
     }
 
-    public void SelectAbility()
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public static UIManager GetInstance()
     {
+        if (!m_instance)
+            m_instance = FindObjectOfType<UIManager>();
 
+        Debug.Assert(m_instance, "UI Manager not found!");
+
+        return m_instance;
     }
 }

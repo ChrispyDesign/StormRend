@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// camera raycasting script responsible for hovering/selecting objects in the scene
@@ -6,7 +7,7 @@
 [RequireComponent(typeof(Camera))]
 public class CameraRaycaster : MonoBehaviour
 {
-    [SerializeField] private LayerMask m_layerMask;
+    [SerializeField] private LayerMask m_layerMaskUI;
 
     private Camera m_camera;
 
@@ -48,10 +49,13 @@ public class CameraRaycaster : MonoBehaviour
     {
         Ray ray = m_camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit raycastHit;
-
+        
         // perform raycast
-        Physics.Raycast(ray, out raycastHit, Mathf.Infinity, m_layerMask);
+        Physics.Raycast(ray, out raycastHit);
         GameObject hitObject = null;
+        
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
 
         if (raycastHit.collider != null)
             hitObject = raycastHit.collider.gameObject;
@@ -61,7 +65,6 @@ public class CameraRaycaster : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
             Select(hitObject); // select (left click)
-        
     }
 
     /// <summary>

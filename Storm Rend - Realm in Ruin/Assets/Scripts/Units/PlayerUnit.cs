@@ -14,10 +14,12 @@ public enum UnitType
 public class PlayerUnit : Unit
 {
     [SerializeField] private UnitType m_unitType = UnitType.BERSERKER;
+    [SerializeField] private Ability[] m_abilities;
 
     #region getters
 
     public UnitType GetUnitType() { return m_unitType; }
+    public Ability[] GetAbilities() { return m_abilities; }
 
     #endregion
 
