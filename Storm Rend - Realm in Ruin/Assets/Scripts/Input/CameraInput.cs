@@ -22,6 +22,14 @@ public class CameraInput : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (m_cameraMove != null)
+        {
+            float xAxis = Input.GetAxisRaw("Horizontal");
+            float yAxis = Input.GetAxisRaw("Vertical");
+
+            m_cameraMove.Move(new Vector2(xAxis, yAxis));
+        }
+
         if (m_cameraZoom != null)
         {
             if (Input.mouseScrollDelta.y > 0)

@@ -101,6 +101,8 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
 
                     CommandManager.m_moves.Add(temp);
                 }
+
+                FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 0.5f);
             }
         }
     }

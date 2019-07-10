@@ -8,11 +8,13 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class CameraZoom : MonoBehaviour
 {
+    [Header("Root Transform")]
+    [SerializeField] private Transform m_rootTransform = null;
+
     [Header("Zoom Speed")]
     [SerializeField] private float m_zoomSpeed = 1;
 
     [Header("Zoom Anchors")]
-    [SerializeField] private Transform m_cameraDolly = null;
     [Tooltip("The nearest possible location the camera can zoom in to")]
     [SerializeField] private Transform m_near = null;
     [Tooltip("The furthest possible location the camera can zoom out to")]
@@ -42,7 +44,7 @@ public class CameraZoom : MonoBehaviour
         // jump to closest anchor on startup
         GameObject closestAnchor = GetClosestAnchor(m_camera.transform.position);
         m_currentStep = m_anchors.IndexOf(closestAnchor);
-        transform.position = closestAnchor.transform.position;
+        m_desiredPosition = m_anchors[m_currentStep].transform.position;
     }
 
     /// <summary>
@@ -55,10 +57,11 @@ public class CameraZoom : MonoBehaviour
         float speed = m_zoomSpeed * Time.deltaTime;
 
         // update position
-        m_camera.transform.position = Vector3.Lerp(currentPosition, m_desiredPosition, speed) + m_cameraDolly.position;
+        Vector3 desiredPosition = m_desiredPosition + m_rootTransform.position;
+        m_camera.transform.position = Vector3.Lerp(currentPosition, desiredPosition, speed);
 
         // update current step based off the closest anchor to the desired position
-        GameObject closestAnchor = GetClosestAnchor(m_desiredPosition);
+        GameObject closestAnchor = GetClosestAnchor(desiredPosition);
         m_currentStep = m_anchors.IndexOf(closestAnchor);
     }
 
@@ -102,7 +105,7 @@ public class CameraZoom : MonoBehaviour
         m_currentStep += step;
         m_currentStep = Mathf.Clamp(m_currentStep, 0, m_nearFarSteps + 1);
         
-        m_desiredPosition = m_anchors[m_currentStep].transform.position;
+        m_desiredPosition = m_anchors[m_currentStep].transform.position - m_rootTransform.position;
     }
 
     /// <summary>

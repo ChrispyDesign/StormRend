@@ -68,6 +68,8 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
         
         Color materialColour = m_meshRenderer.material.color;
         m_meshRenderer.material.color = new Color(materialColour.r, materialColour.g, materialColour.b, 0.5f);
+
+        FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 1.0f);
     }
 
     public virtual void OnDeselect()
