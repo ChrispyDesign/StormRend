@@ -14,10 +14,10 @@ public enum NodeType
     COUNT
 }
 
+[RequireComponent(typeof(GridImporter))]
 public class Map : MonoBehaviour
 {
     [SerializeField] private Grid m_grid;
-    [SerializeField] private int m_gridWorldSize;
     [SerializeField] private int m_nodeSize;
     [SerializeField] private Transform m_tilePrefab;
 
@@ -27,7 +27,8 @@ public class Map : MonoBehaviour
     {
         Transform parent = new GameObject("Tiles").transform;
         parent.parent = this.transform;
-        m_grid = new Grid(m_tilePrefab, m_gridWorldSize, m_nodeSize, parent, m_gridData);
+        GridImporter import = GetComponent<GridImporter>();
+        m_grid = new Grid(m_tilePrefab, m_nodeSize, parent, import.ImportGrid(import.m_path));
     }
 }
 

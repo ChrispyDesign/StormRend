@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GridImporter : MonoBehaviour
 {
-    [SerializeField] private string m_path;
+    public string m_path;
 
     [Header("Legend")]
     [SerializeField] private string m_walkableTiles;
@@ -55,25 +55,5 @@ public class GridImporter : MonoBehaviour
 
         // output
         return grid;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        NodeType[,] grid = ImportGrid(m_path);
-
-        for (int i = 0; i < grid.GetLength(0); i++)
-        {
-            for (int j = 0; j < grid.GetLength(1); j++)
-            {
-                Debug.Log(grid[i, j]);
-            }
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
