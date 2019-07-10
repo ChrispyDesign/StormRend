@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -347,6 +347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_zoomSpeed: 10
+  m_cameraDolly: {fileID: 1131916288}
   m_near: {fileID: 1622518825}
   m_far: {fileID: 168690629}
   m_nearFarSteps: 5
@@ -374,6 +375,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 187bf82676d4c2e43820dffc568628ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_moveSpeed: 1
+  m_anchorExtents: {x: 1, y: 1}
 --- !u!1 &168690628
 GameObject:
   m_ObjectHideFlags: 0
@@ -877,6 +880,36 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3093552309022210591, guid: f1502cb9f21d72147a6acb634f12c6e3,
         type: 3}
+    - target: {fileID: 5934445798658001404, guid: c60cd65fc353f8248b3122327b19c4ed,
+        type: 3}
+      propertyPath: m_gridWorldSize
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934445798658001404, guid: c60cd65fc353f8248b3122327b19c4ed,
+        type: 3}
+      propertyPath: m_nodeSize
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1190528697099320197, guid: c60cd65fc353f8248b3122327b19c4ed,
+        type: 3}
+      propertyPath: m_path
+      value: Assets\CSV\Test.csv
+      objectReference: {fileID: 0}
+    - target: {fileID: 1190528697099320197, guid: c60cd65fc353f8248b3122327b19c4ed,
+        type: 3}
+      propertyPath: m_blockedTiles
+      value: b
+      objectReference: {fileID: 0}
+    - target: {fileID: 1190528697099320197, guid: c60cd65fc353f8248b3122327b19c4ed,
+        type: 3}
+      propertyPath: m_playerSpawnTiles
+      value: s
+      objectReference: {fileID: 0}
+    - target: {fileID: 1190528697099320197, guid: c60cd65fc353f8248b3122327b19c4ed,
+        type: 3}
+      propertyPath: m_enemySpawnTiles
+      value: p
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c60cd65fc353f8248b3122327b19c4ed, type: 3}
 --- !u!1 &818124375
@@ -1378,7 +1411,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1623634178}
-  - component: {fileID: 1623634179}
   m_Layer: 0
   m_Name: '---LEVEL-----------------------------'
   m_TagString: Untagged
@@ -1405,24 +1437,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1623634179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1623634177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba351eb5e6717ae498b3f1c3eda868d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_path: Assets\CSV\Test.csv
-  m_walkableTiles: w
-  m_emptyTiles: e
-  m_blockedTiles: b
-  m_playerSpawnTiles: s
-  m_enemySpawnTiles: p
 --- !u!1 &1757376445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2950,6 +2964,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202965187644101364, guid: 138dcf1ed8ebe694ab4a807758acca73,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202965187644101364, guid: 138dcf1ed8ebe694ab4a807758acca73,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202965187644101364, guid: 138dcf1ed8ebe694ab4a807758acca73,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 36.140015
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202965187644101364, guid: 138dcf1ed8ebe694ab4a807758acca73,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50.26999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 138dcf1ed8ebe694ab4a807758acca73, type: 3}

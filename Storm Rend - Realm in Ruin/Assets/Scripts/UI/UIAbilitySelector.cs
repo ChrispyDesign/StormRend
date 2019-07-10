@@ -10,13 +10,13 @@ public class UIAbilitySelector : MonoBehaviour
 {
     // panel for activation/deactivation
     [Header("Ability Button Panel")]
-    [SerializeField] private GameObject m_buttonPanel;
+    [SerializeField] private GameObject m_buttonPanel = null;
 
     // ability buttons, passive, ability 1/2
     [Header("Ability Buttons")]
-    [SerializeField] private Button m_passiveAbility;
-    [SerializeField] private Transform m_ability1;
-    [SerializeField] private Transform m_ability2;
+    [SerializeField] private Button m_passiveAbility = null;
+    [SerializeField] private Transform m_ability1 = null;
+    [SerializeField] private Transform m_ability2 = null;
 
     // helper variables
     private Button[] m_abilityButtons1;

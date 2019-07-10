@@ -9,7 +9,7 @@ public class BlizzardManager : MonoBehaviour
 {
     // blizzard meter
     [Tooltip("Blizzard meter transform, contains toggle child elements")]
-    [SerializeField] private Transform m_blizzardMeter;
+    [SerializeField] private Transform m_blizzardMeter = null;
 
     // group of blizzard toggles
     private Toggle[] m_blizzardNodes;

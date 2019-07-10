@@ -1,7 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Berserker's Provoke ability
+/// Lv1: Attract enemy aggro, deal 1 damage back to enemies on hit
+/// Lv2: Attract enemy aggro, deal 2 damage back to enemies on hit
+/// Lv3: Attract enemy aggro, deal 2 damage back to enemies on hit, gain rune of protection
+/// </summary>
 public class Provoke : Ability
 {
     public override void CastImmediately(AbilityLevel abilityLevel)
@@ -25,6 +29,7 @@ public class Provoke : Ability
                 if (GloryManager.SpendGlory(m_effectLevels[2].m_gloryRequirement))
                 {
                     Aggro();
+                    Retaliate(2);
                     GainRune();
                 }
                 break;

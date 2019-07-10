@@ -82,7 +82,7 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
 
         if (currentSelectedUnit)
         {
-            List<Node> nodes = Dijkstra.Instance.m_validMoves;
+            List<Node> nodes = currentSelectedUnit.GetAvailableNodes();
 
             if (nodes.Contains(this) && !m_unitOnTop)
             {
@@ -108,11 +108,18 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
     public void OnDeselect()
     {
         m_selected = false;
-        List<Node> nodes = Dijkstra.Instance.m_validMoves;
-        foreach (Node node in nodes)
+
+        Unit unitOnTop = GetUnitOnTop();
+        if (unitOnTop)
         {
-            node.transform.GetComponent<MeshRenderer>().material.color = Color.white;
-            node.m_selected = false;
+            List<Node> nodes = unitOnTop.GetAvailableNodes();
+
+            foreach (Node node in nodes)
+            {
+                node.transform.GetComponent<MeshRenderer>().material.color = Color.white;
+                node.m_selected = false;
+            }
         }
+
     }
 }

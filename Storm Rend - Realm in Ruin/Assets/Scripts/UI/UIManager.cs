@@ -10,11 +10,11 @@ public class UIManager : MonoBehaviour
 
     // an assortment of different UI scripts/managers
     [Header("UI Components")]
-    [SerializeField] private GloryManager m_gloryManager;
-    [SerializeField] private BlizzardManager m_blizzardManager;
-    [SerializeField] private UIAvatarSelector m_avatarSelector;
-    [SerializeField] private UIAbilitySelector m_abilitySelector;
-    [SerializeField] private UIAbilityInfo m_abilityInfo;
+    [SerializeField] private GloryManager m_gloryManager = null;
+    [SerializeField] private BlizzardManager m_blizzardManager = null;
+    [SerializeField] private UIAvatarSelector m_avatarSelector = null;
+    [SerializeField] private UIAbilitySelector m_abilitySelector = null;
+    [SerializeField] private UIAbilityInfo m_abilityInfo = null;
 
     #region getters
 

@@ -7,9 +7,9 @@ public class UIAvatarSelector : MonoBehaviour
 {
     // avatar image/transform elements
     [Header("Unit Avatars")]
-    [SerializeField] private RectTransform m_berserkerAvatar;
-    [SerializeField] private RectTransform m_valkyrieAvatar;
-    [SerializeField] private RectTransform m_sageAvatar;
+    [SerializeField] private RectTransform m_berserkerAvatar = null;
+    [SerializeField] private RectTransform m_valkyrieAvatar = null;
+    [SerializeField] private RectTransform m_sageAvatar = null;
 
     // the focused size of the avatar on selection
     [SerializeField] private float m_focusedScalar = 1.5f;

@@ -8,6 +8,8 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 
     public Vector2Int m_coordinates;
 
+    private List<Node> m_availableNodes;
+
     #region unit stats
 
     [SerializeField] private int m_maxHP = 4;
@@ -18,6 +20,12 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     public void SetHP(int value) { m_HP = Mathf.Clamp(value, 0, m_maxHP); }
 
     public int GetMove() { return m_maxMOV; }
+
+    #endregion
+
+    #region getters
+
+    public List<Node> GetAvailableNodes() { return m_availableNodes; }
 
     #endregion
 
@@ -47,9 +55,9 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 
     public virtual void OnSelect()
     {
-        List<Node> nodes = Dijkstra.Instance.m_validMoves;
+        m_availableNodes = Dijkstra.Instance.m_validMoves;
 
-        foreach (Node node in nodes)
+        foreach (Node node in m_availableNodes)
         {
             if (node.GetUnitOnTop())
                 continue;

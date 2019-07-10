@@ -38,7 +38,9 @@ public class PlayerUnit : Unit
             
             if (move.m_unit == this)
             {
-                if (Grid.GetNodeFromCoords(move.GetOrigCoordinates()).GetUnitOnTop() != null)
+                Node previousNode = Grid.GetNodeFromCoords(move.GetOrigCoordinates());
+
+                if (previousNode.GetUnitOnTop() != this && previousNode.GetUnitOnTop() != null)
                     return;
 
                 move.Undo();

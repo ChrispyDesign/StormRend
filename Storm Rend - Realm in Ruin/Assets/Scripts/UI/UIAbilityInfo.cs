@@ -10,7 +10,7 @@ public class UIAbilityInfo : MonoBehaviour
 {
     // panel for activation/deactivation
     [Header("Ability Info Panel")]
-    [SerializeField] private GameObject m_infoPanel;
+    [SerializeField] private GameObject m_infoPanel = null;
 
     // ability info text elements
     [Header("Ability Text Elements")]

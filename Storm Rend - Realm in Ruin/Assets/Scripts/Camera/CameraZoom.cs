@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// camera zoom class, responsible for zooming in and out the camera
+/// </summary>
 [RequireComponent(typeof(Camera))]
 public class CameraZoom : MonoBehaviour
 {
@@ -9,10 +12,15 @@ public class CameraZoom : MonoBehaviour
     [SerializeField] private float m_zoomSpeed = 1;
 
     [Header("Zoom Anchors")]
+    [SerializeField] private Transform m_cameraDolly = null;
+    [Tooltip("The nearest possible location the camera can zoom in to")]
     [SerializeField] private Transform m_near = null;
+    [Tooltip("The furthest possible location the camera can zoom out to")]
     [SerializeField] private Transform m_far = null;
+    [Tooltip("The amount of transforms/snapping points to generate between near and far")]
     [SerializeField] private int m_nearFarSteps = 5;
 
+    // step/snapping point helper variables
     private List<GameObject> m_anchors = new List<GameObject>();
     private int m_currentStep;
 
@@ -47,7 +55,7 @@ public class CameraZoom : MonoBehaviour
         float speed = m_zoomSpeed * Time.deltaTime;
 
         // update position
-        m_camera.transform.position = Vector3.Lerp(currentPosition, m_desiredPosition, speed);
+        m_camera.transform.position = Vector3.Lerp(currentPosition, m_desiredPosition, speed) + m_cameraDolly.position;
 
         // update current step based off the closest anchor to the desired position
         GameObject closestAnchor = GetClosestAnchor(m_desiredPosition);

@@ -1,56 +1,71 @@
 ﻿using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// helper class that's responsible for importing csv grid data
+/// </summary>
 public class GridImporter : MonoBehaviour
 {
     public string m_path;
 
     [Header("Legend")]
-    [SerializeField] private string m_walkableTiles;
-    [SerializeField] private string m_emptyTiles;
-    [SerializeField] private string m_blockedTiles;
-    [SerializeField] private string m_playerSpawnTiles;
-    [SerializeField] private string m_enemySpawnTiles;
+    [SerializeField] private string m_walkableTiles = null;
+    [SerializeField] private string m_emptyTiles = null;
+    [SerializeField] private string m_blockedTiles = null;
+    [SerializeField] private string m_playerSpawnTiles = null;
+    [SerializeField] private string m_enemySpawnTiles = null;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
     public NodeType[,] ImportGrid(string path)
     {
         FileStream fileStream = File.OpenRead(path);
         StreamReader streamReader = new StreamReader(fileStream);
-        
-        //
-        string csv = streamReader.ReadToEnd();
-        
-        //
-        string[] lines = csv.Split('\n');
-        string[][] characters = new string[lines.Length][];
 
-        for (int i = 0; i < lines.Length; i++)
-            characters[i] = lines[i].Split(',');
+        //
+        List<string[]> csv = new List<string[]>();
+        
+        while (!streamReader.EndOfStream)
+        {
+            string line = streamReader.ReadLine();
+            string[] characters = line.Split(',');
+
+            csv.Add(characters);
+        }
 
         // initialize grid
-        NodeType[,] grid = new NodeType[characters.Length, characters[0].Length];
+        NodeType[,] grid = new NodeType[csv.Count, csv[0].Length];
+        int x = 0;
 
-        for (int i = 0; i < grid.GetLength(0); i++)
+        for (int i = grid.GetLength(0) - 1; i >= 0 ; i--)
         {
-            for (int j = 0; j < grid.GetLength(1); j++)
+            int y = 0;
+
+            for (int j = grid.GetLength(1) - 1; j >= 0; j--)
             {
-                if (characters[i][j] == m_walkableTiles)
+                if (csv[x][y] == m_walkableTiles)
                     grid[i, j] = NodeType.WALKABLE;
 
-                if (characters[i][j] == m_emptyTiles)
+                else if (csv[x][y] == m_emptyTiles)
                     grid[i, j] = NodeType.EMPTY;
 
-                if (characters[i][j] == m_blockedTiles)
+                else if (csv[x][y] == m_blockedTiles)
                     grid[i, j] = NodeType.BLOCKED;
 
-                if (characters[i][j] == m_playerSpawnTiles)
+                else if (csv[x][y] == m_playerSpawnTiles)
                     grid[i, j] = NodeType.PLAYER;
 
-                if (characters[i][j] == m_enemySpawnTiles)
+                else if (csv[x][y] == m_enemySpawnTiles)
                     grid[i, j] = NodeType.ENEMY;
+
+                y++;
             }
+
+            x++;
         }
 
         // output
