@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 /// <summary>
 /// blizzard class responsible for incrementing and decrementing the blizzard meter and performing blizzards when necessary
@@ -9,16 +10,21 @@ public class BlizzardManager : MonoBehaviour
 {
     // blizzard meter
     [Tooltip("Blizzard meter transform, contains toggle child elements")]
-    [SerializeField] private Transform m_blizzardMeter = null;
+    [SerializeField] Transform m_blizzardMeter = null;
 
+    [Space]
+    [SerializeField] UnityEvent OnIncrement;
+    [SerializeField] UnityEvent OnReset;
+    [SerializeField] UnityEvent OnPrepare;
+    [SerializeField] UnityEvent OnExecute;
+
+    #region Variables
     // group of blizzard toggles
-    private Toggle[] m_blizzardNodes;
-    private static int m_blizzardCount = 0;
+    Toggle[] m_blizzardNodes;
+    #endregion
 
-    #region getters
-
-    public static int GetBlizzardCount() { return m_blizzardCount; }
-
+    #region Properties
+    public static int blizzardCount {get; private set; } = 0;
     #endregion
 
     /// <summary>
@@ -31,7 +37,7 @@ public class BlizzardManager : MonoBehaviour
         if (m_blizzardMeter != null)
             m_blizzardNodes = m_blizzardMeter.GetComponentsInChildren<Toggle>();
 
-        m_blizzardCount = 0;
+        blizzardCount = 0;
     }
 
     /// <summary>
@@ -40,8 +46,10 @@ public class BlizzardManager : MonoBehaviour
     /// </summary>
     public void IncrementBlizzardMeter()
     {
+        OnIncrement.Invoke();
+
         // all blizzard nodes are toggled, start blizzard
-        if (m_blizzardCount == m_blizzardNodes.Length)
+        if (blizzardCount == m_blizzardNodes.Length)
         {
             ExecuteBlizzard(); // start blizzard
             ResetBlizzardMeter(); // reset blizzard meter
@@ -49,16 +57,16 @@ public class BlizzardManager : MonoBehaviour
         }
 
         // get blizzard toggle
-        Toggle blizzardNode = m_blizzardNodes[m_blizzardCount];
+        Toggle blizzardNode = m_blizzardNodes[blizzardCount];
         blizzardNode.isOn = true; // toggle on
 
         // increment
-        m_blizzardCount++;
+        blizzardCount++;
 
         // cache reference to the node's animator
         Animator animator = blizzardNode.GetComponent<Animator>();
         
-        if (m_blizzardCount == m_blizzardNodes.Length)
+        if (blizzardCount == m_blizzardNodes.Length)
             PrepareBlizzard();
         else
             animator.SetTrigger("NotifyOnce"); // notify once
@@ -69,6 +77,8 @@ public class BlizzardManager : MonoBehaviour
     /// </summary>
     public void ResetBlizzardMeter()
     {
+        OnReset.Invoke();
+
         // iterate over blizzard toggles
         for (int i = 0; i < m_blizzardNodes.Length; i++)
         {
@@ -76,8 +86,7 @@ public class BlizzardManager : MonoBehaviour
             Toggle blizzardNode = m_blizzardNodes[i];
             blizzardNode.isOn = false; // toggle off
         }
-        
-        m_blizzardCount = 0;
+        blizzardCount = 0;
     }
 
     /// <summary>
@@ -85,6 +94,8 @@ public class BlizzardManager : MonoBehaviour
     /// </summary>
     private void PrepareBlizzard()
     {
+        OnPrepare.Invoke();
+
         // iterate over blizzard toggles
         for (int i = 0; i < m_blizzardNodes.Length; i++)
         {
@@ -103,6 +114,8 @@ public class BlizzardManager : MonoBehaviour
     /// </summary>
     private void ExecuteBlizzard()
     {
+        OnExecute.Invoke();
+
         // do blizzard stuffs here
         Debug.Log("Blizzard");
     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 /// <summary>
@@ -12,13 +13,14 @@ public class GloryManager : MonoBehaviour
     [Tooltip("Glory meter transform, contains toggle child elements")]
     [SerializeField] private Transform m_gloryMeter;
 
-    // group of glory toggles
+    [Space]
+    [SerializeField] static UnityEvent OnGain;
+    [SerializeField] static UnityEvent OnSpend;
+    
+    // group of glory UI toggles
+    #region Variables
     private static Toggle[] m_gloryNodes;
-    private static int m_gloryCount = 0;
-
-    #region getters
-
-    public static int GetGloryCount() { return m_gloryCount; }
+    public static int gloryCount { get; private set; } = 0;
 
     #endregion
 
@@ -32,7 +34,7 @@ public class GloryManager : MonoBehaviour
         if (m_gloryMeter != null)
             m_gloryNodes = m_gloryMeter.GetComponentsInChildren<Toggle>();
 
-        m_gloryCount = 0;
+        gloryCount = 0;
     }
     
     /// <summary>
@@ -41,11 +43,13 @@ public class GloryManager : MonoBehaviour
     /// <param name="value">the amount of glory to gain</param>
     public static void GainGlory(int value)
     {
+        OnGain.Invoke();       
+
         // increment
-        m_gloryCount += value;
+        gloryCount += value;
 
         // ensure glory doesn't exceed max (disallow index overflow)
-        m_gloryCount = Mathf.Clamp(m_gloryCount, 0, m_gloryNodes.Length);
+        gloryCount = Mathf.Clamp(gloryCount, 0, m_gloryNodes.Length);
 
         // turn on/off the right amount of glory nodes
         UpdateGloryMeter();
@@ -61,14 +65,16 @@ public class GloryManager : MonoBehaviour
     /// <returns>false if there isn't enough glory, true if the glory was spent successfully</returns>
     public static bool SpendGlory(int value)
     {
-        if (m_gloryCount - value < 0)
+        OnSpend.Invoke();
+
+        if (gloryCount - value < 0)
             return false; // not enough glory
 
         // decrement
-        m_gloryCount -= value;
+        gloryCount -= value;
 
         // ensure glory doesn't fall below min (disallow index overflow)
-        m_gloryCount = Mathf.Clamp(m_gloryCount, 0, m_gloryNodes.Length);
+        gloryCount = Mathf.Clamp(gloryCount, 0, m_gloryNodes.Length);
 
         // turn on/off the right amount of glory nodes
         UpdateGloryMeter();
@@ -87,7 +93,7 @@ public class GloryManager : MonoBehaviour
             // get glory toggle
             Toggle gloryNode = m_gloryNodes[i];
 
-            if (i < m_gloryCount)
+            if (i < gloryCount)
                 gloryNode.isOn = true; // glory available
             else
                 gloryNode.isOn = false; // glory unavailable
