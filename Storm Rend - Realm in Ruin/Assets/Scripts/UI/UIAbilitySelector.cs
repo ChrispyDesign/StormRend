@@ -68,7 +68,7 @@ public class UIAbilitySelector : MonoBehaviour
 
             abilityButton.image.sprite = levelInfo.m_abilityIcon;
 
-            if (GloryManager.GetGloryCount() >= levelInfo.m_gloryRequirement)
+            if (GloryManager.gloryCount >= levelInfo.m_gloryRequirement)
                 abilityButton.interactable = true;
             else
                 abilityButton.interactable = false;
