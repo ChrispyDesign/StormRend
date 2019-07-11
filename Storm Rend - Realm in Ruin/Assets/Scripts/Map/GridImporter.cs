@@ -17,30 +17,36 @@ public class GridImporter : MonoBehaviour
     [SerializeField] private string m_enemySpawnTiles = null;
 
     /// <summary>
-    /// 
+    /// use this function to import a grid! Reads a .csv file found in the given path and converts it to a 2D
+    /// array of node types
     /// </summary>
-    /// <param name="path"></param>
-    /// <returns></returns>
+    /// <param name="path">the path of the csv</param>
+    /// <returns>the array of NodeTypes</returns>
     public NodeType[,] ImportGrid(string path)
     {
+        // open file for reading
         FileStream fileStream = File.OpenRead(path);
         StreamReader streamReader = new StreamReader(fileStream);
 
-        //
+        // create a list of strings arrays (oh boy) for each element. List = rows, arrays = column
         List<string[]> csv = new List<string[]>();
         
+        // perform reading
         while (!streamReader.EndOfStream)
         {
+            // split by line then by comma
             string line = streamReader.ReadLine();
             string[] characters = line.Split(',');
 
+            // add characters to the csv data for later use
             csv.Add(characters);
         }
 
-        // initialize grid
+        // initialize NodeType 2D array
         NodeType[,] grid = new NodeType[csv.Count, csv[0].Length];
         int x = 0;
-
+        
+        // assign node types based off the csv data
         for (int i = grid.GetLength(0) - 1; i >= 0 ; i--)
         {
             int y = 0;

@@ -78,7 +78,7 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
 
     public void OnSelect()
     {
-        PlayerUnit currentSelectedUnit = Player.GetCurrentPlayer();
+        PlayerUnit currentSelectedUnit = PlayerController.GetCurrentPlayer();
 
         if (currentSelectedUnit)
         {

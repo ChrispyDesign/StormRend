@@ -50,7 +50,7 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 
         m_coordinates = _moveToNode.GetCoordinates();
         transform.position = _moveToNode.GetNodePosition();
-        Player.SetCurrentPlayer(null);
+        PlayerController.SetCurrentPlayer(null);
     }
 
     public virtual void OnSelect()

@@ -52,7 +52,7 @@ public class PlayerUnit : Unit
 
         UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(this);
         UIManager.GetInstance().GetAbilitySelector().SelectPlayerUnit(this);
-        Player.SetCurrentPlayer(this);
+        PlayerController.SetCurrentPlayer(this);
         base.OnSelect();
     }
 
