@@ -41,19 +41,11 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 
     public void SetDuplicateMeshVisibilty(bool _isOff) { m_duplicateMesh.SetActive(_isOff); }
 
-    public Node GetCurrentNode() { return Grid.GetNodeFromCoords(m_coordinates); }
-
     
     // Start is called before the first frame update
     void Start()
     {
         m_HP = m_maxHP;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void MoveTo(Node _moveToNode)
