@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum UnitType
+public enum PlayerClass
 {
     BERSERKER = 0,
     VALKYRIE,
@@ -13,7 +13,7 @@ public enum UnitType
 
 public class PlayerUnit : Unit
 {
-    [SerializeField] private UnitType m_unitType = UnitType.BERSERKER;
+    [SerializeField] private PlayerClass m_unitType = PlayerClass.BERSERKER;
     [SerializeField] private Ability[] m_abilities;
 
     private MoveCommand movePlayer;
@@ -21,7 +21,7 @@ public class PlayerUnit : Unit
 
     #region gettersAndSetters
 
-    public UnitType GetUnitType() { return m_unitType; }
+    public PlayerClass GetUnitType() { return m_unitType; }
     public Ability[] GetAbilities() { return m_abilities; }
     public bool GetAlreadyMoved() { return alreadyMoved; }
     public MoveCommand GetMoveCommand() { return movePlayer; }

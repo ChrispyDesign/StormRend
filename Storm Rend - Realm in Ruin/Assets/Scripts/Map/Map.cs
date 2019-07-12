@@ -8,6 +8,9 @@ public enum NodeType
     EMPTY,
     BLOCKED,
     PLAYER,
+    BERSERKER,
+    VALKYRIE,
+    SAGE,
     ENEMY,
     NOT_ASSIGNED,
 

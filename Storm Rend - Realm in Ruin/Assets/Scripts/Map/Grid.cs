@@ -6,6 +6,8 @@ public class Grid
 {
     public static Node[,] m_nodes;
 
+    [SerializeField] private SpawnManager m_spawnManager;
+
     private Transform m_parent;
     private int m_nodeSize;
     private Vector3Int m_gridSize;
@@ -16,9 +18,8 @@ public class Grid
     public Grid(Transform _prefab, int _nodeSize, Transform _parent, NodeType[,] _gridData)
     {
         m_parent = _parent;
-        m_gridSize.x = _gridData.GetLength(0) ;
-        m_gridSize.y = _gridData.GetLength(1) ;
-        Debug.Log(m_gridSize.x + ", " + m_gridSize.y);
+        m_gridSize.x = _gridData.GetLength(0);
+        m_gridSize.y = _gridData.GetLength(1);
         m_nodeSize = _nodeSize;
         m_gridData = _gridData;
         CreateGrid(_prefab);
@@ -37,9 +38,39 @@ public class Grid
                 Transform tile = Object.Instantiate(_prefab, pos, Quaternion.identity, m_parent);
                 tile.name = "(" + x + ", " + y + ")";
                 m_nodes[x, y] = tile.GetComponent<Node>().SetNodeVariables(pos, new Vector2Int(x, y), m_gridData[x,y]);
-                Debug.Log(m_gridData[x, y]);
+                
                 if (m_nodes[x, y].m_nodeType == NodeType.EMPTY)
                     m_nodes[x, y].GetComponent<MeshRenderer>().enabled = false;
+
+                if (m_nodes[x, y].m_nodeType == NodeType.BLOCKED)
+                    m_nodes[x, y].GetComponent<MeshRenderer>().material.color = Color.black;
+
+                if(m_nodes[x, y].m_nodeType == NodeType.PLAYER)
+                    m_nodes[x, y].GetComponent<MeshRenderer>().material.color = Color.green;
+
+                if (m_nodes[x, y].m_nodeType == NodeType.BERSERKER)
+                {
+                    m_nodes[x, y].GetComponent<MeshRenderer>().material.color = Color.green;
+                    m_spawnManager.m_spawns[0].m_spawnCoords.x = x;
+                    m_spawnManager.m_spawns[0].m_spawnCoords.y = y;
+                }
+
+                if (m_nodes[x, y].m_nodeType == NodeType.VALKYRIE)
+                {
+                    m_nodes[x, y].GetComponent<MeshRenderer>().material.color = Color.green;
+                    m_spawnManager.m_spawns[1].m_spawnCoords.x = x;
+                    m_spawnManager.m_spawns[1].m_spawnCoords.y = y;
+                }
+
+                if (m_nodes[x, y].m_nodeType == NodeType.SAGE)
+                {
+                    m_nodes[x, y].GetComponent<MeshRenderer>().material.color = Color.green;
+                    m_spawnManager.m_spawns[2].m_spawnCoords.x = x;
+                    m_spawnManager.m_spawns[2].m_spawnCoords.y = y;
+                }
+
+                if (m_nodes[x, y].m_nodeType == NodeType.ENEMY)
+                    m_nodes[x, y].GetComponent<MeshRenderer>().material.color = Color.red;
             }
         }
 

@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private List<SpawnPoints> m_spawns;
+    public List<SpawnPoints> m_spawns;
     
     private void Start()
     {
-        foreach(SpawnPoints spawnPoint in m_spawns)
+        
+    }
+
+    public void SpawnPlayers()
+    {
+        foreach (SpawnPoints spawnPoint in m_spawns)
         {
             Node node = Grid.GetNodeFromCoords(
-                        spawnPoint.m_spawnCoords.x, 
+                        spawnPoint.m_spawnCoords.x,
                         spawnPoint.m_spawnCoords.y);
 
             Vector3 pos = node.GetNodePosition();
@@ -28,6 +33,8 @@ public class SpawnManager : MonoBehaviour
         }
     }
 }
+
+
 
 [System.Serializable]
 public class SpawnPoints

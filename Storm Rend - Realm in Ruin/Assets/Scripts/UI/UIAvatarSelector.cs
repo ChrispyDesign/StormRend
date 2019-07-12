@@ -44,15 +44,15 @@ public class UIAvatarSelector : MonoBehaviour
 
         switch (playerUnit.GetUnitType())
         {
-            case UnitType.BERSERKER:
+            case PlayerClass.BERSERKER:
                 m_berserkerAvatar.sizeDelta = m_focusedAvatarSize; // resize berserker avatar
                 break;
 
-            case UnitType.VALKYRIE:
+            case PlayerClass.VALKYRIE:
                 m_valkyrieAvatar.sizeDelta = m_focusedAvatarSize; // resize valkyrie avatar
                 break;
 
-            case UnitType.SAGE:
+            case PlayerClass.SAGE:
                 m_sageAvatar.sizeDelta = m_focusedAvatarSize; // resize sage avatar
                 break;
         }
