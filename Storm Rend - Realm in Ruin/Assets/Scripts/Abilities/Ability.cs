@@ -18,15 +18,51 @@ public enum AbilityLevel
     LEVEL_3
 }
 
-public enum ExecutionOrder
+public enum TargetableTiles
 {
-    TURN_START,
-    TURN_END
+    Empty,
+    Enemy,
+    Player,
+    Self
 }
 
-public abstract class Ability : MonoBehaviour
+public enum AbilityEffects
 {
-    [SerializeField] private string m_abilityName;
+    Damage,
+    Glory,
+    Heal,
+    Push,
+    Move,
+}
+
+[System.Serializable]
+public class RowData
+{
+    public bool[] elements = new bool[7];
+}
+
+[System.Serializable]
+[CreateAssetMenu(fileName = "New Ability", menuName = "StormRend/Ability")]
+public class Ability : ScriptableObject
+{
+    [Header("Ability Info")]
+    [SerializeField] private string m_name;
+    [SerializeField] private Sprite m_icon = null;
+    [TextArea]
+    [SerializeField] private string m_description;
+
+    [Header("Ability Properties")]
+    [SerializeField] private int m_gloryRequirement = 0;
+    [SerializeField] private int m_tilesToSelect = 1;
+
+    [HideInInspector] public RowData[] m_castArea = new RowData[7];
+    [HideInInspector] public int m_targetableTileMask;
+    [HideInInspector] public int m_effectMask;
+
+    /// <summary>
+    /// /////////////////////////////////////////////////////////
+    /// </summary>
+    [HideInInspector]
     [SerializeField] protected AbilityLevelInfo[] m_effectLevels;
 
     #region getters
@@ -35,5 +71,5 @@ public abstract class Ability : MonoBehaviour
 
     #endregion
 
-    public abstract void CastImmediately(AbilityLevel abilityLevel);
+    public void CastImmediately(AbilityLevel abilityLevel) { }
 }

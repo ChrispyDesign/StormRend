@@ -1,146 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &122925978964175317
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3746506586482129780}
-  m_Layer: 0
-  m_Name: Abilities
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3746506586482129780
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 122925978964175317}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2659968795226277263}
-  - {fileID: 6838843966767777572}
-  m_Father: {fileID: 9108019807441497514}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1631546402711592526
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2659968795226277263}
-  - component: {fileID: 6314527063745436437}
-  m_Layer: 0
-  m_Name: Furious Swing
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2659968795226277263
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1631546402711592526}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 3746506586482129780}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6314527063745436437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1631546402711592526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c69a7b2bed566c49af870c8ac8da03e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_abilityName: Furious Swing
-  m_effectLevels:
-  - m_abilityEffect: Deal 2 damage to a unit.
-    m_abilityIcon: {fileID: 21300000, guid: 40cecd076bd72064cad31715927a35d5, type: 3}
-    m_gloryRequirement: 0
-  - m_abilityEffect: 'If you kill a unit, you can move and attack again. '
-    m_abilityIcon: {fileID: 21300000, guid: 106340f204c4135469ac80d66b5a6fab, type: 3}
-    m_gloryRequirement: 2
-  - m_abilityEffect: Deal +2 damage.
-    m_abilityIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-    m_gloryRequirement: 4
---- !u!1 &1852275424334341212
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6838843966767777572}
-  - component: {fileID: 3538274079420890416}
-  m_Layer: 0
-  m_Name: Provoke
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6838843966767777572
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1852275424334341212}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 3746506586482129780}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3538274079420890416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1852275424334341212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90dbe11a4d373ab439aa95c598e373cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_abilityName: Provoke
-  m_effectLevels:
-  - m_abilityEffect: 'Until your next turn, enemies will attack you if they''re able
-      to. Whenever an adjacent enemy damages you deal 1 damage back to them. '
-    m_abilityIcon: {fileID: 0}
-    m_gloryRequirement: 0
-  - m_abilityEffect: Deal +1 damage.
-    m_abilityIcon: {fileID: 0}
-    m_gloryRequirement: 1
-  - m_abilityEffect: 'Gain a Rune of Protection. '
-    m_abilityIcon: {fileID: 0}
-    m_gloryRequirement: 2
 --- !u!1 &3558984163949938290
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,7 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1.8, z: 1}
   m_Children: []
   m_Father: {fileID: 9108019807441497514}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5523575584994322634
 MeshFilter:
@@ -338,7 +197,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3746506586482129780}
   - {fileID: 2642379622842060229}
   - {fileID: 1490102301202466016}
   m_Father: {fileID: 0}
@@ -374,7 +232,26 @@ MonoBehaviour:
   m_coordinates: {x: 0, y: 0}
   m_maxHP: 5
   m_maxMOV: 4
+  m_onSelect:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_onDeselect:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_onHover:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_onUnhover:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_coordinates: {x: 0, y: 0}
   m_unitType: 0
-  m_abilities:
-  - {fileID: 6314527063745436437}
-  - {fileID: 3538274079420890416}
+  m_abilities: []

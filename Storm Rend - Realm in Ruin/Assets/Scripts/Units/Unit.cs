@@ -1,31 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 {
     [SerializeField] private MeshRenderer m_meshRenderer = null;
     [SerializeField] private GameObject m_duplicateMesh = null;
 
-    public Vector2Int m_coordinates;
-    private List<Node> m_availableNodes;
-
-    #region unit stats
-
+    [Header("Unit Stats")]
     [SerializeField] private int m_maxHP = 4;
     [SerializeField] private int m_maxMOV = 4;
     private int m_HP;
+    
+    [Space]
+    [Header("Unit Interaction")]
+    [SerializeField] private UnityEvent m_onSelect;
+    [SerializeField] private UnityEvent m_onDeselect;
+    [SerializeField] private UnityEvent m_onHover;
+    [SerializeField] private UnityEvent m_onUnhover;
 
-    public int GetHP() { return m_HP; }
-    public void SetHP(int value) { m_HP = Mathf.Clamp(value, 0, m_maxHP); }
-
-    public int GetMove() { return m_maxMOV; }
-
-    #endregion
+    public Vector2Int m_coordinates;
+    private List<Node> m_availableNodes;
 
     #region getters
 
     public List<Node> GetAvailableNodes() { return m_availableNodes; }
+    public Node GetCurrentNode() { return Grid.GetNodeFromCoords(m_coordinates); }
+    public int GetMaxHP() { return m_maxHP; }
+    public int GetHP() { return m_HP; }
+    public int GetMove() { return m_maxMOV; }
+
+    #endregion
+
+    #region setters
+
+    public void SetHP(int value) { m_HP = Mathf.Clamp(value, 0, m_maxHP); }
 
     #endregion
 
@@ -33,6 +43,7 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 
     public Node GetCurrentNode() { return Grid.GetNodeFromCoords(m_coordinates); }
 
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -62,6 +73,8 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 
     public virtual void OnSelect()
     {
+        m_onSelect.Invoke();
+
         m_availableNodes = Dijkstra.Instance.m_validMoves;
 
         foreach (Node node in m_availableNodes)
@@ -81,6 +94,8 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 
     public virtual void OnDeselect()
     {
+        m_onDeselect.Invoke();
+
         Grid.GetNodeFromCoords(m_coordinates).OnDeselect();
 
         Color materialColour = m_meshRenderer.material.color;
@@ -89,11 +104,11 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 
     public virtual void OnHover()
     {
-
+        m_onHover.Invoke();
     }
     
     public virtual void OnUnhover()
     {
-
+        m_onUnhover.Invoke();
     }
 }

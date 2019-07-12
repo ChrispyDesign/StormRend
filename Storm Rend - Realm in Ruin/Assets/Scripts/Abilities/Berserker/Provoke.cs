@@ -8,7 +8,7 @@
 /// </summary>
 public class Provoke : Ability
 {
-    public override void CastImmediately(AbilityLevel abilityLevel)
+    public void CastImmediately(AbilityLevel abilityLevel)
     {
         switch (abilityLevel)
         {

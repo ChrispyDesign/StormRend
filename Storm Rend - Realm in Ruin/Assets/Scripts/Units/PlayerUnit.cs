@@ -13,6 +13,7 @@ public enum PlayerClass
 
 public class PlayerUnit : Unit
 {
+    [Header("Player Relevant Variables")]
     [SerializeField] private PlayerClass m_unitType = PlayerClass.BERSERKER;
     [SerializeField] private Ability[] m_abilities;
 
@@ -32,6 +33,8 @@ public class PlayerUnit : Unit
 
     public override void OnSelect()
     {
+
+
         foreach (ICommand command in CommandManager.m_moves)
         {
             MoveCommand move = command as MoveCommand;

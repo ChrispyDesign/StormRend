@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Effect
+public class DamageEffect : Effect
 {
-    public int m_canTarget;
+    public int m_damage;
 }

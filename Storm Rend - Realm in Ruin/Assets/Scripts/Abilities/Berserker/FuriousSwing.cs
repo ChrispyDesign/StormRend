@@ -12,7 +12,7 @@ public class FuriousSwing : Ability
     /// 
     /// </summary>
     /// <param name="abilityLevel"></param>
-    public override void CastImmediately(AbilityLevel abilityLevel)
+    public void CastImmediately(AbilityLevel abilityLevel)
     {
         switch (abilityLevel)
         {
