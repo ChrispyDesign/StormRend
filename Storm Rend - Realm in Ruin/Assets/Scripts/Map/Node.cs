@@ -17,6 +17,8 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
     [SerializeField] private Vector3 m_position;
     [SerializeField] private Vector2Int m_coordinate;
 
+    private Color m_origMaterial;
+
     public bool m_selected = false;
 
     public NodeType m_nodeType;
@@ -67,13 +69,22 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
 
     public void OnHover()
     {
+        m_origMaterial = transform.GetComponent<MeshRenderer>().material.color;
         transform.GetComponent<MeshRenderer>().material.color = Color.red;
+
+        PlayerUnit currentSelectedUnit = PlayerController.GetCurrentPlayer();
+        if (currentSelectedUnit && !m_unitOnTop && currentSelectedUnit.GetAvailableNodes().Contains(this))
+        {
+            currentSelectedUnit.MoveDuplicateTo(this);
+        }
     }
 
     public void OnUnhover()
     {
         if (!m_selected)
             transform.GetComponent<MeshRenderer>().material.color = Color.white;
+
+        transform.GetComponent<MeshRenderer>().material.color = m_origMaterial;
     }
 
     public void OnSelect()
@@ -104,6 +115,7 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
 
                 FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 0.5f);
             }
+            currentSelectedUnit.SetDuplicateMeshVisibilty(false);
         }
     }
 

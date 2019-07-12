@@ -27,7 +27,10 @@ public class Grid
 
     void CreateGrid(Transform _prefab)
     {
+        m_spawnManager = GameObject.FindObjectOfType<SpawnManager>();
+
         m_nodes = new Node[m_gridSize.x, m_gridSize.y];
+        int i = 0;
         for (int x = 0; x < m_gridSize.x; x++)
         {
             for (int y = 0; y < m_gridSize.y; y++)
@@ -45,28 +48,12 @@ public class Grid
                 if (m_nodes[x, y].m_nodeType == NodeType.BLOCKED)
                     m_nodes[x, y].GetComponent<MeshRenderer>().material.color = Color.black;
 
-                if(m_nodes[x, y].m_nodeType == NodeType.PLAYER)
-                    m_nodes[x, y].GetComponent<MeshRenderer>().material.color = Color.green;
-
-                if (m_nodes[x, y].m_nodeType == NodeType.BERSERKER)
+                if (m_nodes[x, y].m_nodeType == NodeType.PLAYER)
                 {
                     m_nodes[x, y].GetComponent<MeshRenderer>().material.color = Color.green;
-                    m_spawnManager.m_spawns[0].m_spawnCoords.x = x;
-                    m_spawnManager.m_spawns[0].m_spawnCoords.y = y;
-                }
-
-                if (m_nodes[x, y].m_nodeType == NodeType.VALKYRIE)
-                {
-                    m_nodes[x, y].GetComponent<MeshRenderer>().material.color = Color.green;
-                    m_spawnManager.m_spawns[1].m_spawnCoords.x = x;
-                    m_spawnManager.m_spawns[1].m_spawnCoords.y = y;
-                }
-
-                if (m_nodes[x, y].m_nodeType == NodeType.SAGE)
-                {
-                    m_nodes[x, y].GetComponent<MeshRenderer>().material.color = Color.green;
-                    m_spawnManager.m_spawns[2].m_spawnCoords.x = x;
-                    m_spawnManager.m_spawns[2].m_spawnCoords.y = y;
+                    m_spawnManager.m_spawns[i].m_spawnCoords.x = x;
+                    m_spawnManager.m_spawns[i].m_spawnCoords.y = y;
+                    i++;
                 }
 
                 if (m_nodes[x, y].m_nodeType == NodeType.ENEMY)
@@ -81,6 +68,8 @@ public class Grid
                 m_nodes[x,y].SetNeighbours(GenerateNeighbours(x, y));
             }
         }
+
+        m_spawnManager.spawnPlayers();
     }
 
     Node[] GenerateNeighbours(int _x, int _y)

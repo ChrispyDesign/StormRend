@@ -48,6 +48,8 @@ public class PlayerUnit : Unit
             }
         }
 
+        SetDuplicateMeshVisibilty(true);
+
         Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetMove(), typeof(EnemyUnit));
 
         UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(this);

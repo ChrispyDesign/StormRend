@@ -11,7 +11,7 @@ public class SpawnManager : MonoBehaviour
         
     }
 
-    public void SpawnPlayers()
+    public void spawnPlayers()
     {
         foreach (SpawnPoints spawnPoint in m_spawns)
         {

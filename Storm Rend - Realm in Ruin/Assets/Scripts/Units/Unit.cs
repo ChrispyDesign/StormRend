@@ -5,9 +5,9 @@ using UnityEngine;
 public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 {
     [SerializeField] private MeshRenderer m_meshRenderer = null;
+    [SerializeField] private GameObject m_duplicateMesh = null;
 
     public Vector2Int m_coordinates;
-
     private List<Node> m_availableNodes;
 
     #region unit stats
@@ -28,6 +28,8 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     public List<Node> GetAvailableNodes() { return m_availableNodes; }
 
     #endregion
+
+    public void SetDuplicateMeshVisibilty(bool _isOff) { m_duplicateMesh.SetActive(_isOff); }
 
     public Node GetCurrentNode() { return Grid.GetNodeFromCoords(m_coordinates); }
 
@@ -51,6 +53,11 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
         m_coordinates = _moveToNode.GetCoordinates();
         transform.position = _moveToNode.GetNodePosition();
         PlayerController.SetCurrentPlayer(null);
+    }
+
+    public void MoveDuplicateTo(Node _moveToNode)
+    {
+        m_duplicateMesh.transform.position = _moveToNode.GetNodePosition();
     }
 
     public virtual void OnSelect()
