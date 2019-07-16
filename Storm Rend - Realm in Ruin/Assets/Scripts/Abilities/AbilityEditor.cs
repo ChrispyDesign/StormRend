@@ -9,38 +9,87 @@ using UnityEditor;
 [CustomEditor(typeof(Ability))]
 public class AbilityEditor : Editor
 {
+    private EffectEditor m_effectEditor;
+
+    // the target ability object
+    private static Ability m_ability;
+
+    private bool m_foldOutAOE = false;
+
+    #region getters
+
+    public static Ability GetAbility() { return m_ability; }
+
+    #endregion
+
+    private void OnEnable()
+    {
+        m_ability = (Ability)target;
+        m_effectEditor = new EffectEditor(m_ability.m_effects);
+    }
+
     /// <summary>
     /// 
     /// </summary>
     public override void OnInspectorGUI()
     {
-        base.OnInspectorGUI();
+        serializedObject.Update();
 
-        Ability ability = (Ability)target;
-        
-        // 2D boolean array for area of effect
-        AreaOfEffect("Area Of Effect", ref ability.m_castArea);
+        PrintAbilityInfo();
 
-        // tile targetting selection
-        string[] targetableTiles = Enum.GetNames(typeof(TargetableTiles));
-        ability.m_targetableTileMask = EditorGUILayout.MaskField("Targetable Tiles", ability.m_targetableTileMask, targetableTiles);
+        Header("Casting");
+        m_ability.m_gloryRequirement = EditorGUILayout.IntField("Glory Requirement", m_ability.m_gloryRequirement);
+        m_ability.m_tilesToSelect = EditorGUILayout.IntField("Tiles To Select", m_ability.m_tilesToSelect);
 
-        Header("Effects");
-        string[] effects = Enum.GetNames(typeof(AbilityEffects));
-        ability.m_effectMask = EditorGUILayout.MaskField("Ability Effects", ability.m_effectMask, effects);
+        m_foldOutAOE = EditorGUILayout.Foldout(m_foldOutAOE, "Area Of Effect");
 
-        List<int> effectIndexes = ConvertMaskToEnumIndex(ability.m_effectMask);
-        
-        for (int i = 0; i < effectIndexes.Count; i++)
+        if (m_foldOutAOE)
+            AreaOfEffect(ref m_ability.m_castArea); // 2D boolean array for area of effect
+
+        EditorGUI.BeginChangeCheck();
         {
-            switch ((AbilityEffects)effectIndexes[i])
-            {
-                case AbilityEffects.Damage:
-                    EditorGUILayout.LabelField("Damage");
-                    break;
-            }
+            SerializedProperty targetableTiles = serializedObject.FindProperty("m_targetableTiles");
+            EditorGUILayout.PropertyField(targetableTiles, true);
         }
+        if (EditorGUI.EndChangeCheck())
+            serializedObject.ApplyModifiedProperties();
 
+        m_effectEditor.PrintEffects();
+
+        ProcessContextMenu();
+
+        EditorUtility.SetDirty(m_ability);
+    }
+
+    private void ProcessContextMenu()
+    {
+        switch (Event.current.type)
+        {
+            case EventType.ContextClick:
+                GenericMenu genericMenu = new GenericMenu();
+
+                genericMenu.AddItem(new GUIContent("Add Effect/Damage"), false, () => m_effectEditor.AddEffect(typeof(DamageEffect)));
+                genericMenu.AddItem(new GUIContent("Add Effect/Heal"), false, () => m_effectEditor.AddEffect(typeof(HealEffect)));
+                genericMenu.AddItem(new GUIContent("Add Effect/Glory Gain"), false, () => m_effectEditor.AddEffect(typeof(GloryEffect)));
+
+                genericMenu.ShowAsContext();
+
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void PrintAbilityInfo()
+    {
+        Header("Ability Info");
+
+        // 
+        m_ability.m_name = EditorGUILayout.TextField("Name", m_ability.m_name);
+        m_ability.m_icon = EditorGUILayout.ObjectField("Icon", m_ability.m_icon, typeof(Sprite), false) as Sprite;
+        EditorGUILayout.LabelField("Description");
+        m_ability.m_description = EditorGUILayout.TextArea(m_ability.m_description);
     }
 
     /// <summary>
@@ -48,9 +97,8 @@ public class AbilityEditor : Editor
     /// </summary>
     /// <param name="label"></param>
     /// <param name="area"></param>
-    private void AreaOfEffect(string label, ref RowData[] area)
+    private void AreaOfEffect(ref RowData[] area)
     {
-        Header("Area Of Effect");
         EditorGUILayout.BeginVertical();
         EditorGUIUtility.labelWidth = 1;
 
@@ -93,37 +141,6 @@ public class AbilityEditor : Editor
         EditorGUILayout.LabelField(label, EditorStyles.boldLabel);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="mask"></param>
-    /// <returns></returns>
-    private List<int> ConvertMaskToEnumIndex(int mask)
-    {
-        List<int> output = new List<int>();
-
-        // nothing
-        if (mask == 0)
-            return output;
-
-        // everything
-        if (mask == -1)
-            return null;
-
-        string binary = Convert.ToString(mask, 2);
-
-        int j = 0;
-
-        for (int i = binary.Length - 1; i >= 0; i--)
-        {
-            if (binary[i] != '0')
-                output.Add(j);
-
-            j++;
-        }
-
-        return output;
-    }
 }
 
 #endif

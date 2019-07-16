@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
-public class Effect
+[System.Serializable]
+public class Effect : ScriptableObject
 {
-    public int m_canTarget;
+    public TargetableTiles m_canTarget;
+
+    public bool m_isFoldOut { get; set; } = true;
 }

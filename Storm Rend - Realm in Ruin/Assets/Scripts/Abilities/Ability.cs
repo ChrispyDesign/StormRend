@@ -18,21 +18,20 @@ public enum AbilityLevel
     LEVEL_3
 }
 
-public enum TargetableTiles
+[System.Serializable]
+public struct TargetableTiles
 {
-    Empty,
-    Enemy,
-    Player,
-    Self
+    public bool m_empty;
+    public bool m_enemies;
+    public bool m_players;
+    public bool m_self;
 }
 
-public enum AbilityEffects
+[System.Serializable]
+public struct Effects
 {
-    Damage,
-    Glory,
-    Heal,
-    Push,
-    Move,
+    public bool m_damage;
+    public bool m_heal;
 }
 
 [System.Serializable]
@@ -45,19 +44,16 @@ public class RowData
 [CreateAssetMenu(fileName = "New Ability", menuName = "StormRend/Ability")]
 public class Ability : ScriptableObject
 {
-    [Header("Ability Info")]
-    [SerializeField] private string m_name;
-    [SerializeField] private Sprite m_icon = null;
-    [TextArea]
-    [SerializeField] private string m_description;
+    public string m_name;
+    public Sprite m_icon = null;
+    public string m_description;
+    
+    public int m_gloryRequirement = 0;
+    public int m_tilesToSelect = 1;
 
-    [Header("Ability Properties")]
-    [SerializeField] private int m_gloryRequirement = 0;
-    [SerializeField] private int m_tilesToSelect = 1;
-
-    [HideInInspector] public RowData[] m_castArea = new RowData[7];
-    [HideInInspector] public int m_targetableTileMask;
-    [HideInInspector] public int m_effectMask;
+    public RowData[] m_castArea = new RowData[7];
+    public TargetableTiles m_targetableTiles;
+    public List<Effect> m_effects = new List<Effect>();
 
     /// <summary>
     /// /////////////////////////////////////////////////////////
