@@ -64,11 +64,10 @@ public class UIAbilitySelector : MonoBehaviour
         for (int i = 0; i < buttons.Length; i++)
         {
             Button abilityButton = buttons[i];
-            AbilityLevelInfo levelInfo = ability.GetLevel(i);
 
-            abilityButton.image.sprite = levelInfo.m_abilityIcon;
+            abilityButton.image.sprite = ability.GetIcon();
 
-            if (GloryManager.gloryCount >= levelInfo.m_gloryRequirement)
+            if (GloryManager.gloryCount >= ability.GetGloryRequirement())
                 abilityButton.interactable = true;
             else
                 abilityButton.interactable = false;
