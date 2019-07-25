@@ -66,6 +66,8 @@ public class PlayerUnit : Unit
         UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(null);
         UIManager.GetInstance().GetAbilitySelector().SelectPlayerUnit(null);
         base.OnDeselect();
+
+        SetDuplicateMeshVisibilty(false);
     }
 
     public override void OnHover()
