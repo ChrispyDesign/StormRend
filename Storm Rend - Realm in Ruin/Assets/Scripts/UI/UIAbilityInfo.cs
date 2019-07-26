@@ -15,9 +15,13 @@ public class UIAbilityInfo : MonoBehaviour
     // ability info text elements
     [Header("Ability Text Elements")]
     [SerializeField] private Text m_abilityTitle;
-    [SerializeField] private Text m_abilityLevel1;
-    [SerializeField] private Text m_abilityLevel2;
-    [SerializeField] private Text m_abilityLevel3;
+    [SerializeField] private Ability m_abilityLevel1;
+    [SerializeField] private Ability m_abilityLevel2;
+    [SerializeField] private Ability m_abilityLevel3;
+
+    #region GettersAndSetters
+
+    #endregion
 
     /// <summary>
     /// 
