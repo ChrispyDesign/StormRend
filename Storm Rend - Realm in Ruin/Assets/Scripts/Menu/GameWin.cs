@@ -13,7 +13,7 @@ public class GameWin : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.W) && !m_gameOver.activeSelf)
+        if(Input.GetKeyDown(KeyCode.U) && !m_gameOver.activeSelf)
         {
             m_gameUI.SetActive(false);
             m_pauseMenu.SetActive(false);
