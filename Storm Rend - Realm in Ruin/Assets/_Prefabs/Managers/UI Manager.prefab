@@ -105,7 +105,7 @@ MonoBehaviour:
   m_blizzardManager: {fileID: 5258137625951902841}
   m_avatarSelector: {fileID: 5812360389844384877}
   m_abilitySelector: {fileID: 2934125595633779067}
-  m_abilityInfo: {fileID: 2544132783239471783}
+  m_abilityInfo: {fileID: 0}
 --- !u!1 &1209504686492816942
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,7 +116,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5862756022052245627}
   - component: {fileID: 2934125595633779067}
-  - component: {fileID: 2544132783239471783}
   m_Layer: 5
   m_Name: Ability Selection
   m_TagString: Untagged
@@ -159,19 +158,11 @@ MonoBehaviour:
   m_passiveAbility: {fileID: 0}
   m_ability1: {fileID: 0}
   m_ability2: {fileID: 0}
---- !u!114 &2544132783239471783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1209504686492816942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f47611783c0b2a4cb7520eb312c7022, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   m_infoPanel: {fileID: 0}
+  m_abilityTitle: {fileID: 0}
+  m_abilityLevel1: {fileID: 0}
+  m_abilityLevel2: {fileID: 0}
+  m_abilityLevel3: {fileID: 0}
 --- !u!1 &4175957171359038887
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,3 +264,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_blizzardMeter: {fileID: 0}
+  OnIncrement:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnReset:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnPrepare:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnExecute:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null

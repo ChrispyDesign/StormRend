@@ -59,4 +59,33 @@ public class Ability : ScriptableObject
     public List<Effect> GetEffects() { return m_effects; }
 
     #endregion
+
+    public void GetSelectableTiles(ref Unit _player)
+    {
+        int center = (m_castArea.Length / 2) + (m_castArea.Length % 2);
+        int endPoint = m_castArea.Length / 2;
+        List<Node> nodes = new List<Node>();
+        Vector2Int coords = Vector2Int.zero;
+
+        for (int y = 0; y < m_castArea.Length; y++)
+        {
+            for(int x = 0; x < m_castArea[y].elements.Length; x++)
+            {
+                if (m_castArea[y].elements[x])
+                { 
+                    int _x = -endPoint + x;
+                    int _y = endPoint - y;
+
+                    coords.x = _player.m_coordinates.x + _x;
+                    coords.y = _player.m_coordinates.y + _y;
+
+                    Node node = Grid.GetNodeFromCoords(coords);
+                    if (node != null)
+                        nodes.Add(node);
+                }
+            }
+        }
+
+        _player.SetAttackNodes(nodes);
+    }
 }

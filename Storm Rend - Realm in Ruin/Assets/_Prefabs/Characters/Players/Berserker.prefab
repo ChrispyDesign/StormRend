@@ -121,7 +121,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1.8, z: 1}
   m_Children: []
   m_Father: {fileID: 9108019807441497514}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &699203228663214357
 MeshFilter:
@@ -229,7 +229,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_meshRenderer: {fileID: 4700236303103991940}
   m_duplicateMesh: {fileID: 7867885566260100302}
-  m_coordinates: {x: 0, y: 0}
+  m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
+  m_firstAbilities:
+  - {fileID: 11400000, guid: 44e41158d6f673b48a6d0fcc88d2f099, type: 2}
+  - {fileID: 11400000, guid: 299703d6c17438b49b1eee135d52d739, type: 2}
+  - {fileID: 11400000, guid: 4123054025b159640b8d4a4768f40ae7, type: 2}
+  m_secondAbilities:
+  - {fileID: 11400000, guid: f59926acb65149d4f86c34c207ab24a2, type: 2}
+  - {fileID: 11400000, guid: 30f263af1c2a01f42b41351c6a20871d, type: 2}
+  - {fileID: 11400000, guid: a770047c9b761624abb71e10329fb51d, type: 2}
   m_maxHP: 5
   m_maxMOV: 4
   m_onSelect:
@@ -254,4 +262,3 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   m_coordinates: {x: 0, y: 0}
   m_unitType: 0
-  m_abilities: []

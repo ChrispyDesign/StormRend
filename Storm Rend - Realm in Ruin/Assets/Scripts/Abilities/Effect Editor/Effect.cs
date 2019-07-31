@@ -16,4 +16,6 @@ public class Effect : ScriptableObject
     public Target m_target;
 
     public bool m_isFoldOut { get; set; } = true;
+
+    public virtual void PerformEffect(Node _effectedNode) { }
 }

@@ -15,7 +15,6 @@ public class PlayerUnit : Unit
 {
     [Header("Player Relevant Variables")]
     [SerializeField] private PlayerClass m_unitType = PlayerClass.BERSERKER;
-    [SerializeField] private Ability[] m_abilities;
 
     private MoveCommand movePlayer;
     private bool alreadyMoved;
@@ -23,7 +22,6 @@ public class PlayerUnit : Unit
     #region gettersAndSetters
 
     public PlayerClass GetUnitType() { return m_unitType; }
-    public Ability[] GetAbilities() { return m_abilities; }
     public bool GetAlreadyMoved() { return alreadyMoved; }
     public MoveCommand GetMoveCommand() { return movePlayer; }
 
@@ -33,10 +31,12 @@ public class PlayerUnit : Unit
 
     public override void OnSelect()
     {
+        PlayerController.SetCurrentMode(PlayerMode.MOVE);
+        m_isFocused = true;
         foreach (ICommand command in CommandManager.m_moves)
         {
             MoveCommand move = command as MoveCommand;
-            
+
             if (move.m_unit == this)
             {
                 Node previousNode = Grid.GetNodeFromCoords(move.GetOrigCoordinates());
@@ -53,16 +53,23 @@ public class PlayerUnit : Unit
 
         Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetMove(), typeof(EnemyUnit));
 
+        Unit player = PlayerController.GetCurrentPlayer();
+        if (player != null && player != this)
+        {
+            if (player.GetAttackNodes() != null &&
+                player.GetAttackNodes().Count > 0)
+                player.UnShowAttackTiles();
+        }
+
+        PlayerController.SetCurrentPlayer(this);
         UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(this);
         UIManager.GetInstance().GetAbilitySelector().SelectPlayerUnit(this);
-        PlayerController.SetCurrentPlayer(this);
+       
         base.OnSelect();
     }
 
     public override void OnDeselect()
-    {
-        UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(null);
-        UIManager.GetInstance().GetAbilitySelector().SelectPlayerUnit(null);
+    {        
         base.OnDeselect();
 
         SetDuplicateMeshVisibilty(false);

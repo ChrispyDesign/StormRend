@@ -14,7 +14,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private BlizzardManager m_blizzardManager = null;
     [SerializeField] private UIAvatarSelector m_avatarSelector = null;
     [SerializeField] private UIAbilitySelector m_abilitySelector = null;
-    [SerializeField] private UIAbilityInfo m_abilityInfo = null;
 
     #region getters
 
@@ -22,7 +21,6 @@ public class UIManager : MonoBehaviour
     public BlizzardManager GetBlizzardManager() { return m_blizzardManager; }
     public UIAvatarSelector GetAvatarSelector() { return m_avatarSelector; }
     public UIAbilitySelector GetAbilitySelector() { return m_abilitySelector; }
-    public UIAbilityInfo GetAbilityInfo() { return m_abilityInfo; }
 
     #endregion
     
@@ -36,7 +34,6 @@ public class UIManager : MonoBehaviour
         Debug.Assert(m_gloryManager, "Glory Manager not assigned to UI Manager!");
         Debug.Assert(m_avatarSelector, "Avatar Manager not assigned to UI Manager!");
         Debug.Assert(m_abilitySelector, "Ability Selector not assigned to UI Manager!");
-        Debug.Assert(m_abilityInfo, "Ability Info not assigned to UI Manager!");
     }
 
     /// <summary>
