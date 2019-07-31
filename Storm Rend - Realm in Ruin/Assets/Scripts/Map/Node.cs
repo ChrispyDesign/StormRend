@@ -91,31 +91,48 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
     {
         PlayerUnit currentSelectedUnit = PlayerController.GetCurrentPlayer();
 
-        if (currentSelectedUnit)
-        {
-            List<Node> nodes = currentSelectedUnit.GetAvailableNodes();
+        if (currentSelectedUnit.GetAttackNodes() != null &&
+            currentSelectedUnit.GetAttackNodes().Count > 0)
+            currentSelectedUnit.UnShowAttackTiles();
 
-            if (nodes.Contains(this) && !m_unitOnTop)
+        if (PlayerController.GetCurrentMode() == PlayerMode.MOVE)
+        { 
+            if (currentSelectedUnit && currentSelectedUnit.GetIsFocused())
             {
-                if (currentSelectedUnit.GetAlreadyMoved())
-                {
-                    currentSelectedUnit.GetMoveCommand().SetCoordinates(m_coordinate);
-                    currentSelectedUnit.GetMoveCommand().Execute();
-                }
-                else
-                {
-                    currentSelectedUnit.SetMoveCommand(new MoveCommand(
-                                                           currentSelectedUnit,
-                                                           m_coordinate));
-                    MoveCommand temp = currentSelectedUnit.GetMoveCommand();
-                    temp.Execute();
+                List<Node> nodes = currentSelectedUnit.GetAvailableNodes();
 
-                    CommandManager.m_moves.Add(temp);
-                }
+                if (nodes.Contains(this) && !m_unitOnTop)
+                {
+                    if (currentSelectedUnit.GetAlreadyMoved())
+                    {
+                        currentSelectedUnit.GetMoveCommand().SetCoordinates(m_coordinate);
+                        currentSelectedUnit.GetMoveCommand().Execute();
+                    }
+                    else
+                    {
+                        currentSelectedUnit.SetMoveCommand(new MoveCommand(
+                                                               currentSelectedUnit,
+                                                               m_coordinate));
+                        MoveCommand temp = currentSelectedUnit.GetMoveCommand();
+                        temp.Execute();
 
-                FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 0.5f);
+                        CommandManager.m_moves.Add(temp);
+                    }
+
+                    FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 0.5f);
+                }
+                currentSelectedUnit.SetDuplicateMeshVisibilty(false);
+                currentSelectedUnit.SetIsFocused(false);
             }
-            currentSelectedUnit.SetDuplicateMeshVisibilty(false);
+        }
+
+        if (PlayerController.GetCurrentMode() == PlayerMode.ATTACK)
+        {
+            Ability ability = currentSelectedUnit.GetLockedAbility();
+            foreach(Effect effect in ability.GetEffects())
+            {
+                effect.PerformEffect(this);
+            }
         }
     }
 

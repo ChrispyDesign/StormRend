@@ -7,8 +7,8 @@ public class EnemyUnit : Unit
     public override void OnSelect()
     {
         Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetMove(), typeof(PlayerUnit));
-        PlayerController.SetCurrentPlayer(null);
         
         base.OnSelect();
+        PlayerController.SetCurrentPlayer(null);
     }
 }

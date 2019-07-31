@@ -8,26 +8,49 @@ using UnityEngine.UI;
 /// </summary>
 public class UIAbilityInfo : MonoBehaviour
 {
-    // panel for activation/deactivation
-    [Header("Ability Info Panel")]
-    [SerializeField] private GameObject m_infoPanel = null;
+    #region Variables
 
-    // ability info text elements
-    [Header("Ability Text Elements")]
-    [SerializeField] private Text m_abilityTitle;
-    [SerializeField] private Ability m_abilityLevel1;
-    [SerializeField] private Ability m_abilityLevel2;
-    [SerializeField] private Ability m_abilityLevel3;
+    [SerializeField] private UIAbilitySelector m_selector;
+    [SerializeField] private GameObject m_infoPanel;
+    [SerializeField] private Ability m_ability;
 
-    #region GettersAndSetters
+    private Unit m_player;
+    private bool m_isAbilityLocked;
 
     #endregion
+
+    #region GettersAndSetters
+    public Ability GetAbility() { return m_ability; }
+
+    public void SetAbility(Ability _ability) { m_ability = _ability; }
+    #endregion
+
+
+    private void Start()
+    {
+        m_selector = UIManager.GetInstance().GetAbilitySelector();
+        m_infoPanel = m_selector.GetInfoPanel();
+    }
 
     /// <summary>
     /// 
     /// </summary>
     public void HoverAbility()
     {
+        m_player = PlayerController.GetCurrentPlayer();
+        if (m_player != null)
+        {
+            PlayerController.SetCurrentMode(PlayerMode.ATTACK);
+            m_selector.SetInfoPanelData();
+
+            if(m_player.GetAttackNodes() != null &&
+                m_player.GetAttackNodes().Count > 0)
+                m_player.UnShowAttackTiles();
+
+            m_ability.GetSelectableTiles(ref m_player);
+            m_player.OnDeselect();
+            m_player.ShowAttackTiles();
+        }
         m_infoPanel.SetActive(true);
     }
 
@@ -36,6 +59,25 @@ public class UIAbilityInfo : MonoBehaviour
     /// </summary>
     public void UnhoverAbility()
     {
-        m_infoPanel.SetActive(false);
+        if (!m_isAbilityLocked)
+        {
+            PlayerController.SetCurrentMode(PlayerMode.MOVE);
+            if (m_player != null)
+            {
+                m_player.UnShowAttackTiles();
+            }
+            m_infoPanel.SetActive(false);
+        }
+    }
+
+    public void OnClickAbility()
+    {
+        if(m_player != null)
+        {
+            PlayerController.SetCurrentMode(PlayerMode.ATTACK);
+            m_player.SetLockedAbility(m_ability);
+            m_isAbilityLocked = true;
+            m_player.ShowAttackTiles();
+        }
     }
 }

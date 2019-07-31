@@ -7,6 +7,9 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 {
     [SerializeField] private MeshRenderer m_meshRenderer = null;
     [SerializeField] private GameObject m_duplicateMesh = null;
+    [SerializeField] private Ability m_passiveAbility;
+    [SerializeField] private Ability[] m_firstAbilities;
+    [SerializeField] private Ability[] m_secondAbilities;
 
     [Header("Unit Stats")]
     [SerializeField] private int m_maxHP = 4;
@@ -22,20 +25,37 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 
     public Vector2Int m_coordinates;
     private List<Node> m_availableNodes;
-
+    private List<Node> m_attackNodes;
+    protected bool m_isFocused;
+    protected Ability m_lockedAbility;
+   
     #region getters
 
     public List<Node> GetAvailableNodes() { return m_availableNodes; }
+    public Ability GetLockedAbility() { return m_lockedAbility; }
+    public List<Node> GetAttackNodes() { return m_attackNodes; }
     public Node GetCurrentNode() { return Grid.GetNodeFromCoords(m_coordinates); }
     public int GetMaxHP() { return m_maxHP; }
     public int GetHP() { return m_HP; }
     public int GetMove() { return m_maxMOV; }
+    public bool GetIsFocused() { return m_isFocused; }
 
+    public void GetAbilities( ref Ability _passive, 
+        ref Ability[] _first, ref Ability[] _second)
+    {
+        _passive = m_passiveAbility;
+        _first = m_firstAbilities;
+        _second = m_secondAbilities;
+    }
+    
+    public void SetAttackNodes(List<Node> _nodes) { m_attackNodes = _nodes; }
+    public void SetLockedAbility(Ability _ability) { m_lockedAbility = _ability; }
     #endregion
 
     #region setters
 
     public void SetHP(int value) { m_HP = Mathf.Clamp(value, 0, m_maxHP); }
+    public void SetIsFocused(bool _isFocused) { m_isFocused = _isFocused; }
 
     #endregion
 
@@ -55,7 +75,24 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 
         m_coordinates = _moveToNode.GetCoordinates();
         transform.position = _moveToNode.GetNodePosition();
-        PlayerController.SetCurrentPlayer(null);
+    }
+
+    public void ShowAttackTiles()
+    {
+        foreach(Node node in m_attackNodes)
+        {
+            node.transform.GetComponent<MeshRenderer>().material.color = Color.red;
+            node.m_selected = true;
+        }
+    }
+
+    public void UnShowAttackTiles()
+    {
+        foreach (Node node in m_attackNodes)
+        {
+            node.transform.GetComponent<MeshRenderer>().material.color = Color.white;
+            node.m_selected = false;
+        }
     }
 
     public void MoveDuplicateTo(Node _moveToNode)
@@ -67,19 +104,38 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     {
         m_onSelect.Invoke();
 
-        m_availableNodes = Dijkstra.Instance.m_validMoves;
+        if (PlayerController.GetCurrentMode() == PlayerMode.MOVE)
+        { 
+            
+            m_availableNodes = Dijkstra.Instance.m_validMoves;
 
-        foreach (Node node in m_availableNodes)
-        {
-            if (node.GetUnitOnTop())
-                continue;
+            foreach (Node node in m_availableNodes)
+            {
+                if (node.GetUnitOnTop())
+                    continue;
 
-            node.transform.GetComponent<MeshRenderer>().material.color = Color.red;
-            node.m_selected = true;
-        }
+                node.transform.GetComponent<MeshRenderer>().material.color = Color.red;
+                node.m_selected = true;
+            }
         
-        Color materialColour = m_meshRenderer.material.color;
-        m_meshRenderer.material.color = new Color(materialColour.r, materialColour.g, materialColour.b, 0.5f);
+            Color materialColour = m_meshRenderer.material.color;
+            m_meshRenderer.material.color = new Color(materialColour.r, materialColour.g, materialColour.b, 0.5f);
+        }
+
+        if (PlayerController.GetCurrentMode() == PlayerMode.ATTACK)
+        {
+            Unit player = PlayerController.GetCurrentPlayer();
+            Node node = GetCurrentNode();
+            if (node.m_selected)
+            {
+                Ability ability = player.GetLockedAbility();
+                foreach(Effect effect in ability.GetEffects())
+                {
+                    effect.PerformEffect(node);
+                }
+            }
+            PlayerController.SetCurrentMode(PlayerMode.IDLE);
+        }
 
         FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 1.0f);
     }
