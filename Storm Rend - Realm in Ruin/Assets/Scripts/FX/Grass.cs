@@ -21,7 +21,7 @@ public class Grass : MonoBehaviour
 
         rand = Random.Range(0, 2);                                                                          //Sets a random Number
         if (rand >= 1)                                                                                      //Changers The Sway Direction
-            grassTuft.GetComponent<Renderer>().material.SetFloat("_Direction", 1);
+           grassTuft.GetComponent<Renderer>().material.SetFloat("_Direction", 1);
         if (rand < 1)
             grassTuft.GetComponent<Renderer>().material.SetFloat("_Direction", -1);
     }
