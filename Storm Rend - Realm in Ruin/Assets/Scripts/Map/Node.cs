@@ -91,8 +91,10 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
     {
         PlayerUnit currentSelectedUnit = PlayerController.GetCurrentPlayer();
 
-        if (currentSelectedUnit.GetAttackNodes() != null &&
-            currentSelectedUnit.GetAttackNodes().Count > 0)
+        if (currentSelectedUnit == null)
+            return;
+
+        if (currentSelectedUnit.GetAttackNodes().Count > 0)
             currentSelectedUnit.UnShowAttackTiles();
 
         if (PlayerController.GetCurrentMode() == PlayerMode.MOVE)
@@ -123,17 +125,25 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
                 }
                 currentSelectedUnit.SetDuplicateMeshVisibilty(false);
                 currentSelectedUnit.SetIsFocused(false);
+
+                currentSelectedUnit.SetAlreadyMoved(true);
             }
         }
 
         if (PlayerController.GetCurrentMode() == PlayerMode.ATTACK)
         {
+            currentSelectedUnit.SetAlreadyMoved(true);
+            currentSelectedUnit.SetAlreadyAttacked(true);
+
             Ability ability = currentSelectedUnit.GetLockedAbility();
             foreach(Effect effect in ability.GetEffects())
             {
-                effect.PerformEffect(this);
+                effect.PerformEffect(this, currentSelectedUnit);
             }
+            CommandManager.m_moves.Clear();
         }
+
+        PlayerController.SetCurrentMode(PlayerMode.IDLE);
     }
 
     public void OnDeselect()
@@ -145,10 +155,13 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
         {
             List<Node> nodes = unitOnTop.GetAvailableNodes();
 
-            foreach (Node node in nodes)
+            if (nodes != null)
             {
-                node.transform.GetComponent<MeshRenderer>().material.color = Color.white;
-                node.m_selected = false;
+                foreach (Node node in nodes)
+                {
+                    node.transform.GetComponent<MeshRenderer>().material.color = Color.white;
+                    node.m_selected = false;
+                }
             }
         }
 

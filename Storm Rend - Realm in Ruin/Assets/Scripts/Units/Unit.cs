@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -23,7 +24,14 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     [SerializeField] private UnityEvent m_onHover;
     [SerializeField] private UnityEvent m_onUnhover;
 
+    public Action OnDie = delegate 
+    {
+
+    };
+
     public Vector2Int m_coordinates;
+    protected bool m_alreadyMoved;
+    protected bool m_alreadyAttacked;
     private List<Node> m_availableNodes;
     private List<Node> m_attackNodes;
     protected bool m_isFocused;
@@ -39,6 +47,8 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     public int GetHP() { return m_HP; }
     public int GetMove() { return m_maxMOV; }
     public bool GetIsFocused() { return m_isFocused; }
+    public bool GetAlreadyMoved() { return m_alreadyMoved; }
+    public bool GetAlreadyAttacked() { return m_alreadyAttacked; }
 
     public void GetAbilities( ref Ability _passive, 
         ref Ability[] _first, ref Ability[] _second)
@@ -47,7 +57,10 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
         _first = m_firstAbilities;
         _second = m_secondAbilities;
     }
-    
+
+    public void SetAlreadyMoved(bool _moved) { m_alreadyMoved = _moved; }
+    public void SetAlreadyAttacked(bool _attack) { m_alreadyAttacked = _attack; }
+
     public void SetAttackNodes(List<Node> _nodes) { m_attackNodes = _nodes; }
     public void SetLockedAbility(Ability _ability) { m_lockedAbility = _ability; }
     #endregion
@@ -60,12 +73,12 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     #endregion
 
     public void SetDuplicateMeshVisibilty(bool _isOff) { m_duplicateMesh.SetActive(_isOff); }
-
     
     // Start is called before the first frame update
     void Start()
     {
         m_HP = m_maxHP;
+        m_attackNodes = new List<Node>();
     }
 
     public void MoveTo(Node _moveToNode)
@@ -124,17 +137,8 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 
         if (PlayerController.GetCurrentMode() == PlayerMode.ATTACK)
         {
-            Unit player = PlayerController.GetCurrentPlayer();
             Node node = GetCurrentNode();
-            if (node.m_selected)
-            {
-                Ability ability = player.GetLockedAbility();
-                foreach(Effect effect in ability.GetEffects())
-                {
-                    effect.PerformEffect(node);
-                }
-            }
-            PlayerController.SetCurrentMode(PlayerMode.IDLE);
+            node.OnSelect();
         }
 
         FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 1.0f);
@@ -158,5 +162,19 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     public virtual void OnUnhover()
     {
         m_onUnhover.Invoke();
+    }
+
+    public void TakeDamage(int damage)
+    {
+        m_HP -= damage;
+        if (m_HP < 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        OnDie.Invoke();
     }
 }

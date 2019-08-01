@@ -15,13 +15,16 @@ public class PlayerController : MonoBehaviour
 {
     private static PlayerUnit m_currentPlayer;
     private static PlayerMode m_curMode;
+    private static bool m_isAbilityLocked;
 
     #region GettersAndSetters
     public static PlayerUnit GetCurrentPlayer() { return m_currentPlayer; }
     public static PlayerMode GetCurrentMode() { return m_curMode; }
+    public static bool GetIsAbilityLocked() { return m_isAbilityLocked; }
 
     public static void SetCurrentPlayer(PlayerUnit _currentPlayer) { m_currentPlayer = _currentPlayer; }
     public static void SetCurrentMode(PlayerMode _curMode) { m_curMode = _curMode; }
+    public static void SetIsAbilityLocked(bool _isLocked) { m_isAbilityLocked = _isLocked; }
     #endregion
 
     private void Start()

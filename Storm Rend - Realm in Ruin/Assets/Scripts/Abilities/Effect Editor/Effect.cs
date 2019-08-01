@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum Target
 {
@@ -14,8 +15,12 @@ public enum Target
 public class Effect : ScriptableObject
 {
     public Target m_target;
+    public UnityEvent OnPeformEffect;
 
     public bool m_isFoldOut { get; set; } = true;
 
-    public virtual void PerformEffect(Node _effectedNode) { }
+    public virtual void PerformEffect(Node _effectedNode, Unit _thisUnit)
+    {
+        OnPeformEffect.Invoke();
+    }
 }

@@ -15,7 +15,6 @@ public class UIAbilityInfo : MonoBehaviour
     [SerializeField] private Ability m_ability;
 
     private Unit m_player;
-    private bool m_isAbilityLocked;
 
     #endregion
 
@@ -59,7 +58,7 @@ public class UIAbilityInfo : MonoBehaviour
     /// </summary>
     public void UnhoverAbility()
     {
-        if (!m_isAbilityLocked)
+        if (!(PlayerController.GetIsAbilityLocked()))
         {
             PlayerController.SetCurrentMode(PlayerMode.MOVE);
             if (m_player != null)
@@ -76,7 +75,7 @@ public class UIAbilityInfo : MonoBehaviour
         {
             PlayerController.SetCurrentMode(PlayerMode.ATTACK);
             m_player.SetLockedAbility(m_ability);
-            m_isAbilityLocked = true;
+            PlayerController.SetIsAbilityLocked(true); ;
             m_player.ShowAttackTiles();
         }
     }
