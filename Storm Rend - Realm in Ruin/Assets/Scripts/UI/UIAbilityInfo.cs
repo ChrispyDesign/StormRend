@@ -36,10 +36,10 @@ public class UIAbilityInfo : MonoBehaviour
     /// </summary>
     public void HoverAbility()
     {
-        m_player = PlayerController.GetCurrentPlayer();
+        m_player = GameManager.GetInstance().GetPlayerController().GetCurrentPlayer();
         if (m_player != null)
         {
-            PlayerController.SetCurrentMode(PlayerMode.ATTACK);
+            GameManager.GetInstance().GetPlayerController().SetCurrentMode(PlayerMode.ATTACK);
             m_selector.SetInfoPanelData();
 
             if(m_player.GetAttackNodes() != null &&
@@ -58,9 +58,9 @@ public class UIAbilityInfo : MonoBehaviour
     /// </summary>
     public void UnhoverAbility()
     {
-        if (!(PlayerController.GetIsAbilityLocked()))
+        if (!(GameManager.GetInstance().GetPlayerController().GetIsAbilityLocked()))
         {
-            PlayerController.SetCurrentMode(PlayerMode.MOVE);
+            GameManager.GetInstance().GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
             if (m_player != null)
             {
                 m_player.UnShowAttackTiles();
@@ -73,9 +73,9 @@ public class UIAbilityInfo : MonoBehaviour
     {
         if(m_player != null)
         {
-            PlayerController.SetCurrentMode(PlayerMode.ATTACK);
+            GameManager.GetInstance().GetPlayerController().SetCurrentMode(PlayerMode.ATTACK);
             m_player.SetLockedAbility(m_ability);
-            PlayerController.SetIsAbilityLocked(true); ;
+            GameManager.GetInstance().GetPlayerController().SetIsAbilityLocked(true); ;
             m_player.ShowAttackTiles();
         }
     }

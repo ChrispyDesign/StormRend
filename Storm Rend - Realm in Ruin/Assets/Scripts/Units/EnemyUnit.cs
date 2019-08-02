@@ -9,6 +9,6 @@ public class EnemyUnit : Unit
         Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetMove(), typeof(PlayerUnit));
         
         base.OnSelect();
-        PlayerController.SetCurrentPlayer(null);
+        GameManager.GetInstance().GetPlayerController().SetCurrentPlayer(null);
     }
 }

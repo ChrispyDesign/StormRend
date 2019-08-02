@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CommandManager : MonoBehaviour
 {
-    public static List<ICommand> m_moves;
+    public List<ICommand> m_moves;
 
     private void Start()
     {

@@ -32,7 +32,7 @@ public class PlayerUnit : Unit
     {
         m_isFocused = true;
 
-        Unit player = PlayerController.GetCurrentPlayer();
+        Unit player = GameManager.GetInstance().GetPlayerController().GetCurrentPlayer();
         if (player != null && player != this)
         {
             if (player.GetAttackNodes() != null &&
@@ -40,15 +40,15 @@ public class PlayerUnit : Unit
                 player.UnShowAttackTiles();
         }
 
-        PlayerController.SetCurrentPlayer(this);
+        GameManager.GetInstance().GetPlayerController().SetCurrentPlayer(this);
         UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(this);
         UIManager.GetInstance().GetAbilitySelector().SelectPlayerUnit(this);
 
         if (m_alreadyMoved && m_alreadyAttacked)
             return;
 
-        PlayerController.SetCurrentMode(PlayerMode.MOVE);
-        foreach (ICommand command in CommandManager.m_moves)
+        GameManager.GetInstance().GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
+        foreach (ICommand command in GameManager.GetInstance().GetCommandManager().m_moves)
         {
             MoveCommand move = command as MoveCommand;
 

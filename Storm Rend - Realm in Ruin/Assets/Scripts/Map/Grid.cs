@@ -30,7 +30,7 @@ public class Grid
         m_spawnManager = GameObject.FindObjectOfType<SpawnManager>();
 
         m_nodes = new Node[m_gridSize.x, m_gridSize.y];
-        int i = 0;
+        //int i = 0;
         for (int x = 0; x < m_gridSize.x; x++)
         {
             for (int y = 0; y < m_gridSize.y; y++)
@@ -51,14 +51,28 @@ public class Grid
                 if (m_nodes[x, y].m_nodeType == NodeType.PLAYER)
                 {
                     m_nodes[x, y].GetComponent<MeshRenderer>().material.color = Color.green;
-                    m_spawnManager.m_spawns[i].m_spawnCoords.x = x;
-                    m_spawnManager.m_spawns[i].m_spawnCoords.y = y;
-                    i++;
+                    //m_spawnManager.m_spawns[i].m_spawnCoords.x = x;
+                    //m_spawnManager.m_spawns[i].m_spawnCoords.y = y;
+                    //i++;
                 }
 
                 if (m_nodes[x, y].m_nodeType == NodeType.ENEMY)
                     m_nodes[x, y].GetComponent<MeshRenderer>().material.color = Color.red;
-            }
+
+				foreach(PlayerUnit player in GameManager.GetInstance().GetPlayerUnits())
+				{
+					if (player.m_coordinates.x == x &&
+					   player.m_coordinates.y == y)
+						m_nodes[x, y].SetUnitOnTop(player);
+				}
+
+				foreach (EnemyUnit enemy in GameManager.GetInstance().GetEnemyUnits())
+				{
+					if (enemy.m_coordinates.x == x &&
+					   enemy.m_coordinates.y == y)
+						m_nodes[x, y].SetUnitOnTop(enemy);
+				}
+			}
         }
 
         for (int x = 0; x < m_gridSize.x; x++)
@@ -69,7 +83,7 @@ public class Grid
             }
         }
 
-        m_spawnManager.spawnPlayers();
+        //m_spawnManager.spawnPlayers();
     }
 
     Node[] GenerateNeighbours(int _x, int _y)

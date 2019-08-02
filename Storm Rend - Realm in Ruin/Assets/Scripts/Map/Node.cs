@@ -72,7 +72,7 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
         m_origMaterial = transform.GetComponent<MeshRenderer>().material.color;
         transform.GetComponent<MeshRenderer>().material.color = Color.red;
 
-        PlayerUnit currentSelectedUnit = PlayerController.GetCurrentPlayer();
+        PlayerUnit currentSelectedUnit = GameManager.GetInstance().GetPlayerController().GetCurrentPlayer();
         if (currentSelectedUnit && !m_unitOnTop && currentSelectedUnit.GetAvailableNodes().Contains(this))
         {
             currentSelectedUnit.MoveDuplicateTo(this);
@@ -89,7 +89,7 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
 
     public void OnSelect()
     {
-        PlayerUnit currentSelectedUnit = PlayerController.GetCurrentPlayer();
+        PlayerUnit currentSelectedUnit = GameManager.GetInstance().GetPlayerController().GetCurrentPlayer();
 
         if (currentSelectedUnit == null)
             return;
@@ -97,7 +97,7 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
         if (currentSelectedUnit.GetAttackNodes().Count > 0)
             currentSelectedUnit.UnShowAttackTiles();
 
-        if (PlayerController.GetCurrentMode() == PlayerMode.MOVE)
+        if (GameManager.GetInstance().GetPlayerController().GetCurrentMode() == PlayerMode.MOVE)
         { 
             if (currentSelectedUnit && currentSelectedUnit.GetIsFocused())
             {
@@ -118,7 +118,7 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
                         MoveCommand temp = currentSelectedUnit.GetMoveCommand();
                         temp.Execute();
 
-                        CommandManager.m_moves.Add(temp);
+                        GameManager.GetInstance().GetCommandManager().m_moves.Add(temp);
                     }
 
                     FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 0.5f);
@@ -130,7 +130,7 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
             }
         }
 
-        if (PlayerController.GetCurrentMode() == PlayerMode.ATTACK)
+        if (GameManager.GetInstance().GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
         {
             currentSelectedUnit.SetAlreadyMoved(true);
             currentSelectedUnit.SetAlreadyAttacked(true);
@@ -140,10 +140,10 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
             {
                 effect.PerformEffect(this, currentSelectedUnit);
             }
-            CommandManager.m_moves.Clear();
+            GameManager.GetInstance().GetCommandManager().m_moves.Clear();
         }
 
-        PlayerController.SetCurrentMode(PlayerMode.IDLE);
+        GameManager.GetInstance().GetPlayerController().SetCurrentMode(PlayerMode.IDLE);
     }
 
     public void OnDeselect()

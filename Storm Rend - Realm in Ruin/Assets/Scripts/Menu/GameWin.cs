@@ -13,14 +13,7 @@ public class GameWin : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.U) && !m_gameOver.activeSelf)
-        {
-            m_gameUI.SetActive(false);
-            m_pauseMenu.SetActive(false);
-            m_settingsMenu.SetActive(false);
-            m_gameOver.SetActive(false);
-            m_gameWin.SetActive(true);
-        }
+
     }
 
     public void Restart()
@@ -40,5 +33,14 @@ public class GameWin : MonoBehaviour
     public void ReturnToMenu()
     {
         SceneManager.LoadScene(0);
-    }
+	}
+
+	public void ShowScreen()
+	{
+		m_gameUI.SetActive(false);
+		m_pauseMenu.SetActive(false);
+		m_settingsMenu.SetActive(false);
+		m_gameOver.SetActive(false);
+		m_gameWin.SetActive(true);
+	}
 }

@@ -117,7 +117,7 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     {
         m_onSelect.Invoke();
 
-        if (PlayerController.GetCurrentMode() == PlayerMode.MOVE)
+        if (GameManager.GetInstance().GetPlayerController().GetCurrentMode() == PlayerMode.MOVE)
         { 
             
             m_availableNodes = Dijkstra.Instance.m_validMoves;
@@ -135,7 +135,7 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
             m_meshRenderer.material.color = new Color(materialColour.r, materialColour.g, materialColour.b, 0.5f);
         }
 
-        if (PlayerController.GetCurrentMode() == PlayerMode.ATTACK)
+        if (GameManager.GetInstance().GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
         {
             Node node = GetCurrentNode();
             node.OnSelect();
@@ -167,7 +167,7 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     public void TakeDamage(int damage)
     {
         m_HP -= damage;
-        if (m_HP < 0)
+        if (m_HP <= 0)
         {
             Die();
         }
@@ -175,6 +175,11 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 
     private void Die()
     {
+		gameObject.SetActive(false);
         OnDie.Invoke();
+
+		GameManager gameManager = GameManager.GetInstance();
+		gameManager.GameOver();
+		gameManager.GameWin();
     }
 }

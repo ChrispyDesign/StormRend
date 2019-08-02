@@ -1,0 +1,71 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GameManager : MonoBehaviour
+{
+    private  static GameManager m_instance;
+
+    [Header("Managers")]
+    [SerializeField] private TurnManager m_turnManager = null;
+    [SerializeField] private PlayerController m_playerController = null;
+    [SerializeField] private CommandManager m_commandManager = null;
+
+    [SerializeField] private PlayerUnit[] m_players;
+    [SerializeField] private EnemyUnit[] m_enemies;
+
+    #region GettersAndSetters
+
+    public TurnManager GetTurnManager() { return m_turnManager; }
+    public PlayerController GetPlayerController() { return m_playerController; }
+    public CommandManager GetCommandManager() { return m_commandManager; }
+	public PlayerUnit[] GetPlayerUnits() { return m_players; }
+	public EnemyUnit[] GetEnemyUnits() { return m_enemies; }
+
+    #endregion
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        Debug.Assert(m_turnManager, "Turn Manager not assigned to GameManager!");
+        Debug.Assert(m_playerController, "Player Controller not assigned to GameManager!");
+        Debug.Assert(m_commandManager, "Command Manager not assigned to GameManager!");
+    }
+
+    // Update is called once per frame
+    void Update()
+	{
+
+	}
+
+	public static GameManager GetInstance()
+    {
+        // if no instance is assigned...
+        if (!m_instance)
+            m_instance = FindObjectOfType<GameManager>(); // find the instance
+
+		// error handling
+        Debug.Assert(m_instance, "UI Manager not found!");
+
+        // done
+        return m_instance;
+    }
+
+	public void GameOver()
+	{
+		if (m_players.Length <= 0)
+		{
+			UIManager uiManager = UIManager.GetInstance();
+			GameOver gameOver = uiManager.gameObject.GetComponentInParent<GameOver>();
+			gameOver.ShowScreen();
+		}
+	}
+
+	public void GameWin()
+	{
+		UIManager uiManager = UIManager.GetInstance();
+		GameWin gameWin = uiManager.gameObject.GetComponentInParent<GameWin>();
+		gameWin.ShowScreen();
+	}
+}
