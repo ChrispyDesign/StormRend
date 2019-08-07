@@ -72,7 +72,7 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
         m_origMaterial = transform.GetComponent<MeshRenderer>().material.color;
         transform.GetComponent<MeshRenderer>().material.color = Color.red;
 
-        PlayerUnit currentSelectedUnit = PlayerController.GetCurrentPlayer();
+        PlayerUnit currentSelectedUnit = GameManager.GetInstance().GetPlayerController().GetCurrentPlayer();
         if (currentSelectedUnit && !m_unitOnTop && currentSelectedUnit.GetAvailableNodes().Contains(this))
         {
             currentSelectedUnit.MoveDuplicateTo(this);
@@ -89,13 +89,15 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
 
     public void OnSelect()
     {
-        PlayerUnit currentSelectedUnit = PlayerController.GetCurrentPlayer();
+        PlayerUnit currentSelectedUnit = GameManager.GetInstance().GetPlayerController().GetCurrentPlayer();
 
-        if (currentSelectedUnit.GetAttackNodes() != null &&
-            currentSelectedUnit.GetAttackNodes().Count > 0)
+        if (currentSelectedUnit == null)
+            return;
+
+        if (currentSelectedUnit.GetAttackNodes().Count > 0)
             currentSelectedUnit.UnShowAttackTiles();
 
-        if (PlayerController.GetCurrentMode() == PlayerMode.MOVE)
+        if (GameManager.GetInstance().GetPlayerController().GetCurrentMode() == PlayerMode.MOVE)
         { 
             if (currentSelectedUnit && currentSelectedUnit.GetIsFocused())
             {
@@ -116,24 +118,32 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
                         MoveCommand temp = currentSelectedUnit.GetMoveCommand();
                         temp.Execute();
 
-                        CommandManager.m_moves.Add(temp);
+                        GameManager.GetInstance().GetCommandManager().m_moves.Add(temp);
                     }
 
                     FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 0.5f);
                 }
                 currentSelectedUnit.SetDuplicateMeshVisibilty(false);
                 currentSelectedUnit.SetIsFocused(false);
+
+                currentSelectedUnit.SetAlreadyMoved(true);
             }
         }
 
-        if (PlayerController.GetCurrentMode() == PlayerMode.ATTACK)
+        if (GameManager.GetInstance().GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
         {
+            currentSelectedUnit.SetAlreadyMoved(true);
+            currentSelectedUnit.SetAlreadyAttacked(true);
+
             Ability ability = currentSelectedUnit.GetLockedAbility();
             foreach(Effect effect in ability.GetEffects())
             {
-                effect.PerformEffect(this);
+                effect.PerformEffect(this, currentSelectedUnit);
             }
+            GameManager.GetInstance().GetCommandManager().m_moves.Clear();
         }
+
+        GameManager.GetInstance().GetPlayerController().SetCurrentMode(PlayerMode.IDLE);
     }
 
     public void OnDeselect()
@@ -145,10 +155,13 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
         {
             List<Node> nodes = unitOnTop.GetAvailableNodes();
 
-            foreach (Node node in nodes)
+            if (nodes != null)
             {
-                node.transform.GetComponent<MeshRenderer>().material.color = Color.white;
-                node.m_selected = false;
+                foreach (Node node in nodes)
+                {
+                    node.transform.GetComponent<MeshRenderer>().material.color = Color.white;
+                    node.m_selected = false;
+                }
             }
         }
 

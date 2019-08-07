@@ -67,7 +67,7 @@ public class UIAbilitySelector : MonoBehaviour
 
         m_buttonPanel.SetActive(true);
 
-        PlayerUnit player = PlayerController.GetCurrentPlayer();
+        PlayerUnit player = GameManager.GetInstance().GetPlayerController().GetCurrentPlayer();
 
         if (player != null)
         {

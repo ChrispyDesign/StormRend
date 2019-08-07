@@ -13,14 +13,7 @@ public class GameOver : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L) && !m_gameWin.activeSelf)
-        {
-            m_gameUI.SetActive(false);
-            m_pauseMenu.SetActive(false);
-            m_settingsMenu.SetActive(false);
-            m_gameOver.SetActive(true);
-            m_gameWin.SetActive(false);
-        }
+
     }
 
     public void Restart()
@@ -41,4 +34,13 @@ public class GameOver : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
+	public void ShowScreen()
+	{
+		m_gameUI.SetActive(false);
+		m_pauseMenu.SetActive(false);
+		m_settingsMenu.SetActive(false);
+		m_gameOver.SetActive(true);
+		m_gameWin.SetActive(false);
+	}
 }
