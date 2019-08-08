@@ -10,5 +10,12 @@ public class EnemyUnit : Unit
         
         base.OnSelect();
         GameManager.GetInstance().GetPlayerController().SetCurrentPlayer(null);
-    }
+	}
+
+	protected override void Die()
+	{
+		base.Die();
+		GameManager.GetInstance().m_enemyCount--;
+		GameManager.GetInstance().CheckEndCondition();
+	}
 }

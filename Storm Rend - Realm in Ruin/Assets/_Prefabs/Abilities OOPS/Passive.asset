@@ -30,4 +30,24 @@ MonoBehaviour:
     m_enemies: 1
     m_players: 0
     m_self: 0
-  m_effects: []
+  m_effects:
+  - {fileID: 114452196164604988}
+--- !u!114 &114452196164604988
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c73d89f3a52747d42ae59231536f0187, type: 3}
+  m_Name: GloryEffect
+  m_EditorClassIdentifier: 
+  m_target: 0
+  OnPeformEffect:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_gloryAmount: 2

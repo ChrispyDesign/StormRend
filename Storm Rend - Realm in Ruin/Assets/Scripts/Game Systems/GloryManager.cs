@@ -14,8 +14,8 @@ public class GloryManager : MonoBehaviour
     [SerializeField] private Transform m_gloryMeter;
 
     [Space]
-    [SerializeField] static UnityEvent OnGain;
-    [SerializeField] static UnityEvent OnSpend;
+    [SerializeField] UnityEvent OnGain;
+    [SerializeField] UnityEvent OnSpend;
     
     // group of glory UI toggles
     #region Variables
@@ -41,7 +41,7 @@ public class GloryManager : MonoBehaviour
     /// use this function to gain glory!
     /// </summary>
     /// <param name="value">the amount of glory to gain</param>
-    public static void GainGlory(int value)
+    public void GainGlory(int value)
     {
         OnGain.Invoke();       
 
@@ -63,7 +63,7 @@ public class GloryManager : MonoBehaviour
     /// </summary>
     /// <param name="value">the amount of glory to spend</param>
     /// <returns>false if there isn't enough glory, true if the glory was spent successfully</returns>
-    public static bool SpendGlory(int value)
+    public bool SpendGlory(int value)
     {
         OnSpend.Invoke();
 
@@ -85,7 +85,7 @@ public class GloryManager : MonoBehaviour
     /// <summary>
     /// updates the UI toggle elements of the glory meter to match the amount of glory
     /// </summary>
-    private static void UpdateGloryMeter()
+    private void UpdateGloryMeter()
     {
         // iterate through all glory nodes and turn on/off the relevant nodes
         for (int i = 0; i < m_gloryNodes.Length; i++)

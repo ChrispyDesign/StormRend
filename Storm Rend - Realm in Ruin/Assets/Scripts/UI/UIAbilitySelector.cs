@@ -98,6 +98,10 @@ public class UIAbilitySelector : MonoBehaviour
             button.interactable = true;
         else
             button.interactable = false;
+
+		PlayerUnit player = GameManager.GetInstance().GetPlayerController().GetCurrentPlayer();
+		if (player.GetAlreadyAttacked())
+			button.interactable = false;
     }
 
     public void SetInfoPanelData()

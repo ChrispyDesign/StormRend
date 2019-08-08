@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private PlayerUnit[] m_players;
     [SerializeField] private EnemyUnit[] m_enemies;
+	public int m_playerCount;
+	public int m_enemyCount;
 
     #region GettersAndSetters
 
@@ -31,12 +33,20 @@ public class GameManager : MonoBehaviour
         Debug.Assert(m_turnManager, "Turn Manager not assigned to GameManager!");
         Debug.Assert(m_playerController, "Player Controller not assigned to GameManager!");
         Debug.Assert(m_commandManager, "Command Manager not assigned to GameManager!");
-    }
+		m_playerCount = m_players.Length;
+		m_enemyCount = m_enemies.Length;
+	}
 
     // Update is called once per frame
     void Update()
 	{
 
+	}
+
+	public void CheckEndCondition()
+	{
+		GameOver();
+		GameWin();
 	}
 
 	public static GameManager GetInstance()
@@ -54,7 +64,7 @@ public class GameManager : MonoBehaviour
 
 	public void GameOver()
 	{
-		if (m_players.Length <= 0)
+		if (m_playerCount <= 0)
 		{
 			UIManager uiManager = UIManager.GetInstance();
 			GameOver gameOver = uiManager.gameObject.GetComponentInParent<GameOver>();
@@ -64,8 +74,11 @@ public class GameManager : MonoBehaviour
 
 	public void GameWin()
 	{
-		UIManager uiManager = UIManager.GetInstance();
-		GameWin gameWin = uiManager.gameObject.GetComponentInParent<GameWin>();
-		gameWin.ShowScreen();
+		if (m_enemyCount <= 0)
+		{
+			UIManager uiManager = UIManager.GetInstance();
+			GameWin gameWin = uiManager.gameObject.GetComponentInParent<GameWin>();
+			gameWin.ShowScreen();
+		}
 	}
 }

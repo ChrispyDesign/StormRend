@@ -65,18 +65,19 @@ public class UIAbilityInfo : MonoBehaviour
             {
                 m_player.UnShowAttackTiles();
             }
-            m_infoPanel.SetActive(false);
-        }
-    }
+		}
+		m_infoPanel.SetActive(false);
+	}
 
     public void OnClickAbility()
     {
-        if(m_player != null)
+        if(m_player != null && !m_player.GetAlreadyAttacked())
         {
             GameManager.GetInstance().GetPlayerController().SetCurrentMode(PlayerMode.ATTACK);
             m_player.SetLockedAbility(m_ability);
             GameManager.GetInstance().GetPlayerController().SetIsAbilityLocked(true); ;
             m_player.ShowAttackTiles();
-        }
-    }
+		}
+		m_infoPanel.SetActive(false);
+	}
 }

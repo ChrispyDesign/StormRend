@@ -6,6 +6,9 @@ using UnityEngine.Events;
 
 public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 {
+	private int m_HP;
+	private static bool m_isDead;
+
     [SerializeField] private MeshRenderer m_meshRenderer = null;
     [SerializeField] private GameObject m_duplicateMesh = null;
     [SerializeField] private Ability m_passiveAbility;
@@ -15,7 +18,7 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     [Header("Unit Stats")]
     [SerializeField] private int m_maxHP = 4;
     [SerializeField] private int m_maxMOV = 4;
-    private int m_HP;
+
     
     [Space]
     [Header("Unit Interaction")]
@@ -23,19 +26,19 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     [SerializeField] private UnityEvent m_onDeselect;
     [SerializeField] private UnityEvent m_onHover;
     [SerializeField] private UnityEvent m_onUnhover;
+	
+	public Action OnDie = delegate
+	{
+		m_isDead = false;
+	};
 
-    public Action OnDie = delegate 
-    {
-
-    };
-
-    public Vector2Int m_coordinates;
+	public Vector2Int m_coordinates;
     protected bool m_alreadyMoved;
     protected bool m_alreadyAttacked;
-    private List<Node> m_availableNodes;
-    private List<Node> m_attackNodes;
     protected bool m_isFocused;
     protected Ability m_lockedAbility;
+    private List<Node> m_availableNodes;
+    private List<Node> m_attackNodes;
    
     #region getters
 
@@ -49,6 +52,7 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     public bool GetIsFocused() { return m_isFocused; }
     public bool GetAlreadyMoved() { return m_alreadyMoved; }
     public bool GetAlreadyAttacked() { return m_alreadyAttacked; }
+	public bool GetIsDead() { return m_isDead; }
 
     public void GetAbilities( ref Ability _passive, 
         ref Ability[] _first, ref Ability[] _second)
@@ -173,13 +177,9 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
         }
     }
 
-    private void Die()
+    protected virtual void Die()
     {
 		gameObject.SetActive(false);
         OnDie.Invoke();
-
-		GameManager gameManager = GameManager.GetInstance();
-		gameManager.GameOver();
-		gameManager.GameWin();
     }
 }

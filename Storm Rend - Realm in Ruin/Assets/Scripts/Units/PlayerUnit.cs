@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum PlayerClass
 {
@@ -18,9 +19,9 @@ public class PlayerUnit : Unit
 
     private MoveCommand movePlayer;
 
-    #region gettersAndSetters
+	#region gettersAndSetters
 
-    public PlayerClass GetUnitType() { return m_unitType; }
+	public PlayerClass GetUnitType() { return m_unitType; }
     public MoveCommand GetMoveCommand() { return movePlayer; }
 
     public void SetMoveCommand(MoveCommand _move) { movePlayer = _move; }
@@ -88,4 +89,11 @@ public class PlayerUnit : Unit
     {
         base.OnUnhover();
     }
+
+	protected override void Die()
+	{
+		base.Die();
+		GameManager.GetInstance().m_playerCount--;
+		GameManager.GetInstance().CheckEndCondition();
+	}
 }

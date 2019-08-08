@@ -143,6 +143,12 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
             GameManager.GetInstance().GetCommandManager().m_moves.Clear();
         }
 
+		if (currentSelectedUnit.GetAlreadyAttacked())
+		{
+			UIAbilitySelector selector = UIManager.GetInstance().GetAbilitySelector();
+			selector.SelectPlayerUnit(null);
+			selector.GetInfoPanel().SetActive(false);
+		}
         GameManager.GetInstance().GetPlayerController().SetCurrentMode(PlayerMode.IDLE);
     }
 

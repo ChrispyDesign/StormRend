@@ -22,5 +22,7 @@ public class Effect : ScriptableObject
     public virtual void PerformEffect(Node _effectedNode, Unit _thisUnit)
     {
         OnPeformEffect.Invoke();
+		Ability ability = _thisUnit.GetLockedAbility();
+		UIManager.GetInstance().GetGloryManager().SpendGlory(ability.GetGloryRequirement());
     }
 }
