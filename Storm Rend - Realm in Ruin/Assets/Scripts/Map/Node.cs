@@ -105,9 +105,11 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
 
                 if (nodes.Contains(this) && !m_unitOnTop)
                 {
-                    if (currentSelectedUnit.GetAlreadyMoved())
+                    if (currentSelectedUnit.GetAlreadyMoved() &&
+						currentSelectedUnit.GetMoveCommand() != null)
                     {
-                        currentSelectedUnit.GetMoveCommand().SetCoordinates(m_coordinate);
+						MoveCommand move = currentSelectedUnit.GetMoveCommand();
+						move.SetCoordinates(m_coordinate);
                         currentSelectedUnit.GetMoveCommand().Execute();
                     }
                     else
@@ -132,15 +134,16 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
 
         if (GameManager.GetInstance().GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
         {
-            currentSelectedUnit.SetAlreadyMoved(true);
-            currentSelectedUnit.SetAlreadyAttacked(true);
-
             Ability ability = currentSelectedUnit.GetLockedAbility();
-            foreach(Effect effect in ability.GetEffects())
-            {
-                effect.PerformEffect(this, currentSelectedUnit);
-            }
-            GameManager.GetInstance().GetCommandManager().m_moves.Clear();
+			if (ability != null)
+			{
+				foreach (Effect effect in ability.GetEffects())
+				{
+					effect.PerformEffect(this, currentSelectedUnit);
+				}
+				currentSelectedUnit.SetLockedAbility(null);
+				GameManager.GetInstance().GetCommandManager().m_moves.Clear();
+			}
         }
 
 		if (currentSelectedUnit.GetAlreadyAttacked())

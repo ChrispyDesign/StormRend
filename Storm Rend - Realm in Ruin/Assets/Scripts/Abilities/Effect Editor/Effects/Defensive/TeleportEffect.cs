@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GloryEffect : Effect
+public class TeleportEffect : Effect
 {
-    [SerializeField] private int m_gloryAmount;
-
 	public override void PerformEffect(Node _effectedNode, Unit _thisUnit)
 	{
 		base.PerformEffect(_effectedNode, _thisUnit);
@@ -13,6 +11,6 @@ public class GloryEffect : Effect
 		if (!m_isTileAllowed)
 			return;
 
-		UIManager.GetInstance().GetGloryManager().GainGlory(m_gloryAmount);
+		_thisUnit.MoveTo(_effectedNode);
 	}
 }

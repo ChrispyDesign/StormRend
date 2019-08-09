@@ -13,11 +13,11 @@ public class RefreshEffect : Effect
     public override void PerformEffect(Node _effectedNode, Unit _thisUnit)
     {
         base.PerformEffect(_effectedNode, _thisUnit);
-        
-        if(m_refreshType == RefreshType.AttackAgain)
-            _thisUnit.SetAlreadyMoved(false);
 
-        if(m_refreshType == RefreshType.MoveAgain)
-            _thisUnit.SetAlreadyAttacked(false);
-    }
+		if (!m_isTileAllowed)
+			return;
+
+		_thisUnit.SetAlreadyMoved(false);
+		_thisUnit.SetAlreadyAttacked(false);
+	}
 }

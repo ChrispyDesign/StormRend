@@ -8,11 +8,14 @@ public class HealEffect : Effect
     {
         base.PerformEffect(_effectedNode, _thisUnit);
 
-        Unit unit = _effectedNode.GetUnitOnTop();
+		if (!m_isTileAllowed)
+			return;
+
+		Unit unit = _effectedNode.GetUnitOnTop();
 
         if (unit != null)
         {
             unit.SetHP(unit.GetHP() + m_healAmount);
         }
-    }
+	}
 }

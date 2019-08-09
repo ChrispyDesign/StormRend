@@ -9,7 +9,6 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 	private int m_HP;
 	private static bool m_isDead;
 
-    [SerializeField] private MeshRenderer m_meshRenderer = null;
     [SerializeField] private GameObject m_duplicateMesh = null;
     [SerializeField] private Ability m_passiveAbility;
     [SerializeField] private Ability[] m_firstAbilities;
@@ -27,10 +26,6 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     [SerializeField] private UnityEvent m_onHover;
     [SerializeField] private UnityEvent m_onUnhover;
 	
-	public Action OnDie = delegate
-	{
-		m_isDead = false;
-	};
 
 	public Vector2Int m_coordinates;
     protected bool m_alreadyMoved;
@@ -40,6 +35,10 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     private List<Node> m_availableNodes;
     private List<Node> m_attackNodes;
    
+	public Action OnDie = delegate
+	{
+		m_isDead = false;
+	};
     #region getters
 
     public List<Node> GetAvailableNodes() { return m_availableNodes; }
@@ -133,10 +132,7 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 
                 node.transform.GetComponent<MeshRenderer>().material.color = Color.red;
                 node.m_selected = true;
-            }
-        
-            Color materialColour = m_meshRenderer.material.color;
-            m_meshRenderer.material.color = new Color(materialColour.r, materialColour.g, materialColour.b, 0.5f);
+            }           
         }
 
         if (GameManager.GetInstance().GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
@@ -153,9 +149,6 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
         m_onDeselect.Invoke();
 
         Grid.GetNodeFromCoords(m_coordinates).OnDeselect();
-
-        Color materialColour = m_meshRenderer.material.color;
-        m_meshRenderer.material.color = new Color(materialColour.r, materialColour.g, materialColour.b, 1);
     }
 
     public virtual void OnHover()
@@ -180,6 +173,7 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     protected virtual void Die()
     {
 		gameObject.SetActive(false);
-        OnDie.Invoke();
+		Node node = Grid.GetNodeFromCoords(m_coordinates);
+		OnDie.Invoke();
     }
 }

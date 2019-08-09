@@ -8,11 +8,14 @@ public class DamageEffect : Effect
     {
         base.PerformEffect(_effectedNode, _thisUnit);
 
-        Unit unit = _effectedNode.GetUnitOnTop();
+		if (!m_isTileAllowed)
+			return;
+
+		Unit unit = _effectedNode.GetUnitOnTop();
 
         if (unit != null)
         {
             unit.TakeDamage(m_damageAmount);
         }
-    }
+	}
 }

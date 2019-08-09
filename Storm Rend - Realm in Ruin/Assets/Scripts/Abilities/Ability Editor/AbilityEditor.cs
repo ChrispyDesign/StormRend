@@ -101,6 +101,10 @@ public class AbilityEditor : Editor
                 genericMenu.AddItem(new GUIContent("Add Effect/Offense/Summon"), false, () => m_effectEditor.AddEffect(typeof(SummonEffect)));
                 genericMenu.AddItem(new GUIContent("Add Effect/Glory Gain"), false, () => m_effectEditor.AddEffect(typeof(GloryEffect)));
 
+				//Defensive
+                genericMenu.AddItem(new GUIContent("Add Effect/Defensive/Teleport"), false, () => m_effectEditor.AddEffect(typeof(TeleportEffect)));
+                genericMenu.AddItem(new GUIContent("Add Effect/Defensive/Swap Units"), false, () => m_effectEditor.AddEffect(typeof(SwapUnitEffect)));
+
                 // recovery
                 genericMenu.AddItem(new GUIContent("Add Effect/Recovery/Heal"), false, () => m_effectEditor.AddEffect(typeof(HealEffect)));
                 genericMenu.AddItem(new GUIContent("Add Effect/Recovery/Refresh"), false, () => m_effectEditor.AddEffect(typeof(RefreshEffect)));

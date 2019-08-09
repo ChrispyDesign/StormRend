@@ -478,7 +478,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e546a4721d175854fb953bc1dc778be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_meshRenderer: {fileID: 709469709}
   m_duplicateMesh: {fileID: 0}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
@@ -1604,7 +1603,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f35686127b2404ca16e9065156b57d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_meshRenderer: {fileID: 1358670999}
   m_duplicateMesh: {fileID: 1579757828}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
@@ -2022,7 +2020,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f35686127b2404ca16e9065156b57d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_meshRenderer: {fileID: 2120205020}
   m_duplicateMesh: {fileID: 1544048409}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
@@ -2177,7 +2174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e546a4721d175854fb953bc1dc778be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_meshRenderer: {fileID: 636799727}
   m_duplicateMesh: {fileID: 0}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
@@ -2292,6 +2288,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1858067639 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8282566447300338917, guid: 5264df4b6b70dde43865d8415c570785,
+    type: 3}
+  m_PrefabInstance: {fileID: 2027765435138271946}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d52311a7ebc70941811e2cc28a1404a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1870606659
 GameObject:
   m_ObjectHideFlags: 0
@@ -2338,7 +2346,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f35686127b2404ca16e9065156b57d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_meshRenderer: {fileID: 2085716460}
   m_duplicateMesh: {fileID: 996954101}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
@@ -3073,6 +3080,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 1858067639}
+    - target: {fileID: 9169910241022614727, guid: 138dcf1ed8ebe694ab4a807758acca73,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnemyTurn
       objectReference: {fileID: 0}
     - target: {fileID: 9169910242224839663, guid: 138dcf1ed8ebe694ab4a807758acca73,
         type: 3}
