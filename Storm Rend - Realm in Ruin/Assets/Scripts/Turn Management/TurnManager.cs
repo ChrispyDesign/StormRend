@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
@@ -10,7 +11,9 @@ public class TurnManager : MonoBehaviour
 {
     // relevant UI
     [SerializeField] private Button m_proceedTurnButton = null;
-    
+
+	private int m_currentTurn;
+
     // state machine for managing turns
     private StateMachine m_stateMachine;
 
@@ -58,7 +61,14 @@ public class TurnManager : MonoBehaviour
 
         // proceed to player turn
         m_stateMachine.ChangeState(m_playerTurn);
-    }
+
+		List<Crystal> crystal = GameManager.GetInstance().GetCrystals();
+		foreach(Crystal c in crystal)
+		{
+			c.IterateTurns();
+		}
+		m_currentTurn++;
+	}
 
     /// <summary>
     /// call this function to begin the enemy's turn!

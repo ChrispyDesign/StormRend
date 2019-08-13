@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
-  m_Name: Ability 1 Lv 3
+  m_Name: PassiveCrystal
   m_EditorClassIdentifier: 
-  m_name: Ability 1
+  m_name: Crystal Push
   m_icon: {fileID: 0}
-  m_description: Level 3 of Ability 1
-  m_gloryRequirement: 2
+  m_description: 
+  m_gloryRequirement: 0
   m_tilesToSelect: 1
   m_castArea:
   - elements: 00000000000000
-  - elements: 00000001000000
-  - elements: 00000100010000
-  - elements: 00010000000100
-  - elements: 00000100010000
-  - elements: 00000001000000
+  - elements: 00000000000000
+  - elements: 00000000000000
+  - elements: 00000000000000
+  - elements: 00000000000000
+  - elements: 00000000000000
   - elements: 00000000000000
   m_targetableTiles:
-    m_empty: 1
+    m_empty: 0
     m_enemies: 0
     m_players: 0
-    m_self: 0
+    m_self: 1
   m_effects:
-  - {fileID: 114117797003832774}
---- !u!114 &114117797003832774
+  - {fileID: 114179666160580772}
+--- !u!114 &114179666160580772
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,8 +41,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15f2715bfc5600e4b9a9a9bea62fb22c, type: 3}
-  m_Name: SummonEffect
+  m_Script: {fileID: 11500000, guid: cca9119896ddbe049ae3df8859d7fd0d, type: 3}
+  m_Name: PushEffect
   m_EditorClassIdentifier: 
   m_target: 0
   OnPeformEffect:
@@ -50,6 +50,4 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_summon: {fileID: 4052113309130031594, guid: 3274fb715873f7a459180b88343656e2,
-    type: 3}
-  m_HowManyTurns: 0
+  m_pushAmount: 1

@@ -13,16 +13,19 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private PlayerUnit[] m_players;
     [SerializeField] private EnemyUnit[] m_enemies;
+    [SerializeField] private List<Crystal> m_crystal;
 	public int m_playerCount;
 	public int m_enemyCount;
 
     #region GettersAndSetters
+	public void AddCrystal(Crystal _crystal) { m_crystal.Add(_crystal); }
 
     public TurnManager GetTurnManager() { return m_turnManager; }
     public PlayerController GetPlayerController() { return m_playerController; }
     public CommandManager GetCommandManager() { return m_commandManager; }
 	public PlayerUnit[] GetPlayerUnits() { return m_players; }
 	public EnemyUnit[] GetEnemyUnits() { return m_enemies; }
+	public List<Crystal> GetCrystals() { return m_crystal; }
 
     #endregion
 

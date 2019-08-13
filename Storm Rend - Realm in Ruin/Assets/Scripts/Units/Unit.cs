@@ -10,9 +10,9 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 	private static bool m_isDead;
 
     [SerializeField] private GameObject m_duplicateMesh = null;
-    [SerializeField] private Ability m_passiveAbility;
-    [SerializeField] private Ability[] m_firstAbilities;
-    [SerializeField] private Ability[] m_secondAbilities;
+    [SerializeField] protected Ability m_passiveAbility;
+    [SerializeField] protected Ability[] m_firstAbilities;
+    [SerializeField] protected Ability[] m_secondAbilities;
 
     [Header("Unit Stats")]
     [SerializeField] private int m_maxHP = 4;

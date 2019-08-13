@@ -33,7 +33,15 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
         }
     }
 
-    public Node SetNodeVariables(Vector3 _pos, Vector2Int _coordinate, NodeType _nodeType)
+	private void Update()
+	{
+		if(m_nodeType == NodeType.EMPTY && m_unitOnTop != null)
+		{
+			m_unitOnTop.Die();
+		}
+	}
+
+	public Node SetNodeVariables(Vector3 _pos, Vector2Int _coordinate, NodeType _nodeType)
     {
         m_neighbours = new Node[4];
         m_position = _pos;
@@ -137,9 +145,11 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
             Ability ability = currentSelectedUnit.GetLockedAbility();
 			if (ability != null)
 			{
+				bool continueAbility = true;
 				foreach (Effect effect in ability.GetEffects())
 				{
-					effect.PerformEffect(this, currentSelectedUnit);
+					if(continueAbility)
+						continueAbility = effect.PerformEffect(this, currentSelectedUnit);
 				}
 				currentSelectedUnit.SetLockedAbility(null);
 

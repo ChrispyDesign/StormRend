@@ -21,7 +21,7 @@ public class Effect : ScriptableObject
 
     public bool m_isFoldOut { get; set; } = true;
 
-    public virtual void PerformEffect(Node _effectedNode, Unit _thisUnit)
+    public virtual bool PerformEffect(Node _effectedNode, Unit _thisUnit)
     {
         OnPeformEffect.Invoke();
 
@@ -49,12 +49,14 @@ public class Effect : ScriptableObject
 		if (!m_isTileAllowed)
 		{
 			_thisUnit.SetAlreadyAttacked(false);
-			return;
+			return false;
 		}
 
 		_thisUnit.SetAlreadyMoved(true);
 		_thisUnit.SetAlreadyAttacked(true);
 
 		UIManager.GetInstance().GetGloryManager().SpendGlory(ability.GetGloryRequirement());
-    }
+
+		return true;
+	}
 }
