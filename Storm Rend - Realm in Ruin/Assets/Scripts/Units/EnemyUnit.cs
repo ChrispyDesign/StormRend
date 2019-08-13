@@ -12,7 +12,7 @@ public class EnemyUnit : Unit
         GameManager.GetInstance().GetPlayerController().SetCurrentPlayer(null);
 	}
 
-	protected override void Die()
+	public override void Die()
 	{
 		base.Die();
 		GameManager.GetInstance().m_enemyCount--;

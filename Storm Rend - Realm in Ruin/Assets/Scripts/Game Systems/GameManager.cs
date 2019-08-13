@@ -40,7 +40,17 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
 	{
+		if(Input.GetKeyDown(KeyCode.P))
+		{
+			foreach (PlayerUnit p in m_players)
+				p.Die();
+		}
 
+		if (Input.GetKeyDown(KeyCode.E))
+		{
+			foreach (EnemyUnit e in m_enemies)
+				e.Die();
+		}
 	}
 
 	public void CheckEndCondition()

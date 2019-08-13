@@ -49,27 +49,30 @@ public class PlayerUnit : Unit
             return;
 
         GameManager.GetInstance().GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
-        foreach (ICommand command in GameManager.GetInstance().GetCommandManager().m_moves)
-        {
-            MoveCommand move = command as MoveCommand;
 
-            if (move.m_unit == this)
-            {
-                Node previousNode = Grid.GetNodeFromCoords(move.GetOrigCoordinates());
+		if (!m_afterClear)
+		{
+			foreach (ICommand command in GameManager.GetInstance().GetCommandManager().m_moves)
+			{
+				MoveCommand move = command as MoveCommand;
 
-                if (previousNode.GetUnitOnTop() != this && previousNode.GetUnitOnTop() != null)
-                    return;
+				if (move.m_unit == this)
+				{
+					Node previousNode = Grid.GetNodeFromCoords(move.GetOrigCoordinates());
 
-                move.Undo();
-                m_alreadyMoved = true;
-            }
-        }
+					if (previousNode.GetUnitOnTop() != this && previousNode.GetUnitOnTop() != null)
+						return;
 
-        SetDuplicateMeshVisibilty(true);
+					move.Undo();
+					m_alreadyMoved = true;
+				}
+			}
 
-        Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetMove(), typeof(EnemyUnit));
+			SetDuplicateMeshVisibilty(true);
 
-       
+			Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetMove(), typeof(EnemyUnit));
+		}
+
         base.OnSelect();
     }
 
@@ -90,7 +93,7 @@ public class PlayerUnit : Unit
         base.OnUnhover();
     }
 
-	protected override void Die()
+	public override void Die()
 	{
 		base.Die();
 		GameManager.GetInstance().m_playerCount--;

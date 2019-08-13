@@ -142,7 +142,16 @@ public class Node : MonoBehaviour, IHoverable, ISelectable
 					effect.PerformEffect(this, currentSelectedUnit);
 				}
 				currentSelectedUnit.SetLockedAbility(null);
-				GameManager.GetInstance().GetCommandManager().m_moves.Clear();
+
+				CommandManager commandManager = GameManager.GetInstance().GetCommandManager();
+
+				foreach(MoveCommand move in commandManager.m_moves)
+				{
+					Unit unit = move.m_unit;
+					unit.m_afterClear = true;
+				}
+
+				commandManager.m_moves.Clear();
 			}
         }
 

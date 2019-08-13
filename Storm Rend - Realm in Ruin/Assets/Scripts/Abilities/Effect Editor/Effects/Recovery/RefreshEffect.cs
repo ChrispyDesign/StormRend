@@ -19,5 +19,6 @@ public class RefreshEffect : Effect
 
 		_thisUnit.SetAlreadyMoved(false);
 		_thisUnit.SetAlreadyAttacked(false);
+		_thisUnit.m_afterClear = false;
 	}
 }

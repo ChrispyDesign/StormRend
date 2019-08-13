@@ -49,5 +49,6 @@ public class EnemyTurn : State
     /// </summary>
     public override void Exit()
     {
+		m_turnManager.ResetPlayerVariables();
     }
 }

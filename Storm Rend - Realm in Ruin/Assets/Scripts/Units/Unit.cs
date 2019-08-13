@@ -28,6 +28,7 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 	
 
 	public Vector2Int m_coordinates;
+    public bool m_afterClear;
     protected bool m_alreadyMoved;
     protected bool m_alreadyAttacked;
     protected bool m_isFocused;
@@ -120,7 +121,8 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     {
         m_onSelect.Invoke();
 
-        if (GameManager.GetInstance().GetPlayerController().GetCurrentMode() == PlayerMode.MOVE)
+        if (GameManager.GetInstance().GetPlayerController().GetCurrentMode() == PlayerMode.MOVE &&
+			!m_afterClear)
         { 
             
             m_availableNodes = Dijkstra.Instance.m_validMoves;
@@ -170,10 +172,11 @@ public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
         }
     }
 
-    protected virtual void Die()
+    public virtual void Die()
     {
 		gameObject.SetActive(false);
 		Node node = Grid.GetNodeFromCoords(m_coordinates);
+		node.SetUnitOnTop(null);
 		OnDie.Invoke();
     }
 }

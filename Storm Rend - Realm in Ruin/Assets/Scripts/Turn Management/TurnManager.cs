@@ -34,7 +34,7 @@ public class TurnManager : MonoBehaviour
         m_stateMachine = GetComponent<StateMachine>();
 
         // initialise state machine and player/enemy turns
-        m_playerTurn = new PlayerTurn();
+        m_playerTurn = new PlayerTurn(this);
         m_enemyTurn = new EnemyTurn(this);
         
         // player turn by default
@@ -71,4 +71,32 @@ public class TurnManager : MonoBehaviour
         // proceed to enemy turn
         m_stateMachine.ChangeState(m_enemyTurn);
     }
+
+	public void ResetPlayerVariables()
+	{
+		PlayerUnit[] units = GameManager.GetInstance().GetPlayerUnits();
+
+		foreach(PlayerUnit player in units)
+		{
+			player.SetAlreadyAttacked(false);
+			player.SetAlreadyMoved(false);
+			player.m_afterClear = false;
+		}
+
+		GameManager.GetInstance().GetCommandManager().m_moves.Clear();
+	}
+
+	public void ResetEnemyVariables()
+	{
+		EnemyUnit[] units = GameManager.GetInstance().GetEnemyUnits();
+
+		foreach (EnemyUnit enemy in units)
+		{
+			enemy.SetAlreadyAttacked(false);
+			enemy.SetAlreadyMoved(false);
+			enemy.m_afterClear = false;
+		}
+
+		GameManager.GetInstance().GetCommandManager().m_moves.Clear();
+	}
 }
