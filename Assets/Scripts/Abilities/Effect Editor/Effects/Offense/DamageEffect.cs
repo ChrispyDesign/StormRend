@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DamageEffect : Effect
 {
-    [SerializeField] private int m_damageAmount;
+    [SerializeField] int m_damageAmount;
 
     public override bool PerformEffect(Tile _effectedNode, Unit _thisUnit)
     {

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class SummonEffect : Effect
 {
-    [SerializeField] private GameObject m_summon;
-    [SerializeField] private int m_HowManyTurns;
+    [SerializeField] GameObject m_summon;
+    [SerializeField] int m_HowManyTurns;
 
 	public override bool PerformEffect(Tile _effectedNode, Unit _thisUnit)
 	{

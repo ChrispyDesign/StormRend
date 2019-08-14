@@ -14,11 +14,11 @@ public enum EffectedTile
 public class PushEffect : Effect
 {
 	//[SerializeField] private EffectedTile m_direction;
-    [SerializeField] private int m_pushAmount;
-	private Vector2Int m_left = new Vector2Int(-1, 0);
-	private Vector2Int m_up = new Vector2Int(0, 1);
-	private Vector2Int m_right = new Vector2Int(1, 0);
-	private Vector2Int m_down = new Vector2Int(0, -1);
+    [SerializeField] int m_pushAmount;
+	Vector2Int m_left = new Vector2Int(-1, 0);
+	Vector2Int m_up = new Vector2Int(0, 1);
+	Vector2Int m_right = new Vector2Int(1, 0);
+	Vector2Int m_down = new Vector2Int(0, -1);
 
 	public override bool PerformEffect(Tile _effectedNode, Unit _thisUnit)
 	{

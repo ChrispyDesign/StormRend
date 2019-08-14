@@ -5,5 +5,5 @@
 /// </summary>
 public class BlindEffect : Effect
 {
-    [SerializeField] private int m_durationInTurns = 1;
+    [SerializeField] int m_durationInTurns = 1;
 }

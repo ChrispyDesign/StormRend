@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class HealEffect : Effect
 {
-    [SerializeField] private int m_healAmount;
+    [SerializeField] int m_healAmount;
 
     public override bool PerformEffect(Tile _effectedNode, Unit _thisUnit)
     {

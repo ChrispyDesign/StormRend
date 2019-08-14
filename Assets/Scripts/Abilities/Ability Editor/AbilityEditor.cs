@@ -9,12 +9,12 @@ using UnityEditor;
 [CustomEditor(typeof(Ability))]
 public class AbilityEditor : Editor
 {
-    private EffectEditor m_effectEditor;
+    EffectEditor m_effectEditor;
 
     // the target ability object
-    private static Ability m_ability;
+    static Ability m_ability;
 
-    private bool m_foldOutAOE = false;
+    bool m_foldOutAOE = false;
 
     #region getters
 
@@ -22,7 +22,7 @@ public class AbilityEditor : Editor
 
     #endregion
 
-    private void OnEnable()
+    void OnEnable()
     {
         m_ability = (Ability)target;
         m_effectEditor = new EffectEditor(m_ability.GetEffects());
@@ -52,7 +52,7 @@ public class AbilityEditor : Editor
     /// <summary>
     /// 
     /// </summary>
-    private void PrintAbilityInfo()
+    void PrintAbilityInfo()
     {
         AbilityEditorUtility.PrintHeader("Ability Info");
 
@@ -65,7 +65,7 @@ public class AbilityEditor : Editor
     /// <summary>
     /// 
     /// </summary>
-    private void PrintAbilityCasting()
+    void PrintAbilityCasting()
     {
         AbilityEditorUtility.PrintHeader("Casting");
         AbilityEditorUtility.PropertyField(serializedObject, "m_gloryRequirement");

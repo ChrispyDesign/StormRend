@@ -9,7 +9,7 @@ public enum RefreshType
 
 public class RefreshEffect : Effect
 {
-    [SerializeField] private RefreshType m_refreshType;
+    [SerializeField] RefreshType m_refreshType;
 
     public override bool PerformEffect(Tile _effectedNode, Unit _thisUnit)
     {

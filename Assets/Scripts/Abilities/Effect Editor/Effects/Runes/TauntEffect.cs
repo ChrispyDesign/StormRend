@@ -5,6 +5,6 @@
 /// </summary>
 public class TauntEffect : Effect
 {
-    [SerializeField] private int m_durationInTurns = 1;
-    [SerializeField] private int m_damageOnHit = 1;
+    [SerializeField] int m_durationInTurns = 1;
+    [SerializeField] int m_damageOnHit = 1;
 }
