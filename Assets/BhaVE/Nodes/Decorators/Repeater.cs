@@ -5,7 +5,7 @@ using System;
 
 namespace BhaVE.Nodes.Decorators
 {
-	[CreateAssetMenu(menuName = "BhaVEInternal/Decorators/Repeater")]
+	// [CreateAssetMenu(menuName = "BhaVEInternal/Decorators/Repeater")]
 	public sealed class Repeater : Decorator
 	{
 		[SerializeField] uint repeats = 100;     //Minimum of 1 otherwise what's the point?

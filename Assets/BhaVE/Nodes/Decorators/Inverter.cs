@@ -4,7 +4,7 @@ using BhaVE.Editor;
 
 namespace BhaVE.Nodes.Decorators
 {
-	[CreateAssetMenu(menuName = "BhaVEInternal/Decorators/Inverter")]
+	// [CreateAssetMenu(menuName = "BhaVEInternal/Decorators/Inverter")]
 	public sealed class Inverter : Decorator
 	{
 		protected internal override NodeState OnExecute(BhaveAgent agent)

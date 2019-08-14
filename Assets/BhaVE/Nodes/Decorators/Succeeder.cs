@@ -7,7 +7,7 @@ namespace BhaVE.Nodes.Decorators
     /// <summary>
     /// Always return success
     /// </summary>
-    [CreateAssetMenu(menuName = "BhaVEInternal/Decorators/Succeeder")]
+    // [CreateAssetMenu(menuName = "BhaVEInternal/Decorators/Succeeder")]
     public sealed class Succeeder : Decorator
     {
         [SerializeField] bool returnPending = false;

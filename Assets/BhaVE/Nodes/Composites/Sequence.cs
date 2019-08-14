@@ -5,7 +5,7 @@ using BhaVE.Editor;
 
 namespace BhaVE.Nodes.Composites
 {
-	[CreateAssetMenu(menuName = "BhaVEInternal/Composites/Sequence")]
+	// [CreateAssetMenu(menuName = "BhaVEInternal/Composites/Sequence")]
 	public class Sequence : Composite
 	{
 		protected internal override NodeState OnExecute(BhaveAgent agent)

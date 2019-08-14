@@ -7,7 +7,7 @@ using BhaVE.Editor;
 
 namespace BhaVE.Nodes.Leafs
 {
-	[CreateAssetMenu(menuName = "BhaVEInternal/Leafs/Action")]
+	// [CreateAssetMenu(menuName = "BhaVEInternal/Leafs/Action")]
 	public class Action : Leaf
 	{
 		//Delegate

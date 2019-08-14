@@ -6,7 +6,7 @@ using BhaVE.Editor;
 
 namespace BhaVE.Nodes.Leafs
 {
-	[CreateAssetMenu(menuName = "BhaVEInternal/Leafs/Condition")]
+	// [CreateAssetMenu(menuName = "BhaVEInternal/Leafs/Condition")]
 	public class Condition : Leaf
 	{
 		//Delegate object

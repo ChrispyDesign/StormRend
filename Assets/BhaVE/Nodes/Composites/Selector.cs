@@ -5,7 +5,7 @@ using BhaVE.Editor;
 
 namespace BhaVE.Nodes.Composites
 {
-	[CreateAssetMenu(menuName = "BhaVEInternal/Composites/Selector")]
+	// [CreateAssetMenu(menuName = "BhaVEInternal/Composites/Selector")]
 	public class Selector : Composite
 	{
 		protected internal override NodeState OnExecute(BhaveAgent agent)
