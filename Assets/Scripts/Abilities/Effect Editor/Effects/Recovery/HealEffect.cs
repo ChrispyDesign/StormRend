@@ -16,7 +16,7 @@ public class HealEffect : Effect
 
         if (unit != null)
         {
-            unit.SetHP(unit.GetHP() + m_healAmount);
+            unit.HP += m_healAmount;
 		}
 
 		return true;

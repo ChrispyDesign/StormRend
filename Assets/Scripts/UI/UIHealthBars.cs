@@ -28,8 +28,8 @@ public class UIHealthBars : MonoBehaviour
         for (int i = 0; i < units.Length; i++)
         {
             Unit unit = units[i];
-            int currentHP = unit.GetHP();
-            int maxHP = unit.GetMaxHP();
+            int currentHP = unit.HP;
+            int maxHP = unit.maxHP;
 
             GameObject newHealthBar = Instantiate(m_healthBarPrefab);
             Slider healthBar = newHealthBar.GetComponent<Slider>();

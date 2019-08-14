@@ -43,14 +43,20 @@ namespace StormRend
         {
             m_isDead = false;
         };
+
+		//Properties
+		public int HP {
+			get => m_HP;
+			set => m_HP = Mathf.Clamp(value, 0, m_maxHP); }
+		public int maxHP => m_maxHP;
+
+
         #region getters
 
         public List<Node> GetAvailableNodes() { return m_availableNodes; }
         public Ability GetLockedAbility() { return m_lockedAbility; }
         public List<Node> GetAttackNodes() { return m_attackNodes; }
         public Node GetCurrentNode() { return Grid.GetNodeFromCoords(m_coordinates); }
-        public int GetMaxHP() { return m_maxHP; }
-        public int GetHP() { return m_HP; }
         public int GetMove() { return m_maxMOV; }
         public bool GetIsFocused() { return m_isFocused; }
         public bool GetAlreadyMoved() { return m_alreadyMoved; }
@@ -74,7 +80,6 @@ namespace StormRend
 
         #region setters
 
-        public void SetHP(int value) { m_HP = Mathf.Clamp(value, 0, m_maxHP); }
         public void SetIsFocused(bool _isFocused) { m_isFocused = _isFocused; }
 
         #endregion
@@ -185,10 +190,11 @@ namespace StormRend
 
         public virtual void Die()
         {
+            OnDie.Invoke();
+			
             gameObject.SetActive(false);
             Node node = Grid.GetNodeFromCoords(m_coordinates);
             node.SetUnitOnTop(null);
-            OnDie.Invoke();
         }
     }
 }

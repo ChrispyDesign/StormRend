@@ -12,7 +12,7 @@ namespace StormRend.Bhaviours
 	[CreateAssetMenu(menuName = "BhaVE/Delegates/Conditions/CheckUnitListCount", fileName = "CheckUnitListCount")]
     public class CheckUnitListCountCondition : BhaveCondition
     {
-		public enum ComparisonType
+		public enum ComparisonMode
 		{ 
 			LessThan,
 			LessOrEqual,
@@ -20,31 +20,31 @@ namespace StormRend.Bhaviours
 			GreaterThan,
 			GreaterOrEqual
 		}
-		[SerializeField] ComparisonType comparisonType;
+		[SerializeField] ComparisonMode comparisonMethod;
 		[SerializeField] BhaveUnitList targets;
 		[SerializeField] int countToCompare = 5;
 
         public override NodeState Execute(BhaveAgent agent)
         {
-			switch (comparisonType)
+			switch (comparisonMethod)
 			{
-				case ComparisonType.LessThan:
+				case ComparisonMode.LessThan:
 					if (targets.value.Count < countToCompare) 
 					return NodeState.Success;
 					break;
-				case ComparisonType.LessOrEqual:
+				case ComparisonMode.LessOrEqual:
 					if (targets.value.Count <= countToCompare) 
 					return NodeState.Success;
 					break;
-				case ComparisonType.Equal:
+				case ComparisonMode.Equal:
 					if (targets.value.Count <= countToCompare) 
 					return NodeState.Success;
 					break;
-				case ComparisonType.GreaterThan:
+				case ComparisonMode.GreaterThan:
 					if (targets.value.Count > countToCompare) 
 					return NodeState.Success;
 					break;
-				case ComparisonType.GreaterOrEqual:
+				case ComparisonMode.GreaterOrEqual:
 					if (targets.value.Count >= countToCompare) 
 					return NodeState.Success;
 					break;

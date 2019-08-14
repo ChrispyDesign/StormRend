@@ -18,14 +18,13 @@ namespace StormRend.Bhaviours
     {
         public enum UnitType { Player, Enemy }
         public UnitType unitType;
-        public BhaveUnitList targetList;
+        public BhaveUnitList targets;
 
         //Privates
         Unit thisUnit;
         List<Node> validMoves = new List<Node>();
         private bool unitFound;
         private bool unitHasBeenFound = false;
-
 
         public override void Initiate(BhaveAgent agent)
         {
@@ -34,7 +33,9 @@ namespace StormRend.Bhaviours
 
         public override void Begin()
         {
+			//Resets
             unitHasBeenFound = false;
+			targets.value.Clear();
         }
 
         public override NodeState Execute(BhaveAgent agent)
@@ -49,12 +50,13 @@ namespace StormRend.Bhaviours
                 var unitOnTop = n.GetUnitOnTop();
                 if (unitType == UnitType.Player && unitOnTop is PlayerUnit)
                 {
-                    targetList.value.Add(unitOnTop);
+					//Update targets
+                    targets.value.Add(unitOnTop);	
                     unitHasBeenFound = true;
                 }
                 else if (unitType == UnitType.Enemy && unitOnTop is EnemyUnit)
                 {
-                    targetList.value.Add(unitOnTop);
+                    targets.value.Add(unitOnTop);
                     return NodeState.Success;
                 }
             }
