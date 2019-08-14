@@ -9,8 +9,8 @@ namespace StormRend.Bhaviours
     /// <summary>
 	/// Checks the size of the target list
     /// </summary>
-	[CreateAssetMenu(menuName = "BhaVE/Delegates/Conditions/CheckUnitListCount", fileName = "CheckUnitListCount")]
-    public class CheckUnitListCountCondition : BhaveCondition
+	[CreateAssetMenu(menuName = "StormRend/Delegates/Conditions/CompareUnitListCount", fileName = "CompareUnitListCount")]
+    public class CompareUnitListCountCondition : BhaveCondition
     {
 		public enum ComparisonMode
 		{ 
