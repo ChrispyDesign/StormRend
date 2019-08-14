@@ -99,18 +99,26 @@ namespace StormRend
         public void ShowAttackTiles()
         {
             foreach (Node node in m_attackNodes)
-            {
-                node.transform.GetComponent<MeshRenderer>().material.color = Color.red;
-                node.m_selected = true;
+			{
+				if (node.m_nodeType == NodeType.EMPTY)
+					continue;
+
+				node.m_attackCover.SetActive(true);
+				node.m_moveCover.SetActive(false);
+				node.m_selected = true;
             }
         }
 
         public void UnShowAttackTiles()
         {
             foreach (Node node in m_attackNodes)
-            {
-                node.transform.GetComponent<MeshRenderer>().material.color = Color.white;
-                node.m_selected = false;
+			{
+				if (node.m_nodeType == NodeType.EMPTY)
+					continue;
+
+				node.m_attackCover.SetActive(false);
+				node.m_moveCover.SetActive(false);
+				node.m_selected = false;
             }
         }
 
@@ -134,8 +142,9 @@ namespace StormRend
                     if (node.GetUnitOnTop())
                         continue;
 
-                    node.transform.GetComponent<MeshRenderer>().material.color = Color.red;
-                    node.m_selected = true;
+					node.m_attackCover.SetActive(false);
+					node.m_moveCover.SetActive(true);
+					node.m_selected = true;
                 }
             }
 

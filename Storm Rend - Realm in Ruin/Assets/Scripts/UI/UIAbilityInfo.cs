@@ -59,20 +59,28 @@ public class UIAbilityInfo : MonoBehaviour
     /// </summary>
     public void UnhoverAbility()
     {
-        if (!(GameManager.GetInstance().GetPlayerController().GetIsAbilityLocked()))
-        {
-            GameManager.GetInstance().GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
-            if (m_player != null)
-            {
-                m_player.UnShowAttackTiles();
-            }
+		bool isLockedAbility = GameManager.GetInstance().GetPlayerController().GetIsAbilityLocked();
+
+		GameManager.GetInstance().GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
+		if (m_player != null)
+		{
+			m_player.UnShowAttackTiles();
 		}
 		m_infoPanel.SetActive(false);
+
+		if (isLockedAbility)
+		{
+			Ability ability = GameManager.GetInstance().GetPlayerController().GetCurrentPlayer().GetLockedAbility();
+			Unit player = GameManager.GetInstance().GetPlayerController().GetCurrentPlayer() as Unit;
+			ability.GetSelectableTiles(ref player);
+			player.ShowAttackTiles();
+		}
 	}
 
     public void OnClickAbility()
     {
-        if(m_player != null && !m_player.GetAlreadyAttacked())
+		Button button = this.gameObject.GetComponent<Button>();
+        if(m_player != null && !m_player.GetAlreadyAttacked() && button.interactable)
         {
             GameManager.GetInstance().GetPlayerController().SetCurrentMode(PlayerMode.ATTACK);
             m_player.SetLockedAbility(m_ability);
