@@ -5,6 +5,7 @@ namespace BhaVE.Delegates
 {
 	public abstract class BhaveDelegate<R> : ScriptableObject
 	{
+		[SerializeField] [TextArea] string description = "";
 		public virtual void Initiate(BhaveAgent agent) { }
 		public virtual void Begin() { }
 		public abstract R Execute(BhaveAgent agent);
