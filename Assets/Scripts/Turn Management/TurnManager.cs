@@ -11,16 +11,16 @@ using UnityEngine.UI;
 public class TurnManager : MonoBehaviour
 {
     // relevant UI
-    [SerializeField] private Button m_proceedTurnButton = null;
+    [SerializeField] Button m_proceedTurnButton = null;
 
-	private int m_currentTurn;
+	int m_currentTurn;
 
     // state machine for managing turns
-    private StateMachine m_stateMachine;
+    StateMachine m_stateMachine;
 
     // player and enemy turns
-    private PlayerTurn m_playerTurn;
-    private EnemyTurn m_enemyTurn;
+    PlayerTurn m_playerTurn;
+    EnemyTurn m_enemyTurn;
 
     #region getters
 

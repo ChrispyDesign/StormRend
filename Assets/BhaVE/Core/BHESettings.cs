@@ -21,6 +21,7 @@ namespace BhaVE.Editor.Settings
 
 		[Header("Connections")]
 		public BHEConnectionStyle connectionStyle = BHEConnectionStyle.Bezier;
+		[Range(1.0f, 10f)]
 		public float lineThickness = 3.5f;
 		public Color defaultLineColour = Color.black;
 		public Color runningLineColor = Color.white;
