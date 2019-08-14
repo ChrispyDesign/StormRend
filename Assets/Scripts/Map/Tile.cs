@@ -84,7 +84,7 @@ namespace StormRend
             m_origMaterial = transform.GetComponent<MeshRenderer>().material.color;
             transform.GetComponent<MeshRenderer>().material.color = Color.red;
 
-            PlayerUnit currentSelectedUnit = GameManager.GetInstance().GetPlayerController().GetCurrentPlayer();
+            PlayerUnit currentSelectedUnit = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
             if (currentSelectedUnit && !m_unitOnTop && currentSelectedUnit.GetAvailableNodes().Contains(this))
             {
                 currentSelectedUnit.MoveDuplicateTo(this);
@@ -101,7 +101,7 @@ namespace StormRend
 
         public void OnSelect()
         {
-            PlayerUnit currentSelectedUnit = GameManager.GetInstance().GetPlayerController().GetCurrentPlayer();
+            PlayerUnit currentSelectedUnit = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
 
             if (currentSelectedUnit == null)
                 return;
@@ -109,7 +109,7 @@ namespace StormRend
             if (currentSelectedUnit.GetAttackNodes().Count > 0)
                 currentSelectedUnit.UnShowAttackTiles();
 
-            if (GameManager.GetInstance().GetPlayerController().GetCurrentMode() == PlayerMode.MOVE)
+            if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.MOVE)
             {
                 if (currentSelectedUnit && currentSelectedUnit.GetIsFocused())
                 {
@@ -132,7 +132,7 @@ namespace StormRend
                             MoveCommand temp = currentSelectedUnit.GetMoveCommand();
                             temp.Execute();
 
-                            GameManager.GetInstance().GetCommandManager().m_moves.Add(temp);
+                            GameManager.singleton.GetCommandManager().m_moves.Add(temp);
                         }
 
                         FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 0.5f);
@@ -144,7 +144,7 @@ namespace StormRend
                 }
             }
 
-            if (GameManager.GetInstance().GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
+            if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
             {
                 Ability ability = currentSelectedUnit.GetLockedAbility();
                 if (ability != null)
@@ -157,7 +157,7 @@ namespace StormRend
                     }
                     currentSelectedUnit.SetLockedAbility(null);
 
-                    CommandManager commandManager = GameManager.GetInstance().GetCommandManager();
+                    CommandManager commandManager = GameManager.singleton.GetCommandManager();
 
                     foreach (MoveCommand move in commandManager.m_moves)
                     {
@@ -175,7 +175,7 @@ namespace StormRend
                 selector.SelectPlayerUnit(null);
                 selector.GetInfoPanel().SetActive(false);
             }
-            GameManager.GetInstance().GetPlayerController().SetCurrentMode(PlayerMode.IDLE);
+            GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.IDLE);
         }
 
         public void OnDeselect()

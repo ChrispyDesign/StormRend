@@ -63,7 +63,7 @@ public class TurnManager : MonoBehaviour
         // proceed to player turn
         m_stateMachine.ChangeState(m_playerTurn);
 
-		List<Crystal> crystal = GameManager.GetInstance().GetCrystals();
+		List<Crystal> crystal = GameManager.singleton.GetCrystals();
 		foreach(Crystal c in crystal)
 		{
 			c.IterateTurns();
@@ -85,7 +85,7 @@ public class TurnManager : MonoBehaviour
 
 	public void ResetPlayerVariables()
 	{
-		PlayerUnit[] units = GameManager.GetInstance().GetPlayerUnits();
+		PlayerUnit[] units = GameManager.singleton.GetPlayerUnits();
 
 		foreach(PlayerUnit player in units)
 		{
@@ -94,12 +94,12 @@ public class TurnManager : MonoBehaviour
 			player.m_afterClear = false;
 		}
 
-		GameManager.GetInstance().GetCommandManager().m_moves.Clear();
+		GameManager.singleton.GetCommandManager().m_moves.Clear();
 	}
 
 	public void ResetEnemyVariables()
 	{
-		EnemyUnit[] units = GameManager.GetInstance().GetEnemyUnits();
+		EnemyUnit[] units = GameManager.singleton.GetEnemyUnits();
 
 		foreach (EnemyUnit enemy in units)
 		{
@@ -108,6 +108,6 @@ public class TurnManager : MonoBehaviour
 			enemy.m_afterClear = false;
 		}
 
-		GameManager.GetInstance().GetCommandManager().m_moves.Clear();
+		GameManager.singleton.GetCommandManager().m_moves.Clear();
 	}
 }

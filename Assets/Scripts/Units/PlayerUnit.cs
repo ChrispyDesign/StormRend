@@ -32,7 +32,7 @@ namespace StormRend
         {
             m_isFocused = true;
 
-            Unit player = GameManager.GetInstance().GetPlayerController().GetCurrentPlayer();
+            Unit player = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
             if (player != null && player != this)
             {
                 if (player.GetAttackNodes() != null &&
@@ -40,18 +40,18 @@ namespace StormRend
                     player.UnShowAttackTiles();
             }
 
-            GameManager.GetInstance().GetPlayerController().SetCurrentPlayer(this);
+            GameManager.singleton.GetPlayerController().SetCurrentPlayer(this);
             UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(this);
             UIManager.GetInstance().GetAbilitySelector().SelectPlayerUnit(this);
 
             if (m_alreadyMoved && m_alreadyAttacked)
                 return;
 
-            GameManager.GetInstance().GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
+            GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
 
             if (!m_afterClear)
             {
-                foreach (ICommand command in GameManager.GetInstance().GetCommandManager().m_moves)
+                foreach (ICommand command in GameManager.singleton.GetCommandManager().m_moves)
                 {
                     MoveCommand move = command as MoveCommand;
 
@@ -87,8 +87,8 @@ namespace StormRend
         public override void Die()
         {
             base.Die();
-            GameManager.GetInstance().m_playerCount--;
-            GameManager.GetInstance().CheckEndCondition();
+            GameManager.singleton.m_playerCount--;
+            GameManager.singleton.CheckEndCondition();
         }
     }
 }

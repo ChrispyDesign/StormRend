@@ -22,7 +22,7 @@ public class SummonEffect : Effect
 		unit.m_coordinates = _effectedNode.GetCoordinates();
 		unit.m_HowManyTurns = m_HowManyTurns;
 		_effectedNode.SetUnitOnTop(unit);
-		GameManager.GetInstance().AddCrystal(unit);
+		GameManager.singleton.AddCrystal(unit);
 
 		return true;
 	}

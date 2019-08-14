@@ -13,8 +13,7 @@ namespace StormRend.Bhaviours
     {
         public override NodeState Execute(BhaveAgent agent)
         {
-			
-            throw new System.NotImplementedException();
+			return NodeState.Failure;
         }
     }
 }

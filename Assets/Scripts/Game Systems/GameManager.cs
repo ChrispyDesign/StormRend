@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using StormRend;
 using UnityEngine;
+using BhaVE.Patterns;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
 	//Scriptable object singleton?
 
@@ -63,18 +64,18 @@ public class GameManager : MonoBehaviour
 		GameWin();
 	}
 
-	public static GameManager GetInstance()
-    {
-        // if no instance is assigned...
-        if (!m_instance)
-            m_instance = FindObjectOfType<GameManager>(); // find the instance
+	// public static GameManager GetInstance()
+    // {
+    //     // if no instance is assigned...
+    //     if (!m_instance)
+    //         m_instance = FindObjectOfType<GameManager>(); // find the instance
 
-		// error handling
-        Debug.Assert(m_instance, "UI Manager not found!");
+	// 	// error handling
+    //     Debug.Assert(m_instance, "UI Manager not found!");
 
-        // done
-        return m_instance;
-    }
+    //     // done
+    //     return m_instance;
+    // }
 
 	public void GameOver()
 	{

@@ -60,14 +60,14 @@ public class Grid
                 if (m_nodes[x, y].m_nodeType == NodeType.ENEMY)
                     m_nodes[x, y].GetComponent<MeshRenderer>().material.color = Color.red;
 
-				foreach(PlayerUnit player in GameManager.GetInstance().GetPlayerUnits())
+				foreach(PlayerUnit player in GameManager.singleton.GetPlayerUnits())
 				{
 					if (player.m_coordinates.x == x &&
 					   player.m_coordinates.y == y)
 						m_nodes[x, y].SetUnitOnTop(player);
 				}
 
-				foreach (EnemyUnit enemy in GameManager.GetInstance().GetEnemyUnits())
+				foreach (EnemyUnit enemy in GameManager.singleton.GetEnemyUnits())
 				{
 					if (enemy.m_coordinates.x == x &&
 					   enemy.m_coordinates.y == y)

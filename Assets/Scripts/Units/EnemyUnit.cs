@@ -13,15 +13,15 @@ namespace StormRend
 			Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetMove(), typeof(PlayerUnit));
 
 			base.OnSelect();
-			GameManager.GetInstance().GetPlayerController().SetCurrentPlayer(null);
+			GameManager.singleton.GetPlayerController().SetCurrentPlayer(null);
 		}
 
 		//This doesn't need to be overriden
 		public override void Die()
 		{
 			base.Die();
-			GameManager.GetInstance().m_enemyCount--;
-			GameManager.GetInstance().CheckEndCondition();
+			GameManager.singleton.m_enemyCount--;
+			GameManager.singleton.CheckEndCondition();
 		}
 	}
 }

@@ -136,7 +136,7 @@ namespace StormRend
         {
             m_onSelect.Invoke();
 
-            if (GameManager.GetInstance().GetPlayerController().GetCurrentMode() == PlayerMode.MOVE &&
+            if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.MOVE &&
                 !m_afterClear)
             {
 
@@ -153,7 +153,7 @@ namespace StormRend
                 }
             }
 
-            if (GameManager.GetInstance().GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
+            if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
             {
                 Tile node = GetCurrentNode();
                 node.OnSelect();

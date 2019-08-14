@@ -68,7 +68,7 @@ public class UIAbilitySelector : MonoBehaviour
 
         m_buttonPanel.SetActive(true);
 
-        PlayerUnit player = GameManager.GetInstance().GetPlayerController().GetCurrentPlayer();
+        PlayerUnit player = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
 
         if (player != null)
         {
@@ -100,7 +100,7 @@ public class UIAbilitySelector : MonoBehaviour
         else
             button.interactable = false;
 
-		PlayerUnit player = GameManager.GetInstance().GetPlayerController().GetCurrentPlayer();
+		PlayerUnit player = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
 		if (player.GetAlreadyAttacked())
 			button.interactable = false;
     }
