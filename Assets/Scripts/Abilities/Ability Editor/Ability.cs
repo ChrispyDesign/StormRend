@@ -65,7 +65,7 @@ public class Ability : ScriptableObject
     {
         int center = (m_castArea.Length / 2) + (m_castArea.Length % 2);
         int endPoint = m_castArea.Length / 2;
-        List<Node> nodes = new List<Node>();
+        List<Tile> nodes = new List<Tile>();
         Vector2Int coords = Vector2Int.zero;
 
         for (int y = 0; y < m_castArea.Length; y++)
@@ -80,7 +80,7 @@ public class Ability : ScriptableObject
                     coords.x = _player.m_coordinates.x + _x;
                     coords.y = _player.m_coordinates.y + _y;
 
-                    Node node = Grid.GetNodeFromCoords(coords);
+                    Tile node = Grid.GetNodeFromCoords(coords);
                     if (node != null)
                         nodes.Add(node);
                 }

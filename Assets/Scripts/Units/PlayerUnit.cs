@@ -57,7 +57,7 @@ namespace StormRend
 
                     if (move.m_unit == this)
                     {
-                        Node previousNode = Grid.GetNodeFromCoords(move.GetOrigCoordinates());
+                        Tile previousNode = Grid.GetNodeFromCoords(move.GetOrigCoordinates());
 
                         if (previousNode.GetUnitOnTop() != this && previousNode.GetUnitOnTop() != null)
                             return;

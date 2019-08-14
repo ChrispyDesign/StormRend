@@ -22,18 +22,12 @@ public class AbilityEditor : Editor
 
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         m_ability = (Ability)target;
         m_effectEditor = new EffectEditor(m_ability.GetEffects());
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnInspectorGUI()
     {
         // update the ability

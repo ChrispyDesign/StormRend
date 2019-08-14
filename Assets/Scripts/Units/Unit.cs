@@ -36,8 +36,8 @@ namespace StormRend
         protected bool m_alreadyAttacked;
         protected bool m_isFocused;
         protected Ability m_lockedAbility;
-        List<Node> m_availableNodes;
-        List<Node> m_attackNodes;
+        List<Tile> m_availableNodes;
+        List<Tile> m_attackNodes;
 
         public Action OnDie = delegate
         {
@@ -53,10 +53,10 @@ namespace StormRend
 
         #region getters
 
-        public List<Node> GetAvailableNodes() { return m_availableNodes; }
+        public List<Tile> GetAvailableNodes() { return m_availableNodes; }
         public Ability GetLockedAbility() { return m_lockedAbility; }
-        public List<Node> GetAttackNodes() { return m_attackNodes; }
-        public Node GetCurrentNode() { return Grid.GetNodeFromCoords(m_coordinates); }
+        public List<Tile> GetAttackNodes() { return m_attackNodes; }
+        public Tile GetCurrentNode() { return Grid.GetNodeFromCoords(m_coordinates); }
         public int GetMove() { return m_maxMOV; }
         public bool GetIsFocused() { return m_isFocused; }
         public bool GetAlreadyMoved() { return m_alreadyMoved; }
@@ -74,7 +74,7 @@ namespace StormRend
         public void SetAlreadyMoved(bool _moved) { m_alreadyMoved = _moved; }
         public void SetAlreadyAttacked(bool _attack) { m_alreadyAttacked = _attack; }
 
-        public void SetAttackNodes(List<Node> _nodes) { m_attackNodes = _nodes; }
+        public void SetAttackNodes(List<Tile> _nodes) { m_attackNodes = _nodes; }
         public void SetLockedAbility(Ability _ability) { m_lockedAbility = _ability; }
         #endregion
 
@@ -89,10 +89,10 @@ namespace StormRend
         void Start()
         {
             m_HP = m_maxHP;
-            m_attackNodes = new List<Node>();
+            m_attackNodes = new List<Tile>();
         }
 
-        public void MoveTo(Node _moveToNode)
+        public void MoveTo(Tile _moveToNode)
         {
             GetCurrentNode().SetUnitOnTop(null);
             _moveToNode.SetUnitOnTop(this);
@@ -103,7 +103,7 @@ namespace StormRend
 
         public void ShowAttackTiles()
         {
-            foreach (Node node in m_attackNodes)
+            foreach (Tile node in m_attackNodes)
 			{
 				if (node.m_nodeType == NodeType.EMPTY)
 					continue;
@@ -116,7 +116,7 @@ namespace StormRend
 
         public void UnShowAttackTiles()
         {
-            foreach (Node node in m_attackNodes)
+            foreach (Tile node in m_attackNodes)
 			{
 				if (node.m_nodeType == NodeType.EMPTY)
 					continue;
@@ -127,7 +127,7 @@ namespace StormRend
             }
         }
 
-        public void MoveDuplicateTo(Node _moveToNode)
+        public void MoveDuplicateTo(Tile _moveToNode)
         {
             m_duplicateMesh.transform.position = _moveToNode.GetNodePosition();
         }
@@ -142,7 +142,7 @@ namespace StormRend
 
                 m_availableNodes = Dijkstra.Instance.m_validMoves;
 
-                foreach (Node node in m_availableNodes)
+                foreach (Tile node in m_availableNodes)
                 {
                     if (node.GetUnitOnTop())
                         continue;
@@ -155,7 +155,7 @@ namespace StormRend
 
             if (GameManager.GetInstance().GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
             {
-                Node node = GetCurrentNode();
+                Tile node = GetCurrentNode();
                 node.OnSelect();
             }
 
@@ -193,7 +193,7 @@ namespace StormRend
             OnDie.Invoke();
 			
             gameObject.SetActive(false);
-            Node node = Grid.GetNodeFromCoords(m_coordinates);
+            Tile node = Grid.GetNodeFromCoords(m_coordinates);
             node.SetUnitOnTop(null);
         }
     }

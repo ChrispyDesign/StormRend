@@ -11,7 +11,7 @@ public class RefreshEffect : Effect
 {
     [SerializeField] private RefreshType m_refreshType;
 
-    public override bool PerformEffect(Node _effectedNode, Unit _thisUnit)
+    public override bool PerformEffect(Tile _effectedNode, Unit _thisUnit)
     {
         base.PerformEffect(_effectedNode, _thisUnit);
 

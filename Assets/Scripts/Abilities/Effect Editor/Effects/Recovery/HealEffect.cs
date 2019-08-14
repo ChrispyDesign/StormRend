@@ -5,7 +5,7 @@ public class HealEffect : Effect
 {
     [SerializeField] private int m_healAmount;
 
-    public override bool PerformEffect(Node _effectedNode, Unit _thisUnit)
+    public override bool PerformEffect(Tile _effectedNode, Unit _thisUnit)
     {
         base.PerformEffect(_effectedNode, _thisUnit);
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Grid 
 {
-    public static Node[,] m_nodes;
+    public static Tile[,] m_nodes;
 
     [SerializeField] private SpawnManager m_spawnManager;
 
@@ -30,7 +30,7 @@ public class Grid
     {
         m_spawnManager = GameObject.FindObjectOfType<SpawnManager>();
 
-        m_nodes = new Node[m_gridSize.x, m_gridSize.y];
+        m_nodes = new Tile[m_gridSize.x, m_gridSize.y];
         //int i = 0;
         for (int x = 0; x < m_gridSize.x; x++)
         {
@@ -41,7 +41,7 @@ public class Grid
                                             -(m_gridSize.y / 2) + y * m_nodeSize);
                 Transform tile = Object.Instantiate(_prefab, pos, Quaternion.identity, m_parent);
                 tile.name = "(" + x + ", " + y + ")";
-                m_nodes[x, y] = tile.GetComponent<Node>().SetNodeVariables(pos, new Vector2Int(x, y), m_gridData[x,y]);
+                m_nodes[x, y] = tile.GetComponent<Tile>().SetNodeVariables(pos, new Vector2Int(x, y), m_gridData[x,y]);
                 
                 if (m_nodes[x, y].m_nodeType == NodeType.EMPTY)
                     m_nodes[x, y].GetComponent<MeshRenderer>().enabled = false;
@@ -87,9 +87,9 @@ public class Grid
         //m_spawnManager.spawnPlayers();
     }
 
-    Node[] GenerateNeighbours(int _x, int _y)
+    Tile[] GenerateNeighbours(int _x, int _y)
     {
-        Node[] neighbours = new Node[4];
+        Tile[] neighbours = new Tile[4];
         
         if (_y < m_gridSize.y - 1)
             neighbours[(int)Neighbour.UP] = m_nodes[_x, _y + 1];
@@ -106,6 +106,6 @@ public class Grid
         return neighbours;
     }
 
-    public static Node GetNodeFromCoords(int _x, int _y) { return m_nodes[_x, _y]; }
-    public static Node GetNodeFromCoords(Vector2Int _coords) { return m_nodes[_coords.x, _coords.y]; }
+    public static Tile GetNodeFromCoords(int _x, int _y) { return m_nodes[_x, _y]; }
+    public static Tile GetNodeFromCoords(Vector2Int _coords) { return m_nodes[_coords.x, _coords.y]; }
 }

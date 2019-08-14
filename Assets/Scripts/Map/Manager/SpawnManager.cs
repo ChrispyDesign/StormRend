@@ -16,7 +16,7 @@ public class SpawnManager : MonoBehaviour
     {
         foreach (SpawnPoints spawnPoint in m_spawns)
         {
-            Node node = Grid.GetNodeFromCoords(
+            Tile node = Grid.GetNodeFromCoords(
                         spawnPoint.m_spawnCoords.x,
                         spawnPoint.m_spawnCoords.y);
 

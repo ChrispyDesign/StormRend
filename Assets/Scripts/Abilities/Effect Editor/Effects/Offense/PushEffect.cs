@@ -20,7 +20,7 @@ public class PushEffect : Effect
 	private Vector2Int m_right = new Vector2Int(1, 0);
 	private Vector2Int m_down = new Vector2Int(0, -1);
 
-	public override bool PerformEffect(Node _effectedNode, Unit _thisUnit)
+	public override bool PerformEffect(Tile _effectedNode, Unit _thisUnit)
 	{
 		base.PerformEffect(_effectedNode, _thisUnit);
 		
@@ -31,7 +31,7 @@ public class PushEffect : Effect
 		Vector2Int unitCoords = _thisUnit.m_coordinates;
 
 		Vector2Int tempCoords = new Vector2Int(0,0);
-		Node tempNode;
+		Tile tempNode;
 
 		// Process Left
 		tempCoords = nodeCoords - m_left;
@@ -40,7 +40,7 @@ public class PushEffect : Effect
 		if (tempNode.GetUnitOnTop() != null)
 		{
 			Unit unit = tempNode.GetUnitOnTop();
-			Node newNode = Grid.GetNodeFromCoords(tempCoords - m_left);
+			Tile newNode = Grid.GetNodeFromCoords(tempCoords - m_left);
 			if(newNode.GetUnitOnTop() == null)
 				unit.MoveTo(newNode);
 		}
@@ -52,7 +52,7 @@ public class PushEffect : Effect
 		if (tempNode.GetUnitOnTop() != null)
 		{
 			Unit unit = tempNode.GetUnitOnTop();
-			Node newNode = Grid.GetNodeFromCoords(tempCoords - m_up);
+			Tile newNode = Grid.GetNodeFromCoords(tempCoords - m_up);
 			if (newNode.GetUnitOnTop() == null)
 				unit.MoveTo(newNode);
 		}
@@ -64,7 +64,7 @@ public class PushEffect : Effect
 		if (tempNode.GetUnitOnTop() != null)
 		{
 			Unit unit = tempNode.GetUnitOnTop();
-			Node newNode = Grid.GetNodeFromCoords(tempCoords - m_right);
+			Tile newNode = Grid.GetNodeFromCoords(tempCoords - m_right);
 			if (newNode.GetUnitOnTop() == null)
 				unit.MoveTo(newNode);
 		}
@@ -76,7 +76,7 @@ public class PushEffect : Effect
 		if (tempNode.GetUnitOnTop() != null)
 		{
 			Unit unit = tempNode.GetUnitOnTop();
-			Node newNode = Grid.GetNodeFromCoords(tempCoords - m_down);
+			Tile newNode = Grid.GetNodeFromCoords(tempCoords - m_down);
 			if (newNode.GetUnitOnTop() == null)
 				unit.MoveTo(newNode);
 		}

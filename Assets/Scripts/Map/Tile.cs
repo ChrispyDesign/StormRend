@@ -12,10 +12,10 @@ public enum Neighbour
 
 namespace StormRend
 {
-    public class Node : MonoBehaviour, IHoverable, ISelectable
+    public class Tile : MonoBehaviour, IHoverable, ISelectable
     {
         [SerializeField] private Unit m_unitOnTop;
-        [SerializeField] private Node[] m_neighbours;
+        [SerializeField] private Tile[] m_neighbours;
         [SerializeField] private Vector3 m_position;
         [SerializeField] private Vector2Int m_coordinate;
 		[SerializeField] public GameObject m_attackCover;
@@ -26,7 +26,7 @@ namespace StormRend
         public bool m_selected = false;
 
         public NodeType m_nodeType;
-        public Node m_parent;
+        public Tile m_parent;
         public int m_nGCost, m_nHCost;
 
         public int m_nFCost
@@ -45,9 +45,9 @@ namespace StormRend
             }
         }
 
-        public Node SetNodeVariables(Vector3 _pos, Vector2Int _coordinate, NodeType _nodeType)
+        public Tile SetNodeVariables(Vector3 _pos, Vector2Int _coordinate, NodeType _nodeType)
         {
-            m_neighbours = new Node[4];
+            m_neighbours = new Tile[4];
             m_position = _pos;
             m_coordinate = _coordinate;
             m_nodeType = _nodeType;
@@ -61,15 +61,15 @@ namespace StormRend
         public Vector3 GetNodePosition() { return m_position; }
 
         public void SetUnitOnTop(Unit _unit) { m_unitOnTop = _unit; }
-        public void SetNeighbours(Node[] _neighbours) { m_neighbours = _neighbours; }
+        public void SetNeighbours(Tile[] _neighbours) { m_neighbours = _neighbours; }
 
         #endregion
 
-        public List<Node> GetNeighbours()
+        public List<Tile> GetNeighbours()
         {
-            List<Node> neighbours = new List<Node>();
+            List<Tile> neighbours = new List<Tile>();
 
-            foreach (Node node in m_neighbours)
+            foreach (Tile node in m_neighbours)
             {
                 if (node == null)
                     continue;
@@ -113,7 +113,7 @@ namespace StormRend
             {
                 if (currentSelectedUnit && currentSelectedUnit.GetIsFocused())
                 {
-                    List<Node> nodes = currentSelectedUnit.GetAvailableNodes();
+                    List<Tile> nodes = currentSelectedUnit.GetAvailableNodes();
 
                     if (nodes.Contains(this) && !m_unitOnTop)
                     {
@@ -185,11 +185,11 @@ namespace StormRend
             Unit unitOnTop = GetUnitOnTop();
             if (unitOnTop)
             {
-                List<Node> nodes = unitOnTop.GetAvailableNodes();
+                List<Tile> nodes = unitOnTop.GetAvailableNodes();
 
                 if (nodes != null)
                 {
-                    foreach (Node node in nodes)
+                    foreach (Tile node in nodes)
 					{
 						if (node.m_nodeType == NodeType.EMPTY)
 							continue;

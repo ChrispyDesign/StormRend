@@ -22,7 +22,7 @@ public class Effect : ScriptableObject
 
     public bool m_isFoldOut { get; set; } = true;
 
-    public virtual bool PerformEffect(Node _effectedNode, Unit _thisUnit)
+    public virtual bool PerformEffect(Tile _effectedNode, Unit _thisUnit)
     {
         OnPeformEffect.Invoke();
 

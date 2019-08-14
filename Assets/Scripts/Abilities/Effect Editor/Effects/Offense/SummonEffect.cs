@@ -8,7 +8,7 @@ public class SummonEffect : Effect
     [SerializeField] private GameObject m_summon;
     [SerializeField] private int m_HowManyTurns;
 
-	public override bool PerformEffect(Node _effectedNode, Unit _thisUnit)
+	public override bool PerformEffect(Tile _effectedNode, Unit _thisUnit)
 	{
 		base.PerformEffect(_effectedNode, _thisUnit);
 

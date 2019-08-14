@@ -1,6 +1,5 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using StormRend;
 using UnityEngine;
 
 namespace StormRend
@@ -8,9 +7,10 @@ namespace StormRend
 	public class Dijkstra : MonoBehaviour
 	{
 		//Make this A* because why not
-		public static Dijkstra Instance; // Static instace of the class
-		public List<Node> m_validMoves = new List<Node>(); // The path we will calculated
-		public List<Node> m_checkedNodes = new List<Node>();
+
+		public static Dijkstra Instance; //bingleton
+		public List<Tile> m_validMoves = new List<Tile>(); // The path we will calculated
+		public List<Tile> m_checkedNodes = new List<Tile>();
 		public bool m_DebugPath; // If we want to debug out path
 
 		private void Awake()
@@ -22,14 +22,15 @@ namespace StormRend
 				Destroy(gameObject);
 		}
 
-		public void FindValidMoves(Node _startNode, int allowedTiles, System.Type blockedUnits)
+		public void FindValidMoves(Tile _startNode, int allowedTiles, System.Type blockedUnits)
 		{
+			//This could just return the valid moves directly
 			// If there is already a path clear it
 			if (m_validMoves.Count > 0)
 				m_validMoves.Clear();
 
 			// Creating a binary tree for paths that can be taken from the currentnode
-			Queue<Node> queue = new Queue<Node>();
+			Queue<Tile> queue = new Queue<Tile>();
 
 			// Add our starting point on the openlist
 			queue.Enqueue(_startNode);
@@ -38,16 +39,16 @@ namespace StormRend
 			{
 				// Initialise the current node to openlist's first node and remove it from the openlist
 				// add it to the closedlist cuz its being searched
-				Node currentNode = queue.Dequeue();
+				Tile currentNode = queue.Dequeue();
 
 				if (!m_checkedNodes.Contains(currentNode))
 					m_checkedNodes.Add(currentNode);
 
-				List<Node> Neighbours = currentNode.GetNeighbours();
+				List<Tile> Neighbours = currentNode.GetNeighbours();
 
 				// We search thru the neighbours until we find the best travel cost
 				// to another node
-				foreach (Node neighbour in Neighbours)
+				foreach (Tile neighbour in Neighbours)
 				{
 					if (neighbour.m_nodeType == NodeType.BLOCKED || neighbour.m_nodeType == NodeType.EMPTY)
 						continue;
@@ -78,7 +79,7 @@ namespace StormRend
 
 			}
 
-			foreach (Node node in m_checkedNodes)
+			foreach (Tile node in m_checkedNodes)
 			{
 				node.m_nHCost = 0;
 				node.m_nGCost = 0;

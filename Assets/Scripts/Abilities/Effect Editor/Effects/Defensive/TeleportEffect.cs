@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TeleportEffect : Effect
 {
-	public override bool PerformEffect(Node _effectedNode, Unit _thisUnit)
+	public override bool PerformEffect(Tile _effectedNode, Unit _thisUnit)
 	{
 		base.PerformEffect(_effectedNode, _thisUnit);
 
