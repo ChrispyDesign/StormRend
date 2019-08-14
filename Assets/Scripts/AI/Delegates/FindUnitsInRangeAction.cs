@@ -18,6 +18,9 @@ namespace StormRend.Bhaviours
         public UnitType unitType;
         public BhaveUnitList targets;
 
+		[Tooltip("The number of turns to cast out in order find the range of this unit")]
+		public uint turnsToRangefind = 1;	
+
         //Privates
         Unit unit;	//The unit mono attached to this agent
         List<Tile> validMoves = new List<Tile>();
@@ -38,7 +41,7 @@ namespace StormRend.Bhaviours
         public override NodeState Execute(BhaveAgent agent)
         {
             //Find valid moves
-            Dijkstra.Instance.FindValidMoves(Grid.GetNodeFromCoords(unit.m_coordinates), unit.GetMove(), typeof(EnemyUnit));
+            Dijkstra.Instance.FindValidMoves(Grid.GetNodeFromCoords(unit.m_coordinates), unit.GetMove() * (int)turnsToRangefind, typeof(EnemyUnit));
             validMoves = Dijkstra.Instance.m_validMoves;
 
             //Determine if specified unit is in range
