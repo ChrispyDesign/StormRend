@@ -13,7 +13,9 @@ namespace StormRend.Bhaviours
     {
         public override NodeState Execute(BhaveAgent agent)
         {
-			return NodeState.Failure;
+			//Do nothing because the AI controller should take care of everything
+			//Maybe just use the end behaviour tree instead
+			return NodeState.Success;
         }
     }
 }

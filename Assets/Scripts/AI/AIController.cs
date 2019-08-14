@@ -16,14 +16,23 @@ namespace StormRend.AI
 		[SerializeField] UnitType unitType;
 		[SerializeField] float delayBetweenTurns = 3f;  //Seconds
 
-		static BhaveManager bhm = BhaveManager.singleton;
+		Unit[] currentUnits = null;
+		GameManager gm = null;
+		BhaveManager bhm = null;
 
-		static Unit[] currentUnits = null;
+		void Awake()
+		{
+			gm = GameManager.singleton;
+			bhm = BhaveManager.singleton;
+		}
 
-		public void StartTurns()
+		public void StartAITurn()
 		{
 			//Get all available units of a certain type
-			currentUnits = GameManager.GetInstance().GetEnemyUnits();
+			if (unitType == UnitType.Player)
+				currentUnits = gm.GetPlayerUnits();
+			else if (unitType == UnitType.Enemy)
+				currentUnits = gm.GetEnemyUnits();
 
 			//Start running the AI
 			StartCoroutine(RunAI());
@@ -39,19 +48,18 @@ namespace StormRend.AI
 			}
 
 			//Then end the turn for this unit type
-			EndTurnOfUnitType();
+			EndAITurn();
 		}
-
 
 		/// <summary>
 		/// Ends current unit's turn. If it's the last one then end turn
 		/// </summary>
-		public void EndTurnOfUnitType()
+		public void EndAITurn()
 		{
 			if (unitType == UnitType.Enemy)
-				GameManager.GetInstance().GetTurnManager().PlayerTurn();
+				GameManager.singleton.GetTurnManager().PlayerTurn();
 			else if (unitType == UnitType.Player)
-				GameManager.GetInstance().GetTurnManager().EnemyTurn();
+				GameManager.singleton.GetTurnManager().EnemyTurn();
 		}
 
 	}
