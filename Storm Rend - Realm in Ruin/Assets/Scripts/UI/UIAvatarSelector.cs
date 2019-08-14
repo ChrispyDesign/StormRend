@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using StormRend;
+using UnityEngine;
 
 /// <summary>
 /// avatar selection script responsible for resizing the avatars on player selection
