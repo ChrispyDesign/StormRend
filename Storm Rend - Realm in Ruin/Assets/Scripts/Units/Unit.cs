@@ -100,6 +100,9 @@ namespace StormRend
         {
             foreach (Node node in m_attackNodes)
 			{
+				if (node.m_nodeType == NodeType.EMPTY)
+					continue;
+
 				node.m_attackCover.SetActive(true);
 				node.m_moveCover.SetActive(false);
 				node.m_selected = true;
@@ -110,6 +113,9 @@ namespace StormRend
         {
             foreach (Node node in m_attackNodes)
 			{
+				if (node.m_nodeType == NodeType.EMPTY)
+					continue;
+
 				node.m_attackCover.SetActive(false);
 				node.m_moveCover.SetActive(false);
 				node.m_selected = false;

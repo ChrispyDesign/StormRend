@@ -190,7 +190,10 @@ namespace StormRend
                 if (nodes != null)
                 {
                     foreach (Node node in nodes)
-                    {
+					{
+						if (node.m_nodeType == NodeType.EMPTY)
+							continue;
+
 						//node.transform.GetComponent<MeshRenderer>().material.color = Color.white;
 						node.m_attackCover.SetActive(false);
 						node.m_moveCover.SetActive(false);
