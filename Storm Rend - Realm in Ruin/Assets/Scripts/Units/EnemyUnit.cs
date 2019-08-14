@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using StormRend;
 using UnityEngine;
 
-public class EnemyUnit : Unit
+namespace StormRend
 {
-    public override void OnSelect()
-    {
-        Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetMove(), typeof(PlayerUnit));
-        
-        base.OnSelect();
-        GameManager.GetInstance().GetPlayerController().SetCurrentPlayer(null);
-	}
-
-	public override void Die()
+	public class EnemyUnit : Unit
 	{
-		base.Die();
-		GameManager.GetInstance().m_enemyCount--;
-		GameManager.GetInstance().CheckEndCondition();
+
+		public override void OnSelect()
+		{
+			Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetMove(), typeof(PlayerUnit));
+
+			base.OnSelect();
+			GameManager.GetInstance().GetPlayerController().SetCurrentPlayer(null);
+		}
+
+		//This doesn't need to be overriden
+		public override void Die()
+		{
+			base.Die();
+			GameManager.GetInstance().m_enemyCount--;
+			GameManager.GetInstance().CheckEndCondition();
+		}
 	}
 }

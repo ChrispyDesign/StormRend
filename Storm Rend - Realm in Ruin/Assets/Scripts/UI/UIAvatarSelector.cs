@@ -43,7 +43,7 @@ public class UIAvatarSelector : MonoBehaviour
         if (playerUnit == null)
             return; // don't do avatar focussing 
 
-        switch (playerUnit.GetUnitType())
+        switch (playerUnit.unitType)
         {
             case PlayerClass.BERSERKER:
                 m_berserkerAvatar.sizeDelta = m_focusedAvatarSize; // resize berserker avatar

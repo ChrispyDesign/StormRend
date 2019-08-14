@@ -18,18 +18,14 @@ namespace StormRend
     public class PlayerUnit : Unit
     {
         [Header("Player Relevant Variables")]
-        [SerializeField] private PlayerClass m_unitType = PlayerClass.BERSERKER;
+        [SerializeField] PlayerClass m_unitType = PlayerClass.BERSERKER;
 
-        private MoveCommand movePlayer;
+        MoveCommand movePlayer;
 
         #region gettersAndSetters
-
-        public PlayerClass GetUnitType() { return m_unitType; }
+		public PlayerClass unitType => m_unitType;
         public MoveCommand GetMoveCommand() { return movePlayer; }
-
         public void SetMoveCommand(MoveCommand _move) { movePlayer = _move; }
-
-
         #endregion
 
         public override void OnSelect()
@@ -86,16 +82,8 @@ namespace StormRend
             SetDuplicateMeshVisibilty(false);
         }
 
-        public override void OnHover()
-        {
-            base.OnHover();
-        }
 
-        public override void OnUnhover()
-        {
-            base.OnUnhover();
-        }
-
+		//Could be better implemented
         public override void Die()
         {
             base.Die();

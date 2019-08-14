@@ -6,27 +6,28 @@ using UnityEngine.Events;
 
 namespace StormRend
 {
+	//Review and Refactor
     public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     {
-        private int m_HP;
-        private static bool m_isDead;
+        int m_HP;
+        static bool m_isDead;
 
-        [SerializeField] private GameObject m_duplicateMesh = null;
+        [SerializeField] GameObject m_duplicateMesh = null;
         [SerializeField] protected Ability m_passiveAbility;
         [SerializeField] protected Ability[] m_firstAbilities;
         [SerializeField] protected Ability[] m_secondAbilities;
 
         [Header("Unit Stats")]
-        [SerializeField] private int m_maxHP = 4;
-        [SerializeField] private int m_maxMOV = 4;
+        [SerializeField] int m_maxHP = 4;
+        [SerializeField] int m_maxMOV = 4;
 
 
         [Space]
         [Header("Unit Interaction")]
-        [SerializeField] private UnityEvent m_onSelect;
-        [SerializeField] private UnityEvent m_onDeselect;
-        [SerializeField] private UnityEvent m_onHover;
-        [SerializeField] private UnityEvent m_onUnhover;
+        [SerializeField] UnityEvent m_onSelect;
+        [SerializeField] UnityEvent m_onDeselect;
+        [SerializeField] UnityEvent m_onHover;
+        [SerializeField] UnityEvent m_onUnhover;
 
 
         public Vector2Int m_coordinates;
@@ -35,8 +36,8 @@ namespace StormRend
         protected bool m_alreadyAttacked;
         protected bool m_isFocused;
         protected Ability m_lockedAbility;
-        private List<Node> m_availableNodes;
-        private List<Node> m_attackNodes;
+        List<Node> m_availableNodes;
+        List<Node> m_attackNodes;
 
         public Action OnDie = delegate
         {
@@ -80,7 +81,6 @@ namespace StormRend
 
         public void SetDuplicateMeshVisibilty(bool _isOff) { m_duplicateMesh.SetActive(_isOff); }
 
-        // Start is called before the first frame update
         void Start()
         {
             m_HP = m_maxHP;
