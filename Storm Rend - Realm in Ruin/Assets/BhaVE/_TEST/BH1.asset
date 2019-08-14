@@ -1,0 +1,385 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f768a4da20eb140fe93ea329c5f4ba32, type: 3}
+  m_Name: BH1
+  m_EditorClassIdentifier: 
+  root: {fileID: 114045803082850440}
+  eNodes:
+  - {fileID: 114045803082850440}
+  - {fileID: 114244072071628142}
+  - {fileID: 114651090563813952}
+  - {fileID: 114812020282484460}
+  - {fileID: 114749049416689854}
+  - {fileID: 114688411238581706}
+  - {fileID: 114277916615959868}
+  - {fileID: 114962257397608468}
+  - {fileID: 114390912787047452}
+--- !u!114 &114045803082850440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa4eca718763d4532bb096dcec704560, type: 3}
+  m_Name: Selector:0
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Selector:0
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 617
+      y: 114
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 0
+  _state: -1
+  parent: {fileID: 0}
+  children:
+  - {fileID: 114244072071628142}
+  - {fileID: 114688411238581706}
+  - {fileID: 114390912787047452}
+--- !u!114 &114136542297207716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 370dcb8bbf9544a45bd6221354db6d74, type: 3}
+  m_Name: InShootRange(Clone)
+  m_EditorClassIdentifier: 
+  target: {fileID: 11400000, guid: c7b5c421915af4bb5987a17d8edbe7d8, type: 2}
+  range: 10
+  FOV_angle: 100
+--- !u!114 &114244072071628142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
+  m_Name: Sequence:1
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Sequence:1
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 523
+      y: 278
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 1
+  _state: -1
+  parent: {fileID: 114045803082850440}
+  children:
+  - {fileID: 114651090563813952}
+  - {fileID: 114812020282484460}
+  - {fileID: 114749049416689854}
+--- !u!114 &114277916615959868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff060b0c5dbb4dbd8db41bbb67dd703, type: 3}
+  m_Name: Condition:6
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Condition:6
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 686
+      y: 441
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 6
+  _state: -1
+  parent: {fileID: 114688411238581706}
+  deleg: {fileID: 114927301685124806}
+--- !u!114 &114294501964454724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11ce160f79487d04ebc6c0f49c333d01, type: 3}
+  m_Name: Wander(Clone)
+  m_EditorClassIdentifier: 
+  speed: 2
+  directionChangeInterval: 1
+  maxHeadingChange: 30
+--- !u!114 &114390912787047452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:8
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Action:8
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 897
+      y: 275
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 8
+  _state: -1
+  parent: {fileID: 114045803082850440}
+  deleg: {fileID: 114294501964454724}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &114619925370755006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82da0f0986ed04b9f96de1eb0505623e, type: 3}
+  m_Name: Seek(Clone)
+  m_EditorClassIdentifier: 
+  target: {fileID: 11400000, guid: c7b5c421915af4bb5987a17d8edbe7d8, type: 2}
+  speed: 4
+--- !u!114 &114651090563813952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff060b0c5dbb4dbd8db41bbb67dd703, type: 3}
+  m_Name: Condition:2
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Condition:2
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 308
+      y: 446
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 2
+  _state: -1
+  parent: {fileID: 114244072071628142}
+  deleg: {fileID: 114136542297207716}
+--- !u!114 &114688411238581706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
+  m_Name: Sequence:5
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Sequence:5
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 717
+      y: 273
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 5
+  _state: -1
+  parent: {fileID: 114045803082850440}
+  children:
+  - {fileID: 114277916615959868}
+  - {fileID: 114962257397608468}
+--- !u!114 &114721185738137674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66537c616c7dc4fda946b8fbec27fb54, type: 3}
+  m_Name: Shoot(Clone)
+  m_EditorClassIdentifier: 
+  target: {fileID: 11400000, guid: c7b5c421915af4bb5987a17d8edbe7d8, type: 2}
+  bulletPrefab: {fileID: 4075605263773245325, guid: 17f9ecdbf0d3b4fe385a8df9583f77cb,
+    type: 3}
+  bulletForce: 20
+  bulletRate: 0
+  bulletForceMode: 1
+  bulletLifetime: 3
+--- !u!114 &114749049416689854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:4
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Action:4
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 547
+      y: 444
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 4
+  _state: -1
+  parent: {fileID: 114244072071628142}
+  deleg: {fileID: 114721185738137674}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &114812020282484460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:3
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Action:3
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 428
+      y: 446
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 3
+  _state: -1
+  parent: {fileID: 114244072071628142}
+  deleg: {fileID: 114975501905626062}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &114927301685124806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 370dcb8bbf9544a45bd6221354db6d74, type: 3}
+  m_Name: InRange(Clone)
+  m_EditorClassIdentifier: 
+  target: {fileID: 11400000, guid: c7b5c421915af4bb5987a17d8edbe7d8, type: 2}
+  range: 20
+  FOV_angle: 360
+--- !u!114 &114962257397608468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:7
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Action:7
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 851
+      y: 435
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 7
+  _state: -1
+  parent: {fileID: 114688411238581706}
+  deleg: {fileID: 114619925370755006}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &114975501905626062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82da0f0986ed04b9f96de1eb0505623e, type: 3}
+  m_Name: Seek(Clone)
+  m_EditorClassIdentifier: 
+  target: {fileID: 11400000, guid: c7b5c421915af4bb5987a17d8edbe7d8, type: 2}
+  speed: 4
