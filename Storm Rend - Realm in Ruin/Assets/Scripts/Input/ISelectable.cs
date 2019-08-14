@@ -1,8 +1,12 @@
 ﻿/// <summary>
 /// selectable interface which forces selectable objects to implement OnSelect and OnDeselect
 /// </summary>
-public interface ISelectable
+
+namespace StormRend
 {
-    void OnSelect();
-    void OnDeselect();
+	public interface ISelectable
+	{
+		void OnSelect();
+		void OnDeselect();
+	}
 }

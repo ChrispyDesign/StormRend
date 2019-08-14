@@ -9,6 +9,7 @@ public enum Neighbour
     DOWN,
     LEFT
 }
+
 namespace StormRend
 {
     public class Node : MonoBehaviour, IHoverable, ISelectable
