@@ -18,6 +18,8 @@ namespace StormRend
         [SerializeField] private Node[] m_neighbours;
         [SerializeField] private Vector3 m_position;
         [SerializeField] private Vector2Int m_coordinate;
+		[SerializeField] public GameObject m_attackCover;
+		[SerializeField] public GameObject m_moveCover;
 
         private Color m_origMaterial;
 
@@ -189,7 +191,9 @@ namespace StormRend
                 {
                     foreach (Node node in nodes)
                     {
-                        node.transform.GetComponent<MeshRenderer>().material.color = Color.white;
+						//node.transform.GetComponent<MeshRenderer>().material.color = Color.white;
+						node.m_attackCover.SetActive(false);
+						node.m_moveCover.SetActive(false);
                         node.m_selected = false;
                     }
                 }
