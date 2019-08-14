@@ -3,7 +3,7 @@ using StormRend;
 using UnityEngine;
 namespace BhaVE.Variables
 {
-	[CreateAssetMenu(menuName = "StormRend/BhaVE/Variables/UnitList", fileName = "BhaveUnitList")]
+	[CreateAssetMenu(menuName = "StormRend/Variables/UnitList", fileName = "UnitList")]
 	public sealed class BhaveUnitList : BhaveVar<List<Unit>>
 	{
 		public static implicit operator BhaveUnitList(List<Unit> rhs)

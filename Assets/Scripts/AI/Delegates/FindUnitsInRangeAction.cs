@@ -2,46 +2,43 @@
 using BhaVE.Delegates;
 using BhaVE.Nodes;
 using UnityEngine;
-using StormRend;
 using System.Collections.Generic;
-using System;
 using BhaVE.Variables;
 
 namespace StormRend.Bhaviours
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    [CreateAssetMenu(menuName = "StormRend/BhaVE/Conditions/Units In Range")]
-    [Serializable]
-    public class UnitsInRangeCondition : BhaveCondition
+	/// <summary>
+	/// Finds a certain unit within range of agent and then adds it to a list (BhaveVar)
+	/// Returns Success if units are found, Failure if none found
+	/// </summary>
+	[CreateAssetMenu(menuName = "StormRend/Delegates/Actions/FindUnitsInRange", fileName = "FindUnitsInRange")]
+    public class FindUnitsInRangeAction : BhaveAction
     {
         public enum UnitType { Player, Enemy }
         public UnitType unitType;
         public BhaveUnitList targets;
 
         //Privates
-        Unit thisUnit;
-        List<Node> validMoves = new List<Node>();
-        private bool unitFound;
-        private bool unitHasBeenFound = false;
+        Unit unit;	//The unit mono attached to this agent
+        List<Tile> validMoves = new List<Tile>();
+        private bool unitsHasBeenFound = false;
 
         public override void Initiate(BhaveAgent agent)
         {
-            thisUnit = agent.GetComponent<Unit>();
+            unit = agent.GetComponent<Unit>();
         }
 
         public override void Begin()
         {
 			//Resets
-            unitHasBeenFound = false;
+            unitsHasBeenFound = false;
 			targets.value.Clear();
         }
 
         public override NodeState Execute(BhaveAgent agent)
         {
             //Find valid moves
-            Dijkstra.Instance.FindValidMoves(Grid.GetNodeFromCoords(thisUnit.m_coordinates), thisUnit.GetMove(), typeof(EnemyUnit));
+            Dijkstra.Instance.FindValidMoves(Grid.GetNodeFromCoords(unit.m_coordinates), unit.GetMove(), typeof(EnemyUnit));
             validMoves = Dijkstra.Instance.m_validMoves;
 
             //Determine if specified unit is in range
@@ -52,15 +49,16 @@ namespace StormRend.Bhaviours
                 {
 					//Update targets
                     targets.value.Add(unitOnTop);	
-                    unitHasBeenFound = true;
+                    unitsHasBeenFound = true;
                 }
                 else if (unitType == UnitType.Enemy && unitOnTop is EnemyUnit)
                 {
                     targets.value.Add(unitOnTop);
+					unitsHasBeenFound = true;
                     return NodeState.Success;
                 }
             }
-            return (unitHasBeenFound) ? NodeState.Success : NodeState.Failure;
+            return (unitsHasBeenFound) ? NodeState.Success : NodeState.Failure;
         }
 
     }

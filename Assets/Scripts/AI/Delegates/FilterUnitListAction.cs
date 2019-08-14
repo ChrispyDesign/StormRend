@@ -10,7 +10,7 @@ namespace StormRend.Bhaviours
 	/// <summary>
 	/// Filters out lists based on the filter method
 	/// </summary>
-	[CreateAssetMenu(menuName = "BhaVE/Delegates/Actions/FilterUnitList", fileName = "FilterUnitList")]
+	[CreateAssetMenu(menuName = "StormRend/Delegates/Actions/FilterUnitList", fileName = "FilterUnitList")]
     public class FilterUnitListAction : BhaveAction
     {
         public enum FilterMode { LowestHP, Closest }
@@ -19,11 +19,11 @@ namespace StormRend.Bhaviours
         [SerializeField] BhaveUnitList targets;
 
         //Privates
-        Unit thisUnit;
+        Unit unit;
 
         public override void Initiate(BhaveAgent agent)
         {
-            thisUnit = agent.GetComponent<Unit>();
+            unit = agent.GetComponent<Unit>();
         }
 
         public override NodeState Execute(BhaveAgent agent)
@@ -34,12 +34,12 @@ namespace StormRend.Bhaviours
                 {
 					//Sort list based on distance from this unit
 					targets.value = targets.value.
-						OrderBy(x => Vector2Int.Distance(x.m_coordinates, thisUnit.m_coordinates)).ToList();
+						OrderBy(x => Vector2Int.Distance(x.m_coordinates, unit.m_coordinates)).ToList();
 
 					//Filter by closest
 					targets.value = targets.value.
-						Where(x => Vector2Int.Distance(x.m_coordinates, thisUnit.m_coordinates).
-							Equals(Vector2Int.Distance(targets.value[0].m_coordinates, thisUnit.m_coordinates))).ToList(); 	//The first value in the list should be the closest unit
+						Where(x => Vector2Int.Distance(x.m_coordinates, unit.m_coordinates).
+							Equals(Vector2Int.Distance(targets.value[0].m_coordinates, unit.m_coordinates))).ToList(); 	//The first value in the list should be the closest unit
                 }
 				break;
 

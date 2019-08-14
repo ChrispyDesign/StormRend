@@ -8,7 +8,7 @@ namespace StormRend.Bhaviours
     /// <summary>
     /// Finished the unit's turn
     /// </summary>
-	[CreateAssetMenu(menuName = "BhaVE/Delegates/Actions/FinishUnitTurn", fileName = "FinishUnitTurn")]
+	// [CreateAssetMenu(menuName = "StormRend/Delegates/Actions/FinishUnitTurn", fileName = "FinishUnitTurn")]
     public class FinishUnitTurnAction : BhaveAction
     {
         public override NodeState Execute(BhaveAgent agent)
