@@ -88,9 +88,8 @@ GameObject:
   - component: {fileID: 4758049521519935278}
   - component: {fileID: 2285558684890238423}
   - component: {fileID: 2662589536457230567}
-  - component: {fileID: 6113798998352964380}
   - component: {fileID: 7987152580402002892}
-  - component: {fileID: 2422303090608438542}
+  - component: {fileID: 2723771780049357483}
   m_Layer: 0
   m_Name: Node
   m_TagString: Untagged
@@ -160,29 +159,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &6113798998352964380
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4758049521519935274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae910391638995645a68fcd1bbd185de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_unitOnTop: {fileID: 0}
-  m_neighbours: []
-  m_position: {x: 0, y: 0, z: 0}
-  m_coordinate: {x: 0, y: 0}
-  m_attackCover: {fileID: 5898761034638728201}
-  m_moveCover: {fileID: 6065424413494142390}
-  m_selected: 0
-  m_nodeType: 0
-  m_parent: {fileID: 0}
-  m_nGCost: 0
-  m_nHCost: 0
 --- !u!65 &7987152580402002892
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -196,7 +172,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 0.2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2422303090608438542
+--- !u!114 &2723771780049357483
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -205,10 +181,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 4758049521519935274}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 328de07dccfcab54f94a7624921b94d4, type: 3}
+  m_Script: {fileID: 11500000, guid: a339e3f3bdf77452a980ad464de331dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  topper: {fileID: 0}
+  m_unitOnTop: {fileID: 0}
+  m_neighbours: []
+  m_position: {x: 0, y: 0, z: 0}
+  m_coordinate: {x: 0, y: 0}
+  m_attackCover: {fileID: 5898761034638728201}
+  m_moveCover: {fileID: 6065424413494142390}
+  m_selected: 0
+  m_nodeType: 0
+  m_parent: {fileID: 0}
+  m_nGCost: 0
+  m_nHCost: 0
 --- !u!1 &5898761034638728201
 GameObject:
   m_ObjectHideFlags: 0
