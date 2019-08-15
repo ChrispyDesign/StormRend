@@ -76,12 +76,12 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     public void EnemyTurn()
     {
-        // disable proceed button
-        m_proceedTurnButton.interactable = false;
+		// disable proceed button
+		m_proceedTurnButton.interactable = false;
 
         // proceed to enemy turn
         m_stateMachine.ChangeState(m_enemyTurn);
-    }
+	}
 
 	public void ResetPlayerVariables()
 	{
