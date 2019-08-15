@@ -37,6 +37,7 @@ public class UIAbilityInfo : MonoBehaviour
     /// </summary>
     public void HoverAbility()
     {
+		
         m_player = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
         if (m_player != null)
         {
@@ -61,7 +62,9 @@ public class UIAbilityInfo : MonoBehaviour
     {
 		bool isLockedAbility = GameManager.singleton.GetPlayerController().GetIsAbilityLocked();
 
-		GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
+		if(!isLockedAbility)
+			GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
+
 		if (m_player != null)
 		{
 			m_player.UnShowAttackTiles();
@@ -72,7 +75,10 @@ public class UIAbilityInfo : MonoBehaviour
 		{
 			Ability ability = GameManager.singleton.GetPlayerController().GetCurrentPlayer().GetLockedAbility();
 			Unit player = GameManager.singleton.GetPlayerController().GetCurrentPlayer() as Unit;
-			ability.GetSelectableTiles(ref player);
+			if (!player)
+			{
+				ability.GetSelectableTiles(ref player);
+			}
 			player.ShowAttackTiles();
 		}
 	}
