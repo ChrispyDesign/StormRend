@@ -20,9 +20,10 @@ namespace StormRend.Bhaviours
 			GreaterThan,
 			GreaterOrEqual
 		}
-		[SerializeField] ComparisonMode comparisonMethod;
 		[SerializeField] BhaveUnitList targets;
 		[SerializeField] int countToCompare = 5;
+		[SerializeField] ComparisonMode comparisonMethod;
+		[SerializeField] NodeState stateToReturn = NodeState.Success;
 
         public override NodeState Execute(BhaveAgent agent)
         {
@@ -30,23 +31,23 @@ namespace StormRend.Bhaviours
 			{
 				case ComparisonMode.LessThan:
 					if (targets.value.Count < countToCompare) 
-					return NodeState.Success;
+					return stateToReturn;
 					break;
 				case ComparisonMode.LessOrEqual:
 					if (targets.value.Count <= countToCompare) 
-					return NodeState.Success;
+					return stateToReturn;
 					break;
 				case ComparisonMode.Equal:
 					if (targets.value.Count <= countToCompare) 
-					return NodeState.Success;
+					return stateToReturn;
 					break;
 				case ComparisonMode.GreaterThan:
 					if (targets.value.Count > countToCompare) 
-					return NodeState.Success;
+					return stateToReturn;
 					break;
 				case ComparisonMode.GreaterOrEqual:
 					if (targets.value.Count >= countToCompare) 
-					return NodeState.Success;
+					return stateToReturn;
 					break;
 			}
 			return NodeState.Failure;

@@ -552,12 +552,12 @@ namespace BhaVE.Editor
 				{
 					Debug.Log("BhaveAgent Selected");
 
-					//Ignore if it's the same
-					if (activeAgent == selectedAgent)
-					{
-						Debug.Log("<Same Project>");
-						return;
-					}
+					// //Ignore if it's the same
+					// if (activeAgent == selectedAgent)
+					// {
+					// 	Debug.Log("<Same Project>");
+					// 	return;
+					// }
 
 					//Confirm load
 					if (promptOnLoad)
@@ -593,11 +593,11 @@ namespace BhaVE.Editor
 
 				Debug.Log("BhaveTree Module Selected");
 
-				if (activeTree == selectedBhaveTreeModule)
-				{
-					Debug.Log("<Same Project>");
-					return;
-				}
+				// if (activeTree == selectedBhaveTreeModule)
+				// {
+				// 	Debug.Log("<Same Project>");
+				// 	return;
+				// }
 
 				if (projectIsDirty)
 				{

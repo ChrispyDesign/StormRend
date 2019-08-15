@@ -39,7 +39,7 @@ namespace StormRend.Bhaviours
                 (unit is PlayerUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
             validMoves = Dijkstra.Instance.m_validMoves;
             
-            validMoves = validMoves.OrderBy(
+            validMoves = validMoves.OrderByDescending(
                 x => (Vector2Int.Distance(unit.m_coordinates, targets.value[0].m_coordinates))).ToList();
 
             unit.MoveTo(validMoves[0]);
