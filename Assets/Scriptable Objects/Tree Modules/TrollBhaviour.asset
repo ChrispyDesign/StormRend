@@ -15,17 +15,14 @@ MonoBehaviour:
   root: {fileID: 114230877015066914}
   eNodes:
   - {fileID: 114565113143350160}
-  - {fileID: 114327460564908360}
   - {fileID: 114802820392742442}
   - {fileID: 114881204046421186}
   - {fileID: 114326456331047848}
   - {fileID: 114074920936197078}
-  - {fileID: 114343769007657376}
   - {fileID: 114436139785046312}
   - {fileID: 114184180362392310}
   - {fileID: 114354033926743562}
   - {fileID: 114585580975774538}
-  - {fileID: 114926191727228708}
   - {fileID: 114230877015066914}
   - {fileID: 114262448939877504}
   - {fileID: 114906093755978736}
@@ -33,10 +30,163 @@ MonoBehaviour:
   - {fileID: 114622950508613004}
   - {fileID: 114874536007597740}
   - {fileID: 114020568044145198}
-  - {fileID: 114196043967114880}
   - {fileID: 114522738197823902}
   - {fileID: 114153901854714366}
+  - {fileID: 114154536906420020}
+  - {fileID: 114905048456288906}
+  - {fileID: 114426020345894118}
+  - {fileID: 114894961471227258}
+  - {fileID: 114667072466613076}
+  - {fileID: 114380453263631916}
+  - {fileID: 114480068855246064}
+  - {fileID: 114271165789363412}
+--- !u!114 &114012610483391676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 197eb9973ce1cda40a9cdebfbc070dde, type: 3}
+  m_Name: AttackUnit(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  targets: {fileID: 0}
+--- !u!114 &114015540231481876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027a29ffcc03ada47b6fbd16541911b9, type: 3}
+  m_Name: MoveToUnit(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
 --- !u!114 &114020568044145198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:15
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Action:15
+    description: StopBhave
+    rect:
+      serializedVersion: 2
+      x: 701
+      y: 771
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 15
+  _state: -1
+  parent: {fileID: 114436139785046312}
+  deleg: {fileID: 114086383258832228}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &114074920936197078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:4
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Action:4
+    description: AttackTargetUnit
+    rect:
+      serializedVersion: 2
+      x: 466
+      y: 436
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 4
+  _state: -1
+  parent: {fileID: 114565113143350160}
+  deleg: {fileID: 114677876581658902}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &114086383258832228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a687d785d57756b4d85f9ae7acd794b0, type: 3}
+  m_Name: StopBhaviour(Clone)
+  m_EditorClassIdentifier: 
+  description: Immediately stops an agent and it's behaviour
+--- !u!114 &114140077491227768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08c14e8546a4941a986ae0e7f46a2bc4, type: 3}
+  m_Name: LowHPFilter(Clone)
+  m_EditorClassIdentifier: 
+  description: 'Filter out the lowest '
+  filterMethod: 0
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+--- !u!114 &114153901854714366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:17
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Action:17
+    description: MoveToUnit
+    rect:
+      serializedVersion: 2
+      x: 396
+      y: 774
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 17
+  _state: -1
+  parent: {fileID: 114436139785046312}
+  deleg: {fileID: 114015540231481876}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &114154536906420020
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -51,94 +201,19 @@ MonoBehaviour:
   eData:
     owner: {fileID: 11400000}
     name: Action:18
-    description: StopBhave
+    description: 
     rect:
       serializedVersion: 2
-      x: 680
-      y: 435
+      x: 249
+      y: 443
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
   ID: 18
   _state: -1
-  parent: {fileID: 0}
-  deleg: {fileID: 114537845879758422}
-  overrideOn: 0
-  stateOverride: 1
---- !u!114 &114074920936197078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:5
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Action:5
-    description: AttackTargetUnit
-    rect:
-      serializedVersion: 2
-      x: 359
-      y: 104
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 5
-  _state: -1
   parent: {fileID: 114565113143350160}
-  deleg: {fileID: 0}
-  overrideOn: 0
-  stateOverride: 1
---- !u!114 &114140077491227768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08c14e8546a4941a986ae0e7f46a2bc4, type: 3}
-  m_Name: LowHPFilter(Clone)
-  m_EditorClassIdentifier: 
-  description: 
-  filterMethod: 0
-  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
---- !u!114 &114153901854714366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:21
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Action:21
-    description: MoveToUnit
-    rect:
-      serializedVersion: 2
-      x: 461
-      y: 436
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 21
-  _state: -1
-  parent: {fileID: 0}
-  deleg: {fileID: 0}
+  deleg: {fileID: 114515388364162300}
   overrideOn: 0
   stateOverride: 1
 --- !u!114 &114184180362392310
@@ -151,54 +226,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:8
+  m_Name: Action:6
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:8
+    name: Action:6
     description: FindClosestLowHealthPlayer
     rect:
       serializedVersion: 2
-      x: 254
-      y: 438
+      x: 186
+      y: 775
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 8
+  ID: 6
   _state: -1
   parent: {fileID: 114436139785046312}
   deleg: {fileID: 114410122911288544}
-  overrideOn: 0
-  stateOverride: 1
---- !u!114 &114196043967114880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:19
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Action:19
-    description: 
-    rect:
-      serializedVersion: 2
-      x: 130
-      y: 106
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 19
-  _state: -1
-  parent: {fileID: 0}
-  deleg: {fileID: 114235670552307656}
   overrideOn: 0
   stateOverride: 1
 --- !u!114 &114230877015066914
@@ -211,45 +256,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa4eca718763d4532bb096dcec704560, type: 3}
-  m_Name: Selector:12
+  m_Name: Selector:9
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Selector:12
+    name: Selector:9
     description: 
     rect:
       serializedVersion: 2
-      x: 627
-      y: -252
+      x: 683
+      y: 82
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 12
+  ID: 9
   _state: -1
   parent: {fileID: 0}
   children:
   - {fileID: 114565113143350160}
   - {fileID: 114906093755978736}
-  - {fileID: 114622950508613004}
---- !u!114 &114235670552307656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37b1f1a99687b412c802b457903ceede, type: 3}
-  m_Name: FindUnitsInRange(Clone)
-  m_EditorClassIdentifier: 
-  description: 'Finds units of a certain type within range of agent and then adds
-    it to the Bhave list
-
-    Returns Success if units found, Failure if not'
-  unitType: 0
-  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+  - {fileID: 114894961471227258}
 --- !u!114 &114239516464575836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,26 +300,109 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:13
+  m_Name: Action:10
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:13
+    name: Action:10
     description: MoveToNearestPlayer
     rect:
       serializedVersion: 2
-      x: 718
-      y: 99
+      x: 695
+      y: 549
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 13
+  ID: 10
   _state: -1
   parent: {fileID: 114906093755978736}
-  deleg: {fileID: 0}
+  deleg: {fileID: 114515919627243812}
   overrideOn: 0
   stateOverride: 1
+--- !u!114 &114263685846939934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8c5c741ee851941a002bce62691694, type: 3}
+  m_Name: FinishTurn(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+--- !u!114 &114271165789363412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:25
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Action:25
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 796
+      y: 551
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 25
+  _state: -1
+  parent: {fileID: 114906093755978736}
+  deleg: {fileID: 114610611880592124}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &114277508598668664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8c5c741ee851941a002bce62691694, type: 3}
+  m_Name: FinishTurn(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+--- !u!114 &114281493803105060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8c5c741ee851941a002bce62691694, type: 3}
+  m_Name: FinishTurn(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+--- !u!114 &114284321356195058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 197eb9973ce1cda40a9cdebfbc070dde, type: 3}
+  m_Name: AttackUnit(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
 --- !u!114 &114315087950470568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,6 +421,7 @@ MonoBehaviour:
     Returns Success if units found, Failure if not'
   unitType: 0
   targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+  turns: 1
 --- !u!114 &114326456331047848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,82 +432,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aff060b0c5dbb4dbd8db41bbb67dd703, type: 3}
-  m_Name: Condition:4
+  m_Name: Condition:3
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Condition:4
+    name: Condition:3
     description: AnyDuplicatesInAttackList?
     rect:
       serializedVersion: 2
-      x: 248
-      y: 283
+      x: 180
+      y: 621
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 4
+  ID: 3
   _state: -1
   parent: {fileID: 114802820392742442}
   deleg: {fileID: 114405462264654964}
---- !u!114 &114327460564908360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aff060b0c5dbb4dbd8db41bbb67dd703, type: 3}
-  m_Name: Condition:1
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Condition:1
-    description: AnyProvokeRune
-    rect:
-      serializedVersion: 2
-      x: -261
-      y: 364
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 1
-  _state: -1
-  parent: {fileID: 0}
-  deleg: {fileID: 0}
---- !u!114 &114343769007657376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:6
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Action:6
-    description: AttackTargetUnit
-    rect:
-      serializedVersion: 2
-      x: -153
-      y: 366
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 6
-  _state: -1
-  parent: {fileID: 0}
-  deleg: {fileID: 0}
-  overrideOn: 0
-  stateOverride: 1
 --- !u!114 &114354033926743562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,24 +460,54 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aff060b0c5dbb4dbd8db41bbb67dd703, type: 3}
-  m_Name: Condition:9
+  m_Name: Condition:7
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Condition:9
+    name: Condition:7
     description: AnyDuplicatesInAttackList?
     rect:
       serializedVersion: 2
-      x: 358
-      y: 438
+      x: 290
+      y: 775
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 9
+  ID: 7
   _state: -1
   parent: {fileID: 114436139785046312}
-  deleg: {fileID: 114965247853879048}
+  deleg: {fileID: 114997710252561292}
+--- !u!114 &114380453263631916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:23
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Action:23
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 495
+      y: 771
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 23
+  _state: -1
+  parent: {fileID: 114436139785046312}
+  deleg: {fileID: 114012610483391676}
+  overrideOn: 0
+  stateOverride: 1
 --- !u!114 &114405462264654964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,9 +521,9 @@ MonoBehaviour:
   m_Name: CompareUnitListCount(Clone)
   m_EditorClassIdentifier: 
   description: 
-  comparisonMethod: 0
-  targets: {fileID: 0}
-  countToCompare: 5
+  comparisonMethod: 1
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+  countToCompare: 1
 --- !u!114 &114407369373539878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,37 +553,7 @@ MonoBehaviour:
   description: 
   filterMethod: 1
   targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
---- !u!114 &114436139785046312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
-  m_Name: Sequence:7
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Sequence:7
-    description: 
-    rect:
-      serializedVersion: 2
-      x: 357
-      y: 283
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 7
-  _state: -1
-  parent: {fileID: 114802820392742442}
-  children:
-  - {fileID: 114184180362392310}
-  - {fileID: 114354033926743562}
---- !u!114 &114522738197823902
+--- !u!114 &114426020345894118
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -518,19 +571,19 @@ MonoBehaviour:
     description: 
     rect:
       serializedVersion: 2
-      x: 604
-      y: 102
+      x: 1023
+      y: 441
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
   ID: 20
   _state: -1
-  parent: {fileID: 0}
-  deleg: {fileID: 114315087950470568}
+  parent: {fileID: 114894961471227258}
+  deleg: {fileID: 114263685846939934}
   overrideOn: 0
   stateOverride: 1
---- !u!114 &114537845879758422
+--- !u!114 &114436139785046312
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -539,10 +592,119 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a687d785d57756b4d85f9ae7acd794b0, type: 3}
-  m_Name: StopBhaviour(Clone)
+  m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
+  m_Name: Sequence:5
   m_EditorClassIdentifier: 
-  description: Immediately stops an agent and it's behaviour
+  eData:
+    owner: {fileID: 11400000}
+    name: Sequence:5
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 289
+      y: 620
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 5
+  _state: -1
+  parent: {fileID: 114802820392742442}
+  children:
+  - {fileID: 114184180362392310}
+  - {fileID: 114354033926743562}
+  - {fileID: 114153901854714366}
+  - {fileID: 114380453263631916}
+  - {fileID: 114585580975774538}
+  - {fileID: 114020568044145198}
+--- !u!114 &114480068855246064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:24
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Action:24
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 361
+      y: 438
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 24
+  _state: -1
+  parent: {fileID: 114565113143350160}
+  deleg: {fileID: 114284321356195058}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &114515388364162300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027a29ffcc03ada47b6fbd16541911b9, type: 3}
+  m_Name: MoveToUnit(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+--- !u!114 &114515919627243812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027a29ffcc03ada47b6fbd16541911b9, type: 3}
+  m_Name: MoveToUnit(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+--- !u!114 &114522738197823902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:16
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Action:16
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 593
+      y: 550
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 16
+  _state: -1
+  parent: {fileID: 0}
+  deleg: {fileID: 114315087950470568}
+  overrideOn: 0
+  stateOverride: 1
 --- !u!114 &114565113143350160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -561,8 +723,8 @@ MonoBehaviour:
     description: AttackSequence
     rect:
       serializedVersion: 2
-      x: 305
-      y: -79
+      x: 237
+      y: 258
       width: 100
       height: 70
     cardinality: 0
@@ -571,8 +733,11 @@ MonoBehaviour:
   _state: -1
   parent: {fileID: 114230877015066914}
   children:
-  - {fileID: 114196043967114880}
+  - {fileID: 0}
+  - {fileID: 114667072466613076}
   - {fileID: 114802820392742442}
+  - {fileID: 114154536906420020}
+  - {fileID: 114480068855246064}
   - {fileID: 114074920936197078}
   - {fileID: 114596922870810198}
 --- !u!114 &114585580975774538
@@ -585,24 +750,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:10
+  m_Name: Action:8
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:10
+    name: Action:8
     description: AttackUnit[BasedOnPriority]
     rect:
       serializedVersion: 2
-      x: 565
-      y: 436
+      x: 599
+      y: 770
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 10
+  ID: 8
   _state: -1
-  parent: {fileID: 0}
-  deleg: {fileID: 0}
+  parent: {fileID: 114436139785046312}
+  deleg: {fileID: 114281493803105060}
   overrideOn: 0
   stateOverride: 1
 --- !u!114 &114596922870810198
@@ -615,26 +780,40 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:15
+  m_Name: Action:12
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:15
+    name: Action:12
     description: 
     rect:
       serializedVersion: 2
-      x: 468
-      y: 104
+      x: 568
+      y: 440
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 15
+  ID: 12
   _state: -1
   parent: {fileID: 114565113143350160}
-  deleg: {fileID: 114849849207433702}
+  deleg: {fileID: 114968209031901400}
   overrideOn: 0
   stateOverride: 1
+--- !u!114 &114610611880592124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 197eb9973ce1cda40a9cdebfbc070dde, type: 3}
+  m_Name: AttackUnit(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
 --- !u!114 &114622950508613004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -645,26 +824,88 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:16
+  m_Name: Action:13
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:16
+    name: Action:13
     description: 
     rect:
       serializedVersion: 2
-      x: 909
-      y: -78
+      x: 1123
+      y: 438
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 16
+  ID: 13
   _state: -1
-  parent: {fileID: 114230877015066914}
+  parent: {fileID: 114894961471227258}
   deleg: {fileID: 114239516464575836}
   overrideOn: 0
   stateOverride: 1
+--- !u!114 &114626472354140254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37b1f1a99687b412c802b457903ceede, type: 3}
+  m_Name: FindUnitsInRange(Clone)
+  m_EditorClassIdentifier: 
+  description: 'Finds units of a certain type within range of agent and then adds
+    it to the Bhave list
+
+    Returns Success if units found, Failure if not'
+  unitType: 0
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+  turns: 1
+--- !u!114 &114667072466613076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:22
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Action:22
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 39
+      y: 442
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 22
+  _state: -1
+  parent: {fileID: 114565113143350160}
+  deleg: {fileID: 114626472354140254}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &114677876581658902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8c5c741ee851941a002bce62691694, type: 3}
+  m_Name: FinishTurn(Clone)
+  m_EditorClassIdentifier: 
+  description: 
 --- !u!114 &114802820392742442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,40 +916,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
-  m_Name: Sequence:2
+  m_Name: Sequence:1
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Sequence:2
+    name: Sequence:1
     description: 
     rect:
       serializedVersion: 2
-      x: 247
-      y: 104
+      x: 145
+      y: 442
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 2
+  ID: 1
   _state: -1
   parent: {fileID: 114565113143350160}
   children:
   - {fileID: 114881204046421186}
   - {fileID: 114326456331047848}
   - {fileID: 114436139785046312}
---- !u!114 &114849849207433702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a687d785d57756b4d85f9ae7acd794b0, type: 3}
-  m_Name: StopBhaviour(Clone)
-  m_EditorClassIdentifier: 
-  description: Immediately stops an agent and it's behaviour
 --- !u!114 &114874536007597740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -719,21 +947,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:17
+  m_Name: Action:14
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:17
+    name: Action:14
     description: 
     rect:
       serializedVersion: 2
-      x: 829
-      y: 100
+      x: 1005
+      y: 547
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 17
+  ID: 14
   _state: -1
   parent: {fileID: 114906093755978736}
   deleg: {fileID: 114961502314000450}
@@ -749,24 +977,84 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:3
+  m_Name: Action:2
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:3
+    name: Action:2
     description: FindUnitWithLowestHealth
     rect:
       serializedVersion: 2
-      x: 140
-      y: 284
+      x: 72
+      y: 622
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 3
+  ID: 2
   _state: -1
   parent: {fileID: 114802820392742442}
   deleg: {fileID: 114140077491227768}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &114894961471227258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
+  m_Name: Sequence:21
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Sequence:21
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 1059
+      y: 267
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 21
+  _state: -1
+  parent: {fileID: 114230877015066914}
+  children:
+  - {fileID: 114426020345894118}
+  - {fileID: 114622950508613004}
+--- !u!114 &114905048456288906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:19
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Action:19
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 900
+      y: 549
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 19
+  _state: -1
+  parent: {fileID: 114906093755978736}
+  deleg: {fileID: 114277508598668664}
   overrideOn: 0
   stateOverride: 1
 --- !u!114 &114906093755978736
@@ -779,58 +1067,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
-  m_Name: Sequence:14
+  m_Name: Sequence:11
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Sequence:14
+    name: Sequence:11
     description: 
     rect:
       serializedVersion: 2
-      x: 718
-      y: -78
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 14
-  _state: -1
-  parent: {fileID: 114230877015066914}
-  children:
-  - {fileID: 114522738197823902}
-  - {fileID: 114262448939877504}
-  - {fileID: 114874536007597740}
---- !u!114 &114926191727228708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e341abc5cf7e31344bcba7ced9d28f02, type: 3}
-  m_Name: Repeater:11
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Repeater:11
-    description: 
-    rect:
-      serializedVersion: 2
-      x: -50
-      y: 364
+      x: 730
+      y: 264
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
   ID: 11
   _state: -1
-  parent: {fileID: 0}
-  child: {fileID: 0}
-  repeats: 100
-  loopForever: 0
-  endOnFailure: 0
+  parent: {fileID: 114230877015066914}
+  children:
+  - {fileID: 114522738197823902}
+  - {fileID: 114262448939877504}
+  - {fileID: 114271165789363412}
+  - {fileID: 114905048456288906}
+  - {fileID: 114874536007597740}
 --- !u!114 &114961502314000450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -844,7 +1103,20 @@ MonoBehaviour:
   m_Name: StopBhaviour(Clone)
   m_EditorClassIdentifier: 
   description: Immediately stops an agent and it's behaviour
---- !u!114 &114965247853879048
+--- !u!114 &114968209031901400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a687d785d57756b4d85f9ae7acd794b0, type: 3}
+  m_Name: StopBhaviour(Clone)
+  m_EditorClassIdentifier: 
+  description: Immediately stops an agent and it's behaviour
+--- !u!114 &114997710252561292
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -854,7 +1126,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df08c0e30268d4c1f92926f823fc5b83, type: 3}
-  m_Name: CompareUnitListCount(Clone)
+  m_Name: CompareUnitListCount(Clone)(Clone)
   m_EditorClassIdentifier: 
   description: 
   comparisonMethod: 0

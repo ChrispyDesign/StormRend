@@ -15,7 +15,7 @@ namespace StormRend.Bhaviours
     public class MoveToUnitAction : BhaveAction
     {
         //This agent should already be in range of the target, but just in case
-        [SerializeField] bool checkInRange = false;
+        // [SerializeField] bool checkInRange = false;
 
         [SerializeField] BhaveUnitList targets;
 
@@ -29,6 +29,8 @@ namespace StormRend.Bhaviours
 
         public override NodeState Execute(BhaveAgent agent)
         {
+            Debug.Log("MoveToUnitAction");
+
             ///Move to the target
             //Find the closest valid tile
             Dijkstra.Instance.FindValidMoves(

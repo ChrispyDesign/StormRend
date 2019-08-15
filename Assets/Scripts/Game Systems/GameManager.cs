@@ -33,6 +33,13 @@ public class GameManager : Singleton<GameManager>
 
     #endregion
 
+	void Awake()
+	{
+		//Populate unit lists
+		m_enemies = FindObjectsOfType<EnemyUnit>();
+		m_players = FindObjectsOfType<PlayerUnit>();
+	}
+
 
     void Start()
     {

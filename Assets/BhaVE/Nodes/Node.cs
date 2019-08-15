@@ -66,6 +66,7 @@ namespace BhaVE.Nodes
 		//Handle disconnections automatically when node deleted in BHEditor
 		protected virtual void OnDestroy()
 		{
+#if UNITY_EDITOR
 			Debug.LogFormat("Destroying [{0}:{1}]", this.GetType().Name, this.ID);
 
 			//Remove relationships from parent
@@ -74,7 +75,7 @@ namespace BhaVE.Nodes
 				Undo.RecordObject(this.eData.owner, "Remove Child Node");
 				parent.RemoveChild(this);
 			}
-
+#endif
 			//UPDATE!! This can't be here
 			//Remove from editor node references list
 			// this.eData.owner.eNodes.Remove(this);

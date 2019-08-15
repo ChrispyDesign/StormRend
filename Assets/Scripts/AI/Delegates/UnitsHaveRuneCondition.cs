@@ -24,6 +24,8 @@ namespace StormRend.Bhaviours
 
 		public override NodeState Execute(BhaveAgent agent)
         {
+			Debug.Log("UnitsHaveRuneCondition");
+			
             throw new System.NotImplementedException();
         }
     }

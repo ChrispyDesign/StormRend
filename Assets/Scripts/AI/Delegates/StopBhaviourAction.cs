@@ -13,6 +13,8 @@ namespace StormRend.Bhaviours
     {
         public override NodeState Execute(BhaveAgent agent)
         {
+            Debug.Log("StopBhaviourAction");
+
             agent.SetActive(false);
             return NodeState.Success;
         }

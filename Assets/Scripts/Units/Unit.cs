@@ -7,12 +7,19 @@ using UnityEngine.Events;
 namespace StormRend
 {
 	//Review and Refactor
+    [SelectionBase]
     public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     {
         int m_HP;
         static bool m_isDead;
 
+        public Vector2Int m_coordinates;
+        public bool m_afterClear;
+
+        [Header("Mesh")]
         [SerializeField] GameObject m_duplicateMesh = null;
+
+        [Header("Abilities")]
         [SerializeField] protected Ability m_passiveAbility;
         [SerializeField] protected Ability[] m_firstAbilities;
         [SerializeField] protected Ability[] m_secondAbilities;
@@ -30,8 +37,7 @@ namespace StormRend
         [SerializeField] UnityEvent m_onUnhover;
 
 
-        public Vector2Int m_coordinates;
-        public bool m_afterClear;
+
         protected bool m_alreadyMoved;
         protected bool m_alreadyAttacked;
         protected bool m_isFocused;

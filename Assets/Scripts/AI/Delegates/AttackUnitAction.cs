@@ -25,12 +25,15 @@ namespace StormRend.Bhaviours
 
         public override NodeState Execute(BhaveAgent agent)
         {
+            Debug.Log("AttackUnitAction");
+
 			//Get abiltiies, get effects and then 
             Ability passive = null;
             Ability[] first = null, second = null;
             unit.GetAbilities(ref passive, ref first, ref second);
 			List<Effect> effects = first[0].GetEffects();
 
+            unit.SetLockedAbility(first[0]);
             foreach (var t in targets.value)
             {
 				if (unit is EnemyUnit)

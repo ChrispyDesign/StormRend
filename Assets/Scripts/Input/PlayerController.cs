@@ -32,8 +32,15 @@ public class PlayerController : MonoBehaviour
     {
         m_curMode = PlayerMode.IDLE;
     }
+
+    string oldMode;
     private void Update()
     {
-        Debug.Log(m_curMode.ToString());
+        var newMode = m_curMode.ToString();
+        if (newMode != oldMode)
+        {
+            Debug.Log(m_curMode.ToString());
+            oldMode = newMode;
+        }
     }
 }

@@ -28,6 +28,8 @@ namespace StormRend.Bhaviours
 
         public override NodeState Execute(BhaveAgent agent)
         {
+            Debug.Log("FilterUnitListAction");
+
             switch (filterMethod)
             {
                 case FilterMode.Closest:

@@ -15,11 +15,11 @@ namespace StormRend.Bhaviours
     public class FindUnitsInRangeAction : BhaveAction
     {
         public enum UnitType { Player, Enemy }
-        public UnitType unitType;
+        public UnitType unitTypeToFind;
         public BhaveUnitList targets;
 
 		[Tooltip("The number of turns to cast out in order find the range of this unit")]
-		public uint turnsToRangefind = 1;	
+		public uint turns = 1;	
 
         //Privates
         Unit unit;	//The unit mono attached to this agent
@@ -40,11 +40,14 @@ namespace StormRend.Bhaviours
 
         public override NodeState Execute(BhaveAgent agent)
         {
+            Debug.Log("FindUnitsInRangeAction");
+            // Debug.Break();
+
             //Find valid moves
             Dijkstra.Instance.FindValidMoves(
                 Grid.GetNodeFromCoords(unit.m_coordinates), 
-                unit.GetMove() * (int)turnsToRangefind, 
-                (unit is PlayerUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
+                unit.GetMove() * (int)turns, 
+                (unit is EnemyUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
                 
             validMoves = Dijkstra.Instance.m_validMoves;
 
@@ -52,17 +55,16 @@ namespace StormRend.Bhaviours
             foreach (var n in validMoves)
             {
                 var unitOnTop = n.GetUnitOnTop();
-                if (unitType == UnitType.Player && unitOnTop is PlayerUnit)
+                if (unitTypeToFind == UnitType.Player && unitOnTop is PlayerUnit)
                 {
 					//Update targets
                     targets.value.Add(unitOnTop);	
                     unitsHasBeenFound = true;
                 }
-                else if (unitType == UnitType.Enemy && unitOnTop is EnemyUnit)
+                else if (unitTypeToFind == UnitType.Enemy && unitOnTop is EnemyUnit)
                 {
                     targets.value.Add(unitOnTop);
 					unitsHasBeenFound = true;
-                    return NodeState.Success;
                 }
             }
             return (unitsHasBeenFound) ? NodeState.Success : NodeState.Failure;
