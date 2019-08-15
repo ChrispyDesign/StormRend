@@ -8,6 +8,8 @@ using UnityEngine.Events;
 /// </summary>
 public class BlizzardManager : MonoBehaviour
 {
+	//Rename to BlizzardController
+
     // blizzard meter
     [Tooltip("Blizzard meter transform, contains toggle child elements")]
     [SerializeField] Transform m_blizzardMeter = null;

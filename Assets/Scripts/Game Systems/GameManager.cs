@@ -33,8 +33,9 @@ public class GameManager : Singleton<GameManager>
 
     #endregion
 
-	void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
 		//Populate unit lists
 		m_enemies = FindObjectsOfType<EnemyUnit>();
 		m_players = FindObjectsOfType<PlayerUnit>();
@@ -70,19 +71,6 @@ public class GameManager : Singleton<GameManager>
 		GameOver();
 		GameWin();
 	}
-
-	// public static GameManager GetInstance()
-    // {
-    //     // if no instance is assigned...
-    //     if (!m_instance)
-    //         m_instance = FindObjectOfType<GameManager>(); // find the instance
-
-	// 	// error handling
-    //     Debug.Assert(m_instance, "UI Manager not found!");
-
-    //     // done
-    //     return m_instance;
-    // }
 
 	public void GameOver()
 	{

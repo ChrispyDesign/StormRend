@@ -14,6 +14,10 @@ public enum PlayerMode
 
 public class PlayerController : MonoBehaviour
 {
+	//Rename:
+	// - UserInputHandler
+	// - GameplayInteractionHandler
+
     private PlayerUnit m_currentPlayer;
     private PlayerMode m_curMode;
     private bool m_isAbilityLocked;

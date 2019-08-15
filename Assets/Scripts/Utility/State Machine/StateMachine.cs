@@ -6,6 +6,8 @@
 /// </summary>
 public class StateMachine : MonoBehaviour
 {
+	//Improve this
+
     // state management
     private State m_currentState;
     private State m_previousState;
