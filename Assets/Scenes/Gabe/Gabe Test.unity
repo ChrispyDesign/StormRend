@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -112,6 +112,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &11031898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa4eca718763d4532bb096dcec704560, type: 3}
+  m_Name: Selector:0
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Selector:0
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 675
+      y: 73
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 0
+  _state: -1
+  parent: {fileID: 0}
+  children:
+  - {fileID: 1007025951}
+  - {fileID: 628586645}
+  - {fileID: 1217380374}
+--- !u!114 &31212468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 197eb9973ce1cda40a9cdebfbc070dde, type: 3}
+  m_Name: AttackUnit(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
 --- !u!1 &57607242
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,6 +187,25 @@ Transform:
   m_Father: {fileID: 1623634178}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &58134115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37b1f1a99687b412c802b457903ceede, type: 3}
+  m_Name: FindUnitsInRange(Clone)
+  m_EditorClassIdentifier: 
+  description: 'Finds units of a certain type within range of agent and then adds
+    it to the Bhave list
+
+    Returns Success if units found, Failure if not'
+  unitType: 0
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+  turns: 2
 --- !u!1 &59777207
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,6 +310,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &112700873 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 752364542293138397, guid: f1502cb9f21d72147a6acb634f12c6e3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2066898262}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e546a4721d175854fb953bc1dc778be0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &183381214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08c14e8546a4941a986ae0e7f46a2bc4, type: 3}
+  m_Name: ClosestFilterList(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  filterMethod: 1
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
 --- !u!1 &188628300
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,6 +397,78 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &242828165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027a29ffcc03ada47b6fbd16541911b9, type: 3}
+  m_Name: MoveToUnit(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+--- !u!114 &267786872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:15
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:15
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 518
+      y: 818
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 15
+  _state: -1
+  parent: {fileID: 868278871}
+  deleg: {fileID: 2061931210}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &272129939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff060b0c5dbb4dbd8db41bbb67dd703, type: 3}
+  m_Name: Condition:5
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Condition:5
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 124
+      y: 642
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 5
+  _state: -1
+  parent: {fileID: 1138077225}
+  deleg: {fileID: 1086545445}
 --- !u!1 &296738047
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +529,79 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &413507990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:22
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:22
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 989
+      y: 601
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 22
+  _state: -1
+  parent: {fileID: 628586645}
+  deleg: {fileID: 1632870719}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &466905258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8c5c741ee851941a002bce62691694, type: 3}
+  m_Name: FinishTurn(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+--- !u!114 &502514998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:12
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:12
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 375
+      y: 421
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 12
+  _state: -1
+  parent: {fileID: 1007025951}
+  deleg: {fileID: 31212468}
+  overrideOn: 0
+  stateOverride: 1
 --- !u!1 &520951965
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,6 +632,114 @@ Transform:
   m_Father: {fileID: 721503181}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &541537364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:13
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:13
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 482
+      y: 421
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 13
+  _state: -1
+  parent: {fileID: 1007025951}
+  deleg: {fileID: 466905258}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &563765558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:4
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:4
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 18
+      y: 642
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 4
+  _state: -1
+  parent: {fileID: 1138077225}
+  deleg: {fileID: 566818358}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &566818358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08c14e8546a4941a986ae0e7f46a2bc4, type: 3}
+  m_Name: LowHPFilterList(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  filterMethod: 0
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+--- !u!114 &581737261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027a29ffcc03ada47b6fbd16541911b9, type: 3}
+  m_Name: MoveToUnit(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+--- !u!114 &600046200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37b1f1a99687b412c802b457903ceede, type: 3}
+  m_Name: FindUnitsInRange(Clone)
+  m_EditorClassIdentifier: 
+  description: 'Finds units of a certain type within range of agent and then adds
+    it to the Bhave list
+
+    Returns Success if units found, Failure if not'
+  unitType: 0
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+  turns: 1
 --- !u!1 &600110875
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,6 +776,40 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 9169910241844544348}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &628586645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
+  m_Name: Sequence:17
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Sequence:17
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 778
+      y: 362
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 17
+  _state: -1
+  parent: {fileID: 11031898}
+  children:
+  - {fileID: 1005993049}
+  - {fileID: 1975857861}
+  - {fileID: 1026867201}
+  - {fileID: 755537810}
+  - {fileID: 413507990}
+  - {fileID: 1690822620}
 --- !u!1 &629005603
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,13 +822,14 @@ GameObject:
   - component: {fileID: 629005607}
   - component: {fileID: 629005606}
   - component: {fileID: 629005605}
+  - component: {fileID: 629005608}
   m_Layer: 0
   m_Name: Enemy(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &629005604
 Transform:
   m_ObjectHideFlags: 0
@@ -464,7 +843,7 @@ Transform:
   m_Children:
   - {fileID: 709469707}
   m_Father: {fileID: 1928572047}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &629005605
 MonoBehaviour:
@@ -478,6 +857,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e546a4721d175854fb953bc1dc778be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_coordinates: {x: 13, y: 8}
+  m_afterClear: 0
   m_duplicateMesh: {fileID: 0}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
@@ -510,8 +891,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_coordinates: {x: 13, y: 8}
-  m_afterClear: 0
 --- !u!65 &629005606
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -533,6 +912,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 629005603}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &629005608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629005603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d61082042b0643e7bdab6ba67737894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _internalTree: {fileID: 0}
+  agentName: BhaveAgent
+  description: Frost Troll
+  _active: 0
+  _paused: 0
+  playOnStart: 0
+  restartWhenDone: 0
+  pauseIfDeactivated: 0
+  bhaveTreeModule: {fileID: 11400000, guid: 911c595ef1d92f64784472a71ee3037b, type: 2}
+  useCopy: 1
 --- !u!4 &661993403 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3219511386051306701, guid: 4dc8e39b9c11ecd4cb6764c56e5af1cc,
@@ -763,6 +1164,36 @@ Transform:
   m_Father: {fileID: 1623634178}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &755537810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:21
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:21
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 887
+      y: 600
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 21
+  _state: -1
+  parent: {fileID: 628586645}
+  deleg: {fileID: 1831077054}
+  overrideOn: 0
+  stateOverride: 1
 --- !u!1 &771194131
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,6 +1445,83 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &836419254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:16
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:16
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 624
+      y: 813
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 16
+  _state: -1
+  parent: {fileID: 868278871}
+  deleg: {fileID: 1276339183}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &851684081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8c5c741ee851941a002bce62691694, type: 3}
+  m_Name: FinishTurn(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+--- !u!114 &868278871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
+  m_Name: Sequence:6
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Sequence:6
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 230
+      y: 644
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 6
+  _state: -1
+  parent: {fileID: 1138077225}
+  children:
+  - {fileID: 1347101483}
+  - {fileID: 1321729023}
+  - {fileID: 1849730917}
+  - {fileID: 1080831635}
+  - {fileID: 267786872}
+  - {fileID: 836419254}
 --- !u!1 &903177710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1217,6 +1725,70 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 996954101}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1005993049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:18
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:18
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 584
+      y: 603
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 18
+  _state: -1
+  parent: {fileID: 628586645}
+  deleg: {fileID: 58134115}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &1007025951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
+  m_Name: Sequence:1
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Sequence:1
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 253
+      y: 241
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 1
+  _state: -1
+  parent: {fileID: 11031898}
+  children:
+  - {fileID: 1543299899}
+  - {fileID: 1138077225}
+  - {fileID: 2077279014}
+  - {fileID: 502514998}
+  - {fileID: 541537364}
+  - {fileID: 1207368448}
 --- !u!1 &1007323991
 GameObject:
   m_ObjectHideFlags: 0
@@ -1229,13 +1801,14 @@ GameObject:
   - component: {fileID: 1007323995}
   - component: {fileID: 1007323994}
   - component: {fileID: 1007323993}
+  - component: {fileID: 1007323996}
   m_Layer: 0
   m_Name: Enemy(Clone) (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1007323992
 Transform:
   m_ObjectHideFlags: 0
@@ -1249,7 +1822,7 @@ Transform:
   m_Children:
   - {fileID: 2086847648}
   m_Father: {fileID: 1928572047}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1007323993
 MonoBehaviour:
@@ -1263,6 +1836,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e546a4721d175854fb953bc1dc778be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_coordinates: {x: 6, y: 7}
+  m_afterClear: 0
   m_duplicateMesh: {fileID: 0}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
@@ -1295,8 +1870,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_coordinates: {x: 6, y: 7}
-  m_afterClear: 0
 --- !u!65 &1007323994
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1318,6 +1891,44 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007323991}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1007323996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007323991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d61082042b0643e7bdab6ba67737894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _internalTree: {fileID: 0}
+  agentName: BhaveAgent
+  description: Frost Troll
+  _active: 0
+  _paused: 0
+  playOnStart: 0
+  restartWhenDone: 0
+  pauseIfDeactivated: 0
+  bhaveTreeModule: {fileID: 11400000, guid: 911c595ef1d92f64784472a71ee3037b, type: 2}
+  useCopy: 1
+--- !u!114 &1010160169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df08c0e30268d4c1f92926f823fc5b83, type: 3}
+  m_Name: CompareListCount(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  comparisonMethod: 1
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+  countToCompare: 1
 --- !u!1 &1025492130
 GameObject:
   m_ObjectHideFlags: 0
@@ -1367,6 +1978,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_healthBarPrefab: {fileID: 0}
+--- !u!114 &1026867201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:20
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:20
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 786
+      y: 602
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 20
+  _state: -1
+  parent: {fileID: 628586645}
+  deleg: {fileID: 1909742915}
+  overrideOn: 0
+  stateOverride: 1
 --- !u!1 &1030491038
 GameObject:
   m_ObjectHideFlags: 0
@@ -1397,6 +2038,156 @@ Transform:
   m_Father: {fileID: 721503181}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1080831635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:10
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:10
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 414
+      y: 818
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 10
+  _state: -1
+  parent: {fileID: 868278871}
+  deleg: {fileID: 851684081}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &1086545445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df08c0e30268d4c1f92926f823fc5b83, type: 3}
+  m_Name: CompareListCount(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  comparisonMethod: 1
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+  countToCompare: 1
+--- !u!114 &1138077225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
+  m_Name: Sequence:3
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Sequence:3
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 157
+      y: 418
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 3
+  _state: -1
+  parent: {fileID: 1007025951}
+  children:
+  - {fileID: 563765558}
+  - {fileID: 272129939}
+  - {fileID: 868278871}
+--- !u!114 &1207368448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:14
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:14
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 592
+      y: 423
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 14
+  _state: -1
+  parent: {fileID: 1007025951}
+  deleg: {fileID: 1219502182}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &1217380374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
+  m_Name: Sequence:24
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Sequence:24
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 1035
+      y: 219
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 24
+  _state: -1
+  parent: {fileID: 11031898}
+  children:
+  - {fileID: 1954898013}
+  - {fileID: 1773241101}
+--- !u!114 &1219502182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a687d785d57756b4d85f9ae7acd794b0, type: 3}
+  m_Name: StopBhaviour(Clone)
+  m_EditorClassIdentifier: 
+  description: Immediately stops an agent and it's behaviour
 --- !u!1 &1269995701
 GameObject:
   m_ObjectHideFlags: 0
@@ -1439,13 +2230,14 @@ GameObject:
   - component: {fileID: 1272122797}
   - component: {fileID: 1272122796}
   - component: {fileID: 1272122795}
+  - component: {fileID: 1272122798}
   m_Layer: 0
   m_Name: Enemy(Clone) (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1272122794
 Transform:
   m_ObjectHideFlags: 0
@@ -1459,7 +2251,7 @@ Transform:
   m_Children:
   - {fileID: 2124916410}
   m_Father: {fileID: 1928572047}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1272122795
 MonoBehaviour:
@@ -1473,6 +2265,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e546a4721d175854fb953bc1dc778be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_coordinates: {x: 4, y: 9}
+  m_afterClear: 0
   m_duplicateMesh: {fileID: 0}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
@@ -1505,8 +2299,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_coordinates: {x: 4, y: 9}
-  m_afterClear: 0
 --- !u!65 &1272122796
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1528,6 +2320,112 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1272122793}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1272122798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272122793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d61082042b0643e7bdab6ba67737894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _internalTree: {fileID: 0}
+  agentName: BhaveAgent
+  description: Frost Troll
+  _active: 0
+  _paused: 0
+  playOnStart: 0
+  restartWhenDone: 0
+  pauseIfDeactivated: 0
+  bhaveTreeModule: {fileID: 11400000, guid: 911c595ef1d92f64784472a71ee3037b, type: 2}
+  useCopy: 1
+--- !u!114 &1276339183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a687d785d57756b4d85f9ae7acd794b0, type: 3}
+  m_Name: StopBhaviour(Clone)
+  m_EditorClassIdentifier: 
+  description: Immediately stops an agent and it's behaviour
+--- !u!114 &1321729023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff060b0c5dbb4dbd8db41bbb67dd703, type: 3}
+  m_Name: Condition:8
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Condition:8
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 200
+      y: 819
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 8
+  _state: -1
+  parent: {fileID: 868278871}
+  deleg: {fileID: 1010160169}
+--- !u!114 &1329740131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8c5c741ee851941a002bce62691694, type: 3}
+  m_Name: FinishTurn(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+--- !u!114 &1347101483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:7
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:7
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 91
+      y: 818
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 7
+  _state: -1
+  parent: {fileID: 868278871}
+  deleg: {fileID: 183381214}
+  overrideOn: 0
+  stateOverride: 1
 --- !u!1 &1358670996
 GameObject:
   m_ObjectHideFlags: 0
@@ -1695,6 +2593,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f35686127b2404ca16e9065156b57d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_coordinates: {x: 3, y: 7}
+  m_afterClear: 0
   m_duplicateMesh: {fileID: 1579757828}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
@@ -1727,8 +2627,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_coordinates: {x: 3, y: 7}
-  m_afterClear: 0
   m_unitType: 1
 --- !u!65 &1422263578
 BoxCollider:
@@ -1876,6 +2774,77 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1543299899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:2
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:2
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 46
+      y: 415
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 2
+  _state: -1
+  parent: {fileID: 1007025951}
+  deleg: {fileID: 600046200}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &1549573770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f768a4da20eb140fe93ea329c5f4ba32, type: 3}
+  m_Name: Enemy.internal
+  m_EditorClassIdentifier: 
+  root: {fileID: 11031898}
+  eNodes:
+  - {fileID: 11031898}
+  - {fileID: 1007025951}
+  - {fileID: 1543299899}
+  - {fileID: 1138077225}
+  - {fileID: 563765558}
+  - {fileID: 272129939}
+  - {fileID: 868278871}
+  - {fileID: 1347101483}
+  - {fileID: 1321729023}
+  - {fileID: 1849730917}
+  - {fileID: 1080831635}
+  - {fileID: 2077279014}
+  - {fileID: 502514998}
+  - {fileID: 541537364}
+  - {fileID: 1207368448}
+  - {fileID: 267786872}
+  - {fileID: 836419254}
+  - {fileID: 628586645}
+  - {fileID: 1005993049}
+  - {fileID: 1975857861}
+  - {fileID: 1026867201}
+  - {fileID: 755537810}
+  - {fileID: 413507990}
+  - {fileID: 1690822620}
+  - {fileID: 1217380374}
+  - {fileID: 1954898013}
+  - {fileID: 1773241101}
 --- !u!1 &1551956351
 GameObject:
   m_ObjectHideFlags: 0
@@ -2107,6 +3076,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1579757828}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1605717397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df08c0e30268d4c1f92926f823fc5b83, type: 3}
+  m_Name: CompareListCount(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  comparisonMethod: 1
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+  countToCompare: 1
 --- !u!1 &1607365746
 GameObject:
   m_ObjectHideFlags: 0
@@ -2172,6 +3157,49 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1632870719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8c5c741ee851941a002bce62691694, type: 3}
+  m_Name: FinishTurn(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+--- !u!114 &1690822620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:23
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:23
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 1097
+      y: 601
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 23
+  _state: -1
+  parent: {fileID: 628586645}
+  deleg: {fileID: 2070492852}
+  overrideOn: 0
+  stateOverride: 1
 --- !u!114 &1710978633 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4738682657758936443, guid: 138dcf1ed8ebe694ab4a807758acca73,
@@ -2184,6 +3212,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe14d5a4559383841a758f9af1b5e69f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1726194263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a687d785d57756b4d85f9ae7acd794b0, type: 3}
+  m_Name: StopBhaviour(Clone)
+  m_EditorClassIdentifier: 
+  description: Immediately stops an agent and it's behaviour
 --- !u!1 &1757376445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2245,6 +3286,36 @@ Transform:
   m_Father: {fileID: 721503181}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1773241101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:26
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:26
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 1098
+      y: 375
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 26
+  _state: -1
+  parent: {fileID: 1217380374}
+  deleg: {fileID: 1726194263}
+  overrideOn: 0
+  stateOverride: 1
 --- !u!1 &1814358960
 GameObject:
   m_ObjectHideFlags: 0
@@ -2275,6 +3346,20 @@ Transform:
   m_Father: {fileID: 1623634178}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1831077054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 197eb9973ce1cda40a9cdebfbc070dde, type: 3}
+  m_Name: AttackUnit(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
 --- !u!1 &1842377413
 GameObject:
   m_ObjectHideFlags: 0
@@ -2305,6 +3390,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1849730917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:9
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:9
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 311
+      y: 818
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 9
+  _state: -1
+  parent: {fileID: 868278871}
+  deleg: {fileID: 581737261}
+  overrideOn: 0
+  stateOverride: 1
 --- !u!114 &1858067639 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8282566447300338917, guid: 5264df4b6b70dde43865d8415c570785,
@@ -2363,6 +3478,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f35686127b2404ca16e9065156b57d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_coordinates: {x: 4, y: 6}
+  m_afterClear: 0
   m_duplicateMesh: {fileID: 996954101}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
@@ -2395,8 +3512,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_coordinates: {x: 4, y: 6}
-  m_afterClear: 0
   m_unitType: 2
 --- !u!65 &1870606662
 BoxCollider:
@@ -2490,6 +3605,20 @@ MonoBehaviour:
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1909742915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027a29ffcc03ada47b6fbd16541911b9, type: 3}
+  m_Name: MoveToUnit(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
 --- !u!1 &1928572046
 GameObject:
   m_ObjectHideFlags: 0
@@ -2517,6 +3646,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2066898263}
   - {fileID: 629005604}
   - {fileID: 1007323992}
   - {fileID: 2031064301}
@@ -2525,6 +3655,64 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1954898013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:25
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:25
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 983
+      y: 378
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 25
+  _state: -1
+  parent: {fileID: 1217380374}
+  deleg: {fileID: 1329740131}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &1975857861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff060b0c5dbb4dbd8db41bbb67dd703, type: 3}
+  m_Name: Condition:19
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Condition:19
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 686
+      y: 603
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 19
+  _state: -1
+  parent: {fileID: 628586645}
+  deleg: {fileID: 1605717397}
 --- !u!1001 &2013826685
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2622,13 +3810,14 @@ GameObject:
   - component: {fileID: 2031064304}
   - component: {fileID: 2031064303}
   - component: {fileID: 2031064302}
+  - component: {fileID: 2031064305}
   m_Layer: 0
   m_Name: Enemy(Clone) (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2031064301
 Transform:
   m_ObjectHideFlags: 0
@@ -2642,7 +3831,7 @@ Transform:
   m_Children:
   - {fileID: 1551956352}
   m_Father: {fileID: 1928572047}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2031064302
 MonoBehaviour:
@@ -2656,6 +3845,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e546a4721d175854fb953bc1dc778be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_coordinates: {x: 5, y: 9}
+  m_afterClear: 0
   m_duplicateMesh: {fileID: 0}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
@@ -2688,8 +3879,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_coordinates: {x: 5, y: 9}
-  m_afterClear: 0
 --- !u!65 &2031064303
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2711,6 +3900,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2031064300}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2031064305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031064300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d61082042b0643e7bdab6ba67737894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _internalTree: {fileID: 0}
+  agentName: BhaveAgent
+  description: Frost Troll
+  _active: 0
+  _paused: 0
+  playOnStart: 0
+  restartWhenDone: 0
+  pauseIfDeactivated: 0
+  bhaveTreeModule: {fileID: 11400000, guid: 911c595ef1d92f64784472a71ee3037b, type: 2}
+  useCopy: 1
 --- !u!1 &2050865947
 GameObject:
   m_ObjectHideFlags: 0
@@ -2741,6 +3952,152 @@ Transform:
   m_Father: {fileID: 1876489161}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2061931210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8c5c741ee851941a002bce62691694, type: 3}
+  m_Name: FinishTurn(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+--- !u!1001 &2066898262
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1928572047}
+    m_Modifications:
+    - target: {fileID: 3093552309022210591, guid: f1502cb9f21d72147a6acb634f12c6e3,
+        type: 3}
+      propertyPath: m_Name
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 752364542293138397, guid: f1502cb9f21d72147a6acb634f12c6e3,
+        type: 3}
+      propertyPath: m_coordinates.x
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 752364542293138397, guid: f1502cb9f21d72147a6acb634f12c6e3,
+        type: 3}
+      propertyPath: m_coordinates.y
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3093552309022210659, guid: f1502cb9f21d72147a6acb634f12c6e3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3093552309022210659, guid: f1502cb9f21d72147a6acb634f12c6e3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3093552309022210659, guid: f1502cb9f21d72147a6acb634f12c6e3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3093552309022210659, guid: f1502cb9f21d72147a6acb634f12c6e3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3093552309022210659, guid: f1502cb9f21d72147a6acb634f12c6e3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3093552309022210659, guid: f1502cb9f21d72147a6acb634f12c6e3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3093552309022210659, guid: f1502cb9f21d72147a6acb634f12c6e3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3093552309022210659, guid: f1502cb9f21d72147a6acb634f12c6e3,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3093552309022210659, guid: f1502cb9f21d72147a6acb634f12c6e3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3093552309022210659, guid: f1502cb9f21d72147a6acb634f12c6e3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3093552309022210659, guid: f1502cb9f21d72147a6acb634f12c6e3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6960083188636952990, guid: f1502cb9f21d72147a6acb634f12c6e3,
+        type: 3}
+      propertyPath: _internalTree
+      value: 
+      objectReference: {fileID: 1549573770}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f1502cb9f21d72147a6acb634f12c6e3, type: 3}
+--- !u!4 &2066898263 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3093552309022210659, guid: f1502cb9f21d72147a6acb634f12c6e3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2066898262}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2070492852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a687d785d57756b4d85f9ae7acd794b0, type: 3}
+  m_Name: StopBhaviour(Clone)
+  m_EditorClassIdentifier: 
+  description: Immediately stops an agent and it's behaviour
+--- !u!114 &2077279014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
+  m_Name: Action:11
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 1549573770}
+    name: Action:11
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 268
+      y: 420
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 11
+  _state: -1
+  parent: {fileID: 1007025951}
+  deleg: {fileID: 242828165}
+  overrideOn: 0
+  stateOverride: 1
 --- !u!4 &2084080109 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5934445798658001405, guid: c60cd65fc353f8248b3122327b19c4ed,
@@ -2856,7 +4213,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2086847648
 Transform:
   m_ObjectHideFlags: 0
@@ -2941,13 +4298,14 @@ GameObject:
   - component: {fileID: 2096567420}
   - component: {fileID: 2096567419}
   - component: {fileID: 2096567418}
+  - component: {fileID: 2096567421}
   m_Layer: 0
   m_Name: Enemy(Clone) (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2096567417
 Transform:
   m_ObjectHideFlags: 0
@@ -2961,7 +4319,7 @@ Transform:
   m_Children:
   - {fileID: 1454258095}
   m_Father: {fileID: 1928572047}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2096567418
 MonoBehaviour:
@@ -2975,6 +4333,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e546a4721d175854fb953bc1dc778be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_coordinates: {x: 4, y: 8}
+  m_afterClear: 0
   m_duplicateMesh: {fileID: 0}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
@@ -3007,8 +4367,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_coordinates: {x: 4, y: 8}
-  m_afterClear: 0
 --- !u!65 &2096567419
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3030,6 +4388,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2096567416}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2096567421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2096567416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d61082042b0643e7bdab6ba67737894, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _internalTree: {fileID: 0}
+  agentName: BhaveAgent
+  description: Frost Troll
+  _active: 0
+  _paused: 0
+  playOnStart: 0
+  restartWhenDone: 0
+  pauseIfDeactivated: 0
+  bhaveTreeModule: {fileID: 11400000, guid: 911c595ef1d92f64784472a71ee3037b, type: 2}
+  useCopy: 1
 --- !u!1 &2105037069
 GameObject:
   m_ObjectHideFlags: 0
@@ -3276,7 +4656,7 @@ PrefabInstance:
     - target: {fileID: 6278063683333937501, guid: 5264df4b6b70dde43865d8415c570785,
         type: 3}
       propertyPath: m_enemies.Array.size
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6278063683333937501, guid: 5264df4b6b70dde43865d8415c570785,
         type: 3}
@@ -3297,12 +4677,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_enemies.Array.data[0]
       value: 
-      objectReference: {fileID: 629005605}
+      objectReference: {fileID: 112700873}
     - target: {fileID: 6278063683333937501, guid: 5264df4b6b70dde43865d8415c570785,
         type: 3}
       propertyPath: m_enemies.Array.data[1]
       value: 
-      objectReference: {fileID: 1007323993}
+      objectReference: {fileID: 112700873}
     - target: {fileID: 6278063683333937501, guid: 5264df4b6b70dde43865d8415c570785,
         type: 3}
       propertyPath: m_enemies.Array.data[2]
