@@ -41,7 +41,11 @@ namespace StormRend.Bhaviours
         public override NodeState Execute(BhaveAgent agent)
         {
             //Find valid moves
-            Dijkstra.Instance.FindValidMoves(Grid.GetNodeFromCoords(unit.m_coordinates), unit.GetMove() * (int)turnsToRangefind, typeof(EnemyUnit));
+            Dijkstra.Instance.FindValidMoves(
+                Grid.GetNodeFromCoords(unit.m_coordinates), 
+                unit.GetMove() * (int)turnsToRangefind, 
+                (unit is PlayerUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
+                
             validMoves = Dijkstra.Instance.m_validMoves;
 
             //Determine if specified unit is in range
