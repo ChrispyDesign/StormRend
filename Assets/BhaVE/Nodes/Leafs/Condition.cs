@@ -46,14 +46,14 @@ namespace BhaVE.Nodes.Leafs
 
 		protected override void OnDestroy()
 		{
-			base.OnDestroy();
-
 			//Make sure to remove delegates from tree and the delete
 			if (deleg)
 			{
 				AssetDatabase.RemoveObjectFromAsset(deleg);
 				DestroyImmediate(deleg);
 			}
+
+			base.OnDestroy();
 		}
 		#endregion
 
