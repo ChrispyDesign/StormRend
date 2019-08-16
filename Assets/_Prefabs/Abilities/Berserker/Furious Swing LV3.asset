@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
+  m_Name: Furious Swing LV3
+  m_EditorClassIdentifier: 
+  m_name: Furious Swing Level 3
+  m_icon: {fileID: 0}
+  m_description: Swing away
+  m_gloryRequirement: 4
+  m_tilesToSelect: 1
+  m_castArea:
+  - elements: 00000000000000
+  - elements: 00000000000000
+  - elements: 00000001000000
+  - elements: 00000100010000
+  - elements: 00000001000000
+  - elements: 00000000000000
+  - elements: 00000000000000
+  m_targetableTiles:
+    m_empty: 0
+    m_enemies: 1
+    m_players: 0
+    m_self: 0
+  m_effects:
+  - {fileID: 114123862469974870}
+  - {fileID: 114641005868121870}
+  - {fileID: 114213161059483038}
+--- !u!114 &114123862469974870
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
+  m_Name: DamageEffect
+  m_EditorClassIdentifier: 
+  m_target: 0
+  OnPeformEffect:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_damageAmount: 4
+--- !u!114 &114213161059483038
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
+  m_Name: RefreshEffect
+  m_EditorClassIdentifier: 
+  m_target: 3
+  OnPeformEffect:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_refreshType: 1
+--- !u!114 &114641005868121870
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
+  m_Name: RefreshEffect
+  m_EditorClassIdentifier: 
+  m_target: 3
+  OnPeformEffect:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_refreshType: 0
