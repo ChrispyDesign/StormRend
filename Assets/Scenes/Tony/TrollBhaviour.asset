@@ -26,7 +26,6 @@ MonoBehaviour:
   - {fileID: 114154536906420020}
   - {fileID: 114667072466613076}
   - {fileID: 114480068855246064}
-  - {fileID: 114271165789363412}
   - {fileID: 114155527321533308}
   - {fileID: 114084248534670744}
   - {fileID: 114772090959817874}
@@ -69,6 +68,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+  turns: 1
 --- !u!114 &114020608395568652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,21 +79,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:25
+  m_Name: Action:24
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:25
+    name: Action:24
     description: 
     rect:
       serializedVersion: 2
-      x: 650
-      y: 760
+      x: 525
+      y: 757
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 25
+  ID: 24
   _state: -1
   parent: {fileID: 114436139785046312}
   deleg: {fileID: 114040391682139712}
@@ -123,21 +123,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8126ef0ea9fc994194efdd9b4cc6990, type: 3}
-  m_Name: Deactivator:24
+  m_Name: Deactivator:23
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Deactivator:24
+    name: Deactivator:23
     description: 
     rect:
       serializedVersion: 2
-      x: 1681
-      y: 1006
+      x: 1544
+      y: 456
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 24
+  ID: 23
   _state: -1
   parent: {fileID: 114084248534670744}
 --- !u!114 &114062885740031926
@@ -150,21 +150,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8126ef0ea9fc994194efdd9b4cc6990, type: 3}
-  m_Name: Deactivator:21
+  m_Name: Deactivator:20
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Deactivator:21
+    name: Deactivator:20
     description: 
     rect:
       serializedVersion: 2
-      x: 612
-      y: 428
+      x: 487
+      y: 425
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 21
+  ID: 20
   _state: -1
   parent: {fileID: 114778803202402758}
 --- !u!114 &114084248534670744
@@ -177,21 +177,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
-  m_Name: Sequence:14
+  m_Name: Sequence:13
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Sequence:14
+    name: Sequence:13
     description: 
     rect:
       serializedVersion: 2
-      x: 1532
-      y: 832
+      x: 1386
+      y: 280
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 14
+  ID: 13
   _state: -1
   parent: {fileID: 114155527321533308}
   children:
@@ -232,8 +232,8 @@ MonoBehaviour:
     description: MoveToUnit
     rect:
       serializedVersion: 2
-      x: 543
-      y: 764
+      x: 418
+      y: 761
       width: 100
       height: 70
     cardinality: 0
@@ -262,8 +262,8 @@ MonoBehaviour:
     description: 
     rect:
       serializedVersion: 2
-      x: 396
-      y: 432
+      x: 271
+      y: 429
       width: 100
       height: 70
     cardinality: 0
@@ -284,21 +284,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa4eca718763d4532bb096dcec704560, type: 3}
-  m_Name: Selector:13
+  m_Name: Selector:12
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Selector:13
+    name: Selector:12
     description: 
     rect:
       serializedVersion: 2
-      x: 1532
-      y: 707
+      x: 1393
+      y: 134
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 13
+  ID: 12
   _state: -1
   parent: {fileID: 0}
   children:
@@ -313,21 +313,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:16
+  m_Name: Action:15
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:16
+    name: Action:15
     description: 
     rect:
       serializedVersion: 2
-      x: 1462
-      y: 1004
+      x: 1333
+      y: 449
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 16
+  ID: 15
   _state: -1
   parent: {fileID: 114084248534670744}
   deleg: {fileID: 114686733825434930}
@@ -351,8 +351,8 @@ MonoBehaviour:
     description: FindClosestLowHealthPlayer
     rect:
       serializedVersion: 2
-      x: 331
-      y: 765
+      x: 206
+      y: 762
       width: 100
       height: 70
     cardinality: 0
@@ -398,8 +398,8 @@ MonoBehaviour:
     description: MoveToNearestPlayer
     rect:
       serializedVersion: 2
-      x: 799
-      y: 605
+      x: 733
+      y: 598
       width: 100
       height: 70
     cardinality: 0
@@ -408,36 +408,6 @@ MonoBehaviour:
   _state: -1
   parent: {fileID: 114906093755978736}
   deleg: {fileID: 114515919627243812}
-  overrideOn: 0
-  stateOverride: 1
---- !u!114 &114271165789363412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:12
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Action:12
-    description: 
-    rect:
-      serializedVersion: 2
-      x: 908
-      y: 603
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 12
-  _state: -1
-  parent: {fileID: 114906093755978736}
-  deleg: {fileID: 114610611880592124}
   overrideOn: 0
   stateOverride: 1
 --- !u!114 &114284321356195058
@@ -510,8 +480,8 @@ MonoBehaviour:
     description: AnyDuplicatesInAttackList?
     rect:
       serializedVersion: 2
-      x: 325
-      y: 611
+      x: 200
+      y: 608
       width: 100
       height: 70
     cardinality: 0
@@ -584,8 +554,8 @@ MonoBehaviour:
     description: Filter out Closest
     rect:
       serializedVersion: 2
-      x: 433
-      y: 613
+      x: 308
+      y: 610
       width: 100
       height: 70
     cardinality: 0
@@ -609,21 +579,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8126ef0ea9fc994194efdd9b4cc6990, type: 3}
-  m_Name: Deactivator:23
+  m_Name: Deactivator:22
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Deactivator:23
+    name: Deactivator:22
     description: 
     rect:
       serializedVersion: 2
-      x: 1186
-      y: 241
+      x: 1061
+      y: 238
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 23
+  ID: 22
   _state: -1
   parent: {fileID: 114616214790225800}
 --- !u!114 &114480068855246064
@@ -644,8 +614,8 @@ MonoBehaviour:
     description: 
     rect:
       serializedVersion: 2
-      x: 506
-      y: 428
+      x: 381
+      y: 425
       width: 100
       height: 70
     cardinality: 0
@@ -670,6 +640,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+  turns: 1
 --- !u!114 &114515919627243812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -684,6 +655,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+  turns: 2
 --- !u!114 &114522738197823902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -702,8 +674,8 @@ MonoBehaviour:
     description: 
     rect:
       serializedVersion: 2
-      x: 694
-      y: 603
+      x: 616
+      y: 598
       width: 100
       height: 70
     cardinality: 0
@@ -714,20 +686,6 @@ MonoBehaviour:
   deleg: {fileID: 114315087950470568}
   overrideOn: 0
   stateOverride: 1
---- !u!114 &114610611880592124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 197eb9973ce1cda40a9cdebfbc070dde, type: 3}
-  m_Name: AttackUnit(Clone)
-  m_EditorClassIdentifier: 
-  description: 
-  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
 --- !u!114 &114616214790225800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -738,21 +696,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa4eca718763d4532bb096dcec704560, type: 3}
-  m_Name: Selector:20
+  m_Name: Selector:19
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Selector:20
+    name: Selector:19
     description: 
     rect:
       serializedVersion: 2
-      x: 834
-      y: 44
+      x: 709
+      y: 41
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 20
+  ID: 19
   _state: -1
   parent: {fileID: 0}
   children:
@@ -788,21 +746,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8126ef0ea9fc994194efdd9b4cc6990, type: 3}
-  m_Name: Deactivator:22
+  m_Name: Deactivator:21
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Deactivator:22
+    name: Deactivator:21
     description: 
     rect:
       serializedVersion: 2
-      x: 1016
+      x: 849
       y: 598
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 22
+  ID: 21
   _state: -1
   parent: {fileID: 114906093755978736}
 --- !u!114 &114653832032950658
@@ -815,21 +773,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8126ef0ea9fc994194efdd9b4cc6990, type: 3}
-  m_Name: Deactivator:26
+  m_Name: Deactivator:25
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Deactivator:26
+    name: Deactivator:25
     description: 
     rect:
       serializedVersion: 2
-      x: 763
-      y: 758
+      x: 638
+      y: 755
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 26
+  ID: 25
   _state: -1
   parent: {fileID: 114436139785046312}
 --- !u!114 &114667072466613076
@@ -850,8 +808,8 @@ MonoBehaviour:
     description: 
     rect:
       serializedVersion: 2
-      x: 184
-      y: 432
+      x: 59
+      y: 429
       width: 100
       height: 70
     cardinality: 0
@@ -876,6 +834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+  turns: 1
 --- !u!114 &114727100593118278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -886,21 +845,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aff060b0c5dbb4dbd8db41bbb67dd703, type: 3}
-  m_Name: Condition:18
+  m_Name: Condition:17
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Condition:18
+    name: Condition:17
     description: 
     rect:
       serializedVersion: 2
-      x: 433
-      y: 765
+      x: 308
+      y: 762
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 18
+  ID: 17
   _state: -1
   parent: {fileID: 114436139785046312}
   deleg: {fileID: 114228954161158348}
@@ -914,21 +873,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:15
+  m_Name: Action:14
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:15
+    name: Action:14
     description: 
     rect:
       serializedVersion: 2
-      x: 1357
-      y: 1007
+      x: 1218
+      y: 445
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 15
+  ID: 14
   _state: -1
   parent: {fileID: 114084248534670744}
   deleg: {fileID: 114309096039406568}
@@ -944,21 +903,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
-  m_Name: Sequence:19
+  m_Name: Sequence:18
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Sequence:19
+    name: Sequence:18
     description: In Range
     rect:
       serializedVersion: 2
-      x: 438
-      y: 232
+      x: 313
+      y: 229
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 19
+  ID: 18
   _state: -1
   parent: {fileID: 114616214790225800}
   children:
@@ -985,8 +944,8 @@ MonoBehaviour:
     description: Filter out lowest health
     rect:
       serializedVersion: 2
-      x: 290
-      y: 432
+      x: 165
+      y: 429
       width: 100
       height: 70
     cardinality: 0
@@ -1016,8 +975,8 @@ MonoBehaviour:
     description: FindUnitWithLowestHealth
     rect:
       serializedVersion: 2
-      x: 217
-      y: 612
+      x: 92
+      y: 609
       width: 100
       height: 70
     cardinality: 0
@@ -1046,8 +1005,8 @@ MonoBehaviour:
     description: In Range of 2 Turns
     rect:
       serializedVersion: 2
-      x: 835
-      y: 428
+      x: 710
+      y: 425
       width: 100
       height: 70
     cardinality: 0
@@ -1058,7 +1017,6 @@ MonoBehaviour:
   children:
   - {fileID: 114522738197823902}
   - {fileID: 114262448939877504}
-  - {fileID: 114271165789363412}
   - {fileID: 114631311602370524}
 --- !u!114 &114930009332274670
 MonoBehaviour:
@@ -1070,21 +1028,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:17
+  m_Name: Action:16
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:17
+    name: Action:16
     description: 
     rect:
       serializedVersion: 2
-      x: 1572
-      y: 1003
+      x: 1441
+      y: 447
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 17
+  ID: 16
   _state: -1
   parent: {fileID: 114084248534670744}
   deleg: {fileID: 114011437156230230}
