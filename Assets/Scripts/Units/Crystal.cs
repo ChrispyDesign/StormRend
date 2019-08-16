@@ -35,25 +35,25 @@ public class Crystal : Unit
 
 		// Process Left
 		tempCoords = m_coordinates - m_left;
-		tempNode = Grid.GetNodeFromCoords(tempCoords);
+		tempNode = Grid.CoordToTile(tempCoords);
 		if(tempNode.GetUnitOnTop() != null)
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
 
 		// Process Up
 		tempCoords = m_coordinates - m_up;
-		tempNode = Grid.GetNodeFromCoords(tempCoords);
+		tempNode = Grid.CoordToTile(tempCoords);
 		if (tempNode.GetUnitOnTop() != null)
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
 
 		// Process Right
 		tempCoords = m_coordinates - m_right;
-		tempNode = Grid.GetNodeFromCoords(tempCoords);
+		tempNode = Grid.CoordToTile(tempCoords);
 		if (tempNode.GetUnitOnTop() != null)
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
 
 		// Process Down
 		tempCoords = m_coordinates - m_down;
-		tempNode = Grid.GetNodeFromCoords(tempCoords);
+		tempNode = Grid.CoordToTile(tempCoords);
 		if (tempNode.GetUnitOnTop() != null)
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
 
