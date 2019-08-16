@@ -57,9 +57,9 @@ namespace StormRend.AI
 		public void EndAITurn()
 		{
 			if (unitType == UnitType.Enemy)
-				GameManager.singleton.GetTurnManager().PlayerTurn();
+				gm.GetTurnManager().PlayerTurn();
 			else if (unitType == UnitType.Player)
-				GameManager.singleton.GetTurnManager().EnemyTurn();
+				gm.GetTurnManager().EnemyTurn();
 		}
 
 	}

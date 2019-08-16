@@ -34,6 +34,8 @@ namespace StormRend.Bhaviours
 			List<Effect> effects = first[0].GetEffects();
 
             unit.SetLockedAbility(first[0]);
+
+            
             foreach (var t in targets.value)
             {
 				if (unit is EnemyUnit)
