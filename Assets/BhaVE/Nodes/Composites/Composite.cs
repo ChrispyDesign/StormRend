@@ -135,6 +135,12 @@ namespace BhaVE.Nodes.Composites
 			}
 		}
 
+		public override void DrawContent()
+		{
+			GUILayout.Label(eData.description, BhaVEditor.skin.GetStyle("small"));
+			base.DrawContent();
+		}
+
 		public override void FailNodeAndChildren()
 		{
 			state = NodeState.Failure;
