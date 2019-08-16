@@ -42,6 +42,7 @@ public class UIAbilitySelector : MonoBehaviour
     #region GettersAndSetters
 
     public GameObject GetInfoPanel() { return m_infoPanel; }
+    public GameObject GetButtonPanel() { return m_buttonPanel; }
 
     #endregion
 
