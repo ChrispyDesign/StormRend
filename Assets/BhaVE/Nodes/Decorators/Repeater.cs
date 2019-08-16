@@ -52,6 +52,7 @@ namespace BhaVE.Nodes.Decorators
 					}
 				}
 
+				//Also returns Bhave System Node States ie. Aborted, Suspended
 				state = result;
 				return state;
 			}

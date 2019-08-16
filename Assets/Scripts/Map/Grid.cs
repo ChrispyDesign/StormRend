@@ -107,5 +107,5 @@ public class Grid
     }
 
     public static Tile GetNodeFromCoords(int _x, int _y) { return m_nodes[_x, _y]; }
-    public static Tile GetNodeFromCoords(Vector2Int _coords) { return m_nodes[_coords.x, _coords.y]; }
+    public static Tile CoordToTile(Vector2Int _coords) { return m_nodes[_coords.x, _coords.y]; }
 }

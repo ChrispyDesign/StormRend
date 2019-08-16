@@ -79,7 +79,7 @@ public class Ability : ScriptableObject
                     coords.x = _player.m_coordinates.x + _x;
                     coords.y = _player.m_coordinates.y + _y;
 
-                    Tile node = Grid.GetNodeFromCoords(coords);
+                    Tile node = Grid.CoordToTile(coords);
                     if (node != null)
                         nodes.Add(node);
                 }

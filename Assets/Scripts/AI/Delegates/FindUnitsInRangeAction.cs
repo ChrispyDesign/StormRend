@@ -19,12 +19,12 @@ namespace StormRend.Bhaviours
         public BhaveUnitList targets;
 
 		[Tooltip("The number of turns to cast out in order find the range of this unit")]
-		public uint turns = 1;	
+		[SerializeField] uint turns = 1;	
 
         //Privates
         Unit unit;	//The unit mono attached to this agent
         List<Tile> validMoves = new List<Tile>();
-        private bool unitsHasBeenFound = false;
+        private bool unitsHaveBeenFound = false;
 
         public override void Initiate(BhaveAgent agent)
         {
@@ -34,7 +34,7 @@ namespace StormRend.Bhaviours
         public override void Begin()
         {
 			//Resets
-            unitsHasBeenFound = false;
+            unitsHaveBeenFound = false;
 			targets.value.Clear();
         }
 
@@ -45,8 +45,8 @@ namespace StormRend.Bhaviours
 
             //Find valid moves
             Dijkstra.Instance.FindValidMoves(
-                Grid.GetNodeFromCoords(unit.m_coordinates), 
-                unit.GetMove() * (int)turns, 
+                Grid.CoordToTile(unit.m_coordinates), 
+                unit.GetRange() * (int)turns, 
                 (unit is EnemyUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
                 
             validMoves = Dijkstra.Instance.m_validMoves;
@@ -59,15 +59,15 @@ namespace StormRend.Bhaviours
                 {
 					//Update targets
                     targets.value.Add(unitOnTop);	
-                    unitsHasBeenFound = true;
+                    unitsHaveBeenFound = true;
                 }
                 else if (unitTypeToFind == UnitType.Enemy && unitOnTop is EnemyUnit)
                 {
                     targets.value.Add(unitOnTop);
-					unitsHasBeenFound = true;
+					unitsHaveBeenFound = true;
                 }
             }
-            return (unitsHasBeenFound) ? NodeState.Success : NodeState.Failure;
+            return (unitsHaveBeenFound) ? NodeState.Success : NodeState.Failure;
         }
 
     }

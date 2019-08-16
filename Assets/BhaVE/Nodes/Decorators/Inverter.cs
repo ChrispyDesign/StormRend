@@ -12,8 +12,15 @@ namespace BhaVE.Nodes.Decorators
 			switch (child.OnExecute(agent))
 			{
 #if UNITY_EDITOR   //For BHEditor live view and debugging
+				//Bhave System Node States. Return Immediately
                 case NodeState.None:
                     state = NodeState.None;
+                    return state;
+                case NodeState.Aborted:
+                    state = NodeState.Aborted;
+                    return state;
+                case NodeState.Suspended:
+                    state = NodeState.Suspended;
                     return state;
 #endif
 				case NodeState.Failure:

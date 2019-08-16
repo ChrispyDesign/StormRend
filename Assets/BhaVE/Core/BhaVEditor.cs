@@ -197,6 +197,11 @@ namespace BhaVE.Editor
 		{
 			switch (n.state)
 			{
+				case NodeState.Aborted:
+					return settings.abortColor;
+				case NodeState.Suspended:
+					return settings.pauseColor;
+
 				case NodeState.None:    //If not in play mode
 					if (n == activeTree.root) return settings.rootColour;
 					if (n is Selector) return settings.selectorColour;

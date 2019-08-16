@@ -35,11 +35,11 @@ public class MoveCommand : ICommand
 
     public void Execute()
     {
-        m_unit.MoveTo(Grid.GetNodeFromCoords(m_coords));
+        m_unit.MoveTo(Grid.CoordToTile(m_coords));
     }
 
     public void Undo()
     {
-        m_unit.MoveTo(Grid.GetNodeFromCoords(m_origCoords));
+        m_unit.MoveTo(Grid.CoordToTile(m_origCoords));
     }
 }

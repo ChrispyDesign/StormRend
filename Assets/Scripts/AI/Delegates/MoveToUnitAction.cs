@@ -14,11 +14,11 @@ namespace StormRend.Bhaviours
     [CreateAssetMenu(menuName = "StormRend/Delegates/Actions/MoveToUnit", fileName = "MoveToUnit")]
     public class MoveToUnitAction : BhaveAction
     {
-        //This agent should already be in range of the target, but just in case
-        // [SerializeField] bool checkInRange = false;
-
         [SerializeField] BhaveUnitList targets;
+   		[Tooltip("The number of turns to cast out in order find the range of this unit")]
+        [SerializeField] uint turns = 1;
 
+        //Privates
         Unit unit;
         List<Tile> validMoves = new List<Tile>();
 
@@ -29,20 +29,31 @@ namespace StormRend.Bhaviours
 
         public override NodeState Execute(BhaveAgent agent)
         {
-            Debug.Log("MoveToUnitAction");
+            Vector2Int oldCoord;
 
-            ///Move to the target
-            //Find the closest valid tile
+            oldCoord = unit.m_coordinates;
+
+            ///Move as close as possible to the target
             Dijkstra.Instance.FindValidMoves(
-                Grid.GetNodeFromCoords(targets.value[0].m_coordinates), 
-                1, 
+                Grid.CoordToTile(unit.m_coordinates), 
+                unit.GetRange() * (int)turns,
                 (unit is PlayerUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
             validMoves = Dijkstra.Instance.m_validMoves;
+            foreach (var vm in validMoves)
+            {
+                Debug.Log("Before Sort Distances: " + Vector2Int.Distance(unit.m_coordinates, vm.GetCoordinates()));
+            }
             
-            validMoves = validMoves.OrderByDescending(
-                x => (Vector2Int.Distance(unit.m_coordinates, targets.value[0].m_coordinates))).ToList();
+            validMoves = validMoves.OrderBy(
+                x => (Vector2Int.Distance(targets.value[0].m_coordinates, x.GetCoordinates()))).ToList();
+            foreach (var vm in validMoves)
+            {
+                Debug.Log("After Sort Distances: " + Vector2Int.Distance(unit.m_coordinates, vm.GetCoordinates()));
+            }
 
             unit.MoveTo(validMoves[0]);
+
+            Debug.LogFormat("MoveToUnitAction: {0} > {1}", oldCoord, unit.m_coordinates);
 
             return NodeState.Success;
         }

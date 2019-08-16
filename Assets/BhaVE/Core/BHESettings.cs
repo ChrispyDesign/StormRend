@@ -32,6 +32,8 @@ namespace BhaVE.Editor.Settings
 		public Color pendingColor = new Color(1, 0.92f, 0.2f, nodeAlpha);      //#FFEB33
 		public Color failureColor = new Color(1, 0.3f, 0, nodeAlpha);       //#FF3D33
 		public Color successColour = new Color(0.6f, 1, 0, nodeAlpha);      //#98FF33
+        public Color abortColor = new Color(0.3f, 0.3f, 0.3f, nodeAlpha);
+        public Color pauseColor = new Color(0.8f, 0.8f, 0.8f, nodeAlpha);
     }
 }
 

@@ -34,6 +34,8 @@ namespace StormRend.Bhaviours
 			List<Effect> effects = first[0].GetEffects();
 
             unit.SetLockedAbility(first[0]);
+
+            
             foreach (var t in targets.value)
             {
 				if (unit is EnemyUnit)
@@ -41,7 +43,7 @@ namespace StormRend.Bhaviours
 					//Should be encapsulted
 					foreach(Effect effect in effects)
 					{
-						effect.PerformEffect(Grid.GetNodeFromCoords(t.m_coordinates), unit);
+						effect.PerformEffect(Grid.CoordToTile(t.m_coordinates), unit);
 					}
 				}
 				else if (unit is PlayerUnit)

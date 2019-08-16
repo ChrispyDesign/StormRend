@@ -35,48 +35,48 @@ public class PushEffect : Effect
 
 		// Process Left
 		tempCoords = nodeCoords - m_left;
-		tempNode = Grid.GetNodeFromCoords(tempCoords);
+		tempNode = Grid.CoordToTile(tempCoords);
 
 		if (tempNode.GetUnitOnTop() != null)
 		{
 			Unit unit = tempNode.GetUnitOnTop();
-			Tile newNode = Grid.GetNodeFromCoords(tempCoords - m_left);
+			Tile newNode = Grid.CoordToTile(tempCoords - m_left);
 			if(newNode.GetUnitOnTop() == null)
 				unit.MoveTo(newNode);
 		}
 
 		// Process Up
 		tempCoords = nodeCoords - m_up;
-		tempNode = Grid.GetNodeFromCoords(tempCoords);
+		tempNode = Grid.CoordToTile(tempCoords);
 
 		if (tempNode.GetUnitOnTop() != null)
 		{
 			Unit unit = tempNode.GetUnitOnTop();
-			Tile newNode = Grid.GetNodeFromCoords(tempCoords - m_up);
+			Tile newNode = Grid.CoordToTile(tempCoords - m_up);
 			if (newNode.GetUnitOnTop() == null)
 				unit.MoveTo(newNode);
 		}
 
 		// Process Right
 		tempCoords = nodeCoords - m_right;
-		tempNode = Grid.GetNodeFromCoords(tempCoords);
+		tempNode = Grid.CoordToTile(tempCoords);
 
 		if (tempNode.GetUnitOnTop() != null)
 		{
 			Unit unit = tempNode.GetUnitOnTop();
-			Tile newNode = Grid.GetNodeFromCoords(tempCoords - m_right);
+			Tile newNode = Grid.CoordToTile(tempCoords - m_right);
 			if (newNode.GetUnitOnTop() == null)
 				unit.MoveTo(newNode);
 		}
 
 		// Process Down
 		tempCoords = nodeCoords - m_down;
-		tempNode = Grid.GetNodeFromCoords(tempCoords);
+		tempNode = Grid.CoordToTile(tempCoords);
 
 		if (tempNode.GetUnitOnTop() != null)
 		{
 			Unit unit = tempNode.GetUnitOnTop();
-			Tile newNode = Grid.GetNodeFromCoords(tempCoords - m_down);
+			Tile newNode = Grid.CoordToTile(tempCoords - m_down);
 			if (newNode.GetUnitOnTop() == null)
 				unit.MoveTo(newNode);
 		}
