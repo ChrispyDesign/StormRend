@@ -7,10 +7,9 @@ namespace StormRend
 {
 	public class EnemyUnit : Unit
 	{
-
 		public override void OnSelect()
 		{
-			Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetMove(), typeof(PlayerUnit));
+			Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetRange(), typeof(PlayerUnit));
 
 			base.OnSelect();
 			GameManager.singleton.GetPlayerController().SetCurrentPlayer(null);

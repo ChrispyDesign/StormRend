@@ -18,7 +18,7 @@ public class Crystal : Unit
 		foreach (Effect effect in m_passiveAbility.GetEffects())
 		{
 			m_lockedAbility = m_passiveAbility;
-			effect.PerformEffect(Grid.GetNodeFromCoords(m_coordinates), this);
+			effect.PerformEffect(Grid.CoordToTile(m_coordinates), this);
 		}
 	}
 }

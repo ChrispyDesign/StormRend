@@ -26,7 +26,7 @@ namespace StormRend
 
         [Header("Unit Stats")]
         [SerializeField] int m_maxHP = 4;
-        [SerializeField] int m_maxMOV = 4;
+        [SerializeField] int m_maxRange = 4;
 
 
         [Space]
@@ -62,8 +62,8 @@ namespace StormRend
         public List<Tile> GetAvailableNodes() { return m_availableNodes; }
         public Ability GetLockedAbility() { return m_lockedAbility; }
         public List<Tile> GetAttackNodes() { return m_attackNodes; }
-        public Tile GetCurrentNode() { return Grid.GetNodeFromCoords(m_coordinates); }
-        public int GetMove() { return m_maxMOV; }
+        public Tile GetCurrentNode() { return Grid.CoordToTile(m_coordinates); }
+        public int GetRange() { return m_maxRange; }
         public bool GetIsFocused() { return m_isFocused; }
         public bool GetAlreadyMoved() { return m_alreadyMoved; }
         public bool GetAlreadyAttacked() { return m_alreadyAttacked; }
@@ -172,7 +172,7 @@ namespace StormRend
         {
             m_onDeselect.Invoke();
 
-            Grid.GetNodeFromCoords(m_coordinates).OnDeselect();
+            Grid.CoordToTile(m_coordinates).OnDeselect();
         }
 
         public virtual void OnHover()
@@ -199,7 +199,7 @@ namespace StormRend
             OnDie.Invoke();
 			
             gameObject.SetActive(false);
-            Tile node = Grid.GetNodeFromCoords(m_coordinates);
+            Tile node = Grid.CoordToTile(m_coordinates);
             node.SetUnitOnTop(null);
         }
     }

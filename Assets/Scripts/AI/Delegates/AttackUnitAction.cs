@@ -43,7 +43,7 @@ namespace StormRend.Bhaviours
 					//Should be encapsulted
 					foreach(Effect effect in effects)
 					{
-						effect.PerformEffect(Grid.GetNodeFromCoords(t.m_coordinates), unit);
+						effect.PerformEffect(Grid.CoordToTile(t.m_coordinates), unit);
 					}
 				}
 				else if (unit is PlayerUnit)

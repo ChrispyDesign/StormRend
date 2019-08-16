@@ -57,7 +57,7 @@ namespace StormRend
 
                     if (move.m_unit == this)
                     {
-                        Tile previousNode = Grid.GetNodeFromCoords(move.GetOrigCoordinates());
+                        Tile previousNode = Grid.CoordToTile(move.GetOrigCoordinates());
 
                         if (previousNode.GetUnitOnTop() != this && previousNode.GetUnitOnTop() != null)
                             return;
@@ -69,7 +69,7 @@ namespace StormRend
 
                 SetDuplicateMeshVisibilty(true);
 
-                Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetMove(), typeof(EnemyUnit));
+                Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetRange(), typeof(EnemyUnit));
             }
 
             base.OnSelect();
