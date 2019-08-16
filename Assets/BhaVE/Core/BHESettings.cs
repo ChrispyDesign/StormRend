@@ -18,6 +18,7 @@ namespace BhaVE.Editor.Settings
 		public Color decoratorColour = new Color(0.83f, 0.63f, 0.97f, nodeAlpha);	//#D5A1F8
 		public Color conditionColour = new Color(1, 0.95f, 0.45f, nodeAlpha);       //#FFF373
 		public Color actionColor = new Color(0.73f, 1, 0.5f, nodeAlpha); 			//#BBFF80
+        public Color deactivateColor = new Color(0.35f, 0.35f, 0.35f, nodeAlpha);
 
 		[Header("Connections")]
 		public BHEConnectionStyle connectionStyle = BHEConnectionStyle.Bezier;
@@ -31,8 +32,7 @@ namespace BhaVE.Editor.Settings
 		public Color pendingColor = new Color(1, 0.92f, 0.2f, nodeAlpha);      //#FFEB33
 		public Color failureColor = new Color(1, 0.3f, 0, nodeAlpha);       //#FF3D33
 		public Color successColour = new Color(0.6f, 1, 0, nodeAlpha);      //#98FF33
-
-	}
+    }
 }
 
 

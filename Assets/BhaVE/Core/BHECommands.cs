@@ -5,13 +5,13 @@
 		//Add
 		AddSelector, AddSequence,
 		AddInverter, AddSucceeder, AddRepeater,
-		AddAction, AddCondition,
+		AddAction, AddCondition, AddDeactivator,
 
 		//Edit
 		CreateConnection,
 		ReplaceNode,
 		SetAsRoot,
 		ShowOnInspector,
-		DeleteNode
-	}
+		DeleteNode,
+    }
 }
