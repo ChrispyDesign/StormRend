@@ -12,7 +12,8 @@ namespace BhaVE.Nodes.Leafs
         protected internal override NodeState OnExecute(BhaveAgent agent)
         {
             agent.SetActive(false);
-            return NodeState.Failure;
+            state = NodeState.Aborted;
+            return state;
         }
         
 #if UNITY_EDITOR

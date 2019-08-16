@@ -14,9 +14,9 @@ namespace BhaVE.Core
 	{
 		//Internal inbuilt tree of this agent. 	
 		//Protected internal so that the BhaVEditor can access + subclasses
-		[SerializeField] protected internal BhaveTree _internalTree = null;
+		[HideInInspector] [SerializeField] protected internal BhaveTree _internalTree = null;
 		public BhaveTree internalTree => _internalTree;
-		private BhaveTree backupTree = null;	//Backup tree so that module does not override any internal trees
+		private BhaveTree backupTree = null;    //Backup tree so that module does not override any internal trees
 
 		//Reference to external behaviour tree module.
 		public NodeState agentStatus { get; private set; }  //Needs to be set after each evaluation of the tree
@@ -62,11 +62,12 @@ namespace BhaVE.Core
 		[SerializeField] bool pauseIfDeactivated = false;
 
 		[Header("Tree")]
-		[SerializeField] BhaveTree bhaveTreeModule = null;	//THIS MUST NOT BE OVERRIDDEN!!
-		private BhaveTree _READONLY_bhaveTreeModule => bhaveTreeModule;	//Use this instead
+		[SerializeField] BhaveTree bhaveTreeModule = null;  //THIS MUST NOT BE OVERRIDDEN!!
+		private BhaveTree _READONLY_bhaveTreeModule => bhaveTreeModule; //Use this instead
 
 		[Tooltip("Make a copy of the tree module instead of using it directly")]
 		[SerializeField] bool useCopy = true;
+		bool internalTreeSet = false;
 
 		// [Header("Variables")]
 		// public List<BhaveVar<object>> variables = new List<BhaveVar<object>>();     //TODO need it's own editor script
@@ -76,11 +77,13 @@ namespace BhaVE.Core
 		public Action OnDeactivate = delegate { };
 		public Action OnPause = delegate { };
 		public Action OnUnpause = delegate { };
-		#endregion
+        #endregion
 
-		#region Inits
-		void Awake()
+        #region Inits
+        void Awake()
 		{
+			internalTreeSet = false;
+
 			//Start running agent if flagged
 			_active = playOnStart;
 
@@ -128,9 +131,12 @@ namespace BhaVE.Core
 				{
 					throw new NullReferenceException("No BhaVETree found! Shutting down agent...");
 				}
-
-				//Finally, internal tree is available for use
-				//No more null checks required for internal tree
+				else
+				{
+					//Finally, internal tree is available for use
+					//No more null checks required for internal tree
+					internalTreeSet = true;
+				}
 			}
 			catch (Exception e)
 			{
@@ -203,11 +209,34 @@ namespace BhaVE.Core
 			_internalTree?.RunBegin();
 			if (_internalTree) agentStatus = _internalTree.RunExecute(this);
 			_internalTree?.RunEnd();
+
+			HandleSystemNodeStates();
 		}
 		/// <summary>
 		/// Runs core BhaveTree pause execution
 		/// </summary>
-		internal void PauseTick(bool paused) => _internalTree?.RunPause(paused);
+		internal void PauseTick(bool paused)
+		{
+            _internalTree?.RunPause(paused);
+
+			HandleSystemNodeStates();
+		}
+
+
+		void HandleSystemNodeStates()
+		{
+			switch (agentStatus)
+			{
+				case NodeState.None:	//Failsafe: Shut everything down anyways. Should be in editor
+				case NodeState.Aborted:
+					SetActive(false);	//Shut down immediately
+					break;
+				case NodeState.Suspended:
+					SetPaused(true);	//Pause immediately
+					break;
+			}
+
+		}
 		#endregion
 
 		#region Shutdown

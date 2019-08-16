@@ -17,24 +17,14 @@ MonoBehaviour:
   - {fileID: 114802820392742442}
   - {fileID: 114881204046421186}
   - {fileID: 114326456331047848}
-  - {fileID: 114074920936197078}
   - {fileID: 114436139785046312}
   - {fileID: 114184180362392310}
-  - {fileID: 114585580975774538}
   - {fileID: 114262448939877504}
   - {fileID: 114906093755978736}
-  - {fileID: 114596922870810198}
-  - {fileID: 114622950508613004}
-  - {fileID: 114874536007597740}
-  - {fileID: 114020568044145198}
   - {fileID: 114522738197823902}
   - {fileID: 114153901854714366}
   - {fileID: 114154536906420020}
-  - {fileID: 114905048456288906}
-  - {fileID: 114426020345894118}
-  - {fileID: 114894961471227258}
   - {fileID: 114667072466613076}
-  - {fileID: 114380453263631916}
   - {fileID: 114480068855246064}
   - {fileID: 114271165789363412}
   - {fileID: 114155527321533308}
@@ -42,10 +32,15 @@ MonoBehaviour:
   - {fileID: 114772090959817874}
   - {fileID: 114163340594126814}
   - {fileID: 114930009332274670}
-  - {fileID: 114074848012905426}
   - {fileID: 114727100593118278}
   - {fileID: 114778803202402758}
   - {fileID: 114616214790225800}
+  - {fileID: 114062885740031926}
+  - {fileID: 114631311602370524}
+  - {fileID: 114456853233960182}
+  - {fileID: 114052669176837946}
+  - {fileID: 114020608395568652}
+  - {fileID: 114653832032950658}
 --- !u!114 &114011437156230230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,20 +55,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
---- !u!114 &114012610483391676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 197eb9973ce1cda40a9cdebfbc070dde, type: 3}
-  m_Name: AttackUnit(Clone)
-  m_EditorClassIdentifier: 
-  description: 
-  targets: {fileID: 0}
 --- !u!114 &114015540231481876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,7 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
---- !u!114 &114020568044145198
+--- !u!114 &114020608395568652
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,57 +79,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:12
+  m_Name: Action:25
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:12
-    description: StopBhave
-    rect:
-      serializedVersion: 2
-      x: 707
-      y: 815
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 12
-  _state: -1
-  parent: {fileID: 114436139785046312}
-  deleg: {fileID: 114086383258832228}
-  overrideOn: 0
-  stateOverride: 1
---- !u!114 &114074848012905426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:28
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Action:28
+    name: Action:25
     description: 
     rect:
       serializedVersion: 2
-      x: 1544
-      y: 1060
+      x: 650
+      y: 760
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 28
+  ID: 25
   _state: -1
-  parent: {fileID: 114084248534670744}
-  deleg: {fileID: 114302442107156468}
+  parent: {fileID: 114436139785046312}
+  deleg: {fileID: 114040391682139712}
   overrideOn: 0
   stateOverride: 1
---- !u!114 &114074920936197078
+--- !u!114 &114040391682139712
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,27 +108,65 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:3
+  m_Script: {fileID: 11500000, guid: 197eb9973ce1cda40a9cdebfbc070dde, type: 3}
+  m_Name: AttackUnit(Clone)
+  m_EditorClassIdentifier: 
+  description: 
+  targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
+--- !u!114 &114052669176837946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8126ef0ea9fc994194efdd9b4cc6990, type: 3}
+  m_Name: Deactivator:24
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:3
-    description: AttackTargetUnit
+    name: Deactivator:24
+    description: 
     rect:
       serializedVersion: 2
-      x: 476
-      y: 476
+      x: 1681
+      y: 1006
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 3
+  ID: 24
+  _state: -1
+  parent: {fileID: 114084248534670744}
+--- !u!114 &114062885740031926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8126ef0ea9fc994194efdd9b4cc6990, type: 3}
+  m_Name: Deactivator:21
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Deactivator:21
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 612
+      y: 428
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 21
   _state: -1
   parent: {fileID: 114778803202402758}
-  deleg: {fileID: 114677876581658902}
-  overrideOn: 0
-  stateOverride: 1
 --- !u!114 &114084248534670744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,41 +177,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
-  m_Name: Sequence:24
+  m_Name: Sequence:14
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Sequence:24
+    name: Sequence:14
     description: 
     rect:
       serializedVersion: 2
-      x: 1397
-      y: 882
+      x: 1532
+      y: 832
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 24
+  ID: 14
   _state: -1
   parent: {fileID: 114155527321533308}
   children:
   - {fileID: 114772090959817874}
   - {fileID: 114163340594126814}
   - {fileID: 114930009332274670}
-  - {fileID: 114074848012905426}
---- !u!114 &114086383258832228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a687d785d57756b4d85f9ae7acd794b0, type: 3}
-  m_Name: StopBhaviour(Clone)
-  m_EditorClassIdentifier: 
-  description: Immediately stops an agent and it's behaviour
+  - {fileID: 114052669176837946}
 --- !u!114 &114140077491227768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,21 +224,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:14
+  m_Name: Action:8
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:14
+    name: Action:8
     description: MoveToUnit
     rect:
       serializedVersion: 2
-      x: 408
-      y: 814
+      x: 543
+      y: 764
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 14
+  ID: 8
   _state: -1
   parent: {fileID: 114436139785046312}
   deleg: {fileID: 114015540231481876}
@@ -278,21 +254,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:15
+  m_Name: Action:9
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:15
+    name: Action:9
     description: 
     rect:
       serializedVersion: 2
-      x: 261
-      y: 482
+      x: 396
+      y: 432
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 15
+  ID: 9
   _state: -1
   parent: {fileID: 114778803202402758}
   deleg: {fileID: 114515388364162300}
@@ -308,21 +284,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa4eca718763d4532bb096dcec704560, type: 3}
-  m_Name: Selector:23
+  m_Name: Selector:13
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Selector:23
+    name: Selector:13
     description: 
     rect:
       serializedVersion: 2
-      x: 1397
-      y: 757
+      x: 1532
+      y: 707
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 23
+  ID: 13
   _state: -1
   parent: {fileID: 0}
   children:
@@ -337,21 +313,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:26
+  m_Name: Action:16
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:26
+    name: Action:16
     description: 
     rect:
       serializedVersion: 2
-      x: 1327
-      y: 1054
+      x: 1462
+      y: 1004
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 26
+  ID: 16
   _state: -1
   parent: {fileID: 114084248534670744}
   deleg: {fileID: 114686733825434930}
@@ -367,21 +343,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:5
+  m_Name: Action:4
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:5
+    name: Action:4
     description: FindClosestLowHealthPlayer
     rect:
       serializedVersion: 2
-      x: 196
-      y: 815
+      x: 331
+      y: 765
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 5
+  ID: 4
   _state: -1
   parent: {fileID: 114436139785046312}
   deleg: {fileID: 114410122911288544}
@@ -404,19 +380,6 @@ MonoBehaviour:
   countToCompare: 1
   comparisonMethod: 3
   stateToReturn: 1
---- !u!114 &114239516464575836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a687d785d57756b4d85f9ae7acd794b0, type: 3}
-  m_Name: StopBhaviour(Clone)
-  m_EditorClassIdentifier: 
-  description: Immediately stops an agent and it's behaviour
 --- !u!114 &114262448939877504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,39 +390,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:7
+  m_Name: Action:5
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:7
+    name: Action:5
     description: MoveToNearestPlayer
     rect:
       serializedVersion: 2
-      x: 705
-      y: 589
+      x: 799
+      y: 605
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 7
+  ID: 5
   _state: -1
   parent: {fileID: 114906093755978736}
   deleg: {fileID: 114515919627243812}
   overrideOn: 0
   stateOverride: 1
---- !u!114 &114263685846939934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d8c5c741ee851941a002bce62691694, type: 3}
-  m_Name: FinishTurn(Clone)
-  m_EditorClassIdentifier: 
-  description: 
 --- !u!114 &114271165789363412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,52 +420,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:22
+  m_Name: Action:12
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:22
+    name: Action:12
     description: 
     rect:
       serializedVersion: 2
-      x: 806
-      y: 591
+      x: 908
+      y: 603
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 22
+  ID: 12
   _state: -1
   parent: {fileID: 114906093755978736}
   deleg: {fileID: 114610611880592124}
   overrideOn: 0
   stateOverride: 1
---- !u!114 &114277508598668664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d8c5c741ee851941a002bce62691694, type: 3}
-  m_Name: FinishTurn(Clone)
-  m_EditorClassIdentifier: 
-  description: 
---- !u!114 &114281493803105060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d8c5c741ee851941a002bce62691694, type: 3}
-  m_Name: FinishTurn(Clone)
-  m_EditorClassIdentifier: 
-  description: 
 --- !u!114 &114284321356195058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,19 +454,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
---- !u!114 &114302442107156468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a687d785d57756b4d85f9ae7acd794b0, type: 3}
-  m_Name: StopBhaviour(Clone)
-  m_EditorClassIdentifier: 
-  description: Immediately stops an agent and it's behaviour
 --- !u!114 &114309096039406568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -599,8 +510,8 @@ MonoBehaviour:
     description: AnyDuplicatesInAttackList?
     rect:
       serializedVersion: 2
-      x: 190
-      y: 661
+      x: 325
+      y: 611
       width: 100
       height: 70
     cardinality: 0
@@ -609,36 +520,6 @@ MonoBehaviour:
   _state: -1
   parent: {fileID: 114802820392742442}
   deleg: {fileID: 114405462264654964}
---- !u!114 &114380453263631916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:20
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Action:20
-    description: 
-    rect:
-      serializedVersion: 2
-      x: 509
-      y: 815
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 20
-  _state: -1
-  parent: {fileID: 114436139785046312}
-  deleg: {fileID: 114012610483391676}
-  overrideOn: 0
-  stateOverride: 1
 --- !u!114 &114405462264654964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -685,36 +566,6 @@ MonoBehaviour:
   description: 
   filterMethod: 1
   targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
---- !u!114 &114426020345894118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:17
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Action:17
-    description: 
-    rect:
-      serializedVersion: 2
-      x: 1033
-      y: 481
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 17
-  _state: -1
-  parent: {fileID: 114894961471227258}
-  deleg: {fileID: 114263685846939934}
-  overrideOn: 0
-  stateOverride: 1
 --- !u!114 &114436139785046312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -725,30 +576,56 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
-  m_Name: Sequence:4
+  m_Name: Sequence:3
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Sequence:4
-    description: 
+    name: Sequence:3
+    description: Filter out Closest
     rect:
       serializedVersion: 2
-      x: 298
-      y: 663
+      x: 433
+      y: 613
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 4
+  ID: 3
   _state: -1
   parent: {fileID: 114802820392742442}
   children:
   - {fileID: 114184180362392310}
   - {fileID: 114727100593118278}
   - {fileID: 114153901854714366}
-  - {fileID: 114380453263631916}
-  - {fileID: 114585580975774538}
-  - {fileID: 114020568044145198}
+  - {fileID: 114020608395568652}
+  - {fileID: 114653832032950658}
+--- !u!114 &114456853233960182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8126ef0ea9fc994194efdd9b4cc6990, type: 3}
+  m_Name: Deactivator:23
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Deactivator:23
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 1186
+      y: 241
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 23
+  _state: -1
+  parent: {fileID: 114616214790225800}
 --- !u!114 &114480068855246064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -759,21 +636,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:21
+  m_Name: Action:11
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:21
+    name: Action:11
     description: 
     rect:
       serializedVersion: 2
-      x: 371
-      y: 478
+      x: 506
+      y: 428
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 21
+  ID: 11
   _state: -1
   parent: {fileID: 114778803202402758}
   deleg: {fileID: 114284321356195058}
@@ -817,84 +694,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:13
+  m_Name: Action:7
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:13
+    name: Action:7
     description: 
     rect:
       serializedVersion: 2
-      x: 604
-      y: 587
+      x: 694
+      y: 603
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 13
+  ID: 7
   _state: -1
   parent: {fileID: 0}
   deleg: {fileID: 114315087950470568}
-  overrideOn: 0
-  stateOverride: 1
---- !u!114 &114585580975774538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:6
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Action:6
-    description: AttackUnit[BasedOnPriority]
-    rect:
-      serializedVersion: 2
-      x: 607
-      y: 814
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 6
-  _state: -1
-  parent: {fileID: 114436139785046312}
-  deleg: {fileID: 114281493803105060}
-  overrideOn: 0
-  stateOverride: 1
---- !u!114 &114596922870810198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:9
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Action:9
-    description: 
-    rect:
-      serializedVersion: 2
-      x: 578
-      y: 480
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 9
-  _state: -1
-  parent: {fileID: 114778803202402758}
-  deleg: {fileID: 114968209031901400}
   overrideOn: 0
   stateOverride: 1
 --- !u!114 &114610611880592124
@@ -921,57 +738,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa4eca718763d4532bb096dcec704560, type: 3}
-  m_Name: Selector:31
+  m_Name: Selector:20
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Selector:31
+    name: Selector:20
     description: 
     rect:
       serializedVersion: 2
-      x: 739
-      y: 80
+      x: 834
+      y: 44
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 31
+  ID: 20
   _state: -1
   parent: {fileID: 0}
   children:
   - {fileID: 114778803202402758}
   - {fileID: 114906093755978736}
-  - {fileID: 114894961471227258}
---- !u!114 &114622950508613004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:10
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Action:10
-    description: 
-    rect:
-      serializedVersion: 2
-      x: 1133
-      y: 478
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 10
-  _state: -1
-  parent: {fileID: 114894961471227258}
-  deleg: {fileID: 114239516464575836}
-  overrideOn: 0
-  stateOverride: 1
+  - {fileID: 114456853233960182}
 --- !u!114 &114626472354140254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -991,6 +778,60 @@ MonoBehaviour:
   unitTypeToFind: 0
   targets: {fileID: 11400000, guid: a7b5d33cdef51b447a6d6be998bf3a8f, type: 2}
   turns: 1
+--- !u!114 &114631311602370524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8126ef0ea9fc994194efdd9b4cc6990, type: 3}
+  m_Name: Deactivator:22
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Deactivator:22
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 1016
+      y: 598
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 22
+  _state: -1
+  parent: {fileID: 114906093755978736}
+--- !u!114 &114653832032950658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8126ef0ea9fc994194efdd9b4cc6990, type: 3}
+  m_Name: Deactivator:26
+  m_EditorClassIdentifier: 
+  eData:
+    owner: {fileID: 11400000}
+    name: Deactivator:26
+    description: 
+    rect:
+      serializedVersion: 2
+      x: 763
+      y: 758
+      width: 100
+      height: 70
+    cardinality: 0
+    breakpoint: 0
+  ID: 26
+  _state: -1
+  parent: {fileID: 114436139785046312}
 --- !u!114 &114667072466613076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1001,39 +842,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:19
+  m_Name: Action:10
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:19
+    name: Action:10
     description: 
     rect:
       serializedVersion: 2
-      x: 49
-      y: 482
+      x: 184
+      y: 432
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 19
+  ID: 10
   _state: -1
   parent: {fileID: 114778803202402758}
   deleg: {fileID: 114626472354140254}
   overrideOn: 0
   stateOverride: 1
---- !u!114 &114677876581658902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d8c5c741ee851941a002bce62691694, type: 3}
-  m_Name: FinishTurn(Clone)
-  m_EditorClassIdentifier: 
-  description: 
 --- !u!114 &114686733825434930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1058,21 +886,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aff060b0c5dbb4dbd8db41bbb67dd703, type: 3}
-  m_Name: Condition:29
+  m_Name: Condition:18
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Condition:29
+    name: Condition:18
     description: 
     rect:
       serializedVersion: 2
-      x: 298
-      y: 815
+      x: 433
+      y: 765
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 29
+  ID: 18
   _state: -1
   parent: {fileID: 114436139785046312}
   deleg: {fileID: 114228954161158348}
@@ -1086,21 +914,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:25
+  m_Name: Action:15
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:25
+    name: Action:15
     description: 
     rect:
       serializedVersion: 2
-      x: 1215
-      y: 1047
+      x: 1357
+      y: 1007
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 25
+  ID: 15
   _state: -1
   parent: {fileID: 114084248534670744}
   deleg: {fileID: 114309096039406568}
@@ -1116,21 +944,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
-  m_Name: Sequence:30
+  m_Name: Sequence:19
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Sequence:30
-    description: 
+    name: Sequence:19
+    description: In Range
     rect:
       serializedVersion: 2
-      x: 303
-      y: 282
+      x: 438
+      y: 232
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 30
+  ID: 19
   _state: -1
   parent: {fileID: 114616214790225800}
   children:
@@ -1138,8 +966,7 @@ MonoBehaviour:
   - {fileID: 114802820392742442}
   - {fileID: 114154536906420020}
   - {fileID: 114480068855246064}
-  - {fileID: 114074920936197078}
-  - {fileID: 114596922870810198}
+  - {fileID: 114062885740031926}
 --- !u!114 &114802820392742442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1155,11 +982,11 @@ MonoBehaviour:
   eData:
     owner: {fileID: 11400000}
     name: Sequence:0
-    description: 
+    description: Filter out lowest health
     rect:
       serializedVersion: 2
-      x: 155
-      y: 482
+      x: 290
+      y: 432
       width: 100
       height: 70
     cardinality: 0
@@ -1171,36 +998,6 @@ MonoBehaviour:
   - {fileID: 114881204046421186}
   - {fileID: 114326456331047848}
   - {fileID: 114436139785046312}
---- !u!114 &114874536007597740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:11
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Action:11
-    description: 
-    rect:
-      serializedVersion: 2
-      x: 1015
-      y: 587
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 11
-  _state: -1
-  parent: {fileID: 114906093755978736}
-  deleg: {fileID: 114961502314000450}
-  overrideOn: 0
-  stateOverride: 1
 --- !u!114 &114881204046421186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1219,8 +1016,8 @@ MonoBehaviour:
     description: FindUnitWithLowestHealth
     rect:
       serializedVersion: 2
-      x: 82
-      y: 662
+      x: 217
+      y: 612
       width: 100
       height: 70
     cardinality: 0
@@ -1229,66 +1026,6 @@ MonoBehaviour:
   _state: -1
   parent: {fileID: 114802820392742442}
   deleg: {fileID: 114140077491227768}
-  overrideOn: 0
-  stateOverride: 1
---- !u!114 &114894961471227258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
-  m_Name: Sequence:18
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Sequence:18
-    description: 
-    rect:
-      serializedVersion: 2
-      x: 1069
-      y: 307
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 18
-  _state: -1
-  parent: {fileID: 114616214790225800}
-  children:
-  - {fileID: 114426020345894118}
-  - {fileID: 114622950508613004}
---- !u!114 &114905048456288906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:16
-  m_EditorClassIdentifier: 
-  eData:
-    owner: {fileID: 11400000}
-    name: Action:16
-    description: 
-    rect:
-      serializedVersion: 2
-      x: 910
-      y: 589
-      width: 100
-      height: 70
-    cardinality: 0
-    breakpoint: 0
-  ID: 16
-  _state: -1
-  parent: {fileID: 114906093755978736}
-  deleg: {fileID: 114277508598668664}
   overrideOn: 0
   stateOverride: 1
 --- !u!114 &114906093755978736
@@ -1301,29 +1038,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a50b02343b7b04df1970e92a9a88c065, type: 3}
-  m_Name: Sequence:8
+  m_Name: Sequence:6
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Sequence:8
-    description: 
+    name: Sequence:6
+    description: In Range of 2 Turns
     rect:
       serializedVersion: 2
-      x: 781
-      y: 290
+      x: 835
+      y: 428
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 8
+  ID: 6
   _state: -1
   parent: {fileID: 114616214790225800}
   children:
   - {fileID: 114522738197823902}
   - {fileID: 114262448939877504}
   - {fileID: 114271165789363412}
-  - {fileID: 114905048456288906}
-  - {fileID: 114874536007597740}
+  - {fileID: 114631311602370524}
 --- !u!114 &114930009332274670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1334,49 +1070,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbf09e0d2ec8f5d439394954c0e42030, type: 3}
-  m_Name: Action:27
+  m_Name: Action:17
   m_EditorClassIdentifier: 
   eData:
     owner: {fileID: 11400000}
-    name: Action:27
+    name: Action:17
     description: 
     rect:
       serializedVersion: 2
-      x: 1438
-      y: 1056
+      x: 1572
+      y: 1003
       width: 100
       height: 70
     cardinality: 0
     breakpoint: 0
-  ID: 27
+  ID: 17
   _state: -1
   parent: {fileID: 114084248534670744}
   deleg: {fileID: 114011437156230230}
   overrideOn: 0
   stateOverride: 1
---- !u!114 &114961502314000450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a687d785d57756b4d85f9ae7acd794b0, type: 3}
-  m_Name: StopBhaviour(Clone)
-  m_EditorClassIdentifier: 
-  description: Immediately stops an agent and it's behaviour
---- !u!114 &114968209031901400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a687d785d57756b4d85f9ae7acd794b0, type: 3}
-  m_Name: StopBhaviour(Clone)
-  m_EditorClassIdentifier: 
-  description: Immediately stops an agent and it's behaviour

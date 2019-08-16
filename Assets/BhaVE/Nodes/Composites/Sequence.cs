@@ -26,23 +26,30 @@ namespace BhaVE.Nodes.Composites
 				switch (c.OnExecute(agent))
 				{
 #if UNITY_EDITOR   //For BHEditor live view and debugging
+					//In Editor
 					case NodeState.None:
 						state = NodeState.None;
 						return state;
+					//Deactivate
+					case NodeState.Aborted:
+						state = NodeState.Aborted;
+						return state;
+					//Pause
+					case NodeState.Suspended:
+						state = NodeState.Suspended;
+						return state;
 #endif
-					//Break out and also fail the remaining children
+					//Continue on with next child if failure
 					case NodeState.Failure:
-						state = NodeState.Failure;
 						continue;
-
-					//Continue with next child if success found
+					//Return success instantly if found
 					case NodeState.Success:
-						continue;
-
-					//Set child running flag and continue
+						state = NodeState.Success;
+						break;
+					//Return pending only after no successes found
 					case NodeState.Pending:
-						anyChildPending = true;
-						continue;
+						state = NodeState.Pending;
+						break;
 
 					default:
 						throw new NotImplementedException("NodeState not implemented yet");
