@@ -149,26 +149,33 @@ namespace StormRend
                 Ability ability = currentSelectedUnit.GetLockedAbility();
                 if (ability != null)
                 {
-                    bool continueAbility = true;
-                    foreach (Effect effect in ability.GetEffects())
-                    {
-                        if (continueAbility)
-                            continueAbility = effect.PerformEffect(this, currentSelectedUnit);
-                    }
-                    currentSelectedUnit.SetLockedAbility(null);
+					ability.AddToList(this);
+					if (ability.GetTilesToSelect() != ability.GetTiles().Count)
+						return;
 
-                    CommandManager commandManager = GameManager.singleton.GetCommandManager();
+					foreach (Tile tile in ability.GetTiles())
+					{
+						bool continueAbility = true;
+						foreach (Effect effect in ability.GetEffects())
+						{
+							if (continueAbility)
+								continueAbility = effect.PerformEffect(tile, currentSelectedUnit);
+						}
+						currentSelectedUnit.SetLockedAbility(null);
 
-                    foreach (MoveCommand move in commandManager.m_moves)
-                    {
-                        Unit unit = move.m_unit;
-                        unit.m_afterClear = true;
-                    }
+						CommandManager commandManager = GameManager.singleton.GetCommandManager();
 
-                    commandManager.m_moves.Clear();
-					UIAbilitySelector abilitySelector = UIManager.GetInstance().GetAbilitySelector();
-					abilitySelector.GetInfoPanel().SetActive(false);
-					abilitySelector.GetButtonPanel().SetActive(false);
+						foreach (MoveCommand move in commandManager.m_moves)
+						{
+							Unit unit = move.m_unit;
+							unit.m_afterClear = true;
+						}
+
+						commandManager.m_moves.Clear();
+						UIAbilitySelector abilitySelector = UIManager.GetInstance().GetAbilitySelector();
+						abilitySelector.GetInfoPanel().SetActive(false);
+						abilitySelector.GetButtonPanel().SetActive(false);
+					}
                 }
             }
 

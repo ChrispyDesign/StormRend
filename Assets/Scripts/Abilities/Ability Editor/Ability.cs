@@ -31,6 +31,8 @@ public class RowData
 [CreateAssetMenu(fileName = "New Ability", menuName = "StormRend/Ability")]
 public class Ability : ScriptableObject
 {
+	private List<Tile> m_tiles = new List<Tile>();
+
     // ability info (for UI display purposes)
     [SerializeField] string m_name;
     [SerializeField] Sprite m_icon = null;
@@ -46,6 +48,7 @@ public class Ability : ScriptableObject
 
     #region getters
 	//GET RID OF GETTERS AND SETTERS!!!
+    public List<Tile> GetTiles() { return m_tiles; }
     public string GetName() { return m_name; }
     public Sprite GetIcon() { return m_icon; }
     public string GetDescription() { return m_description; }
@@ -59,6 +62,8 @@ public class Ability : ScriptableObject
     public List<Effect> GetEffects() { return m_effects; }
 
     #endregion
+
+	public void AddToList(Tile _tile) { m_tiles.Add(_tile); }
 
     public void GetSelectableTiles(ref Unit _player)
     {
