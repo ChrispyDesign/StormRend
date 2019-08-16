@@ -166,6 +166,9 @@ namespace StormRend
                     }
 
                     commandManager.m_moves.Clear();
+					UIAbilitySelector abilitySelector = UIManager.GetInstance().GetAbilitySelector();
+					abilitySelector.GetInfoPanel().SetActive(false);
+					abilitySelector.GetButtonPanel().SetActive(false);
                 }
             }
 

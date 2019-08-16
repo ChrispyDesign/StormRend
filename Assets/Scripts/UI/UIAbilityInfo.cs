@@ -36,8 +36,7 @@ public class UIAbilityInfo : MonoBehaviour
     /// 
     /// </summary>
     public void HoverAbility()
-    {
-		
+    {		
         m_player = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
         if (m_player != null)
         {
