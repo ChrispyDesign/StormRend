@@ -1,24 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
-    [SerializeField] private GameObject m_gameUI;
-    [SerializeField] private GameObject m_settingsMenu;
-    [SerializeField] private GameObject m_pauseMenu;
-    [SerializeField] private GameObject m_gameOver;
-    [SerializeField] private GameObject m_gameWin;
-
-    private void Update()
-    {
-
-    }
+    [SerializeField] GameObject m_gameUI;
+    [SerializeField] GameObject m_settingsMenu;
+    [SerializeField] GameObject m_pauseMenu;
+    [SerializeField] GameObject m_gameOver;
+    [SerializeField] GameObject m_gameWin;
 
     public void Restart()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void Settings()
     {

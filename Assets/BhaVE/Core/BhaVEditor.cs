@@ -50,13 +50,6 @@ namespace BhaVE.Editor
 			Undo.undoRedoPerformed += OnUndoRedo;
 		}
 
-		void InitTestSerializableObjectWorkflow()
-		{
-			// activeTreeSO = new SerializedObject(activeTree);
-			// activeTreeNodeProp = activeTreeSO.FindProperty("root");
-			// activeTreeNode = activeTreeNodeProp.objectReferenceValue as Node;
-		}
-
 		/// <summary> Unity callback thatd updates this window; Akin to MonoBehaviour.Update(); </summary>
 		void OnGUI()
 		{
@@ -211,6 +204,7 @@ namespace BhaVE.Editor
 					if (n is Decorator) return settings.decoratorColour;
 					if (n is Condition) return settings.conditionColour;
 					if (n is Action) return settings.actionColor;
+					if (n is Deactivator) return settings.deactivateColor;
 					break;
 
 				//Play mode
@@ -433,6 +427,7 @@ namespace BhaVE.Editor
 			m.AddItem(new GUIContent("Leafs/"), false, null);
 			m.AddItem(new GUIContent("Leafs/Condition"), false, OnAddNodeContext, BHECommands.AddCondition);
 			m.AddItem(new GUIContent("Leafs/Action"), false, OnAddNodeContext, BHECommands.AddAction);
+			m.AddItem(new GUIContent("Leafs/Deactivator"), false, OnAddNodeContext, BHECommands.AddDeactivator);
 
 			m.ShowAsContext();
 			e.Use();    //Finish using this event
@@ -483,6 +478,9 @@ namespace BhaVE.Editor
 					break;
 				case BHECommands.AddCondition:
 					newNode = CreateInstance<Condition>();
+					break;
+				case BHECommands.AddDeactivator:
+					newNode = CreateInstance<Deactivator>();
 					break;
 				default: Debug.Log("Nothing created"); break;
 			}
