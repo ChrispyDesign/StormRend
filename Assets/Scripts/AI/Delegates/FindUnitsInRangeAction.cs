@@ -40,16 +40,15 @@ namespace StormRend.Bhaviours
 
         public override NodeState Execute(BhaveAgent agent)
         {
-            Debug.Log("FindUnitsInRangeAction");
-            // Debug.Break();
-
             //Find valid moves
             Dijkstra.Instance.FindValidMoves(
                 Grid.CoordToTile(unit.m_coordinates), 
                 unit.GetRange() * (int)turns, 
                 (unit is EnemyUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
-                
             validMoves = Dijkstra.Instance.m_validMoves;
+ 
+            Debug.Log("Validmoves Count: " + validMoves.Count);
+            if (validMoves.Count <= 0) return NodeState.Failure;
 
             //Determine if specified unit is in range
             foreach (var n in validMoves)
@@ -67,6 +66,8 @@ namespace StormRend.Bhaviours
 					unitsHaveBeenFound = true;
                 }
             }
+            Debug.Log("FindUnitsInRange: UnitsHaveBeenFound: " + unitsHaveBeenFound);
+            Debug.Break();
             return (unitsHaveBeenFound) ? NodeState.Success : NodeState.Failure;
         }
 

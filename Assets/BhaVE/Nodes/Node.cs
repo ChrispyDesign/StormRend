@@ -7,8 +7,11 @@ using UnityEditor;
 
 namespace BhaVE.Nodes
 {
+#if UNITY_EDITOR
     [System.Serializable]
-	public abstract class Node : ScriptableObject, IBHNode, IBHENode
+	public abstract class Node : ScriptableObject, IBHNode
+#endif
+	// public abstract class Node : ScriptableObject, IBHNode, IBHENode
 	{
 #if UNITY_EDITOR
 		[SerializeField] internal BHEData eData = new BHEData();
@@ -34,11 +37,12 @@ namespace BhaVE.Nodes
 		//Children
 		// - This need to be implemented by Composite and Decorators
 		// - All other nodes will have a null implementation
+#if UNITY_EDITOR
 		public abstract bool hasChild { get; }
 		public abstract void AddChild(Node n);
 		public abstract void RemoveChild(Node n);
 		public abstract bool ContainsChild(Node n);
-
+#endif
 		#region Core Methods
 		// - These should be implemented by Action and Condition nodes
 		// - Accessible by: Inherited nodes, Editor
@@ -64,9 +68,9 @@ namespace BhaVE.Nodes
 		#endregion
 
 		//Handle disconnections automatically when node deleted in BHEditor
+#if UNITY_EDITOR
 		protected virtual void OnDestroy()
 		{
-#if UNITY_EDITOR
 			Debug.LogFormat("Destroying [{0}:{1}]", this.GetType().Name, this.ID);
 
 			//Remove relationships from parent
@@ -75,13 +79,13 @@ namespace BhaVE.Nodes
 				Undo.RecordObject(this.eData.owner, "Remove Child Node");
 				parent.RemoveChild(this);
 			}
-#endif
 			//UPDATE!! This can't be here
 			//Remove from editor node references list
 			// this.eData.owner.eNodes.Remove(this);
 		}
+#endif
 
-// #if UNITY_EDITOR
+#if UNITY_EDITOR
 		internal virtual Rect DrawNode(int id)	//Public?
 		{
 			//Update node's ID
@@ -119,6 +123,6 @@ namespace BhaVE.Nodes
 		/// and is ONLY for BhaVEditor's realtime visualisation of the nodes during play mode.
 		/// </summary>
 		public abstract void FailNodeAndChildren();
-// #endif
+#endif
 	}
 }

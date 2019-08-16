@@ -54,6 +54,7 @@ namespace BhaVE.Nodes.Leafs
 		protected internal override void OnEnd() => deleg?.End();
 		protected internal override void OnShutdown() => deleg?.Shutdown();
 
+#if UNITY_EDITOR
 		protected override void OnDestroy()
 		{
 			//Make sure to remove delegate from tree and delete
@@ -65,8 +66,8 @@ namespace BhaVE.Nodes.Leafs
 
 			base.OnDestroy();
 		}
+#endif
 		#endregion
-
 
 #if UNITY_EDITOR
 		BhaveAction interimDeleg;

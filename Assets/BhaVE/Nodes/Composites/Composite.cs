@@ -43,6 +43,7 @@ namespace BhaVE.Nodes.Composites
 		}
 	#endregion
 
+#if UNITY_EDITOR
 	#region Children
 		/// <summary>Connects n to this node while removing any parent connections where necessary</summary>
 		/// <param name="n">The node to connect</param>
@@ -125,7 +126,6 @@ namespace BhaVE.Nodes.Composites
 			}
 		}
 
-#if UNITY_EDITOR
 		public override void DrawConnections()
 		{
 			//Draw connections for all of this node's active children
