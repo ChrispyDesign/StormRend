@@ -81,6 +81,10 @@ namespace StormRend
 		public void EnemyTurn()
 		{
 			GameManager.singleton.GetCommandManager().m_moves.Clear();
+			foreach(PlayerUnit player in GameManager.singleton.GetPlayerUnits())
+			{
+				player.SetMoveCommand(null);
+			}
 
 			// disable proceed button
 			m_proceedTurnButton.interactable = false;
