@@ -1,5 +1,6 @@
 ﻿namespace BhaVE.Nodes
 {
+	//The Runtime Part of a node
 	public interface IBHNode
 	{
 		//Backing interface

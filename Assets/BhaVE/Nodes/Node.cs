@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
 using BhaVE.Core;
+
+#if UNITY_EDITOR
 using BhaVE.Editor;
 using BhaVE.Editor.Nodes;
 using BhaVE.Editor.Data;
 using UnityEditor;
+#endif
 
 namespace BhaVE.Nodes
 {
-#if UNITY_EDITOR
     [System.Serializable]
 	public abstract class Node : ScriptableObject, IBHNode
+#if UNITY_EDITOR
+	, IBHENode
 #endif
-	// public abstract class Node : ScriptableObject, IBHNode, IBHENode
 	{
 #if UNITY_EDITOR
 		[SerializeField] internal BHEData eData = new BHEData();
@@ -37,8 +40,8 @@ namespace BhaVE.Nodes
 		//Children
 		// - This need to be implemented by Composite and Decorators
 		// - All other nodes will have a null implementation
-#if UNITY_EDITOR
 		public abstract bool hasChild { get; }
+#if UNITY_EDITOR
 		public abstract void AddChild(Node n);
 		public abstract void RemoveChild(Node n);
 		public abstract bool ContainsChild(Node n);
@@ -86,7 +89,7 @@ namespace BhaVE.Nodes
 #endif
 
 #if UNITY_EDITOR
-		internal virtual Rect DrawNode(int id)	//Public?
+		public virtual Rect DrawNode(int id)	//Public?
 		{
 			//Update node's ID
 			this.ID = id;

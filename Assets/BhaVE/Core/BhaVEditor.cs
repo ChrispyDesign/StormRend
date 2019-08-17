@@ -1,4 +1,6 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+
+using UnityEditor;
 using BhaVE.Nodes;
 using BhaVE.Core;
 using BhaVE.Nodes.Composites;
@@ -10,7 +12,6 @@ using BhaVE.Editor.Enums;
 
 namespace BhaVE.Editor
 {
-#if UNITY_EDITOR
 
 	//Note: This should really be in an Editor folder in it's own assembly
 	public partial class BhaVEditor : EditorWindow
@@ -1228,5 +1229,6 @@ namespace BhaVE.Editor
 		}
 		#endregion
 	}
-#endif
 }
+
+#endif	//UNITY_EDITOR

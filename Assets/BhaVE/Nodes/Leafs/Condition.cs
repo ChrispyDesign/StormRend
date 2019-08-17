@@ -43,7 +43,9 @@ namespace BhaVE.Nodes.Leafs
 		protected internal override void OnPause(bool paused) => deleg?.Paused(paused);
 		protected internal override void OnEnd() => deleg?.End();
 		protected internal override void OnShutdown() => deleg?.Shutdown();
+		#endregion
 
+#if UNITY_EDITOR
 		protected override void OnDestroy()
 		{
 			//Make sure to remove delegates from tree and the delete
@@ -55,9 +57,7 @@ namespace BhaVE.Nodes.Leafs
 
 			base.OnDestroy();
 		}
-		#endregion
 
-#if UNITY_EDITOR
 		BhaveCondition interimDeleg;
 		bool delegateChanged = false;   //Required to prevent excessive autosaving
 
