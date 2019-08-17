@@ -69,8 +69,8 @@ namespace BhaVE.Core
 		[SerializeField] bool useCopy = true;
 		bool internalTreeSet = false;
 
-		// [Header("Variables")]
-		// public List<BhaveVar<object>> variables = new List<BhaveVar<object>>();     //TODO need it's own editor script
+		[Header("Variables")]
+		public List<BhaveVarSeed> variables = new List<BhaveVarSeed>();
 
 		[Header("Events")]
 		public Action OnActivate = delegate { };
@@ -156,7 +156,7 @@ namespace BhaVE.Core
 			while (true)
 			{
 				//Must be in fixed tick mode and agent active
-				if (BhaveManager.singleton.tickMode == TickMode.Fixed && _active)
+				if (BhaveDirector.singleton.tickMode == TickMode.Fixed && _active)
 				{
 					//Entering Fixed Tick Mode
 
@@ -170,7 +170,7 @@ namespace BhaVE.Core
 					if (!restartWhenDone)
 						_active = false;
 
-					yield return new WaitForSeconds(BhaveManager.singleton.tickRate);
+					yield return new WaitForSeconds(BhaveDirector.singleton.tickRate);
 				}
 				else
 				{
@@ -186,7 +186,7 @@ namespace BhaVE.Core
 		protected virtual void Update()
 		{
 			//Agent must be active and in EveryFrame tickmode
-			if (BhaveManager.singleton.tickMode != TickMode.EveryFrame || !_active)
+			if (BhaveDirector.singleton.tickMode != TickMode.EveryFrame || !_active)
 				return;
 
 			//Handle pause state
@@ -222,7 +222,6 @@ namespace BhaVE.Core
 			HandleSystemNodeStates();
 		}
 
-
 		void HandleSystemNodeStates()
 		{
 			switch (agentStatus)
@@ -235,7 +234,6 @@ namespace BhaVE.Core
 					SetPaused(true);	//Pause immediately
 					break;
 			}
-
 		}
 		#endregion
 

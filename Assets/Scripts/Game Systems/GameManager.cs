@@ -8,18 +8,18 @@ public class GameManager : Singleton<GameManager>
 {
 	//Scriptable object singleton?
 
-    private  static GameManager m_instance;
+    static GameManager m_instance;
 
     [Header("Managers")]
-    [SerializeField] private TurnManager m_turnManager = null;
-    [SerializeField] private PlayerController m_playerController = null;
-    [SerializeField] private CommandManager m_commandManager = null;
+    [SerializeField] TurnManager m_turnManager = null;
+    [SerializeField] PlayerController m_playerController = null;
+    [SerializeField] CommandManager m_commandManager = null;
 
-    [SerializeField] private PlayerUnit[] m_players;
-    [SerializeField] private EnemyUnit[] m_enemies;
-    [SerializeField] private List<Crystal> m_crystal;
-	public int m_playerCount;
-	public int m_enemyCount;
+    [SerializeField] PlayerUnit[] m_players;
+    [SerializeField] EnemyUnit[] m_enemies;
+    [SerializeField] List<Crystal> m_crystal;
+	public int playerCount { get; set; }
+	public int enemyCount { get; set; }
 
     #region GettersAndSetters
 	public void AddCrystal(Crystal _crystal) { m_crystal.Add(_crystal); }
@@ -47,8 +47,8 @@ public class GameManager : Singleton<GameManager>
         Debug.Assert(m_turnManager, "Turn Manager not assigned to GameManager!");
         Debug.Assert(m_playerController, "Player Controller not assigned to GameManager!");
         Debug.Assert(m_commandManager, "Command Manager not assigned to GameManager!");
-		m_playerCount = m_players.Length;
-		m_enemyCount = m_enemies.Length;
+		playerCount = m_players.Length;
+		enemyCount = m_enemies.Length;
 	}
 
     void Update()
@@ -74,7 +74,7 @@ public class GameManager : Singleton<GameManager>
 
 	public void GameOver()
 	{
-		if (m_playerCount <= 0)
+		if (playerCount <= 0)
 		{
 			UIManager uiManager = UIManager.GetInstance();
 			GameOver gameOver = uiManager.gameObject.GetComponentInParent<GameOver>();
@@ -84,7 +84,7 @@ public class GameManager : Singleton<GameManager>
 
 	public void GameWin()
 	{
-		if (m_enemyCount <= 0)
+		if (enemyCount <= 0)
 		{
 			UIManager uiManager = UIManager.GetInstance();
 			GameWin gameWin = uiManager.gameObject.GetComponentInParent<GameWin>();

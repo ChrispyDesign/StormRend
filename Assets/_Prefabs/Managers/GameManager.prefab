@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1360014777689805779}
   - component: {fileID: 6278063683333937501}
-  - component: {fileID: 3544570663890578643}
   - component: {fileID: 3074314172487970484}
+  - component: {fileID: 1743483341871431976}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -54,22 +54,6 @@ MonoBehaviour:
   m_players: []
   m_enemies: []
   m_crystal: []
-  m_playerCount: 0
-  m_enemyCount: 0
---- !u!114 &3544570663890578643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6301149344042230064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92219e1d3ede345b6818b6dab1137231, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _tickMode: 2
-  tickRate: 0.2
 --- !u!114 &3074314172487970484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +68,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: 1
   delayBetweenTurns: 3
+--- !u!114 &1743483341871431976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6301149344042230064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efd6d667a8a274ac1a8ceec61e5d9163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptableSingletons:
+  - {fileID: 11400000, guid: 98c6b2114a3364948a26e8d9c0a59f38, type: 2}
 --- !u!1001 &490501058520517808
 PrefabInstance:
   m_ObjectHideFlags: 0

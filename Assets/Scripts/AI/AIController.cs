@@ -18,12 +18,12 @@ namespace StormRend.AI
 
 		Unit[] currentUnits = null;
 		GameManager gm = null;
-		BhaveManager bhm = null;
+		BhaveDirector bhm = null;
 
 		void Awake()
 		{
 			gm = GameManager.singleton;
-			bhm = BhaveManager.singleton;
+			bhm = BhaveDirector.singleton;
 		}
 
 		public void StartAITurn()

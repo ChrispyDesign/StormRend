@@ -19,7 +19,7 @@ namespace StormRend
 		public override void Die()
 		{
 			base.Die();
-			GameManager.singleton.m_enemyCount--;
+			GameManager.singleton.enemyCount--;
 			GameManager.singleton.CheckEndCondition();
 		}
 	}
