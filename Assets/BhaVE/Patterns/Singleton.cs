@@ -51,7 +51,7 @@ namespace BhaVE.Patterns
 			if (_singleton == null)
 			{
 				_singleton = thisSingleton;
-				DontDestroyOnLoad(_singleton);
+				// DontDestroyOnLoad(_singleton);
 			}
 			else if (thisSingleton != _singleton)
 			{
