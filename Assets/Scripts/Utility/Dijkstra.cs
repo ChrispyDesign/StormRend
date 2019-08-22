@@ -74,7 +74,7 @@ namespace StormRend
 					}
 				}
 
-				if (currentNode.m_nGCost > 0 && currentNode.m_nGCost <= allowedTiles)
+				if (currentNode.m_nGCost > 0 && currentNode.m_nGCost <= allowedTiles && !m_validMoves.Contains(currentNode))
 					m_validMoves.Add(currentNode);
 
 			}
@@ -84,6 +84,9 @@ namespace StormRend
 				node.m_nHCost = 0;
 				node.m_nGCost = 0;
 			}
+
+			foreach (Tile tile in m_validMoves)
+				Debug.Log(tile.GetCoordinates());
 		}
 	}
 }
