@@ -9,7 +9,7 @@ namespace StormRend
 	{
 		public override void OnSelect()
 		{
-			Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetRange(), typeof(PlayerUnit));
+			Dijkstra.Instance.FindValidMoves(GetTile(), GetMoveRange(), typeof(PlayerUnit));
 
 			base.OnSelect();
 			GameManager.singleton.GetPlayerController().SetCurrentPlayer(null);

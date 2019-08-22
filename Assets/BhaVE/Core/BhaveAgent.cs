@@ -14,7 +14,7 @@ namespace BhaVE.Core
 	{
 		//Internal inbuilt tree of this agent. 	
 		//Protected internal so that the BhaVEditor can access + subclasses
-		[HideInInspector] [SerializeField] protected internal BhaveTree _internalTree = null;
+		[SerializeField] protected internal BhaveTree _internalTree = null;
 		public BhaveTree internalTree => _internalTree;
 		private BhaveTree backupTree = null;    //Backup tree so that module does not override any internal trees
 

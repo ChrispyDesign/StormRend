@@ -18,8 +18,8 @@ public class RefreshEffect : Effect
 		if (!m_isTileAllowed)
 			return false;
 
-		_thisUnit.SetAlreadyMoved(false);
-		_thisUnit.SetAlreadyAttacked(false);
+		_thisUnit.SetHasMoved(false);
+		_thisUnit.SetHasAttacked(false);
 		_thisUnit.m_afterClear = false;
 
 		return true;

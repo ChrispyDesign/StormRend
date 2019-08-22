@@ -36,12 +36,12 @@ namespace StormRend.Bhaviours
                 {
 					//Sort list based on distance from this unit
 					targets.value = targets.value.
-						OrderBy(x => Vector2Int.Distance(x.m_coordinates, unit.m_coordinates)).ToList();
+						OrderBy(x => Vector2Int.Distance(x.coords, unit.coords)).ToList();
 
 					//Filter by closest
 					targets.value = targets.value.
-						Where(x => Vector2Int.Distance(x.m_coordinates, unit.m_coordinates).
-							Equals(Vector2Int.Distance(targets.value[0].m_coordinates, unit.m_coordinates))).ToList(); 	//The first value in the list should be the closest unit
+						Where(x => Vector2Int.Distance(x.coords, unit.coords).
+							Equals(Vector2Int.Distance(targets.value[0].coords, unit.coords))).ToList(); 	//The first value in the list should be the closest unit
                 }
 				break;
 

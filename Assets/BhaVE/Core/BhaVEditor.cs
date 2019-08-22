@@ -784,14 +784,14 @@ namespace BhaVE.Editor
 				{
 					throw new System.NotImplementedException("Agent tree saving not implemented!");
 
-					if (showNofication)
-						ShowNotification(new GUIContent(string.Format("{0} saved!", activeAgent.name)));
+					// if (showNofication)
+					// 	ShowNotification(new GUIContent(string.Format("{0} saved!", activeAgent.name)));
 
 					//Aren't agents already saved?
 
-					//Reset flags
-					projectIsDirty = false;
-					projectHasBeenSaved = true;
+					// //Reset flags
+					// projectIsDirty = false;
+					// projectHasBeenSaved = true;
 				}
 				//BhaveTree Module
 				else if (activeTree)

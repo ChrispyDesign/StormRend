@@ -62,15 +62,15 @@ public class Grid
 
 				foreach(PlayerUnit player in GameManager.singleton.GetPlayerUnits())
 				{
-					if (player.m_coordinates.x == x &&
-					   player.m_coordinates.y == y)
+					if (player.coords.x == x &&
+					   player.coords.y == y)
 						m_nodes[x, y].SetUnitOnTop(player);
 				}
 
 				foreach (EnemyUnit enemy in GameManager.singleton.GetEnemyUnits())
 				{
-					if (enemy.m_coordinates.x == x &&
-					   enemy.m_coordinates.y == y)
+					if (enemy.coords.x == x &&
+					   enemy.coords.y == y)
 						m_nodes[x, y].SetUnitOnTop(enemy);
 				}
 			}

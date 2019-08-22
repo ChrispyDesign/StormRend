@@ -43,8 +43,8 @@ public class UIAbilityInfo : MonoBehaviour
             GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.ATTACK);
             m_selector.SetInfoPanelData();
 
-            if(m_player.GetAttackNodes() != null &&
-                m_player.GetAttackNodes().Count > 0)
+            if(m_player.GetAttackTiles() != null &&
+                m_player.GetAttackTiles().Count > 0)
                 m_player.UnShowAttackTiles();
 
             m_ability.GetSelectableTiles(ref m_player);
@@ -72,7 +72,7 @@ public class UIAbilityInfo : MonoBehaviour
 
 		if (isLockedAbility)
 		{
-			Ability ability = GameManager.singleton.GetPlayerController().GetCurrentPlayer().GetLockedAbility();
+			Ability ability = GameManager.singleton.GetPlayerController().GetCurrentPlayer().GetSelectedAbility();
 			Unit player = GameManager.singleton.GetPlayerController().GetCurrentPlayer() as Unit;
 			if (!player)
 			{
@@ -85,10 +85,10 @@ public class UIAbilityInfo : MonoBehaviour
     public void OnClickAbility()
     {
 		Button button = this.gameObject.GetComponent<Button>();
-        if(m_player != null && !m_player.GetAlreadyAttacked() && button.interactable)
+        if(m_player != null && !m_player.GetHasAttacked() && button.interactable)
         {
             GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.ATTACK);
-            m_player.SetLockedAbility(m_ability);
+            m_player.SetSelectedAbility(m_ability);
             GameManager.singleton.GetPlayerController().SetIsAbilityLocked(true); ;
             m_player.ShowAttackTiles();
 		}

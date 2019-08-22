@@ -102,7 +102,7 @@ public class UIAbilitySelector : MonoBehaviour
             button.interactable = false;
 
 		PlayerUnit player = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
-		if (player.GetAlreadyAttacked())
+		if (player.GetHasAttacked())
 			button.interactable = false;
     }
 

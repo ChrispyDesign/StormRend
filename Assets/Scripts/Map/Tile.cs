@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public enum Neighbour
@@ -45,6 +45,17 @@ namespace StormRend
             }
         }
 
+#if UNITY_EDITOR
+		void OnDrawGizmos()
+		{
+			float offsetY = 1.5f;
+			Handles.color = Color.white;
+			Handles.BeginGUI();
+			Handles.Label(transform.position + Vector3.up * offsetY, this.name);
+			Handles.EndGUI();
+		}
+#endif
+
         public Tile SetNodeVariables(Vector3 _pos, Vector2Int _coordinate, NodeType _nodeType)
         {
             m_neighbours = new Tile[4];
@@ -85,7 +96,7 @@ namespace StormRend
             transform.GetComponent<MeshRenderer>().material.color = Color.red;
 
             PlayerUnit currentSelectedUnit = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
-            if (currentSelectedUnit && !m_unitOnTop && currentSelectedUnit.GetAvailableNodes().Contains(this))
+            if (currentSelectedUnit && !m_unitOnTop && currentSelectedUnit.GetAvailableTiles().Contains(this))
             {
                 currentSelectedUnit.MoveDuplicateTo(this);
             }
@@ -106,18 +117,18 @@ namespace StormRend
             if (currentSelectedUnit == null)
                 return;
 
-            if (currentSelectedUnit.GetAttackNodes().Count > 0)
+            if (currentSelectedUnit.GetAttackTiles().Count > 0)
                 currentSelectedUnit.UnShowAttackTiles();
 
             if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.MOVE)
             {
-                if (currentSelectedUnit && currentSelectedUnit.GetIsFocused())
+                if (currentSelectedUnit && currentSelectedUnit.GetIsSelected())
                 {
-                    List<Tile> nodes = currentSelectedUnit.GetAvailableNodes();
+                    List<Tile> nodes = currentSelectedUnit.GetAvailableTiles();
 
                     if (nodes.Contains(this) && !m_unitOnTop)
                     {
-                        if (currentSelectedUnit.GetAlreadyMoved() &&
+                        if (currentSelectedUnit.GetHasMoved() &&
                             currentSelectedUnit.GetMoveCommand() != null)
                         {
                             MoveCommand move = currentSelectedUnit.GetMoveCommand();
@@ -138,15 +149,15 @@ namespace StormRend
                         FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 0.5f);
                     }
                     currentSelectedUnit.SetDuplicateMeshVisibilty(false);
-                    currentSelectedUnit.SetIsFocused(false);
+                    currentSelectedUnit.SetIsSelected(false);
 
-                    currentSelectedUnit.SetAlreadyMoved(true);
+                    currentSelectedUnit.SetHasMoved(true);
                 }
             }
 
             if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
             {
-                Ability ability = currentSelectedUnit.GetLockedAbility();
+                Ability ability = currentSelectedUnit.GetSelectedAbility();
                 if (ability != null)
                 {
 					bool continueAbility = true;
@@ -155,7 +166,7 @@ namespace StormRend
 						if (continueAbility)
 							continueAbility = effect.PerformEffect(this, currentSelectedUnit);
 					}
-					currentSelectedUnit.SetLockedAbility(null);
+					currentSelectedUnit.SetSelectedAbility(null);
 
 					CommandManager commandManager = GameManager.singleton.GetCommandManager();
 
@@ -172,7 +183,7 @@ namespace StormRend
                 }
             }
 
-            if (currentSelectedUnit.GetAlreadyAttacked())
+            if (currentSelectedUnit.GetHasAttacked())
             {
                 UIAbilitySelector selector = UIManager.GetInstance().GetAbilitySelector();
                 selector.SelectPlayerUnit(null);
@@ -185,10 +196,10 @@ namespace StormRend
         {
             m_selected = false;
 
-            Unit unitOnTop = GetUnitOnTop();
+            Unit unitOnTop = this.GetUnitOnTop();
             if (unitOnTop)
             {
-                List<Tile> nodes = unitOnTop.GetAvailableNodes();
+                List<Tile> nodes = unitOnTop.GetAvailableTiles();
 
                 if (nodes != null)
                 {

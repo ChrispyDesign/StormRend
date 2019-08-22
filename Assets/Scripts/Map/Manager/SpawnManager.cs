@@ -28,7 +28,7 @@ public class SpawnManager : MonoBehaviour
                 Quaternion.identity,
                 null).transform;
             Unit unit = go.GetComponent<Unit>();
-            unit.m_coordinates = spawnPoint.m_spawnCoords;
+            unit.coords = spawnPoint.m_spawnCoords;
 
             node.SetUnitOnTop(unit);
         }

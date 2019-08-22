@@ -35,18 +35,21 @@ namespace BhaVE.Patterns
 				_singleton = these[0];
 
 				//Delete the rest
+#if UNITY_EDITOR
 				//NOTE: It is assumed that these objects will always be assets and never in memory
 				for (int i = 1; i < these.Length; i++)
 				{
 					AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(these[i]));
 				}
+# endif
 			}
 		}
-
 		static void InstantiateAndCreateAsset()
 		{
 			_singleton = CreateInstance<T>();
+#if UNITY_EDITOR
 			AssetDatabase.CreateAsset(_singleton, defaultPath + _singleton.GetType().Name + ".asset");
+#endif
 		}
 	#endregion
 	}

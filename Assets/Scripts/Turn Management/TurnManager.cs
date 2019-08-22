@@ -99,8 +99,8 @@ namespace StormRend
 
 			foreach (PlayerUnit player in units)
 			{
-				player.SetAlreadyAttacked(false);
-				player.SetAlreadyMoved(false);
+				player.SetHasAttacked(false);
+				player.SetHasMoved(false);
 				player.m_afterClear = false;
 			}
 
@@ -113,8 +113,8 @@ namespace StormRend
 
 			foreach (EnemyUnit enemy in units)
 			{
-				enemy.SetAlreadyAttacked(false);
-				enemy.SetAlreadyMoved(false);
+				enemy.SetHasAttacked(false);
+				enemy.SetHasMoved(false);
 				enemy.m_afterClear = false;
 			}
 

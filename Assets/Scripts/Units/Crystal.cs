@@ -28,31 +28,31 @@ public class Crystal : Unit
 		//	effect.PerformEffect(Grid.GetNodeFromCoords(m_coordinates), this);
 		//}
 
-		Vector2Int unitCoords = this.m_coordinates;
+		Vector2Int unitCoords = this.coords;
 
 		Vector2Int tempCoords = new Vector2Int(0, 0);
 		Tile tempNode;
 
 		// Process Left
-		tempCoords = m_coordinates - m_left;
+		tempCoords = coords - m_left;
 		tempNode = Grid.CoordToTile(tempCoords);
 		if(tempNode.GetUnitOnTop() != null)
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
 
 		// Process Up
-		tempCoords = m_coordinates - m_up;
+		tempCoords = coords - m_up;
 		tempNode = Grid.CoordToTile(tempCoords);
 		if (tempNode.GetUnitOnTop() != null)
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
 
 		// Process Right
-		tempCoords = m_coordinates - m_right;
+		tempCoords = coords - m_right;
 		tempNode = Grid.CoordToTile(tempCoords);
 		if (tempNode.GetUnitOnTop() != null)
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
 
 		// Process Down
-		tempCoords = m_coordinates - m_down;
+		tempCoords = coords - m_down;
 		tempNode = Grid.CoordToTile(tempCoords);
 		if (tempNode.GetUnitOnTop() != null)
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);

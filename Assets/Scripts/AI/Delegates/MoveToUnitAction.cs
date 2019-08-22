@@ -31,29 +31,29 @@ namespace StormRend.Bhaviours
         {
             Vector2Int oldCoord;
 
-            oldCoord = unit.m_coordinates;
+            oldCoord = unit.coords;
 
             ///Move as close as possible to the target
             Dijkstra.Instance.FindValidMoves(
-                Grid.CoordToTile(unit.m_coordinates), 
-                unit.GetRange() * (int)turns,
-                (unit is PlayerUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
+				unit.GetTile(), 
+                unit.GetMoveRange() * (int)turns,
+                (unit is EnemyUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
             validMoves = Dijkstra.Instance.m_validMoves;
             foreach (var vm in validMoves)
             {
-                Debug.Log("Before Sort Distances: " + Vector2Int.Distance(unit.m_coordinates, vm.GetCoordinates()));
+                Debug.Log("Before Sort Distances: " + Vector2Int.Distance(unit.coords, vm.GetCoordinates()));
             }
             
             validMoves = validMoves.OrderBy(
-                x => (Vector2Int.Distance(targets.value[0].m_coordinates, x.GetCoordinates()))).ToList();
+                x => (Vector2Int.Distance(targets.value[0].coords, x.GetCoordinates()))).ToList();
             foreach (var vm in validMoves)
             {
-                Debug.Log("After Sort Distances: " + Vector2Int.Distance(unit.m_coordinates, vm.GetCoordinates()));
+                Debug.Log("After Sort Distances: " + Vector2Int.Distance(unit.coords, vm.GetCoordinates()));
             }
 
             unit.MoveTo(validMoves[0]);
 
-            Debug.LogFormat("MoveToUnitAction: {0} > {1}", oldCoord, unit.m_coordinates);
+            Debug.LogFormat("MoveToUnitAction: {0} > {1}", oldCoord, unit.coords);
 
             return NodeState.Success;
         }

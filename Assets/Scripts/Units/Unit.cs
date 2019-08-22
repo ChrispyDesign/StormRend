@@ -10,10 +10,19 @@ namespace StormRend
     [SelectionBase]
     public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     {
+		// - Refactor get/setters to properties where appropriate
+		// - Shwo/Unshow attack tiles should be handled by a different utility class
+		// - Decouple Camera in OnSelect()
+		// - Decouple/reduce coupling of game manager
+
         int m_HP;
         static bool m_isDead;
 
-        public Vector2Int m_coordinates;
+        private Vector2Int m_coordinates;
+		public Vector2Int coords {
+			get => m_coordinates;
+			set => m_coordinates = value; }
+			
         public bool m_afterClear;
 
         [Header("Mesh")]
@@ -26,7 +35,7 @@ namespace StormRend
 
         [Header("Unit Stats")]
         [SerializeField] int m_maxHP = 4;
-        [SerializeField] int m_maxRange = 4;
+        [SerializeField] int m_maxMoveRange = 4;
 
 
         [Space]
@@ -37,13 +46,12 @@ namespace StormRend
         [SerializeField] UnityEvent m_onUnhover;
 
 
-
-        protected bool m_alreadyMoved;
-        protected bool m_alreadyAttacked;
-        protected bool m_isFocused;
-        protected Ability m_lockedAbility;
-        List<Tile> m_availableNodes;
-        List<Tile> m_attackNodes;
+        protected bool m_hasMoved;
+        protected bool m_hasAttacked;
+        protected bool m_isSelected;
+        protected Ability m_selectedAbility;
+        List<Tile> m_availableTiles;
+        List<Tile> m_attackTiles;
 
         public Action OnDie = delegate
         {
@@ -56,60 +64,51 @@ namespace StormRend
 			set => m_HP = Mathf.Clamp(value, 0, m_maxHP); }
 		public int maxHP => m_maxHP;
 
-
-        #region getters
-
-        public List<Tile> GetAvailableNodes() { return m_availableNodes; }
-        public Ability GetLockedAbility() { return m_lockedAbility; }
-        public List<Tile> GetAttackNodes() { return m_attackNodes; }
-        public Tile GetCurrentNode() { return Grid.CoordToTile(m_coordinates); }
-        public int GetRange() { return m_maxRange; }
-        public bool GetIsFocused() { return m_isFocused; }
-        public bool GetAlreadyMoved() { return m_alreadyMoved; }
-        public bool GetAlreadyAttacked() { return m_alreadyAttacked; }
+    #region Properties
+        public List<Tile> GetAvailableTiles() { return m_availableTiles; }
+        public Ability GetSelectedAbility() { return m_selectedAbility; }
+        public List<Tile> GetAttackTiles() { return m_attackTiles; }
+        public Tile GetTile() { return Grid.CoordToTile(m_coordinates); }
+        public int GetMoveRange() { return m_maxMoveRange; }
+        public bool GetIsSelected() { return m_isSelected; }
+        public bool GetHasMoved() { return m_hasMoved; }
+        public bool GetHasAttacked() { return m_hasAttacked; }
         public bool GetIsDead() { return m_isDead; }
 
-        public void GetAbilities(ref Ability _passive,
-            ref Ability[] _first, ref Ability[] _second)
+        public void GetAbilities(ref Ability passive,
+            ref Ability[] first, ref Ability[] second)
         {
-            _passive = m_passiveAbility;
-            _first = m_firstAbilities;
-            _second = m_secondAbilities;
+            passive = m_passiveAbility;
+            first = m_firstAbilities;
+            second = m_secondAbilities;
         }
-
-        public void SetAlreadyMoved(bool _moved) { m_alreadyMoved = _moved; }
-        public void SetAlreadyAttacked(bool _attack) { m_alreadyAttacked = _attack; }
-
-        public void SetAttackNodes(List<Tile> _nodes) { m_attackNodes = _nodes; }
-        public void SetLockedAbility(Ability _ability) { m_lockedAbility = _ability; }
-        #endregion
-
-        #region setters
-
-        public void SetIsFocused(bool _isFocused) { m_isFocused = _isFocused; }
-
-        #endregion
-
+        public void SetHasMoved(bool moveFlag) { m_hasMoved = moveFlag; }
+        public void SetHasAttacked(bool attackFlag) { m_hasAttacked = attackFlag; }
+        public void SetAttackNodes(List<Tile> tiles) { m_attackTiles = tiles; }
+        public void SetSelectedAbility(Ability ability) { m_selectedAbility = ability; }
+        public void SetIsSelected(bool isSelected) { m_isSelected = isSelected; }
         public void SetDuplicateMeshVisibilty(bool _isOff) { m_duplicateMesh.SetActive(_isOff); }
+	#region
 
         void Start()
         {
             m_HP = m_maxHP;
-            m_attackNodes = new List<Tile>();
+            m_attackTiles = new List<Tile>();
         }
 
-        public void MoveTo(Tile _moveToNode)
+        public void MoveTo(Tile tile)
         {
-            GetCurrentNode().SetUnitOnTop(null);
-            _moveToNode.SetUnitOnTop(this);
+            GetTile().SetUnitOnTop(null);
+            tile.SetUnitOnTop(this);
 
-            m_coordinates = _moveToNode.GetCoordinates();
-            transform.position = _moveToNode.GetNodePosition();
+            m_coordinates = tile.GetCoordinates();
+            transform.position = tile.GetNodePosition();
         }
 
+	
         public void ShowAttackTiles()
         {
-            foreach (Tile node in m_attackNodes)
+            foreach (Tile node in m_attackTiles)
 			{
 				if (node.m_nodeType == NodeType.EMPTY)
 					continue;
@@ -119,10 +118,9 @@ namespace StormRend
 				node.m_selected = true;
             }
         }
-
         public void UnShowAttackTiles()
         {
-            foreach (Tile node in m_attackNodes)
+            foreach (Tile node in m_attackTiles)
 			{
 				if (node.m_nodeType == NodeType.EMPTY)
 					continue;
@@ -146,9 +144,9 @@ namespace StormRend
                 !m_afterClear)
             {
 
-                m_availableNodes = Dijkstra.Instance.m_validMoves;
+                m_availableTiles = Dijkstra.Instance.m_validMoves;
 
-                foreach (Tile node in m_availableNodes)
+                foreach (Tile node in m_availableTiles)
                 {
                     if (node.GetUnitOnTop())
                         continue;
@@ -161,7 +159,7 @@ namespace StormRend
 
             if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
             {
-                Tile node = GetCurrentNode();
+                Tile node = GetTile();
                 node.OnSelect();
             }
 

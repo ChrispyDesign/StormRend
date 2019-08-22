@@ -30,13 +30,13 @@ namespace StormRend
 
         public override void OnSelect()
         {
-            m_isFocused = true;
+            m_isSelected = true;
 
             Unit player = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
             if (player != null && player != this)
             {
-                if (player.GetAttackNodes() != null &&
-                    player.GetAttackNodes().Count > 0)
+                if (player.GetAttackTiles() != null &&
+                    player.GetAttackTiles().Count > 0)
                     player.UnShowAttackTiles();
             }
 
@@ -44,7 +44,7 @@ namespace StormRend
             UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(this);
             UIManager.GetInstance().GetAbilitySelector().SelectPlayerUnit(this);
 
-            if (m_alreadyMoved && m_alreadyAttacked)
+            if (m_hasMoved && m_hasAttacked)
                 return;
 
             GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
@@ -63,13 +63,13 @@ namespace StormRend
                             return;
 
                         move.Undo();
-                        m_alreadyMoved = true;
+                        m_hasMoved = true;
                     }
                 }
 
                 SetDuplicateMeshVisibilty(true);
 
-                Dijkstra.Instance.FindValidMoves(GetCurrentNode(), GetRange(), typeof(EnemyUnit));
+                Dijkstra.Instance.FindValidMoves(GetTile(), GetMoveRange(), typeof(EnemyUnit));
             }
 
             base.OnSelect();

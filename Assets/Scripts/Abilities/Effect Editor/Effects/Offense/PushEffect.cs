@@ -28,7 +28,7 @@ public class PushEffect : Effect
 			return false;
 
 		Vector2Int nodeCoords = _effectedNode.GetCoordinates();
-		Vector2Int unitCoords = _thisUnit.m_coordinates;
+		Vector2Int unitCoords = _thisUnit.coords;
 
 		Vector2Int tempCoords = new Vector2Int(0,0);
 		Tile tempNode;

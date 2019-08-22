@@ -14,7 +14,7 @@ public class TeleportEffect : Effect
 
 		if (_effectedNode.GetUnitOnTop() != null)
 		{
-			_thisUnit.SetAlreadyAttacked(false);
+			_thisUnit.SetHasAttacked(false);
 			return false;
 		}
 		_thisUnit.MoveTo(_effectedNode);

@@ -22,7 +22,7 @@ public class MoveCommand : ICommand
         m_unit = _unit;
         m_coords.x = _x;
         m_coords.y = _y;
-        m_origCoords = m_unit.m_coordinates;
+        m_origCoords = m_unit.coords;
     }
 
     public MoveCommand(Unit _unit, Vector2Int _coords)
@@ -30,7 +30,7 @@ public class MoveCommand : ICommand
         m_unit = _unit;
         m_coords.x = _coords.x;
         m_coords.y = _coords.y;
-        m_origCoords = m_unit.m_coordinates;
+        m_origCoords = m_unit.coords;
     }
 
     public void Execute()

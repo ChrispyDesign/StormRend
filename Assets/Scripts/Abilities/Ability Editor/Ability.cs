@@ -81,8 +81,8 @@ public class Ability : ScriptableObject
                     int _x = -endPoint + x;
                     int _y = endPoint - y;
 
-                    coords.x = _player.m_coordinates.x + _x;
-                    coords.y = _player.m_coordinates.y + _y;
+                    coords.x = _player.coords.x + _x;
+                    coords.y = _player.coords.y + _y;
 
                     Tile node = Grid.CoordToTile(coords);
                     if (node != null)

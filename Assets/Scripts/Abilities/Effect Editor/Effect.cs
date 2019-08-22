@@ -26,7 +26,7 @@ public class Effect : ScriptableObject
     {
         OnPeformEffect.Invoke();
 
-		Ability ability = _thisUnit.GetLockedAbility();
+		Ability ability = _thisUnit.GetSelectedAbility();
 		TargetableTiles tileInfo = ability.GetTargetableTiles();
 
 		if (tileInfo.m_empty == (_effectedNode.GetUnitOnTop() == null))
@@ -49,12 +49,12 @@ public class Effect : ScriptableObject
 
 		if (!m_isTileAllowed)
 		{
-			_thisUnit.SetAlreadyAttacked(false);
+			_thisUnit.SetHasAttacked(false);
 			return false;
 		}
 
-		_thisUnit.SetAlreadyMoved(true);
-		_thisUnit.SetAlreadyAttacked(true);
+		_thisUnit.SetHasMoved(true);
+		_thisUnit.SetHasAttacked(true);
 
 		UIManager.GetInstance().GetGloryManager().SpendGlory(ability.GetGloryRequirement());
 
