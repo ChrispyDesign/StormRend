@@ -77,9 +77,12 @@ namespace StormRend.Bhaviours
 				// marker.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
 			}
 
+
 			// Debug.Log("Validmoves Count: " + validMoves.Count);
 			// PrintList(validMoves);
 			// Debug.Break();
+
+
 
 			if (tilesToScan.Count <= 0) return NodeState.Failure;
 
@@ -100,7 +103,7 @@ namespace StormRend.Bhaviours
 				}
 			}
 			Debug.Log("FindUnitsInRange: UnitsHaveBeenFound: " + unitsHaveBeenFound);
-			// Debug.Break();
+
 			return (unitsHaveBeenFound) ? NodeState.Success : NodeState.Failure;
 		}
 
