@@ -88,7 +88,7 @@ namespace StormRend
         public void SetSelectedAbility(Ability ability) { m_selectedAbility = ability; }
         public void SetIsSelected(bool isSelected) { m_isSelected = isSelected; }
         public void SetDuplicateMeshVisibilty(bool _isOff) { m_duplicateMesh.SetActive(_isOff); }
-	#region
+	#endregion
 
         void Start()
         {
