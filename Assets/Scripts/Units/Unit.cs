@@ -18,7 +18,7 @@ namespace StormRend
         int m_HP;
         static bool m_isDead;
 
-        [SerializeField] private Vector2Int m_coordinates;
+        [SerializeField] Vector2Int m_coordinates;
 		public Vector2Int coords {
 			get => m_coordinates;
 			set => m_coordinates = value; }

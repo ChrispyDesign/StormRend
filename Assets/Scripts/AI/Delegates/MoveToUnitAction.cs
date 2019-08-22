@@ -39,13 +39,12 @@ namespace StormRend.Bhaviours
                 unit.GetMoveRange() * (int)turns,
                 (unit is EnemyUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
             validMoves = Dijkstra.Instance.m_validMoves;
+
             foreach (var vm in validMoves)
             {
                 Debug.Log("Before Sort Distances: " + Vector2Int.Distance(unit.coords, vm.GetCoordinates()));
             }
-            
-            validMoves = validMoves.OrderBy(
-                x => (Vector2Int.Distance(targets.value[0].coords, x.GetCoordinates()))).ToList();
+            validMoves = validMoves.OrderBy(x => (Vector2Int.Distance(targets.value[0].coords, x.GetCoordinates()))).ToList();
             foreach (var vm in validMoves)
             {
                 Debug.Log("After Sort Distances: " + Vector2Int.Distance(unit.coords, vm.GetCoordinates()));
@@ -57,5 +56,7 @@ namespace StormRend.Bhaviours
 
             return NodeState.Success;
         }
+
+
     }
 }

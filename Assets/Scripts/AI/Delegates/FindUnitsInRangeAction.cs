@@ -23,8 +23,13 @@ namespace StormRend.Bhaviours
 
 		//Privates
 		Unit u; //The unit mono attached to this agent
-		List<Tile> validMoves = new List<Tile>();
+		List<Tile> tilesToScan = new List<Tile>();
 		private bool unitsHaveBeenFound = false;
+
+
+		HashSet<Tile> noDuplicates = new HashSet<Tile>();
+
+
 
 		public override void Initiate(BhaveAgent agent)
 		{
@@ -37,8 +42,10 @@ namespace StormRend.Bhaviours
 			unitsHaveBeenFound = false;
 			targets.value.Clear();
 
-			PrintList(targets.value);
-			Debug.Break();
+			noDuplicates.Clear();
+
+			// PrintList(targets.value);
+			// Debug.Break();
 		}
 
 		public override NodeState Execute(BhaveAgent agent)
@@ -48,16 +55,36 @@ namespace StormRend.Bhaviours
 				u.GetTile(),
 				u.GetMoveRange() * (int)turns,
 				(u is EnemyUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
-			validMoves = Dijkstra.Instance.m_validMoves;
+			tilesToScan = Dijkstra.Instance.m_validMoves;
 
-			Debug.Log("Validmoves Count: " + validMoves.Count);
-			PrintList(validMoves);
-			Debug.Break();
+			///TEMPORARY
+			foreach (var t in tilesToScan)
+			{
+				noDuplicates.Add(t);
+			}
+			tilesToScan.Clear();
+			foreach (var nd in noDuplicates)
+			{
+				tilesToScan.Add(nd);
+			}
 
-			if (validMoves.Count <= 0) return NodeState.Failure;
+			//DB: draw the valid moves
+			foreach (var v in tilesToScan)
+			{
+				v.m_attackCover.SetActive(true);
+				// var marker = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+				// marker.transform.position = v.transform.position;
+				// marker.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+			}
+
+			// Debug.Log("Validmoves Count: " + validMoves.Count);
+			// PrintList(validMoves);
+			// Debug.Break();
+
+			if (tilesToScan.Count <= 0) return NodeState.Failure;
 
 			//Determine if specified unit is in range
-			foreach (var t in validMoves)
+			foreach (var t in tilesToScan)
 			{
 				var unitOnTop = t.GetUnitOnTop();
 				if (unitTypeToFind == UnitType.Player && unitOnTop is PlayerUnit)
@@ -73,16 +100,15 @@ namespace StormRend.Bhaviours
 				}
 			}
 			Debug.Log("FindUnitsInRange: UnitsHaveBeenFound: " + unitsHaveBeenFound);
-			Debug.Break();
+			// Debug.Break();
 			return (unitsHaveBeenFound) ? NodeState.Success : NodeState.Failure;
 		}
 
 		void PrintList(IEnumerable<object> list)
 		{
-			Debug.Log("List contents: ");
-			foreach (var u in list)
+			foreach (var t in list)
 			{
-				Debug.Log(u);
+				Debug.Log(t);
 			}
 		}
 	}

@@ -23,7 +23,7 @@ public class Map : MonoBehaviour
 
     private TileData m_gridData;
 
-    private void Awake()
+    void Start()
     {
         Transform parent = new GameObject("Tiles").transform;
         parent.parent = this.transform;
