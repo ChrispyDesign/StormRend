@@ -13,28 +13,27 @@ namespace StormRend.AI
 		// - API to end enemy's turn accessible by delegates
 
 		public enum UnitType { Player, Enemy }
-		// [SerializeField] UnitType unitType;
-		[SerializeField] float delayBetweenTurns = 3f;  //Seconds
+		[SerializeField] UnitType aiUnitType;
+		[SerializeField] float delayBetweenNextUnitTurn = 2f;  //Seconds
 
 		Unit[] currentUnits = null;
 		GameManager gm = null;
-		BhaveDirector bhm = null;
+		BhaveDirector bhd = null;
 
 		void Awake()
 		{
 			gm = GameManager.singleton;
-			bhm = BhaveDirector.singleton;
+			bhd = BhaveDirector.singleton;
 		}
 
 		public void StartAITurn()
 		{
 			//Get all CURRENT available units of a certain type
-			// if (unitType == UnitType.Player)
-			// 	currentUnits = gm.GetPlayerUnits();
-			// else if (unitType == UnitType.Enemy)
-			// 	currentUnits = gm.GetEnemyUnits();
-			currentUnits = gm.GetEnemyUnits();
-
+			if (aiUnitType == UnitType.Player)
+				currentUnits = gm.GetPlayerUnits();
+			else if (aiUnitType == UnitType.Enemy)
+				currentUnits = gm.GetEnemyUnits();
+			
 			//Start running the AI
 			StartCoroutine(RunAI());
 		}
@@ -44,8 +43,9 @@ namespace StormRend.AI
 			//Run through each unit's turn
 			foreach (var u in currentUnits)
 			{
-				bhm.Tick(u.GetComponent<BhaveAgent>());
-				yield return new WaitForSeconds(delayBetweenTurns);
+				var agent = u.GetComponent<BhaveAgent>();
+				bhd.Tick(agent);
+				yield return new WaitForSeconds(delayBetweenNextUnitTurn);
 			}
 
 			//Then end the turn for this unit type
@@ -57,11 +57,10 @@ namespace StormRend.AI
 		/// </summary>
 		public void EndAITurn()
 		{
-			// if (unitType == UnitType.Enemy)
-			// 	gm.GetTurnManager().PlayerTurn();
-			// else if (unitType == UnitType.Player)
-			// 	gm.GetTurnManager().EnemyTurn();
-			gm.GetTurnManager().PlayerTurn();
+			if (aiUnitType == UnitType.Enemy)
+				gm.GetTurnManager().PlayerTurn();
+			else if (aiUnitType == UnitType.Player)
+				gm.GetTurnManager().EnemyTurn();
 		}
 	}
 }

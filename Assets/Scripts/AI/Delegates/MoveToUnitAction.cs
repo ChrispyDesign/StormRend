@@ -41,6 +41,7 @@ namespace StormRend.Bhaviours
                 (unit is EnemyUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
             validMoves = Dijkstra.Instance.m_validMoves;
 
+            //TEMP Checks adjacent tiles for target
 			for (int i = 0; i < 4; i++)
 			{
 				if(validMoves[i].GetUnitOnTop() == targets.value[0])
@@ -60,7 +61,7 @@ namespace StormRend.Bhaviours
 			//{
 			//	Debug.Log(Grid.CoordToTile(t.coords).GetUnitOnTop());
 			//}
-			unit.MoveTo(validMoves[1]);
+			unit.MoveTo(validMoves[1]);     //MVP
 			//foreach (var t in targets.value)
 			//{
 			//	Debug.Log(Grid.CoordToTile(t.coords).GetUnitOnTop());

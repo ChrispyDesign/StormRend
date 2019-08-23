@@ -43,9 +43,6 @@ namespace StormRend.Bhaviours
 			targets.value.Clear();
 
 			noDuplicates.Clear();
-
-			// PrintList(targets.value);
-			// Debug.Break();
 		}
 
 		public override NodeState Execute(BhaveAgent agent)
@@ -58,31 +55,21 @@ namespace StormRend.Bhaviours
 			tilesToScan = Dijkstra.Instance.m_validMoves;
 
 			///TEMPORARY
-			foreach (var t in tilesToScan)
-			{
-				noDuplicates.Add(t);
-			}
-			tilesToScan.Clear();
-			foreach (var nd in noDuplicates)
-			{
-				tilesToScan.Add(nd);
-			}
+			// foreach (var t in tilesToScan)
+			// {
+			// 	noDuplicates.Add(t);
+			// }
+			// tilesToScan.Clear();
+			// foreach (var nd in noDuplicates)
+			// {
+			// 	tilesToScan.Add(nd);
+			// }
 
 			//DB: draw the valid moves
-			foreach (var v in tilesToScan)
-			{
-				v.m_attackCover.SetActive(true);
-				// var marker = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-				// marker.transform.position = v.transform.position;
-				// marker.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-			}
-
-
-			// Debug.Log("Validmoves Count: " + validMoves.Count);
-			// PrintList(validMoves);
-			// Debug.Break();
-
-
+			// foreach (var v in tilesToScan)
+			// {
+			// 	v.m_attackCover.SetActive(true);
+			// }
 
 			if (tilesToScan.Count <= 0) return NodeState.Failure;
 
@@ -102,9 +89,7 @@ namespace StormRend.Bhaviours
 					unitsHaveBeenFound = true;
 				}
 			}
-			//Debug.Log("FindUnitsInRange: UnitsHaveBeenFound: " + unitsHaveBeenFound);
-
-			PrintList(targets.value);
+			// PrintList(targets.value);
 			return (unitsHaveBeenFound) ? NodeState.Success : NodeState.Failure;
 		}
 
