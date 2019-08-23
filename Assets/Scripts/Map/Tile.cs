@@ -170,13 +170,14 @@ namespace StormRend
 
 					CommandManager commandManager = GameManager.singleton.GetCommandManager();
 
+					//UndoController.
 					foreach (MoveCommand move in commandManager.m_moves)
 					{
 						Unit unit = move.m_unit;
 						unit.m_afterClear = true;
 					}
 
-					commandManager.m_moves.Clear();
+					commandManager.m_moves.Clear();		//UndoController.Clear()
 					UIAbilitySelector abilitySelector = UIManager.GetInstance().GetAbilitySelector();
 					abilitySelector.GetInfoPanel().SetActive(false);
 					abilitySelector.GetButtonPanel().SetActive(false);					

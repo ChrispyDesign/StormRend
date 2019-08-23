@@ -6,12 +6,22 @@ namespace StormRend
     {
         public class Architecture
         {/*
+			- Better and improved turned based state machine
 
+			public class TurnBasedStackableStateMachine
+			+ Push(StackState)	//For pause etc
+			+ Pop()
+
+			+ Switch(StackState)
+			+ Next()
+			+ Previous()
             
-            
-            
-            
-            
+			public class State
+			+ OnCover()
+			+ OnUncover()
+			+ OnEnter()
+			+ OnExit()
+			+ OnUpdate()
             
         */}
 
