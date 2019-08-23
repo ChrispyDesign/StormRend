@@ -208,6 +208,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 752364542293138397}
+    - target: {fileID: 1017855105720201312, guid: 534138d032de9754c88a7c4793a96b8c,
+        type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 1129968865905045787}
     - target: {fileID: 4460336594618475941, guid: 534138d032de9754c88a7c4793a96b8c,
         type: 3}
       propertyPath: m_havePropertiesChanged
@@ -226,6 +231,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 719670635740816919}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1129968865905045787 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 455633302327990028, guid: 534138d032de9754c88a7c4793a96b8c,
+    type: 3}
+  m_PrefabInstance: {fileID: 719670635740816919}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6712265897453864521
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -233,6 +250,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3093552309022210659}
     m_Modifications:
+    - target: {fileID: 100000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
+      propertyPath: m_Name
+      value: FrostTroll_Mesh
+      objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
       propertyPath: m_Controller
       value: 
@@ -292,10 +313,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.875
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
-      propertyPath: m_Name
-      value: FrostTroll_Mesh
       objectReference: {fileID: 0}
     - target: {fileID: 13700000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
       propertyPath: m_Materials.Array.data[0]

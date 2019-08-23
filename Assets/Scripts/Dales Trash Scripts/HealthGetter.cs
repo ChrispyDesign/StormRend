@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 using StormRend;
 
 public class HealthGetter : MonoBehaviour
 {
-    public TextMeshProUGUI text;
-    public Unit player;
-    public int health;
+    [SerializeField] Image healthBar;
+    [SerializeField] Unit player;
+    [SerializeField] float health;
 
 
     private void Awake()
@@ -17,8 +17,8 @@ public class HealthGetter : MonoBehaviour
     }
     private void Update()
     {
-        health = player.HP;
+        health = (player.HP / (float)player.maxHP);
 
-        text.text = health.ToString();
+        healthBar.fillAmount = health;
     }
 }
