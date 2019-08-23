@@ -84,9 +84,6 @@ namespace StormRend
 				node.m_nHCost = 0;
 				node.m_nGCost = 0;
 			}
-
-			foreach (Tile tile in m_validMoves)
-				Debug.Log(tile.GetCoordinates());
 		}
 	}
 }
