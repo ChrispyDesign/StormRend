@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Light Fall LV1
   m_EditorClassIdentifier: 
   m_name: Light Fall Level 1
+  animNumber: 0
   m_icon: {fileID: 0}
   m_description: Dive Bomb Baby
   m_gloryRequirement: 0
@@ -31,8 +32,9 @@ MonoBehaviour:
     m_players: 0
     m_self: 0
   m_effects:
-  - {fileID: 114020080747306808}
---- !u!114 &114020080747306808
+  - {fileID: 114782338034524522}
+  - {fileID: 114038669192008964}
+--- !u!114 &114038669192008964
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,10 +46,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9119896ddbe049ae3df8859d7fd0d, type: 3}
   m_Name: PushEffect
   m_EditorClassIdentifier: 
-  m_target: 2
+  m_target: 0
   OnPeformEffect:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_pushAmount: 1
+  m_pushAmount: 0
+--- !u!114 &114782338034524522
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a689f1c72aecd749bd69b2cc1345b40, type: 3}
+  m_Name: TeleportEffect
+  m_EditorClassIdentifier: 
+  m_target: 0
+  OnPeformEffect:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
