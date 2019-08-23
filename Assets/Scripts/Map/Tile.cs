@@ -92,6 +92,11 @@ namespace StormRend
 
         public void OnHover()
         {
+            if (m_nodeType == NodeType.WALKABLE && m_unitOnTop != null)
+            {
+                m_attackCover.SetActive(true);
+            }
+
             m_origMaterial = transform.GetComponent<MeshRenderer>().material.color;
             transform.GetComponent<MeshRenderer>().material.color = Color.red;
 
@@ -104,6 +109,8 @@ namespace StormRend
 
         public void OnUnhover()
         {
+            m_attackCover.SetActive(false);
+
             if (!m_selected)
                 transform.GetComponent<MeshRenderer>().material.color = Color.white;
 
