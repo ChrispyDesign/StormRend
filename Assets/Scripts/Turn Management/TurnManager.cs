@@ -54,6 +54,13 @@ namespace StormRend
 		/// </summary>
 		public void PlayerTurn()
 		{
+			List<Crystal> crystal = GameManager.singleton.GetCrystals();
+			foreach (Crystal c in crystal)
+			{
+				c.IterateTurns();
+			}
+			m_currentTurn++;
+
 			// ensure blizzard manager exists
 			BlizzardManager blizzardManager = UIManager.GetInstance().GetBlizzardManager();
 
@@ -84,13 +91,6 @@ namespace StormRend
 
 			// proceed to enemy turn
 			m_stateMachine.ChangeState(m_enemyTurn);
-
-			List<Crystal> crystal = GameManager.singleton.GetCrystals();
-			foreach (Crystal c in crystal)
-			{
-				c.IterateTurns();
-			}
-			m_currentTurn++;
 		}
 
 		public void ResetPlayerVariables()
