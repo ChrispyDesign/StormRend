@@ -169,7 +169,8 @@ namespace StormRend
 						if (continueAbility)
 						{
 							continueAbility = effect.PerformEffect(this, currentSelectedUnit);
-							anim.SetInteger("AttackAnim", ability.GetAnimNumber());
+							if(anim != null)
+								anim.SetInteger("AttackAnim", ability.GetAnimNumber());
 						}
 					}
 					currentSelectedUnit.SetSelectedAbility(null);
