@@ -66,13 +66,6 @@ namespace StormRend
 
 			// proceed to player turn
 			m_stateMachine.ChangeState(m_playerTurn);
-
-			List<Crystal> crystal = GameManager.singleton.GetCrystals();
-			foreach (Crystal c in crystal)
-			{
-				c.IterateTurns();
-			}
-			m_currentTurn++;
 		}
 
 		/// <summary>
@@ -91,6 +84,13 @@ namespace StormRend
 
 			// proceed to enemy turn
 			m_stateMachine.ChangeState(m_enemyTurn);
+
+			List<Crystal> crystal = GameManager.singleton.GetCrystals();
+			foreach (Crystal c in crystal)
+			{
+				c.IterateTurns();
+			}
+			m_currentTurn++;
 		}
 
 		public void ResetPlayerVariables()
