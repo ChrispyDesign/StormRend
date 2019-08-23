@@ -102,8 +102,9 @@ namespace StormRend.Bhaviours
 					unitsHaveBeenFound = true;
 				}
 			}
-			Debug.Log("FindUnitsInRange: UnitsHaveBeenFound: " + unitsHaveBeenFound);
+			//Debug.Log("FindUnitsInRange: UnitsHaveBeenFound: " + unitsHaveBeenFound);
 
+			PrintList(targets.value);
 			return (unitsHaveBeenFound) ? NodeState.Success : NodeState.Failure;
 		}
 

@@ -28,10 +28,11 @@ namespace StormRend.Bhaviours
         }
 
         public override NodeState Execute(BhaveAgent agent)
-        {
-            Vector2Int oldCoord;
+		{
+			Vector2Int oldCoord;
+			unit = agent.GetComponent<Unit>();
 
-            oldCoord = unit.coords;
+			oldCoord = unit.coords;
 
             ///Move as close as possible to the target
             Dijkstra.Instance.FindValidMoves(
@@ -40,21 +41,33 @@ namespace StormRend.Bhaviours
                 (unit is EnemyUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
             validMoves = Dijkstra.Instance.m_validMoves;
 
-            foreach (var vm in validMoves)
-            {
-                Debug.Log("Before Sort Distances: " + Vector2Int.Distance(unit.coords, vm.GetCoordinates()));
-            }
+			for (int i = 0; i < 4; i++)
+			{
+				if(validMoves[i].GetUnitOnTop() == targets.value[0])
+					return NodeState.Success;
+			}
+
+            //foreach (var vm in validMoves)
+            //{
+            //    Debug.Log("Before Sort Distances: " + Vector2Int.Distance(unit.coords, vm.GetCoordinates()));
+            //}
             validMoves = validMoves.OrderBy(x => (Vector2Int.Distance(targets.value[0].coords, x.GetCoordinates()))).ToList();
-            foreach (var vm in validMoves)
-            {
-                Debug.Log("After Sort Distances: " + Vector2Int.Distance(unit.coords, vm.GetCoordinates()));
-            }
+            //foreach (var vm in validMoves)
+            //{
+            //    //Debug.Log("After Sort Distances: " + Vector2Int.Distance(unit.coords, vm.GetCoordinates()));
+            //}
+			//foreach (var t in targets.value)
+			//{
+			//	Debug.Log(Grid.CoordToTile(t.coords).GetUnitOnTop());
+			//}
+			unit.MoveTo(validMoves[1]);
+			//foreach (var t in targets.value)
+			//{
+			//	Debug.Log(Grid.CoordToTile(t.coords).GetUnitOnTop());
+			//}
+			//Debug.LogFormat("MoveToUnitAction: {0} > {1}", oldCoord, unit.coords);
 
-            unit.MoveTo(validMoves[0]);
-
-            Debug.LogFormat("MoveToUnitAction: {0} > {1}", oldCoord, unit.coords);
-
-            return NodeState.Success;
+			return NodeState.Success;
         }
 
 

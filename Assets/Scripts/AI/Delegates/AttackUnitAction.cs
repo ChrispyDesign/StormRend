@@ -36,21 +36,22 @@ namespace StormRend.Bhaviours
             unit.SetSelectedAbility(first[0]);
 
             
-            foreach (var t in targets.value)
-            {
+            //foreach (var t in targets.value)
+            //{
 				if (unit is EnemyUnit)
 				{
 					//Should be encapsulted
 					foreach(Effect effect in effects)
 					{
-						effect.PerformEffect(Grid.CoordToTile(t.coords), unit);
+						Tile coord = Grid.CoordToTile(targets.value[0].coords);
+						effect.PerformEffect(coord, unit);
 					}
 				}
 				else if (unit is PlayerUnit)
 				{
 					throw new NotImplementedException();
 				}
-            }
+            //}
             return NodeState.Success;
         }
     }
