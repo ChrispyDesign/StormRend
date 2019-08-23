@@ -35,6 +35,7 @@ public class Ability : ScriptableObject
 
     // ability info (for UI display purposes)
     [SerializeField] string m_name;
+	[SerializeField] int animNumber;
     [SerializeField] Sprite m_icon = null;
     [TextArea]
     [SerializeField] string m_description;
@@ -50,6 +51,8 @@ public class Ability : ScriptableObject
 	//GET RID OF GETTERS AND SETTERS!!!
     public List<Tile> GetTiles() { return m_tiles; }
     public string GetName() { return m_name; }
+
+    public int GetAnimNumber() { return animNumber; }
     public Sprite GetIcon() { return m_icon; }
     public string GetDescription() { return m_description; }
 

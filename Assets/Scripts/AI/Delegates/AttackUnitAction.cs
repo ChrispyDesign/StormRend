@@ -35,9 +35,11 @@ namespace StormRend.Bhaviours
 
             unit.SetSelectedAbility(first[0]);
 
-            
-            //foreach (var t in targets.value)
-            //{
+
+			//foreach (var t in targets.value)
+			//{
+			Animator anim = agent.GetComponentInChildren<Animator>();
+			anim.SetInteger("AttackAnim", 1);
 				if (unit is EnemyUnit)
 				{
 					//Should be encapsulted
@@ -45,6 +47,7 @@ namespace StormRend.Bhaviours
 					{
 						Tile coord = Grid.CoordToTile(targets.value[0].coords);
 						effect.PerformEffect(coord, unit);
+						
 					}
 				}
 				else if (unit is PlayerUnit)

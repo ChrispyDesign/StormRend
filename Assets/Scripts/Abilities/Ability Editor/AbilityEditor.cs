@@ -58,6 +58,7 @@ public class AbilityEditor : Editor
 
         // 
         AbilityEditorUtility.PropertyField(serializedObject, "m_name");
+        AbilityEditorUtility.PropertyField(serializedObject, "animNumber");
         AbilityEditorUtility.PropertyField(serializedObject, "m_icon");
         AbilityEditorUtility.PropertyField(serializedObject, "m_description");
     }

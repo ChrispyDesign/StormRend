@@ -157,14 +157,20 @@ namespace StormRend
 
             if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
             {
-                Ability ability = currentSelectedUnit.GetSelectedAbility();
-                if (ability != null)
+				PlayerUnit player = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
+
+				Ability ability = currentSelectedUnit.GetSelectedAbility();
+				Animator anim = player.GetComponentInChildren<Animator>();
+				if (ability != null)
                 {
 					bool continueAbility = true;
 					foreach (Effect effect in ability.GetEffects())
 					{
 						if (continueAbility)
+						{
 							continueAbility = effect.PerformEffect(this, currentSelectedUnit);
+							anim.SetInteger("AttackAnim", ability.GetAnimNumber());
+						}
 					}
 					currentSelectedUnit.SetSelectedAbility(null);
 
