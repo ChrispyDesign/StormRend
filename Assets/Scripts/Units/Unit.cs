@@ -176,12 +176,21 @@ namespace StormRend
         public virtual void OnHover()
         {
             m_onHover.Invoke();
-        }
+
+			Tile tile = Grid.CoordToTile(m_coordinates);
+			if (tile.m_nodeType == NodeType.WALKABLE && tile.GetUnitOnTop() != null)
+			{
+				tile.m_onHoverCover.SetActive(true);
+			}
+		}
 
         public virtual void OnUnhover()
         {
             m_onUnhover.Invoke();
-        }
+
+			Tile tile = Grid.CoordToTile(m_coordinates);
+			tile.m_onHoverCover.SetActive(false);
+		}
 
         public void TakeDamage(int damage)
         {

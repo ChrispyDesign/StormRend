@@ -20,6 +20,7 @@ namespace StormRend
         [SerializeField] private Vector2Int m_coordinate;
 		[SerializeField] public GameObject m_attackCover;
 		[SerializeField] public GameObject m_moveCover;
+		[SerializeField] public GameObject m_onHoverCover;
 
         private Color m_origMaterial;
 
@@ -92,13 +93,13 @@ namespace StormRend
 
         public void OnHover()
         {
-            if (m_nodeType == NodeType.WALKABLE && m_unitOnTop != null)
-            {
-                m_attackCover.SetActive(true);
-            }
+    //        if (m_nodeType == NodeType.WALKABLE && m_unitOnTop != null)
+    //        {
+				//m_onHoverCover.SetActive(true);
+    //        }
 
-            m_origMaterial = transform.GetComponent<MeshRenderer>().material.color;
-            transform.GetComponent<MeshRenderer>().material.color = Color.red;
+            //m_origMaterial = transform.GetComponent<MeshRenderer>().material.color;
+            //transform.GetComponent<MeshRenderer>().material.color = Color.red;
 
             PlayerUnit currentSelectedUnit = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
             if (currentSelectedUnit && !m_unitOnTop && currentSelectedUnit.GetAvailableTiles().Contains(this))
@@ -109,10 +110,10 @@ namespace StormRend
 
         public void OnUnhover()
         {
-            m_attackCover.SetActive(false);
+			//m_onHoverCover.SetActive(false);
 
-            if (!m_selected)
-                transform.GetComponent<MeshRenderer>().material.color = Color.white;
+            //if (!m_selected)
+            //    transform.GetComponent<MeshRenderer>().material.color = Color.white;
 
             transform.GetComponent<MeshRenderer>().material.color = m_origMaterial;
         }
