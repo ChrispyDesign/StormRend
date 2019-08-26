@@ -94,46 +94,49 @@ namespace StormRend
 
         public void OnHover()
         {
-    //        if (m_nodeType == NodeType.WALKABLE && m_unitOnTop != null)
-    //        {
-				//m_onHoverCover.SetActive(true);
-    //        }
+			if (m_nodeType == NodeType.WALKABLE && m_unitOnTop != null)
+			{
+				m_onHoverCover.SetActive(true);
+			}
+			PlayerUnit currentSelectedUnit = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
+			if (currentSelectedUnit && !m_unitOnTop && currentSelectedUnit.GetAvailableTiles().Contains(this))
+			{
+				currentSelectedUnit.MoveDuplicateTo(this);
+			}
 
-            //m_origMaterial = transform.GetComponent<MeshRenderer>().material.color;
-            //transform.GetComponent<MeshRenderer>().material.color = Color.red;
+			//m_origMaterial = transform.GetComponent<MeshRenderer>().material.color;
+			//transform.GetComponent<MeshRenderer>().material.color = Color.red;
 
-            PlayerUnit currentSelectedUnit = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
-            if (currentSelectedUnit && !m_unitOnTop && currentSelectedUnit.GetAvailableTiles().Contains(this) && !currentSelectedUnit.GetHasMoved() && !currentSelectedUnit.GetHasAttacked())
-            {
-                currentSelectedUnit.MoveDuplicateTo(this);
-                m_onHoverCover.SetActive(true);
-                m_moveCover.SetActive(false);
-            }
-        }
+			//PlayerUnit currentSelectedUnit = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
+			//if (currentSelectedUnit && !m_unitOnTop && currentSelectedUnit.GetAvailableTiles().Contains(this) && !currentSelectedUnit.GetHasMoved() && !currentSelectedUnit.GetHasAttacked())
+			//{
+			//    currentSelectedUnit.MoveDuplicateTo(this);
+			//    m_onHoverCover.SetActive(true);
+			//    m_moveCover.SetActive(false);
+			//}
+		}
 
         public void OnUnhover()
         {
-            PlayerUnit currentSelectedUnit = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
+			m_onHoverCover.SetActive(false);
 
-            //m_onHoverCover.SetActive(false);
+			//if (!m_selected)
+			//    transform.GetComponent<MeshRenderer>().material.color = Color.white;
 
-            //if (!m_selected)
-            //    transform.GetComponent<MeshRenderer>().material.color = Color.white;
+			//transform.GetComponent<MeshRenderer>().material.color = m_origMaterial;
 
-            //transform.GetComponent<MeshRenderer>().material.color = m_origMaterial;
+			//if (currentSelectedUnit && !m_unitOnTop && currentSelectedUnit.GetAvailableTiles().Contains(this) && !currentSelectedUnit.GetHasMoved())
+			//{
+			//    m_onHoverCover.SetActive(false);
+			//    m_moveCover.SetActive(true);
+			//}
+			//else
+			//{
+			//    m_onHoverCover.SetActive(false);
+			//    m_moveCover.SetActive(false);
+			//}
 
-            if (currentSelectedUnit && !m_unitOnTop && currentSelectedUnit.GetAvailableTiles().Contains(this) && !currentSelectedUnit.GetHasMoved())
-            {
-                m_onHoverCover.SetActive(false);
-                m_moveCover.SetActive(true);
-            }
-            else
-            {
-                m_onHoverCover.SetActive(false);
-                m_moveCover.SetActive(false);
-            }
-
-        }
+		}
 
         public void OnSelect()
         {
