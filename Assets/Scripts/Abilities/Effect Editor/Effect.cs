@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using StormRend;
+﻿using StormRend;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,46 +14,53 @@ public enum Target
 public class Effect : ScriptableObject
 {
     public Target m_target;
-    public UnityEvent OnPeformEffect;
+    // public UnityEvent OnPeformEffect;
 
 	protected bool m_isTileAllowed;
 
     public bool m_isFoldOut { get; set; } = true;
 
-    public virtual bool PerformEffect(Tile _effectedNode, Unit _thisUnit)
+    public virtual bool PerformEffect(Tile targetTile, Unit effectPerformer)
     {
-        OnPeformEffect.Invoke();
+        // OnPeformEffect.Invoke();
 
-		Ability ability = _thisUnit.GetSelectedAbility();
+		Ability ability = effectPerformer.GetSelectedAbility();
 		TargetableTiles tileInfo = ability.GetTargetableTiles();
 
-		if (tileInfo.m_empty == (_effectedNode.GetUnitOnTop() == null))
+		if (tileInfo.m_empty == (targetTile.GetUnitOnTop() == null))
 			m_isTileAllowed = true;
 
-		if (_effectedNode.GetUnitOnTop() != null)
+		if (targetTile.GetUnitOnTop() != null)
 		{
 			if (tileInfo.m_enemies && 
-				tileInfo.m_enemies == (_effectedNode.GetUnitOnTop().GetComponent<EnemyUnit>() != null))
+				tileInfo.m_enemies == (targetTile.GetUnitOnTop().GetComponent<EnemyUnit>() != null))
 				m_isTileAllowed = true;
 
 			if (tileInfo.m_players && 
-				tileInfo.m_players == (_effectedNode.GetUnitOnTop().GetComponent<PlayerUnit>() != null))
+				tileInfo.m_players == (targetTile.GetUnitOnTop().GetComponent<PlayerUnit>() != null))
 				m_isTileAllowed = true;
 
 			if (tileInfo.m_self && 
-				tileInfo.m_self == (_effectedNode.GetUnitOnTop().GetComponent<Unit>() == _thisUnit))
+				tileInfo.m_self == (targetTile.GetUnitOnTop().GetComponent<Unit>() == effectPerformer))
 				m_isTileAllowed = true;
 		}
 
 		if (!m_isTileAllowed)
 		{
-			_thisUnit.SetHasAttacked(false);
+			effectPerformer.SetHasAttacked(false);
 			return false;
 		}
 
-		_thisUnit.SetHasMoved(true);
-		_thisUnit.SetHasAttacked(true);
+		//Effect successfully performed???
+		effectPerformer.SetHasMoved(true);
+		effectPerformer.SetHasAttacked(true);
 
+		//TEMP Orient performer
+		var effectDir = Vector3.Normalize(targetTile.transform.position - effectPerformer.transform.position);
+		if (effectDir != Vector3.zero)
+			effectPerformer.transform.rotation = Quaternion.LookRotation(effectDir, Vector3.up);
+
+		//Set glory
 		UIManager.GetInstance().GetGloryManager().SpendGlory(ability.GetGloryRequirement());
 
 		return true;

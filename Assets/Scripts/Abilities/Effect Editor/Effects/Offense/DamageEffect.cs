@@ -5,19 +5,17 @@ public class DamageEffect : Effect
 {
     [SerializeField] int m_damageAmount;
 
-    public override bool PerformEffect(Tile _effectedNode, Unit _thisUnit)
+    public override bool PerformEffect(Tile targetTile, Unit effectPerformer)
     {
-        base.PerformEffect(_effectedNode, _thisUnit);
+        base.PerformEffect(targetTile, effectPerformer);
 
 		if (!m_isTileAllowed)
 			return false;
 
-		Unit unit = _effectedNode.GetUnitOnTop();
+		Unit unit = targetTile.GetUnitOnTop();
 
         if (unit != null)
-        {
             unit.TakeDamage(m_damageAmount);
-		}
 
 		return true;
 	}

@@ -26,7 +26,7 @@ namespace StormRend.Bhaviours
 
 			//Get this agent's unit and animator (BAD)
 			u = agent.GetComponent<Unit>();
-			anim = u.GetComponentInChildren<Animator>();
+			anim = u.GetComponentInChildren<Animator>();	//VERY BAD
 
 			//Get abiltiies then attack effect
 			Ability passive = null;
@@ -35,23 +35,22 @@ namespace StormRend.Bhaviours
 			u.GetAbilities(ref passive, ref first, ref second);
 			List<Effect> effects = first[0].GetEffects();
 
-			//Attack! (+animate) (BAD)
+			//Attack!
 			u.SetSelectedAbility(first[0]);
-			anim.SetInteger("AttackAnim", 1);
+			anim.SetInteger("AttackAnim", 1);	//THIS IS BAD!!!
 
 			if (u is EnemyUnit)
 			{
-				//Should be encapsulted
+				//SHOULD BE ENCAPSULATED/SIMPLE METHOD CALL
 				foreach (Effect effect in effects)
 				{
-					Tile coord = Grid.CoordToTile(targets.value[0].coords);
-					effect.PerformEffect(coord, u);
-
+					Tile targetTile = Grid.CoordToTile(targets.value[0].coords);
+					effect.PerformEffect(targetTile, u);
 				}
 			}
 			else if (u is PlayerUnit)
 			{
-				throw new NotImplementedException();
+				throw new NotImplementedException("PlayerUnit AI not implemented!");
 			}
 
 			return NodeState.Success;

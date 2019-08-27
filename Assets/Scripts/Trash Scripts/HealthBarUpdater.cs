@@ -17,16 +17,13 @@ namespace StormRend.Prototype
 			healthValue = unit.HP;
 		}
 
-		void Start()
-		{
-			//Initially face the camera
-			transform.rotation = Quaternion.AngleAxis(Camera.main.transform.rotation.eulerAngles.y - 180f, Vector3.up);
-		}
-
 		void Update()
 		{
-			healthValue = (unit.HP / (float)unit.maxHP);
+			//Face camera's y angle
+			transform.rotation = Quaternion.AngleAxis(Camera.main.transform.rotation.eulerAngles.y - 180f, Vector3.up);
 
+			//Update health bar
+			healthValue = (unit.HP / (float)unit.maxHP);
 			healthBar.fillAmount = healthValue;
 		}
 	}

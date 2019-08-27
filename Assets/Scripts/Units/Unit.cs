@@ -98,11 +98,19 @@ namespace StormRend
 
         public void MoveTo(Tile tile)
         {
+			//PROBABLY BAD
+			var oldPos = transform.position;	//Record old position to change
+
             GetTile().SetUnitOnTop(null);
             tile.SetUnitOnTop(this);
 
             m_coordinates = tile.GetCoordinates();
             transform.position = tile.GetNodePosition();
+
+			//Rotate unit accordingly
+			var moveDir = Vector3.Normalize(transform.position - oldPos);
+			if (moveDir != Vector3.zero)
+				transform.rotation = Quaternion.LookRotation(moveDir, Vector3.up);
         }
 
 	
