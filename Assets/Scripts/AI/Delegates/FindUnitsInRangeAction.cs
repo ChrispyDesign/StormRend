@@ -27,49 +27,24 @@ namespace StormRend.Bhaviours
 		private bool unitsHaveBeenFound = false;
 
 
-		HashSet<Tile> noDuplicates = new HashSet<Tile>();
-
-
-
-		public override void Initiate(BhaveAgent agent)
-		{
-			u = agent.GetComponent<Unit>();
-		}
-
 		public override void Begin()
 		{
 			//Resets
 			unitsHaveBeenFound = false;
 			targets.value.Clear();
-
-			noDuplicates.Clear();
 		}
 
 		public override NodeState Execute(BhaveAgent agent)
 		{
+			//Until each delegate object is deep copied, the current unit must be updated each tick
+			u = agent.GetComponent<Unit>();
+
 			//Find valid moves
 			Dijkstra.Instance.FindValidMoves(
 				u.GetTile(),
 				u.GetMoveRange() * (int)turns,
 				(u is EnemyUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
 			tilesToScan = Dijkstra.Instance.m_validMoves;
-
-			///TEMPORARY
-			// foreach (var t in tilesToScan)
-			// {
-			// 	noDuplicates.Add(t);
-			// }
-			// tilesToScan.Clear();
-			// foreach (var nd in noDuplicates)
-			// {
-			// 	tilesToScan.Add(nd);
-			// }
-
-			//DB: draw the valid moves
-			// foreach (var v in tilesToScan)
-			// {
-			// 	v.m_attackCover.SetActive(true);
-			// }
 
 			if (tilesToScan.Count <= 0) return NodeState.Failure;
 
@@ -95,6 +70,7 @@ namespace StormRend.Bhaviours
 
 		void PrintList(IEnumerable<object> list)
 		{
+			Debug.LogFormat("{0}.{1}:", this.GetType().Name, list.GetType().Name);
 			foreach (var t in list)
 			{
 				Debug.Log(t);
