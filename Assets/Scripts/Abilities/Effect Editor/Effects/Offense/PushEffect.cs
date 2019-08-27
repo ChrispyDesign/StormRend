@@ -37,11 +37,13 @@ public class PushEffect : Effect
 		tempCoords = nodeCoords - m_left;
 		tempNode = Grid.CoordToTile(tempCoords);
 
-		if (tempNode.GetUnitOnTop() != null)
+		if (tempNode.GetUnitOnTop() != null
+			&& _effectedNode.m_nodeType != NodeType.BLOCKED)
 		{
 			Unit unit = tempNode.GetUnitOnTop();
 			Tile newNode = Grid.CoordToTile(tempCoords - m_left);
-			if(newNode.GetUnitOnTop() == null)
+			if (newNode.GetUnitOnTop() == null
+				&& newNode.m_nodeType != NodeType.BLOCKED)
 				unit.MoveTo(newNode);
 		}
 
@@ -49,11 +51,13 @@ public class PushEffect : Effect
 		tempCoords = nodeCoords - m_up;
 		tempNode = Grid.CoordToTile(tempCoords);
 
-		if (tempNode.GetUnitOnTop() != null)
+		if (tempNode.GetUnitOnTop() != null
+			&& _effectedNode.m_nodeType != NodeType.BLOCKED)
 		{
 			Unit unit = tempNode.GetUnitOnTop();
 			Tile newNode = Grid.CoordToTile(tempCoords - m_up);
-			if (newNode.GetUnitOnTop() == null)
+			if (newNode.GetUnitOnTop() == null
+				&& newNode.m_nodeType != NodeType.BLOCKED)
 				unit.MoveTo(newNode);
 		}
 
@@ -61,11 +65,13 @@ public class PushEffect : Effect
 		tempCoords = nodeCoords - m_right;
 		tempNode = Grid.CoordToTile(tempCoords);
 
-		if (tempNode.GetUnitOnTop() != null)
+		if (tempNode.GetUnitOnTop() != null
+			&& _effectedNode.m_nodeType != NodeType.BLOCKED)
 		{
 			Unit unit = tempNode.GetUnitOnTop();
 			Tile newNode = Grid.CoordToTile(tempCoords - m_right);
-			if (newNode.GetUnitOnTop() == null)
+			if (newNode.GetUnitOnTop() == null
+				&& newNode.m_nodeType != NodeType.BLOCKED)
 				unit.MoveTo(newNode);
 		}
 
@@ -77,7 +83,8 @@ public class PushEffect : Effect
 		{
 			Unit unit = tempNode.GetUnitOnTop();
 			Tile newNode = Grid.CoordToTile(tempCoords - m_down);
-			if (newNode.GetUnitOnTop() == null)
+			if (newNode.GetUnitOnTop() == null
+				&& newNode.m_nodeType != NodeType.BLOCKED)
 				unit.MoveTo(newNode);
 		}
 

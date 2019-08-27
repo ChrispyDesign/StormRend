@@ -13,7 +13,8 @@ public class TeleportEffect : Effect
 			return false;
 
 		if (_effectedNode.GetUnitOnTop() != null 
-			|| _effectedNode.m_nodeType == NodeType.BLOCKED)
+			|| _effectedNode.m_nodeType == NodeType.BLOCKED
+			|| _effectedNode.m_nodeType == NodeType.EMPTY)
 		{
 			_thisUnit.SetHasAttacked(false);
 			return false;
