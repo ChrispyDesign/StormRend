@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         var newMode = m_curMode.ToString();
         if (newMode != oldMode)
         {
-            Debug.Log(m_curMode.ToString());
+            // Debug.Log(m_curMode.ToString());
             oldMode = newMode;
         }
     }
