@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Provoke Level 3
   m_EditorClassIdentifier: 
   m_name: Provoke (Level 1)
+  animNumber: 0
   m_icon: {fileID: 0}
   m_description: Gain a Rune of Protection. Take no damage from the next attack.
   m_gloryRequirement: 2
@@ -46,6 +47,11 @@ MonoBehaviour:
   m_Name: ProtectEffect
   m_EditorClassIdentifier: 
   m_target: 1
+  OnPeformEffect:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   m_durationInTurns: 1
 --- !u!114 &114202355932698588
 MonoBehaviour:
@@ -60,6 +66,11 @@ MonoBehaviour:
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
   m_target: 1
+  OnPeformEffect:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   m_durationInTurns: 1
   m_damageOnHit: 2
 --- !u!114 &114286334617455646
@@ -75,6 +86,11 @@ MonoBehaviour:
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
   m_target: 1
+  OnPeformEffect:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   m_durationInTurns: 1
   m_damageOnHit: 1
 --- !u!114 &114656497702361800
@@ -90,5 +106,10 @@ MonoBehaviour:
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
   m_target: 0
+  OnPeformEffect:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   m_durationInTurns: 1
   m_damageOnHit: 2
