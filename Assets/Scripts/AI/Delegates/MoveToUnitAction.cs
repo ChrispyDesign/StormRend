@@ -19,58 +19,61 @@ namespace StormRend.Bhaviours
         [SerializeField] uint turns = 1;
 
         //Privates
-        Unit unit;
+        Unit u;
         List<Tile> validMoves = new List<Tile>();
-
-        public override void Initiate(BhaveAgent agent)
-        {
-            unit = agent.GetComponent<Unit>();
-        }
 
         public override NodeState Execute(BhaveAgent agent)
 		{
-			Vector2Int oldCoord;
-			unit = agent.GetComponent<Unit>();
+			//If there aren't any targets then fail
+			if (targets.value.Count <= 0) return NodeState.Failure;
 
-			oldCoord = unit.coords;
+			//Get this agent's unit
+			u = agent.GetComponent<Unit>();
 
-            ///Move as close as possible to the target
+			//Find the valid moves
             Dijkstra.Instance.FindValidMoves(
-				unit.GetTile(), 
-                unit.GetMoveRange() * (int)turns,
-                (unit is EnemyUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
+				u.GetTile(), 	//The tile the agent is current on
+                u.GetMoveRange() * (int)turns,		//Scan move range by turns
+                (u is EnemyUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
             validMoves = Dijkstra.Instance.m_validMoves;
 
-            //TEMP Checks adjacent tiles for target
-			for (int i = 0; i < 4; i++)
-			{
-				if(validMoves[i].GetUnitOnTop() == targets.value[0])
-					return NodeState.Success;
-			}
+			//Check to see if the target is already next to this agent before moving
+			if (TargetIsAdjacent()) return NodeState.Success;
 
-            //foreach (var vm in validMoves)
-            //{
-            //    Debug.Log("Before Sort Distances: " + Vector2Int.Distance(unit.coords, vm.GetCoordinates()));
-            //}
+            //Move as close as possible to the target (targets.value[0] should be the closest unit)
+			// Debug.Log("Before Sort"); for (int i = 0; i < validMoves.Count; i++) Debug.Log(Vector2Int.Distance(targets.value[0].coords, validMoves[i].GetCoordinates()));
             validMoves = validMoves.OrderBy(x => (Vector2Int.Distance(targets.value[0].coords, x.GetCoordinates()))).ToList();
-            //foreach (var vm in validMoves)
-            //{
-            //    //Debug.Log("After Sort Distances: " + Vector2Int.Distance(unit.coords, vm.GetCoordinates()));
-            //}
-			//foreach (var t in targets.value)
-			//{
-			//	Debug.Log(Grid.CoordToTile(t.coords).GetUnitOnTop());
-			//}
-			unit.MoveTo(validMoves[1]);     //MVP
-			//foreach (var t in targets.value)
-			//{
-			//	Debug.Log(Grid.CoordToTile(t.coords).GetUnitOnTop());
-			//}
-			//Debug.LogFormat("MoveToUnitAction: {0} > {1}", oldCoord, unit.coords);
+			// Debug.Log("After Sort"); for (int i = 0; i < validMoves.Count; i++) Debug.Log(Vector2Int.Distance(targets.value[0].coords, validMoves[i].GetCoordinates()));
 
-			return NodeState.Success;
+			//Move the agent
+			if (validMoves.Count > 0)
+				u.MoveTo(validMoves[1]);
+
+			//If target is next to opponent then successful chase
+			if (TargetIsAdjacent())
+				return NodeState.Success;
+			else
+				return NodeState.Pending;
         }
 
+		bool TargetIsAdjacent()
+		{	
+			if (validMoves.Count < 4) return false;
 
+			for (int i = 0; i < 4; ++i)
+				if (validMoves[i].GetUnitOnTop() == targets.value[0])
+					return true;
+			
+			return false;
+		}
+
+		void PrintList(IEnumerable<object> list)
+		{
+			Debug.LogFormat("{0}.{1}:", this.GetType().Name, list.GetType().Name);
+			foreach (var t in list)
+			{
+				Debug.Log(t);
+			}
+		}
     }
 }
