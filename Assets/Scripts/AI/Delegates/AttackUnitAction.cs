@@ -8,54 +8,53 @@ using UnityEngine;
 
 namespace StormRend.Bhaviours
 {
-    /// <summary>
-    /// Attacks the units in the input list (hopefully only one left)
-    /// </summary>
-    [CreateAssetMenu(menuName = "StormRend/Delegates/Actions/AttackUnit", fileName = "AttackUnit")]
-    public class AttackUnitAction : BhaveAction
-    {
-        [SerializeField] BhaveUnitList targets;
+	/// <summary>
+	/// Attacks the units in the input list (hopefully only one left)
+	/// </summary>
+	[CreateAssetMenu(menuName = "StormRend/Delegates/Actions/AttackUnit", fileName = "AttackUnit")]
+	public class AttackUnitAction : BhaveAction
+	{
+		[SerializeField] BhaveUnitList targets;
 
-        Unit unit;
+		Unit u;
+		Animator anim;
 
-        public override void Initiate(BhaveAgent agent)
-        {
-            unit = agent.GetComponent<Unit>();
-        }
+		public override NodeState Execute(BhaveAgent agent)
+		{
+			//Make sure there are targets to attack
+			if (targets.value.Count <= 0) return NodeState.Failure;
 
-        public override NodeState Execute(BhaveAgent agent)
-        {
-            Debug.Log("AttackUnitAction");
+			//Get this agent's unit and animator (BAD)
+			u = agent.GetComponent<Unit>();
+			anim = u.GetComponentInChildren<Animator>();
 
-			//Get abiltiies, get effects and then 
-            Ability passive = null;
-            Ability[] first = null, second = null;
-            unit.GetAbilities(ref passive, ref first, ref second);
+			//Get abiltiies then attack effect
+			Ability passive = null;
+			Ability[] first = null;
+			Ability[] second = null;
+			u.GetAbilities(ref passive, ref first, ref second);
 			List<Effect> effects = first[0].GetEffects();
 
-            unit.SetSelectedAbility(first[0]);
-
-
-			//foreach (var t in targets.value)
-			//{
-			Animator anim = agent.GetComponentInChildren<Animator>();
+			//Attack! (+animate) (BAD)
+			u.SetSelectedAbility(first[0]);
 			anim.SetInteger("AttackAnim", 1);
-				if (unit is EnemyUnit)
+
+			if (u is EnemyUnit)
+			{
+				//Should be encapsulted
+				foreach (Effect effect in effects)
 				{
-					//Should be encapsulted
-					foreach(Effect effect in effects)
-					{
-						Tile coord = Grid.CoordToTile(targets.value[0].coords);
-						effect.PerformEffect(coord, unit);
-						
-					}
+					Tile coord = Grid.CoordToTile(targets.value[0].coords);
+					effect.PerformEffect(coord, u);
+
 				}
-				else if (unit is PlayerUnit)
-				{
-					throw new NotImplementedException();
-				}
-            //}
-            return NodeState.Success;
-        }
-    }
+			}
+			else if (u is PlayerUnit)
+			{
+				throw new NotImplementedException();
+			}
+
+			return NodeState.Success;
+		}
+	}
 }
