@@ -6,11 +6,11 @@
 /// </summary>
 public class StateMachine : MonoBehaviour
 {
-	//Improve this
+    //Improve this
 
     // state management
     private State m_currentState;
-    private State m_previousState;
+    private State m_previousState;      //Why is this needed?
 
     #region getters
 
@@ -25,37 +25,37 @@ public class StateMachine : MonoBehaviour
     void Update()
     {
         if (m_currentState != null)
-            m_currentState.Stay(this);
+            m_currentState.OnUpdate(this);
     }
 
     /// <summary>
     /// function that handles state initialisation
     /// </summary>
     /// <param name="state">the state to initialise</param>
-    public void InitialiseState(State state)
+    public void InitState(State state)
     {
         // update states
         m_previousState = null;
         m_currentState = state;
 
         // enter new state
-        m_currentState.Enter();
+        m_currentState.OnEnter();
     }
 
     /// <summary>
     /// function that handles state transitions
     /// </summary>
     /// <param name="state">the state to transition to</param>
-    public void ChangeState(State state)
+    public void Switch(State state)
     {
         // update states
         m_previousState = m_currentState;
         m_currentState = state;
 
         // exit previous state
-        m_previousState.Exit();
+        m_previousState.OnExit();
 
         // enter new state
-        m_currentState.Enter();
+        m_currentState.OnEnter();
     }
 }

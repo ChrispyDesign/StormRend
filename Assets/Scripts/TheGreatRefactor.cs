@@ -5,7 +5,8 @@ namespace StormRend
     namespace The.Great.Refactor
     {
         public class Architecture
-        {/*
+        {
+            /*
 			- Better and improved turned based state machine
 
 			public class TurnBasedStackableStateMachine
@@ -21,9 +22,57 @@ namespace StormRend
 			+ OnUncover()
 			+ OnEnter()
 			+ OnExit()
-			+ OnUpdate()
+			+ OnUpdate()      */
             
-        */}
+            public class State : ScriptableObject
+            {
+                void OnEnter() {}
+                void OnUpdate() {}
+                void OnExit() {}
+            }
+            public class StackState : State
+            {
+                void OnCover() {}
+                void OnUncover() {}
+            }
+            public class TurnState : State
+            {
+                public void OnNext() {}
+            }
+
+
+            public class StateMachine
+            {
+                public void Switch(State state) {}
+                public State GetCurrentState()
+                {
+                    return new State();
+                }
+            }
+
+            public class StackableStateMachine : StateMachine
+            {
+                public void Push(StackState stackState) {}
+                public StackState Pop()
+                {
+                    return new StackState();
+                }
+                public StackState Peek()
+                {
+                    return new StackState();
+                }
+                public void Update()
+                {
+
+                }
+            }
+
+            public class TurnBasedStackableStateMachine : StackableStateMachine
+            {
+                public void NextTurn() {}
+                public void PrevTurn() {}   //?
+            }
+        }
 
         public class Renames
         {

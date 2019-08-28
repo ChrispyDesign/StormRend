@@ -46,7 +46,7 @@ namespace StormRend
 			m_enemyTurn = new EnemyTurn(this);
 
 			// player turn by default
-			m_stateMachine.InitialiseState(m_playerTurn);
+			m_stateMachine.InitState(m_playerTurn);
 		}
 
 		/// <summary>
@@ -72,7 +72,7 @@ namespace StormRend
 			m_proceedTurnButton.interactable = true;
 
 			// proceed to player turn
-			m_stateMachine.ChangeState(m_playerTurn);
+			m_stateMachine.Switch(m_playerTurn);
 		}
 
 		/// <summary>
@@ -90,7 +90,7 @@ namespace StormRend
 			m_proceedTurnButton.interactable = false;
 
 			// proceed to enemy turn
-			m_stateMachine.ChangeState(m_enemyTurn);
+			m_stateMachine.Switch(m_enemyTurn);
 		}
 
 		public void ResetPlayerVariables()

@@ -23,7 +23,7 @@ public class PlayerTurn : State
     /// <summary>
     /// 
     /// </summary>
-    public override void Enter()
+    public override void OnEnter()
     {
         m_turnTimer = 0;
     }
@@ -31,7 +31,7 @@ public class PlayerTurn : State
     /// <summary>
     /// 
     /// </summary>
-    public override void Stay(StateMachine stateMachine)
+    public override void OnUpdate(StateMachine stateMachine)
     {
         // increment turn timer
         m_turnTimer += Time.deltaTime;
@@ -40,7 +40,7 @@ public class PlayerTurn : State
     /// <summary>
     /// 
     /// </summary>
-    public override void Exit()
+    public override void OnExit()
     {
         // update longest turn
         if (m_turnTimer > m_longestTurn)

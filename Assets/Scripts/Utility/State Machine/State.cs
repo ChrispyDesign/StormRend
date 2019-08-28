@@ -3,7 +3,7 @@
 /// </summary>
 public abstract class State
 {
-    public abstract void Enter();
-    public abstract void Stay(StateMachine stateMachine);
-    public abstract void Exit();
+    public abstract void OnEnter();
+    public abstract void OnUpdate(StateMachine stateMachine);
+    public abstract void OnExit();
 }
