@@ -14,13 +14,5 @@ namespace StormRend
 			base.OnSelect();
 			GameManager.singleton.GetPlayerController().SetCurrentPlayer(null);
 		}
-
-		//This doesn't need to be overriden
-		public override void Die()
-		{
-			base.Die();
-			GameManager.singleton.enemyCount--;
-			GameManager.singleton.CheckEndCondition();
-		}
 	}
 }

@@ -28,6 +28,8 @@ public class Grid
     {
         m_spawnManager = GameObject.FindObjectOfType<SpawnManager>();
 
+        var gm = GameManager.singleton;
+
         m_nodes = new Tile[m_gridSize.x, m_gridSize.y];
         //int i = 0;
         for (int x = 0; x < m_gridSize.x; x++)
@@ -58,14 +60,14 @@ public class Grid
                 if (m_nodes[x, y].m_nodeType == NodeType.ENEMY)
                     m_nodes[x, y].GetComponent<MeshRenderer>().material.color = Color.red;
 
-				foreach(PlayerUnit player in GameManager.singleton.GetPlayerUnits())
+				foreach(PlayerUnit player in gm.GetPlayerUnits())
 				{
 					if (player.coords.x == x &&
 					   player.coords.y == y)
 						m_nodes[x, y].SetUnitOnTop(player);
 				}
 
-				foreach (EnemyUnit enemy in GameManager.singleton.GetEnemyUnits())
+				foreach (EnemyUnit enemy in gm.GetEnemyUnits())
 				{
 					if (enemy.coords.x == x &&
 					   enemy.coords.y == y)

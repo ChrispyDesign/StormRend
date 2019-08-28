@@ -81,14 +81,5 @@ namespace StormRend
 
             SetDuplicateMeshVisibilty(false);
         }
-
-
-		//Could be better implemented
-        public override void Die()
-        {
-            base.Die();
-            GameManager.singleton.playerCount--;
-            GameManager.singleton.CheckEndCondition();
-        }
     }
 }

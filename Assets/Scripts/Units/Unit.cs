@@ -72,8 +72,6 @@ namespace StormRend
         public bool GetIsSelected() { return m_isSelected; }
         public bool GetHasMoved() { return m_hasMoved; }
         public bool GetHasAttacked() { return m_hasAttacked; }
-        public bool GetIsDead() { return m_isDead; }
-
         public void GetAbilities(ref Ability passive,
             ref Ability[] first, ref Ability[] second)
         {
@@ -87,6 +85,9 @@ namespace StormRend
         public void SetSelectedAbility(Ability ability) { m_selectedAbility = ability; }
         public void SetIsSelected(bool isSelected) { m_isSelected = isSelected; }
         public void SetDuplicateMeshVisibilty(bool _isOff) { m_duplicateMesh.SetActive(_isOff); }
+
+        public bool isDead => m_HP <= 0;
+
 	#endregion
 
         void Start()
@@ -202,8 +203,7 @@ namespace StormRend
 
         public void TakeDamage(int damage)
         {
-			if (!gameObject.activeSelf)
-				return;
+			if (isDead) return;     //Can't beat a dead horse :P
 
             m_HP -= damage;
             if (m_HP <= 0)
@@ -215,10 +215,13 @@ namespace StormRend
         public virtual void Die()
         {
             OnDie.Invoke();
-			
+
+            //Temp
             gameObject.SetActive(false);
-            Tile node = Grid.CoordToTile(m_coordinates);
-            node.SetUnitOnTop(null);
+            Grid.CoordToTile(this.m_coordinates).SetUnitOnTop(null); 
+
+            //This should work for any unit regardless of type
+            GameManager.singleton.RegisterUnitDeath(this);
         }
     }
 }
