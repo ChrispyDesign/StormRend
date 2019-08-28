@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using StormRend;
+﻿using StormRend;
 using UnityEngine;
 
 public class Grid 

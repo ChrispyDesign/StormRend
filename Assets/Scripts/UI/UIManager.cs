@@ -13,14 +13,14 @@ namespace StormRend
 		// an assortment of different UI scripts/managers
 		[Header("UI Components")]
 		[SerializeField] private GloryManager m_gloryManager = null;
-		[SerializeField] private BlizzardManager m_blizzardManager = null;
+		[SerializeField] private BlizzardController m_blizzardManager = null;
 		[SerializeField] private UIAvatarSelector m_avatarSelector = null;
 		[SerializeField] private UIAbilitySelector m_abilitySelector = null;
 
 		#region getters
 
 		public GloryManager GetGloryManager() { return m_gloryManager; }
-		public BlizzardManager GetBlizzardManager() { return m_blizzardManager; }
+		public BlizzardController GetBlizzardManager() { return m_blizzardManager; }
 		public UIAvatarSelector GetAvatarSelector() { return m_avatarSelector; }
 		public UIAbilitySelector GetAbilitySelector() { return m_abilitySelector; }
 
