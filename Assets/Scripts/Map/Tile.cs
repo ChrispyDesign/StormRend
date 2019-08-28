@@ -187,9 +187,9 @@ namespace StormRend
             {
 				PlayerUnit player = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
 
-				Ability ability = currentSelectedUnit.GetSelectedAbility();
+				Ability ability = player.GetSelectedAbility();
 				Animator anim = player.GetComponentInChildren<Animator>();
-				if (ability != null)
+				if (ability != null && player.GetAttackTiles().Contains(this))
                 {
 					bool continueAbility = true;
 					foreach (Effect effect in ability.GetEffects())

@@ -117,7 +117,8 @@ namespace StormRend
         {
             foreach (Tile node in m_attackTiles)
 			{
-				if (node.m_nodeType == NodeType.EMPTY)
+				if (node.m_nodeType == NodeType.EMPTY
+					|| node.m_nodeType == NodeType.BLOCKED)
 					continue;
 
 				node.m_attackCover.SetActive(true);
