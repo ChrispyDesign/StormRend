@@ -202,6 +202,9 @@ namespace StormRend
 
         public void TakeDamage(int damage)
         {
+			if (!gameObject.activeSelf)
+				return;
+
             m_HP -= damage;
             if (m_HP <= 0)
             {

@@ -18,9 +18,6 @@ namespace StormRend
 		//This doesn't need to be overriden
 		public override void Die()
 		{
-			if (!gameObject.activeSelf)
-				return;
-
 			base.Die();
 			GameManager.singleton.enemyCount--;
 			GameManager.singleton.CheckEndCondition();
