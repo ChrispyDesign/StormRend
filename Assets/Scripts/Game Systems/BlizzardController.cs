@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
-using StormRend.Utility;
+using StormRend.Utility.Attributes;
 
 namespace StormRend
 {
