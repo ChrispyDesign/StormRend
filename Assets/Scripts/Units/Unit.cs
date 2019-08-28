@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace StormRend
 {
-	//Review and Refactor
+    //Review and Refactor
     [SelectionBase]
     public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
     {
@@ -118,7 +117,8 @@ namespace StormRend
         {
             foreach (Tile node in m_attackTiles)
 			{
-				if (node.m_nodeType == NodeType.EMPTY)
+				if (node.m_nodeType == NodeType.EMPTY
+					|| node.m_nodeType == NodeType.BLOCKED)
 					continue;
 
 				node.m_attackCover.SetActive(true);

@@ -62,7 +62,7 @@ namespace StormRend
 			m_currentTurn++;
 
 			// ensure blizzard manager exists
-			BlizzardManager blizzardManager = UIManager.GetInstance().GetBlizzardManager();
+			BlizzardController blizzardManager = UIManager.GetInstance().GetBlizzardManager();
 
 			// increment blizzard counter at the start of each turn
 			if (blizzardManager)
