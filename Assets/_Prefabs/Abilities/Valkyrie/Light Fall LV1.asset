@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Light Fall Level 1
   animNumber: 0
   m_icon: {fileID: 21300000, guid: 91e1f11880f394645921aec1f2a8c2c8, type: 3}
-  m_description: Dive Bomb Baby
+  m_description: 'Leap to an empty tile, pushing back adjacent units 1 tile. '
   m_gloryRequirement: 0
   m_tilesToSelect: 1
   m_castArea:
@@ -47,11 +47,6 @@ MonoBehaviour:
   m_Name: PushEffect
   m_EditorClassIdentifier: 
   m_target: 0
-  OnPeformEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_pushAmount: 1
 --- !u!114 &114782338034524522
 MonoBehaviour:
@@ -66,8 +61,3 @@ MonoBehaviour:
   m_Name: TeleportEffect
   m_EditorClassIdentifier: 
   m_target: 0
-  OnPeformEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null

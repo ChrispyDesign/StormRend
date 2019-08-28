@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
-  m_Name: Frost Troll Attack 1
+  m_Name: Frost Hound Attack
   m_EditorClassIdentifier: 
-  m_name: Frost Wolf Attack
+  m_name: Frost Hound Attack
   animNumber: 1
   m_icon: {fileID: 0}
-  m_description: Bite
+  m_description: Deal 1 damage and inflict Curse of Crippling
   m_gloryRequirement: 0
   m_tilesToSelect: 1
   m_castArea:
@@ -47,11 +47,6 @@ MonoBehaviour:
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
   m_target: 0
-  OnPeformEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_damageAmount: 2
 --- !u!114 &114850570729337468
 MonoBehaviour:
@@ -66,9 +61,4 @@ MonoBehaviour:
   m_Name: CrippleEffect
   m_EditorClassIdentifier: 
   m_target: 0
-  OnPeformEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_durationInTurns: 1

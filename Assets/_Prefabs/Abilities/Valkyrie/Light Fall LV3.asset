@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Light Fall LV3
   m_EditorClassIdentifier: 
   m_name: Light Fall Level 3
+  animNumber: 0
   m_icon: {fileID: 0}
-  m_description: Dive Bomb Baby
+  m_description: 'Deal 2 damage to adjacent units. '
   m_gloryRequirement: 3
   m_tilesToSelect: 1
   m_castArea:
@@ -47,11 +48,6 @@ MonoBehaviour:
   m_Name: ProtectEffect
   m_EditorClassIdentifier: 
   m_target: 3
-  OnPeformEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_durationInTurns: 1
 --- !u!114 &114339514596999984
 MonoBehaviour:
@@ -66,11 +62,6 @@ MonoBehaviour:
   m_Name: PushEffect
   m_EditorClassIdentifier: 
   m_target: 2
-  OnPeformEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_pushAmount: 1
 --- !u!114 &114628230698747540
 MonoBehaviour:
@@ -85,9 +76,4 @@ MonoBehaviour:
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
   m_target: 2
-  OnPeformEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_damageAmount: 2

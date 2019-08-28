@@ -15,7 +15,7 @@ MonoBehaviour:
   m_name: Furious Swing Level 2
   animNumber: 1
   m_icon: {fileID: 0}
-  m_description: Swing away
+  m_description: If you kill an enemy, you may move and attack again.
   m_gloryRequirement: 2
   m_tilesToSelect: 1
   m_castArea:
@@ -48,11 +48,6 @@ MonoBehaviour:
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
   m_target: 0
-  OnPeformEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_damageAmount: 2
 --- !u!114 &114213161059483038
 MonoBehaviour:
@@ -67,11 +62,6 @@ MonoBehaviour:
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
   m_target: 3
-  OnPeformEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_refreshType: 1
 --- !u!114 &114641005868121870
 MonoBehaviour:
@@ -86,9 +76,4 @@ MonoBehaviour:
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
   m_target: 3
-  OnPeformEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_refreshType: 0
