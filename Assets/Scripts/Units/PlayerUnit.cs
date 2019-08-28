@@ -86,6 +86,9 @@ namespace StormRend
 		//Could be better implemented
         public override void Die()
         {
+			if (!gameObject.activeSelf)
+				return;
+
             base.Die();
             GameManager.singleton.playerCount--;
             GameManager.singleton.CheckEndCondition();
