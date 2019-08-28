@@ -1,7 +1,6 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace StormRend.Utility
+namespace StormRend.Utility.Attributes
 {
     public class EnumFlagsAttribute : PropertyAttribute
     {

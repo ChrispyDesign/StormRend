@@ -1,11 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using BhaVE.Core;
 using UnityEngine;
 
 namespace StormRend.AI
 {
-	public class AIController : MonoBehaviour
+    public class AIController : MonoBehaviour
 	{
 		// - Is triggered by player finish turn event
 		// - Runs each enemy's AI one by one
@@ -19,6 +18,7 @@ namespace StormRend.AI
 		Unit[] currentUnits = null;
 		GameManager gm = null;
 		BhaveDirector bhd = null;
+
 
 		void Awake()
 		{

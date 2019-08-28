@@ -1,11 +1,11 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using StormRend.Utility;
+using StormRend.Utility.Attributes;
 
 namespace StormRend.Editor.PropDrawers
 {
     [CustomPropertyDrawer(typeof(EnumFlagsAttribute))]
-    public class EnumFlagsAttributeDrawer : PropertyDrawer
+    public class EnumFlagsDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {

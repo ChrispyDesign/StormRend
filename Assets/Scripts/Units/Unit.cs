@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using StormRend.Utility.Attributes;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,7 +15,7 @@ namespace StormRend
 		// - Decouple Camera in OnSelect()
 		// - Decouple/reduce coupling of game manager
 
-        int m_HP;
+        [SerializeField][ReadOnlyField] int m_HP;
         static bool m_isDead;
 
         [SerializeField] Vector2Int m_coordinates;
