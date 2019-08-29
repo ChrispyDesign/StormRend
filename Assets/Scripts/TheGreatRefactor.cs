@@ -5,54 +5,54 @@ namespace StormRend
     namespace The.Great.Refactor
     {
         public class Architecture
+
+        public class StateMachineImplementation
         {
-            /*
-			- Better and improved turned based state machine
-
-			public class TurnBasedStackableStateMachine
-			+ Push(StackState)	//For pause etc
-			+ Pop()
-
-			+ Switch(StackState)
-			+ Next()
-			+ Previous()
-            
-			public class State
-			+ OnCover()
-			+ OnUncover()
-			+ OnEnter()
-			+ OnExit()
-			+ OnUpdate()      */
-            
             public class State : ScriptableObject
             {
-                void OnEnter() {}
-                void OnUpdate() {}
-                void OnExit() {}
+                public void OnEnter() { }
+                public void OnUpdate() { }
+                public void OnExit() { }
             }
             public class StackState : State
             {
-                void OnCover() {}
-                void OnUncover() {}
+                public void OnCover() { }
+                public void OnUncover() { }
             }
             public class TurnState : State
             {
-                public void OnNext() {}
+                public void OnNext() { }
             }
 
 
-            public class StateMachine
+            public class CoreStateMachine
             {
-                public void Switch(State state) {}
-                public State GetCurrentState()
+                public virtual State currentState { get; private set; }
+
+                //--------------------------------
+                public void Switch(State state) 
+                { 
+                    currentState?.OnExit();
+                    currentState = state;
+
+                }
+                protected virtual void Update()
                 {
-                    return new State();
+                    
                 }
             }
 
-            public class StackableStateMachine : StateMachine
+            public class TurnBasedStackStateMachine : CoreStateMachine
             {
-                public void Push(StackState stackState) {}
+                protected Stack<State> states = new Stack<State>();
+
+                public new State currentState
+                {
+                    get;
+                }
+
+                //-----------------------------------------------
+                public void Push(StackState stackState) { }
                 public StackState Pop()
                 {
                     return new StackState();
@@ -61,44 +61,39 @@ namespace StormRend
                 {
                     return new StackState();
                 }
-                public void Update()
+                public void Update() 
                 {
 
                 }
+                //-----------------
+                public void Insert(State state) {}
+                public void Remove(State state) {}
+                public void NextTurn() { }
+                public void PrevTurn() { }   //?
+                //-----------------
             }
-
-            public class TurnBasedStackableStateMachine : StackableStateMachine
-            {
-                public void NextTurn() {}
-                public void PrevTurn() {}   //?
-            }
         }
 
-        public class Renames
-        {
-            
 
+        //Renames
 
-        }
+        //Unit Testing
 
-        public class UnitTesting
-        {
-
-        }
-
+        //Conventions
         public class Conventions
         {
             //Fields/Symbols
             [SerializeField] float privateShownOnInspector;
             [HideInInspector] [SerializeField] float PrivateNotShownOnInspectorButSerialized;
             public float avoidMe;     //Free variable that can be modified by anything and anyone
-            
+
             //Properties
             //Shown on inspector, but read only in the assembly/codebase
             [SerializeField] float _propertyBackingField;
-            public float propertyBackingField {
+            public float propertyBackingField
+            {
                 get => _propertyBackingField;
-                
+
             }
 
             void Something()
@@ -112,14 +107,7 @@ namespace StormRend
             //Privates
             bool isPrivate = true;      //Implicit private
 
-
-
-            
-            
-            
             /*
-
-
             Big classes
             - Classes over 200-300 lines of code should be split up using partial
 
@@ -135,6 +123,7 @@ namespace StormRend
             {
                 Debug.LogWarning(e);
             }
-        */}
+        */
+        }
     }
 }

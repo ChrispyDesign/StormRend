@@ -1,55 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using StormRend;
-using UnityEngine;
+﻿using UnityEngine;
 
-/// <summary>
-/// 
-/// </summary>
-public class EnemyTurn : State
+namespace StormRend
 {
-    [SerializeField] private TurnManager m_turnManager;
-
-    // enemy turn timer
-    [SerializeField] private float m_enemyTurnTime = 1f;
-    private float m_timer;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="turnManager"></param>
-    public EnemyTurn(TurnManager turnManager)
+    public class EnemyTurn : State
     {
-        m_turnManager = turnManager;
-    }
+        [SerializeField] private TurnManager m_turnManager;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public override void OnEnter()
-    {
-        m_timer = 0;
-    }
+        // enemy turn timer
+        [SerializeField] private float m_enemyTurnTime = 1f;
+        private float m_timer;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public override void OnUpdate(StateMachine stateMachine)
-    {
-        //while (m_timer < m_enemyTurnTime)
-        //{
-        //    m_timer += Time.deltaTime;
-        //    return;
-        //}
+        public EnemyTurn(TurnManager turnManager)
+        {
+            m_turnManager = turnManager;
+        }
 
-        //m_turnManager.PlayerTurn();
-    }
+        public override void OnEnter()
+        {
+            m_timer = 0;
+        }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public override void OnExit()
-    {
-		m_turnManager.ResetPlayerVariables();
+        public override void OnUpdate(StateMachine stateMachine)
+        {
+            //while (m_timer < m_enemyTurnTime)
+            //{
+            //    m_timer += Time.deltaTime;
+            //    return;
+            //}
+
+            //m_turnManager.PlayerTurn();
+        }
+
+        public override void OnExit()
+        {
+            m_turnManager.ResetPlayerVariables();
+        }
     }
 }

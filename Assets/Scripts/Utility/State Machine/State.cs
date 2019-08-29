@@ -1,9 +1,12 @@
-﻿/// <summary>
-/// abstract base state class. Contains pure virtual functions for entering, updating and exiting states
-/// </summary>
-public abstract class State
+﻿namespace StormRend
 {
-    public abstract void OnEnter();
-    public abstract void OnUpdate(StateMachine stateMachine);
-    public abstract void OnExit();
+    /// <summary>
+    /// abstract base state class. Contains pure virtual functions for entering, updating and exiting states
+    /// </summary>
+    public abstract class State
+    {
+        public abstract void OnEnter();
+        public abstract void OnUpdate(StateMachine stateMachine);
+        public abstract void OnExit();
+    }
 }
