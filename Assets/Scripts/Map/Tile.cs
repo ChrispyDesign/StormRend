@@ -50,10 +50,10 @@ namespace StormRend
 #if UNITY_EDITOR
 		void OnDrawGizmos()
 		{
-			float offsetY = 1.5f;
+			float offsetY = 0;
 			Handles.color = Color.white;
 			Handles.BeginGUI();
-			Handles.Label(transform.position + Vector3.up * offsetY, this.name);
+			Handles.Label(transform.position + Vector3.up * offsetY, this.name, EditorStyles.whiteMiniLabel);
 			Handles.EndGUI();
 		}
 #endif

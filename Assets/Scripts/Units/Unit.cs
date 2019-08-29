@@ -188,7 +188,7 @@ namespace StormRend
             m_onHover.Invoke();
 
 			Tile tile = Grid.CoordToTile(m_coordinates);
-			if (tile.m_nodeType == NodeType.WALKABLE && tile.GetUnitOnTop() != null)
+			if (tile.m_nodeType == NodeType.WALKABLE && tile.GetUnitOnTop())
 			{
 				tile.m_onHoverCover.SetActive(true);
 			}

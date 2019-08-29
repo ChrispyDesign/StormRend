@@ -72,7 +72,7 @@ public class UIAbilityInfo : MonoBehaviour
 
 		if (isLockedAbility)
 		{
-			Ability ability = GameManager.singleton.GetPlayerController().GetCurrentPlayer().GetSelectedAbility();
+			Ability ability = GameManager.singleton.GetPlayerController().GetCurrentPlayer()?.GetSelectedAbility();
 			Unit player = GameManager.singleton.GetPlayerController().GetCurrentPlayer() as Unit;
 			if (!player)
 			{
