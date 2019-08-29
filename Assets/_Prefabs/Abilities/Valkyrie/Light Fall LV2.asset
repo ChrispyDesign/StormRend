@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_name: Light Fall Level 2
   animNumber: 0
-  m_icon: {fileID: 0}
+  m_icon: {fileID: 21300000, guid: 91e1f11880f394645921aec1f2a8c2c8, type: 3}
   m_description: Gain a Rune of Protection.
   m_gloryRequirement: 1
   m_tilesToSelect: 1
@@ -32,9 +32,37 @@ MonoBehaviour:
     m_players: 0
     m_self: 1
   m_effects:
-  - {fileID: 114150829349028398}
-  - {fileID: 114339514596999984}
---- !u!114 &114150829349028398
+  - {fileID: 114766508189950850}
+  - {fileID: 114407635194727074}
+  - {fileID: 114784999023779952}
+--- !u!114 &114407635194727074
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cca9119896ddbe049ae3df8859d7fd0d, type: 3}
+  m_Name: PushEffect
+  m_EditorClassIdentifier: 
+  m_target: 0
+  m_pushAmount: 1
+--- !u!114 &114766508189950850
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a689f1c72aecd749bd69b2cc1345b40, type: 3}
+  m_Name: TeleportEffect
+  m_EditorClassIdentifier: 
+  m_target: 0
+--- !u!114 &114784999023779952
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,17 +76,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_target: 3
   m_durationInTurns: 1
---- !u!114 &114339514596999984
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca9119896ddbe049ae3df8859d7fd0d, type: 3}
-  m_Name: PushEffect
-  m_EditorClassIdentifier: 
-  m_target: 2
-  m_pushAmount: 1
