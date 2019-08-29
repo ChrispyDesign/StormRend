@@ -22,7 +22,7 @@ namespace StormRend
 				Destroy(gameObject);
 		}
 
-		public void FindValidMoves(Tile _startNode, int allowedTiles, System.Type blockedUnits)
+		public void FindValidMoves(Tile start, int range, System.Type unitToBlock)
 		{
 			//This could just return the valid moves directly
 			// If there is already a path clear it
@@ -33,7 +33,7 @@ namespace StormRend
 			Queue<Tile> queue = new Queue<Tile>();
 
 			// Add our starting point on the openlist
-			queue.Enqueue(_startNode);
+			queue.Enqueue(start);
 
 			while (queue.Count > 0)
 			{
@@ -56,7 +56,7 @@ namespace StormRend
 					Unit neighbourOnTop = neighbour.GetUnitOnTop();
 
 					if (neighbourOnTop)
-						if (neighbourOnTop.GetType() == blockedUnits)
+						if (neighbourOnTop.GetType() == unitToBlock)
 							continue;
 
 					if (!m_checkedNodes.Contains(neighbour))
@@ -69,12 +69,12 @@ namespace StormRend
 						neighbour.m_nHCost = 1;
 						neighbour.m_parent = currentNode;
 
-						if (neighbour.m_nGCost <= allowedTiles)
+						if (neighbour.m_nGCost <= range)
 							queue.Enqueue(neighbour);
 					}
 				}
 
-				if (currentNode.m_nGCost > 0 && currentNode.m_nGCost <= allowedTiles && !m_validMoves.Contains(currentNode))
+				if (currentNode.m_nGCost > 0 && currentNode.m_nGCost <= range && !m_validMoves.Contains(currentNode))
 					m_validMoves.Add(currentNode);
 
 			}
