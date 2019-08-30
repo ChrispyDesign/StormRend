@@ -2,7 +2,7 @@
 
 namespace StormRend
 {
-    public class EnemyTurn : State
+    public class EnemyTurn : ShitState
     {
         [SerializeField] private TurnManager m_turnManager;
 

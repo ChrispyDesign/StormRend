@@ -28,8 +28,8 @@ namespace StormRend
 
 		#region getters
 
-		public State GetCurrentTurn() { return m_stateMachine.GetCurrentState(); }
-		public State GetPreviousTurn() { return m_stateMachine.GetPreviousState(); }
+		public ShitState GetCurrentTurn() { return m_stateMachine.GetCurrentState(); }
+		public ShitState GetPreviousTurn() { return m_stateMachine.GetPreviousState(); }
 
 		#endregion
 

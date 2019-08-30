@@ -2,9 +2,9 @@
 
 namespace StormRend
 {
-    public class PlayerTurn : State
+    public class PlayerTurn : ShitState
     {
-        [SerializeField] private TurnManager m_turnManager;
+        [SerializeField] TurnManager m_turnManager;
 
         // turn timing variables
         private float m_turnTimer = 0;

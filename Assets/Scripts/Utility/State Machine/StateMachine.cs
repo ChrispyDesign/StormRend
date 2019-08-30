@@ -10,13 +10,13 @@ public class StateMachine : MonoBehaviour
     //Improve this
 
     // state management
-    private State m_currentState;
-    private State m_previousState;      //Why is this needed?
+    private ShitState m_currentState;
+    private ShitState m_previousState;      //Why is this needed?
 
     #region getters
 
-    public State GetCurrentState() { return m_currentState; }
-    public State GetPreviousState() { return m_previousState; }
+    public ShitState GetCurrentState() { return m_currentState; }
+    public ShitState GetPreviousState() { return m_previousState; }
 
     #endregion
 
@@ -33,7 +33,7 @@ public class StateMachine : MonoBehaviour
     /// function that handles state initialisation
     /// </summary>
     /// <param name="state">the state to initialise</param>
-    public void InitState(State state)
+    public void InitState(ShitState state)
     {
         // update states
         m_previousState = null;
@@ -47,7 +47,7 @@ public class StateMachine : MonoBehaviour
     /// function that handles state transitions
     /// </summary>
     /// <param name="state">the state to transition to</param>
-    public void Switch(State state)
+    public void Switch(ShitState state)
     {
         // update states
         m_previousState = m_currentState;

@@ -1,11 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace StormRend
 {
     namespace The.Great.Refactor
     {
-        public class Architecture
-
         public class StateMachineImplementation
         {
             public class State : ScriptableObject
@@ -27,14 +26,13 @@ namespace StormRend
 
             public class CoreStateMachine
             {
-                public virtual State currentState { get; private set; }
+                public virtual State currentState { get; protected set; }
 
                 //--------------------------------
                 public void Switch(State state) 
                 { 
                     currentState?.OnExit();
                     currentState = state;
-
                 }
                 protected virtual void Update()
                 {
@@ -46,24 +44,13 @@ namespace StormRend
             {
                 protected Stack<State> states = new Stack<State>();
 
-                public new State currentState
-                {
-                    get;
-                }
+                public new State currentState { get; }
 
                 //-----------------------------------------------
                 public void Push(StackState stackState) { }
                 public StackState Pop()
                 {
                     return new StackState();
-                }
-                public StackState Peek()
-                {
-                    return new StackState();
-                }
-                public void Update() 
-                {
-
                 }
                 //-----------------
                 public void Insert(State state) {}

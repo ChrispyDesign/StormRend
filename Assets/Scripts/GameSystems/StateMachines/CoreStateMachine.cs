@@ -7,7 +7,7 @@ namespace StormRend.Systems.StateMachines
 {
     public class CoreStateMachine : Singleton<CoreStateMachine>
     {
-        public virtual State currentState { get; private set; }
+        public virtual State currentState { get; protected set; }
 
         /// <summary>
         /// Runs every frame

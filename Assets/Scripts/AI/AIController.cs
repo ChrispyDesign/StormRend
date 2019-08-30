@@ -57,6 +57,8 @@ namespace StormRend.AI
 		/// </summary>
 		public void EndAITurn()
 		{
+			//This shit needs to be something like GameStateDirector.NextTurn()
+
 			if (aiUnitType == UnitType.Enemy)
 				gm.GetTurnManager().PlayerTurn();
 			else if (aiUnitType == UnitType.Player)
