@@ -64,8 +64,10 @@ public class UIAbilityInfo : MonoBehaviour
 		if(!isLockedAbility)
 			GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
 
+		Ability previousAbility = m_player.GetSelectedAbility();
 		if (m_player != null)
 		{
+			//if (previousAbility.GetTilesToSelect() > previousAbility.GetTiles().Count)
 			m_player.UnShowAttackTiles();
 		}
 		m_infoPanel.SetActive(false);
@@ -84,12 +86,15 @@ public class UIAbilityInfo : MonoBehaviour
 
     public void OnClickAbility()
     {
+		PlayerController controller = GameManager.singleton.GetPlayerController();
+
 		Button button = this.gameObject.GetComponent<Button>();
         if(m_player != null && !m_player.GetHasAttacked() && button.interactable)
         {
-            GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.ATTACK);
+			controller.SetCurrentMode(PlayerMode.ATTACK);
+			m_ability.GetTiles().Clear();
             m_player.SetSelectedAbility(m_ability);
-            GameManager.singleton.GetPlayerController().SetIsAbilityLocked(true); ;
+			controller.SetIsAbilityLocked(true); ;
             m_player.ShowAttackTiles();
 		}
 		m_infoPanel.SetActive(false);

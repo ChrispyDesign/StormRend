@@ -103,52 +103,25 @@ namespace StormRend
 			{
 				currentSelectedUnit.MoveDuplicateTo(this);
 			}
-
-			//m_origMaterial = transform.GetComponent<MeshRenderer>().material.color;
-			//transform.GetComponent<MeshRenderer>().material.color = Color.red;
-
-			//PlayerUnit currentSelectedUnit = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
-			//if (currentSelectedUnit && !m_unitOnTop && currentSelectedUnit.GetAvailableTiles().Contains(this) && !currentSelectedUnit.GetHasMoved() && !currentSelectedUnit.GetHasAttacked())
-			//{
-			//    currentSelectedUnit.MoveDuplicateTo(this);
-			//    m_onHoverCover.SetActive(true);
-			//    m_moveCover.SetActive(false);
-			//}
 		}
 
         public void OnUnhover()
         {
 			m_onHoverCover.SetActive(false);
-
-			//if (!m_selected)
-			//    transform.GetComponent<MeshRenderer>().material.color = Color.white;
-
-			//transform.GetComponent<MeshRenderer>().material.color = m_origMaterial;
-
-			//if (currentSelectedUnit && !m_unitOnTop && currentSelectedUnit.GetAvailableTiles().Contains(this) && !currentSelectedUnit.GetHasMoved())
-			//{
-			//    m_onHoverCover.SetActive(false);
-			//    m_moveCover.SetActive(true);
-			//}
-			//else
-			//{
-			//    m_onHoverCover.SetActive(false);
-			//    m_moveCover.SetActive(false);
-			//}
-
 		}
 
         public void OnSelect()
         {
-            PlayerUnit currentSelectedUnit = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
+			PlayerController controller = GameManager.singleton.GetPlayerController();
+            PlayerUnit currentSelectedUnit = controller.GetCurrentPlayer();
 
-            if (currentSelectedUnit == null)
+			if (currentSelectedUnit == null)
                 return;
 
-            if (currentSelectedUnit.GetAttackTiles().Count > 0)
+            if (currentSelectedUnit.GetAttackTiles().Count > 0 && controller.GetCurrentMode() != PlayerMode.ATTACK)
                 currentSelectedUnit.UnShowAttackTiles();
 
-            if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.MOVE)
+            if (controller.GetCurrentMode() == PlayerMode.MOVE)
             {
                 if (currentSelectedUnit && currentSelectedUnit.GetIsSelected())
                 {
@@ -183,39 +156,46 @@ namespace StormRend
                 }
             }
 
-            if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
+            if (controller.GetCurrentMode() == PlayerMode.ATTACK)
             {
-				PlayerUnit player = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
+				PlayerUnit player = controller.GetCurrentPlayer();
 
 				Ability ability = player.GetSelectedAbility();
 				Animator anim = player.GetComponentInChildren<Animator>();
 				if (ability != null && player.GetAttackTiles().Contains(this))
                 {
-					bool continueAbility = true;
-					foreach (Effect effect in ability.GetEffects())
-					{
-						if (continueAbility)
-						{
-							continueAbility = effect.PerformEffect(this, currentSelectedUnit);
-							if(anim != null)
-								anim.SetInteger("AttackAnim", ability.GetAnimNumber());
-						}
-					}
-					currentSelectedUnit.SetSelectedAbility(null);
+					ability.AddToList(this);
 
-					CommandManager commandManager = GameManager.singleton.GetCommandManager();
+					if (ability.GetTilesToSelect() > ability.GetTiles().Count)
+						return;
 
-					//UndoController.
-					foreach (MoveCommand move in commandManager.m_moves)
-					{
-						Unit unit = move.m_unit;
-						unit.m_afterClear = true;
-					}
+					foreach (Tile tile in ability.GetTiles())
+						Debug.Log(tile.name);
 
-					commandManager.m_moves.Clear();		//UndoController.Clear()
-					UIAbilitySelector abilitySelector = UIManager.GetInstance().GetAbilitySelector();
-					abilitySelector.GetInfoPanel().SetActive(false);
-					abilitySelector.GetButtonPanel().SetActive(false);					
+					//bool continueAbility = true;
+					//foreach (Effect effect in ability.GetEffects())
+					//{
+					//	if (continueAbility)
+					//	{
+					//		continueAbility = effect.PerformEffect(this, currentSelectedUnit);
+					//		if(anim != null)
+					//			anim.SetInteger("AttackAnim", ability.GetAnimNumber());
+					//	}
+					//}
+					//currentSelectedUnit.SetSelectedAbility(null);
+
+					//CommandManager commandManager = GameManager.singleton.GetCommandManager();
+					
+					//foreach (MoveCommand move in commandManager.m_moves)
+					//{
+					//	Unit unit = move.m_unit;
+					//	unit.m_afterClear = true;
+					//}
+
+					//commandManager.m_moves.Clear();		
+					//UIAbilitySelector abilitySelector = UIManager.GetInstance().GetAbilitySelector();
+					//abilitySelector.GetInfoPanel().SetActive(false);
+					//abilitySelector.GetButtonPanel().SetActive(false);					
                 }
             }
 
@@ -225,33 +205,39 @@ namespace StormRend
                 selector.SelectPlayerUnit(null);
                 selector.GetInfoPanel().SetActive(false);
             }
-            GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.IDLE);
+            //controller.SetCurrentMode(PlayerMode.IDLE);
         }
 
         public void OnDeselect()
         {
-            m_selected = false;
+			m_selected = false;
 
-            Unit unitOnTop = this.GetUnitOnTop();
-            if (unitOnTop)
-            {
-                List<Tile> nodes = unitOnTop.GetAvailableTiles();
+			Unit unitOnTop = this.GetUnitOnTop();
+			if (unitOnTop)
+			{
+				PlayerController controller = GameManager.singleton.GetPlayerController();
+				Ability ability = controller.GetCurrentPlayer().GetSelectedAbility();
+				List<Tile> nodes = new List<Tile>();
 
-                if (nodes != null)
-                {
-                    foreach (Tile node in nodes)
+				if (controller.GetPrevMode() == PlayerMode.ATTACK && ability.GetTiles().Count == ability.GetTilesToSelect())
+					nodes = unitOnTop.GetAttackTiles();
+				else if (controller.GetPrevMode() == PlayerMode.MOVE)
+					nodes = unitOnTop.GetAvailableTiles();
+
+				if (nodes != null)
+				{
+					foreach (Tile node in nodes)
 					{
 						if (node.m_nodeType == NodeType.EMPTY)
 							continue;
 
-						//node.transform.GetComponent<MeshRenderer>().material.color = Color.white;
 						node.m_attackCover.SetActive(false);
 						node.m_moveCover.SetActive(false);
-                        node.m_selected = false;
-                    }
-                }
-            }
+						node.m_selected = false;
+					}
+				}
+			}
 
-        }
+		}
     }
 }
