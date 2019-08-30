@@ -16,6 +16,13 @@ namespace StormRend
 		[SerializeField] private BlizzardController m_blizzardManager = null;
 		[SerializeField] private UIAvatarSelector m_avatarSelector = null;
 		[SerializeField] private UIAbilitySelector m_abilitySelector = null;
+		[SerializeField] private GameObject m_playerFlag;
+		[SerializeField] private GameObject m_enemyFlag;
+
+		#region Getters
+		public GameObject GetPlayerFlag() { return m_playerFlag; }
+		public GameObject GetEnemyFlag() { return m_enemyFlag; }
+		#endregion
 
 		#region getters
 

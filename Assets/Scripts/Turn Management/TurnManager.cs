@@ -18,6 +18,8 @@ namespace StormRend
 		[SerializeField] Button m_proceedTurnButton = null;
 
 		int m_currentTurn;
+		GameObject m_playerFlag;
+		GameObject m_enemyFlag;
 
 		// state machine for managing turns
 		StateMachine m_stateMachine;
@@ -45,6 +47,11 @@ namespace StormRend
 			m_playerTurn = new PlayerTurn(this);
 			m_enemyTurn = new EnemyTurn(this);
 
+			m_playerFlag = UIManager.GetInstance().GetPlayerFlag();
+			m_enemyFlag = UIManager.GetInstance().GetEnemyFlag();
+			m_playerFlag.SetActive(true);
+			m_enemyFlag.SetActive(false);
+
 			// player turn by default
 			m_stateMachine.InitState(m_playerTurn);
 		}
@@ -54,6 +61,8 @@ namespace StormRend
 		/// </summary>
 		public void PlayerTurn()
 		{
+			m_enemyFlag.SetActive(false);
+			m_playerFlag.SetActive(true);
 			List<Crystal> crystal = GameManager.singleton.GetCrystals();
 			foreach (Crystal c in crystal)
 			{
@@ -80,6 +89,8 @@ namespace StormRend
 		/// </summary>
 		public void EnemyTurn()
 		{
+			m_playerFlag.SetActive(false);
+			m_enemyFlag.SetActive(true);
 			GameManager.singleton.GetCommandManager().m_moves.Clear();
 			foreach(PlayerUnit player in GameManager.singleton.GetPlayerUnits())
 			{
