@@ -169,34 +169,34 @@ namespace StormRend
 					if (ability.GetTilesToSelect() > ability.GetTiles().Count)
 						return;
 
+					bool continueAbility = true;
 					foreach (Tile tile in ability.GetTiles())
-						Debug.Log(tile.name);
+					{
+						foreach (Effect effect in ability.GetEffects())
+						{
+							if (continueAbility)
+							{
+								continueAbility = effect.PerformEffect(this, currentSelectedUnit);
+								if (anim != null)
+									anim.SetInteger("AttackAnim", ability.GetAnimNumber());
+							}
+						}
+					}
+					currentSelectedUnit.SetSelectedAbility(null);
 
-					//bool continueAbility = true;
-					//foreach (Effect effect in ability.GetEffects())
-					//{
-					//	if (continueAbility)
-					//	{
-					//		continueAbility = effect.PerformEffect(this, currentSelectedUnit);
-					//		if(anim != null)
-					//			anim.SetInteger("AttackAnim", ability.GetAnimNumber());
-					//	}
-					//}
-					//currentSelectedUnit.SetSelectedAbility(null);
+					CommandManager commandManager = GameManager.singleton.GetCommandManager();
 
-					//CommandManager commandManager = GameManager.singleton.GetCommandManager();
-					
-					//foreach (MoveCommand move in commandManager.m_moves)
-					//{
-					//	Unit unit = move.m_unit;
-					//	unit.m_afterClear = true;
-					//}
+					foreach (MoveCommand move in commandManager.m_moves)
+					{
+						Unit unit = move.m_unit;
+						unit.m_afterClear = true;
+					}
 
-					//commandManager.m_moves.Clear();		
-					//UIAbilitySelector abilitySelector = UIManager.GetInstance().GetAbilitySelector();
-					//abilitySelector.GetInfoPanel().SetActive(false);
-					//abilitySelector.GetButtonPanel().SetActive(false);					
-                }
+					commandManager.m_moves.Clear();
+					UIAbilitySelector abilitySelector = UIManager.GetInstance().GetAbilitySelector();
+					abilitySelector.GetInfoPanel().SetActive(false);
+					abilitySelector.GetButtonPanel().SetActive(false);
+				}
             }
 
             if (currentSelectedUnit.GetHasAttacked())
@@ -205,8 +205,8 @@ namespace StormRend
                 selector.SelectPlayerUnit(null);
                 selector.GetInfoPanel().SetActive(false);
             }
-            //controller.SetCurrentMode(PlayerMode.IDLE);
-        }
+			controller.SetCurrentMode(PlayerMode.IDLE);
+		}
 
         public void OnDeselect()
         {
@@ -219,10 +219,15 @@ namespace StormRend
 				Ability ability = controller.GetCurrentPlayer().GetSelectedAbility();
 				List<Tile> nodes = new List<Tile>();
 
-				if (controller.GetPrevMode() == PlayerMode.ATTACK && ability.GetTiles().Count == ability.GetTilesToSelect())
+				if (controller.GetPrevMode() == PlayerMode.ATTACK
+					&& ability.GetTiles().Count == ability.GetTilesToSelect())
+				{
 					nodes = unitOnTop.GetAttackTiles();
+				}
 				else if (controller.GetPrevMode() == PlayerMode.MOVE)
+				{
 					nodes = unitOnTop.GetAvailableTiles();
+				}
 
 				if (nodes != null)
 				{

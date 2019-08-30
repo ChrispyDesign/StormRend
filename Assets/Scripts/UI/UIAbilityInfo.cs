@@ -65,10 +65,10 @@ public class UIAbilityInfo : MonoBehaviour
 			GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
 
 		Ability previousAbility = m_player.GetSelectedAbility();
-		if (m_player != null)
+		if (m_player != null && previousAbility != null)
 		{
-			//if (previousAbility.GetTilesToSelect() > previousAbility.GetTiles().Count)
-			m_player.UnShowAttackTiles();
+			if (previousAbility.GetTilesToSelect() == previousAbility.GetTiles().Count)
+				m_player.UnShowAttackTiles();
 		}
 		m_infoPanel.SetActive(false);
 
