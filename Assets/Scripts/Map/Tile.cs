@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using StormRend.Abilities.Effects;
 using StormRend.Defunct;
 using UnityEditor;
 using UnityEngine;
@@ -215,7 +216,7 @@ namespace StormRend
 					commandManager.m_moves.Clear();		//UndoController.Clear()
 					UIAbilitySelector abilitySelector = UIManager.GetInstance().GetAbilitySelector();
 					abilitySelector.GetInfoPanel().SetActive(false);
-					abilitySelector.GetButtonPanel().SetActive(false);					
+					abilitySelector.GetButtonPanel().SetActive(false);
                 }
             }
 

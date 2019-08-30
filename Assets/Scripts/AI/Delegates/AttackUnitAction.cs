@@ -4,6 +4,7 @@ using BhaVE.Core;
 using BhaVE.Delegates;
 using BhaVE.Nodes;
 using BhaVE.Variables;
+using StormRend.Abilities.Effects;
 using UnityEngine;
 
 namespace StormRend.Bhaviours

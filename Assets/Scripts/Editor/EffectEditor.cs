@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
-#if UNITY_EDITOR
+using StormRend.Abilities.Effects;
 
 /// <summary>
-/// helper editor class used to display effects in the unity inspector. Also handles the
-/// addition & removal of effects
+/// Helper editor class used to display effects in the unity inspector.
+/// Also handles the addition & removal of effects
 /// </summary>
 public class EffectEditor : Editor
 {
@@ -14,7 +13,7 @@ public class EffectEditor : Editor
     private List<Effect> m_effects;
 
     /// <summary>
-    /// constructor which caches a reference to an ability's list of effects
+    /// Constructor which caches a reference to an ability's list of effects
     /// </summary>
     /// <param name="effects"></param>
     public EffectEditor(List<Effect> effects)
@@ -109,5 +108,3 @@ public class EffectEditor : Editor
         AssetDatabase.SaveAssets(); // save!
     }
 }
-
-#endif

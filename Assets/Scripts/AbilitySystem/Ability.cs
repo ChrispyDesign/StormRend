@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using StormRend;
+using StormRend.Abilities.Effects;
 using UnityEngine;
 
 /// <summary>
-/// 
+///
 /// </summary>
 [System.Serializable]
 public struct TargetableTiles
@@ -16,7 +17,7 @@ public struct TargetableTiles
 }
 
 /// <summary>
-/// 
+///
 /// </summary>
 [System.Serializable]
 public class RowData
@@ -25,7 +26,7 @@ public class RowData
 }
 
 /// <summary>
-/// 
+///
 /// </summary>
 [System.Serializable]
 [CreateAssetMenu(fileName = "New Ability", menuName = "StormRend/Ability")]
@@ -80,7 +81,7 @@ public class Ability : ScriptableObject
             for(int x = 0; x < m_castArea[y].elements.Length; x++)
             {
                 if (m_castArea[y].elements[x])
-                { 
+                {
                     int _x = -endPoint + x;
                     int _y = endPoint - y;
 
