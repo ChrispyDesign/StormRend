@@ -2,13 +2,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace StormRend
+namespace StormRend.Defunct
 {
 	/// <summary>
 	/// Class responsible for transitioning from player to enemy turn and vice versa. Also responsible for
 	/// ensuring turn transitions aren't called inappropriately
 	/// </summary>
-	[RequireComponent(typeof(StateMachine))]
+	[RequireComponent(typeof(ShitStateMachine))]
 	public class TurnManager : MonoBehaviour
 	{
 		//Rename:
@@ -20,7 +20,7 @@ namespace StormRend
 		int m_currentTurn;
 
 		// state machine for managing turns
-		StateMachine m_stateMachine;
+		ShitStateMachine m_stateMachine;
 
 		// player and enemy turns
 		PlayerTurn m_playerTurn;
@@ -39,7 +39,7 @@ namespace StormRend
 		void Start()
 		{
 			// cache state machine reference
-			m_stateMachine = GetComponent<StateMachine>();
+			m_stateMachine = GetComponent<ShitStateMachine>();
 
 			// initialise state machine and player/enemy turns
 			m_playerTurn = new PlayerTurn(this);

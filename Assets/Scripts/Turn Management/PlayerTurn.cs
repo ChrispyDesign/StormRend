@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace StormRend
+namespace StormRend.Defunct
 {
     public class PlayerTurn : ShitState
     {
@@ -21,7 +21,7 @@ namespace StormRend
             m_turnTimer = 0;
         }
 
-        public override void OnUpdate(StateMachine stateMachine)
+        public override void OnUpdate(ShitStateMachine stateMachine)
         {
             // increment turn timer
             m_turnTimer += Time.deltaTime;

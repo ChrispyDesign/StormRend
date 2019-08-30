@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
 using StormRend.Utility.Attributes;
+using StormRend.Defunct;
 
 namespace StormRend
 {

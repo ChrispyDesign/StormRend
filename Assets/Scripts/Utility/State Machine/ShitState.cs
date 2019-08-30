@@ -1,4 +1,4 @@
-﻿namespace StormRend
+﻿namespace StormRend.Defunct
 {
     /// <summary>
     /// abstract base state class. Contains pure virtual functions for entering, updating and exiting states
@@ -6,7 +6,7 @@
     public abstract class ShitState
     {
         public abstract void OnEnter();
-        public abstract void OnUpdate(StateMachine stateMachine);
+        public abstract void OnUpdate(ShitStateMachine stateMachine);
         public abstract void OnExit();
     }
 }

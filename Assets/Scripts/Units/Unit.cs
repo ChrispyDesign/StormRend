@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using StormRend.Defunct;
 using StormRend.Utility.Attributes;
 using UnityEngine;
 using UnityEngine.Events;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using StormRend.Defunct;
 using UnityEditor;
 using UnityEngine;
 
@@ -50,10 +51,9 @@ namespace StormRend
 #if UNITY_EDITOR
 		void OnDrawGizmos()
 		{
-			float offsetY = 1.5f;
 			Handles.color = Color.white;
 			Handles.BeginGUI();
-			Handles.Label(transform.position + Vector3.up * offsetY, this.name);
+			Handles.Label(transform.position, this.name, EditorStyles.whiteLargeLabel);
 			Handles.EndGUI();
 		}
 #endif

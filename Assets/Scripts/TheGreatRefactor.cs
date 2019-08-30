@@ -18,28 +18,25 @@ namespace StormRend
                 public void OnCover() { }
                 public void OnUncover() { }
             }
-            public class TurnState : State
-            {
-                public void OnNext() { }
-            }
-
-
+            // public class TurnState : State
+            // {
+            //     public void OnNext() { }
+            // }
             public class CoreStateMachine
             {
                 public virtual State currentState { get; protected set; }
 
                 //--------------------------------
-                public void Switch(State state) 
-                { 
+                public void Switch(State state)
+                {
                     currentState?.OnExit();
                     currentState = state;
                 }
                 protected virtual void Update()
                 {
-                    
+
                 }
             }
-
             public class TurnBasedStackStateMachine : CoreStateMachine
             {
                 protected Stack<State> states = new Stack<State>();
@@ -53,16 +50,107 @@ namespace StormRend
                     return new StackState();
                 }
                 //-----------------
-                public void Insert(State state) {}
-                public void Remove(State state) {}
+                public void Insert(State state) { }
+                public void Remove(State state) { }
                 public void NextTurn() { }
                 public void PrevTurn() { }   //?
                 //-----------------
             }
         }
 
+        /* -------- Organization
+        --- Folder structure
+        -- Conventions
+        - No spaces in file/folder names
 
-        //Renames
+        [ScriptableObjects]
+        Abilities
+            Ally
+            Enemy
+        AI
+            Delegates
+            Variables
+
+        [Scripts]
+        --------
+        |Editor|
+            AbilityInspector
+            EffectInspector
+            EnumFlagsInspector
+            ReadOnlyFieldInspector
+            MapEditorInspector,Core,Scene
+            DecorationPainterInspector,Core,Scene
+
+        |Tests|
+        -------
+        AbilitySystem
+            Ability.cs
+            AttackManager.cs ?
+            Effects
+                Effect.cs
+                Benefits / Curses / Defensive / Offsensive / Recovery / Runes
+        AI
+            Delegates
+            Variables
+        States
+            GameStateDirector.cs
+            AllyTurnState.cs
+            EnemyTurnState.cs
+            UI
+                UIState.cs
+                MainMenuState.cs
+                PauseMenuState.cs
+                SettingsMenuState.cs
+                GameOverState.cs
+                VictoryState.cs
+        Commands
+        Units
+            Unit
+            AllyUnit
+            EnemyUnit
+            SpiritCrystal
+        UI
+            AvatarFrame
+            PulsingNode
+            PulsingBar
+            AbilityButton ?
+            NextTurnButton  ?
+            InfoPanel ?
+        AnimatorStateMachineBehaviours
+        FX
+        CoreSystems
+            Camera
+            FileIO
+
+            GameplayInteraction
+                IInteraction.cs
+                GameplayInteractionHandler.cs
+            StateMachines
+                State, StackState
+                CoreStateMachine, TurnBasedStackStateMachine
+            Mapping
+                Connection
+                Tile
+                Map
+                Pathfinder
+            UndoSystem
+                Undo
+                ICommand
+        Utility
+            Attributes
+                EnumFlagsAttribute.cs
+                ReadOnlyFieldAttribute.cs
+            Patterns
+                Singleton<T>
+                ScriptableSingleton<T>
+        |Defunct|
+            "Put old shit here"
+            TrashScripts
+        */
+
+        //Renames, Cleanups
+        // - AbilityEditorUtility > SREditorUtility
+
 
         //Unit Testing
 
