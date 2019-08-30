@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace StormRend
+namespace StormRend.Defunct
 {
     public class EnemyTurn : ShitState
     {
@@ -20,7 +20,7 @@ namespace StormRend
             m_timer = 0;
         }
 
-        public override void OnUpdate(StateMachine stateMachine)
+        public override void OnUpdate(ShitStateMachine stateMachine)
         {
             //while (m_timer < m_enemyTurnTime)
             //{

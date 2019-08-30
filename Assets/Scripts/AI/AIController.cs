@@ -2,6 +2,11 @@
 using BhaVE.Core;
 using UnityEngine;
 
+//TODO temp
+using StormRend.Defunct;
+using StormRend.States;
+using StormRend.Systems.StateMachines;
+
 namespace StormRend.AI
 {
     public class AIController : MonoBehaviour
@@ -11,19 +16,26 @@ namespace StormRend.AI
 		// - Adjustable delay between each enemy's turn
 		// - API to end enemy's turn accessible by delegates
 
-		public enum UnitType { Player, Enemy }
+		public enum UnitType 
+			{ Player, Enemy }
+
 		[SerializeField] UnitType aiUnitType;
-		[SerializeField] float delayBetweenNextUnitTurn = 2f;  //Seconds
+		[SerializeField] float aiTurnTime = 2f;  //Seconds
 
 		Unit[] currentUnits = null;
-		GameManager gm = null;
-		BhaveDirector bhd = null;
 
+        TurnBasedStackStateMachine tbssm;
+		BhaveDirector bd = null;
+
+		//Death row below
+        GameManager gm = null;
 
 		void Awake()
 		{
+			tbssm = GameStateDirector.singleton as TurnBasedStackStateMachine;
+			bd = BhaveDirector.singleton;
+
 			gm = GameManager.singleton;
-			bhd = BhaveDirector.singleton;
 		}
 
 		public void StartAITurn()
@@ -44,8 +56,8 @@ namespace StormRend.AI
 			foreach (var u in currentUnits)
 			{
 				var agent = u.GetComponent<BhaveAgent>();
-				bhd.Tick(agent);
-				yield return new WaitForSeconds(delayBetweenNextUnitTurn);
+				bd.Tick(agent);
+				yield return new WaitForSeconds(aiTurnTime);
 			}
 
 			//Then end the turn for this unit type
@@ -58,11 +70,12 @@ namespace StormRend.AI
 		public void EndAITurn()
 		{
 			//This shit needs to be something like GameStateDirector.NextTurn()
+			tbssm.NextTurn();
 
-			if (aiUnitType == UnitType.Enemy)
-				gm.GetTurnManager().PlayerTurn();
-			else if (aiUnitType == UnitType.Player)
-				gm.GetTurnManager().EnemyTurn();
+			// if (aiUnitType == UnitType.Enemy)
+			// 	gm.GetTurnManager().PlayerTurn();
+			// else if (aiUnitType == UnitType.Player)
+			// 	gm.GetTurnManager().EnemyTurn();
 		}
 	}
 }

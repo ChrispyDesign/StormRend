@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using StormRend.Utility.Attributes;
 using UnityEngine;
 
 namespace StormRend.Systems.StateMachines
@@ -32,10 +33,7 @@ namespace StormRend.Systems.StateMachines
                     return null;
             }
         }
-        public bool isInStackMode => stackStates.Count > 0;
-        public bool isInTurnBasedMode => !isInStackMode;
-
-        int _currentTurnStateIDX;
+        [ReadOnlyField][SerializeField] int _currentTurnStateIDX;
         int currentTurnStateIDX
         {
             get => _currentTurnStateIDX;
@@ -44,12 +42,15 @@ namespace StormRend.Systems.StateMachines
                 _currentTurnStateIDX = value;
 
                 //Wrap around
-                if (_currentTurnStateIDX > turnStates.Count-1)
+                if (_currentTurnStateIDX > turnStates.Count - 1)
                     _currentTurnStateIDX = 0;
                 else if (_currentTurnStateIDX < 0)
-                    _currentTurnStateIDX = turnStates.Count-1;
+                    _currentTurnStateIDX = turnStates.Count - 1;
             }
         }
+
+        public bool isInStackMode => stackStates.Count > 0;
+        public bool isInTurnBasedMode => !isInStackMode;
         #endregion
 
         //The state the will be returned to once all the states are popped off
@@ -65,8 +66,13 @@ namespace StormRend.Systems.StateMachines
             }
             else
             {
-                //Add entry state to turn states and set the turn index
+                //Insert while taking care of duplicates
                 Insert(entryState);
+
+                //Execute OnEnter()
+                Switch(entryState);
+
+                //Set initial turn index
                 currentTurnStateIDX = turnStates.IndexOf(entryState);
             }
         }
@@ -74,28 +80,41 @@ namespace StormRend.Systems.StateMachines
 
         //------------- Turn-Based -------------
         /// <summary>
-        /// Inserts a new state inside the list of turn states.
-        /// Does not allow for duplicates
+        /// Inserts a new state into list of turn states. Will not allow duplicate states.
+        /// States can be inserted anytime.
         /// </summary>
         public void Insert(StackState turnState)
         {
             if (!turnStates.Contains(turnState))    //No duplicates
                 turnStates.Add(turnState);
         }
-        public void Remove(StackState turnState)
-        {
-            turnStates.Remove(turnState);
-        }
+        /// <summary>
+        /// Removes specified state from list of turn states.
+        /// States can be removed anytime.
+        /// </summary>
+        public void Remove(StackState turnState) => turnStates.Remove(turnState);
 
+        /// <summary>
+        /// Switch to the next turn state
+        /// </summary>
         public void NextTurn()
         {
-            if (isInTurnBasedMode)
-            {
-                currentState = turnStates[currentTurnStateIDX++];
-            }
+            if (isInTurnBasedMode) Switch(turnStates[currentTurnStateIDX++]);
+        }
+        /// <summary>
+        /// Switch to the previous turn state
+        /// </summary>
+        public void PrevTurn()
+        {
+            if (isInTurnBasedMode) Switch(turnStates[currentTurnStateIDX--]);
         }
 
         //------------ Stackable --------------
+        /// <summary>
+        /// Stacks a state on top of current state. If state is a turn state then it will switch to Stack State Mode
+        /// and Next/PrevTurn() cannot be called until all states in the stack are popped.
+        /// </summary>
+        /// <param name="state"></param>
         public void Stack(StackState state)
         {
             //Cover current state
@@ -114,7 +133,8 @@ namespace StormRend.Systems.StateMachines
             //Push onto stack
             stackStates.Push(state);
         }
-        public State UnStack()
+
+        public void UnStack()
         {
             if (isInStackMode)
             {
@@ -129,16 +149,13 @@ namespace StormRend.Systems.StateMachines
                 {
                     currentState = coveredTurnState;
                 }
-                
+
                 //Uncover state
                 (currentState as StackState).OnUncover();
-
-                return currentState;
             }
             else
             {
                 Debug.LogWarning("Nothing to unstack");
-                return null;
             }
         }
     }
