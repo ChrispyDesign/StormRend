@@ -123,6 +123,12 @@ namespace StormRend
 					|| node.m_nodeType == NodeType.BLOCKED)
 					continue;
 
+				Unit unit = node.GetUnitOnTop();
+				if (unit != null)
+				{
+					unit.GetComponent<BoxCollider>().enabled = false;
+				}
+
 				node.m_attackCover.SetActive(true);
 				node.m_moveCover.SetActive(false);
 				node.m_selected = true;
@@ -134,6 +140,13 @@ namespace StormRend
 			{
 				if (node.m_nodeType == NodeType.EMPTY)
 					continue;
+
+				Unit unit = node.GetUnitOnTop();
+				if (unit != null)
+				{
+					unit.GetComponent<BoxCollider>().enabled = true;
+				}
+
 
 				node.m_attackCover.SetActive(false);
 				node.m_moveCover.SetActive(false);

@@ -176,7 +176,7 @@ namespace StormRend
 						{
 							if (continueAbility)
 							{
-								continueAbility = effect.PerformEffect(this, currentSelectedUnit);
+								continueAbility = effect.PerformEffect(tile, currentSelectedUnit);
 								if (anim != null)
 									anim.SetInteger("AttackAnim", ability.GetAnimNumber());
 							}
@@ -204,6 +204,7 @@ namespace StormRend
                 UIAbilitySelector selector = UIManager.GetInstance().GetAbilitySelector();
                 selector.SelectPlayerUnit(null);
                 selector.GetInfoPanel().SetActive(false);
+				currentSelectedUnit.UnShowAttackTiles();
             }
 			controller.SetCurrentMode(PlayerMode.IDLE);
 		}

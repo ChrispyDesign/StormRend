@@ -30,7 +30,15 @@ public class PlayerController : MonoBehaviour
     public bool GetIsAbilityLocked() { return m_isAbilityLocked; }
 
     public void SetCurrentPlayer(PlayerUnit _currentPlayer) { m_currentPlayer = _currentPlayer; }
-    public void SetCurrentMode(PlayerMode _curMode) { m_prevMode = m_curMode; m_curMode = _curMode; }
+    public void SetCurrentMode(PlayerMode _curMode)
+	{
+		if (m_curMode == PlayerMode.IDLE)
+			m_prevMode = PlayerMode.MOVE;
+		else
+			m_prevMode = m_curMode;
+
+		m_curMode = _curMode;
+	}
     public void SetIsAbilityLocked(bool _isLocked) { m_isAbilityLocked = _isLocked; }
     #endregion
 
