@@ -1,48 +1,74 @@
+using StormRend.Defunct;
 using StormRend.States.UI;
 using StormRend.Systems.StateMachines;
 using StormRend.Utility.Attributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace StormRend.States
 {
     public abstract class TurnState : UIState
     {
-        //Record the time
-        [Header("Timing")]
-        [ReadOnlyField] public float currentTurnTime;
-        [ReadOnlyField] public float longestTurnTime = 0;
-        [ReadOnlyField] public float totalTurnTime = 0;
+        [Header("Stats")]
+        [ReadOnlyField] public float turnCount = 0;
+        [ReadOnlyField] public float currentStateTime;
+        [ReadOnlyField] public float longestStateTime = 0;
+        [ReadOnlyField] public float totalStateTime = 0;
 
-        internal override void OnEnter()
+		//General
+        [Header("Events")]
+		[SerializeField] protected UnityEvent OnTurnEnter;
+        [SerializeField] protected UnityEvent OnTurnExit;
+
+		GameManager gm;
+        BlizzardController bc;
+
+        void Awake()
         {
-            currentTurnTime = 0;
+            //TODO try to not use singletons
+            gm = GameManager.singleton;
+            bc = UIManager.GetInstance().GetBlizzardManager();
         }
 
-        internal override void OnUpdate(CoreStateMachine sm)
+        public override void OnEnter(UltraStateMachine sm)
         {
-            currentTurnTime += Time.deltaTime;
+            OnTurnEnter.Invoke();
+
+            //Stats
+            turnCount++;
+            currentStateTime = 0;
+
+            //Blizzard
+            bc.IncrementBlizzardMeter();
         }
 
-        internal override void OnExit()
+        public override void OnUpdate(UltraStateMachine sm)
         {
+            currentStateTime += Time.deltaTime;
+        }
+
+        public override void OnExit(UltraStateMachine sm)
+        {
+            OnTurnExit.Invoke();
+
             //Update longest turn
-            if (currentTurnTime > longestTurnTime)
-                longestTurnTime = currentTurnTime;
+            if (currentStateTime > longestStateTime)
+                longestStateTime = currentStateTime;
 
-            totalTurnTime += currentTurnTime;
+            totalStateTime += currentStateTime;
         }
 
         //Auto handle pause and unpause
-        internal override void OnCover()
+        public override void OnCover(UltraStateMachine sm)
         {
-            base.OnCover();     //Hides UI
+            base.OnCover(sm);     //Hides UI
 
             Time.timeScale = 0;
         }
 
-        internal override void OnUncover()
+        public override void OnUncover(UltraStateMachine sm)
         {
-            base.OnUncover();   //Unhide UI
+            base.OnUncover(sm);   //Unhide UI
 
             Time.timeScale = 1f;
         }

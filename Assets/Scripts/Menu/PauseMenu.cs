@@ -12,14 +12,14 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            GamePause();
+        // if (Input.GetKeyDown(KeyCode.Escape))
+        //     GamePause();
     }
 
     public void GamePause()
     {
-        if (!m_pauseMenu.activeSelf && 
-            !m_gameOver.activeSelf && 
+        if (!m_pauseMenu.activeSelf &&
+            !m_gameOver.activeSelf &&
             !m_gameWin.activeSelf)
         {
             Time.timeScale = 0.0f;

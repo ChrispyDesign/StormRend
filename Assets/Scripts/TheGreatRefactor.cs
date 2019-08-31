@@ -93,9 +93,11 @@ namespace StormRend
             Delegates
             Variables
         States
-            GameStateDirector.cs
-            AllyTurnState.cs
-            EnemyTurnState.cs
+            GameStateMachine.cs
+            Unit
+                AllyTurnState.cs
+                EnemyTurnState.cs
+                CrystalTurnState.cs
             UI
                 UIState.cs
                 MainMenuState.cs
@@ -150,7 +152,7 @@ namespace StormRend
 
         //Renames, Cleanups
         // - AbilityEditorUtility > SREditorUtility
-
+        // - PlayerController > UserInputHandler
 
         //Unit Testing
 

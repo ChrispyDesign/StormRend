@@ -3,25 +3,34 @@ using System.Collections.Generic;
 using BhaVE.Patterns;
 using StormRend.Utility.Attributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace StormRend.Systems.StateMachines
 {
 	/// <summary>
 	/// Turn-based stackable state machine.
-	/// Turn-based allows for improved NextTurn() API.
-	/// Stackable for Pause menus etc.
+	/// Turn states for turn based games.
+	/// Stacks for Pause menus etc.
 	/// </summary>
-	public abstract class UltraStateMachine : Singleton<UltraStateMachine>
+	public sealed class UltraStateMachine : MonoBehaviour //: Singleton<UltraStateMachine>
 	{
 		//Normally this state machine starts of running states in turnStates
 		//If a state is stacked, then the current state is saved to be returned to later
 		//and the state machines starts using stack states
 		//Turn based states can only be returned to once all Stacked states have bee popped off
+
+	#region Inspector
+		[ReadOnlyField] [SerializeField] int _currentStateIDX = 0;
 		[SerializeField] State entryState;
 		[SerializeField] List<State> turnStates = new List<State>();  //They have to be StackStates becaused they can be covered/uncovered
 		Stack<State> stackStates = new Stack<State>();
 
-		#region Properties
+		[Space]
+		public UnityEvent OnNextTurn, OnPrevTurn;
+	#endregion
+	#region Properties
+		public int turnsCount => turnStates.Count;
+		public int stackCount => stackStates.Count;
 		public State currentState
 		{
 			get
@@ -31,39 +40,37 @@ namespace StormRend.Systems.StateMachines
 					return stackStates.Peek();
 				//else return current turn state
 				else if (isInTurnBasedMode)
-					return turnStates[currentTurnStateIDX];
+					return turnStates[currentStateIDX];
 				//return null if neither collection has any states
 				else
 					return null;
 			}
 		}
-		[ReadOnlyField] [SerializeField] int _currentTurnStateIDX = 0;
-		int currentTurnStateIDX
+		int currentStateIDX
 		{
-			get => _currentTurnStateIDX;
+			get => _currentStateIDX;
 			set
 			{
-				_currentTurnStateIDX = value;
+				_currentStateIDX = value;
 
 				//Wrap around
-				if (_currentTurnStateIDX > turnStates.Count - 1)
-					_currentTurnStateIDX = 0;
-				else if (_currentTurnStateIDX < 0)
-					_currentTurnStateIDX = turnStates.Count - 1;
+				if (_currentStateIDX > turnStates.Count - 1)
+					_currentStateIDX = 0;
+				else if (_currentStateIDX < 0)
+					_currentStateIDX = turnStates.Count - 1;
 			}
 		}
 
 		public bool isInStackMode => stackStates.Count > 0;
 		public bool isInTurnBasedMode => !isInStackMode && turnStates.Count > 0;
-		#endregion
-
-		#region Core
+	#endregion
+	#region Core
 		void Start()
 		{
 			if (!entryState)
 			{
 				Debug.LogWarning("No entry state found!");
-				this.enabled = false;
+				enabled = false;
 			}
 			else
 			{
@@ -74,7 +81,7 @@ namespace StormRend.Systems.StateMachines
 				Switch(entryState);
 
 				//Set initial turn index
-				currentTurnStateIDX = turnStates.IndexOf(entryState);
+				currentStateIDX = turnStates.IndexOf(entryState);
 			}
 		}
 
@@ -91,7 +98,7 @@ namespace StormRend.Systems.StateMachines
 			if (isInTurnBasedMode)
 			{
 				currentState?.OnExit(this);
-				turnStates[currentTurnStateIDX] = state;
+				turnStates[currentStateIDX] = state;
 				state?.OnEnter(this);
 			}
 			else
@@ -99,72 +106,88 @@ namespace StormRend.Systems.StateMachines
 				Debug.LogWarning("Cannot switch in stack mode OR if turn state list is empty");
 			}
 		}
-		#endregion
-
-		#region Turn-Based
+	#endregion
+	#region Turn-Based
 		/// <summary>
-		/// Inserts a new state into list of turn states. Will not allow duplicate states.
-		/// States can be inserted anytime.
+		/// Inserts a new state into list of turn states. Will not allow duplicate states. States can be inserted anytime.
 		/// </summary>
-		public virtual void Insert(State turnState)
+		public void Insert(State turnState)
 		{
 			if (!turnStates.Contains(turnState))    //No duplicates
 				turnStates.Add(turnState);
 		}
 		/// <summary>
-		/// Removes specified state from list of turn states.
-		/// States can be removed anytime.
+		/// Removes specified state from list of turn states. States can be removed anytime.
 		/// </summary>
-		public virtual void Remove(State turnState)
+		public void Remove(State turnState)
 		{
 			turnStates.Remove(turnState);
 		}
 
 		/// <summary>
+		/// Clears list of turn states. States can be cleared anytime.
+		/// </summary>
+		public void ClearTurns()
+		{
+			turnStates.Clear();
+		}
+
+		/// <summary>
 		/// Select next turn state
 		/// </summary>
-		public virtual void NextTurn()
+		public void NextTurn()
 		{
-			if (isInTurnBasedMode) Switch(turnStates[currentTurnStateIDX++]);
+			OnNextTurn.Invoke();
+
+			if (isInTurnBasedMode)
+				Switch(turnStates[currentStateIDX++]);
 		}
 		/// <summary>
 		/// Select previous turn state
 		/// </summary>
-		public virtual void PrevTurn()
+		public void PrevTurn()
 		{
-			if (isInTurnBasedMode) Switch(turnStates[currentTurnStateIDX--]);
-		}
-		#endregion
+			OnPrevTurn.Invoke();
 
-		#region Stacks
+			if (isInTurnBasedMode)
+				Switch(turnStates[currentStateIDX--]);
+		}
+	#endregion
+	#region Stacks
 		//------------ Stackable --------------
 		/// <summary>
 		/// Stacks a state on top of current state. If state is a turn state then it will switch to Stack State Mode
-		/// and Next/PrevTurn() cannot be called until all states in the stack are popped. Duplicates allowed.
+		/// and Next/PrevTurn() cannot be called until all states in the stack are popped. Stack state duplicates allowed.
 		/// </summary>
-		public virtual void Stack(State state)
+		public void Stack(State state)
 		{
+			Debug.Log("Stacking: " + state.GetType().Name);
+
 			//Cover current state
 			currentState.OnCover(this);
 
-			//Enter new state
-			state.OnEnter(this);
-
 			//Set current state
 			stackStates.Push(state);
+
+			//Enter new state
+			currentState.OnEnter(this);
 		}
 
-		public virtual void UnStack()
+		public void UnStack()
 		{
 			if (isInStackMode)
 			{
-				//Exit current state
+				Debug.Log("Un-stacking: " + currentState.GetType().Name);
+
+				//Exit current stack state
 				currentState.OnExit(this);
 
+				// Debug.Log("Pre-Pop().currentState: " + currentState.GetType().Name);
 				//Pop stack (automatically setting the new state)
 				stackStates.Pop();
+				// Debug.Log("Post-Pop().currentState: " + currentState.GetType().Name);
 
-				//Uncover state
+				//Uncover state below
 				currentState.OnUncover(this);
 			}
 			else
@@ -172,6 +195,13 @@ namespace StormRend.Systems.StateMachines
 				Debug.LogWarning("Nothing to unstack");
 			}
 		}
-		#endregion
+
+		public void ClearStack()
+		{
+			//Keep unstacking, while executing appropriate state methods, until the stack is clear
+			while (isInStackMode)
+				UnStack();
+		}
+	#endregion
 	}
 }
