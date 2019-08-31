@@ -4,10 +4,14 @@ namespace StormRend.Systems.StateMachines
 {
     public abstract class State : MonoBehaviour
     {
-        internal virtual void OnEnter() { }
+		public virtual void OnEnter(UltraStateMachine sm) { }
 
-        internal virtual void OnUpdate(CoreStateMachine sm) { }
+		public virtual void OnUpdate(UltraStateMachine sm) { }
 
-        internal virtual void OnExit() { }
+		public virtual void OnExit(UltraStateMachine sm) { }
+
+        public virtual void OnCover(UltraStateMachine sm) {}
+
+        public virtual void OnUncover(UltraStateMachine sm) {}
     }
 }
