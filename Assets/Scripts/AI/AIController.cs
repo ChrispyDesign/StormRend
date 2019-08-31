@@ -32,7 +32,7 @@ namespace StormRend.AI
 
 		void Awake()
 		{
-			tbssm = GameStateDirector.singleton as UltraStateMachine;
+			// tbssm = GameStateMachine.singleton as UltraStateMachine;
 			bd = BhaveDirector.singleton;
 
 			gm = GameManager.singleton;
