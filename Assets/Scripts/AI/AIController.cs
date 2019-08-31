@@ -16,7 +16,7 @@ namespace StormRend.AI
 		// - Adjustable delay between each enemy's turn
 		// - API to end enemy's turn accessible by delegates
 
-		public enum UnitType 
+		public enum UnitType
 			{ Player, Enemy }
 
 		[SerializeField] UnitType aiUnitType;
@@ -24,7 +24,7 @@ namespace StormRend.AI
 
 		Unit[] currentUnits = null;
 
-        TurnBasedStackStateMachine tbssm;
+        UltraStateMachine tbssm;
 		BhaveDirector bd = null;
 
 		//Death row below
@@ -32,7 +32,7 @@ namespace StormRend.AI
 
 		void Awake()
 		{
-			tbssm = GameStateDirector.singleton as TurnBasedStackStateMachine;
+			tbssm = GameStateDirector.singleton as UltraStateMachine;
 			bd = BhaveDirector.singleton;
 
 			gm = GameManager.singleton;
@@ -45,7 +45,7 @@ namespace StormRend.AI
 				currentUnits = gm.GetPlayerUnits();
 			else if (aiUnitType == UnitType.Enemy)
 				currentUnits = gm.GetEnemyUnits();
-			
+
 			//Start running the AI
 			StartCoroutine(RunAI());
 		}
