@@ -6,17 +6,13 @@ using UnityEngine;
 /// </summary>
 public class CameraMove : MonoBehaviour
 {
-    [Header("Root Transform")]
-    [SerializeField] private Transform m_rootTransform = null;
+    [SerializeField] Transform rootTransform = null;
+    [SerializeField] float moveSpeed = 10;
 
-    [Header("Move Speed")]
-    [SerializeField] private float m_moveSpeed = 10;
-
-    [Header("Move Anchors")]
-    [SerializeField] private BoxCollider m_cameraBounds = null;
+    [SerializeField] BoxCollider cameraBounds = null;
 
     // movement coroutine reference (for stopping/interrupting)
-    private IEnumerator m_moveTo;
+    // private IEnumerator moveTo;
 
     /// <summary>
     /// use this to move the camera by an incremental amount!
@@ -25,22 +21,22 @@ public class CameraMove : MonoBehaviour
     public void MoveBy(Vector3 axis)
     {
         // stop movement if the MoveTo coroutine is already executing
-        if (m_moveTo != null && axis != Vector3.zero)
-            StopCoroutine(m_moveTo);
-        
-        float speed = m_moveSpeed * Time.deltaTime;
+        // if (moveTo != null && axis != Vector3.zero)
+            StopCoroutine(LerpTo(Vector3.zero));
+
+        float speed = moveSpeed * Time.unscaledDeltaTime;
 
         // determine the destination of the end of the movement
-        Vector3 destination = m_rootTransform.position;
-        destination += axis.z * m_rootTransform.forward * speed;
-        destination += axis.y * m_rootTransform.up * speed;
-        destination += axis.x * m_rootTransform.right * speed;
+        Vector3 destination = rootTransform.position;
+        destination += axis.z * rootTransform.forward * speed;
+        destination += axis.y * rootTransform.up * speed;
+        destination += axis.x * rootTransform.right * speed;
 
         // ensure camera stays within bounds
         destination = ClampDestination(destination);
 
         // perform movement
-        m_rootTransform.position = destination;
+        rootTransform.position = destination;
     }
 
     /// <summary>
@@ -51,14 +47,14 @@ public class CameraMove : MonoBehaviour
     public void MoveTo(Vector3 destination, float time = 0.3f)
     {
         // stop movement if the MoveTo coroutine is already executing
-        if (m_moveTo != null)
-            StopCoroutine(m_moveTo); 
+        // if (moveTo != null)
+            StopCoroutine(LerpTo(destination, time));
 
         // ensure camera stays within bounds
         destination = ClampDestination(destination);
 
         // start new MoveTo coroutine
-        StartCoroutine(m_moveTo = LerpTo(destination, time));
+        StartCoroutine(LerpTo(destination, time));
     }
 
     /// <summary>
@@ -75,10 +71,10 @@ public class CameraMove : MonoBehaviour
         {
             // get lerp percentage & increment timer
             float t = timer / time;
-            timer += Time.deltaTime;
-            
+            timer += Time.unscaledDeltaTime;
+
             // perform incremental movement
-            m_rootTransform.position = Vector3.Lerp(m_rootTransform.position, destination, t);
+            rootTransform.position = Vector3.Lerp(rootTransform.position, destination, t);
             yield return null;
         }
     }
@@ -90,6 +86,6 @@ public class CameraMove : MonoBehaviour
     /// <returns>the clamped destination</returns>
     private Vector3 ClampDestination(Vector3 destination)
     {
-        return m_cameraBounds.ClosestPoint(destination);
+        return cameraBounds.ClosestPoint(destination);
     }
 }

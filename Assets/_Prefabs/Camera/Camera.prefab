@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_rootTransform: {fileID: 2145422008916954137}
-  m_zoomSpeed: 10
+  m_zoomSpeed: 7.5
   m_near: {fileID: 2145422009628610115}
   m_far: {fileID: 2145422007922876847}
   m_anchorPoints: {fileID: 2145422009065853913}
@@ -140,9 +140,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 187bf82676d4c2e43820dffc568628ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_rootTransform: {fileID: 2145422008916954137}
-  m_moveSpeed: 15
-  m_cameraBounds: {fileID: 0}
+  rootTransform: {fileID: 2145422008916954137}
+  moveSpeed: 10
+  cameraBounds: {fileID: 0}
 --- !u!1 &2145422007922876846
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,7 +213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2145422008916954137}
   m_Layer: 0
-  m_Name: Root
+  m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

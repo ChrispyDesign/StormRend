@@ -26,10 +26,10 @@ public class CameraZoom : MonoBehaviour
     // step/snapping point helper variables
     private List<GameObject> m_anchors = new List<GameObject>();
     private int m_currentStep;
-    
+
     // the position that the camera will consistently attempt to zoom to
     private Vector3 m_desiredPosition;
-    
+
     /// <summary>
     /// create a list of anchor/snapping points at startup, and jump to the closest anchor
     /// </summary>
@@ -51,7 +51,7 @@ public class CameraZoom : MonoBehaviour
     {
         // get current position and speed
         Vector3 currentPosition = transform.position;
-        float speed = m_zoomSpeed * Time.deltaTime;
+        float speed = m_zoomSpeed * Time.unscaledDeltaTime;
 
         // update position
         Vector3 desiredPosition = m_desiredPosition + m_rootTransform.position;
@@ -74,7 +74,7 @@ public class CameraZoom : MonoBehaviour
 
         // add near to list
         m_anchors.Add(m_near.gameObject);
-        
+
         // use a for loop to create a given amount of steps/anchor points between near and far points
         for (int i = 0; i < m_nearFarSteps; i++)
         {
@@ -106,7 +106,7 @@ public class CameraZoom : MonoBehaviour
         // increment the step/anchor point and clamp it between 0 and step/anchor count
         m_currentStep += step;
         m_currentStep = Mathf.Clamp(m_currentStep, 0, m_nearFarSteps + 1);
-        
+
         // update desired position
         m_desiredPosition = m_anchors[m_currentStep].transform.position - m_rootTransform.position;
     }
