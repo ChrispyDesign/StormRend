@@ -22,7 +22,7 @@ namespace StormRend.Defunct
 
 		Unit[] currentUnits = null;
 
-        UltraStateMachine tbssm;
+        // UltraStateMachine tbssm;
 		BhaveDirector bd = null;
 
 		//Death row below
@@ -66,7 +66,7 @@ namespace StormRend.Defunct
 		public void EndAITurn()
 		{
 			//This shit needs to be something like GameStateDirector.NextTurn()
-			tbssm.NextTurn();
+			// tbssm.NextTurn();
 
 			// if (aiUnitType == UnitType.Enemy)
 			// 	gm.GetTurnManager().PlayerTurn();
