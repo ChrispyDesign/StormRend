@@ -13,7 +13,7 @@ namespace StormRend.Systems
     public class BlizzardController : MonoBehaviour
     {
         [Flags]
-        public enum BlizzardTargetTypeMask
+        public enum BlizzardTargetType
         {
             Player = 1 << 0,
             Enemy = 1 << 1,
@@ -22,8 +22,8 @@ namespace StormRend.Systems
 
         [Tooltip("Blizzard meter transform, contains toggle child elements")]
         [SerializeField] Transform m_blizzardMeter = null;
-        [SerializeField][EnumFlags] BlizzardTargetTypeMask targetTypes;
-        [SerializeField] int blizzardDamage = 1;
+        [SerializeField][EnumFlags] BlizzardTargetType targetTypes;
+        [SerializeField] [Range(1, 10)] int blizzardDamage = 1;
 
         [Space]
         [Header("Events")]
@@ -130,7 +130,7 @@ namespace StormRend.Systems
             OnExecute.Invoke();
 
             //Player Units
-            if ((targetTypes & BlizzardTargetTypeMask.Player) == BlizzardTargetTypeMask.Player)
+            if ((targetTypes & BlizzardTargetType.Player) == BlizzardTargetType.Player)
             {
                 //Get all player units
                 var playerUnits = GameManager.singleton.GetPlayerUnits();
@@ -138,7 +138,7 @@ namespace StormRend.Systems
             }
 
             //Enemy units
-            if ((targetTypes & BlizzardTargetTypeMask.Enemy) == BlizzardTargetTypeMask.Enemy)
+            if ((targetTypes & BlizzardTargetType.Enemy) == BlizzardTargetType.Enemy)
             {
                 //Deal damage to all enemies
                 var enemyUnits = GameManager.singleton.GetEnemyUnits();
@@ -146,7 +146,7 @@ namespace StormRend.Systems
             }
 
             //Inanimate units (ie. Spirit crystals etc)
-            if ((targetTypes & BlizzardTargetTypeMask.Inanimate) == BlizzardTargetTypeMask.Inanimate)
+            if ((targetTypes & BlizzardTargetType.Inanimate) == BlizzardTargetType.Inanimate)
             {
                 Debug.LogError("Blizzard affect on inanimate units not implemented!");
             }

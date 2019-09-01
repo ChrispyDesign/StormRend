@@ -15,16 +15,16 @@ namespace StormRend.States
 		[SerializeField] KeyCode pauseKey = KeyCode.Escape;
 		[SerializeField] UIState pauseMenuState;
 
+		[Header("End Game")]
+		[SerializeField] State loseState;
+		[SerializeField] State victoryState;
+
 		UltraStateMachine usm;
-		GameManager gm;
-		BlizzardController bc;
 		private bool isPaused;
 
 		void Awake()    //Doesn't matter if you override or hide. Singleton.Awake() will run regardless.
 		{
 			usm = GetComponent<UltraStateMachine>();
-			gm = GameManager.singleton;
-			bc = UIManager.GetInstance().GetBlizzardManager();
 		}
 
 		void Start()
@@ -45,7 +45,7 @@ namespace StormRend.States
 		{
 			if (Input.GetKeyDown(pauseKey))
 			{
-                // Debug.Log("currentState: " + usm.currentState.GetType().Name);
+				// Debug.Log("currentState: " + usm.currentState.GetType().Name);
 				if (usm.currentState != pauseMenuState)
 				{
 
@@ -56,12 +56,6 @@ namespace StormRend.States
 					usm.ClearStack();
 				}
 			}
-		}
-
-		public void RunNextTurnLogic()
-		{
-			//Tick blizzard
-			bc.IncrementBlizzardMeter();
 		}
 
 		public void ReturnToGame()

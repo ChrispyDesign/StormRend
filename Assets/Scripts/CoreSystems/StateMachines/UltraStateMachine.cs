@@ -76,10 +76,8 @@ namespace StormRend.Systems.StateMachines
 			{
 				//Insert into turn states (no duplicates)
 				Insert(entryState);
-
 				//Enter entry state
-				Switch(entryState);
-
+				entryState.OnEnter(this);
 				//Set initial turn index
 				currentStateIDX = turnStates.IndexOf(entryState);
 			}
@@ -99,10 +97,8 @@ namespace StormRend.Systems.StateMachines
 			{
 				//Exit current state
 				currentState?.OnExit(this);
-
 				//Switch to new state
 				turnStates[currentStateIDX] = state;
-
 				//Enter new state
 				currentState.OnEnter(this);
 			}
@@ -144,19 +140,28 @@ namespace StormRend.Systems.StateMachines
 		{
 			OnNextTurn.Invoke();
 
+			//Can only go to next turn if in turn based mode
 			if (isInTurnBasedMode)
 			{
+				//Exit current state
+				currentState?.OnExit(this);
+				//Set next state index
 				currentStateIDX++;
-				Switch(turnStates[currentStateIDX]);
+				//Enter next state
+				currentState?.OnEnter(this);
 			}
 		}
 		/// <summary>
-		/// Select previous turn state
+		/// Select previous turn state. Probably impractical
 		/// </summary>
 		public void PrevTurn()
 		{
 			if (isInTurnBasedMode)
-				Switch(turnStates[currentStateIDX--]);
+			{
+				currentState?.OnExit(this);
+				currentStateIDX--;
+				currentState?.OnEnter(this);
+			}
 		}
 	#endregion
 	#region Stacks
@@ -167,34 +172,28 @@ namespace StormRend.Systems.StateMachines
 		/// </summary>
 		public void Stack(State state)
 		{
-			Debug.Log("Stacking: " + state.GetType().Name);
+			// Debug.Log("Stacking: " + state.GetType().Name);
 
 			//Cover current state
 			currentState?.OnCover(this);
-
 			//Push on new state
 			stackStates.Push(state);
-
 			//Enter new state
-			currentState.OnEnter(this);
+			currentState?.OnEnter(this);
 		}
 
 		public void UnStack()
 		{
 			if (isInStackMode)
 			{
-				Debug.Log("Un-stacking: " + currentState.GetType().Name);
+				// Debug.Log("Un-stacking: " + currentState.GetType().Name);
 
 				//Exit current stack state
 				currentState?.OnExit(this);
-
-				// Debug.Log("Pre-Pop().currentState: " + currentState.GetType().Name);
 				//Push off current state (automatically setting the new state)
 				stackStates.Pop();
-				// Debug.Log("Post-Pop().currentState: " + currentState.GetType().Name);
-
 				//Uncover state below
-				currentState.OnUncover(this);
+				currentState?.OnUncover(this);
 			}
 			else
 			{

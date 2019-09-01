@@ -15,31 +15,31 @@ namespace StormRend.States
         [ReadOnlyField] public float longestStateTime = 0;
         [ReadOnlyField] public float totalStateTime = 0;
 
-		//General
         [Header("Events")]
 		[SerializeField] protected UnityEvent OnTurnEnter;
         [SerializeField] protected UnityEvent OnTurnExit;
 
-		GameManager gm;
-        BlizzardController bc;
+        // [Header("Systems")]
+        // BlizzardController blizzardCtrl;
 
         void Awake()
         {
-            //TODO try to not use singletons
-            gm = GameManager.singleton;
-            bc = UIManager.GetInstance().GetBlizzardManager();
+            // blizzardCtrl = GetComponentInParent<BlizzardController>();
+            // Debug.Assert(blizzardCtrl, "No Blizzard Controller found!");
+
         }
+
+        /// NOTE! All these methods must be called by overriden methods to preserve correct functionality
 
         public override void OnEnter(UltraStateMachine sm)
         {
+            base.OnEnter(sm);
+            // Debug.Log("OnTurnEnter()");
             OnTurnEnter.Invoke();
 
             //Stats
             turnCount++;
             currentStateTime = 0;
-
-            //Blizzard
-            bc.IncrementBlizzardMeter();
         }
 
         public override void OnUpdate(UltraStateMachine sm)
@@ -49,6 +49,8 @@ namespace StormRend.States
 
         public override void OnExit(UltraStateMachine sm)
         {
+            base.OnExit(sm);
+            // Debug.Log("OnTurnExit()");
             OnTurnExit.Invoke();
 
             //Update longest turn

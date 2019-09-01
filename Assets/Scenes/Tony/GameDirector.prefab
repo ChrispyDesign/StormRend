@@ -381,6 +381,51 @@ MonoBehaviour:
   m_selector: {fileID: 0}
   m_infoPanel: {fileID: 0}
   m_ability: {fileID: 0}
+--- !u!1 &1298932653378580952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5150136796973514098}
+  - component: {fileID: 2177819233072501}
+  m_Layer: 0
+  m_Name: BhaVE
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5150136796973514098
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298932653378580952}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 796.6473, y: 528.4397, z: 13.799345}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6841392900819925574}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2177819233072501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298932653378580952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1361485836, guid: 7e4372972433fb64a896064962770e80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tickMode: 1
+  tickRate: 0.15
 --- !u!1 &1506211927116513685
 GameObject:
   m_ObjectHideFlags: 0
@@ -2828,7 +2873,7 @@ RectTransform:
   m_LocalScale: {x: 2.07, y: 2.07, z: 2.07}
   m_Children: []
   m_Father: {fileID: 6841392900819925574}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2847,8 +2892,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e6e1399496b6bb45a6f27a3b0045df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_gloryManager: {fileID: 6841392900819925569}
-  m_blizzardManager: {fileID: 6841392900819925568}
+  m_gloryManager: {fileID: 2386037887812987862}
+  m_blizzardManager: {fileID: 6471288850949845595}
   m_avatarSelector: {fileID: 2354728632894904422}
   m_abilitySelector: {fileID: 2021877514690654775}
 --- !u!114 &2354728632894904422
@@ -5554,7 +5599,7 @@ GameObject:
   - component: {fileID: 2828046761603909175}
   - component: {fileID: 6841392901622992971}
   m_Layer: 5
-  m_Name: Victory
+  m_Name: Win
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5592,7 +5637,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4253472180937816188}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 039e28ef6dd78c64b8eb710a801daaf4, type: 3}
+  m_Script: {fileID: 11500000, guid: c29c96076267c40869ade636c86bbce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Description: 
@@ -7960,6 +8005,60 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1 &6652805309005778066
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1217614300026342216}
+  - component: {fileID: 2386037887812987862}
+  m_Layer: 0
+  m_Name: GloryController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1217614300026342216
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6652805309005778066}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 796.6473, y: 528.4397, z: 13.799345}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6841392900819925574}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2386037887812987862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6652805309005778066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0c47059f6007b24ca7d6ec235825909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_gloryMeter: {fileID: 4397642115998719468}
+  OnGain:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnSpend:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &6655543724543872091
 GameObject:
   m_ObjectHideFlags: 0
@@ -8444,50 +8543,6 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!1 &6841392900765732338
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6841392900765732339}
-  - component: {fileID: 6841392900765732348}
-  m_Layer: 0
-  m_Name: CrystalTurn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6841392900765732339
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6841392900765732338}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6841392900826536576}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6841392900765732348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6841392900765732338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3eb38225b95e14da59f3da1f55ffd09d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Description: 
 --- !u!1 &6841392900814874495
 GameObject:
   m_ObjectHideFlags: 0
@@ -8548,8 +8603,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  enemyType: 0
-  aiController: {fileID: 0}
+  aiTurnTime: 2
 --- !u!1 &6841392900819925572
 GameObject:
   m_ObjectHideFlags: 0
@@ -8561,8 +8615,6 @@ GameObject:
   - component: {fileID: 6841392900819925574}
   - component: {fileID: 6841392900819925573}
   - component: {fileID: 6841392900819925575}
-  - component: {fileID: 6841392900819925569}
-  - component: {fileID: 6841392900819925568}
   m_Layer: 0
   m_Name: GameDirector
   m_TagString: Untagged
@@ -8577,12 +8629,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6841392900819925572}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12, y: 0.19554019, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6841392900826536576}
   - {fileID: 2428445561950147831}
+  - {fileID: 5150136796973514098}
+  - {fileID: 594724467979692465}
+  - {fileID: 1217614300026342216}
   - {fileID: 2428445561809573818}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -8602,6 +8657,8 @@ MonoBehaviour:
   debug: 0
   pauseKey: 27
   pauseMenuState: {fileID: 6841392902387126551}
+  loseState: {fileID: 9015395174224637444}
+  victoryState: {fileID: 6841392901622992971}
   mainMenuSceneIdx: 0
 --- !u!114 &6841392900819925575
 MonoBehaviour:
@@ -8620,79 +8677,20 @@ MonoBehaviour:
   turnStates:
   - {fileID: 6841392901105898438}
   - {fileID: 6841392900814874489}
-  - {fileID: 6841392900765732348}
   OnNextTurn:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6841392900819925573}
-        m_MethodName: 
+      - m_Target: {fileID: 6471288850949845595}
+        m_MethodName: Tick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnPrevTurn:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &6841392900819925569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6841392900819925572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0c47059f6007b24ca7d6ec235825909, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_gloryMeter: {fileID: 4397642115998719468}
-  OnGain:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnSpend:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &6841392900819925568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6841392900819925572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19c0fe357a69ebd41969bb0751de740b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_blizzardMeter: {fileID: 2428445561436877473}
-  targetTypes: 1
-  blizzardDamage: 1
-  OnIncrement:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnPrepare:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  OnExecute:
-    m_PersistentCalls:
-      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &6841392900826536583
@@ -8724,7 +8722,6 @@ Transform:
   m_Children:
   - {fileID: 6841392901105898437}
   - {fileID: 6841392900814874488}
-  - {fileID: 6841392900765732339}
   m_Father: {fileID: 6841392900819925574}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9646,7 +9643,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8915570360049266705}
-  - component: {fileID: 6841392900658153022}
+  - component: {fileID: 9015395174224637444}
   m_Layer: 5
   m_Name: Lose
   m_TagString: Untagged
@@ -9677,7 +9674,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6841392900658153022
+--- !u!114 &9015395174224637444
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9686,12 +9683,78 @@ MonoBehaviour:
   m_GameObject: {fileID: 6962013832118132037}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0266a710721e9744092496d5c67532ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 004a5c26c66b946bdbd3e1da53909d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Description: 
   uiItems:
   - {fileID: 6962013832118132037}
+--- !u!1 &7520192714840683413
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 594724467979692465}
+  - component: {fileID: 6471288850949845595}
+  m_Layer: 0
+  m_Name: BlizzardController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &594724467979692465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7520192714840683413}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 796.6473, y: 528.4397, z: 13.799345}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6841392900819925574}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6471288850949845595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7520192714840683413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19c0fe357a69ebd41969bb0751de740b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_blizzardMeter: {fileID: 2428445561436877473}
+  targetTypes: 1
+  blizzardDamage: 1
+  OnTick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnReset:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnPrepare:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnExecute:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &7652918077435659037
 GameObject:
   m_ObjectHideFlags: 0
@@ -9755,7 +9818,7 @@ MonoBehaviour:
   Description: 
   uiItems:
   - {fileID: 7652918077435659037}
-  pauseTimeScale: 0.3
+  pauseTimeScale: 0.1
 --- !u!1 &7703311352327123336
 GameObject:
   m_ObjectHideFlags: 0
