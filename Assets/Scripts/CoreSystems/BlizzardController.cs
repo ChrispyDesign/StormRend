@@ -5,7 +5,7 @@ using System;
 using StormRend.Utility.Attributes;
 using StormRend.Defunct;
 
-namespace StormRend
+namespace StormRend.Systems
 {
     /// <summary>
     /// blizzard class responsible for incrementing and decrementing the blizzard meter and performing blizzards when necessary
@@ -22,12 +22,12 @@ namespace StormRend
 
         [Tooltip("Blizzard meter transform, contains toggle child elements")]
         [SerializeField] Transform m_blizzardMeter = null;
-
         [SerializeField][EnumFlags] BlizzardTargetTypeMask targetTypes;
         [SerializeField] int blizzardDamage = 1;
 
         [Space]
-        [SerializeField] UnityEvent OnIncrement;
+        [Header("Events")]
+        [SerializeField] UnityEvent OnTick;
         [SerializeField] UnityEvent OnReset;
         [SerializeField] UnityEvent OnPrepare;
         [SerializeField] UnityEvent OnExecute;
@@ -44,7 +44,7 @@ namespace StormRend
         /// <summary>
         /// caches references to blizzard nodes
         /// </summary>
-        private void Start()
+        private void Awake()
         {
             Debug.Assert(m_blizzardMeter != null, "Blizzard meter not assigned to Blizzard Manager!");
 
@@ -58,15 +58,15 @@ namespace StormRend
         /// use this function to increment the blizzard meter by one! Performs an animation on
         /// the blizzard toggle node and executes & resets the blizzard if the meter is full
         /// </summary>
-        public void IncrementBlizzardMeter()
+        public void Tick()
         {
-            OnIncrement.Invoke();
+            OnTick.Invoke();
 
             // all blizzard nodes are toggled, start blizzard
             if (blizzardCount == m_blizzardNodes.Length)
             {
-                ExecuteBlizzard(); // start blizzard
-                ResetBlizzardMeter(); // reset blizzard meter
+                Execute(); // start blizzard
+                Reset(); // reset blizzard meter
                 return;
             }
 
@@ -81,15 +81,15 @@ namespace StormRend
             Animator animator = blizzardNode.GetComponent<Animator>();
 
             if (blizzardCount == m_blizzardNodes.Length)
-                PrepareBlizzard();
+                Prepare();
             else
                 animator.SetTrigger("NotifyOnce"); // notify once
         }
 
         /// <summary>
-        /// use this function to reset & empty the blizzard meter! 
+        /// use this function to reset & empty the blizzard meter!
         /// </summary>
-        public void ResetBlizzardMeter()
+        internal void Reset()
         {
             OnReset.Invoke();
 
@@ -103,7 +103,7 @@ namespace StormRend
             blizzardCount = 0;
         }
 
-        private void PrepareBlizzard()
+        void Prepare()
         {
             OnPrepare.Invoke();
 
@@ -120,10 +120,9 @@ namespace StormRend
         }
 
         /// <summary>
-        /// function which executes the blizzard when the meter is full, decreases all player health by one
-        /// and immobilizes them
+        /// Executes the blizzard
         /// </summary>
-        private void ExecuteBlizzard()
+        internal void Execute()
         {
             Debug.Log("Blizzard Executing...");
             Debug.Log("Target types: " + targetTypes);

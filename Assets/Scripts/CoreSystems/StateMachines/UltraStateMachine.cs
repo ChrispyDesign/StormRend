@@ -26,7 +26,7 @@ namespace StormRend.Systems.StateMachines
 		Stack<State> stackStates = new Stack<State>();
 
 		[Space]
-		public UnityEvent OnNextTurn, OnPrevTurn;
+		public UnityEvent OnNextTurn;
 	#endregion
 	#region Properties
 		public int turnsCount => turnStates.Count;
@@ -97,9 +97,14 @@ namespace StormRend.Systems.StateMachines
 		{
 			if (isInTurnBasedMode)
 			{
+				//Exit current state
 				currentState?.OnExit(this);
+
+				//Switch to new state
 				turnStates[currentStateIDX] = state;
-				state?.OnEnter(this);
+
+				//Enter new state
+				currentState.OnEnter(this);
 			}
 			else
 			{
@@ -140,15 +145,16 @@ namespace StormRend.Systems.StateMachines
 			OnNextTurn.Invoke();
 
 			if (isInTurnBasedMode)
-				Switch(turnStates[currentStateIDX++]);
+			{
+				currentStateIDX++;
+				Switch(turnStates[currentStateIDX]);
+			}
 		}
 		/// <summary>
 		/// Select previous turn state
 		/// </summary>
 		public void PrevTurn()
 		{
-			OnPrevTurn.Invoke();
-
 			if (isInTurnBasedMode)
 				Switch(turnStates[currentStateIDX--]);
 		}
@@ -164,9 +170,9 @@ namespace StormRend.Systems.StateMachines
 			Debug.Log("Stacking: " + state.GetType().Name);
 
 			//Cover current state
-			currentState.OnCover(this);
+			currentState?.OnCover(this);
 
-			//Set current state
+			//Push on new state
 			stackStates.Push(state);
 
 			//Enter new state
@@ -180,10 +186,10 @@ namespace StormRend.Systems.StateMachines
 				Debug.Log("Un-stacking: " + currentState.GetType().Name);
 
 				//Exit current stack state
-				currentState.OnExit(this);
+				currentState?.OnExit(this);
 
 				// Debug.Log("Pre-Pop().currentState: " + currentState.GetType().Name);
-				//Pop stack (automatically setting the new state)
+				//Push off current state (automatically setting the new state)
 				stackStates.Pop();
 				// Debug.Log("Post-Pop().currentState: " + currentState.GetType().Name);
 

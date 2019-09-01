@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1360014777689805779}
   - component: {fileID: 6278063683333937501}
-  - component: {fileID: 3074314172487970484}
-  - component: {fileID: 3520646519342248256}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -31,7 +29,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4102394522535637675}
-  - {fileID: 8282566447300338916}
   - {fileID: 2175749787330395213}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -48,40 +45,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ae525e515293940b58b807d9025b03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_turnManager: {fileID: 8282566447300338917}
+  OnGameLose:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnGameWin:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_turnManager: {fileID: 0}
   m_playerController: {fileID: 7364325051455779121}
   m_commandManager: {fileID: 4102394522535637674}
   m_players: []
   m_enemies: []
   m_crystal: []
---- !u!114 &3074314172487970484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6301149344042230064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94e616bca83d24648995dc21027132cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aiUnitType: 1
-  aiTurnTime: 2
---- !u!114 &3520646519342248256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6301149344042230064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1361485836, guid: 7e4372972433fb64a896064962770e80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _tickMode: 1
-  tickRate: 0.15
 --- !u!1001 &490501058520517808
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -169,98 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66d9a50e3caaa8843875d185889852d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &6644887766161496875
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1360014777689805779}
-    m_Modifications:
-    - target: {fileID: 3370650178599190477, guid: 4417b45b589c3264eb788c68c13efb09,
-        type: 3}
-      propertyPath: m_Name
-      value: Turn Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 3370650178599190479, guid: 4417b45b589c3264eb788c68c13efb09,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3370650178599190479, guid: 4417b45b589c3264eb788c68c13efb09,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3370650178599190479, guid: 4417b45b589c3264eb788c68c13efb09,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3370650178599190479, guid: 4417b45b589c3264eb788c68c13efb09,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3370650178599190479, guid: 4417b45b589c3264eb788c68c13efb09,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3370650178599190479, guid: 4417b45b589c3264eb788c68c13efb09,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3370650178599190479, guid: 4417b45b589c3264eb788c68c13efb09,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3370650178599190479, guid: 4417b45b589c3264eb788c68c13efb09,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3370650178599190479, guid: 4417b45b589c3264eb788c68c13efb09,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3370650178599190479, guid: 4417b45b589c3264eb788c68c13efb09,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3370650178599190479, guid: 4417b45b589c3264eb788c68c13efb09,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3370650178599190478, guid: 4417b45b589c3264eb788c68c13efb09,
-        type: 3}
-      propertyPath: m_proceedTurnButton
-      value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4417b45b589c3264eb788c68c13efb09, type: 3}
---- !u!4 &8282566447300338916 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3370650178599190479, guid: 4417b45b589c3264eb788c68c13efb09,
-    type: 3}
-  m_PrefabInstance: {fileID: 6644887766161496875}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8282566447300338917 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3370650178599190478, guid: 4417b45b589c3264eb788c68c13efb09,
-    type: 3}
-  m_PrefabInstance: {fileID: 6644887766161496875}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d52311a7ebc70941811e2cc28a1404a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &7091852364440132445
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -311,7 +198,7 @@ PrefabInstance:
     - target: {fileID: 8960618177738467088, guid: 6ee4cb7d8d9f0914ab61744b54086994,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8960618177738467088, guid: 6ee4cb7d8d9f0914ab61744b54086994,
         type: 3}
