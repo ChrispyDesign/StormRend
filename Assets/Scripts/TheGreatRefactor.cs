@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using BhaVE.Patterns;
 using UnityEngine;
 
 namespace StormRend
@@ -57,6 +59,32 @@ namespace StormRend
                 //-----------------
             }
         }
+
+			public class MapImplementation
+			{
+
+				public class Connection
+				{
+					Tile target;
+					float cost;
+				}
+
+				public class Tile : MonoBehaviour
+				{
+					List<Connection> connections = new List<Connection>();
+				}
+
+				public class Map : ScriptableObject
+				{
+					List<Tile> tiles = new List<Tile>();
+				}
+
+				public static class Pathfinder
+				{
+					public static Tile[] FindValidMoves(Map map, Unit unit) { return new Tile[0]; }
+				}
+			}
+
 
         /* -------- Organization
         --- Folder structure
