@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using StormRend.Systems;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -66,7 +67,7 @@ namespace StormRend.Defunct
 
 			// increment blizzard counter at the start of each turn
 			if (blizzardManager)
-				blizzardManager.IncrementBlizzardMeter();
+				blizzardManager.Tick();
 
 			// enable proceed button
 			m_proceedTurnButton.interactable = true;

@@ -3,11 +3,9 @@ using BhaVE.Core;
 using UnityEngine;
 
 //TODO temp
-using StormRend.Defunct;
-using StormRend.States;
 using StormRend.Systems.StateMachines;
 
-namespace StormRend.AI
+namespace StormRend.Defunct
 {
     public class AIController : MonoBehaviour
 	{
@@ -32,9 +30,7 @@ namespace StormRend.AI
 
 		void Awake()
 		{
-			// tbssm = GameStateMachine.singleton as UltraStateMachine;
 			bd = BhaveDirector.singleton;
-
 			gm = GameManager.singleton;
 		}
 
@@ -61,7 +57,7 @@ namespace StormRend.AI
 			}
 
 			//Then end the turn for this unit type
-			EndAITurn();
+			// EndAITurn();
 		}
 
 		/// <summary>
