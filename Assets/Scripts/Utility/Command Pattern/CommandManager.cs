@@ -1,23 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class CommandManager : MonoBehaviour
+namespace StormRend.Defunct
 {
-	//Stop calling everything managers!
-	//Maybe UndoSystem or just Undo
-	//Static
-	//Doesn't need to be a monobehaviour, maybe a scriptable object
-
-	public List<ICommand> m_moves;
-
-	private void Start()
+	public class CommandManager : MonoBehaviour
 	{
-		m_moves = new List<ICommand>();
-	}
+		//Stop calling everything managers!
+		//Maybe UndoSystem or just Undo
+		//Static
+		//Doesn't need to be a monobehaviour, maybe a scriptable object
 
-	public static void RegisterMove(MoveCommand command)
-	{
+		public List<ICommand> commands = new List<ICommand>();
 
+		public void ClearCommands()
+		{
+			commands.Clear();
+		}
 	}
 }

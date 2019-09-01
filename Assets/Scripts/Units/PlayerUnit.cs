@@ -52,7 +52,7 @@ namespace StormRend
 
             if (!m_afterClear)
             {
-                foreach (ICommand command in GameManager.singleton.GetCommandManager().m_moves)
+                foreach (ICommand command in GameManager.singleton.GetCommandManager().commands)
                 {
                     MoveCommand move = command as MoveCommand;
 

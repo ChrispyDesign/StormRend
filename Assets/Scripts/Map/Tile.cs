@@ -172,7 +172,7 @@ namespace StormRend
                             MoveCommand temp = currentSelectedUnit.GetMoveCommand();
                             temp.Execute();
 
-                            GameManager.singleton.GetCommandManager().m_moves.Add(temp);
+                            GameManager.singleton.GetCommandManager().commands.Add(temp);
                         }
 
                         FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 0.5f);
@@ -207,13 +207,13 @@ namespace StormRend
 					CommandManager commandManager = GameManager.singleton.GetCommandManager();
 
 					//UndoController.
-					foreach (MoveCommand move in commandManager.m_moves)
+					foreach (MoveCommand move in commandManager.commands)
 					{
 						Unit unit = move.m_unit;
 						unit.m_afterClear = true;
 					}
 
-					commandManager.m_moves.Clear();		//UndoController.Clear()
+					commandManager.commands.Clear();		//UndoController.Clear()
 					UIAbilitySelector abilitySelector = UIManager.GetInstance().GetAbilitySelector();
 					abilitySelector.GetInfoPanel().SetActive(false);
 					abilitySelector.GetButtonPanel().SetActive(false);

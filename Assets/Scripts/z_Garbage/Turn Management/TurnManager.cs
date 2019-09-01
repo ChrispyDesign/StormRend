@@ -81,7 +81,7 @@ namespace StormRend.Defunct
 		/// </summary>
 		public void EnemyTurn()
 		{
-			GameManager.singleton.GetCommandManager().m_moves.Clear();
+			GameManager.singleton.GetCommandManager().commands.Clear();
 			foreach(PlayerUnit player in GameManager.singleton.GetPlayerUnits())
 			{
 				player.SetMoveCommand(null);
@@ -105,7 +105,7 @@ namespace StormRend.Defunct
 				player.m_afterClear = false;
 			}
 
-			GameManager.singleton.GetCommandManager().m_moves.Clear();
+			GameManager.singleton.GetCommandManager().ClearCommands();
 		}
 
 		public void ResetEnemyVariables()
@@ -119,7 +119,7 @@ namespace StormRend.Defunct
 				enemy.m_afterClear = false;
 			}
 
-			GameManager.singleton.GetCommandManager().m_moves.Clear();
+			GameManager.singleton.GetCommandManager().ClearCommands();
 		}
 	}
 }
