@@ -19,22 +19,12 @@ namespace StormRend.States
 		[SerializeField] protected UnityEvent OnTurnEnter;
         [SerializeField] protected UnityEvent OnTurnExit;
 
-        // [Header("Systems")]
-        // BlizzardController blizzardCtrl;
-
-        void Awake()
-        {
-            // blizzardCtrl = GetComponentInParent<BlizzardController>();
-            // Debug.Assert(blizzardCtrl, "No Blizzard Controller found!");
-
-        }
-
         /// NOTE! All these methods must be called by overriden methods to preserve correct functionality
 
         public override void OnEnter(UltraStateMachine sm)
         {
             base.OnEnter(sm);
-            // Debug.Log("OnTurnEnter()");
+
             OnTurnEnter.Invoke();
 
             //Stats

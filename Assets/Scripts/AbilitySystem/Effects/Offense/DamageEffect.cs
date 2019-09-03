@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using StormRend.Defunct;
+using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
@@ -6,7 +7,7 @@ namespace StormRend.Abilities.Effects
     {
         [SerializeField] int m_damageAmount;
 
-        public override bool PerformEffect(Tile targetTile, Unit effectPerformer)
+        public override bool PerformEffect(oTile targetTile, Unit effectPerformer)
         {
             base.PerformEffect(targetTile, effectPerformer);
 

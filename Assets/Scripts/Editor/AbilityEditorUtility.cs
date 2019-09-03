@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using StormRend.Abilities;
 
 //RENAME THIS TO SREditorUtility
 
@@ -41,7 +42,7 @@ public class AbilityEditorUtility : Editor
         {
             // minimize label width, as these toggles won't have labels
             EditorGUIUtility.labelWidth = 1;
-            
+
             for (int i = 0; i < area.Length; i++)
             {
                 // begin horizontal group for columns

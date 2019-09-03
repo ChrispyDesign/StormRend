@@ -4,6 +4,7 @@ using BhaVE.Nodes;
 using UnityEngine;
 using System.Collections.Generic;
 using BhaVE.Variables;
+using StormRend.Defunct;
 
 namespace StormRend.Bhaviours
 {
@@ -23,7 +24,7 @@ namespace StormRend.Bhaviours
 
 		//Privates
 		Unit u; //The unit mono attached to this agent
-		List<Tile> tilesToScan = new List<Tile>();
+		List<oTile> tilesToScan = new List<oTile>();
 		private bool unitsHaveBeenFound = false;
 
 

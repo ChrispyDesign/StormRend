@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using StormRend.Abilities.Effects;
+using StormRend.Abilities;
 
 [CustomEditor(typeof(Ability))]
 public class AbilityEditor : Editor
@@ -49,7 +50,7 @@ public class AbilityEditor : Editor
     {
         AbilityEditorUtility.PrintHeader("Ability Info");
 
-        // 
+        //
         AbilityEditorUtility.PropertyField(serializedObject, "m_name");
         AbilityEditorUtility.PropertyField(serializedObject, "animNumber");
         AbilityEditorUtility.PropertyField(serializedObject, "m_icon");

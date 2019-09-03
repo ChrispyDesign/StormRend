@@ -14,7 +14,7 @@ namespace StormRend.States
 			base.OnEnter(sm);
 
 			///------ Garbage code to be refactored  --------
-			GameManager.singleton.GetCommandManager().ClearCommands();		//Clear undos
+			GameManager.singleton.GetCommandManager().m_moves.Clear();			//Clear undos
 			// GameManager.singleton.GetPlayerController().enabled = true;		//Enable user control Update: Doesn't work
 			//-----------------------------------------------------
 		}

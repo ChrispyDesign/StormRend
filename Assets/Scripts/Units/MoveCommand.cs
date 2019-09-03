@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using StormRend;
+using StormRend.Defunct;
 using UnityEngine;
 
 public class MoveCommand : ICommand
@@ -35,11 +36,11 @@ public class MoveCommand : ICommand
 
     public void Execute()
     {
-        m_unit.MoveTo(Grid.CoordToTile(m_coords));
+        m_unit.MoveTo(oGrid.CoordToTile(m_coords));
     }
 
     public void Undo()
     {
-        m_unit.MoveTo(Grid.CoordToTile(m_origCoords));
+        m_unit.MoveTo(oGrid.CoordToTile(m_origCoords));
     }
 }
