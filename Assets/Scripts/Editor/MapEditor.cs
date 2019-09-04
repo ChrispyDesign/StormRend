@@ -11,7 +11,7 @@ namespace StormRend.Editors
 		Color[] paletteAssetPreviews;
 		GameObject stamp;
 		List<Tile> eraseList = new List<Tile>();
-		Vector3 worldCursor;
+		Vector3 snappedCursor;
 		Map t;
 		Event e;
 
@@ -37,11 +37,14 @@ namespace StormRend.Editors
 
 	#endregion
 
-		void UpdateStamp()
+		void CreateStamp()
 		{
-			//Destoy stamp's children
+			//Destoy stamp's child
+			while (stamp.transform.childCount > 0)
+				DestroyImmediate(stamp.transform.GetChild(0).gameObject);
 
-			
+			//Recreate
+
 		}
 
 		void ExecuteErase()
