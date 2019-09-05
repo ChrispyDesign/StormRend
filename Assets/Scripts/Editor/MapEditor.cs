@@ -11,7 +11,7 @@ namespace StormRend.Editors
 	{
 		Vector3 snappedCursor;
 		GameObject stamp;
-		List<Tile> eraseList = new List<Tile>();
+
 
 		Map t;
 		Event e;

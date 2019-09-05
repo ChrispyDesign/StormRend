@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using StormRend.Systems.Mapping;
 using UnityEditor;
 using UnityEngine;
@@ -9,15 +10,19 @@ namespace StormRend.Editors
     public partial class MapEditor : Editor
     {
 		public enum PaintMode
-		{
-			Painting, Erasing
-		}
+		    { Painting, Erasing }
+
+
+		List<Tile> eraseList = new List<Tile>();
 
         const int kNumOfGridLines = 30;
-        Color oldHandleColor;
-        Color oldGUIColor;
+        public override bool RequiresConstantRepaint() => true;
+
+        Color oldHandleColor, oldGUIColor;
 		PaintMode mode;
-        private int controlID;
+
+        int controlID;
+
 
         #region Core
         void OnSceneGUIBegin()
@@ -51,10 +56,7 @@ namespace StormRend.Editors
             OnSceneGUIEnd();
         }
 
-        void DrawStamp(Vector3 center)
-        {
-            stamp.transform.position = center;
-        }
+
 
         void OnSceneGUIEnd()
         {
@@ -146,7 +148,7 @@ namespace StormRend.Editors
             Debug.Log("Erase!");
         }
 
-        private void PeformStamp()
+        void PeformStamp()
         {
             Debug.Log("Stamp!");
 
@@ -158,13 +160,16 @@ namespace StormRend.Editors
                 Debug.LogWarning("Tile already exists here!");
                 return;
             }
+
             //Instantiate a new tile prefab
             var newTile = Instantiate(t.selectedTilePrefab, snappedCursor, Quaternion.identity);
-            //parent to the root
-            newTile.transform.SetParent(t.root);
+            newTile.transform.SetParent(t.transform);
+            newTile.gameObject.layer = t.gameObject.layer;
+
             //Register undo
             Undo.RegisterCreatedObjectUndo(newTile, "Stamp Tile Type" + t.selectedTilePrefab.name);
-            //Add to list of tiles
+
+            //Add to map's list of tiles
             t.tiles.Add(newTile.GetComponent<Tile>());
         }
 
@@ -214,6 +219,12 @@ namespace StormRend.Editors
                 // Handles.DrawSphere(2, snappedCursor, Quaternion.identity, t.tileSize * 0.25f);
             }
         }
+
+        void DrawTileTypeOverlayColour()
+        {
+
+        }
+
 
 
     }

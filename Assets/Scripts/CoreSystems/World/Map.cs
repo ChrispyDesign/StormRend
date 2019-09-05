@@ -16,23 +16,23 @@ namespace StormRend.Systems.Mapping
         const float maxMapSize = 400f;
 
         #region Inspector
-        [Tooltip("Where this editor will parent the painted tiles. Defaults to this Map object")]
-        [SerializeField] Transform _root;
-        internal Transform root
-        {
-            get
-            {
-                if (!_root) 
-                {
-                    _root = transform;
-                    return _root;
-                }
-                else 
-                    return _root;
-            }
-            set => _root = value;
-        }
-        [SerializeField] internal LayerMask layerMask;
+        // [Tooltip("Where this editor will parent the painted tiles. Defaults to this Map object")]
+        // [SerializeField] Transform _root;
+        // internal Transform root
+        // {
+        //     get
+        //     {
+        //         if (!_root) 
+        //         {
+        //             _root = transform;
+        //             return _root;
+        //         }
+        //         else 
+        //             return _root;
+        //     }
+        //     set => _root = value;
+        // }
+        // [SerializeField] internal LayerMask layerMask;
         [SerializeField] [Range(1, 5)] [Tooltip("This map's tile XZ scale")] internal float tileSize = 2;
 
         internal bool isPaletteActive => palette != null && palette.Length != 0;
@@ -52,8 +52,8 @@ namespace StormRend.Systems.Mapping
         void OnEnable()
         {
 #if UNITY_EDITOR
-            layerMask = 1 << gameObject.layer;
-            _root = this.transform;
+            // layerMask = 1 << gameObject.layer;
+            // _root = this.transform;
             Selection.selectionChanged += OnSelected;
 #endif
         }
@@ -103,8 +103,10 @@ namespace StormRend.Systems.Mapping
         [ContextMenu("Delete All Tiles")]
         void DeleteAllTiles()
         {
-            while (root.childCount > 0)
-                DestroyImmediate(root.GetChild(0).gameObject);
+            while (transform.childCount > 0)
+                DestroyImmediate(transform.GetChild(0).gameObject);
+
+            tiles.Clear();
         }
 
         //Maybe these should Editor methods
