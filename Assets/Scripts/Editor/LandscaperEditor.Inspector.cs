@@ -27,48 +27,53 @@ namespace StormRend.Editors
 		{
 			serializedObject.Update();
 
-			if (gardener.rootTransform == null)
+			//Helpbox
+			if (t.rootTransform == null)
 			{
 				EditorGUILayout.HelpBox("You must assign the root transform for new painted instances.", MessageType.Error);
-				gardener.rootTransform = (Transform)EditorGUILayout.ObjectField("Root Transform", gardener.rootTransform, typeof(Transform), true);
+				t.rootTransform = (Transform)EditorGUILayout.ObjectField("Root Transform", t.rootTransform, typeof(Transform), true);
 				return;
 			}
 			EditorGUILayout.HelpBox("Stamp: Left Click\nErase: Ctrl + Left Click\nRotate: Shift + Scroll\nBrush Size: Alt + Scroll or [ and ]\nDensity: - =\nScale: . /\nSpace: Randomize", MessageType.Info);
-			base.OnInspectorGUI();
-			if (gardener.prefabPalette == null || gardener.prefabPalette.Length == 0)
+
+			base.OnInspectorGUI();	//Default Inspector Draw
+
+			if (t.prefabPalette == null || t.prefabPalette.Length == 0)
 			{
 				EditorGUILayout.HelpBox("You must assign prefabs to the Prefab Pallete array.", MessageType.Error);
 				return;
 			}
 			GUILayout.Space(16);
 
+			//Options
 			using (new EditorGUILayout.HorizontalScope())
 			{
 				EditorGUILayout.PrefixLabel("Align to Normal");
-				gardener.alignToNormal = GUILayout.Toggle(gardener.alignToNormal, GUIContent.none);
+				t.alignToNormal = GUILayout.Toggle(t.alignToNormal, GUIContent.none);
 			}
 			using (new EditorGUILayout.HorizontalScope())
 			{
 				EditorGUILayout.PrefixLabel("Follow Surface");
-				gardener.followOnSurface = GUILayout.Toggle(gardener.followOnSurface, GUIContent.none);
+				t.followOnSurface = GUILayout.Toggle(t.followOnSurface, GUIContent.none);
 			}
 			using (new EditorGUILayout.HorizontalScope())
 			{
 				EditorGUILayout.PrefixLabel("Randomize each Stamp");
-				gardener.randomizeAfterStamp = GUILayout.Toggle(gardener.randomizeAfterStamp, GUIContent.none);
+				t.randomizeAfterStamp = GUILayout.Toggle(t.randomizeAfterStamp, GUIContent.none);
 			}
-
 			GUILayout.Space(16);
-			if (gardener.prefabPalette != null && gardener.prefabPalette.Length > 0)
+
+			//Brush palette
+			if (t.prefabPalette != null && t.prefabPalette.Length > 0)
 			{
-				RefreshPaletteImages(gardener);
+				RefreshPaletteImages(t);
 				var tileSize = 96;
 				var xCount = Mathf.FloorToInt(Screen.width / tileSize + 1);
 				var gridHeight = GUILayout.Height(paletteImages.Length / (xCount) * tileSize);
-				var newIndex = GUILayout.SelectionGrid(gardener.selectedPrefabIndex, paletteImages, xCount, EditorStyles.miniButton, gridHeight);
-				if (newIndex != gardener.selectedPrefabIndex)
+				var newIndex = GUILayout.SelectionGrid(t.selectedPrefabIndex, paletteImages, xCount, EditorStyles.miniButton, gridHeight);
+				if (newIndex != t.selectedPrefabIndex)
 				{
-					gardener.selectedPrefabIndex = newIndex;
+					t.selectedPrefabIndex = newIndex;
 					// variations = ip.SelectedPrefab.GetComponent<Variations>();
 					// if (variationsEditor != null)
 						// DestroyImmediate(variationsEditor);

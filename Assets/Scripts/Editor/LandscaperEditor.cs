@@ -13,7 +13,7 @@ namespace StormRend.Editors
 
 		List<GameObject> erase = new List<GameObject>();
 		Vector3 worldCursor;
-		Landscaper gardener;
+		Landscaper t;
 		List<Bounds> overlaps = new List<Bounds>();
 		List<GameObject> overlappedGameObjects = new List<GameObject>();
 
@@ -21,8 +21,8 @@ namespace StormRend.Editors
 		{
 			stamp = new GameObject("Stamp");
 			stamp.hideFlags = HideFlags.HideAndDontSave;
-			gardener = target as Landscaper;
-			
+			t = target as Landscaper;
+
 			// if (ip.SelectedPrefab != null)
 			// {
 			// 	variations = ip.SelectedPrefab.GetComponent<Variations>();
@@ -48,7 +48,7 @@ namespace StormRend.Editors
 				DestroyImmediate(stamp.transform.GetChild(0).gameObject);
 
 			//Determine number of objects in stamp
-			var count = Mathf.Min(1000, (Mathf.PI * Mathf.Pow(gardener.brushRadius, 2)) / (1f / gardener.brushDensity));
+			var count = Mathf.Min(1000, (Mathf.PI * Mathf.Pow(t.brushRadius, 2)) / (1f / t.brushDensity));
 
 
 			for (var i = 0; i < count; i++)
@@ -59,21 +59,21 @@ namespace StormRend.Editors
 
 				//Randomize local position within brush radius
 				var p = Random.insideUnitCircle;
-				child.transform.localPosition = new Vector3(p.x, 0, p.y) * gardener.brushRadius;
+				child.transform.localPosition = new Vector3(p.x, 0, p.y) * t.brushRadius;
 
 				//Randomize local rotation
 				var eulerAngles = Vector3.zero;
-				if (gardener.maxRandomRotation > 0)
+				if (t.maxRandomRotation > 0)
 				{
-					eulerAngles.y = Random.value * gardener.maxRandomRotation;
-					if (gardener.rotationStep > 0)
-						eulerAngles.y = Mathf.Round(eulerAngles.y / gardener.rotationStep) * gardener.rotationStep;
+					eulerAngles.y = Random.value * t.maxRandomRotation;
+					if (t.rotationStep > 0)
+						eulerAngles.y = Mathf.Round(eulerAngles.y / t.rotationStep) * t.rotationStep;
 				}
 				child.transform.localEulerAngles = eulerAngles;
 
 				//Make a stamp dummy and
 				GameObject dummy;
-				dummy = PrefabUtility.InstantiatePrefab(gardener.SelectedPrefab) as GameObject;
+				dummy = PrefabUtility.InstantiatePrefab(t.SelectedPrefab) as GameObject;
 				foreach (var c in dummy.GetComponentsInChildren<Collider>())
 					c.enabled = false;
 				dummy.transform.parent = child.transform;
@@ -104,7 +104,7 @@ namespace StormRend.Editors
 						// Handles.DrawWireCube(intersection.center, intersection.size);
 						var maxIntersection = Mathf.Max(intersectionVolume / overlapVolume, intersectionVolume / childVolume);
 						// Handles.Label(intersection.center, maxIntersection.ToString());
-						if (maxIntersection > gardener.maxIntersectionVolume)
+						if (maxIntersection > t.maxIntersectionVolume)
 						{
 							toDestroy.Add(child.gameObject);
 							break;
@@ -141,15 +141,15 @@ namespace StormRend.Editors
 					g.transform.position = stampObject.position;
 					g.transform.rotation = stampObject.rotation;
 					g.transform.localScale = stampObject.lossyScale;
-					if (gardener.rootTransform != null)
+					if (t.rootTransform != null)
 					{
-						g.transform.parent = gardener.rootTransform;
-						g.isStatic = gardener.rootTransform.gameObject.isStatic;
-						g.layer = gardener.rootTransform.gameObject.layer;
+						g.transform.parent = t.rootTransform;
+						g.isStatic = t.rootTransform.gameObject.isStatic;
+						g.layer = t.rootTransform.gameObject.layer;
 					}
 				}
 			}
-			if (gardener.randomizeAfterStamp)
+			if (t.randomizeAfterStamp)
 				CreateNewStamp();
 		}
 

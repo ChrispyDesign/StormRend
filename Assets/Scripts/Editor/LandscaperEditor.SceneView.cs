@@ -9,23 +9,23 @@ namespace StormRend.Editors
 		void OnSceneGUI()
 		{
 			SceneView.RepaintAll();
-			if (gardener == null || gardener.SelectedPrefab == null) return;
+			if (t == null || t.SelectedPrefab == null) return;
 			var isErasing = Event.current.control;
 			var controlId = GUIUtility.GetControlID(FocusType.Passive);
 			var mousePos = Event.current.mousePosition;
 
 			var ray = HandleUtility.GUIPointToWorldRay(mousePos);
 
-			if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, gardener.layerMask))
+			if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, t.layerMask))
 			{
 				worldCursor = hit.point;
-				var up = gardener.followOnSurface ? hit.normal : Vector3.up;
+				var up = t.followOnSurface ? hit.normal : Vector3.up;
 				Handles.color = isErasing ? Color.red : Color.white;
-				Handles.DrawWireDisc(worldCursor, up, gardener.brushRadius);
+				Handles.DrawWireDisc(worldCursor, up, t.brushRadius);
 				Handles.color = Color.white * 0.5f;
-				Handles.DrawWireDisc(worldCursor + up * gardener.brushHeight, up, gardener.brushRadius);
-				Handles.DrawWireDisc(worldCursor - up * gardener.brushHeight, up, gardener.brushRadius);
-				OverlapCapsule(worldCursor + hit.normal * 10, worldCursor - hit.normal * 10, gardener.brushRadius, gardener.layerMask);
+				Handles.DrawWireDisc(worldCursor + up * t.brushHeight, up, t.brushRadius);
+				Handles.DrawWireDisc(worldCursor - up * t.brushHeight, up, t.brushRadius);
+				OverlapCapsule(worldCursor + hit.normal * 10, worldCursor - hit.normal * 10, t.brushRadius, t.layerMask);
 				if (isErasing)
 					DrawEraser(worldCursor, hit.normal);
 				else
@@ -42,7 +42,7 @@ namespace StormRend.Editors
 					}
 					if (Event.current.alt)
 					{
-						gardener.brushRadius *= Event.current.delta.y < 0 ? 0.9f : 1.1f;
+						t.brushRadius *= Event.current.delta.y < 0 ? 0.9f : 1.1f;
 						CreateNewStamp();
 						Event.current.Use();
 					}
@@ -69,24 +69,24 @@ namespace StormRend.Editors
 		{
 			overlaps.Clear();
 			overlappedGameObjects.Clear();
-			if (gardener.collisionTest == Landscaper.CollisionTest.ColliderBounds)
+			if (t.collisionTest == Landscaper.CollisionTest.ColliderBounds)
 			{
 				foreach (var c in Physics.OverlapCapsule(top, bottom, brushRadius))
 				{
-					if (c.transform.parent == gardener.rootTransform)
+					if (c.transform.parent == t.rootTransform)
 					{
 						overlaps.Add(c.bounds);
 						overlappedGameObjects.Add(c.gameObject);
 					}
 				}
 			}
-			if (gardener.collisionTest == Landscaper.CollisionTest.RendererBounds)
+			if (t.collisionTest == Landscaper.CollisionTest.RendererBounds)
 			{
 				//TODO: This might need an oct-tree later. Brute force for now.
 				var capsule = new Bounds(Vector3.Lerp(top, bottom, 0.5f), new Vector3(brushRadius * 2, brushRadius * 2 + (top - bottom).magnitude, brushRadius * 2));
-				for (var i = 0; i < gardener.rootTransform.childCount; i++)
+				for (var i = 0; i < t.rootTransform.childCount; i++)
 				{
-					var child = gardener.rootTransform.GetChild(i);
+					var child = t.rootTransform.GetChild(i);
 					var bounds = child.GetComponentInChildren<Renderer>().bounds;
 					if (capsule.Intersects(bounds))
 					{
@@ -109,12 +109,12 @@ namespace StormRend.Editors
 					AdjustMaxScale(1.1f);
 					break;
 				case KeyCode.Minus:
-					gardener.brushDensity *= 0.9f;
+					t.brushDensity *= 0.9f;
 					CreateNewStamp();
 					Event.current.Use();
 					break;
 				case KeyCode.Equals:
-					gardener.brushDensity *= 1.1f;
+					t.brushDensity *= 1.1f;
 					CreateNewStamp();
 					Event.current.Use();
 					break;
@@ -124,12 +124,12 @@ namespace StormRend.Editors
 					Event.current.Use();
 					break;
 				case KeyCode.LeftBracket:
-					gardener.brushRadius *= 0.9f;
+					t.brushRadius *= 0.9f;
 					CreateNewStamp();
 					Event.current.Use();
 					break;
 				case KeyCode.RightBracket:
-					gardener.brushRadius *= 1.1f;
+					t.brushRadius *= 1.1f;
 					CreateNewStamp();
 					Event.current.Use();
 					break;
@@ -141,7 +141,7 @@ namespace StormRend.Editors
 		{
 			stamp.transform.position = center;
 
-			if (gardener.followOnSurface)
+			if (t.followOnSurface)
 			{
 				var tangent = Vector3.Cross(normal, Vector3.forward);
 				if (tangent.magnitude == 0)
@@ -159,10 +159,10 @@ namespace StormRend.Editors
 				var child = stamp.transform.GetChild(i);
 				child.localPosition = Vector3.Scale(child.localPosition, new Vector3(1, 0, 1));
 				RaycastHit hit;
-				if (Physics.Raycast(child.position + (child.up * gardener.brushHeight), -child.up, out hit, gardener.brushHeight * 2, gardener.layerMask))
+				if (Physics.Raycast(child.position + (child.up * t.brushHeight), -child.up, out hit, t.brushHeight * 2, t.layerMask))
 				{
 					var slope = Vector3.Angle(normal, hit.normal);
-					if (slope > gardener.maxSlope)
+					if (slope > t.maxSlope)
 					{
 						child.gameObject.SetActive(false);
 						continue;
@@ -170,7 +170,7 @@ namespace StormRend.Editors
 					child.gameObject.SetActive(true);
 					var dummy = child.GetChild(0);
 					dummy.position = hit.point;
-					if (gardener.alignToNormal)
+					if (t.alignToNormal)
 					{
 						var tangent = Vector3.Cross(hit.normal, child.forward);
 						if (tangent.magnitude == 0)
@@ -192,7 +192,7 @@ namespace StormRend.Editors
 							// Handles.DrawWireCube(intersection.center, intersection.size);
 							var maxIntersection = Mathf.Max(intersectionVolume / overlapVolume, intersectionVolume / childVolume);
 							// Handles.Label(intersection.center, maxIntersection.ToString());
-							if (maxIntersection > gardener.maxIntersectionVolume)
+							if (maxIntersection > t.maxIntersectionVolume)
 							{
 								child.gameObject.SetActive(false);
 							}
@@ -222,7 +222,7 @@ namespace StormRend.Editors
 				stamp.transform.GetChild(i).gameObject.SetActive(false);
 
 			stamp.transform.position = center;
-			if (gardener.followOnSurface)
+			if (t.followOnSurface)
 			{
 				var tangent = Vector3.Cross(normal, Vector3.forward);
 				if (tangent.magnitude == 0)
