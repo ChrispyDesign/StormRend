@@ -16,6 +16,7 @@ namespace StormRend.Editors
 
 			var ray = HandleUtility.GUIPointToWorldRay(mousePos);
 
+			//Draw stamp if an appropriate surface detected
 			if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, t.layerMask))
 			{
 				worldCursor = hit.point;

@@ -127,9 +127,9 @@ namespace StormRend.Editors
         }
         #endregion  //Event Handling
 
-        void DrawTileTypeOverlayColour()
+        void OverlapCheck(Vector3 cursor)
         {
-
+            //var bounds = new Bounds(Vector3.Lerp())
         }
 
         void CreateStamp()
@@ -143,9 +143,19 @@ namespace StormRend.Editors
             go.transform.SetParent(stamp.transform);
         }
 
-        private void PeformErase()
+        void DrawStamp(Vector3 center)
+        {
+            stamp.transform.position = center;
+        }
+
+        void PeformErase()
         {
             Debug.Log("Erase!");
+            eraseList.Clear();
+            for (var i = 0; i < stamp.transform.childCount; ++i)
+            {
+                stamp.transform.GetChild(i).gameObject.SetActive(false);
+            }
         }
 
         void PeformStamp()
