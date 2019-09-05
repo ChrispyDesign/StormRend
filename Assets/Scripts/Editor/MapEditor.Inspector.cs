@@ -39,11 +39,11 @@ namespace StormRend.Editors
             {
             	if (GUILayout.Button(new GUIContent("Paint", "Paint tiles"), GUILayout.MinHeight(50)))
             	{
-            		mode = PaintMode.Painting;
+            		editMode = EditMode.Painting;
             	}
             	if (GUILayout.Button(new GUIContent("Erase", "Erase tiles"), GUILayout.MinHeight(50)))
             	{
-            		mode = PaintMode.Erasing;
+            		editMode = EditMode.Erasing;
             	}
             }
         }
@@ -86,8 +86,8 @@ namespace StormRend.Editors
 			EditorGUILayout.HelpBox(
 				string.Format(
 					"Snapped Cursor: {0}\nselectedPrefabIndex: {1}\n",
-					snappedCursor,
-					t.selectedPrefabIDX), 
+					gridCursor,
+					t.selectedPrefabIDX),
 				MessageType.None);
 		}
 

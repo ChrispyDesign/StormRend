@@ -166,8 +166,8 @@ namespace StormRend.Editors
 
 				if (Physics.Raycast(
 						child.position + (child.up * t.brushHeight),
-						-child.up, 
-						out RaycastHit hit, 
+						-child.up,
+						out RaycastHit hit,
 						t.brushHeight * 2, t.layerMask))
 				{
 					var slope = Vector3.Angle(normal, hit.normal);

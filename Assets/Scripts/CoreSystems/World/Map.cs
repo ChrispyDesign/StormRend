@@ -2,6 +2,7 @@
 using UnityEngine;
 using BhaVE.Patterns;
 using System.Linq;
+using StormRend.Utility.Attributes;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -12,36 +13,21 @@ namespace StormRend.Systems.Mapping
     [ExecuteInEditMode]
     public sealed class Map : Singleton<Map>
     {
+		public enum BoundsType
+		    { RendererBounds, ColliderBounds }
         //Constants
         const float maxMapSize = 400f;
 
-        #region Inspector
-        // [Tooltip("Where this editor will parent the painted tiles. Defaults to this Map object")]
-        // [SerializeField] Transform _root;
-        // internal Transform root
-        // {
-        //     get
-        //     {
-        //         if (!_root) 
-        //         {
-        //             _root = transform;
-        //             return _root;
-        //         }
-        //         else 
-        //             return _root;
-        //     }
-        //     set => _root = value;
-        // }
-        // [SerializeField] internal LayerMask layerMask;
-        [SerializeField] [Range(1, 5)] [Tooltip("This map's tile XZ scale")] internal float tileSize = 2;
-
-        internal bool isPaletteActive => palette != null && palette.Length != 0;
+    #region Inspector
+		[SerializeField] [Range(1, 5)] [Tooltip("This map's tile XZ scale")] internal float tileSize = 2;
+		[SerializeField] internal BoundsType boundsType;
         [SerializeField] internal GameObject[] palette;
         internal int selectedPrefabIDX;
-        internal GameObject selectedTilePrefab => palette?.Length == 0 ? null : palette?[selectedPrefabIDX];
 
-        //[HideInInspector] 
-        [SerializeField] internal List<Tile> tiles = new List<Tile>();
+        internal GameObject selectedTilePrefab => palette?.Length == 0 ? null : palette?[selectedPrefabIDX];
+        internal bool isPaletteActive => palette != null && palette.Length != 0;
+
+        [HideInInspector][SerializeField] internal List<Tile> tiles = new List<Tile>();
 
 #if UNITY_EDITOR
         [HideInInspector] public BoxCollider editorRaycastPlane;
@@ -122,12 +108,26 @@ namespace StormRend.Systems.Mapping
 }
 
 
-// public enum BoundsType
-// {
-// 	RendererBounds,
-// 	ColliderBounds
-// }
-// public BoundsType boundsType;
+
 // [SerializeField] Color hoverTint = Color.yellow;
 // [SerializeField] Color attackTint = Color.red;
-// [SerializeField] Color moveTint = Color.blue;
+// [SerializeField] Color moveTint = Color.blue;'
+
+
+// [Tooltip("Where this editor will parent the painted tiles. Defaults to this Map object")]
+// [SerializeField] Transform _root;
+// internal Transform root
+// {
+//     get
+//     {
+//         if (!_root)
+//         {
+//             _root = transform;
+//             return _root;
+//         }
+//         else
+//             return _root;
+//     }
+//     set => _root = value;
+// }
+// [SerializeField] internal LayerMask layerMask;

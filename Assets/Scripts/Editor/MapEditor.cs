@@ -9,18 +9,16 @@ namespace StormRend.Editors
 	[CustomEditor(typeof(Map))]
 	public partial class MapEditor : Editor
 	{
-		Vector3 snappedCursor;
+		Vector3 gridCursor;
 		GameObject stamp;
-
 
 		Map t;
 		Event e;
 
 		GUIStyle style;
-        private bool wrongAssetInserted;
 
-        #region Cores
-        [MenuItem("GameObject/StormRend/Map", false, 10)]
+		#region Cores
+		[MenuItem("GameObject/StormRend/Map", false, 10)]
 		static void CreateNewMap(MenuCommand menuCommand)
 		{
 			var newMapObj = new GameObject("Map", typeof(Map));
@@ -34,9 +32,7 @@ namespace StormRend.Editors
 			stamp = new GameObject("TileStamp");
 			stamp.hideFlags = HideFlags.HideAndDontSave;
 
-			style = new GUIStyle();
-			style.fontSize = 15;
-			style.fontStyle = FontStyle.Bold;
+			CreateStyles();
 
 			// t.OnWrongAssetAdded.AddListener(HandleShowNotification);
 		}
@@ -44,8 +40,13 @@ namespace StormRend.Editors
 		{
 			if (stamp) DestroyImmediate(stamp);
 		}
-	#endregion
+		#endregion
 
-
+		void CreateStyles()
+		{
+			style = new GUIStyle();
+			style.fontSize = 15;
+			style.fontStyle = FontStyle.Bold;
+		}
 	}
 }

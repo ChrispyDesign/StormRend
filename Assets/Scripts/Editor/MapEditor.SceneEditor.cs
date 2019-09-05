@@ -9,9 +9,8 @@ namespace StormRend.Editors
 	//------------- Scene Editor --------------
     public partial class MapEditor : Editor
     {
-		public enum PaintMode
+		public enum EditMode
 		    { Painting, Erasing }
-
 
 		List<Tile> eraseList = new List<Tile>();
 
@@ -19,7 +18,7 @@ namespace StormRend.Editors
         public override bool RequiresConstantRepaint() => true;
 
         Color oldHandleColor, oldGUIColor;
-		PaintMode mode;
+		EditMode editMode;
 
         int controlID;
 
@@ -37,7 +36,7 @@ namespace StormRend.Editors
             controlID = GUIUtility.GetControlID(FocusType.Passive);
 
 			//Is in erasing mode?
-           	mode = e.control ? PaintMode.Erasing : PaintMode.Painting;
+           	editMode = e.control ? EditMode.Erasing : EditMode.Painting;
 
             SceneView.RepaintAll();
         }
@@ -46,18 +45,15 @@ namespace StormRend.Editors
             OnSceneGUIBegin();
 
             DrawGrid(new Color(1f, 0.5f, 0));
-            DrawSnappedCursor();
+            DrawGridCursor();
             if (!t || !t.selectedTilePrefab) return;
-            DrawStamp(snappedCursor);
+            DrawStamp(gridCursor);
 
             HandleEvents();
             DrawTileTypeOverlayColour();
 
             OnSceneGUIEnd();
         }
-
-
-
         void OnSceneGUIEnd()
         {
             //Reset colors
@@ -72,33 +68,15 @@ namespace StormRend.Editors
             switch (e.type)
             {
                 case EventType.KeyDown:
-                    HandleKeyEvents(e);
+                    // HandleKeyEvents(e);
                     break;
                 case EventType.MouseMove:
-                    HandleMouseMoveEvents(e);
+                    Debug.Log("Mouse move event detected");
+                    // HandleMouseMoveEvents(e);
                     break;
                 case EventType.MouseDown:
                     HandleMouseEvents(e);
                     break;
-            }
-        }
-        void HandleKeyEvents(Event e)
-        {
-            // //Erase
-            // if (e.control || e.command) //Both sides
-            // {
-            // 	isErasing = true;
-            // 	return;
-            // }
-            // else if (e.alt) //Both sides
-            // {
-            // }
-        }
-        void HandleMouseMoveEvents(Event e)
-        {
-            if (!e.alt)     //Let the user orbit
-            {
-                //Handle continuous painting?
             }
         }
         void HandleMouseEvents(Event e)
@@ -108,7 +86,7 @@ namespace StormRend.Editors
                 switch (e.button)
                 {
                     case 0: //Left mouse button
-                        if (mode == PaintMode.Erasing)
+                        if (editMode == EditMode.Erasing)
                             PeformErase();
                         else
                             PeformStamp();
@@ -127,11 +105,30 @@ namespace StormRend.Editors
         }
         #endregion  //Event Handling
 
-        void OverlapCheck(Vector3 cursor)
+        bool IsCursorOverTile(Vector3 checkPos, float checkBoundsSize, out GameObject overTile)
         {
-            //var bounds = new Bounds(Vector3.Lerp())
-        }
+            //BRUTE FORCE; Not the best
+            float boundsFactor = 0.95f;
+            var cursorBoundsSize = new Vector3(checkBoundsSize * boundsFactor, float.MaxValue, checkBoundsSize * boundsFactor);
+            var cursorBounds = new Bounds(gridCursor, cursorBoundsSize);
 
+            for (int i = 0; i < t.transform.childCount; ++i)
+            {
+                var child = t.transform.GetChild(i);
+
+                //Check child is overlapping
+                var bounds = child.GetComponentInChildren<Renderer>().bounds;
+
+                //Tile found
+                if (cursorBounds.Intersects(bounds))
+                {
+                    overTile = child.gameObject;
+                    return true;
+                }
+            }
+            overTile = null;
+            return false;
+        }
         void CreateStamp()
         {
             //Kill all children
@@ -139,7 +136,7 @@ namespace StormRend.Editors
                 DestroyImmediate(stamp.transform.GetChild(0).gameObject);
 
             //Recreate at cursor position
-            var go = Instantiate(t.selectedTilePrefab, snappedCursor, Quaternion.identity);
+            var go = Instantiate(t.selectedTilePrefab, gridCursor, Quaternion.identity);
             go.transform.SetParent(stamp.transform);
         }
 
@@ -150,29 +147,25 @@ namespace StormRend.Editors
 
         void PeformErase()
         {
-            Debug.Log("Erase!");
             eraseList.Clear();
             for (var i = 0; i < stamp.transform.childCount; ++i)
             {
                 stamp.transform.GetChild(i).gameObject.SetActive(false);
             }
+            //Remove the tile from
         }
 
         void PeformStamp()
         {
-            Debug.Log("Stamp!");
-
             //Make sure there are no tiles in the current position
-            var halfExtents = new Vector3(t.tileSize * 0.5f * 0.9f, float.MaxValue, t.tileSize * 0.5f * 0.9f);
-            if (Physics.BoxCast(snappedCursor, halfExtents, Vector3.up, Quaternion.identity, float.MaxValue, 1 << t.gameObject.layer))
+            if (IsCursorOverTile(gridCursor, t.tileSize, out GameObject tileHit))
             {
-                //Don't stamp if there's already a tile here!
-                Debug.LogWarning("Tile already exists here!");
+                Debug.LogWarning("Can't stamp. There's a tile here already!");
                 return;
             }
 
             //Instantiate a new tile prefab
-            var newTile = Instantiate(t.selectedTilePrefab, snappedCursor, Quaternion.identity);
+            var newTile = Instantiate(t.selectedTilePrefab, gridCursor, Quaternion.identity);
             newTile.transform.SetParent(t.transform);
             newTile.gameObject.layer = t.gameObject.layer;
 
@@ -205,10 +198,10 @@ namespace StormRend.Editors
             }
         }
 
-        void DrawSnappedCursor(Color? color = null)
+        void DrawGridCursor(Color? color = null)
         {
             if (color == null) color = Color.white;
-            if (mode == PaintMode.Erasing) color = Color.red;
+            if (editMode == EditMode.Erasing) color = Color.red;
 
             var ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
 
@@ -222,10 +215,10 @@ namespace StormRend.Editors
                 Vector3 offset = t.transform.position;
                 Vector3 centre = new Vector3(t.tileSize * 0.5f, 0, t.tileSize * 0.5f);
 
-                snappedCursor = floor * t.tileSize + offset + centre;
+                gridCursor = floor * t.tileSize + offset + centre;
 
                 //Draw grid cursor
-                Handles.RectangleHandleCap(1, snappedCursor, Quaternion.AngleAxis(90, Vector3.right), t.tileSize * 0.5f, EventType.Repaint);
+                Handles.RectangleHandleCap(1, gridCursor, Quaternion.AngleAxis(90, Vector3.right), t.tileSize * 0.5f, EventType.Repaint);
                 // Handles.DrawSphere(2, snappedCursor, Quaternion.identity, t.tileSize * 0.25f);
             }
         }
