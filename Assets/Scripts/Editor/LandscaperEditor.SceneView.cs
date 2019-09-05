@@ -141,12 +141,13 @@ namespace StormRend.Editors
 		{
 			stamp.transform.position = center;
 
+			//
 			if (t.followOnSurface)
 			{
 				var tangent = Vector3.Cross(normal, Vector3.forward);
 				if (tangent.magnitude == 0)
 					tangent = Vector3.Cross(normal, Vector3.up);
-				if (normal.magnitude < Mathf.Epsilon || tangent.magnitude < Mathf.Epsilon) return;
+				if (Mathf.Approximately(normal.magnitude, tangent.magnitude)) return;
 				stamp.transform.rotation = Quaternion.LookRotation(tangent, normal);
 			}
 			else
@@ -154,12 +155,19 @@ namespace StormRend.Editors
 				stamp.transform.rotation = Quaternion.identity;
 			}
 
+			//Loop through all dummy objects in the stamp
 			for (var i = 0; i < stamp.transform.childCount; i++)
 			{
+				//Get this dummy object
 				var child = stamp.transform.GetChild(i);
+				//Level child
 				child.localPosition = Vector3.Scale(child.localPosition, new Vector3(1, 0, 1));
-				RaycastHit hit;
-				if (Physics.Raycast(child.position + (child.up * t.brushHeight), -child.up, out hit, t.brushHeight * 2, t.layerMask))
+
+				if (Physics.Raycast(
+						child.position + (child.up * t.brushHeight),
+						-child.up, 
+						out RaycastHit hit, 
+						t.brushHeight * 2, t.layerMask))
 				{
 					var slope = Vector3.Angle(normal, hit.normal);
 					if (slope > t.maxSlope)

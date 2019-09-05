@@ -5,18 +5,22 @@ using UnityEngine;
 
 namespace StormRend.Editors
 {
+	//-------------- Core ---------------
 	[CustomEditor(typeof(Map))]
 	public partial class MapEditor : Editor
 	{
-		Color[] paletteAssetPreviews;
+		Vector3 snappedCursor;
 		GameObject stamp;
 		List<Tile> eraseList = new List<Tile>();
-		Vector3 snappedCursor;
+
 		Map t;
 		Event e;
 
-		#region Cores
-		[MenuItem("GameObject/StormRend/Map", false, 10)]
+		GUIStyle style;
+        private bool wrongAssetInserted;
+
+        #region Cores
+        [MenuItem("GameObject/StormRend/Map", false, 10)]
 		static void CreateNewMap(MenuCommand menuCommand)
 		{
 			var newMapObj = new GameObject("Map", typeof(Map));
@@ -29,32 +33,19 @@ namespace StormRend.Editors
 			t = target as Map;
 			stamp = new GameObject("TileStamp");
 			stamp.hideFlags = HideFlags.HideAndDontSave;
+
+			style = new GUIStyle();
+			style.fontSize = 15;
+			style.fontStyle = FontStyle.Bold;
+
+			// t.OnWrongAssetAdded.AddListener(HandleShowNotification);
 		}
 		void OnDisable()
 		{
 			if (stamp) DestroyImmediate(stamp);
 		}
-
 	#endregion
 
-		void CreateStamp()
-		{
-			//Destoy stamp's child
-			while (stamp.transform.childCount > 0)
-				DestroyImmediate(stamp.transform.GetChild(0).gameObject);
 
-			//Recreate
-
-		}
-
-		void ExecuteErase()
-		{
-
-		}
-
-		void ExecuteStamp()
-		{
-
-		}
 	}
 }
