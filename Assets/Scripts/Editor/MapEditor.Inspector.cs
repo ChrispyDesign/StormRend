@@ -84,11 +84,9 @@ namespace StormRend.Editors
 		void DrawDebugInfo()
 		{
 			EditorGUILayout.HelpBox(
-				string.Format(
-					"Snapped Cursor: {0}\nselectedPrefabIndex: {1}\n",
-					gridCursor,
-					t.selectedPrefabIDX),
-				MessageType.None);
+				string.Format("Snapped Cursor: {0}\nselectedPrefabIndex: {1}\nisEditing: {2}",
+					gridCursor, t.selectedPrefabIDX, isEditing),
+                    MessageType.None);
 		}
 
         void RefreshPalettePreviews(Map map)
