@@ -220,14 +220,13 @@ namespace StormRend
 				Ability ability = controller.GetCurrentPlayer().GetSelectedAbility();
 				List<Tile> nodes = new List<Tile>();
 
-				if (controller.GetPrevMode() == PlayerMode.ATTACK
-					&& ability.GetTiles().Count == ability.GetTilesToSelect())
+				if (controller?.GetPrevMode() == PlayerMode.ATTACK && ability?.GetTiles().Count == ability?.GetTilesToSelect())
 				{
-					nodes = unitOnTop.GetAttackTiles();
+					nodes = unitOnTop?.GetAttackTiles();
 				}
-				else if (controller.GetPrevMode() == PlayerMode.MOVE)
+				else if (controller?.GetPrevMode() == PlayerMode.MOVE)
 				{
-					nodes = unitOnTop.GetAvailableTiles();
+					nodes = unitOnTop?.GetAvailableTiles();
 				}
 
 				if (nodes != null)
