@@ -189,8 +189,7 @@ namespace StormRend.Editors
 			newTile.transform.SetParent(t.transform);
 			newTile.gameObject.layer = t.gameObject.layer;
 
-			//Register undo
-			Undo.RegisterCreatedObjectUndo(newTile, "Stamp Tile Type" + t.selectedTilePrefab.name);
+			Undo.RegisterCreatedObjectUndo(newTile, "Paint Tile " + t.selectedTilePrefab.name);
 
 			//Add to map's list of tiles
 			t.tiles.Add(newTile.GetComponent<Tile>());
@@ -201,7 +200,8 @@ namespace StormRend.Editors
             {
                 //Erase the found tile
                 t.tiles.Remove(tileToErase.GetComponent<Tile>());
-                DestroyImmediate(tileToErase);
+
+                Undo.DestroyObjectImmediate(tileToErase);
             }
 		}
 		#endregion
