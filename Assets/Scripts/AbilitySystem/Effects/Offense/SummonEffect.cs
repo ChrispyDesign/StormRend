@@ -11,7 +11,7 @@ namespace StormRend.Abilities.Effects
         [SerializeField] GameObject m_summon;
         [SerializeField] int m_HowManyTurns;
 
-        public override bool PerformEffect(Tile _effectedNode, Unit _thisUnit)
+        public override bool PerformEffect(oTile _effectedNode, Unit _thisUnit)
         {
             base.PerformEffect(_effectedNode, _thisUnit);
 

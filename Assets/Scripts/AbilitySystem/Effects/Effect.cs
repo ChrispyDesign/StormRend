@@ -1,4 +1,5 @@
 ﻿using StormRend;
+using StormRend.Defunct;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,7 +23,7 @@ namespace StormRend.Abilities.Effects
 
 		public bool m_isFoldOut { get; set; } = true;
 
-		public virtual bool PerformEffect(Tile targetTile, Unit effectPerformer)
+		public virtual bool PerformEffect(oTile targetTile, Unit effectPerformer)
 		{
 			// OnPeformEffect.Invoke();
 

@@ -4,7 +4,9 @@ using BhaVE.Core;
 using BhaVE.Delegates;
 using BhaVE.Nodes;
 using BhaVE.Variables;
+using StormRend.Abilities;
 using StormRend.Abilities.Effects;
+using StormRend.Defunct;
 using UnityEngine;
 
 namespace StormRend.Bhaviours
@@ -45,7 +47,7 @@ namespace StormRend.Bhaviours
 				//SHOULD BE ENCAPSULATED/SIMPLE METHOD CALL
 				foreach (Effect effect in effects)
 				{
-					Tile targetTile = Grid.CoordToTile(targets.value[0].coords);
+					oTile targetTile = oGrid.CoordToTile(targets.value[0].coords);
 					effect.PerformEffect(targetTile, u);
 				}
 			}

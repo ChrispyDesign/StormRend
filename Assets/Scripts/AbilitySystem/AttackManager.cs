@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using StormRend.Abilities;
 using UnityEngine;
 
 public class AttackManager : MonoBehaviour
 {
-    #region Variables   
+    #region Variables
 
     [SerializeField] private int m_currentAbilityLevel;
     [SerializeField] private List<Ability> m_abilities;

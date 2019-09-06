@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using StormRend;
+using StormRend.Defunct;
 using UnityEngine;
 
 public class Crystal : Unit
@@ -31,29 +32,29 @@ public class Crystal : Unit
 		Vector2Int unitCoords = this.coords;
 
 		Vector2Int tempCoords = new Vector2Int(0, 0);
-		Tile tempNode;
+		oTile tempNode;
 
 		// Process Left
 		tempCoords = coords - m_left;
-		tempNode = Grid.CoordToTile(tempCoords);
+		tempNode = oGrid.CoordToTile(tempCoords);
 		if(tempNode.GetUnitOnTop() != null)
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
 
 		// Process Up
 		tempCoords = coords - m_up;
-		tempNode = Grid.CoordToTile(tempCoords);
+		tempNode = oGrid.CoordToTile(tempCoords);
 		if (tempNode.GetUnitOnTop() != null)
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
 
 		// Process Right
 		tempCoords = coords - m_right;
-		tempNode = Grid.CoordToTile(tempCoords);
+		tempNode = oGrid.CoordToTile(tempCoords);
 		if (tempNode.GetUnitOnTop() != null)
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
 
 		// Process Down
 		tempCoords = coords - m_down;
-		tempNode = Grid.CoordToTile(tempCoords);
+		tempNode = oGrid.CoordToTile(tempCoords);
 		if (tempNode.GetUnitOnTop() != null)
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
 

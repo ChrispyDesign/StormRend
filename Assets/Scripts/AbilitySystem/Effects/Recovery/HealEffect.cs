@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using StormRend.Defunct;
+using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
@@ -6,7 +7,7 @@ namespace StormRend.Abilities.Effects
     {
         [SerializeField] int m_healAmount;
 
-        public override bool PerformEffect(Tile _effectedNode, Unit _thisUnit)
+        public override bool PerformEffect(oTile _effectedNode, Unit _thisUnit)
         {
             base.PerformEffect(_effectedNode, _thisUnit);
 

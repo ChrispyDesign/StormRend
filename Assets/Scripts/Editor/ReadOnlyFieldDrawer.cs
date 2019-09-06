@@ -2,7 +2,7 @@
 using UnityEngine;
 using StormRend.Utility.Attributes;
 
-namespace StormRend.Editor.PropDrawers
+namespace StormRend.Editors.PropDrawers
 {
     [CustomPropertyDrawer(typeof(ReadOnlyFieldAttribute))]
     public class ReadOnlyFieldDrawer : PropertyDrawer

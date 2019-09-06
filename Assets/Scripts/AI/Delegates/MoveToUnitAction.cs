@@ -5,6 +5,7 @@ using BhaVE.Delegates;
 using BhaVE.Nodes;
 using BhaVE.Variables;
 using UnityEngine;
+using StormRend.Defunct;
 
 namespace StormRend.Bhaviours
 {
@@ -20,7 +21,7 @@ namespace StormRend.Bhaviours
 
         //Privates
         Unit u;
-        List<Tile> validMoves = new List<Tile>();
+        List<oTile> validMoves = new List<oTile>();
 
         public override NodeState Execute(BhaveAgent agent)
 		{
@@ -57,13 +58,13 @@ namespace StormRend.Bhaviours
         }
 
 		bool TargetIsAdjacent()
-		{	
+		{
 			if (validMoves.Count < 4) return false;
 
 			for (int i = 0; i < 4; ++i)
 				if (validMoves[i].GetUnitOnTop() == targets.value[0])
 					return true;
-			
+
 			return false;
 		}
 

@@ -1,22 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using StormRend;
+using StormRend.Defunct;
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour
+public class oSpawnManager : MonoBehaviour
 {
     public List<SpawnPoints> m_spawns;
-    
+
     private void Start()
     {
-        
+
     }
 
     public void spawnPlayers()
     {
         foreach (SpawnPoints spawnPoint in m_spawns)
         {
-            Tile node = Grid.GetNodeFromCoords(
+            oTile node = oGrid.GetNodeFromCoords(
                         spawnPoint.m_spawnCoords.x,
                         spawnPoint.m_spawnCoords.y);
 
