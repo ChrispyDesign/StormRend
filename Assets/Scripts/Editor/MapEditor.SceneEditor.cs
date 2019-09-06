@@ -12,7 +12,7 @@ namespace StormRend.Editors
         public enum EditMode
             { Painting, Erasing }
 
-        List<Tile> eraseList = new List<Tile>();
+        // List<Tile> eraseList = new List<Tile>();
 
         const int kNumOfGridLines = 30;
         public override bool RequiresConstantRepaint() => true;
@@ -34,9 +34,6 @@ namespace StormRend.Editors
 
             //Hijack focus
             controlID = GUIUtility.GetControlID(FocusType.Passive);
-
-            //Is in erasing mode?
-            editMode = e.control ? EditMode.Erasing : EditMode.Painting;
 
             SceneView.RepaintAll();
         }
@@ -65,6 +62,7 @@ namespace StormRend.Editors
         #region Event Handling
         void HandleEvents()
         {
+            editMode = (e.control || e.command) ? EditMode.Erasing : EditMode.Painting;
             switch (e.type)
             {
                 case EventType.MouseDown:
@@ -179,7 +177,7 @@ namespace StormRend.Editors
 		void PerformStamp()
 		{
 			//Make sure there are no tiles in the current position
-			if (IsCursorOverTile(gridCursor, t.tileSize, out GameObject tileHit))
+			if (IsOverTile(gridCursor, t.tileSize, out GameObject tileHit))
 			{
 				Debug.LogWarning("Can't stamp. There's a tile here already!");
 				return;
@@ -198,19 +196,19 @@ namespace StormRend.Editors
 		}
 		void PerformErase()
 		{
-			eraseList.Clear();
-			for (var i = 0; i < stamp.transform.childCount; ++i)
-			{
-				stamp.transform.GetChild(i).gameObject.SetActive(false);
-			}
-			//Remove the tile from
+            if (IsOverTile(gridCursor, t.tileSize, out GameObject tileToErase))
+            {
+                //Erase the found tile
+                t.tiles.Remove(tileToErase.GetComponent<Tile>());
+                DestroyImmediate(tileToErase);
+            }
 		}
 		#endregion
 
         #region Assists
-		bool IsCursorOverTile(Vector3 checkPos, float checkBoundsSize, out GameObject intersectedTile)
+		bool IsOverTile(Vector3 checkPos, float checkBoundsSize, out GameObject intersectedTile)
         {
-            //BRUTE FORCE; Not the best
+            //BRUTE FORCE; Probably not very efficient
             float boundsFactor = 0.95f;
             var cursorBoundsSize = new Vector3(checkBoundsSize * boundsFactor, float.MaxValue, checkBoundsSize * boundsFactor);
             var cursorBounds = new Bounds(gridCursor, cursorBoundsSize);
