@@ -43,9 +43,9 @@ namespace StormRend.Editors
 				EditorGUILayout.HelpBox("You must assign prefabs to the Prefab Pallete array.", MessageType.Error);
 				return;
 			}
-			GUILayout.Space(16);
 
 			//Options
+			GUILayout.Space(16);
 			using (new EditorGUILayout.HorizontalScope())
 			{
 				EditorGUILayout.PrefixLabel("Align to Normal");

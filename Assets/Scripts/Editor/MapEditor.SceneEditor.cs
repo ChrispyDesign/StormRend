@@ -179,12 +179,13 @@ namespace StormRend.Editors
 			//Make sure there are no tiles in the current position
 			if (IsOverTile(gridCursor, t.tileSize, out GameObject tileHit))
 			{
-				Debug.LogWarning("Can't stamp. There's a tile here already!");
+				Debug.LogWarning("Cannot paint on existing tile!");
 				return;
 			}
 
 			//Instantiate a new tile prefab
-			var newTile = Instantiate(t.selectedTilePrefab, gridCursor, Quaternion.identity);
+            var rotation = randomizePaintDirection ? Quaternion.AngleAxis(90 * UnityEngine.Random.Range(0, 4), Vector3.up) : Quaternion.identity;
+			var newTile = Instantiate(t.selectedTilePrefab, gridCursor, rotation);
 			newTile.transform.SetParent(t.transform);
 			newTile.gameObject.layer = t.gameObject.layer;
 

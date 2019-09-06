@@ -13,9 +13,8 @@ namespace StormRend.Systems.Mapping
     [ExecuteInEditMode]
     public sealed class Map : Singleton<Map>
     {
-		public enum BoundsType
-		    { RendererBounds, ColliderBounds }
-        //Constants
+		public enum BoundsType { RendererBounds, ColliderBounds }
+
         const float maxMapSize = 400f;
 
     #region Inspector

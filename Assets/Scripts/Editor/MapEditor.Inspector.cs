@@ -10,20 +10,21 @@ namespace StormRend.Editors
     {
         float previewTileSize = 128;
         Texture2D[] palettePreviews;
-		// GUIContent[] palettePreviewGUIContents;
+		bool randomizePaintDirection;
 
-        #region Core
-        public override void OnInspectorGUI()
+
+		#region Core
+		public override void OnInspectorGUI()
         {
             serializedObject.Update();
 
             DrawDefaultInspector();
 
-            // DrawButtons();
+            DrawOptions();
 
             DrawPalette();
 
-            DrawPaletteSizeSlider();
+            DrawPreviewSizeSlider();
 
 			DrawDebugInfo();
 
@@ -32,6 +33,7 @@ namespace StormRend.Editors
 
         #endregion    //Core
 
+        #region Draws
         void DrawButtons()
         {
             //Paint, Erase buttons
@@ -56,7 +58,8 @@ namespace StormRend.Editors
 
                 int columns = Mathf.FloorToInt(Screen.width / previewTileSize + 1);
 
-                GUILayoutOption gridHeight = GUILayout.Height(palettePreviews.Length / (columns) * previewTileSize);
+                // GUILayoutOption gridHeight = GUILayout.Height(palettePreviews.Length / (columns) * previewTileSize);
+                GUILayoutOption gridHeight = GUILayout.Height(64);
 
                 int newIndex = GUILayout.SelectionGrid(t.selectedPrefabIDX, palettePreviews, columns, gridHeight);
 
@@ -68,27 +71,31 @@ namespace StormRend.Editors
             }
             else
             {
-                EditorGUILayout.HelpBox("Assign tile prefabs to palette", MessageType.Error);
+                EditorGUILayout.HelpBox("Assign tile prefabs to this palette", MessageType.Error);
                 return;
             }
         }
-        private void DrawPaletteSizeSlider()
+		void DrawOptions()
+		{
+            using (new GUILayout.HorizontalScope())
+            {
+                EditorGUILayout.PrefixLabel("Randomize Direction");
+                randomizePaintDirection = EditorGUILayout.Toggle(randomizePaintDirection);
+            }
+		}
+        void DrawPreviewSizeSlider()
         {
+            GUILayout.Space(5);
             using (new GUILayout.HorizontalScope())
             {
 				GUILayout.Label(string.Format("Preview Size: {0:0}", previewTileSize), EditorStyles.miniLabel);
                 previewTileSize = GUILayout.HorizontalSlider(previewTileSize, 32, 128);
             }
+            GUILayout.Space(5);
         }
+        #endregion
 
-		void DrawDebugInfo()
-		{
-			EditorGUILayout.HelpBox(
-				string.Format("Snapped Cursor: {0}\nselectedPrefabIndex: {1}\nisEditing: {2}",
-					gridCursor, t.selectedPrefabIDX, isEditing),
-                    MessageType.None);
-		}
-
+        #region Assists
         void RefreshPalettePreviews(Map map)
         {
 			var paletteCount = map.palette.Length;
@@ -99,18 +106,17 @@ namespace StormRend.Editors
 				for (var i = 0; i < paletteCount; ++i)
 					palettePreviews[i] = AssetPreview.GetAssetPreview(map.palette[i]);
 			}
-
-			// if (palettePreviewGUIContents == null || palettePreviewGUIContents.Length != paletteCount)
-			// {
-			// 	//Refresh GUI Contents
-			// 	palettePreviewGUIContents = new GUIContent[paletteCount];
-			// 	for (var i = 0; i < paletteCount; ++i)
-			// 	{
-			// 		palettePreviewGUIContents[i].text = map.palette[i].name;
-			// 		palettePreviewGUIContents[i].tooltip = "Tile type: " + map.palette[i].GetComponentInChildren<Tile>().GetType().Name;
-			// 		palettePreviewGUIContents[i].image = AssetPreview.GetAssetPreview(map.palette[i]) as Texture2D;
-			// 	}
-			// }
         }
+		#endregion
+
+		#region Debugs
+		void DrawDebugInfo()
+		{
+			EditorGUILayout.HelpBox(
+				string.Format("Snapped Cursor: {0}\nselectedPrefabIndex: {1}\nisEditing: {2}",
+					gridCursor, t.selectedPrefabIDX, isEditing),
+					MessageType.None);
+		}
+        #endregion
     }
 }
