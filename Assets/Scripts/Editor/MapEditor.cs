@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using StormRend.Systems.Mapping;
 using UnityEditor;
 using UnityEngine;
@@ -34,11 +33,13 @@ namespace StormRend.Editors
 
 			CreateStyles();
 
-			// t.OnWrongAssetAdded.AddListener(HandleShowNotification);
+			Undo.undoRedoPerformed += OnUndoRedo;
 		}
 		void OnDisable()
 		{
 			if (stamp) DestroyImmediate(stamp);
+
+			Undo.undoRedoPerformed += OnUndoRedo;
 		}
 		#endregion
 

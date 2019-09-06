@@ -206,6 +206,20 @@ namespace StormRend.Editors
 		#endregion
 
         #region Assists
+		void OnUndoRedo()
+		{
+			//Clean up mess left behind from Undo system
+			//Add tiles that aren't in the list
+			for (int i = 0; i < t.transform.childCount; i++)
+			{
+				var childTile = t.transform.GetChild(i).GetComponent<Tile>();
+				if (!t.tiles.Contains(childTile))
+					t.tiles.Add(childTile);
+			}
+
+			//Remove all tiles that are null
+			t.tiles.RemoveAll(x => !x);
+		}
 		bool IsOverTile(Vector3 checkPos, float checkBoundsSize, out GameObject intersectedTile)
         {
             //BRUTE FORCE; Probably not very efficient

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using BhaVE.Patterns;
 using System.Linq;
@@ -89,8 +89,9 @@ namespace StormRend.Systems.Mapping
         void DeleteAllTiles()
         {
             while (transform.childCount > 0)
-                DestroyImmediate(transform.GetChild(0).gameObject);
-
+			{
+				Undo.DestroyObjectImmediate(transform.GetChild(0).gameObject);
+			}
             tiles.Clear();
         }
 
