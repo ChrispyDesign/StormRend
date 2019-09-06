@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace StormRend.Editors
 {
-	public partial class LandscaperEditor : Editor
+	public partial class LandscaperEditor : SmartEditor
 	{
 		[MenuItem("GameObject/Create Other/Gardener")]
 		static void CreateInstancePainter()
@@ -23,10 +23,10 @@ namespace StormRend.Editors
 			}
 		}
 
-		public override void OnInspectorGUI()
+		#region Core
+		public override string[] propertiesToExclude => new [] { "m_Script" };
+		public override void OnPreInspector()
 		{
-			serializedObject.Update();
-
 			//Helpbox
 			if (t.rootTransform == null)
 			{
@@ -35,9 +35,9 @@ namespace StormRend.Editors
 				return;
 			}
 			EditorGUILayout.HelpBox("Stamp: Left Click\nErase: Ctrl + Left Click\nRotate: Shift + Scroll\nBrush Size: Alt + Scroll or [ and ]\nDensity: - =\nScale: . /\nSpace: Randomize", MessageType.Info);
-
-			base.OnInspectorGUI();	//Default Inspector Draw
-
+		}
+		public override void OnPostInspector()
+		{
 			if (t.prefabPalette == null || t.prefabPalette.Length == 0)
 			{
 				EditorGUILayout.HelpBox("You must assign prefabs to the Prefab Pallete array.", MessageType.Error);
@@ -74,28 +74,10 @@ namespace StormRend.Editors
 				if (newIndex != t.selectedPrefabIndex)
 				{
 					t.selectedPrefabIndex = newIndex;
-					// variations = ip.SelectedPrefab.GetComponent<Variations>();
-					// if (variationsEditor != null)
-						// DestroyImmediate(variationsEditor);
-					// if (variations != null)
-						// variationsEditor = Editor.CreateEditor(variations);
 					CreateNewStamp();
 				}
-				// GUILayout.Space(16);
-				// if (variationsEditor == null)
-				// {
-				// 	if (GUILayout.Button("Add Variations"))
-				// 	{
-				// 		// variations = ip.SelectedPrefab.AddComponent<Variations>();
-				// 		// variationsEditor = Editor.CreateEditor(variations);
-				// 	}
-				// }
-				// else
-				// {
-				// 	variationsEditor.OnInspectorGUI();
-				// }
-
 			}
 		}
+		#endregion
 	}
 }

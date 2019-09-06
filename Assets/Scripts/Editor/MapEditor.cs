@@ -7,7 +7,7 @@ namespace StormRend.Editors
 {
 	//-------------- Core ---------------
 	[CustomEditor(typeof(Map))]
-	public partial class MapEditor : Editor
+	public partial class MapEditor : SmartEditor
 	{
 		Vector3 gridCursor;
 		GameObject stamp;

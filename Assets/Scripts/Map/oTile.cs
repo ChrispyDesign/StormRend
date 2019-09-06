@@ -214,7 +214,7 @@ namespace StormRend.Defunct
 						unit.m_afterClear = true;
 					}
 
-					commandManager.ClearCommands();     //UndoController.Clear()
+					commandManager.ClearCommands();     //UndoSystem.Clear()
 					UIAbilitySelector abilitySelector = UIManager.GetInstance().GetAbilitySelector();
 					abilitySelector.GetInfoPanel().SetActive(false);
 					abilitySelector.GetButtonPanel().SetActive(false);

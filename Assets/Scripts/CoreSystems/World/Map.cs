@@ -18,8 +18,8 @@ namespace StormRend.Systems.Mapping
         const float maxMapSize = 400f;
 
     #region Inspector
-		[SerializeField] [Range(1, 5)] [Tooltip("This map's tile XZ scale")] internal float tileSize = 2;
 		[SerializeField] internal BoundsType boundsType;
+		[SerializeField] [Range(1, 5)] [Tooltip("This map's tile XZ scale")] internal float tileSize = 2;
         [SerializeField] internal GameObject[] palette;
         internal int selectedPrefabIDX;
 

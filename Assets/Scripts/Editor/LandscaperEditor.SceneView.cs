@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace StormRend.Editors
 {
-	public partial class LandscaperEditor : Editor
+	public partial class LandscaperEditor : SmartEditor
 	{
 		void OnSceneGUI()
 		{

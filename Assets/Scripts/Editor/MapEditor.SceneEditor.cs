@@ -7,10 +7,9 @@ using UnityEngine;
 namespace StormRend.Editors
 {
     //------------- Scene Editor --------------
-    public partial class MapEditor : Editor
+    public partial class MapEditor : SmartEditor
     {
-        public enum EditMode
-            { Painting, Erasing }
+        public enum EditMode { Painting, Erasing }
 
         // List<Tile> eraseList = new List<Tile>();
 

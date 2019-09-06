@@ -6,7 +6,7 @@ using UnityEngine;
 namespace StormRend.Editors
 {
 	[CustomEditor(typeof(Landscaper))]
-	public partial class LandscaperEditor : Editor
+	public partial class LandscaperEditor : SmartEditor
 	{
 		Texture2D[] paletteImages;
 		GameObject stamp;

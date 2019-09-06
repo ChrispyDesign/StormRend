@@ -6,49 +6,28 @@ using UnityEngine;
 namespace StormRend.Editors
 {
     //------------ Inspector ---------------
-    public partial class MapEditor : Editor
+    public partial class MapEditor : SmartEditor
     {
         float previewTileSize = 128;
         Texture2D[] palettePreviews;
 		bool randomizePaintDirection;
 
-
 		#region Core
-		public override void OnInspectorGUI()
+        public override string[] propertiesToExclude => new[] { "m_Script" };
+
+        public override void OnPreInspector()
         {
-            serializedObject.Update();
-
-            DrawDefaultInspector();
-
-            DrawOptions();
-
-            DrawPalette();
-
-            DrawPreviewSizeSlider();
-
-			DrawDebugInfo();
-
-            serializedObject.ApplyModifiedProperties();
+            DrawDebugInfo();
         }
-
+        public override void OnPostInspector()
+        {
+            DrawPalette();
+            DrawOptions();
+            DrawPreviewSizeSlider();
+        }
         #endregion    //Core
 
         #region Draws
-        void DrawButtons()
-        {
-            //Paint, Erase buttons
-            using (new EditorGUILayout.HorizontalScope(GUILayout.MinHeight(50)))
-            {
-            	if (GUILayout.Button(new GUIContent("Paint", "Paint tiles"), GUILayout.MinHeight(50)))
-            	{
-            		editMode = EditMode.Painting;
-            	}
-            	if (GUILayout.Button(new GUIContent("Erase", "Erase tiles"), GUILayout.MinHeight(50)))
-            	{
-            		editMode = EditMode.Erasing;
-            	}
-            }
-        }
         void DrawPalette()
         {
             //Palette
