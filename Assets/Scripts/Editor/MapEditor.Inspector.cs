@@ -14,7 +14,6 @@ namespace StormRend.Editors
 
 		#region Core
         public override string[] propertiesToExclude => new[] { "m_Script" };
-
         public override void OnPreInspector()
         {
             DrawDebugInfo();
@@ -31,20 +30,20 @@ namespace StormRend.Editors
         void DrawPalette()
         {
             //Palette
-            if (t.isPaletteActive)
+            if (m.isPaletteActive)
             {
-				RefreshPalettePreviews(t);
+				RefreshPalettePreviews(m);
 
                 int columns = Mathf.FloorToInt(Screen.width / previewTileSize + 1);
 
                 // GUILayoutOption gridHeight = GUILayout.Height(palettePreviews.Length / (columns) * previewTileSize);
                 GUILayoutOption gridHeight = GUILayout.Height(64);
 
-                int newIndex = GUILayout.SelectionGrid(t.selectedPrefabIDX, palettePreviews, columns, gridHeight);
+                int newIndex = GUILayout.SelectionGrid(m.selectedPrefabIDX, palettePreviews, columns, gridHeight);
 
-                if (newIndex != t.selectedPrefabIDX)
+                if (newIndex != m.selectedPrefabIDX)
                 {
-                    t.selectedPrefabIDX = newIndex;
+                    m.selectedPrefabIDX = newIndex;
                     CreateStamp();
                 }
             }
@@ -93,7 +92,7 @@ namespace StormRend.Editors
 		{
 			EditorGUILayout.HelpBox(
 				string.Format("Snapped Cursor: {0}\nselectedPrefabIndex: {1}\nisEditing: {2}",
-					gridCursor, t.selectedPrefabIDX, isEditing),
+					gridCursor, m.selectedPrefabIDX, isEditing),
 					MessageType.None);
 		}
         #endregion

@@ -2,7 +2,6 @@
 using UnityEngine;
 using BhaVE.Patterns;
 using System.Linq;
-using StormRend.Utility.Attributes;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -37,8 +36,6 @@ namespace StormRend.Systems.Mapping
         void OnEnable()
         {
 #if UNITY_EDITOR
-            // layerMask = 1 << gameObject.layer;
-            // _root = this.transform;
             Selection.selectionChanged += OnSelected;
 #endif
         }
@@ -105,28 +102,3 @@ namespace StormRend.Systems.Mapping
         }
     }
 }
-
-
-
-// [SerializeField] Color hoverTint = Color.yellow;
-// [SerializeField] Color attackTint = Color.red;
-// [SerializeField] Color moveTint = Color.blue;'
-
-
-// [Tooltip("Where this editor will parent the painted tiles. Defaults to this Map object")]
-// [SerializeField] Transform _root;
-// internal Transform root
-// {
-//     get
-//     {
-//         if (!_root)
-//         {
-//             _root = transform;
-//             return _root;
-//         }
-//         else
-//             return _root;
-//     }
-//     set => _root = value;
-// }
-// [SerializeField] internal LayerMask layerMask;

@@ -13,7 +13,7 @@ namespace StormRend.Editors
 
 		List<GameObject> erase = new List<GameObject>();
 		Vector3 worldCursor;
-		Landscaper t;
+		Landscaper l;
 		List<Bounds> overlaps = new List<Bounds>();
 		List<GameObject> overlappedGameObjects = new List<GameObject>();
 
@@ -21,18 +21,7 @@ namespace StormRend.Editors
 		{
 			stamp = new GameObject("Stamp");
 			stamp.hideFlags = HideFlags.HideAndDontSave;
-			t = target as Landscaper;
-
-			// if (ip.SelectedPrefab != null)
-			// {
-			// 	variations = ip.SelectedPrefab.GetComponent<Variations>();
-			// 	if (variationsEditor != null)
-			// 		DestroyImmediate(variationsEditor);
-			// 	if (variations != null)
-			// 		variationsEditor = Editor.CreateEditor(variations);
-			// 	CreateNewStamp();
-			// }
-
+			l = target as Landscaper;
 		}
 
 		void OnDisable()
@@ -48,7 +37,7 @@ namespace StormRend.Editors
 				DestroyImmediate(stamp.transform.GetChild(0).gameObject);
 
 			//Determine number of objects in stamp
-			var count = Mathf.Min(1000, (Mathf.PI * Mathf.Pow(t.brushRadius, 2)) / (1f / t.brushDensity));
+			var count = Mathf.Min(1000, (Mathf.PI * Mathf.Pow(l.brushRadius, 2)) / (1f / l.brushDensity));
 
 
 			for (var i = 0; i < count; i++)
@@ -59,21 +48,21 @@ namespace StormRend.Editors
 
 				//Randomize local position within brush radius
 				var p = Random.insideUnitCircle;
-				child.transform.localPosition = new Vector3(p.x, 0, p.y) * t.brushRadius;
+				child.transform.localPosition = new Vector3(p.x, 0, p.y) * l.brushRadius;
 
 				//Randomize local rotation
 				var eulerAngles = Vector3.zero;
-				if (t.maxRandomRotation > 0)
+				if (l.maxRandomRotation > 0)
 				{
-					eulerAngles.y = Random.value * t.maxRandomRotation;
-					if (t.rotationStep > 0)
-						eulerAngles.y = Mathf.Round(eulerAngles.y / t.rotationStep) * t.rotationStep;
+					eulerAngles.y = Random.value * l.maxRandomRotation;
+					if (l.rotationStep > 0)
+						eulerAngles.y = Mathf.Round(eulerAngles.y / l.rotationStep) * l.rotationStep;
 				}
 				child.transform.localEulerAngles = eulerAngles;
 
 				//Make a stamp dummy and
 				GameObject dummy;
-				dummy = PrefabUtility.InstantiatePrefab(t.SelectedPrefab) as GameObject;
+				dummy = PrefabUtility.InstantiatePrefab(l.SelectedPrefab) as GameObject;
 				foreach (var c in dummy.GetComponentsInChildren<Collider>())
 					c.enabled = false;
 				dummy.transform.parent = child.transform;
@@ -104,7 +93,7 @@ namespace StormRend.Editors
 						// Handles.DrawWireCube(intersection.center, intersection.size);
 						var maxIntersection = Mathf.Max(intersectionVolume / overlapVolume, intersectionVolume / childVolume);
 						// Handles.Label(intersection.center, maxIntersection.ToString());
-						if (maxIntersection > t.maxIntersectionVolume)
+						if (maxIntersection > l.maxIntersectionVolume)
 						{
 							toDestroy.Add(child.gameObject);
 							break;
@@ -127,7 +116,6 @@ namespace StormRend.Editors
 
 		void PerformStamp()
 		{
-			// var removeVariations = ip.SelectedPrefab.GetComponent<Variations>() != null;
 			for (var i = 0; i < stamp.transform.childCount; i++)
 			{
 				var dummy = stamp.transform.GetChild(i);
@@ -137,19 +125,18 @@ namespace StormRend.Editors
 					var prefab = PrefabUtility.GetCorrespondingObjectFromSource(stampObject.gameObject);
 					var g = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
 					Undo.RegisterCreatedObjectUndo(g, "Stamp");
-					// if (removeVariations) DestroyImmediate(g.GetComponent<Variations>());
 					g.transform.position = stampObject.position;
 					g.transform.rotation = stampObject.rotation;
 					g.transform.localScale = stampObject.lossyScale;
-					if (t.rootTransform != null)
+					if (l.rootTransform != null)
 					{
-						g.transform.parent = t.rootTransform;
-						g.isStatic = t.rootTransform.gameObject.isStatic;
-						g.layer = t.rootTransform.gameObject.layer;
+						g.transform.parent = l.rootTransform;
+						g.isStatic = l.rootTransform.gameObject.isStatic;
+						g.layer = l.rootTransform.gameObject.layer;
 					}
 				}
 			}
-			if (t.randomizeAfterStamp)
+			if (l.randomizeAfterStamp)
 				CreateNewStamp();
 		}
 

@@ -28,17 +28,17 @@ namespace StormRend.Editors
 		public override void OnPreInspector()
 		{
 			//Helpbox
-			if (t.rootTransform == null)
+			if (l.rootTransform == null)
 			{
 				EditorGUILayout.HelpBox("You must assign the root transform for new painted instances.", MessageType.Error);
-				t.rootTransform = (Transform)EditorGUILayout.ObjectField("Root Transform", t.rootTransform, typeof(Transform), true);
+				l.rootTransform = (Transform)EditorGUILayout.ObjectField("Root Transform", l.rootTransform, typeof(Transform), true);
 				return;
 			}
 			EditorGUILayout.HelpBox("Stamp: Left Click\nErase: Ctrl + Left Click\nRotate: Shift + Scroll\nBrush Size: Alt + Scroll or [ and ]\nDensity: - =\nScale: . /\nSpace: Randomize", MessageType.Info);
 		}
 		public override void OnPostInspector()
 		{
-			if (t.prefabPalette == null || t.prefabPalette.Length == 0)
+			if (l.prefabPalette == null || l.prefabPalette.Length == 0)
 			{
 				EditorGUILayout.HelpBox("You must assign prefabs to the Prefab Pallete array.", MessageType.Error);
 				return;
@@ -49,31 +49,31 @@ namespace StormRend.Editors
 			using (new EditorGUILayout.HorizontalScope())
 			{
 				EditorGUILayout.PrefixLabel("Align to Normal");
-				t.alignToNormal = GUILayout.Toggle(t.alignToNormal, GUIContent.none);
+				l.alignToNormal = GUILayout.Toggle(l.alignToNormal, GUIContent.none);
 			}
 			using (new EditorGUILayout.HorizontalScope())
 			{
 				EditorGUILayout.PrefixLabel("Follow Surface");
-				t.followOnSurface = GUILayout.Toggle(t.followOnSurface, GUIContent.none);
+				l.followOnSurface = GUILayout.Toggle(l.followOnSurface, GUIContent.none);
 			}
 			using (new EditorGUILayout.HorizontalScope())
 			{
 				EditorGUILayout.PrefixLabel("Randomize each Stamp");
-				t.randomizeAfterStamp = GUILayout.Toggle(t.randomizeAfterStamp, GUIContent.none);
+				l.randomizeAfterStamp = GUILayout.Toggle(l.randomizeAfterStamp, GUIContent.none);
 			}
 			GUILayout.Space(16);
 
 			//Brush palette
-			if (t.prefabPalette != null && t.prefabPalette.Length > 0)
+			if (l.prefabPalette != null && l.prefabPalette.Length > 0)
 			{
-				RefreshPaletteImages(t);
+				RefreshPaletteImages(l);
 				var tileSize = 96;
 				var xCount = Mathf.FloorToInt(Screen.width / tileSize + 1);
 				var gridHeight = GUILayout.Height(paletteImages.Length / (xCount) * tileSize);
-				var newIndex = GUILayout.SelectionGrid(t.selectedPrefabIndex, paletteImages, xCount, EditorStyles.miniButton, gridHeight);
-				if (newIndex != t.selectedPrefabIndex)
+				var newIndex = GUILayout.SelectionGrid(l.selectedPrefabIndex, paletteImages, xCount, EditorStyles.miniButton, gridHeight);
+				if (newIndex != l.selectedPrefabIndex)
 				{
-					t.selectedPrefabIndex = newIndex;
+					l.selectedPrefabIndex = newIndex;
 					CreateNewStamp();
 				}
 			}

@@ -9,12 +9,9 @@ namespace StormRend.Editors
 	[CustomEditor(typeof(Map))]
 	public partial class MapEditor : SmartEditor
 	{
-		Vector3 gridCursor;
-		GameObject stamp;
-
-		Map t;
+		Map m;	//target
 		Event e;
-
+		Color oldHandleColor, oldGUIColor;
 		GUIStyle style;
 
 		#region Cores
@@ -28,13 +25,11 @@ namespace StormRend.Editors
 		}
 		void OnEnable()
 		{
-			t = target as Map;
+			m = target as Map;
 			stamp = new GameObject("TileStamp");
 			stamp.hideFlags = HideFlags.HideAndDontSave;
 
 			CreateStyles();
-
-			// t.OnWrongAssetAdded.AddListener(HandleShowNotification);
 		}
 		void OnDisable()
 		{

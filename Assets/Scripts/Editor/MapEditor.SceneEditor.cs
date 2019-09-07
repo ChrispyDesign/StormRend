@@ -10,17 +10,14 @@ namespace StormRend.Editors
     public partial class MapEditor : SmartEditor
     {
         public enum EditMode { Painting, Erasing }
-
-        // List<Tile> eraseList = new List<Tile>();
-
-        const int kNumOfGridLines = 30;
+		const int kNumOfGridLines = 30;
         public override bool RequiresConstantRepaint() => true;
-
-        Color oldHandleColor, oldGUIColor;
+		GameObject stamp;
+		Vector3 gridCursor;
         EditMode editMode;
 
         int controlID;
-        private bool isEditing;
+        bool isEditing;
 
         #region Core
         void OnSceneGUIBegin()
@@ -40,9 +37,9 @@ namespace StormRend.Editors
         {
             OnSceneGUIBegin();
 
-            DrawGrid(new Color(1f, 0.5f, 0));
-            DrawGridCursor();
-            if (!t || !t.selectedTilePrefab) return;
+            DrawG(new Color(1f, 0.5f, 0));
+            DrawGC();
+            if (!m || !m.selectedTilePrefab) return;
             DrawStamp(gridCursor);
 
             HandleEvents();
@@ -104,49 +101,40 @@ namespace StormRend.Editors
         {
             stamp.transform.position = center;
         }
-		void DrawGrid(Color color, float alpha = 0.9f)
+		void DrawG(Color color, float alpha = 0.9f)
 		{
 			var dottedLineSize = 2f;
-
 			Handles.color = new Color(color.r, color.g, color.b, alpha);
-			var lineLength = kNumOfGridLines * t.tileSize * 0.5f;
+			var lineLength = kNumOfGridLines * m.tileSize * 0.5f;
 			//Z lines
 			for (int i = -kNumOfGridLines / 2; i <= kNumOfGridLines / 2; i++)
 			{
-				var start = new Vector3(t.tileSize * i, 0, -lineLength) + t.transform.position;
-				var end = new Vector3(t.tileSize * i, 0, lineLength) + t.transform.position;
+				var start = new Vector3(m.tileSize * i, 0, -lineLength) + m.transform.position;
+				var end = new Vector3(m.tileSize * i, 0, lineLength) + m.transform.position;
 				Handles.DrawDottedLine(start, end, dottedLineSize);
 			}
 			//X lines
 			for (int i = -kNumOfGridLines / 2; i <= kNumOfGridLines / 2; i++)
 			{
-				var start = new Vector3(-lineLength, 0, t.tileSize * i) + t.transform.position;
-				var end = new Vector3(lineLength, 0, t.tileSize * i) + t.transform.position;
+				var start = new Vector3(-lineLength, 0, m.tileSize * i) + m.transform.position;
+				var end = new Vector3(lineLength, 0, m.tileSize * i) + m.transform.position;
 				Handles.DrawDottedLine(start, end, dottedLineSize);
 			}
 		}
-		void DrawGridCursor(Color? color = null)
+		void DrawGC(Color? color = null)
 		{
 			if (color == null) color = Color.white;
 			if (editMode == EditMode.Erasing) color = Color.red;
-
 			var ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
-
-			if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, 1 << t.gameObject.layer))      //The hidden editor raycast plane will always be on the same layer as the map object
+			if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, 1 << m.gameObject.layer))      //The hidden editor raycast plane should always be on the same layer as the map object
 			{
 				Handles.color = color.Value;
-
-				//Snap to the nearest grid square
-				Vector3 offsetHit = hit.point - t.transform.position;
-				Vector3 floor = new Vector3(Mathf.FloorToInt(offsetHit.x / t.tileSize), 0, Mathf.FloorToInt(offsetHit.z / t.tileSize));
-				Vector3 offset = t.transform.position;
-				Vector3 centre = new Vector3(t.tileSize * 0.5f, 0, t.tileSize * 0.5f);
-
-				gridCursor = floor * t.tileSize + offset + centre;
-
-				//Draw grid cursor
-				Handles.RectangleHandleCap(1, gridCursor, Quaternion.AngleAxis(90, Vector3.right), t.tileSize * 0.5f, EventType.Repaint);
-				// Handles.DrawSphere(2, snappedCursor, Quaternion.identity, t.tileSize * 0.25f);
+				Vector3 oshit = hit.point - m.transform.position;
+				Vector3 f = new Vector3(Mathf.FloorToInt(oshit.x / m.tileSize), 0, Mathf.FloorToInt(oshit.z / m.tileSize));
+				Vector3 os = m.transform.position;
+				Vector3 c = new Vector3(m.tileSize * 0.5f, 0, m.tileSize * 0.5f);
+				gridCursor = f * m.tileSize + os + c;
+				Handles.RectangleHandleCap(1, gridCursor, Quaternion.AngleAxis(90, Vector3.right), m.tileSize * 0.5f, EventType.Repaint);
 			}
 		}
 		void DrawTileTypeOverlayColour()
@@ -163,7 +151,7 @@ namespace StormRend.Editors
 				DestroyImmediate(stamp.transform.GetChild(0).gameObject);
 
 			//Recreate at cursor position
-			var go = Instantiate(t.selectedTilePrefab, gridCursor, Quaternion.identity);
+			var go = Instantiate(m.selectedTilePrefab, gridCursor, Quaternion.identity);
 			go.transform.SetParent(stamp.transform);
 		}
 		void PerformEdit()
@@ -176,7 +164,7 @@ namespace StormRend.Editors
 		void PerformStamp()
 		{
 			//Make sure there are no tiles in the current position
-			if (IsOverTile(gridCursor, t.tileSize, out GameObject tileHit))
+			if (IsOverTile(gridCursor, m.tileSize, out GameObject tileHit))
 			{
 				Debug.LogWarning("Cannot paint on existing tile!");
 				return;
@@ -184,21 +172,21 @@ namespace StormRend.Editors
 
 			//Instantiate a new tile prefab
             var rotation = randomizePaintDirection ? Quaternion.AngleAxis(90 * UnityEngine.Random.Range(0, 4), Vector3.up) : Quaternion.identity;
-			var newTile = Instantiate(t.selectedTilePrefab, gridCursor, rotation);
-			newTile.transform.SetParent(t.transform);
-			newTile.gameObject.layer = t.gameObject.layer;
+			var newTile = Instantiate(m.selectedTilePrefab, gridCursor, rotation);
+			newTile.transform.SetParent(m.transform);
+			newTile.gameObject.layer = m.gameObject.layer;
 
-			Undo.RegisterCreatedObjectUndo(newTile, "Paint Tile " + t.selectedTilePrefab.name);
+			Undo.RegisterCreatedObjectUndo(newTile, "Paint Tile " + m.selectedTilePrefab.name);
 
 			//Add to map's list of tiles
-			t.tiles.Add(newTile.GetComponent<Tile>());
+			m.tiles.Add(newTile.GetComponent<Tile>());
 		}
 		void PerformErase()
 		{
-            if (IsOverTile(gridCursor, t.tileSize, out GameObject tileToErase))
+            if (IsOverTile(gridCursor, m.tileSize, out GameObject tileToErase))
             {
                 //Erase the found tile
-                t.tiles.Remove(tileToErase.GetComponent<Tile>());
+                m.tiles.Remove(tileToErase.GetComponent<Tile>());
 
                 Undo.DestroyObjectImmediate(tileToErase);
             }
@@ -213,9 +201,9 @@ namespace StormRend.Editors
             var cursorBoundsSize = new Vector3(checkBoundsSize * boundsFactor, float.MaxValue, checkBoundsSize * boundsFactor);
             var cursorBounds = new Bounds(gridCursor, cursorBoundsSize);
 
-            for (int i = 0; i < t.transform.childCount; ++i)
+            for (int i = 0; i < m.transform.childCount; ++i)
             {
-                var child = t.transform.GetChild(i);
+                var child = m.transform.GetChild(i);
 
                 //Check child is overlapping
                 var bounds = child.GetComponentInChildren<Renderer>().bounds;
