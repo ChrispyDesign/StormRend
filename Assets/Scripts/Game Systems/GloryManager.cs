@@ -34,7 +34,7 @@ public class GloryManager : MonoBehaviour
         if (m_gloryMeter != null)
             m_gloryNodes = m_gloryMeter.GetComponentsInChildren<Toggle>();
 
-        gloryCount = 0;
+        gloryCount = 4;
     }
     
     /// <summary>

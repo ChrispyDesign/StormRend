@@ -167,19 +167,20 @@ namespace StormRend
 					ability.AddToList(this);
 
 					if (ability.GetTilesToSelect() > ability.GetTiles().Count)
+					{
+						this.m_selected = false;
+						this.m_attackCover.SetActive(false);
 						return;
+					}
 
 					bool continueAbility = true;
-					foreach (Tile tile in ability.GetTiles())
+					foreach (Effect effect in ability.GetEffects())
 					{
-						foreach (Effect effect in ability.GetEffects())
+						if (continueAbility)
 						{
-							if (continueAbility)
-							{
-								continueAbility = effect.PerformEffect(tile, currentSelectedUnit);
-								if (anim != null)
-									anim.SetInteger("AttackAnim", ability.GetAnimNumber());
-							}
+							continueAbility = effect.PerformEffect(ability.GetTiles(), currentSelectedUnit);
+							if (anim != null)
+								anim.SetInteger("AttackAnim", ability.GetAnimNumber());
 						}
 					}
 					currentSelectedUnit.SetSelectedAbility(null);

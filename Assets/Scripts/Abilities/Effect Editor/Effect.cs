@@ -1,6 +1,6 @@
 ﻿using StormRend;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public enum Target
 {
@@ -63,6 +63,18 @@ public class Effect : ScriptableObject
 		//Set glory
 		UIManager.GetInstance().GetGloryManager().SpendGlory(ability.GetGloryRequirement());
 
+		return true;
+	}
+
+	public virtual bool PerformEffect(List<Tile> targetTile, Unit effectPerformer)
+	{
+		foreach(Tile tile in targetTile) 
+		{
+			if(!(this.PerformEffect(tile, effectPerformer)))
+			{
+				return false;
+			}
+		}
 		return true;
 	}
 }
