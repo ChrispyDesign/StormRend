@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using BhaVE.Patterns;
 using System.Linq;
@@ -13,25 +13,21 @@ namespace StormRend.Systems.Mapping
     [ExecuteInEditMode]
     public sealed class Map : Singleton<Map>
     {
-		public enum BoundsType { RendererBounds, ColliderBounds }
+        const float maxMapSize = 500f;
 
-        const float maxMapSize = 400f;
-
-    #region Inspector
-		[SerializeField] internal BoundsType boundsType;
-		[SerializeField] [Range(1, 5)] [Tooltip("This map's tile XZ scale")] internal float tileSize = 2;
+        #region Inspector
+        [SerializeField] [Range(1, 5)] [Tooltip("This map's tile XZ scale")] internal float tileSize = 2;
+        [HideInInspector] [SerializeField] internal List<Tile> tiles = new List<Tile>();
         [SerializeField] internal GameObject[] palette;
-        internal int selectedPrefabIDX;
+        #endregion
 
+        internal int selectedPrefabIDX;
         internal GameObject selectedTilePrefab => palette?.Length == 0 ? null : palette?[selectedPrefabIDX];
         internal bool isPaletteActive => palette != null && palette.Length != 0;
-
-        [HideInInspector][SerializeField] internal List<Tile> tiles = new List<Tile>();
 
 #if UNITY_EDITOR
         [HideInInspector] public BoxCollider editorRaycastPlane;
 #endif
-        #endregion
 
         #region Core
         void OnEnable()
@@ -72,9 +68,20 @@ namespace StormRend.Systems.Mapping
             if (!editorRaycastPlane) CreateEditorRaycastPlane(maxMapSize);
         }
 #endif
+        void Update()
+        {
+            LockRotationAndScale();
+
+            void LockRotationAndScale()
+            {
+                transform.rotation = Quaternion.identity;
+                transform.localScale = Vector3.one;
+            }
+        }
         #endregion
 
 #if UNITY_EDITOR
+        #region Assists
         void CreateEditorRaycastPlane(float mapSize)
         {
             //Create an extremely large plane colider that is used only for editor raycasting
@@ -84,21 +91,24 @@ namespace StormRend.Systems.Mapping
             editorRaycastPlane.isTrigger = true;
             editorRaycastPlane.hideFlags = HideFlags.HideAndDontSave | HideFlags.HideInInspector;   //Hide
         }
-#endif
         [ContextMenu("Delete All Tiles")]
-        void DeleteAllTiles()
+        public void DeleteAllTiles()
         {
             while (transform.childCount > 0)
-			{
-				Undo.DestroyObjectImmediate(transform.GetChild(0).gameObject);
-			}
+            {
+                Undo.DestroyObjectImmediate(transform.GetChild(0).gameObject);
+            }
             tiles.Clear();
         }
-
+        #endregion
+#endif
+        #region Connections
         //Maybe these should Editor methods
-        public void ConnectNeighbourTilesByDistance(float connectRadius) {}
-        public void ConnectNeighbourTilesByManhattan() {}
-        public void GetTileTerrainCost(Tile tile) {}
+        
+        public void ConnectNeighbourTilesByDistance(float connectRadius) { }
+        public void ConnectNeighbourTilesByManhattan() { }
+        public void GetTileTerrainCost(Tile tile) { }
+        #endregion
 
         public static Tile[] AStar(Map map, Tile start, Tile end)
         {
