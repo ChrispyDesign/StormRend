@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using StormRend.Systems.Mapping;
 using UnityEditor;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace StormRend.Editors
 		Vector3 gridCursor;
 		GameObject stamp;
 
-		Map t;
+		Map m;
 		Event e;
 
 		GUIStyle style;
@@ -27,7 +28,7 @@ namespace StormRend.Editors
 		}
 		void OnEnable()
 		{
-			t = target as Map;
+			m = target as Map;
 			stamp = new GameObject("TileStamp");
 			stamp.hideFlags = HideFlags.HideAndDontSave;
 
@@ -49,5 +50,33 @@ namespace StormRend.Editors
 			style.fontSize = 15;
 			style.fontStyle = FontStyle.Bold;
 		}
+
+		#region Utility
+		void AutoConnectNeighbourTiles(Tile subject, bool connectDiagonals = false, float tolerance = 0.1f)
+		{
+			//Find tiles within range (ie. within the distance of the map's tilesize)
+			float adjDist = 1;
+			float diagDist = 1.414213f;
+
+			foreach (var t in m.tiles)
+			{
+				//Adjacent
+				float dist = Vector3.Distance(subject.transform.position, t.transform.position);
+
+				if ((dist - (adjDist * m.tileSize - tolerance)) * ((adjDist * m.tileSize + tolerance) - dist) >= 0)
+				{
+					subject.Connect(t);
+				}
+				//Diagonals
+				if (connectDiagonals)
+				{
+					if ((dist - (diagDist * m.tileSize - tolerance)) * ((diagDist * m.tileSize + tolerance) - dist) >= 0)
+					{
+						subject.Connect(t);
+					}
+				}
+			}
+		}
+		#endregion
 	}
 }

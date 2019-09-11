@@ -4,32 +4,25 @@ using UnityEngine.EventSystems;
 
 namespace StormRend.Systems.Mapping
 {
-    /// <summary>
-    /// Base tile class. Holds a list of connections to neighbouring tiles. 
-    /// </summary>
-    public abstract class Tile : MonoBehaviour //, IPointerEnterHandler//, IPointerExitHandler, IPointerClickHandler
-    {
+	/// <summary>
+	/// Base tile class. Holds a list of connections to neighbouring tiles. 
+	/// </summary>
+	public abstract class Tile : MonoBehaviour //, IPointerEnterHandler//, IPointerExitHandler, IPointerClickHandler
+	{
 #if UNITY_EDITOR
-        public Color editorColor = Color.white;
+		public Color editorColor = Color.white;
 #endif
-        public int ID;
-        public List<Link> links = new List<Link>();
-        public List<Tile> connections = new List<Tile>();
-        public float cost = 1;
-        public float G = float.MaxValue;
-        public float H = float.MaxValue;
-        public float F = 0;
+		public int ID;
+		public HashSet<Tile> connections = new HashSet<Tile>();
 
-        //Connect to a tile
-        public void Connect(Tile to, float cost = 1f)
-        {
-            to.cost = cost;
-            connections.Add(to);
-        }
-        // public void Connect(Tile to, float cost = 1f) => links.Add(new Link(to, cost));
+		public float cost = 1;
 
-        //Disconnect from a tile
-        public void Disconnect(Tile from) => connections.Remove(from);
-        // public void Disconnect(Tile from) => links.RemoveAll(x => x.target == from);
-    }
+		public float G = float.MaxValue;
+		public float H = float.MaxValue;
+		public float F = 0;
+
+		public void Connect(Tile to) => connections.Add(to);
+		public void Disconnect(Tile from) => connections.Remove(from);
+		public void DisconnectAll() => connections.Clear();
+	}
 }

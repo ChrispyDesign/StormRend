@@ -5,78 +5,125 @@ using UnityEngine;
 
 namespace StormRend.Editors
 {
-    //------------ Inspector ---------------
-    public partial class MapEditor : SmartEditor
-    {
-        float previewTileSize = 128;
-        Texture2D[] palettePreviews;
+	//------------ Inspector ---------------
+	public partial class MapEditor : SmartEditor
+	{
+		public enum BoundsType { RendererBounds, ColliderBounds }
+
+		float previewTileSize = 128;
+		Texture2D[] palettePreviews;
 		bool randomizePaintDirection;
+		BoundsType boundsType;
+		bool connectDiagonals;
+		private bool showConnections;
 
 		#region Core
-        public override string[] propertiesToExclude => new[] { "m_Script" };
+		public override string[] propertiesToExclude => new[] { "m_Script" };
 
-        public override void OnPreInspector()
-        {
-            DrawDebugInfo();
-        }
-        public override void OnPostInspector()
-        {
-            DrawPalette();
-            DrawOptions();
-            DrawPreviewSizeSlider();
-        }
-        #endregion    //Core
+		public override void OnPreInspector()
+		{
+			DrawDebugInfo();
 
-        #region Draws
-        void DrawPalette()
-        {
-            //Palette
-            if (t.isPaletteActive)
-            {
-				RefreshPalettePreviews(t);
+			using (new EditorGUILayout.HorizontalScope())
+			{
+				EditorGUILayout.PrefixLabel(new GUIContent("Bounds Type", "The type of method to detect collisions"));
+				boundsType = (BoundsType)EditorGUILayout.EnumPopup(boundsType);
+			}
+		}
+		public override void OnPostInspector()
+		{
+			DrawPreviewSizeSlider();
+			DrawPalette();
+			DrawOptions();
+		}
+		#endregion    //Core
 
-                int columns = Mathf.FloorToInt(Screen.width / previewTileSize + 1);
+		#region Draws
+		void DrawPalette()
+		{
+			//Randomize direction
+			using (new GUILayout.HorizontalScope())
+			{
+				EditorGUILayout.PrefixLabel("Randomize Tile Direction");
+				randomizePaintDirection = EditorGUILayout.Toggle(randomizePaintDirection);
+			}
 
-                // GUILayoutOption gridHeight = GUILayout.Height(palettePreviews.Length / (columns) * previewTileSize);
-                GUILayoutOption gridHeight = GUILayout.Height(64);
+			//Palette
+			if (m.isPaletteActive)
+			{
+				RefreshPalettePreviews(m);
 
-                int newIndex = GUILayout.SelectionGrid(t.selectedPrefabIDX, palettePreviews, columns, gridHeight);
+				int columns = Mathf.FloorToInt(Screen.width / previewTileSize + 1);
 
-                if (newIndex != t.selectedPrefabIDX)
-                {
-                    t.selectedPrefabIDX = newIndex;
-                    CreateStamp();
-                }
-            }
-            else
-            {
-                EditorGUILayout.HelpBox("Assign tile prefabs to this palette", MessageType.Error);
-                return;
-            }
-        }
+				GUILayoutOption gridHeight = GUILayout.Height(palettePreviews.Length / (columns) * previewTileSize);
+				// GUILayoutOption gridHeight = GUILayout.Height(64);
+
+				int newIndex = GUILayout.SelectionGrid(m.selectedPrefabIDX, palettePreviews, columns, gridHeight);
+
+				if (newIndex != m.selectedPrefabIDX)
+				{
+					m.selectedPrefabIDX = newIndex;
+					CreateStamp();
+				}
+			}
+			else
+			{
+				EditorGUILayout.HelpBox("Assign tile prefabs to this palette", MessageType.Error);
+				return;
+			}
+		}
+
 		void DrawOptions()
 		{
-            using (new GUILayout.HorizontalScope())
-            {
-                EditorGUILayout.PrefixLabel("Randomize Direction");
-                randomizePaintDirection = EditorGUILayout.Toggle(randomizePaintDirection);
-            }
-		}
-        void DrawPreviewSizeSlider()
-        {
-            GUILayout.Space(5);
-            using (new GUILayout.HorizontalScope())
-            {
-				GUILayout.Label(string.Format("Preview Size: {0:0}", previewTileSize), EditorStyles.miniLabel);
-                previewTileSize = GUILayout.HorizontalSlider(previewTileSize, 32, 128);
-            }
-            GUILayout.Space(5);
-        }
-        #endregion
+			//Connections
+			GUILayout.Space(5);
+			GUILayout.Label("Connections", EditorStyles.boldLabel);
+			using (new GUILayout.HorizontalScope())
+			{
+				EditorGUILayout.PrefixLabel("Connect Diagonals");
+				connectDiagonals = EditorGUILayout.Toggle(connectDiagonals);
+			}
+			using (new GUILayout.HorizontalScope())
+			{
+				if (GUILayout.Button("Auto Connect Neighbour Tiles"))
+				{
+					foreach (var t in m.tiles)
+						AutoConnectNeighbourTiles(t, connectDiagonals ? true : false, 0.2f);
+				}
+			}
+			using (new GUILayout.HorizontalScope())
+			{
+				if (GUILayout.Button("Toggle Connections"))
+				{
+					showConnections = !showConnections;
+				}
+				if (GUILayout.Button("Clear Connections"))
+				{
+					foreach (var t in m.tiles)
+						t.DisconnectAll();
+				}
+			}
 
-        #region Assists
-        void RefreshPalettePreviews(Map map)
-        {
+			//Clear
+			GUILayout.Space(5);
+			if (GUILayout.Button("Clear All Tiles"))
+				m.DeleteAllTiles();
+		}
+		void DrawPreviewSizeSlider()
+		{
+			GUILayout.Space(5);
+			using (new GUILayout.HorizontalScope())
+			{
+				GUILayout.Label(string.Format("Preview Size: {0:0}", previewTileSize), EditorStyles.miniLabel);
+				previewTileSize = GUILayout.HorizontalSlider(previewTileSize, 32, 128);
+			}
+			GUILayout.Space(5);
+		}
+		#endregion
+
+		#region Assists
+		void RefreshPalettePreviews(Map map)
+		{
 			var paletteCount = map.palette.Length;
 
 			if (palettePreviews == null || palettePreviews.Length != paletteCount)
@@ -85,7 +132,7 @@ namespace StormRend.Editors
 				for (var i = 0; i < paletteCount; ++i)
 					palettePreviews[i] = AssetPreview.GetAssetPreview(map.palette[i]);
 			}
-        }
+		}
 		#endregion
 
 		#region Debugs
@@ -93,9 +140,9 @@ namespace StormRend.Editors
 		{
 			EditorGUILayout.HelpBox(
 				string.Format("Snapped Cursor: {0}\nselectedPrefabIndex: {1}\nisEditing: {2}",
-					gridCursor, t.selectedPrefabIDX, isEditing),
+					gridCursor, m.selectedPrefabIDX, isEditing),
 					MessageType.None);
 		}
-        #endregion
-    }
+		#endregion
+	}
 }
