@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
+  m_Name: Piercing Light]
+  m_EditorClassIdentifier: 
+  m_name: 
+  animNumber: 0
+  m_icon: {fileID: 0}
+  m_description: 
+  m_gloryRequirement: 0
+  m_tilesToSelect: 1
+  m_castArea:
+  - elements: 00000000000000
+  - elements: 00000000000000
+  - elements: 00000001000000
+  - elements: 00000100010000
+  - elements: 00000001000000
+  - elements: 00000000000000
+  - elements: 00000000000000
+  m_targetableTiles:
+    m_empty: 1
+    m_enemies: 1
+    m_players: 0
+    m_self: 1
+  m_effects:
+  - {fileID: 114073617312548028}
+--- !u!114 &114073617312548028
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9581fc9934ad0104eb975f6f587914d4, type: 3}
+  m_Name: PiercingLightEffect
+  m_EditorClassIdentifier: 
+  m_target: 0
+  m_damage: 0
