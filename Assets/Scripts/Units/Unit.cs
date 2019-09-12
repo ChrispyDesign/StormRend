@@ -24,6 +24,10 @@ namespace StormRend
 			set => m_coordinates = value; }
 			
         public bool m_afterClear;
+		public bool m_protected;
+		public bool m_blind;
+		public bool m_haste;
+		public bool m_crippled;
 
         [Header("Mesh")]
         [SerializeField] GameObject m_duplicateMesh = null;
@@ -219,7 +223,9 @@ namespace StormRend
         {
 			if (isDead) return;     //Can't beat a dead horse :P
 
-            m_HP -= damage;
+			if (!m_protected)
+				m_HP -= damage;
+
             if (m_HP <= 0)
             {
                 Die();

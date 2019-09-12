@@ -113,6 +113,10 @@ namespace StormRend
 				player.SetHasAttacked(false);
 				player.SetHasMoved(false);
 				player.m_afterClear = false;
+				player.m_blind = false;
+				player.m_protected = false;
+				player.m_haste = false;
+				player.m_crippled = false;
 			}
 
 			GameManager.singleton.GetCommandManager().m_moves.Clear();

@@ -17,7 +17,11 @@ public class SwapUnitEffect : Effect
 
 		if (removeCurses)
 		{
+			unit1.m_blind = false;
+			unit1.m_crippled = false;
 
+			unit2.m_blind = false;
+			unit2.m_crippled = false;
 		}
 
 		if (restoreHealth)

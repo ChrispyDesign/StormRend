@@ -7,6 +7,7 @@ public class PiercingLightEffect : Effect
 	public int m_damage;
 	public int m_tilesToEffectInfront;
 	public int m_gloryGainPerUnit;
+	public bool m_inflictBlindness;
 
 	public override bool PerformEffect(Tile _effectedNode, Unit _thisUnit)
 	{
@@ -20,8 +21,13 @@ public class PiercingLightEffect : Effect
 		Unit unit = _effectedNode.GetUnitOnTop();
 		if (unit != null && unit.GetType() != typeof(PlayerUnit))
 		{
+			if (m_inflictBlindness)
+				unit.m_blind = true;
+
 			unit.TakeDamage(m_damage);
-			uiManager.GetGloryManager().GainGlory(m_gloryGainPerUnit);
+
+			if (unit.GetType() != typeof(PlayerUnit))
+				uiManager.GetGloryManager().GainGlory(m_gloryGainPerUnit);
 		}
 		
 		for(int i = 0; i < m_tilesToEffectInfront; i++)
@@ -31,10 +37,15 @@ public class PiercingLightEffect : Effect
 			nodesToEffect.Add(node);
 
 			unit = node.GetUnitOnTop();
-			if (unit != null && unit.GetType() != typeof(PlayerUnit))
+			if (unit != null)
 			{
+				if (m_inflictBlindness)
+					unit.m_blind = true;
+
 				unit.TakeDamage(m_damage);
-				uiManager.GetGloryManager().GainGlory(m_gloryGainPerUnit);
+
+				if(unit.GetType() != typeof(PlayerUnit))
+					uiManager.GetGloryManager().GainGlory(m_gloryGainPerUnit);
 			}
 		}
 

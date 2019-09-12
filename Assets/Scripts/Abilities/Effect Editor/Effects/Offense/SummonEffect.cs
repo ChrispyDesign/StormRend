@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SummonEffect : Effect
 {
+	public bool m_inflictCrippling;
     [SerializeField] GameObject m_summon;
     [SerializeField] int m_HowManyTurns;
 
@@ -21,6 +22,7 @@ public class SummonEffect : Effect
 		Crystal unit = go.GetComponent<Crystal>();
 		unit.coords = _effectedNode.GetCoordinates();
 		unit.m_HowManyTurns = m_HowManyTurns;
+		unit.m_inflictCrippling = m_inflictCrippling;
 		_effectedNode.SetUnitOnTop(unit);
 		GameManager.singleton.AddCrystal(unit);
 
