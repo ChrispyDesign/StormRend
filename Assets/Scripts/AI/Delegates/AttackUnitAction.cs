@@ -35,7 +35,7 @@ namespace StormRend.Bhaviours
 			u.GetAbilities(ref passive, ref first, ref second);
 			List<Effect> effects = first[0].GetEffects();
 
-			//Attack!
+			//TODO TEMPORARY! Attack!
 			u.SetSelectedAbility(first[0]);
 			anim.SetInteger("AttackAnim", 1);	//THIS IS BAD!!!
 
