@@ -19,7 +19,7 @@ namespace StormRend.Editors
 
 		int controlID;
 		bool isEditing;
-	
+
 
 		#region Core
 		void OnSceneGUIBegin()
@@ -152,19 +152,23 @@ namespace StormRend.Editors
 				// Handles.DrawSphere(2, snappedCursor, Quaternion.identity, t.tileSize * 0.25f);
 			}
 		}
-		void DrawConnections()
+		void DrawConnections(Color? color = null)
 		{
-			foreach (var t in m.tiles)
+			Handles.color = color == null ? Color.white : color.Value;
+
+			foreach (var t in m?.tiles)
 			{
 				Vector3 start = t.transform.position;
-				foreach (var c in t.connections)
+
+				foreach (var c in t?.connections)
 				{
 					Vector3 end = c.transform.position;
 
-					Handles.color = new Color(0.6f, 1, 0.1f);
 					Handles.DrawLine(start, end);
 
 					// Handles.DrawBezier(start, end, start + Vector3.up, end + Vector3.up, Color.red, null, 2);
+					// Handles.DrawSphere(0, start, Quaternion.identity, m.tileSize / 20f);
+					// Handles.color = new Color(0.6f, 1, 0.1f);
 				}
 			}
 		}
@@ -216,6 +220,10 @@ namespace StormRend.Editors
 		{
 			if (IsOverTile(gridCursor, m.tileSize * 0.95f, out GameObject tileToErase))
 			{
+				//TODO Temporary-better-than-nothing-solution
+				//Just clear all the connections to prevent null reference exceptions
+				m.ClearAllTileConnections();
+
 				//Erase the found tile
 				m.tiles.Remove(tileToErase.GetComponent<Tile>());
 

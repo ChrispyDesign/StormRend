@@ -103,10 +103,14 @@ namespace StormRend.Systems.Mapping
 		#endregion
 #endif
 		#region Connections
-		//Maybe these should Editor methods
-
-		public void ConnectNeighbourTilesByDistance(float connectRadius) { }
-		public void ConnectNeighbourTilesByManhattan() { }
+		/// <summary>
+		/// Clear all tile connections
+		/// </summary>
+		public void ClearAllTileConnections()
+		{
+			foreach (var t in tiles)
+				t.DisconnectAll();
+		}
 		public void GetTileTerrainCost(Tile tile) { }
 		#endregion
 
@@ -116,28 +120,3 @@ namespace StormRend.Systems.Mapping
 		}
 	}
 }
-
-
-
-// [SerializeField] Color hoverTint = Color.yellow;
-// [SerializeField] Color attackTint = Color.red;
-// [SerializeField] Color moveTint = Color.blue;'
-
-
-// [Tooltip("Where this editor will parent the painted tiles. Defaults to this Map object")]
-// [SerializeField] Transform _root;
-// internal Transform root
-// {
-//     get
-//     {
-//         if (!_root)
-//         {
-//             _root = transform;
-//             return _root;
-//         }
-//         else
-//             return _root;
-//     }
-//     set => _root = value;
-// }
-// [SerializeField] internal LayerMask layerMask;

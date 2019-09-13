@@ -80,27 +80,19 @@ namespace StormRend.Editors
 			GUILayout.Label("Connections", EditorStyles.boldLabel);
 			using (new GUILayout.HorizontalScope())
 			{
-				EditorGUILayout.PrefixLabel("Connect Diagonals");
-				connectDiagonals = EditorGUILayout.Toggle(connectDiagonals);
+				EditorGUILayout.PrefixLabel("Show Connections"); showConnections = EditorGUILayout.Toggle(showConnections);				
+				EditorGUILayout.PrefixLabel("Connect Diagonals"); connectDiagonals = EditorGUILayout.Toggle(connectDiagonals);
 			}
 			using (new GUILayout.HorizontalScope())
 			{
-				if (GUILayout.Button("Auto Connect Neighbour Tiles"))
+				if (GUILayout.Button("Connect Neighbours"))
 				{
 					foreach (var t in m.tiles)
 						AutoConnectNeighbourTiles(t, connectDiagonals ? true : false, 0.2f);
 				}
-			}
-			using (new GUILayout.HorizontalScope())
-			{
-				if (GUILayout.Button("Toggle Connections"))
-				{
-					showConnections = !showConnections;
-				}
 				if (GUILayout.Button("Clear Connections"))
 				{
-					foreach (var t in m.tiles)
-						t.DisconnectAll();
+					m.ClearAllTileConnections();
 				}
 			}
 
