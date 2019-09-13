@@ -26,7 +26,7 @@ namespace StormRend
         public bool m_afterClear;
 		public bool m_protected;
 		public bool m_blind;
-		public bool m_haste;
+		public bool m_provoked;
 		public bool m_crippled;
 
         [Header("Mesh")]
