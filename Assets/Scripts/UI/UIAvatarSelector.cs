@@ -47,20 +47,20 @@ namespace StormRend
 			if (playerUnit == null)
 				return; // don't do avatar focussing 
 
-			switch (playerUnit.unitType)
-			{
-				case PlayerClass.BERSERKER:
-					m_berserkerAvatar.sizeDelta = m_focusedAvatarSize; // resize berserker avatar
-					break;
+			//switch (playerUnit.unitType)
+			//{
+			//	case PlayerClass.BERSERKER:
+			//		m_berserkerAvatar.sizeDelta = m_focusedAvatarSize; // resize berserker avatar
+			//		break;
 
-				case PlayerClass.VALKYRIE:
-					m_valkyrieAvatar.sizeDelta = m_focusedAvatarSize; // resize valkyrie avatar
-					break;
+			//	case PlayerClass.VALKYRIE:
+			//		m_valkyrieAvatar.sizeDelta = m_focusedAvatarSize; // resize valkyrie avatar
+			//		break;
 
-				case PlayerClass.SAGE:
-					m_sageAvatar.sizeDelta = m_focusedAvatarSize; // resize sage avatar
-					break;
-			}
+			//	case PlayerClass.SAGE:
+			//		m_sageAvatar.sizeDelta = m_focusedAvatarSize; // resize sage avatar
+			//		break;
+			//}
 		}
 	}
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8051624613143853834}
   - component: {fileID: 752364542293138397}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: FrostTroll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,10 +66,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3093552309022210591}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 620388576, guid: 7e4372972433fb64a896064962770e80, type: 3}
+  m_Script: {fileID: 11500000, guid: a06177e06b4a42c4f8a1a7acf55d075a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _internalTree: {fileID: 11400000, guid: 68bab5547e8eb2145956fe15fd9fd9f9, type: 2}
+  _internalTree: {fileID: 0}
   agentName: BhaveAgent
   description: 
   _active: 0
@@ -92,8 +92,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e546a4721d175854fb953bc1dc778be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_HP: 0
   m_coordinates: {x: 0, y: 0}
   m_afterClear: 0
+  m_protected: 0
+  m_blind: 0
+  m_haste: 0
+  m_crippled: 0
   m_duplicateMesh: {fileID: 6712265897453895913}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
