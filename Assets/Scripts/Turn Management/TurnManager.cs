@@ -115,7 +115,6 @@ namespace StormRend
 				player.m_afterClear = false;
 				player.m_blind = false;
 				player.m_protected = false;
-				player.m_haste = false;
 				player.m_crippled = false;
 			}
 
@@ -125,7 +124,6 @@ namespace StormRend
 			{
 				enemy.m_blind = false;
 				enemy.m_protected = false;
-				enemy.m_haste = false;
 				enemy.m_crippled = false;
 			}
 

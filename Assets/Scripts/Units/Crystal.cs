@@ -41,7 +41,7 @@ public class Crystal : Unit
 		if (tempNode.GetUnitOnTop() != null)
 		{
 			if(m_inflictCrippling)
-				tempNode.GetUnitOnTop().m_haste = true;
+				tempNode.GetUnitOnTop().m_crippled = true;
 
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
 		}
@@ -51,7 +51,7 @@ public class Crystal : Unit
 		if (tempNode.GetUnitOnTop() != null)
 		{
 			if (m_inflictCrippling)
-				tempNode.GetUnitOnTop().m_haste = true;
+				tempNode.GetUnitOnTop().m_crippled = true;
 
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
 		}
@@ -62,7 +62,7 @@ public class Crystal : Unit
 		if (tempNode.GetUnitOnTop() != null)
 		{
 			if (m_inflictCrippling)
-				tempNode.GetUnitOnTop().m_haste = true;
+				tempNode.GetUnitOnTop().m_crippled = true;
 
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
 		}
@@ -73,7 +73,7 @@ public class Crystal : Unit
 		if (tempNode.GetUnitOnTop() != null)
 		{
 			if (m_inflictCrippling)
-				tempNode.GetUnitOnTop().m_haste = true;
+				tempNode.GetUnitOnTop().m_crippled = true;
 
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
 		}
