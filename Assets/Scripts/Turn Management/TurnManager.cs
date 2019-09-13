@@ -119,6 +119,16 @@ namespace StormRend
 				player.m_crippled = false;
 			}
 
+			EnemyUnit[] enemyUnits = GameManager.singleton.GetEnemyUnits();
+
+			foreach (EnemyUnit enemy in enemyUnits)
+			{
+				enemy.m_blind = false;
+				enemy.m_protected = false;
+				enemy.m_haste = false;
+				enemy.m_crippled = false;
+			}
+
 			GameManager.singleton.GetCommandManager().m_moves.Clear();
 		}
 

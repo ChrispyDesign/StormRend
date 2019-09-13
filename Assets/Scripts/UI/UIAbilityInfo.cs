@@ -38,7 +38,7 @@ public class UIAbilityInfo : MonoBehaviour
     public void HoverAbility()
     {		
         m_player = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
-        if (m_player != null)
+        if (m_player != null && !(m_player.m_blind))
         {
             GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.ATTACK);
             m_selector.SetInfoPanelData();

@@ -103,6 +103,9 @@ namespace StormRend
 
         public void MoveTo(Tile tile)
         {
+			if (m_crippled)
+				return;
+
 			//PROBABLY BAD
 			var oldPos = transform.position;	//Record old position to change
 
