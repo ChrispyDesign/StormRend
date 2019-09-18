@@ -17,6 +17,9 @@ public class DamageEffect : Effect
         if (unit != null)
             unit.TakeDamage(m_damageAmount);
 
+		if (unit.isProvoking)
+			effectPerformer.TakeDamage(unit.provokeDamage);
+
 		return true;
 	}
 }

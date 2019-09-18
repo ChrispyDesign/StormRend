@@ -183,6 +183,11 @@ namespace StormRend
 								anim.SetInteger("AttackAnim", ability.GetAnimNumber());
 						}
 					}
+
+					//TODO Temporary Fix
+					if (continueAbility)
+						currentSelectedUnit.SetHasAttacked(true);
+
 					currentSelectedUnit.SetSelectedAbility(null);
 
 					CommandManager commandManager = GameManager.singleton.GetCommandManager();

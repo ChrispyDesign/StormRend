@@ -100,6 +100,7 @@ public class AbilityEditor : Editor
 				//Defensive
                 genericMenu.AddItem(new GUIContent("Add Effect/Defensive/Teleport"), false, () => m_effectEditor.AddEffect(typeof(TeleportEffect)));
                 genericMenu.AddItem(new GUIContent("Add Effect/Defensive/Swap Units"), false, () => m_effectEditor.AddEffect(typeof(SwapUnitEffect)));
+				genericMenu.AddItem(new GUIContent("Add Effect/Defensive/Provoke"), false, () => m_effectEditor.AddEffect(typeof(ProvokeEffect)));
 
                 // recovery
                 genericMenu.AddItem(new GUIContent("Add Effect/Recovery/Heal"), false, () => m_effectEditor.AddEffect(typeof(HealEffect)));

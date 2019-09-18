@@ -116,6 +116,7 @@ namespace StormRend
 				player.m_blind = false;
 				player.m_protected = false;
 				player.m_crippled = false;
+				player.isProvoking = false;
 			}
 
 			EnemyUnit[] enemyUnits = GameManager.singleton.GetEnemyUnits();
@@ -125,6 +126,7 @@ namespace StormRend
 				enemy.m_blind = false;
 				enemy.m_protected = false;
 				enemy.m_crippled = false;
+				enemy.isProvoking = false;
 			}
 
 			GameManager.singleton.GetCommandManager().m_moves.Clear();

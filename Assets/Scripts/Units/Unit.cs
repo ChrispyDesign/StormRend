@@ -6,40 +6,41 @@ using UnityEngine.Events;
 
 namespace StormRend
 {
-    //Review and Refactor
-    [SelectionBase]
-    public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
-    {
+	//Review and Refactor
+	[SelectionBase]
+	public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
+	{
 		// - Refactor get/setters to properties where appropriate
 		// - Shwo/Unshow attack tiles should be handled by a different utility class
 		// - Decouple Camera in OnSelect()
 		// - Decouple/reduce coupling of game manager
 
-        [SerializeField][ReadOnlyField] int m_HP;
-        static bool m_isDead;
+		[SerializeField] [ReadOnlyField] int m_HP;
+		static bool m_isDead;
 
-        [SerializeField] Vector2Int m_coordinates;
+		[SerializeField] Vector2Int m_coordinates;
 		public Vector2Int coords {
 			get => m_coordinates;
 			set => m_coordinates = value; }
-			
-        public bool m_afterClear;
+
+		public bool m_afterClear;
 		public bool m_protected;
 		public bool m_blind;
 		public bool isProvoking { get; set; }
 		public bool m_crippled;
 
-        [Header("Mesh")]
-        [SerializeField] GameObject m_duplicateMesh = null;
+		[Header("Mesh")]
+		[SerializeField] GameObject m_duplicateMesh = null;
 
-        [Header("Abilities")]
-        [SerializeField] protected Ability m_passiveAbility;
-        [SerializeField] protected Ability[] m_firstAbilities;
-        [SerializeField] protected Ability[] m_secondAbilities;
+		[Header("Abilities")]
+		[SerializeField] protected Ability m_passiveAbility;
+		[SerializeField] protected Ability[] m_firstAbilities;
+		[SerializeField] protected Ability[] m_secondAbilities;
 
-        [Header("Unit Stats")]
-        [SerializeField] int m_maxHP = 4;
-        [SerializeField] int m_maxMoveRange = 4;
+		[Header("Unit Stats")]
+		[SerializeField] int m_maxHP = 4;
+		[SerializeField] int m_maxMoveRange = 4;
+		[HideInInspector] public int provokeDamage;
 
 
         [Space]
