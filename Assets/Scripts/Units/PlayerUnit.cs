@@ -30,7 +30,7 @@ namespace StormRend
 
         public override void OnSelect()
         {
-            m_isSelected = true;
+            isSelected = true;
 
             Unit player = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
             if (player != null && player != this)
@@ -44,12 +44,12 @@ namespace StormRend
             UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(this);
             UIManager.GetInstance().GetAbilitySelector().SelectPlayerUnit(this);
 
-            if (m_hasMoved && m_hasAttacked)
+            if (hasMoved && hasAttacked)
                 return;
 
             GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
 
-            if (!isChained) 
+            if (!isLocked) 
             {
                 foreach (ICommand command in GameManager.singleton.GetCommandManager().m_moves)
                 {
@@ -63,7 +63,7 @@ namespace StormRend
                             return;
 
                         move.Undo();
-                        m_hasMoved = true;
+                        hasMoved = true;
                     }
                 }
 
@@ -87,7 +87,7 @@ namespace StormRend
 			Dijkstra dijkstra = Dijkstra.Instance;
 			dijkstra.GetValidMoves(Grid.CoordToTile(coords), GetMoveRange(), typeof(EnemyUnit));
 
-			foreach(Tile tile in dijkstra.m_validMoves)
+			foreach(Tile tile in dijkstra.validMoves)
 			{
 				if(tile.GetUnitOnTop() != null && tile.GetUnitOnTop() == _deadUnit)
 				{

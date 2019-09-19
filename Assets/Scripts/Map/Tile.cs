@@ -14,14 +14,15 @@ namespace StormRend
 {
     public class Tile : MonoBehaviour, IHoverable, ISelectable
     {
-        [SerializeField] private Unit m_unitOnTop;
-        [SerializeField] private Tile[] m_neighbours;
-        [SerializeField] private Vector3 m_position;
-        [SerializeField] private Vector2Int m_coordinate;
-		[SerializeField] public GameObject m_attackCover;
-		[SerializeField] public GameObject m_moveCover;
-		[SerializeField] public GameObject m_onHoverCover;
-		[SerializeField] public GameObject m_onDeactivate;
+		[SerializeField] public GameObject attackHighlight;
+		[SerializeField] public GameObject moveHighlight;
+		[SerializeField] public GameObject hoverHighlight;
+		[SerializeField] public GameObject deactivateHighlight;
+
+        [SerializeField] Unit m_unitOnTop;
+        [SerializeField] Tile[] m_neighbours;
+        [SerializeField] Vector3 m_position;        //Monobehaviours already have a position!
+        [SerializeField] Vector2Int m_coordinate;
 
         private Color m_origMaterial;
 
@@ -29,18 +30,19 @@ namespace StormRend
 
         public NodeType m_nodeType;
         public Tile m_parent;
-        public int m_nGCost, m_nHCost;
+        public int gCost, hCost;
 
-        public int m_nFCost
+        public int fCost
         {
             get
             {
-                return m_nGCost + m_nHCost;
+                return gCost + hCost;
             }
         }
 
-        private void Update()
+        void Update()
         {
+            //Wasteful and inefficient. Use events somehow
             if (m_nodeType == NodeType.EMPTY && m_unitOnTop != null)
             {
                 m_unitOnTop.Die();
@@ -96,7 +98,7 @@ namespace StormRend
         {
 			if (m_nodeType == NodeType.WALKABLE && m_unitOnTop != null)
 			{
-				m_onHoverCover.SetActive(true);
+				hoverHighlight.SetActive(true);
 			}
 			PlayerUnit currentSelectedUnit = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
 			if (currentSelectedUnit && !m_unitOnTop && currentSelectedUnit.GetAvailableTiles().Contains(this))
@@ -107,7 +109,7 @@ namespace StormRend
 
         public void OnUnhover()
         {
-			m_onHoverCover.SetActive(false);
+			hoverHighlight.SetActive(false);
 		}
 
         public void OnSelect()
@@ -146,8 +148,6 @@ namespace StormRend
 
                             GameManager.singleton.GetCommandManager().m_moves.Add(temp);
                         }
-
-                        FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 0.5f);
                     }
                     currentSelectedUnit.SetDuplicateMeshVisibilty(false);
                     currentSelectedUnit.SetIsSelected(false);
@@ -169,7 +169,7 @@ namespace StormRend
 					if (ability.GetTilesToSelect() > ability.GetTiles().Count)
 					{
 						this.m_selected = false;
-						this.m_attackCover.SetActive(false);
+						this.attackHighlight.SetActive(false);
 						return;
 					}
 
@@ -198,7 +198,7 @@ namespace StormRend
 					foreach (MoveCommand move in commandManager.m_moves)
 					{
 						Unit unit = move.m_unit;
-						unit.isChained = true;
+						unit.isLocked = true;
 					}
 
 					commandManager.m_moves.Clear();
@@ -245,8 +245,8 @@ namespace StormRend
 						if (node.m_nodeType == NodeType.EMPTY)
 							continue;
 
-						node.m_attackCover.SetActive(false);
-						node.m_moveCover.SetActive(false);
+						node.attackHighlight.SetActive(false);
+						node.moveHighlight.SetActive(false);
 						node.m_selected = false;
 					}
 				}

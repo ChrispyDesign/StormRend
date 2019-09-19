@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4974029390396355642}
   - component: {fileID: 8948708225834256656}
   m_Layer: 0
-  m_Name: OnDeactivate
+  m_Name: Deactivate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 256566717103785120}
   - component: {fileID: 2277378641187523524}
   m_Layer: 0
-  m_Name: OnHover
+  m_Name: Hover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -344,19 +344,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a339e3f3bdf77452a980ad464de331dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackHighlight: {fileID: 5898761034638728201}
+  moveHighlight: {fileID: 6065424413494142390}
+  hoverHighlight: {fileID: 2291294699805228607}
+  deactivateHighlight: {fileID: 629962353033160886}
   m_unitOnTop: {fileID: 0}
   m_neighbours: []
   m_position: {x: 0, y: 0, z: 0}
   m_coordinate: {x: 0, y: 0}
-  m_attackCover: {fileID: 5898761034638728201}
-  m_moveCover: {fileID: 6065424413494142390}
-  m_onHoverCover: {fileID: 2291294699805228607}
-  m_onDeactivate: {fileID: 629962353033160886}
   m_selected: 0
   m_nodeType: 0
   m_parent: {fileID: 0}
-  m_nGCost: 0
-  m_nHCost: 0
+  gCost: 0
+  hCost: 0
 --- !u!1 &5898761034638728201
 GameObject:
   m_ObjectHideFlags: 0

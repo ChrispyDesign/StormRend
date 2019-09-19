@@ -113,7 +113,7 @@ namespace StormRend
 			{
 				player.SetHasAttacked(false);
 				player.SetHasMoved(false);
-				player.isChained = false;
+				player.isLocked = false;
 				player.isBlind = false;
 				player.isProtected = false;
 				player.isCrippled = false;
@@ -141,7 +141,7 @@ namespace StormRend
 			{
 				enemy.SetHasAttacked(false);
 				enemy.SetHasMoved(false);
-				enemy.isChained = false;
+				enemy.isLocked = false;
 			}
 
 			GameManager.singleton.GetCommandManager().m_moves.Clear();

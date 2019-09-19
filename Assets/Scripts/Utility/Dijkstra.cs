@@ -9,8 +9,8 @@ namespace StormRend
 		//Make this A* because why not
 
 		public static Dijkstra Instance; //bingleton
-		public List<Tile> m_validMoves = new List<Tile>(); // The path we will calculated
-		public List<Tile> m_checkedNodes = new List<Tile>();
+		public List<Tile> validMoves = new List<Tile>(); // The path we will calculated
+		public List<Tile> checkTiles = new List<Tile>();
 		public bool m_DebugPath; // If we want to debug out path
 
 		private void Awake()
@@ -32,8 +32,8 @@ namespace StormRend
 		{
 			//This could just return the valid moves directly
 			// If there is already a path clear it
-			if (m_validMoves.Count > 0)
-				m_validMoves.Clear();
+			if (validMoves.Count > 0)
+				validMoves.Clear();
 
 			// Creating a binary tree for paths that can be taken from the currentnode
 			Queue<Tile> queue = new Queue<Tile>();
@@ -47,8 +47,8 @@ namespace StormRend
 				// add it to the closedlist cuz its being searched
 				Tile currentNode = queue.Dequeue();
 
-				if (!m_checkedNodes.Contains(currentNode))
-					m_checkedNodes.Add(currentNode);
+				if (!checkTiles.Contains(currentNode))
+					checkTiles.Add(currentNode);
 
 				List<Tile> Neighbours = currentNode.GetNeighbours();
 
@@ -65,33 +65,33 @@ namespace StormRend
 						if (neighbourOnTop.GetType() == blockingUnitType)
 							continue;
 
-					if (!m_checkedNodes.Contains(neighbour))
-						m_checkedNodes.Add(neighbour);
+					if (!checkTiles.Contains(neighbour))
+						checkTiles.Add(neighbour);
 
-					int newMovementCostToNeighbour = currentNode.m_nGCost + 1;
-					if (newMovementCostToNeighbour < neighbour.m_nGCost || !queue.Contains(neighbour))
+					int newMovementCostToNeighbour = currentNode.gCost + 1;
+					if (newMovementCostToNeighbour < neighbour.gCost || !queue.Contains(neighbour))
 					{
-						neighbour.m_nGCost = newMovementCostToNeighbour;
-						neighbour.m_nHCost = 1;
+						neighbour.gCost = newMovementCostToNeighbour;
+						neighbour.hCost = 1;
 						neighbour.m_parent = currentNode;
 
-						if (neighbour.m_nGCost <= range)
+						if (neighbour.gCost <= range)
 							queue.Enqueue(neighbour);
 					}
 				}
 
-				if (currentNode.m_nGCost > 0 && currentNode.m_nGCost <= range && !m_validMoves.Contains(currentNode))
-					m_validMoves.Add(currentNode);
+				if (currentNode.gCost > 0 && currentNode.gCost <= range && !validMoves.Contains(currentNode))
+					validMoves.Add(currentNode);
 
 			}
 
-			foreach (Tile node in m_checkedNodes)
+			foreach (Tile t in checkTiles)
 			{
-				node.m_nHCost = 0;
-				node.m_nGCost = 0;
+				t.hCost = 0;
+				t.gCost = 0;
 			}
 			
-			return m_validMoves;
+			return validMoves;
 		}
 	}
 }

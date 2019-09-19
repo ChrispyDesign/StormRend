@@ -10,11 +10,13 @@ namespace StormRend
 	[SelectionBase]
 	public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
 	{
+		//This class is doing WAY TOO MUCH!
 		// - Refactor get/setters to properties where appropriate
 		// - Shwo/Unshow attack tiles should be handled by a different utility class
 		// - Decouple Camera in OnSelect()
 		// - Decouple/reduce coupling of game manager
 
+	#region Inspector
 		[SerializeField] [ReadOnlyField] int m_HP;
 		static bool m_isDead;
 
@@ -25,8 +27,9 @@ namespace StormRend
 			set => m_coordinates = value;
 		}
 
+		[Header("Unit Properties")]
         [Tooltip("A unit is closed when it has moved but not attacked and another unit has moved and ")]
-		public bool isChained;
+		public bool isLocked;
 		public bool isProtected;
 		public bool isBlind;
 		public bool isProvoking;
@@ -43,197 +46,202 @@ namespace StormRend
 		[Header("Unit Stats")]
 		[SerializeField] int m_maxHP = 4;
 		[SerializeField] int m_maxMoveRange = 4;
-		[HideInInspector] public int provokeDamage;
-
-
-		[Space]
-		[Header("Unit Interaction")]
-		[SerializeField] UnityEvent m_onSelect;
-		[SerializeField] UnityEvent m_onDeselect;
-		[SerializeField] UnityEvent m_onHover;
-		[SerializeField] UnityEvent m_onUnhover;
-
-
-		protected bool m_hasMoved;
-		protected bool m_hasAttacked;
-		protected bool m_isSelected;
-		protected Ability m_selectedAbility;
-		List<Tile> m_availableTiles;
-		List<Tile> m_attackTiles;
-
-		public Action OnDie = delegate
+		// [Space]
+		// [Header("Unit Interaction")]
+		// [SerializeField] UnityEvent m_onSelect;
+		// [SerializeField] UnityEvent m_onDeselect;
+		// [SerializeField] UnityEvent m_onHover;
+		// [SerializeField] UnityEvent m_onUnhover;
+	#endregion Inspector
+	#region Properties
+		public List<Tile> GetAvailableTiles() { return availableTiles; }
+		public Ability GetSelectedAbility() { return selectedAbility; }
+		public List<Tile> GetAttackTiles() { return attackTiles; }
+		public Tile GetTile() { return Grid.CoordToTile(m_coordinates); }
+		public int GetMoveRange() { return m_maxMoveRange; }
+		public bool GetIsSelected() { return isSelected; }
+		public bool GetHasMoved() { return hasMoved; }
+		public bool GetHasAttacked() { return hasAttacked; }
+		public void GetAbilities(ref Ability passive, ref Ability[] first, ref Ability[] second)
 		{
-			m_isDead = false;
-		};
+			passive = m_passiveAbility;
+			first = m_firstAbilities;
+			second = m_secondAbilities;
+		}
+		public void SetHasMoved(bool moveFlag) { hasMoved = moveFlag; }
+		public void SetHasAttacked(bool attackFlag) { hasAttacked = attackFlag; }
+		public void SetAttackNodes(List<Tile> tiles) { attackTiles = tiles; }
+		public void SetSelectedAbility(Ability ability) { selectedAbility = ability; }
+		public void SetIsSelected(bool isSelected) { this.isSelected = isSelected; }
+		public void SetDuplicateMeshVisibilty(bool _isOff) { m_duplicateMesh.SetActive(_isOff); }
 
-		//Properties
+		public bool isDead => m_HP <= 0;
 		public int HP
 		{
 			get => m_HP;
 			set => m_HP = Mathf.Clamp(value, 0, m_maxHP);
 		}
 		public int maxHP => m_maxHP;
+	#endregion Properties
 
-		#region Properties
-		public List<Tile> GetAvailableTiles() { return m_availableTiles; }
-		public Ability GetSelectedAbility() { return m_selectedAbility; }
-		public List<Tile> GetAttackTiles() { return m_attackTiles; }
-		public Tile GetTile() { return Grid.CoordToTile(m_coordinates); }
-		public int GetMoveRange() { return m_maxMoveRange; }
-		public bool GetIsSelected() { return m_isSelected; }
-		public bool GetHasMoved() { return m_hasMoved; }
-		public bool GetHasAttacked() { return m_hasAttacked; }
-		public void GetAbilities(ref Ability passive,
-			ref Ability[] first, ref Ability[] second)
+		//----------- Protected ---------------
+		protected bool hasMoved;
+		protected bool hasAttacked;
+		protected bool isSelected;
+		protected Ability selectedAbility;
+
+		//----------- Privates ---------------
+		List<Tile> availableTiles;
+		List<Tile> attackTiles;
+		new Camera camera;
+		CameraMove cameraMover;
+
+		//---------- Others ----------------
+		public Action OnDie = delegate  { m_isDead = false; };
+		[HideInInspector] public int provokeDamage;
+
+
+	#region Core
+		void Awake()
 		{
-			passive = m_passiveAbility;
-			first = m_firstAbilities;
-			second = m_secondAbilities;
+			camera = FindObjectOfType<Camera>();
+			cameraMover = camera.GetComponent<CameraMove>();
 		}
-		public void SetHasMoved(bool moveFlag) { m_hasMoved = moveFlag; }
-		public void SetHasAttacked(bool attackFlag) { m_hasAttacked = attackFlag; }
-		public void SetAttackNodes(List<Tile> tiles) { m_attackTiles = tiles; }
-		public void SetSelectedAbility(Ability ability) { m_selectedAbility = ability; }
-		public void SetIsSelected(bool isSelected) { m_isSelected = isSelected; }
-		public void SetDuplicateMeshVisibilty(bool _isOff) { m_duplicateMesh.SetActive(_isOff); }
-
-		public bool isDead => m_HP <= 0;
-
-		#endregion
 
 		void Start()
 		{
 			m_HP = m_maxHP;
-			m_attackTiles = new List<Tile>();
+			attackTiles = new List<Tile>();
 		}
 
 		void Update()
 		{
+			//Right click deselected?
 			if (Input.GetKeyUp(KeyCode.Mouse1))
 			{
 				GameManager.singleton.GetPlayerController().GetCurrentPlayer().OnDeselect();
 			}
 		}
+	#endregion Core
 
-        public void MoveTo(Tile tile)
+	#region Select and Hover
+		public virtual void OnSelect()
+		{
+			// m_onSelect.Invoke();
+
+            if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.MOVE && !isLocked)
+            {
+				availableTiles = Dijkstra.Instance.validMoves;
+
+				foreach (Tile t in availableTiles)
+				{
+					if (t.GetUnitOnTop())
+						continue;
+
+					t.attackHighlight.SetActive(false);
+					t.moveHighlight.SetActive(true);
+					t.m_selected = true;
+				}
+			}
+
+			//Do on select for tile that this unti is on
+			if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
+			{
+				GetTile().OnSelect();
+			}
+
+			//Move camera to just selected unit
+			cameraMover.MoveTo(transform.position, 1.0f);
+		}
+
+		public virtual void OnDeselect()
+		{
+			// m_onDeselect.Invoke();
+			Grid.CoordToTile(m_coordinates).OnDeselect();
+		}
+
+		public virtual void OnHover()
+		{
+			// m_onHover.Invoke();
+
+			Tile tile = Grid.CoordToTile(m_coordinates);
+			if (tile.m_nodeType == NodeType.WALKABLE && tile.GetUnitOnTop())
+			{
+				tile.hoverHighlight.SetActive(true);
+			}
+		}
+
+		public virtual void OnUnhover()
+		{
+			// m_onUnhover.Invoke();
+
+			Tile tile = Grid.CoordToTile(m_coordinates);
+			tile.hoverHighlight.SetActive(false);
+		}
+	#endregion Select and Hover
+
+	#region Helpers
+        public void MoveTo(Tile destTile)
         {
-			if (isCrippled)     //TODO temp
+			if (isCrippled)     //TODO temp don't move if crippled
 				return;
 
 			//PROBABLY BAD
 			var oldPos = transform.position;    //Record old position to change
 
 			GetTile().SetUnitOnTop(null);
-			tile.SetUnitOnTop(this);
+			destTile.SetUnitOnTop(this);
 
-			m_coordinates = tile.GetCoordinates();
-			transform.position = tile.GetNodePosition();
+			m_coordinates = destTile.GetCoordinates();
+			transform.position = destTile.GetNodePosition();
 
 			//Rotate unit accordingly
 			var moveDir = Vector3.Normalize(transform.position - oldPos);
 			if (moveDir != Vector3.zero)
 				transform.rotation = Quaternion.LookRotation(moveDir, Vector3.up);
-		}
 
+			//Move camera to move destination
+			cameraMover.MoveTo(destTile.transform.position, 1f);
+		}
 
 		public void ShowAttackTiles()
 		{
-			foreach (Tile node in m_attackTiles)
+			foreach (Tile t in attackTiles)
 			{
-				if (node.m_nodeType == NodeType.EMPTY
-					|| node.m_nodeType == NodeType.BLOCKED)
+				if (t.m_nodeType == NodeType.EMPTY || t.m_nodeType == NodeType.BLOCKED)
 					continue;
 
-				Unit unit = node.GetUnitOnTop();
-				if (unit != null)
-				{
-					unit.GetComponent<BoxCollider>().enabled = false;
-				}
+				Unit unit = t.GetUnitOnTop();
+				if (!unit) unit.GetComponent<BoxCollider>().enabled = false;
 
-				node.m_attackCover.SetActive(true);
-				node.m_moveCover.SetActive(false);
-				node.m_selected = true;
+				t.attackHighlight.SetActive(true);
+				t.moveHighlight.SetActive(false);
+				t.m_selected = true;
 			}
 		}
 		public void UnShowAttackTiles()
 		{
-			foreach (Tile node in m_attackTiles)
+			foreach (Tile t in attackTiles)
 			{
-				if (node.m_nodeType == NodeType.EMPTY)
+				if (t.m_nodeType == NodeType.EMPTY)
 					continue;
 
-				Unit unit = node.GetUnitOnTop();
+				Unit unit = t.GetUnitOnTop();
 				if (unit != null)
 				{
 					unit.GetComponent<BoxCollider>().enabled = true;
 				}
 
 
-				node.m_attackCover.SetActive(false);
-				node.m_moveCover.SetActive(false);
-				node.m_selected = false;
+				t.attackHighlight.SetActive(false);
+				t.moveHighlight.SetActive(false);
+				t.m_selected = false;
 			}
 		}
 
 		public void MoveDuplicateTo(Tile _moveToNode)
 		{
 			m_duplicateMesh.transform.position = _moveToNode.GetNodePosition();
-		}
-
-		public virtual void OnSelect()
-		{
-			m_onSelect.Invoke();
-
-            if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.MOVE &&
-                !isChained)
-            {
-
-				m_availableTiles = Dijkstra.Instance.m_validMoves;
-
-				foreach (Tile node in m_availableTiles)
-				{
-					if (node.GetUnitOnTop())
-						continue;
-
-					node.m_attackCover.SetActive(false);
-					node.m_moveCover.SetActive(true);
-					node.m_selected = true;
-				}
-			}
-
-			if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
-			{
-				Tile node = GetTile();
-				node.OnSelect();
-			}
-
-			FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 1.0f);
-		}
-
-		public virtual void OnDeselect()
-		{
-			m_onDeselect.Invoke();
-
-			Grid.CoordToTile(m_coordinates).OnDeselect();
-		}
-
-		public virtual void OnHover()
-		{
-			m_onHover.Invoke();
-
-			Tile tile = Grid.CoordToTile(m_coordinates);
-			if (tile.m_nodeType == NodeType.WALKABLE && tile.GetUnitOnTop())
-			{
-				tile.m_onHoverCover.SetActive(true);
-			}
-		}
-
-		public virtual void OnUnhover()
-		{
-			m_onUnhover.Invoke();
-
-			Tile tile = Grid.CoordToTile(m_coordinates);
-			tile.m_onHoverCover.SetActive(false);
 		}
 
 		public void TakeDamage(int damage)
@@ -254,6 +262,7 @@ namespace StormRend
 			OnDie.Invoke();
 
 			GameManager.singleton.m_sage.CheckSoulCommune(this);
+
 			//Temp
 			gameObject.SetActive(false);
 			Grid.CoordToTile(this.m_coordinates).SetUnitOnTop(null);
@@ -261,5 +270,6 @@ namespace StormRend
 			//This should work for any unit regardless of type
 			GameManager.singleton.RegisterUnitDeath(this);
 		}
+	#endregion
 	}
 }

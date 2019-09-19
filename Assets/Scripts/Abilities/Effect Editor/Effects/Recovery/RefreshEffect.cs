@@ -20,7 +20,7 @@ public class RefreshEffect : Effect
 
 		_thisUnit.SetHasMoved(false);
 		_thisUnit.SetHasAttacked(false);
-		_thisUnit.isChained = false;
+		_thisUnit.isLocked = false;
 
 		return true;
 	}
