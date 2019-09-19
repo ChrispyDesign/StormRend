@@ -112,10 +112,10 @@ namespace StormRend
 			{
 				player.SetHasAttacked(false);
 				player.SetHasMoved(false);
-				player.m_afterClear = false;
-				player.m_blind = false;
-				player.m_protected = false;
-				player.m_crippled = false;
+				player.isChained = false;
+				player.isBlind = false;
+				player.isProtected = false;
+				player.isCrippled = false;
 				player.isProvoking = false;
 			}
 
@@ -123,9 +123,9 @@ namespace StormRend
 
 			foreach (EnemyUnit enemy in enemyUnits)
 			{
-				enemy.m_blind = false;
-				enemy.m_protected = false;
-				enemy.m_crippled = false;
+				enemy.isBlind = false;
+				enemy.isProtected = false;
+				enemy.isCrippled = false;
 				enemy.isProvoking = false;
 			}
 
@@ -140,7 +140,7 @@ namespace StormRend
 			{
 				enemy.SetHasAttacked(false);
 				enemy.SetHasMoved(false);
-				enemy.m_afterClear = false;
+				enemy.isChained = false;
 			}
 
 			GameManager.singleton.GetCommandManager().m_moves.Clear();

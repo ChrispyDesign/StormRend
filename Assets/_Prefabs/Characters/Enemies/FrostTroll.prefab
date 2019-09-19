@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8051624613143853834}
   - component: {fileID: 752364542293138397}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: FrostTroll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,8 +92,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e546a4721d175854fb953bc1dc778be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_HP: 0
   m_coordinates: {x: 0, y: 0}
   m_afterClear: 0
+  m_protected: 0
+  m_blind: 0
+  m_crippled: 0
   m_duplicateMesh: {fileID: 6712265897453895913}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
@@ -101,6 +105,7 @@ MonoBehaviour:
   m_secondAbilities: []
   m_maxHP: 5
   m_maxMoveRange: 4
+  provokeDamage: 0
   m_onSelect:
     m_PersistentCalls:
       m_Calls: []
@@ -250,10 +255,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3093552309022210659}
     m_Modifications:
-    - target: {fileID: 100000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
-      propertyPath: m_Name
-      value: FrostTroll_Mesh
-      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4c3d676a609e3a241abd8aab69d701ba, type: 2}
     - target: {fileID: 400000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -310,10 +315,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.875
       objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 4c3d676a609e3a241abd8aab69d701ba, type: 2}
+    - target: {fileID: 100000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
+      propertyPath: m_Name
+      value: FrostTroll_Mesh
+      objectReference: {fileID: 0}
     - target: {fileID: 13700000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

@@ -5,21 +5,21 @@ public class Grid
 {
     public static Tile[,] m_nodes;
 
-    [SerializeField] private SpawnManager m_spawnManager;
+    [SerializeField] SpawnManager m_spawnManager;
 
-    private Transform m_parent;
-    private int m_nodeSize;
-    private Vector3Int m_gridSize;
+    Transform m_parent;
+    float tileSize;
+    Vector3Int m_gridSize;
     Vector2Int v;
 
     private NodeType[,] m_gridData;
     
-    public Grid(Transform _prefab, int _nodeSize, Transform _parent, NodeType[,] _gridData)
+    public Grid(Transform _prefab, float _tileSize, Transform _parent, NodeType[,] _gridData)
     {
         m_parent = _parent;
         m_gridSize.x = _gridData.GetLength(0);
         m_gridSize.y = _gridData.GetLength(1);
-        m_nodeSize = _nodeSize;
+        tileSize = _tileSize;
         m_gridData = _gridData;
         CreateGrid(_prefab);
     }
@@ -36,9 +36,9 @@ public class Grid
         {
             for (int y = 0; y < m_gridSize.y; y++)
             {
-                Vector3 pos = new Vector3( -(m_gridSize.x / 2) + x * m_nodeSize,
+                Vector3 pos = new Vector3( -(m_gridSize.x / 2) + x * tileSize,
                                             0.0f,
-                                            -(m_gridSize.y / 2) + y * m_nodeSize);
+                                            -(m_gridSize.y / 2) + y * tileSize);
                 Transform tile = Object.Instantiate(_prefab, pos, Quaternion.identity, m_parent);
                 tile.name = "(" + x + ", " + y + ")";
                 m_nodes[x, y] = tile.GetComponent<Tile>().SetNodeVariables(pos, new Vector2Int(x, y), m_gridData[x,y]);

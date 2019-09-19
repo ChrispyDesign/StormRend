@@ -23,11 +23,12 @@ namespace StormRend
 			get => m_coordinates;
 			set => m_coordinates = value; }
 
-		public bool m_afterClear;
-		public bool m_protected;
-		public bool m_blind;
-		public bool isProvoking { get; set; }
-		public bool m_crippled;
+        [Tooltip("A unit is closed when it has moved but not attacked and another unit has moved and ")]
+		public bool isChained;
+		public bool isProtected;
+		public bool isBlind;
+		public bool isProvoking;
+		public bool isCrippled;
 
 		[Header("Mesh")]
 		[SerializeField] GameObject m_duplicateMesh = null;
@@ -104,7 +105,7 @@ namespace StormRend
 
         public void MoveTo(Tile tile)
         {
-			if (m_crippled)
+			if (isCrippled)     //TODO temp
 				return;
 
 			//PROBABLY BAD
@@ -172,7 +173,7 @@ namespace StormRend
             m_onSelect.Invoke();
 
             if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.MOVE &&
-                !m_afterClear)
+                !isChained)
             {
 
                 m_availableTiles = Dijkstra.Instance.m_validMoves;
@@ -227,7 +228,7 @@ namespace StormRend
         {
 			if (isDead) return;     //Can't beat a dead horse :P
 
-			if (!m_protected)
+			if (!isProtected)
 				m_HP -= damage;
 
             if (m_HP <= 0)

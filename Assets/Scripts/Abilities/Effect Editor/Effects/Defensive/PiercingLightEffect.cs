@@ -22,7 +22,7 @@ public class PiercingLightEffect : Effect
 		if (unit != null && unit.GetType() != typeof(PlayerUnit))
 		{
 			if (m_inflictBlindness)
-				unit.m_blind = true;
+				unit.isBlind = true;
 
 			unit.TakeDamage(m_damage);
 
@@ -40,7 +40,7 @@ public class PiercingLightEffect : Effect
 			if (unit != null)
 			{
 				if (m_inflictBlindness)
-					unit.m_blind = true;
+					unit.isBlind = true;
 
 				unit.TakeDamage(m_damage);
 

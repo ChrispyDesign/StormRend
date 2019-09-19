@@ -11,7 +11,7 @@ public class ProvokeEffect : Effect
 		unit.isProvoking = true;
 
 		if (m_gainProtection)
-			unit.m_protected = true;
+			unit.isProtected = true;
 
 		return true;
 	}

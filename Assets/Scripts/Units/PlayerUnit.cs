@@ -49,7 +49,7 @@ namespace StormRend
 
             GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
 
-            if (!m_afterClear) 
+            if (!isChained) 
             {
                 foreach (ICommand command in GameManager.singleton.GetCommandManager().m_moves)
                 {

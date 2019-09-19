@@ -195,7 +195,7 @@ namespace StormRend
 					foreach (MoveCommand move in commandManager.m_moves)
 					{
 						Unit unit = move.m_unit;
-						unit.m_afterClear = true;
+						unit.isChained = true;
 					}
 
 					commandManager.m_moves.Clear();
