@@ -40,11 +40,10 @@ namespace StormRend.Bhaviours
 			u = agent.GetComponent<Unit>();
 
 			//Find valid moves
-			Dijkstra.Instance.FindValidMoves(
+			tilesToScan = Dijkstra.Instance.GetValidMoves(
 				u.GetTile(),
 				u.GetMoveRange() * (int)turns,
 				(u is EnemyUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
-			tilesToScan = Dijkstra.Instance.m_validMoves;
 
 			if (tilesToScan.Count <= 0) return NodeState.Failure;
 

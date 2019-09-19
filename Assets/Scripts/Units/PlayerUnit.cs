@@ -69,7 +69,7 @@ namespace StormRend
 
                 SetDuplicateMeshVisibilty(true);
 
-                Dijkstra.Instance.FindValidMoves(GetTile(), GetMoveRange(), typeof(EnemyUnit));
+                Dijkstra.Instance.GetValidMoves(GetTile(), GetMoveRange(), typeof(EnemyUnit));
             }
 
             base.OnSelect();
@@ -85,7 +85,7 @@ namespace StormRend
 		public void CheckSoulCommune(Unit _deadUnit)
 		{
 			Dijkstra dijkstra = Dijkstra.Instance;
-			dijkstra.FindValidMoves(Grid.CoordToTile(coords), GetMoveRange(), typeof(EnemyUnit));
+			dijkstra.GetValidMoves(Grid.CoordToTile(coords), GetMoveRange(), typeof(EnemyUnit));
 
 			foreach(Tile tile in dijkstra.m_validMoves)
 			{

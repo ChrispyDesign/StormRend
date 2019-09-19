@@ -32,18 +32,17 @@ namespace StormRend.Bhaviours
 			u = agent.GetComponent<Unit>();
 
 			//Find the valid moves
-			Dijkstra.Instance.FindValidMoves(
+			validMoves = Dijkstra.Instance.GetValidMoves(
 				u.GetTile(), 	//The tile the agent is current on
-				u.GetMoveRange() * (int)turns,		//Scan move range by turns
-				(u is EnemyUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
-			validMoves = Dijkstra.Instance.m_validMoves;
+					u.GetMoveRange() * (int)turns,		//Scan move range by turns
+						(u is EnemyUnit) ? typeof(PlayerUnit) : typeof(EnemyUnit));
 
 			//Check to see if the target is already next to this agent before moving
 			if (TargetIsAdjacent(false)) return NodeState.Success;
 
 			//Move as close as possible to the target (targets.value[0] should be the closest unit)
-			// Debug.Log("Before Sort"); for (int i = 0; i < validMoves.Count; i++) Debug.Log(Vector2Int.Distance(targets.value[0].coords, validMoves[i].GetCoordinates()));
 			validMoves = validMoves.OrderBy(x => (Vector2Int.Distance(targets.value[0].coords, x.GetCoordinates()))).ToList();
+			// Debug.Log("Before Sort"); for (int i = 0; i < validMoves.Count; i++) Debug.Log(Vector2Int.Distance(targets.value[0].coords, validMoves[i].GetCoordinates()));
 			// Debug.Log("After Sort"); for (int i = 0; i < validMoves.Count; i++) Debug.Log(Vector2Int.Distance(targets.value[0].coords, validMoves[i].GetCoordinates()));
 
 			//Move the agent

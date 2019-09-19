@@ -22,7 +22,13 @@ namespace StormRend
 				Destroy(gameObject);
 		}
 
-		public void FindValidMoves(Tile start, int range, System.Type unitToBlock)
+		/// <summary>
+		/// Calculate valid moves
+		/// </summary>
+		/// <param name="start">Starting tile</param>
+		/// <param name="range">Range to pathfind in manhattan tile distance</param>
+		/// <param name="blockingUnitType">The type of unit that will block the pathfinding</param>
+		public List<Tile> GetValidMoves(Tile start, int range, Type blockingUnitType)
 		{
 			//This could just return the valid moves directly
 			// If there is already a path clear it
@@ -56,7 +62,7 @@ namespace StormRend
 					Unit neighbourOnTop = neighbour.GetUnitOnTop();
 
 					if (neighbourOnTop)
-						if (neighbourOnTop.GetType() == unitToBlock)
+						if (neighbourOnTop.GetType() == blockingUnitType)
 							continue;
 
 					if (!m_checkedNodes.Contains(neighbour))
@@ -84,6 +90,8 @@ namespace StormRend
 				node.m_nHCost = 0;
 				node.m_nGCost = 0;
 			}
+			
+			return m_validMoves;
 		}
 	}
 }
