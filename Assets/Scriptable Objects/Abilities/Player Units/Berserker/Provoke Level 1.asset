@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Provoke Level 1
   m_EditorClassIdentifier: 
   m_name: Provoke (Level 1)
+  animNumber: 0
   m_icon: {fileID: 0}
   m_description: 'Gain a Rune of Taunting. Until the start of your next turn, whenever
     a unit damages you deal 1 damage back to them. '
@@ -32,8 +33,8 @@ MonoBehaviour:
     m_players: 0
     m_self: 1
   m_effects:
-  - {fileID: 114286334617455646}
---- !u!114 &114286334617455646
+  - {fileID: 114391420721333136}
+--- !u!114 &114391420721333136
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,9 +43,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
-  m_Name: TauntEffect
+  m_Script: {fileID: 11500000, guid: a93208d452704714bb7fed91c6f2180c, type: 3}
+  m_Name: ProvokeEffect
   m_EditorClassIdentifier: 
-  m_target: 1
-  m_durationInTurns: 1
-  m_damageOnHit: 1
+  m_target: 0
+  m_damageBack: 0
+  m_gainProtection: 0

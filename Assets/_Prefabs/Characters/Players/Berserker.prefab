@@ -9228,8 +9228,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f35686127b2404ca16e9065156b57d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_HP: 0
   m_coordinates: {x: 0, y: 0}
-  m_afterClear: 0
+  isChained: 0
+  isProtected: 0
+  isBlind: 0
+  isProvoking: 0
+  isCrippled: 0
   m_duplicateMesh: {fileID: 5823134057458797011}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
@@ -9237,11 +9242,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 810376f68cb966c49a3900cab232a8b9, type: 2}
   - {fileID: 11400000, guid: 39d7a18c9cc72814c8a001cb3f8cec4d, type: 2}
   m_secondAbilities:
-  - {fileID: 11400000, guid: f59926acb65149d4f86c34c207ab24a2, type: 2}
-  - {fileID: 11400000, guid: 30f263af1c2a01f42b41351c6a20871d, type: 2}
-  - {fileID: 11400000, guid: a770047c9b761624abb71e10329fb51d, type: 2}
+  - {fileID: 11400000, guid: 4975ea856020d5348bed3e0527a94334, type: 2}
+  - {fileID: 11400000, guid: ed211851a6dd295469d834476cbe8611, type: 2}
+  - {fileID: 11400000, guid: 8afc1e9cc640dae43b7fcd7cd17b2b51, type: 2}
   m_maxHP: 5
   m_maxMoveRange: 4
+  provokeDamage: 0
   m_onSelect:
     m_PersistentCalls:
       m_Calls: []
@@ -9522,6 +9528,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3219090337810754754}
     m_Modifications:
+    - target: {fileID: 6205012047602493075, guid: 81310dc61334044428430a30fc4c519b,
+        type: 3}
+      propertyPath: m_Name
+      value: Axe_L
+      objectReference: {fileID: 0}
     - target: {fileID: 6205012047602268851, guid: 81310dc61334044428430a30fc4c519b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9576,11 +9587,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6205012047602493075, guid: 81310dc61334044428430a30fc4c519b,
-        type: 3}
-      propertyPath: m_Name
-      value: Axe_L
       objectReference: {fileID: 0}
     - target: {fileID: 6205012047604693075, guid: 81310dc61334044428430a30fc4c519b,
         type: 3}
@@ -9757,6 +9763,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5636055475279997316}
     m_Modifications:
+    - target: {fileID: 6205012047602493075, guid: 81310dc61334044428430a30fc4c519b,
+        type: 3}
+      propertyPath: m_Name
+      value: Axe_L
+      objectReference: {fileID: 0}
     - target: {fileID: 6205012047602268851, guid: 81310dc61334044428430a30fc4c519b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9811,11 +9822,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6205012047602493075, guid: 81310dc61334044428430a30fc4c519b,
-        type: 3}
-      propertyPath: m_Name
-      value: Axe_L
       objectReference: {fileID: 0}
     - target: {fileID: 6205012047604693075, guid: 81310dc61334044428430a30fc4c519b,
         type: 3}

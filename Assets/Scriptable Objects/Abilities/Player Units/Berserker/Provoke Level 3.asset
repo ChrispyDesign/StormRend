@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: Provoke Level 3
   m_EditorClassIdentifier: 
-  m_name: Provoke (Level 1)
+  m_name: Provoke (Level 3)
   animNumber: 0
   m_icon: {fileID: 0}
   m_description: Gain a Rune of Protection. Take no damage from the next attack.
@@ -32,47 +32,7 @@ MonoBehaviour:
     m_players: 0
     m_self: 1
   m_effects:
-  - {fileID: 114202355932698588}
-  - {fileID: 114114709379188316}
---- !u!114 &114114709379188316
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae0340ba18f4cdb44a632086657e9e90, type: 3}
-  m_Name: ProtectEffect
-  m_EditorClassIdentifier: 
-  m_target: 1
-  OnPeformEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_durationInTurns: 1
---- !u!114 &114202355932698588
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
-  m_Name: TauntEffect
-  m_EditorClassIdentifier: 
-  m_target: 1
-  OnPeformEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_durationInTurns: 1
-  m_damageOnHit: 2
+  - {fileID: 114664813265654434}
 --- !u!114 &114286334617455646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -86,11 +46,6 @@ MonoBehaviour:
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
   m_target: 1
-  OnPeformEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_durationInTurns: 1
   m_damageOnHit: 1
 --- !u!114 &114656497702361800
@@ -106,10 +61,20 @@ MonoBehaviour:
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
   m_target: 0
-  OnPeformEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   m_durationInTurns: 1
   m_damageOnHit: 2
+--- !u!114 &114664813265654434
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a93208d452704714bb7fed91c6f2180c, type: 3}
+  m_Name: ProvokeEffect
+  m_EditorClassIdentifier: 
+  m_target: 0
+  m_damageBack: 2
+  m_gainProtection: 1
