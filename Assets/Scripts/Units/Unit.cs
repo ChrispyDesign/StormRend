@@ -107,6 +107,14 @@ namespace StormRend
 			m_attackTiles = new List<Tile>();
 		}
 
+		void Update()
+		{
+			if (Input.GetKeyUp(KeyCode.Mouse1))
+			{
+				GameManager.singleton.GetPlayerController().GetCurrentPlayer().OnDeselect();
+			}
+		}
+
         public void MoveTo(Tile tile)
         {
 			if (isCrippled)     //TODO temp
