@@ -226,7 +226,7 @@ namespace StormRend
 			if (unitOnTop)
 			{
 				PlayerController controller = GameManager.singleton.GetPlayerController();
-				Ability ability = controller.GetCurrentPlayer().GetSelectedAbility();
+				Ability ability = controller.GetCurrentPlayer()?.GetSelectedAbility();
 				List<Tile> nodes = new List<Tile>();
 
 				if (controller?.GetPrevMode() == PlayerMode.ATTACK && ability?.GetTiles().Count == ability?.GetTilesToSelect())
