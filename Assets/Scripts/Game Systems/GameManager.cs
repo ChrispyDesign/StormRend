@@ -8,25 +8,25 @@ using System.Linq;
 public class GameManager : Singleton<GameManager>
 {
 	[Header("Managers")]
-	[SerializeField] TurnManager m_turnManager = null;
-	[SerializeField] PlayerController m_playerController = null;
-	[SerializeField] CommandManager m_commandManager = null;
-	[SerializeField] PlayerUnit[] m_players;
-	[SerializeField] EnemyUnit[] m_enemies;
-	[SerializeField] List<Crystal> m_crystal;
-	public PlayerUnit m_sage { get; set; }
+	[SerializeField] TurnManager turnManager = null;
+	[SerializeField] PlayerController playerController = null;
+	[SerializeField] CommandManager commandManager = null;
+	[SerializeField] PlayerUnit[] players;
+	[SerializeField] EnemyUnit[] enemies;
+	[SerializeField] List<Crystal> crystals;
+	public PlayerUnit sage { get; set; }		//???
 
-	#region GettersAndSetters
-	public void AddCrystal(Crystal _crystal) { m_crystal.Add(_crystal); }
+#region Getters And Setters
+	public void AddCrystal(Crystal _crystal) { crystals.Add(_crystal); }
 
 
-	public TurnManager GetTurnManager() { return m_turnManager; }
-	public PlayerController GetPlayerController() { return m_playerController; }
-	public CommandManager GetCommandManager() { return m_commandManager; }
+	public TurnManager GetTurnManager() { return turnManager; }
+	public PlayerController GetPlayerController() { return playerController; }
+	public CommandManager GetCommandManager() { return commandManager; }
 
-	public PlayerUnit[] GetPlayerUnits() { return m_players; }
-	public EnemyUnit[] GetEnemyUnits() { return m_enemies; }
-	public List<Crystal> GetCrystals() { return m_crystal; }
+	public PlayerUnit[] GetPlayerUnits() { return players; }
+	public EnemyUnit[] GetEnemyUnits() { return enemies; }
+	public List<Crystal> GetCrystals() { return crystals; }
 
 	#endregion
 
@@ -35,13 +35,13 @@ public class GameManager : Singleton<GameManager>
 		base.Awake();   //Automatic singleton setup
 
 		//Populate unit lists
-		m_enemies = FindObjectsOfType<EnemyUnit>();
-		m_players = FindObjectsOfType<PlayerUnit>();
+		enemies = FindObjectsOfType<EnemyUnit>();
+		players = FindObjectsOfType<PlayerUnit>();
 
-		foreach(PlayerUnit player in m_players)
+		foreach(PlayerUnit player in players)
 		{
 			if (player.unitType == PlayerClass.SAGE)
-				m_sage = player;
+				sage = player;
 		}
 
 		DoAsserts();
@@ -49,9 +49,9 @@ public class GameManager : Singleton<GameManager>
 
 	void DoAsserts()
 	{
-		Debug.Assert(m_turnManager, "Turn Manager not assigned to GameManager!");
-		Debug.Assert(m_playerController, "Player Controller not assigned to GameManager!");
-		Debug.Assert(m_commandManager, "Command Manager not assigned to GameManager!");
+		Debug.Assert(turnManager, "Turn Manager not assigned to GameManager!");
+		Debug.Assert(playerController, "Player Controller not assigned to GameManager!");
+		Debug.Assert(commandManager, "Command Manager not assigned to GameManager!");
 	}
 
 	void Update()
@@ -59,14 +59,14 @@ public class GameManager : Singleton<GameManager>
 		//Debug kill all players
 		if (Input.GetKeyDown(KeyCode.P))
 		{
-			foreach (PlayerUnit p in m_players)
+			foreach (PlayerUnit p in players)
 				p.Die();
 		}
 
 		//Debug kill all enemies
 		if (Input.GetKeyDown(KeyCode.E))
 		{
-			foreach (EnemyUnit e in m_enemies)
+			foreach (EnemyUnit e in enemies)
 				e.Die();
 		}
 	}
@@ -76,11 +76,11 @@ public class GameManager : Singleton<GameManager>
 		//Filter out dead unit and reassign back to appropriate unit list
 		if (deadUnit is PlayerUnit)
 		{
-			m_players = m_players.Where(x => x != deadUnit).ToArray();
+			players = players.Where(x => x != deadUnit).ToArray();
 		}
 		else if (deadUnit is EnemyUnit)
 		{
-			m_enemies = m_enemies.Where(x => x != deadUnit).ToArray();
+			enemies = enemies.Where(x => x != deadUnit).ToArray();
 		}
 
 		//Then check for end conditions
@@ -95,7 +95,7 @@ public class GameManager : Singleton<GameManager>
 
 	public void GameOver()
 	{
-		if (m_players.Length <= 0)
+		if (players.Length <= 0)
 		{
 			UIManager uiManager = UIManager.GetInstance();
 			GameOver gameOver = uiManager.gameObject.GetComponentInParent<GameOver>();
@@ -105,11 +105,29 @@ public class GameManager : Singleton<GameManager>
 
 	public void GameWin()
 	{
-		if (m_enemies.Length <= 0)
+		if (enemies.Length <= 0)
 		{
 			UIManager uiManager = UIManager.GetInstance();
 			GameWin gameWin = uiManager.gameObject.GetComponentInParent<GameWin>();
 			gameWin.ShowScreen();
+		}
+	}
+
+	public void DeselectAllUnits<T>() where T : Unit
+	{
+		if (typeof(T) is EnemyUnit)
+		{
+			foreach (var e in enemies)
+			{
+				e.OnDeselect();
+			}
+		}
+		else if (typeof(T) is PlayerUnit)
+		{
+			foreach (var p in players)
+			{
+				p.OnDeselect();
+			}
 		}
 	}
 }

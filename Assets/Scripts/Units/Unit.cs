@@ -212,7 +212,7 @@ namespace StormRend
 					continue;
 
 				Unit unit = t.GetUnitOnTop();
-				if (!unit) unit.GetComponent<BoxCollider>().enabled = false;
+				if (unit) unit.GetComponent<BoxCollider>().enabled = false;
 
 				t.attackHighlight.SetActive(true);
 				t.moveHighlight.SetActive(false);
@@ -261,7 +261,7 @@ namespace StormRend
 		{
 			OnDie.Invoke();
 
-			GameManager.singleton.m_sage.CheckSoulCommune(this);
+			GameManager.singleton.sage.CheckSoulCommune(this);
 
 			//Temp
 			gameObject.SetActive(false);

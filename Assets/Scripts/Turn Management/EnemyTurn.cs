@@ -29,6 +29,8 @@ public class EnemyTurn : State
     public override void OnEnter()
     {
         m_timer = 0;
+
+        GameManager.singleton.DeselectAllUnits<PlayerUnit>();
     }
 
     /// <summary>
