@@ -186,7 +186,10 @@ namespace StormRend
 
 					//TODO Temporary Fix
 					if (continueAbility)
+					{
+						currentSelectedUnit.SetHasMoved(true);
 						currentSelectedUnit.SetHasAttacked(true);
+					}
 
 					currentSelectedUnit.SetSelectedAbility(null);
 

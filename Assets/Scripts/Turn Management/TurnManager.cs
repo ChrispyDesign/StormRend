@@ -94,10 +94,11 @@ namespace StormRend
 			GameManager.singleton.GetCommandManager().m_moves.Clear();
 			foreach(PlayerUnit player in GameManager.singleton.GetPlayerUnits())
 			{
+				player.OnDeselect();
 				player.SetMoveCommand(null);
 			}
 
-			// disable proceed button
+			// disable proceed buttonPer
 			m_proceedTurnButton.interactable = false;
 
 			// proceed to enemy turn

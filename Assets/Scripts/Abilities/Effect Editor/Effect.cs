@@ -52,8 +52,8 @@ public class Effect : ScriptableObject
 		}
 
 		//Effect successfully performed???
-		effectPerformer.SetHasMoved(true);
-		effectPerformer.SetHasAttacked(true);
+		//effectPerformer.SetHasMoved(true);
+		//effectPerformer.SetHasAttacked(true);
 
 		//TEMP Orient performer
 		var effectDir = Vector3.Normalize(targetTile.transform.position - effectPerformer.transform.position);
