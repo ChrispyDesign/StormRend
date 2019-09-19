@@ -81,5 +81,20 @@ namespace StormRend
 
             SetDuplicateMeshVisibilty(false);
         }
+
+		public void CheckSoulCommune(Unit _deadUnit)
+		{
+			Dijkstra dijkstra = Dijkstra.Instance;
+			dijkstra.FindValidMoves(Grid.CoordToTile(coords), GetMoveRange(), typeof(EnemyUnit));
+
+			foreach(Tile tile in dijkstra.m_validMoves)
+			{
+				if(tile.GetUnitOnTop() != null && tile.GetUnitOnTop() == _deadUnit)
+				{
+					UIManager.GetInstance().GetGloryManager().GainGlory(1);
+
+				}
+			}
+		}
     }
 }
