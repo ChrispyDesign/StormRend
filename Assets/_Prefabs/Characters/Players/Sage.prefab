@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9108019807441497514}
-  - component: {fileID: 9108019807441497519}
   - component: {fileID: 1706327281877639260}
+  - component: {fileID: 9108019807441497519}
   m_Layer: 0
   m_Name: Sage
   m_TagString: Untagged
@@ -35,19 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &9108019807441497519
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9108019807441497518}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
-  m_Center: {x: 0, y: 0.19554019, z: 0}
 --- !u!114 &1706327281877639260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,6 +68,19 @@ MonoBehaviour:
   m_maxMoveRange: 4
   provokeDamage: 0
   m_unitType: 2
+--- !u!65 &9108019807441497519
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108019807441497518}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
+  m_Center: {x: 0, y: 0.19554019, z: 0}
 --- !u!1001 &2827533052342091546
 PrefabInstance:
   m_ObjectHideFlags: 0
