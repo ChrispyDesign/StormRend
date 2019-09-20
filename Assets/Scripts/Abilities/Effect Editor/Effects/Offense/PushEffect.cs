@@ -15,6 +15,7 @@ public class PushEffect : Effect
 {
 	//[SerializeField] private EffectedTile m_direction;
     [SerializeField] int m_pushAmount;
+	[SerializeField] bool m_gainProtection;
 	[SerializeField] bool m_doDamage;
 	[SerializeField] int m_damage;
 
@@ -32,6 +33,9 @@ public class PushEffect : Effect
 
 		Vector2Int nodeCoords = _effectedNode.GetCoordinates();
 		Vector2Int unitCoords = _thisUnit.coords;
+
+		if(m_gainProtection)
+			_thisUnit.isProtected = true;
 
 		Vector2Int tempCoords = new Vector2Int(0,0);
 		Tile tempNode;

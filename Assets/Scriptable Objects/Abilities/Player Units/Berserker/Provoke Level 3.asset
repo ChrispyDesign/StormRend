@@ -23,7 +23,7 @@ MonoBehaviour:
   - elements: 00000000000000
   - elements: 00000000000000
   - elements: 00000000000000
-  - elements: 00000000000000
+  - elements: 00000001000000
   - elements: 00000000000000
   - elements: 00000000000000
   - elements: 00000000000000
@@ -31,8 +31,9 @@ MonoBehaviour:
     m_empty: 0
     m_enemies: 0
     m_players: 0
-    m_self: 0
-  m_effects: []
+    m_self: 1
+  m_effects:
+  - {fileID: 114492225689454012}
 --- !u!114 &114286334617455646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48,6 +49,21 @@ MonoBehaviour:
   m_target: 1
   m_durationInTurns: 1
   m_damageOnHit: 1
+--- !u!114 &114492225689454012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a93208d452704714bb7fed91c6f2180c, type: 3}
+  m_Name: ProvokeEffect
+  m_EditorClassIdentifier: 
+  m_target: 0
+  m_damageBack: 2
+  m_gainProtection: 1
 --- !u!114 &114656497702361800
 MonoBehaviour:
   m_ObjectHideFlags: 1
