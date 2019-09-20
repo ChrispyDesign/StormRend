@@ -14,7 +14,6 @@ public enum Target
 public class Effect : ScriptableObject
 {
     public Target m_target;
-    // public UnityEvent OnPeformEffect;
 
 	protected bool m_isTileAllowed;
 
@@ -22,8 +21,6 @@ public class Effect : ScriptableObject
 
     public virtual bool PerformEffect(Tile targetTile, Unit effectPerformer)
     {
-        // OnPeformEffect.Invoke();
-
 		Ability ability = effectPerformer.GetSelectedAbility();
 		TargetableTiles tileInfo = ability.GetTargetableTiles();
 
@@ -32,15 +29,15 @@ public class Effect : ScriptableObject
 
 		if (targetTile.GetUnitOnTop() != null)
 		{
-			if (tileInfo.m_enemies && 
+			if (tileInfo.m_enemies &&
 				tileInfo.m_enemies == (targetTile.GetUnitOnTop().GetComponent<EnemyUnit>() != null))
 				m_isTileAllowed = true;
 
-			if (tileInfo.m_players && 
+			if (tileInfo.m_players &&
 				tileInfo.m_players == (targetTile.GetUnitOnTop().GetComponent<PlayerUnit>() != null))
 				m_isTileAllowed = true;
 
-			if (tileInfo.m_self && 
+			if (tileInfo.m_self &&
 				tileInfo.m_self == (targetTile.GetUnitOnTop().GetComponent<Unit>() == effectPerformer))
 				m_isTileAllowed = true;
 		}
@@ -68,7 +65,7 @@ public class Effect : ScriptableObject
 
 	public virtual bool PerformEffect(List<Tile> targetTile, Unit effectPerformer)
 	{
-		foreach(Tile tile in targetTile) 
+		foreach(Tile tile in targetTile)
 		{
 			if(!(this.PerformEffect(tile, effectPerformer)))
 			{

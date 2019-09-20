@@ -6,13 +6,8 @@ using UnityEngine;
 /// </summary>
 public class CameraMove : MonoBehaviour
 {
-    [Header("Root Transform")]
     [SerializeField] private Transform m_rootTransform = null;
-
-    [Header("Move Speed")]
     [SerializeField] private float m_moveSpeed = 10;
-
-    [Header("Move Anchors")]
     [SerializeField] private BoxCollider m_cameraBounds = null;
 
     // movement coroutine reference (for stopping/interrupting)
@@ -27,7 +22,7 @@ public class CameraMove : MonoBehaviour
         // stop movement if the MoveTo coroutine is already executing
         if (m_moveTo != null && axis != Vector3.zero)
             StopCoroutine(m_moveTo);
-        
+
         float speed = m_moveSpeed * Time.deltaTime;
 
         // determine the destination of the end of the movement
@@ -52,7 +47,7 @@ public class CameraMove : MonoBehaviour
     {
         // stop movement if the MoveTo coroutine is already executing
         if (m_moveTo != null)
-            StopCoroutine(m_moveTo); 
+            StopCoroutine(m_moveTo);
 
         // ensure camera stays within bounds
         destination = ClampDestination(destination);
@@ -76,7 +71,7 @@ public class CameraMove : MonoBehaviour
             // get lerp percentage & increment timer
             float t = timer / time;
             timer += Time.deltaTime;
-            
+
             // perform incremental movement
             m_rootTransform.position = Vector3.Lerp(m_rootTransform.position, destination, t);
             yield return null;

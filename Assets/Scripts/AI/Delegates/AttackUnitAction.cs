@@ -18,6 +18,12 @@ namespace StormRend.Bhaviours
 
 		Unit u;
 		Animator anim;
+		CameraMove camMover;
+
+		public override void Awaken(BhaveAgent agent)
+		{
+			camMover = FindObjectOfType<Camera>().GetComponent<CameraMove>();
+		}
 
 		public override NodeState Execute(BhaveAgent agent)
 		{
@@ -35,7 +41,7 @@ namespace StormRend.Bhaviours
 			u.GetAbilities(ref passive, ref first, ref second);
 			List<Effect> effects = first[0].GetEffects();
 
-			//TODO TEMPORARY! Attack!
+			//TODO TEMPORARY: Play animations
 			u.SetSelectedAbility(first[0]);
 			anim.SetInteger("AttackAnim", 1);	//THIS IS BAD!!!
 
@@ -47,6 +53,9 @@ namespace StormRend.Bhaviours
 					Tile targetTile = Grid.CoordToTile(targets.value[0].coords);
 					effect.PerformEffect(targetTile, u);
 				}
+
+				//Focus camera on activity
+				camMover.MoveTo(u.transform.position, 1f);
 			}
 			else if (u is PlayerUnit)
 			{
