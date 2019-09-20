@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: Spirit Crystal Level 1
   m_EditorClassIdentifier: 
-  m_name: Spirit Crystal (Level 1)
-  m_icon: {fileID: 0}
-  m_description: 'Create a Spirit Crystal at an empty tile that blocks movement and
-    has 1 Health. At the start of your turn and when it dies it shatters, dealing
-    1 damage to adjacent units. '
+  m_name: Spirit Crystal 1
+  animNumber: 0
+  m_icon: {fileID: 21300000, guid: 0cc4c52a31cbc7247a4c1b36cfcc7bd5, type: 3}
+  m_description: 1. Summon a Spirit Crystal. When it is destroyed, it deals 1 damage
+    to adjacent units. At the start of your next turn, destroy it.
   m_gloryRequirement: 0
   m_tilesToSelect: 1
   m_castArea:
@@ -47,4 +47,7 @@ MonoBehaviour:
   m_Name: SummonEffect
   m_EditorClassIdentifier: 
   m_target: 0
-  m_summon: {fileID: 0}
+  m_inflictCrippling: 0
+  m_summon: {fileID: 4052113309130031594, guid: 3274fb715873f7a459180b88343656e2,
+    type: 3}
+  m_HowManyTurns: 0

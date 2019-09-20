@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: Piercing Light Level 1
   m_EditorClassIdentifier: 
-  m_name: Piercing Light (Level 1)
-  m_icon: {fileID: 0}
-  m_description: Deal 1 damage to up to 3 units in a straight line.
+  m_name: Piercing Light 1
+  animNumber: 0
+  m_icon: {fileID: 21300000, guid: 8311ef358ed5a594c8e4a97241c78523, type: 3}
+  m_description: 1. Deal 1 damage to up to 3 units in a straight line.
   m_gloryRequirement: 0
   m_tilesToSelect: 1
   m_castArea:
@@ -31,8 +32,8 @@ MonoBehaviour:
     m_players: 1
     m_self: 0
   m_effects:
-  - {fileID: 114415901351157682}
---- !u!114 &114415901351157682
+  - {fileID: 114723758034040340}
+--- !u!114 &114723758034040340
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,8 +42,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
-  m_Name: DamageEffect
+  m_Script: {fileID: 11500000, guid: 9581fc9934ad0104eb975f6f587914d4, type: 3}
+  m_Name: PiercingLightEffect
   m_EditorClassIdentifier: 
-  m_target: 1
-  m_damageAmount: 1
+  m_target: 0
+  m_damage: 1
+  m_tilesToEffectInfront: 2
+  m_gloryGainPerUnit: 1
+  m_inflictBlindness: 0

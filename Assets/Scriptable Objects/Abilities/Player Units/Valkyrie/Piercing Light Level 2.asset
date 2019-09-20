@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Piercing Light Level 2
   m_EditorClassIdentifier: 
   m_name: Piercing Light (Level 2)
-  m_icon: {fileID: 0}
-  m_description: Deal +1 damage.
+  animNumber: 0
+  m_icon: {fileID: 21300000, guid: e59bbcf216bd0ac4797b7a45f62cf8d8, type: 3}
+  m_description: '2. Deal +1 damage. (Glory: 2)'
   m_gloryRequirement: 2
   m_tilesToSelect: 1
   m_castArea:
@@ -31,8 +32,8 @@ MonoBehaviour:
     m_players: 1
     m_self: 0
   m_effects:
-  - {fileID: 114415901351157682}
---- !u!114 &114415901351157682
+  - {fileID: 114457962300095176}
+--- !u!114 &114457962300095176
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,8 +42,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
-  m_Name: DamageEffect
+  m_Script: {fileID: 11500000, guid: 9581fc9934ad0104eb975f6f587914d4, type: 3}
+  m_Name: PiercingLightEffect
   m_EditorClassIdentifier: 
-  m_target: 1
-  m_damageAmount: 2
+  m_target: 0
+  m_damage: 2
+  m_tilesToEffectInfront: 2
+  m_gloryGainPerUnit: 0
+  m_inflictBlindness: 0

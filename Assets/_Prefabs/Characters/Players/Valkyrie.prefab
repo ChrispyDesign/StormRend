@@ -60,40 +60,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f35686127b2404ca16e9065156b57d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_HP: 0
   m_coordinates: {x: 0, y: 0}
-  m_afterClear: 0
+  isLocked: 0
+  isProtected: 0
+  isBlind: 0
+  isProvoking: 0
+  isCrippled: 0
   m_duplicateMesh: {fileID: 1148459413528804736}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
-  - {fileID: 11400000, guid: c02490f9397c5de44b80120196088781, type: 2}
-  - {fileID: 11400000, guid: 0d87344cbdd4a4f4a93fb0822af0569b, type: 2}
-  - {fileID: 11400000, guid: 6e8fa0b5ebd266343a8f86295be6bb63, type: 2}
+  - {fileID: 11400000, guid: 25e639c4f4cae444ea8a550cd69696d9, type: 2}
+  - {fileID: 11400000, guid: 3fb5203629a20a240aa8def6bdbdde32, type: 2}
+  - {fileID: 11400000, guid: 3d678432b3290d74db837cfc4be4f319, type: 2}
   m_secondAbilities:
-  - {fileID: 11400000, guid: f59926acb65149d4f86c34c207ab24a2, type: 2}
-  - {fileID: 11400000, guid: 30f263af1c2a01f42b41351c6a20871d, type: 2}
-  - {fileID: 11400000, guid: a770047c9b761624abb71e10329fb51d, type: 2}
+  - {fileID: 11400000, guid: 099648482d9dabf4dbfbe0bbb3ca2083, type: 2}
+  - {fileID: 11400000, guid: 1b20c7895940bd54aa0bb1e2cd5e88db, type: 2}
+  - {fileID: 11400000, guid: d58a3e6ef76ae704b9a5f873deb33dda, type: 2}
   m_maxHP: 4
   m_maxMoveRange: 4
-  m_onSelect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_onDeselect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_onHover:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_onUnhover:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  provokeDamage: 0
   m_unitType: 1
 --- !u!1001 &1148459413528902442
 PrefabInstance:
@@ -102,6 +88,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 653011552559127036}
     m_Modifications:
+    - target: {fileID: 100010, guid: 32f9e36c242cbca41a9ddfc5adcaa7a1, type: 3}
+      propertyPath: m_Name
+      value: Valkyrie_Blockout_02 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: 32f9e36c242cbca41a9ddfc5adcaa7a1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 32f9e36c242cbca41a9ddfc5adcaa7a1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -144,14 +138,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 32f9e36c242cbca41a9ddfc5adcaa7a1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100010, guid: 32f9e36c242cbca41a9ddfc5adcaa7a1, type: 3}
-      propertyPath: m_Name
-      value: Valkyrie_Blockout_02 (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 100010, guid: 32f9e36c242cbca41a9ddfc5adcaa7a1, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300008, guid: 32f9e36c242cbca41a9ddfc5adcaa7a1, type: 3}
@@ -316,6 +302,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 653011552559127036}
     m_Modifications:
+    - target: {fileID: 100010, guid: 32f9e36c242cbca41a9ddfc5adcaa7a1, type: 3}
+      propertyPath: m_Name
+      value: Valkyrie_Blockout_02 (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 32f9e36c242cbca41a9ddfc5adcaa7a1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -359,10 +349,6 @@ PrefabInstance:
     - target: {fileID: 400010, guid: 32f9e36c242cbca41a9ddfc5adcaa7a1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100010, guid: 32f9e36c242cbca41a9ddfc5adcaa7a1, type: 3}
-      propertyPath: m_Name
-      value: Valkyrie_Blockout_02 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 2300008, guid: 32f9e36c242cbca41a9ddfc5adcaa7a1, type: 3}
       propertyPath: m_Materials.Array.data[0]
