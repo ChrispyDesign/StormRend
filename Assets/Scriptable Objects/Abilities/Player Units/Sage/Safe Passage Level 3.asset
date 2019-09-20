@@ -31,4 +31,21 @@ MonoBehaviour:
     m_enemies: 1
     m_players: 1
     m_self: 0
-  m_effects: []
+  m_effects:
+  - {fileID: 114264529992382716}
+--- !u!114 &114264529992382716
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8276f40f4bf260f4e92f11193e47668e, type: 3}
+  m_Name: SwapUnitEffect
+  m_EditorClassIdentifier: 
+  m_target: 0
+  removeCurses: 1
+  restoreHealth: 1
+  restoreAmount: 2
