@@ -98,5 +98,6 @@ public class UIAbilityInfo : MonoBehaviour
             m_player.ShowAttackTiles();
 		}
 		m_infoPanel.SetActive(false);
+        UIManager.GetInstance().GetAbilitySelector().GetButtonPanel().SetActive(false);
 	}
 }

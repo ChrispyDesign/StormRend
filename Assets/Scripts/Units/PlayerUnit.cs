@@ -41,7 +41,7 @@ namespace StormRend
             }
 
             GameManager.singleton.GetPlayerController().SetCurrentPlayer(this);
-            UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(this);
+           // UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(this);
             UIManager.GetInstance().GetAbilitySelector().SelectPlayerUnit(this);
 
             if (hasMoved && hasAttacked)

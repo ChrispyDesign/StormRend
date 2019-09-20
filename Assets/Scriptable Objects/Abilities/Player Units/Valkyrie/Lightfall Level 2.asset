@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lightfall Level 2
   m_EditorClassIdentifier: 
   m_name: Lightfall (Level 2)
-  animNumber: 0
+  animNumber: 2
   m_icon: {fileID: 21300000, guid: 69e71dddb9aa0d942bb5d03508c81cb5, type: 3}
   m_description: '2. Gain a Rune of Protection. (Take no damage from the first attack
     that hits you) (Glory: 1)'
@@ -34,8 +34,9 @@ MonoBehaviour:
     m_self: 0
   m_effects:
   - {fileID: 114923053855270444}
-  - {fileID: 114494440402168048}
---- !u!114 &114494440402168048
+  - {fileID: 114433627636263934}
+  - {fileID: 114368944278866296}
+--- !u!114 &114368944278866296
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,8 +48,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
-  m_target: 3
+  m_target: 0
   m_refreshType: 1
+--- !u!114 &114433627636263934
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a689f1c72aecd749bd69b2cc1345b40, type: 3}
+  m_Name: TeleportEffect
+  m_EditorClassIdentifier: 
+  m_target: 0
 --- !u!114 &114923053855270444
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -61,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9119896ddbe049ae3df8859d7fd0d, type: 3}
   m_Name: PushEffect
   m_EditorClassIdentifier: 
-  m_target: 2
+  m_target: 1
   m_pushAmount: 1
   m_doDamage: 0
   m_damage: 0
