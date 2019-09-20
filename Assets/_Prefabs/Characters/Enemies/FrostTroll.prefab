@@ -66,10 +66,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3093552309022210591}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 620388576, guid: 7e4372972433fb64a896064962770e80, type: 3}
+  m_Script: {fileID: 11500000, guid: 767119bfa6c83f3459422f107ce40f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _internalTree: {fileID: 11400000, guid: 68bab5547e8eb2145956fe15fd9fd9f9, type: 2}
+  _internalTree: {fileID: 11400000, guid: 162aa4aba77166b4385654ee9337d37d, type: 2}
   agentName: BhaveAgent
   description: 
   _active: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
   restartWhenDone: 0
   pauseIfDeactivated: 0
   variables: []
-  bhaveTreeModule: {fileID: 0}
+  bhaveTreeModule: {fileID: 11400000, guid: 162aa4aba77166b4385654ee9337d37d, type: 2}
   useCopy: 1
 --- !u!114 &752364542293138397
 MonoBehaviour:
@@ -94,10 +94,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HP: 0
   m_coordinates: {x: 0, y: 0}
-  m_afterClear: 0
-  m_protected: 0
-  m_blind: 0
-  m_crippled: 0
+  isLocked: 0
+  isProtected: 0
+  isBlind: 0
+  isProvoking: 0
+  isCrippled: 0
   m_duplicateMesh: {fileID: 6712265897453895913}
   m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
   m_firstAbilities:
@@ -106,26 +107,6 @@ MonoBehaviour:
   m_maxHP: 5
   m_maxMoveRange: 4
   provokeDamage: 0
-  m_onSelect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_onDeselect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_onHover:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_onUnhover:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &5206367902980421788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,10 +236,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3093552309022210659}
     m_Modifications:
-    - target: {fileID: 9500000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 4c3d676a609e3a241abd8aab69d701ba, type: 2}
+    - target: {fileID: 100000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
+      propertyPath: m_Name
+      value: FrostTroll_Mesh
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -315,10 +296,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.875
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
-      propertyPath: m_Name
-      value: FrostTroll_Mesh
-      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4c3d676a609e3a241abd8aab69d701ba, type: 2}
     - target: {fileID: 13700000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
