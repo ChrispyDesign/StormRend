@@ -34,8 +34,8 @@ namespace StormRend.Bhaviours
 			//Find the valid moves
 			validMoves = Dijkstra.Instance.GetValidMoves(
 				u.GetTile(), 	//The tile the agent is current on
-					u.GetMoveRange() * (int)turns,		//Scan move range by turns
-						(u is EnemyUnit) ? typeof(PlayerUnit) : typeof(EnemyUnit));
+				u.GetMoveRange() * (int)turns,		//Scan move range by turns
+				(u is EnemyUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
 
 			//Check to see if the target is already next to this agent before moving
 			if (TargetIsAdjacent(false)) return NodeState.Success;
@@ -58,7 +58,7 @@ namespace StormRend.Bhaviours
 
 		//Checks if the opponent unit is on an adjacent tile
 		bool TargetIsAdjacent(bool checkDiagonal)
-		{	
+		{
 			float tileSize = GameSettings.singleton.tileSize;
 			const float KadjDist = 1f;
 			const float KdiagDist = 1.414213f;

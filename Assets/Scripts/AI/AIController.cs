@@ -33,7 +33,7 @@ namespace StormRend.AI
 				currentUnits = gm.GetPlayerUnits();
 			else if (aiUnitType == UnitType.Enemy)
 				currentUnits = gm.GetEnemyUnits();
-			
+
 			//Start running the AI
 			StartCoroutine(RunAI());
 		}
