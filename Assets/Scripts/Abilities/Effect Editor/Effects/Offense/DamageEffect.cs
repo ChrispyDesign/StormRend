@@ -14,12 +14,15 @@ public class DamageEffect : Effect
 
 		Unit unit = targetTile.GetUnitOnTop();
 
-        if (unit != null)
+		//If an opponent unit is found
+        if (unit)
+		{
             unit.TakeDamage(m_damageAmount);
 
-		if (unit.isProvoking)
-			effectPerformer.TakeDamage(unit.provokeDamage);
-
+			//Handle provoke
+			if (unit.isProvoking)
+				effectPerformer.TakeDamage(unit.provokeDamage);
+		}
 		return true;
 	}
 }
