@@ -55,7 +55,7 @@ MonoBehaviour:
   isProvoking: 0
   isCrippled: 0
   m_duplicateMesh: {fileID: 7897677849403756264}
-  m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
+  m_passiveAbility: {fileID: 0}
   m_firstAbilities:
   - {fileID: 11400000, guid: c824855963fee1e48883b5fcaeb65d5a, type: 2}
   - {fileID: 11400000, guid: 101add0e257f5a64ab6298cbfef40116, type: 2}
@@ -88,6 +88,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9108019807441497514}
     m_Modifications:
+    - target: {fileID: 100002, guid: fdfcd39877056a54e96ead5e8b8dca22, type: 3}
+      propertyPath: m_Name
+      value: Sage_Unwrapped_01
+      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: fdfcd39877056a54e96ead5e8b8dca22, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -143,10 +147,6 @@ PrefabInstance:
     - target: {fileID: 400002, guid: fdfcd39877056a54e96ead5e8b8dca22, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.0086586
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: fdfcd39877056a54e96ead5e8b8dca22, type: 3}
-      propertyPath: m_Name
-      value: Sage_Unwrapped_01
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: fdfcd39877056a54e96ead5e8b8dca22, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -227,6 +227,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 455633302327990028, guid: 534138d032de9754c88a7c4793a96b8c,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 455633302327990028, guid: 534138d032de9754c88a7c4793a96b8c,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 455633302327990028, guid: 534138d032de9754c88a7c4793a96b8c,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 681122493872013710, guid: 534138d032de9754c88a7c4793a96b8c,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300006, guid: 624d876d414ab6c41b2e2d7ffebd4ba4,
+        type: 3}
     - target: {fileID: 1017855105720201312, guid: 534138d032de9754c88a7c4793a96b8c,
         type: 3}
       propertyPath: player
@@ -247,27 +268,6 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 455633302327990028, guid: 534138d032de9754c88a7c4793a96b8c,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 455633302327990028, guid: 534138d032de9754c88a7c4793a96b8c,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 455633302327990028, guid: 534138d032de9754c88a7c4793a96b8c,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 681122493872013710, guid: 534138d032de9754c88a7c4793a96b8c,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 262b1662453fa3d4392b515fec8dcbf3,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 534138d032de9754c88a7c4793a96b8c, type: 3}
 --- !u!4 &7171355106327627164 stripped
@@ -295,6 +295,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9108019807441497514}
     m_Modifications:
+    - target: {fileID: 100002, guid: fdfcd39877056a54e96ead5e8b8dca22, type: 3}
+      propertyPath: m_Name
+      value: Sage_Unwrapped_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: fdfcd39877056a54e96ead5e8b8dca22, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: fdfcd39877056a54e96ead5e8b8dca22, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -350,14 +358,6 @@ PrefabInstance:
     - target: {fileID: 400002, guid: fdfcd39877056a54e96ead5e8b8dca22, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.00866
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: fdfcd39877056a54e96ead5e8b8dca22, type: 3}
-      propertyPath: m_Name
-      value: Sage_Unwrapped_01 (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 100002, guid: fdfcd39877056a54e96ead5e8b8dca22, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: fdfcd39877056a54e96ead5e8b8dca22, type: 3}
       propertyPath: m_Materials.Array.data[0]
