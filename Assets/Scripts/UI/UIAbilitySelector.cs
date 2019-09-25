@@ -93,8 +93,12 @@ public class UIAbilitySelector : MonoBehaviour
     /// <param name="ability"></param>
     private void DisplayAbility(Button button, Ability ability)
     {
+		if (ability == null)
+			return;
+
         button.GetComponent<UIAbilityInfo>().SetAbility(ability);
-        button.image.sprite = ability.GetIcon();
+
+		button.image.sprite = ability.GetIcon();
 
         if (GloryManager.gloryCount >= ability.GetGloryRequirement())
             button.interactable = true;

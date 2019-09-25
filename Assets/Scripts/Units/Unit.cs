@@ -116,11 +116,7 @@ namespace StormRend
 
 		void Update()
 		{
-			//Right click deselected?
-			if (Input.GetKeyUp(KeyCode.Mouse1))
-			{
-				GameManager.singleton.GetPlayerController().GetCurrentPlayer().OnDeselect();
-			}
+
 		}
 	#endregion Core
 
@@ -158,6 +154,7 @@ namespace StormRend
 		{
 			// m_onDeselect.Invoke();
 			Grid.CoordToTile(m_coordinates).OnDeselect();
+			UIManager.GetInstance().GetAbilitySelector().GetButtonPanel().SetActive(false);
 		}
 
 		public virtual void OnHover()
