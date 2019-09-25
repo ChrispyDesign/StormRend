@@ -47,7 +47,16 @@ namespace StormRend.Bhaviours
 
 			//Move the agent
 			if (validMoves.Count > 0)
-				u.MoveTo(validMoves[1]);
+			{
+				for(int i = 0; i < validMoves.Count; i++)
+				{
+					if(validMoves[i].GetUnitOnTop() == null)
+					{
+						u.MoveTo(validMoves[i]);
+						break;
+					}
+				}
+			}
 
 			//If target is next to opponent then successful chase
 			if (TargetIsAdjacent(false))
@@ -75,6 +84,30 @@ namespace StormRend.Bhaviours
 					break;
 				}
 			}
+
+			//Check for adjacency
+			if (opponentTile)
+			{
+				float dist = Vector3.Distance(u.transform.position, opponentTile.transform.position);
+
+				//Check for diagonal adjacency first
+				if (checkDiagonal)
+				{
+					if ((dist - (KdiagDist * tileSize - Ktolerance)) * ((KdiagDist * tileSize + Ktolerance) - dist) >= 0)
+						return true;
+				}
+				if ((dist - (KadjDist * tileSize - Ktolerance)) * ((KadjDist * tileSize + Ktolerance) - dist) >= 0)
+					return true;
+			}
+			return false;
+		}
+
+		bool TargetIsAdjacent(bool checkDiagonal, Tile opponentTile)
+		{
+			float tileSize = GameSettings.singleton.tileSize;
+			const float KadjDist = 1f;
+			const float KdiagDist = 1.414213f;
+			const float Ktolerance = 0.1f;
 
 			//Check for adjacency
 			if (opponentTile)

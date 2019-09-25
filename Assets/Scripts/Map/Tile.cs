@@ -162,7 +162,7 @@ namespace StormRend
 
 				Ability ability = player.GetSelectedAbility();
 				Animator anim = player.GetComponentInChildren<Animator>();
-				if (ability != null && player.GetAttackTiles().Contains(this))
+				if (ability != null && player.GetAttackTiles().Contains(this) && !ability.GetTiles().Contains(this))
                 {
 					ability.AddToList(this);
 

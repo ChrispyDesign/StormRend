@@ -68,7 +68,6 @@ namespace StormRend
                 }
 
                 SetDuplicateMeshVisibilty(true);
-
                 Dijkstra.Instance.GetValidMoves(GetTile(), GetMoveRange(), typeof(EnemyUnit));
             }
 

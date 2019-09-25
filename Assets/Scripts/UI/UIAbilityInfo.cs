@@ -61,9 +61,6 @@ public class UIAbilityInfo : MonoBehaviour
     {
 		bool isLockedAbility = GameManager.singleton.GetPlayerController().GetIsAbilityLocked();
 
-		if(!isLockedAbility)
-			GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
-
 		Ability previousAbility = m_player.GetSelectedAbility();
 		if (m_player != null && previousAbility != null)
 		{
@@ -71,6 +68,16 @@ public class UIAbilityInfo : MonoBehaviour
 				m_player.UnShowAttackTiles();
 		}
 		m_infoPanel.SetActive(false);
+
+		if (!isLockedAbility)
+		{
+			GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
+			Unit player = GameManager.singleton.GetPlayerController().GetCurrentPlayer() as Unit;
+			player.UnShowAttackTiles();
+
+			if(!player.GetHasMoved())
+				player.OnSelect();
+		}
 
 		if (isLockedAbility)
 		{
