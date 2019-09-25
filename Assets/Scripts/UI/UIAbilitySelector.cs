@@ -76,7 +76,7 @@ public class UIAbilitySelector : MonoBehaviour
             player.GetAbilities(ref m_passiveAbility,
                 ref m_firstAbilities, ref m_secondAbilities);
 
-            DisplayAbility(m_passiveButton, m_passiveAbility);
+            //DisplayAbility(m_passiveButton, m_passiveAbility);
 
             for (int i = 0; i < m_firstAbilities.Length; i++)
                 DisplayAbility(m_firstAbilityButtons[i], m_firstAbilities[i]);
@@ -93,7 +93,7 @@ public class UIAbilitySelector : MonoBehaviour
     /// <param name="ability"></param>
     private void DisplayAbility(Button button, Ability ability)
     {
-		if (ability == null)
+		if (ability == null || button == null)
 			return;
 
         button.GetComponent<UIAbilityInfo>().SetAbility(ability);

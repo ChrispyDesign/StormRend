@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
 		{
 			m_currentPlayer.OnDeselect();
 			m_currentPlayer = null;
+			UIManager.GetInstance().GetAbilitySelector().GetButtonPanel().SetActive(false);
 		}
 		else if (Input.GetKeyUp(KeyCode.Escape))
 		{

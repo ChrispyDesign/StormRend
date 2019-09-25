@@ -154,7 +154,6 @@ namespace StormRend
 		{
 			// m_onDeselect.Invoke();
 			Grid.CoordToTile(m_coordinates).OnDeselect();
-			UIManager.GetInstance().GetAbilitySelector().GetButtonPanel().SetActive(false);
 		}
 
 		public virtual void OnHover()
