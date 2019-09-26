@@ -15,12 +15,14 @@ namespace StormRend.Prototype
 		{
 			unit = GetComponentInParent<Unit>();
 			healthValue = unit.HP;
-		}
+
+            transform.rotation = Quaternion.AngleAxis(Camera.main.transform.rotation.eulerAngles.y - 180f, Vector3.up);
+        }
 
 		void Update()
 		{
-			//Face camera's y angle
-			transform.rotation = Quaternion.AngleAxis(Camera.main.transform.rotation.eulerAngles.y - 180f, Vector3.up);
+            //Face camera's angle
+            
 
 			//Update health bar
 			healthValue = (unit.HP / (float)unit.maxHP);
