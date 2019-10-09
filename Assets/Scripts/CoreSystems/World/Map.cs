@@ -18,14 +18,14 @@ namespace StormRend.Systems.Mapping
 
     #region Inspector
 		[SerializeField] internal BoundsType boundsType;
-		[SerializeField] [Range(1, 5)] [Tooltip("This map's tile XZ scale")] internal float tileSize = 2;
-        [SerializeField] internal GameObject[] palette;
-        internal int selectedPrefabIDX;
+		[Range(1, 5)] [Tooltip("This map's tile XZ scale")] public float tileSize = 2;
+        public GameObject[] palette;
+        public int selectedPrefabIDX;
 
-        internal GameObject selectedTilePrefab => palette?.Length == 0 ? null : palette?[selectedPrefabIDX];
-        internal bool isPaletteActive => palette != null && palette.Length != 0;
+        public GameObject selectedTilePrefab => palette?.Length == 0 ? null : palette?[selectedPrefabIDX];
+        public bool isPaletteActive => palette != null && palette.Length != 0;
 
-        [HideInInspector][SerializeField] internal List<Tile> tiles = new List<Tile>();
+        [HideInInspector] public List<Tile> tiles = new List<Tile>();
 
 #if UNITY_EDITOR
         [HideInInspector] public BoxCollider editorRaycastPlane;
