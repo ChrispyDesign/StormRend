@@ -107,15 +107,15 @@ namespace StormRend.Editors
 			using (new GUILayout.HorizontalScope())
 			{
 				GUILayout.Label(string.Format("Preview Size: {0:0}", previewTileSize), EditorStyles.miniLabel);
-				previewTileSize = GUILayout.HorizontalSlider(previewTileSize, 32, 128);
-			}
-			GUILayout.Space(5);
-		}
-		#endregion
+                previewTileSize = GUILayout.HorizontalSlider(previewTileSize, 32, 256);
+            }
+            GUILayout.Space(5);
+        }
+        #endregion
 
-		#region Assists
-		void RefreshPalettePreviews(Map map)
-		{
+        #region Assists
+        void RefreshPalettePreviews(Map map)
+        {
 			var paletteCount = map.palette.Length;
 
 			if (palettePreviews == null || palettePreviews.Length != paletteCount)

@@ -17,7 +17,6 @@ namespace StormRend.Abilities.Effects
 	public class Effect : ScriptableObject
 	{
 		public Target m_target;
-		// public UnityEvent OnPeformEffect;
 
 		protected bool m_isTileAllowed;
 
@@ -25,8 +24,6 @@ namespace StormRend.Abilities.Effects
 
 		public virtual bool PerformEffect(oTile targetTile, Unit effectPerformer)
 		{
-			// OnPeformEffect.Invoke();
-
 			Ability ability = effectPerformer.GetSelectedAbility();
 			TargetableTiles tileInfo = ability.GetTargetableTiles();
 

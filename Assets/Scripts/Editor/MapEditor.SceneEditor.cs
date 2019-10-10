@@ -186,6 +186,7 @@ namespace StormRend.Editors
 				DestroyImmediate(stamp.transform.GetChild(0).gameObject);
 
 			//Recreate at cursor position
+			if (!m.selectedTilePrefab) return;	//null check
 			var go = Instantiate(m.selectedTilePrefab, gridCursor, Quaternion.identity);
 			go.transform.SetParent(stamp.transform);
 		}

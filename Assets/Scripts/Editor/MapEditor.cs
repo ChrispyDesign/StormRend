@@ -32,8 +32,13 @@ namespace StormRend.Editors
 			stamp = new GameObject("TileStamp");
 			stamp.hideFlags = HideFlags.HideAndDontSave;
 
+			//Create a internal style for this inspector to use
 			CreateStyles();
 
+			//Prevent a blank stamp from show on startup
+			CreateStamp();		
+
+			//Register events
 			Undo.undoRedoPerformed += OnUndoRedo;
 		}
 		void OnDisable()
