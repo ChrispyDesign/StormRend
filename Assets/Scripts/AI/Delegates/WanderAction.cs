@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using BhaVE.Core;
-using BhaVE.Nodes;
+﻿using pokoro.BhaVE.Core;
+using pokoro.BhaVE.Core.Delegates;
+using pokoro.BhaVE.Core.Enums;
 using UnityEngine;
 
 namespace BhaVE.Delegates.Examples

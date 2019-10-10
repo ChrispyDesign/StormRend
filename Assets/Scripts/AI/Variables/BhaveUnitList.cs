@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using pokoro.BhaVE.Core.Variables;
 using StormRend;
 using UnityEngine;
 namespace BhaVE.Variables

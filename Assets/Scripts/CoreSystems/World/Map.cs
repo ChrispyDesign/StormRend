@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using BhaVE.Patterns;
 using System.Linq;
+using pokoro.Patterns.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,7 +9,7 @@ using UnityEditor;
 
 namespace StormRend.Systems.Mapping
 {
-    [ExecuteInEditMode]
+	[ExecuteInEditMode]
     public sealed class Map : Singleton<Map>
     {
 		public enum BoundsType { RendererBounds, ColliderBounds }

@@ -1,14 +1,14 @@
-﻿using BhaVE.Core;
-using BhaVE.Delegates;
-using BhaVE.Nodes;
-using BhaVE.Variables;
+﻿using BhaVE.Variables;
+using pokoro.BhaVE.Core;
+using pokoro.BhaVE.Core.Delegates;
+using pokoro.BhaVE.Core.Enums;
 using UnityEngine;
 
 namespace StormRend.Bhaviours
 {
-    /// <summary>
+	/// <summary>
 	/// Checks the size of the target list
-    /// </summary>
+	/// </summary>
 	[CreateAssetMenu(menuName = "StormRend/Delegates/Conditions/CompareUnitListCount", fileName = "CompareUnitListCount")]
     public class CompareUnitListCountCondition : BhaveCondition
     {

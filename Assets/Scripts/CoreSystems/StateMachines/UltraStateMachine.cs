@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using BhaVE.Patterns;
+﻿using System.Collections.Generic;
 using StormRend.Utility.Attributes;
 using UnityEngine;
 using UnityEngine.Events;

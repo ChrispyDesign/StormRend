@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEngine;
-using BhaVE.Core;
-using BhaVE.Nodes;
-using BhaVE.Variables;
+using pokoro.BhaVE.Core.Delegates;
+using pokoro.BhaVE.Core.Variables;
+using pokoro.BhaVE.Core;
+using pokoro.BhaVE.Core.Enums;
 
 namespace BhaVE.Delegates.Examples
 {

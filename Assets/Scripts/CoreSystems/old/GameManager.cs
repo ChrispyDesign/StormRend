@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using BhaVE.Patterns;
 using System.Linq;
 using UnityEngine.Events;
+using pokoro.Patterns.Generic;
 
 namespace StormRend.Defunct
 {

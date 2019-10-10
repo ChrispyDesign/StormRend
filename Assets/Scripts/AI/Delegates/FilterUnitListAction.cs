@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using BhaVE.Core;
-using BhaVE.Delegates;
-using BhaVE.Nodes;
 using BhaVE.Variables;
+using pokoro.BhaVE.Core;
+using pokoro.BhaVE.Core.Delegates;
+using pokoro.BhaVE.Core.Enums;
 using UnityEngine;
 
 namespace StormRend.Bhaviours

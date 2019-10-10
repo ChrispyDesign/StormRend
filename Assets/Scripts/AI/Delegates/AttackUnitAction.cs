@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using BhaVE.Core;
-using BhaVE.Delegates;
-using BhaVE.Nodes;
 using BhaVE.Variables;
+using pokoro.BhaVE.Core;
+using pokoro.BhaVE.Core.Delegates;
+using pokoro.BhaVE.Core.Enums;
 using StormRend.Abilities;
 using StormRend.Abilities.Effects;
 using StormRend.Defunct;

@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
-using BhaVE.Core;
-using BhaVE.Delegates;
-using BhaVE.Nodes;
 using BhaVE.Variables;
 using UnityEngine;
 using StormRend.Defunct;
+using pokoro.BhaVE.Core.Delegates;
+using pokoro.BhaVE.Core.Enums;
+using pokoro.BhaVE.Core;
 
 namespace StormRend.Bhaviours
 {
