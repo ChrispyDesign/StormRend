@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using BhaVE.Variables;
 using pokoro.BhaVE.Core;
 using pokoro.BhaVE.Core.Delegates;
 using pokoro.BhaVE.Core.Enums;
 using StormRend.Abilities;
 using StormRend.Abilities.Effects;
 using StormRend.Defunct;
+using StormRend.Variables;
 using UnityEngine;
 
 namespace StormRend.Bhaviours
@@ -17,7 +17,7 @@ namespace StormRend.Bhaviours
 	[CreateAssetMenu(menuName = "StormRend/Delegates/Actions/AttackUnit", fileName = "AttackUnit")]
 	public class AttackUnitAction : BhaveAction
 	{
-		[SerializeField] BhaveUnitList targets;
+		[SerializeField] UnitListVar targets;
 
 		Unit u;
 		Animator anim;

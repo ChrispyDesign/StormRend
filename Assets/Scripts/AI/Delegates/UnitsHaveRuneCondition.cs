@@ -1,7 +1,7 @@
-﻿using BhaVE.Variables;
-using pokoro.BhaVE.Core;
+﻿using pokoro.BhaVE.Core;
 using pokoro.BhaVE.Core.Delegates;
 using pokoro.BhaVE.Core.Enums;
+using StormRend.Variables;
 using UnityEngine;
 
 namespace StormRend.Bhaviours
@@ -12,7 +12,7 @@ namespace StormRend.Bhaviours
 	// [CreateAssetMenu(menuName = "StormRend/Delegates/Conditions/UnitsHaveRune", fileName = "UnitsHaveRune")]
 	public class UnitsHaveRuneCondition : BhaveCondition
     {
-		[SerializeField] BhaveUnitList targets;
+		[SerializeField] UnitListVar targets;
 
 
 		Unit unit;

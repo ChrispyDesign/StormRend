@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
-using BhaVE.Variables;
 using UnityEngine;
 using StormRend.Defunct;
 using pokoro.BhaVE.Core.Delegates;
 using pokoro.BhaVE.Core.Enums;
 using pokoro.BhaVE.Core;
+using StormRend.Variables;
 
 namespace StormRend.Bhaviours
 {
@@ -15,7 +15,7 @@ namespace StormRend.Bhaviours
     [CreateAssetMenu(menuName = "StormRend/Delegates/Actions/MoveToUnit", fileName = "MoveToUnit")]
     public class MoveToUnitAction : BhaveAction
     {
-        [SerializeField] BhaveUnitList targets;
+        [SerializeField] UnitListVar targets;
    		[Tooltip("The number of turns to cast out in order find the range of this unit")]
         [SerializeField] uint turns = 1;
 

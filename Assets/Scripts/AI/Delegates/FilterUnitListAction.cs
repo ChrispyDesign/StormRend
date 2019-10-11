@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using BhaVE.Variables;
 using pokoro.BhaVE.Core;
 using pokoro.BhaVE.Core.Delegates;
 using pokoro.BhaVE.Core.Enums;
+using StormRend.Variables;
 using UnityEngine;
 
 namespace StormRend.Bhaviours
@@ -16,7 +16,7 @@ namespace StormRend.Bhaviours
         public enum FilterMode { LowestHP, Closest }
 
         public FilterMode filterMethod;
-        [SerializeField] BhaveUnitList targets;
+        [SerializeField] UnitListVar targets;
 
         //Privates
         Unit unit;

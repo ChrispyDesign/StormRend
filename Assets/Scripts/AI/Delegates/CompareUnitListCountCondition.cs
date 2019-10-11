@@ -1,7 +1,7 @@
-﻿using BhaVE.Variables;
-using pokoro.BhaVE.Core;
+﻿using pokoro.BhaVE.Core;
 using pokoro.BhaVE.Core.Delegates;
 using pokoro.BhaVE.Core.Enums;
+using StormRend.Variables;
 using UnityEngine;
 
 namespace StormRend.Bhaviours
@@ -20,7 +20,7 @@ namespace StormRend.Bhaviours
 			GreaterThan,
 			GreaterOrEqual
 		}
-		[SerializeField] BhaveUnitList targets;
+		[SerializeField] UnitListVar targets;
 		[SerializeField] int countToCompare = 5;
 		[SerializeField] ComparisonMode comparisonMethod;
 		[SerializeField] NodeState stateToReturn = NodeState.Success;

@@ -1,23 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using BhaVE.Variables;
 using StormRend.Defunct;
 using pokoro.BhaVE.Core.Delegates;
 using pokoro.BhaVE.Core.Enums;
 using pokoro.BhaVE.Core;
+using StormRend.Variables;
 
 namespace StormRend.Bhaviours
 {
-	/// <summary>
-	/// Finds a certain unit within range of agent and then adds it to a list (BhaveVar)
-	/// Returns Success if units are found, Failure if none found
-	/// </summary>
-	[CreateAssetMenu(menuName = "StormRend/Delegates/Actions/FindUnitsInRange", fileName = "FindUnitsInRange")]
+    /// <summary>
+    /// Finds a certain unit within range of agent and then adds it to a list (BhaveVar)
+    /// Returns Success if units are found, Failure if none found
+    /// </summary>
+    [CreateAssetMenu(menuName = "StormRend/Delegates/Actions/FindUnitsInRange", fileName = "FindUnitsInRange")]
 	public class FindUnitsInRangeAction : BhaveAction
 	{
 		public enum UnitType { Player, Enemy }
 		public UnitType unitTypeToFind = UnitType.Player;
-		public BhaveUnitList targets;
+		public UnitListVar targets;
 
 		[Tooltip("The number of turns to cast out in order find the range of this unit")]
 		[SerializeField] uint turns = 1;
