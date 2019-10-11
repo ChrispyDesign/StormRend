@@ -7,15 +7,14 @@ namespace The.Great.Refactor.Brainstorm
 {
 	/*Programming elements of StormRend
 	CoreSystems
-		UltraStateMachine: Turn based stackable state machine
-		GameDirector: 
-		Glory
-		Blizzard
+		V UltraStateMachine: Turn based stackable state machine
+		V GameDirector: Extra component to control the statemachine and other
+		Glory/Blizzard
 		UserInputHandler (PlayerController)
 			UndoSystem
 		GameData Brainstorm:
 		- Glory and Blizzard are just integer numbers
-			- Use SO variable?
+			- Use advanced SO variables with SO events?
 			- global Scriptable object that holds all the crucial data
 		- Selected Unit
 			- SO variable
@@ -37,8 +36,8 @@ namespace The.Great.Refactor.Brainstorm
 		Meter (for Glory and Blizzard meters)
 		AvatarSelectButton
 		AbilitySelectButton
-		AbilityInfoPanel
-		Panels:
+		InfoPanel
+		Panels: (states)
 			MainMenu
 			Gameplay
 			Settings
@@ -52,7 +51,7 @@ namespace The.Great.Refactor.Brainstorm
 		- Decouple from UI stuff
 		- Work with new improved map system
 
-	BhaVE (AI): Awesome Behaviour Tree Editor
+	BhaVE (AI): Awesome Behaviour Tree Editor Completed
 		Editor and Runtime Segregated DLL
 
 	Sequencing: 
