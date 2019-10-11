@@ -19,7 +19,7 @@ namespace StormRend.Editors
 
 		#region Cores
 		[MenuItem("GameObject/StormRend/Map", false, 10)]
-		static void CreateNewMap(MenuCommand menuCommand)
+		static void CreateGameObject(MenuCommand menuCommand)
 		{
 			var newMapObj = new GameObject("Map", typeof(Map));
 			GameObjectUtility.SetParentAndAlign(newMapObj, menuCommand.context as GameObject);

@@ -4,16 +4,19 @@ using UnityEngine;
 
 namespace StormRend.Editors
 {
-	public partial class LandscaperEditor : SmartEditor
+	public partial class PropPainterEditor : SmartEditor
 	{
-		[MenuItem("GameObject/Create Other/Gardener")]
-		static void CreateInstancePainter()
+		[MenuItem("GameObject/StormRend/Prop Painter", false)]
+		static void CreateGameObject(MenuCommand menuCommand)
 		{
-			var g = new GameObject("Gardener", typeof(Landscaper));
-			Selection.activeGameObject = g;
+			var newGO = new GameObject("PropPainter", typeof(PropPainter));
+			GameObjectUtility.SetParentAndAlign(newGO, menuCommand.context as GameObject);
+			newGO.GetComponent<PropPainter>().rootTransform = newGO.transform;
+			Undo.RegisterCreatedObjectUndo(newGO, "Create StormRend Prop Painter");
+			Selection.activeObject = newGO;
 		}
 
-		void RefreshPaletteImages(Landscaper ip)
+		void RefreshPaletteImages(PropPainter ip)
 		{
 			if (paletteImages == null || paletteImages.Length != ip.prefabPalette.Length)
 			{

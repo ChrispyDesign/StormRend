@@ -68,7 +68,7 @@ namespace StormRend.Editors
 			}
 			else
 			{
-				EditorGUILayout.HelpBox("Assign tile prefabs to this palette", MessageType.Error);
+				EditorGUILayout.HelpBox("Assign tile prefabs to the palette", MessageType.Error);
 				return;
 			}
 		}

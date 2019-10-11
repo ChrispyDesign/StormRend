@@ -3,7 +3,7 @@ using UnityEngine;
 namespace StormRend.Tools
 {
 	[ExecuteInEditMode]
-	public class Landscaper : MonoBehaviour	//Rename to Decorator, DecorationPainter, OrnamentPainter
+	public class PropPainter : MonoBehaviour	//Rename to Decorator, DecorationPainter, OrnamentPainter
 	{
 		public enum CollisionTest
 		{

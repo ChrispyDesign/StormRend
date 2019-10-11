@@ -5,15 +5,15 @@ using UnityEngine;
 
 namespace StormRend.Editors
 {
-	[CustomEditor(typeof(Landscaper))]
-	public partial class LandscaperEditor : SmartEditor
+	[CustomEditor(typeof(PropPainter))]
+	public partial class PropPainterEditor : SmartEditor
 	{
 		Texture2D[] paletteImages;
 		GameObject stamp;
 
 		List<GameObject> erase = new List<GameObject>();
 		Vector3 worldCursor;
-		Landscaper l;
+		PropPainter l;
 		List<Bounds> overlaps = new List<Bounds>();
 		List<GameObject> overlappedGameObjects = new List<GameObject>();
 
@@ -21,7 +21,7 @@ namespace StormRend.Editors
 		{
 			stamp = new GameObject("Stamp");
 			stamp.hideFlags = HideFlags.HideAndDontSave;
-			l = target as Landscaper;
+			l = target as PropPainter;
 		}
 
 		void OnDisable()

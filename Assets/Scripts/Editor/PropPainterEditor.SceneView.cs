@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace StormRend.Editors
 {
-	public partial class LandscaperEditor : SmartEditor
+	public partial class PropPainterEditor : SmartEditor
 	{
 		void OnSceneGUI()
 		{
@@ -70,7 +70,7 @@ namespace StormRend.Editors
 		{
 			overlaps.Clear();
 			overlappedGameObjects.Clear();
-			if (l.collisionTest == Landscaper.CollisionTest.ColliderBounds)
+			if (l.collisionTest == PropPainter.CollisionTest.ColliderBounds)
 			{
 				foreach (var c in Physics.OverlapCapsule(top, bottom, brushRadius))
 				{
@@ -81,7 +81,7 @@ namespace StormRend.Editors
 					}
 				}
 			}
-			if (l.collisionTest == Landscaper.CollisionTest.RendererBounds)
+			if (l.collisionTest == PropPainter.CollisionTest.RendererBounds)
 			{
 				//TODO: This might need an oct-tree later. Brute force for now.
 				var capsule = new Bounds(Vector3.Lerp(top, bottom, 0.5f), new Vector3(brushRadius * 2, brushRadius * 2 + (top - bottom).magnitude, brushRadius * 2));
