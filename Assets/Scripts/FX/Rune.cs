@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class Rune : MonoBehaviour
 {
-    [SerializeField] private List<Transform> nodes;
-    [SerializeField] private Transform target;
-    [SerializeField] private Transform start;
+    [SerializeField] List<Transform> nodes;
+    [SerializeField] Transform target;
+    [SerializeField] Transform start;
 
-    [SerializeField] private float speed;
-    [SerializeField] private float percent;
+    [SerializeField] float speed;
+    [SerializeField] float percent;
 
 
-    private void Start()
+    void Start()
     {
         NewNode();
     }
 
-    private void Update()
+    void Update()
     {
         if(Vector3.Distance(transform.position, target.position) <= 0.01f)        
             NewNode();
