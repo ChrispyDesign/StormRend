@@ -17,75 +17,92 @@ namespace The.Great.Refactor.Brainstorm
 	- Current active units
 		- Just find all units at start of scene
 
+    >> Custom Game Variables
+    UnitListVar : BhaveVar<List<Unit>>
+    UnitVar : BhaveVar<Unit>
+
+    >> Game Data
+    - [ActiveUnits] : UnitListVar
+        - Players
+        - Enemies
+    - [DeadUnits]? : UnitListVar
+    - [EnemyTargetList] : UnitListVar
+        Working unit target list for enemies. Updated and controller by the enemie's AI system
+    - [SelectedUnit] : UnitVar
+        The currently selected unit
+    - [Glory] : BhaveInt
+        Holds the current glory level
+    - [Blizzard] : BhaveInt
+        Holds the current blizzard level
+
 	>> Main Elements
-	CoreSystems
+	[CoreSystems]
 		[Completed] UltraStateMachine: Turn based stackable state machine
 		[Completed] GameDirector: Extra component to control the statemachine and other
 		[Refactor] UserInputHandler (PlayerController)
 		[Refactor] UndoSystem
-		[]
 
-	Game Variables and Events:
+	[Game Variables and Events]
 		[Completed] SO Variables (BhaveVar<T>)
 		[Completed] SO Events (BhaveEvent)
 
+	[Glory]
+        VariableListener
+        • Limit variable min/max
+        • Events
+            -> GloryMeter : Meter (UI)
+                - Increase(), Decrease()
+            -> Play sounds, other
 
-	- Glory: BhaveInt (Invokes BhaveVar<T>.onChanged.Raise() when a number changes)
-	- Blizzard: BhaveInt
-	- CurrentSelectedUnit: UnitVar : BhaveVar<Unit>
-	- Enemy Target List: UnitListVar : BhaveVar<List<Unit>>
-	- 
+	[Blizzard]
+        VariableListener
+        • Events
+            -> BlizzardMeter : Meter (UI)
+            -> BlizzardApplicator : MonoBehaviour
+                - Refs: ActiveUnits, EnemyTargetList
+            -> Play sounds, other
 
-	Glory
-		GloryMeter : Meter (UI)
-		GloryApplicator:
-			- Game var refs: CurrentUnits
-			-
-	Blizzard
-		BlizzardApplicator : MonoBehaviour
-		- Game var refs: UnitList
-
-
-	Camera and Event
+	[Camera and Event]
 		Use unity inbuilt ISelectable/hoverable/etc
 		Stretch goal: Use cinemachine
 
-	EventSystem:
+	[EventSystem]
 		Replace current selectable/hoverable system with Unity's inbuilt event system
+        - Unit class
 		- Use PhysicsRaycaster instead of CameraRaycaster
 
-	Map System:
-		Tile: A tile holds a list of other connected tiles and its traversal costs
-		Map: A map is a list of tiles
-		MapEditor: Rapidly create, edit and connect tiles
-		Pathfinder (Proposal): Maybe should be called MapExtentions? Pathfinding functionality
-		Landscaper: Prefab painting tool for use with map
+	[Map System]
+		O Tile: A tile holds a list of other connected tiles and its traversal costs
+		O Map: A map is mostly a list of tiles
+		O MapEditor: Rapidly create, edit and connect tiles
+		- PropPainter: Prefab painting tool for use with map
+		- Pathfinder (Proposal): Maybe should be called MapExtentions? Pathfinding functionality
 
-	UI:
-		Meter (for Glory and Blizzard meters)
-		AvatarSelectButton
-		AbilitySelectButton
-		InfoPanel
-		Panels: (states)
+	[UI]
+		- Meter (for Glory and Blizzard meters)
+		- AvatarSelectButton
+		- AbilitySelectButton
+		- InfoPanel
+		O Panels: (Includes states)
 			MainMenu
 			Gameplay
 			Settings
 			Pause
 			Win/Lose?
 
-	Ability System:
+	[Ability System]
 		Refactor goals:
 		- Get rid of getters and setters
 		- Simplify and expose only essential APIs ie. Ability.Perform()
 		- Decouple from UI stuff
 		- Work with new improved map system
 
-	BhaVE (AI): Awesome Behaviour Tree Editor Completed
-		Editor and Runtime Segregated DLL
+	[BhaVE (AI): Awesome Behaviour Tree Editor Completed]
+		O Editor and Runtime Segregated DLL
 
-	Sequencing: 
-		Cutscenes - Need to learn more about timeline
-		Dialog/subtitle system - OK
+	[Sequencing]
+		O Dialog/subtitle system - OK
+		- Cutscenes; Need to learn more about timeline and cinemachine
 	*/
 
     public class StateMachineImplementation : Completed

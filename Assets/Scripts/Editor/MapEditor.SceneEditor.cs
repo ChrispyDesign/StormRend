@@ -105,7 +105,11 @@ namespace StormRend.Editors
 		#region Draw
 		void DrawStamp(Vector3 center)
 		{
+			//Position
 			stamp.transform.position = center;
+
+			//Visibility
+			stamp.SetActive((editMode == EditMode.Painting) ? true : false);
 		}
 		void DrawGrid(Color color, float alpha = 0.9f)
 		{
@@ -148,8 +152,9 @@ namespace StormRend.Editors
 				gridCursor = floor * m.tileSize + offset + centre;
 
 				//Draw grid cursor
+				Handles.RectangleHandleCap(0, gridCursor, Quaternion.AngleAxis(90, Vector3.right), m.tileSize * 0.499f, EventType.Repaint);
 				Handles.RectangleHandleCap(1, gridCursor, Quaternion.AngleAxis(90, Vector3.right), m.tileSize * 0.5f, EventType.Repaint);
-				// Handles.DrawSphere(2, snappedCursor, Quaternion.identity, t.tileSize * 0.25f);
+				Handles.RectangleHandleCap(2, gridCursor, Quaternion.AngleAxis(90, Vector3.right), m.tileSize * 0.501f, EventType.Repaint);
 			}
 		}
 		void DrawConnections(Color? color = null)
