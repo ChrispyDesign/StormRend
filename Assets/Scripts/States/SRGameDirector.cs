@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 namespace StormRend.States
 {
 	[RequireComponent(typeof(UltraStateMachine))]
-	public class GameDirector : MonoBehaviour
+	public class SRGameDirector : MonoBehaviour
 	{
 		[SerializeField] bool debug = false;
 
@@ -48,7 +48,6 @@ namespace StormRend.States
 				// Debug.Log("currentState: " + usm.currentState.GetType().Name);
 				if (usm.currentState != pauseMenuState)
 				{
-
 					usm.Stack(pauseMenuState);
 				}
 				else
@@ -65,18 +64,18 @@ namespace StormRend.States
 		}
 
 		//-------- Temp ----------
-		public void tRestartGame()
+		public void ReloadCurrentScene()
 		{
 			var currentScene = SceneManager.GetActiveScene();
 			SceneManager.LoadScene(currentScene.buildIndex);
 		}
+
 		[Header("Scene Management")]
 		public int mainMenuSceneIdx = 0;
-		public void tReturnToMainMenu()
+		public void LoadMainMenuScene()
 		{
 			SceneManager.LoadScene(mainMenuSceneIdx);
 		}
-
 
 		//----------------------- DEBUG -----------------------
 		void OnGUI()

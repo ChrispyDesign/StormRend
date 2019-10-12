@@ -6,24 +6,31 @@ using UnityEngine;
 
 namespace The.Great.Refactor.Brainstorm
 {
-    /*Programming elements of StormRend
+    /*
+	>> Brainstorm
+	- Glory and Blizzard are essentially just integer numbers
+		Implementation Ideas:
+		- Use advanced SO variables with inbuilt SO events that trigger when changed
+		- global Scriptable object that holds all the crucial data
+	- Selected Unit
+		- SO variable
+	- Current active units
+		- Just find all units at start of scene
+
+	>> Main Elements
 	CoreSystems
-		V UltraStateMachine: Turn based stackable state machine
-		V GameDirector: Extra component to control the statemachine and other
-		UserInputHandler (PlayerController)
-			UndoSystem
+		[Completed] UltraStateMachine: Turn based stackable state machine
+		[Completed] GameDirector: Extra component to control the statemachine and other
+		[Refactor] UserInputHandler (PlayerController)
+		[Refactor] UndoSystem
+		[]
 
-		GameData Brainstorm:
-		- Glory and Blizzard are just integer numbers
-			V Use advanced SO variables with inbuilt SO events that trigger when changed
-			- global Scriptable object that holds all the crucial data
-		- Selected Unit
-			- SO variable
-		- Current active units
-			- Just find all units at start of scene
+	Game Variables and Events:
+		[Completed] SO Variables (BhaveVar<T>)
+		[Completed] SO Events (BhaveEvent)
 
-	Game Essential Data and Variables:
-	- Glory: BhaveInt (Invokes BhaveVar.onChanged.Raise() when a number changes)
+
+	- Glory: BhaveInt (Invokes BhaveVar<T>.onChanged.Raise() when a number changes)
 	- Blizzard: BhaveInt
 	- CurrentSelectedUnit: UnitVar : BhaveVar<Unit>
 	- Enemy Target List: UnitListVar : BhaveVar<List<Unit>>
