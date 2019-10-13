@@ -2,7 +2,7 @@
 
 namespace StormRend.Abilities.Effects
 {
-    public class BlindEffect : Effect
+    public class BlindEffect : xEffect
     {
         [SerializeField] int m_durationInTurns = 1;
     }

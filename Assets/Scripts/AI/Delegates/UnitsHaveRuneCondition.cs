@@ -1,6 +1,7 @@
 ﻿using pokoro.BhaVE.Core;
 using pokoro.BhaVE.Core.Delegates;
 using pokoro.BhaVE.Core.Enums;
+using StormRend.Defunct;
 using StormRend.Variables;
 using UnityEngine;
 
@@ -15,11 +16,11 @@ namespace StormRend.Bhaviours
 		[SerializeField] UnitListVar targets;
 
 
-		Unit unit;
+		xUnit unit;
 
 		public override void Initiate(BhaveAgent agent)
 		{
-			unit = agent.GetComponent<Unit>();
+			unit = agent.GetComponent<xUnit>();
 		}
 
 		public override NodeState Execute(BhaveAgent agent)

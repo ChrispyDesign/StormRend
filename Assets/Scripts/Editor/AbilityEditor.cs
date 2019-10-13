@@ -3,25 +3,25 @@ using UnityEditor;
 using StormRend.Abilities.Effects;
 using StormRend.Abilities;
 
-[CustomEditor(typeof(Ability))]
+[CustomEditor(typeof(xAbility))]
 public class AbilityEditor : Editor
 {
     EffectEditor m_effectEditor;
 
     // the target ability object
-    static Ability m_ability;
+    static xAbility m_ability;
 
     bool m_foldOutAOE = false;
 
     #region getters
 
-    public static Ability GetAbility() { return m_ability; }
+    public static xAbility GetAbility() { return m_ability; }
 
     #endregion
 
     void OnEnable()
     {
-        m_ability = (Ability)target;
+        m_ability = (xAbility)target;
         m_effectEditor = new EffectEditor(m_ability.GetEffects());
     }
 

@@ -9,11 +9,11 @@ namespace StormRend.Abilities.Effects
         MoveAgain
     }
 
-    public class RefreshEffect : Effect
+    public class RefreshEffect : xEffect
     {
         [SerializeField] RefreshType m_refreshType;
 
-        public override bool PerformEffect(oTile _effectedNode, Unit _thisUnit)
+        public override bool PerformEffect(xTile _effectedNode, xUnit _thisUnit)
         {
             base.PerformEffect(_effectedNode, _thisUnit);
 

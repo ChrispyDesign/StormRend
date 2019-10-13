@@ -13,19 +13,20 @@ namespace StormRend.Abilities.Effects
         COUNT
     }
 
-    public class PushEffect : Effect
+    public class PushEffect : xEffect
     {
         //[SerializeField] private EffectedTile m_direction;
         [SerializeField] int m_pushAmount;
         [SerializeField] bool m_doDamage;
         [SerializeField] int m_damage;
 
-        Vector2Int m_left = new Vector2Int(-1, 0);
-        Vector2Int m_up = new Vector2Int(0, 1);
+		//SO DUMB!!! Just use Vector2Int.left/right/up/down etc...
+        Vector2Int m_left = Vector2Int.left;
+        Vector2Int m_up = Vector2Int.up;
         Vector2Int m_right = new Vector2Int(1, 0);
         Vector2Int m_down = new Vector2Int(0, -1);
 
-        public override bool PerformEffect(oTile _effectedNode, Unit _thisUnit)
+        public override bool PerformEffect(xTile _effectedNode, xUnit _thisUnit)
         {
             base.PerformEffect(_effectedNode, _thisUnit);
 
@@ -36,19 +37,19 @@ namespace StormRend.Abilities.Effects
             Vector2Int unitCoords = _thisUnit.coords;
 
             Vector2Int tempCoords = new Vector2Int(0, 0);
-            oTile tempNode;
+            xTile tempNode;
 
             // Process Left
             tempCoords = nodeCoords - m_left;
-            tempNode = oGrid.CoordToTile(tempCoords);
+            tempNode = xGrid.CoordToTile(tempCoords);
 
             if (tempNode.GetUnitOnTop() != null)
             {
-                Unit unit = tempNode.GetUnitOnTop();
-                oTile newNode = oGrid.CoordToTile(tempCoords - m_left);
+                xUnit unit = tempNode.GetUnitOnTop();
+                xTile newNode = xGrid.CoordToTile(tempCoords - m_left);
 
                 if (m_doDamage)
-                    oGrid.CoordToTile(tempCoords).GetUnitOnTop().TakeDamage(m_damage);
+                    xGrid.CoordToTile(tempCoords).GetUnitOnTop().TakeDamage(m_damage);
 
                 if (newNode.GetUnitOnTop() == null
                     && newNode.m_nodeType != NodeType.BLOCKED)
@@ -57,15 +58,15 @@ namespace StormRend.Abilities.Effects
 
             // Process Up
             tempCoords = nodeCoords - m_up;
-            tempNode = oGrid.CoordToTile(tempCoords);
+            tempNode = xGrid.CoordToTile(tempCoords);
 
             if (tempNode.GetUnitOnTop() != null)
             {
-                Unit unit = tempNode.GetUnitOnTop();
-                oTile newNode = oGrid.CoordToTile(tempCoords - m_up);
+                xUnit unit = tempNode.GetUnitOnTop();
+                xTile newNode = xGrid.CoordToTile(tempCoords - m_up);
 
                 if (m_doDamage)
-                    oGrid.CoordToTile(tempCoords).GetUnitOnTop().TakeDamage(m_damage);
+                    xGrid.CoordToTile(tempCoords).GetUnitOnTop().TakeDamage(m_damage);
 
                 if (newNode.GetUnitOnTop() == null
                     && newNode.m_nodeType != NodeType.BLOCKED)
@@ -74,15 +75,15 @@ namespace StormRend.Abilities.Effects
 
             // Process Right
             tempCoords = nodeCoords - m_right;
-            tempNode = oGrid.CoordToTile(tempCoords);
+            tempNode = xGrid.CoordToTile(tempCoords);
 
             if (tempNode.GetUnitOnTop() != null)
             {
-                Unit unit = tempNode.GetUnitOnTop();
-                oTile newNode = oGrid.CoordToTile(tempCoords - m_right);
+                xUnit unit = tempNode.GetUnitOnTop();
+                xTile newNode = xGrid.CoordToTile(tempCoords - m_right);
 
                 if (m_doDamage)
-                    oGrid.CoordToTile(tempCoords).GetUnitOnTop().TakeDamage(m_damage);
+                    xGrid.CoordToTile(tempCoords).GetUnitOnTop().TakeDamage(m_damage);
 
                 if (newNode.GetUnitOnTop() == null
                     && newNode.m_nodeType != NodeType.BLOCKED)
@@ -91,15 +92,15 @@ namespace StormRend.Abilities.Effects
 
             // Process Down
             tempCoords = nodeCoords - m_down;
-            tempNode = oGrid.CoordToTile(tempCoords);
+            tempNode = xGrid.CoordToTile(tempCoords);
 
             if (tempNode.GetUnitOnTop() != null)
             {
-                Unit unit = tempNode.GetUnitOnTop();
-                oTile newNode = oGrid.CoordToTile(tempCoords - m_down);
+                xUnit unit = tempNode.GetUnitOnTop();
+                xTile newNode = xGrid.CoordToTile(tempCoords - m_down);
 
                 if (m_doDamage)
-                    oGrid.CoordToTile(tempCoords).GetUnitOnTop().TakeDamage(m_damage);
+                    xGrid.CoordToTile(tempCoords).GetUnitOnTop().TakeDamage(m_damage);
 
                 if (newNode.GetUnitOnTop() == null
                     && newNode.m_nodeType != NodeType.BLOCKED)

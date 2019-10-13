@@ -3,18 +3,18 @@ using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
-    public class HealEffect : Effect
+    public class HealEffect : xEffect
     {
         [SerializeField] int m_healAmount;
 
-        public override bool PerformEffect(oTile _effectedNode, Unit _thisUnit)
+        public override bool PerformEffect(xTile _effectedNode, xUnit _thisUnit)
         {
             base.PerformEffect(_effectedNode, _thisUnit);
 
             if (!m_isTileAllowed)
                 return false;
 
-            Unit unit = _effectedNode.GetUnitOnTop();
+            xUnit unit = _effectedNode.GetUnitOnTop();
 
             if (unit != null)
             {

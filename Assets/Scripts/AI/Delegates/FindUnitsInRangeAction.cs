@@ -23,8 +23,8 @@ namespace StormRend.Bhaviours
 		[SerializeField] uint turns = 1;
 
 		//Privates
-		Unit u; //The unit mono attached to this agent
-		List<oTile> tilesToScan = new List<oTile>();
+		xUnit u; //The unit mono attached to this agent
+		List<xTile> tilesToScan = new List<xTile>();
 		private bool unitsHaveBeenFound = false;
 
 
@@ -38,14 +38,14 @@ namespace StormRend.Bhaviours
 		public override NodeState Execute(BhaveAgent agent)
 		{
 			//Until each delegate object is deep copied, the current unit must be updated each tick
-			u = agent.GetComponent<Unit>();
+			u = agent.GetComponent<xUnit>();
 
 			//Find valid moves
-			Dijkstra.Instance.FindValidMoves(
+			xDijkstra.Instance.FindValidMoves(
 				u.GetTile(),
 				u.GetMoveRange() * (int)turns,
-				(u is EnemyUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
-			tilesToScan = Dijkstra.Instance.m_validMoves;
+				(u is xEnemyUnit) ? typeof(xEnemyUnit) : typeof(xPlayerUnit));
+			tilesToScan = xDijkstra.Instance.m_validMoves;
 
 			if (tilesToScan.Count <= 0) return NodeState.Failure;
 
@@ -53,13 +53,13 @@ namespace StormRend.Bhaviours
 			foreach (var t in tilesToScan)
 			{
 				var unitOnTop = t.GetUnitOnTop();
-				if (unitTypeToFind == UnitType.Player && unitOnTop is PlayerUnit)
+				if (unitTypeToFind == UnitType.Player && unitOnTop is xPlayerUnit)
 				{
 					//Update targets
 					targets.value.Add(unitOnTop);
 					unitsHaveBeenFound = true;
 				}
-				else if (unitTypeToFind == UnitType.Enemy && unitOnTop is EnemyUnit)
+				else if (unitTypeToFind == UnitType.Enemy && unitOnTop is xEnemyUnit)
 				{
 					targets.value.Add(unitOnTop);
 					unitsHaveBeenFound = true;

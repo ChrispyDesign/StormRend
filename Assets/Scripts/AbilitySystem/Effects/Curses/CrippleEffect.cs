@@ -2,7 +2,7 @@
 
 namespace StormRend.Abilities.Effects
 {
-    public class CrippleEffect : Effect
+    public class CrippleEffect : xEffect
     {
         [SerializeField] int m_durationInTurns = 1;
     }

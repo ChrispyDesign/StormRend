@@ -83,7 +83,7 @@ namespace StormRend
 				// unhovered object can be null, so perform safety check
 				if (m_unhoveredObject)
 				{
-					IHoverable unhoveredClickable = m_unhoveredObject.GetComponent<IHoverable>();
+					xIHoverable unhoveredClickable = m_unhoveredObject.GetComponent<xIHoverable>();
 					if (unhoveredClickable != null)
 						unhoveredClickable.OnUnhover(); // call unhover on unhovered object
 				}
@@ -95,7 +95,7 @@ namespace StormRend
 			// hovered object can be null, so perform safety check
 			if (m_hoveredObject)
 			{
-				IHoverable hoveredClickable = m_hoveredObject.GetComponent<IHoverable>();
+				xIHoverable hoveredClickable = m_hoveredObject.GetComponent<xIHoverable>();
 				if (hoveredClickable != null)
 					hoveredClickable.OnHover(); // call hover on hovered object
 			}
@@ -115,7 +115,7 @@ namespace StormRend
 				// deselected object can be null, so perform safety check
 				if (m_deselectedObject)
 				{
-					ISelectable deselectedClickable = m_deselectedObject.GetComponent<ISelectable>();
+					xISelectable deselectedClickable = m_deselectedObject.GetComponent<xISelectable>();
 					if (deselectedClickable != null)
 						deselectedClickable.OnDeselect(); // call deselect on deselected object
 				}
@@ -127,7 +127,7 @@ namespace StormRend
 			// selected object can be null, so perform safety check
 			if (m_selectedObject)
 			{
-				ISelectable selectedClickable = m_selectedObject.GetComponent<ISelectable>();
+				xISelectable selectedClickable = m_selectedObject.GetComponent<xISelectable>();
 				if (selectedClickable != null)
 					selectedClickable.OnSelect(); // call select on selected object
 			}

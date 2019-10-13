@@ -1,6 +1,6 @@
 ﻿namespace StormRend.Abilities.Effects
 {
-    public class SwapUnitEffect : Effect
+    public class SwapUnitEffect : xEffect
     {
 
     }

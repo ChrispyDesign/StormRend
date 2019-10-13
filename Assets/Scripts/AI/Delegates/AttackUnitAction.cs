@@ -19,7 +19,7 @@ namespace StormRend.Bhaviours
 	{
 		[SerializeField] UnitListVar targets;
 
-		Unit u;
+		xUnit u;
 		Animator anim;
 
 		public override NodeState Execute(BhaveAgent agent)
@@ -28,30 +28,30 @@ namespace StormRend.Bhaviours
 			if (targets.value.Count <= 0) return NodeState.Failure;
 
 			//Get this agent's unit and animator (BAD)
-			u = agent.GetComponent<Unit>();
+			u = agent.GetComponent<xUnit>();
 			anim = u.GetComponentInChildren<Animator>();	//VERY BAD
 
 			//Get abiltiies then attack effect
-			Ability passive = null;
-			Ability[] first = null;
-			Ability[] second = null;
+			xAbility passive = null;
+			xAbility[] first = null;
+			xAbility[] second = null;
 			u.GetAbilities(ref passive, ref first, ref second);
-			List<Effect> effects = first[0].GetEffects();
+			List<xEffect> effects = first[0].GetEffects();
 
 			//Attack!
 			u.SetSelectedAbility(first[0]);
 			anim.SetInteger("AttackAnim", 1);	//THIS IS BAD!!!
 
-			if (u is EnemyUnit)
+			if (u is xEnemyUnit)
 			{
 				//SHOULD BE ENCAPSULATED/SIMPLE METHOD CALL
-				foreach (Effect effect in effects)
+				foreach (xEffect effect in effects)
 				{
-					oTile targetTile = oGrid.CoordToTile(targets.value[0].coords);
+					xTile targetTile = xGrid.CoordToTile(targets.value[0].coords);
 					effect.PerformEffect(targetTile, u);
 				}
 			}
-			else if (u is PlayerUnit)
+			else if (u is xPlayerUnit)
 			{
 				throw new NotImplementedException("PlayerUnit AI not implemented!");
 			}

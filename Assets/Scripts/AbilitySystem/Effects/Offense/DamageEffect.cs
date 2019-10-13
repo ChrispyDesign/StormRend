@@ -3,18 +3,18 @@ using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
-    public class DamageEffect : Effect
+    public class DamageEffect : xEffect
     {
         [SerializeField] int m_damageAmount;
 
-        public override bool PerformEffect(oTile targetTile, Unit effectPerformer)
+        public override bool PerformEffect(xTile targetTile, xUnit effectPerformer)
         {
             base.PerformEffect(targetTile, effectPerformer);
 
             if (!m_isTileAllowed)
                 return false;
 
-            Unit unit = targetTile.GetUnitOnTop();
+            xUnit unit = targetTile.GetUnitOnTop();
 
             if (unit != null)
                 unit.TakeDamage(m_damageAmount);

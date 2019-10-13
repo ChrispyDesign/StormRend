@@ -16,17 +16,17 @@ namespace StormRend.States
 		// 	{ FrostTroll, FrostHound }
 		// [SerializeField] EnemyType tbaEnemyType;
 
-		[Tooltip("Seconds")]
+		[Tooltip("Time between each enemy unit's turn in seconds")]
 		[SerializeField] float aiTurnTime = 2f;
 
-		Unit[] currentEnemies;
+		xUnit[] currentEnemies;
 		BhaveDirector ai;
-		GameManager gm;
+		xGameManager gm;
 
 		void Awake()
 		{
 			ai = BhaveDirector.singleton;
-			gm = GameManager.singleton;
+			gm = xGameManager.singleton;
 		}
 
 		public override void OnEnter(UltraStateMachine sm)
@@ -58,7 +58,7 @@ namespace StormRend.States
 		void TickCrystals()
 		{
 			//Tick crystals
-			foreach (var c in GameManager.singleton.GetCrystals())
+			foreach (var c in xGameManager.singleton.GetCrystals())
 			{
 				c.IterateTurns();
 			}

@@ -18,16 +18,16 @@ public class UserInputHandler : MonoBehaviour
 	// - UserInputHandler
 	// - GameplayInteractionHandler
 
-    PlayerUnit currentPlayer;
+    xPlayerUnit currentPlayer;
     PlayerMode currentMode;
     bool isAbilityLocked;
 
     #region GettersAndSetters
-    public PlayerUnit GetCurrentPlayer() { return currentPlayer; }
+    public xPlayerUnit GetCurrentPlayer() { return currentPlayer; }
     public PlayerMode GetCurrentMode() { return currentMode; }
     public bool GetIsAbilityLocked() { return isAbilityLocked; }
 
-    public void SetCurrentPlayer(PlayerUnit _currentPlayer) { currentPlayer = _currentPlayer; }
+    public void SetCurrentPlayer(xPlayerUnit _currentPlayer) { currentPlayer = _currentPlayer; }
     public void SetCurrentMode(PlayerMode _curMode) { currentMode = _curMode; }
     public void SetIsAbilityLocked(bool _isLocked) { isAbilityLocked = _isLocked; }
     #endregion

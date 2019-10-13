@@ -20,8 +20,8 @@ namespace StormRend.Bhaviours
         [SerializeField] uint turns = 1;
 
         //Privates
-        Unit u;
-        List<oTile> validMoves = new List<oTile>();
+        xUnit u;
+        List<xTile> validMoves = new List<xTile>();
 
         public override NodeState Execute(BhaveAgent agent)
 		{
@@ -29,14 +29,14 @@ namespace StormRend.Bhaviours
 			if (targets.value.Count <= 0) return NodeState.Failure;
 
 			//Get this agent's unit
-			u = agent.GetComponent<Unit>();
+			u = agent.GetComponent<xUnit>();
 
 			//Find the valid moves
-            Dijkstra.Instance.FindValidMoves(
+            xDijkstra.Instance.FindValidMoves(
 				u.GetTile(), 	//The tile the agent is current on
                 u.GetMoveRange() * (int)turns,		//Scan move range by turns
-                (u is EnemyUnit) ? typeof(EnemyUnit) : typeof(PlayerUnit));
-            validMoves = Dijkstra.Instance.m_validMoves;
+                (u is xEnemyUnit) ? typeof(xEnemyUnit) : typeof(xPlayerUnit));
+            validMoves = xDijkstra.Instance.m_validMoves;
 
 			//Check to see if the target is already next to this agent before moving
 			if (TargetIsAdjacent()) return NodeState.Success;

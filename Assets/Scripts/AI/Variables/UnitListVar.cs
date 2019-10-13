@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using pokoro.BhaVE.Core.Variables;
+using StormRend.Defunct;
 using UnityEngine;
 
 namespace StormRend.Variables
 {
 	[CreateAssetMenu(menuName = "StormRend/Variables/UnitList", fileName = "UnitListVar")]
-	public sealed class UnitListVar : BhaveVar<List<Unit>>
+	public sealed class UnitListVar : BhaveVar<List<xUnit>>
 	{
 		public override bool Equals(object other)
 		{
-			var otherUnitList = other as List<Unit>;
+			var otherUnitList = other as List<xUnit>;
 
 			//Valid check
 			if (otherUnitList == null)
@@ -29,11 +30,11 @@ namespace StormRend.Variables
 		}
 		public override int GetHashCode() => base.GetHashCode();
 
-        public static implicit operator UnitListVar(List<Unit> rhs)
+        public static implicit operator UnitListVar(List<xUnit> rhs)
 		{
 			return new UnitListVar { value = rhs };
 		}
-		public static implicit operator List<Unit>(UnitListVar self)
+		public static implicit operator List<xUnit>(UnitListVar self)
 		{
 			return self.value;
 		}

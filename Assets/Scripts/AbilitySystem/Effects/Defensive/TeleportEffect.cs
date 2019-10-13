@@ -2,9 +2,9 @@
 
 namespace StormRend.Abilities.Effects
 {
-    public class TeleportEffect : Effect
+    public class TeleportEffect : xEffect
     {
-        public override bool PerformEffect(oTile _effectedNode, Unit _thisUnit)
+        public override bool PerformEffect(xTile _effectedNode, xUnit _thisUnit)
         {
             base.PerformEffect(_effectedNode, _thisUnit);
 

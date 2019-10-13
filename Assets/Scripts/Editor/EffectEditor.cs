@@ -10,13 +10,13 @@ using StormRend.Abilities.Effects;
 public class EffectEditor : Editor
 {
     // the effects to edit
-    private List<Effect> m_effects;
+    private List<xEffect> m_effects;
 
     /// <summary>
     /// Constructor which caches a reference to an ability's list of effects
     /// </summary>
     /// <param name="effects"></param>
-    public EffectEditor(List<Effect> effects)
+    public EffectEditor(List<xEffect> effects)
     {
         m_effects = effects;
     }
@@ -28,7 +28,7 @@ public class EffectEditor : Editor
     {
         for (int i = 0; i < m_effects.Count; i++)
         {
-            Effect effect = m_effects[i];
+            xEffect effect = m_effects[i];
 
             // print effect header (two lines, a title and a remove 'X' button)
             PrintEffectHeader(effect);
@@ -48,7 +48,7 @@ public class EffectEditor : Editor
     /// lines, a title label and a remove 'X' button.
     /// </summary>
     /// <param name="effect">the effect to print the header of</param>
-    public void PrintEffectHeader(Effect effect)
+    public void PrintEffectHeader(xEffect effect)
     {
         EditorGUILayout.Space();
 
@@ -78,7 +78,7 @@ public class EffectEditor : Editor
     public void AddEffect(System.Type effectType)
     {
         // instantiate the effect asset
-        Effect effect = CreateInstance(effectType) as Effect;
+        xEffect effect = CreateInstance(effectType) as xEffect;
         effect.name = effectType.Name;
 
         // add to ability
@@ -98,7 +98,7 @@ public class EffectEditor : Editor
     /// list of effects, then destroying the effect asset
     /// </summary>
     /// <param name="effect">the effect to remove</param>
-    private void RemoveEffect(Effect effect)
+    private void RemoveEffect(xEffect effect)
     {
         // remove from ability
         m_effects.Remove(effect);

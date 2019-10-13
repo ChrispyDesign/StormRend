@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class MoveCommand : ICommand
 {
-    public Unit m_unit;
+    public xUnit m_unit;
     private Vector2Int m_coords;
     private Vector2Int m_origCoords;
 
@@ -18,7 +18,7 @@ public class MoveCommand : ICommand
 
     #endregion
 
-    public MoveCommand(Unit _unit, int _x, int _y)
+    public MoveCommand(xUnit _unit, int _x, int _y)
     {
         m_unit = _unit;
         m_coords.x = _x;
@@ -26,7 +26,7 @@ public class MoveCommand : ICommand
         m_origCoords = m_unit.coords;
     }
 
-    public MoveCommand(Unit _unit, Vector2Int _coords)
+    public MoveCommand(xUnit _unit, Vector2Int _coords)
     {
         m_unit = _unit;
         m_coords.x = _coords.x;
@@ -36,11 +36,11 @@ public class MoveCommand : ICommand
 
     public void Execute()
     {
-        m_unit.MoveTo(oGrid.CoordToTile(m_coords));
+        m_unit.MoveTo(xGrid.CoordToTile(m_coords));
     }
 
     public void Undo()
     {
-        m_unit.MoveTo(oGrid.CoordToTile(m_origCoords));
+        m_unit.MoveTo(xGrid.CoordToTile(m_origCoords));
     }
 }
