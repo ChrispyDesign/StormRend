@@ -17,39 +17,38 @@ namespace The.Great.Refactor.Brainstorm
 	- Current active units
 		- Just find all units at start of scene
 
-    >> Custom Game Variables
+    >> Custom StormRend Variables
     UnitListVar : BhaveVar<List<Unit>>
     UnitVar : BhaveVar<Unit>
 
     >> Game Data
-    - [ActiveUnits] : UnitListVar
+    [ActiveUnits] : UnitListVar
         - Players
         - Enemies
-    - [DeadUnits]? : UnitListVar
-    - [EnemyTargetList] : UnitListVar
+    [DeadUnits]? : UnitListVar
+    [EnemyTargetList] : UnitListVar
         Working unit target list for enemies. Updated and controller by the enemy's AI system
-    - [SelectedUnit] : UnitVar
+    [SelectedUnit] : UnitVar
         The currently selected unit
-    - [Glory] : BhaveInt
+    [Glory] : BhaveInt
         Holds the current glory level
-    - [Blizzard] : BhaveInt
+    [Blizzard] : BhaveInt
         Holds the current blizzard level
 
 	>> Main Elements
 	[CoreSystems]
-		[Completed] UltraStateMachine: 
-			Turn based stackable state machine
-		[Completed] GameDirector: Extra component to control the statemachine and other minor game logic
+		[V] UltraStateMachine: Turn based stackable state machine
+		[V] GameDirector: Extra component to control the statemachine and other minor game logic
+		[ ] BlizzardApplicator: Applies the blizzard to selected units
 		[Refactor] UserInputHandler (PlayerController)
 		[Refactor] UndoSystem
 
 	[Game Variables and Events]
-		[Completed] SO Variables (BhaveVar<T>)
-		[Completed] SO Events (BhaveEvent)
-		[VariableEventListener]
-		* Listens to variable changes and invokes local UnityEvent
-		[VariableLimiter]
-		* Puts limits on variables (need internal onChanged event?)
+		[V] SO Variables (BhaveVar<T>)
+		[V] SO Events (BhaveEvent)
+		[V] IntVariableHandler: Listens for events from variables and limits it's value
+		[X] VariableEventListener: Listens to variable changes and invokes local UnityEvent
+		[X] VariableLimiter: Puts limits on variables (need internal onChanged event?)
 
 	[Glory, Blizzard]
 		IntVariableHandler
@@ -62,27 +61,27 @@ namespace The.Great.Refactor.Brainstorm
             -> Play sounds, other
 
 	[Camera and Event]
-		Use unity inbuilt ISelectable/hoverable/etc
-		Stretch goal: Use cinemachine
+		[ ] Use unity inbuilt ISelectable/hoverable/etc
+		[ ] Stretch goal: Use cinemachine
 
 	[EventSystem]
-		Replace current selectable/hoverable system with Unity's inbuilt event system
+		[ ] Replace current selectable/hoverable system with Unity's inbuilt event system
         - Unit class
 		- Use PhysicsRaycaster instead of CameraRaycaster
 
 	[Map System]
-		O Tile: A tile holds a list of other connected tiles and its traversal costs
-		O Map: A map is mostly a list of tiles
-		O MapEditor: Rapidly create, edit and connect tiles
-		- PropPainter: Prefab painting tool for use with map
-		- Pathfinder (Proposal): Maybe should be called MapExtentions? Pathfinding functionality
+		[V 90%] Tile: A tile holds a list of other connected tiles and its traversal costs
+		[V 90%] Map: A map is mostly a list of tiles
+		[V 90%] MapEditor: Rapidly create, edit and connect tiles
+		[V 75%] PropPainter: Prefab painting tool for use with map
+		[ ] Pathfinder (Proposal): Maybe should be called MapExtentions? Pathfinding functionality
 
 	[UI]
-		- Meter (for Glory and Blizzard meters)
-		- AvatarSelectButton
-		- AbilitySelectButton
-		- InfoPanel
-		O Panels: (Includes states)
+		[ ] Meter (for Glory and Blizzard meters)
+		[ ] AvatarSelectButton
+		[ ] AbilitySelectButton
+		[ ] InfoPanel
+		[V] Panels: (Includes states)
 			MainMenu
 			Gameplay
 			Settings
@@ -96,12 +95,13 @@ namespace The.Great.Refactor.Brainstorm
 		- Decouple from UI stuff
 		- Work with new improved map system
 
-	[BhaVE (AI): Awesome Behaviour Tree Editor Completed]
-		O Editor and Runtime Segregated DLL
+	[BhaVE (AI): Awesome Behaviour Tree Editor!]
+		[V] BhaVE segregated into Runtime and Editor Dlls
+		[V] Project is able to build without errors
 
 	[Sequencing]
-		O Dialog/subtitle system - OK
-		- Cutscenes; Need to learn more about timeline and cinemachine
+		[V 85%] Dialog/subtitle system - OK
+		[ ] Cutscenes; Need to learn more about timeline and cinemachine
 	*/
 
     public class StateMachineImplementation : Completed
