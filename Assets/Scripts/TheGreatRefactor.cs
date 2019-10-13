@@ -27,7 +27,7 @@ namespace The.Great.Refactor.Brainstorm
         - Enemies
     - [DeadUnits]? : UnitListVar
     - [EnemyTargetList] : UnitListVar
-        Working unit target list for enemies. Updated and controller by the enemie's AI system
+        Working unit target list for enemies. Updated and controller by the enemy's AI system
     - [SelectedUnit] : UnitVar
         The currently selected unit
     - [Glory] : BhaveInt
@@ -37,27 +37,26 @@ namespace The.Great.Refactor.Brainstorm
 
 	>> Main Elements
 	[CoreSystems]
-		[Completed] UltraStateMachine: Turn based stackable state machine
-		[Completed] GameDirector: Extra component to control the statemachine and other
+		[Completed] UltraStateMachine: 
+			Turn based stackable state machine
+		[Completed] GameDirector: Extra component to control the statemachine and other minor game logic
 		[Refactor] UserInputHandler (PlayerController)
 		[Refactor] UndoSystem
 
 	[Game Variables and Events]
 		[Completed] SO Variables (BhaveVar<T>)
 		[Completed] SO Events (BhaveEvent)
+		[VariableEventListener]
+		* Listens to variable changes and invokes local UnityEvent
+		[VariableLimiter]
+		* Puts limits on variables (need internal onChanged event?)
 
-	[Glory]
-        VariableListener
+	[Glory, Blizzard]
+		IntVariableHandler
         • Limit variable min/max
         • Events
-            -> GloryMeter : Meter (UI)
+            -> Meter (UI)
                 - Increase(), Decrease()
-            -> Play sounds, other
-
-	[Blizzard]
-        VariableListener
-        • Events
-            -> BlizzardMeter : Meter (UI)
             -> BlizzardApplicator : MonoBehaviour
                 - Refs: ActiveUnits, EnemyTargetList
             -> Play sounds, other

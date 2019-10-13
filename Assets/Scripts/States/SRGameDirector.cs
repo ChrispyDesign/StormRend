@@ -20,9 +20,9 @@ namespace StormRend.States
 		[SerializeField] State victoryState;
 
 		UltraStateMachine usm;
-		private bool isPaused;
+		bool isPaused;
 
-		void Awake()    //Doesn't matter if you override or hide. Singleton.Awake() will run regardless.
+		void Awake()    //Doesn't matter if you override or hide. base.Awake() will be invoked via reflection regardless.
 		{
 			usm = GetComponent<UltraStateMachine>();
 		}
