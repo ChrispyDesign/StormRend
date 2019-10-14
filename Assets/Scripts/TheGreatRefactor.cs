@@ -35,13 +35,13 @@ namespace The.Great.Refactor.Brainstorm
     [Blizzard] : BhaveInt
         Holds the current blizzard level
 
-	>> Main Elements
+	>> Main Elements >>
 	[CoreSystems]
 		[V] UltraStateMachine: Turn based stackable state machine
 		[V] GameDirector: Extra component to control the statemachine and other minor game logic
 		[ ] BlizzardApplicator: Applies the blizzard to selected units
-		[Refactor] UserInputHandler (PlayerController)
-		[Refactor] UndoSystem
+		[ ] UserInputHandler (PlayerController)
+		[ ] UndoSystem
 
 	[Game Variables and Events]
 		[V] SO Variables (BhaveVar<T>)
@@ -94,6 +94,30 @@ namespace The.Great.Refactor.Brainstorm
 		- Simplify and expose only essential APIs ie. Ability.Perform()
 		- Decouple from UI stuff
 		- Work with new improved map system
+		- AbilityType : Enum ie. Passive, First, Second, Third, etc
+		Important members:
+		- ability name, Not Required! Just use Object.name
+		- animNumber? Maybe this could hold the actual animation
+		- Eliminate RowData; Use Array[7][7] instead
+		- TargetableTiles > Convert to bitmask
+		Important APIs to expose:
+		- 
+
+	[Units]
+		Refactor goals:
+		- Get rid of getters and setters
+		- Simplify and expose only essential APIs ie. Ability.Perform()
+		- Decouple from UI stuff
+		- Work with new improved map system
+		- Use unity inbuilt event system
+		- Duplicate mesh > ghost mesh
+		- Just hold a single list of abilities instead of multiple lists; sort by AbilityType
+		- Get rid of current UnityEvents
+		Important APIs to expose:
+		- MoveTo(Tile tile), MoveTo(Vector2Int direction)?
+		- ProposeMove(Tile tile); displays the ghost mesh
+		- TakeDamage(int damage); current one is OK (Because I wrote it)
+		- Die(); OK
 
 	[BhaVE (AI): Awesome Behaviour Tree Editor!]
 		[V] BhaVE segregated into Runtime and Editor Dlls

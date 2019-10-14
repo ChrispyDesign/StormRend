@@ -17,7 +17,7 @@ namespace StormRend.Systems
         {
             Player = 1 << 0,
             Enemy = 1 << 1,
-            Inanimate = 1 << 2,
+            InAnimate = 1 << 2,
         }
 
         [Tooltip("Blizzard meter transform, contains toggle child elements")]
@@ -146,7 +146,7 @@ namespace StormRend.Systems
             }
 
             //Inanimate units (ie. Spirit crystals etc)
-            if ((targetTypes & BlizzardTargetType.Inanimate) == BlizzardTargetType.Inanimate)
+            if ((targetTypes & BlizzardTargetType.InAnimate) == BlizzardTargetType.InAnimate)
             {
                 Debug.LogError("Blizzard affect on inanimate units not implemented!");
             }

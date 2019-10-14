@@ -109,7 +109,7 @@ namespace StormRend.Defunct
 			Vector2 rect = m_passivePanel.InverseTransformPoint(Input.mousePosition);
 			if (m_passivePanel.rect.Contains(rect))
 			{
-				m_abilityTitle.text = m_passiveAbility.GetName();
+				m_abilityTitle.text = m_passiveAbility.name;
 				m_abilityLevel1.text = m_passiveAbility.GetDescription();
 				m_abilityLevel2.text = "";
 				m_abilityLevel3.text = "";
@@ -118,7 +118,7 @@ namespace StormRend.Defunct
 			rect = m_firstAbilityPanel.InverseTransformPoint(Input.mousePosition);
 			if (m_firstAbilityPanel.rect.Contains(rect))
 			{
-				m_abilityTitle.text = m_firstAbilities[0].GetName();
+				m_abilityTitle.text = m_firstAbilities[0].name;
 				m_abilityLevel1.text = m_firstAbilities[0].GetDescription();
 				m_abilityLevel2.text = m_firstAbilities[1].GetDescription();
 				m_abilityLevel3.text = m_firstAbilities[2].GetDescription();
@@ -127,7 +127,7 @@ namespace StormRend.Defunct
 			rect = m_secondAbilityPanel.InverseTransformPoint(Input.mousePosition);
 			if (m_secondAbilityPanel.rect.Contains(rect))
 			{
-				m_abilityTitle.text = m_secondAbilities[0].GetName();
+				m_abilityTitle.text = m_secondAbilities[0].name;
 				m_abilityLevel1.text = m_secondAbilities[0].GetDescription();
 				m_abilityLevel2.text = m_secondAbilities[1].GetDescription();
 				m_abilityLevel3.text = m_secondAbilities[2].GetDescription();

@@ -2,30 +2,29 @@
 using UnityEditor;
 using StormRend.Abilities.Effects;
 using StormRend.Abilities;
+using StormRend.Editors;
 
 [CustomEditor(typeof(xAbility))]
-public class AbilityEditor : Editor
+public class xAbilityEditor : SmartEditor
 {
+
+
     EffectEditor m_effectEditor;
 
     // the target ability object
-    static xAbility m_ability;
+    static xAbility t;
+	public static xAbility GetTarget() => t;
 
     bool m_foldOutAOE = false;
 
-    #region getters
-
-    public static xAbility GetAbility() { return m_ability; }
-
-    #endregion
 
     void OnEnable()
     {
-        m_ability = (xAbility)target;
-        m_effectEditor = new EffectEditor(m_ability.GetEffects());
+        t = (xAbility)target;
+        m_effectEditor = new EffectEditor(t.GetEffects());
     }
 
-    public override void OnInspectorGUI()
+    public override void OnPostInspector()
     {
         // update the ability
         serializedObject.Update();
@@ -43,16 +42,14 @@ public class AbilityEditor : Editor
         ProcessContextMenu();
 
         // allow ability serialization
-        EditorUtility.SetDirty(m_ability);
+        EditorUtility.SetDirty(t);
     }
 
     void PrintAbilityInfo()
     {
         AbilityEditorUtility.PrintHeader("Ability Info");
 
-        //
-        AbilityEditorUtility.PropertyField(serializedObject, "m_name");
-        AbilityEditorUtility.PropertyField(serializedObject, "animNumber");
+        // AbilityEditorUtility.PropertyField(serializedObject, "animNumber");
         AbilityEditorUtility.PropertyField(serializedObject, "m_icon");
         AbilityEditorUtility.PropertyField(serializedObject, "m_description");
     }
@@ -66,7 +63,7 @@ public class AbilityEditor : Editor
         m_foldOutAOE = EditorGUILayout.Foldout(m_foldOutAOE, "Area Of Effect");
 
         if (m_foldOutAOE)
-            AbilityEditorUtility.ToggleMatrix(ref m_ability.m_castArea); // 2D boolean array for area of effect
+            AbilityEditorUtility.ToggleMatrix(ref t.m_castArea); // 2D boolean array for area of effect
 
         AbilityEditorUtility.PropertyField(serializedObject, "m_targetableTiles", true);
     }

@@ -85,7 +85,7 @@ public class EffectEditor : Editor
         m_effects.Add(effect);
 
         // parent effect to ability asset
-        string path = AssetDatabase.GetAssetPath(AbilityEditor.GetAbility());
+        string path = AssetDatabase.GetAssetPath(xAbilityEditor.GetTarget());
         AssetDatabase.AddObjectToAsset(effect, path);
 
         // hide effect asset from unity project window

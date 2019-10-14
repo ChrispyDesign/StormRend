@@ -27,7 +27,6 @@ namespace StormRend.Abilities
 		private List<xTile> m_tiles = new List<xTile>();
 
 		// ability info (for UI display purposes)
-		[SerializeField] string m_name;
 		[SerializeField] int animNumber;
 		[SerializeField] Sprite m_icon = null;
 		[TextArea]
@@ -42,9 +41,6 @@ namespace StormRend.Abilities
 
 		#region getters
 		//GET RID OF GETTERS AND SETTERS!!!
-		public List<xTile> GetTiles() { return m_tiles; }
-		public string GetName() { return m_name; }
-
 		public int GetAnimNumber() { return animNumber; }
 		public Sprite GetIcon() { return m_icon; }
 		public string GetDescription() { return m_description; }
@@ -53,16 +49,18 @@ namespace StormRend.Abilities
 		public int GetGloryRequirement() { return m_gloryRequirement; }
 
 		/// <summary> the amount of tiles to select before this ability is cast </summary>
-		public int GetTilesToSelect() { return m_tilesToSelect; }
+		// public int GetTilesToSelect() { return m_tilesToSelect; }
 		public TargetableTiles GetTargetableTiles() { return m_targetableTiles; }
 		public List<xEffect> GetEffects() { return m_effects; }
 
 		#endregion
 
-		public void AddToList(xTile _tile) { m_tiles.Add(_tile); }
+		// public void AddToList(xTile _tile) { m_tiles.Add(_tile); }
 
 		public void GetSelectableTiles(ref xUnit _player)
 		{
+			//WTF is this doing?
+			//
 			int center = (m_castArea.Length / 2) + (m_castArea.Length % 2);
 			int endPoint = m_castArea.Length / 2;
 			List<xTile> nodes = new List<xTile>();
