@@ -157,14 +157,14 @@ namespace StormRend.Defunct
 
                 m_availableTiles = xDijkstra.Instance.m_validMoves;
 
-                foreach (xTile node in m_availableTiles)
+                foreach (xTile tile in m_availableTiles)
                 {
-                    if (node.GetUnitOnTop())
+                    if (tile.GetUnitOnTop())
                         continue;
 
-					node.m_attackCover.SetActive(false);
-					node.m_moveCover.SetActive(true);
-					node.m_selected = true;
+					tile.m_attackCover.SetActive(false);
+					tile.m_moveCover.SetActive(true);
+					tile.m_selected = true;
                 }
             }
 

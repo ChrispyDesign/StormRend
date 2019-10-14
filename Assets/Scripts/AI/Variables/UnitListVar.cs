@@ -8,27 +8,10 @@ namespace StormRend.Variables
 	[CreateAssetMenu(menuName = "StormRend/Variables/UnitList", fileName = "UnitListVar")]
 	public sealed class UnitListVar : BhaveVar<List<xUnit>>
 	{
-		public override bool Equals(object other)
-		{
-			var otherUnitList = other as List<xUnit>;
-
-			//Valid check
-			if (otherUnitList == null)
-				throw new System.NullReferenceException("other unit list is null");
-
-			//Size must match
-			if (value.Count != otherUnitList.Count)
-				return false;
-
-			//Loop through this list and check if the values match up with the other list
-			for (int i = 0; i < value.Count; i++)
-			{
-				if (value[i] != otherUnitList[i])
-					return false;
-			}
-			return true;
-		}
-		public override int GetHashCode() => base.GetHashCode();
+		// void OnEnable()
+		// {
+		// 	value = new List<xUnit>();
+		// }
 
         public static implicit operator UnitListVar(List<xUnit> rhs)
 		{
@@ -38,5 +21,30 @@ namespace StormRend.Variables
 		{
 			return self.value;
 		}
+
+		// public override bool Equals(object other)
+		// {
+		// 	if (other == null) return false;
+
+		// 	var otherUnitList = other as List<xUnit>;
+
+		// 	//Valid check
+		// 	if (otherUnitList == null)
+		// 		throw new System.NullReferenceException("other unit list is null");
+
+		// 	//Size must match
+		// 	if (value.Count != otherUnitList.Count)
+		// 		return false;
+
+		// 	//Loop through this list and check if the values match up with the other list
+		// 	for (int i = 0; i < value.Count; i++)
+		// 	{
+		// 		if (value[i] != otherUnitList[i])
+		// 			return false;
+		// 	}
+		// 	return true;
+		// }
+
+		// public override int GetHashCode() => base.GetHashCode();
 	}
 }
