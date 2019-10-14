@@ -38,20 +38,11 @@ namespace StormRend.Defunct
         [SerializeField] int m_maxHP = 4;
         [SerializeField] int m_maxMoveRange = 4;
 
-
-        [Space]
-        [Header("Unit Interaction")]
-        [SerializeField] UnityEvent m_onSelect;
-        [SerializeField] UnityEvent m_onDeselect;
-        [SerializeField] UnityEvent m_onHover;
-        [SerializeField] UnityEvent m_onUnhover;
-
-
         protected bool m_hasMoved;
         protected bool m_hasAttacked;
         protected bool m_isSelected;
         protected xAbility m_selectedAbility;
-        List<xTile> m_availableTiles;
+        List<xTile> m_availableTiles;		//This gets the tiles this unit is able to move to. Rename: tilesAbleToMoveTo
         List<xTile> m_attackTiles;
 
         public Action OnDie = delegate
@@ -149,8 +140,7 @@ namespace StormRend.Defunct
 
         public virtual void OnSelect()
         {
-            m_onSelect.Invoke();
-
+			//Highlight Tile Move
             if (xGameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.MOVE &&
                 !m_afterClear)
             {
@@ -179,15 +169,11 @@ namespace StormRend.Defunct
 
         public virtual void OnDeselect()
         {
-            m_onDeselect.Invoke();
-
             xGrid.CoordToTile(m_coordinates).OnDeselect();
         }
 
         public virtual void OnHover()
         {
-            m_onHover.Invoke();
-
 			xTile tile = xGrid.CoordToTile(m_coordinates);
 			if (tile.m_nodeType == NodeType.WALKABLE && tile.GetUnitOnTop() != null)
 			{
@@ -197,8 +183,6 @@ namespace StormRend.Defunct
 
         public virtual void OnUnhover()
         {
-            m_onUnhover.Invoke();
-
 			xTile tile = xGrid.CoordToTile(m_coordinates);
 			tile.m_onHoverCover.SetActive(false);
 		}
