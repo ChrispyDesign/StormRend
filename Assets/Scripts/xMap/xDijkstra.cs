@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using pokoro.Patterns.Generic;
+using StormRend.Systems.Mapping;
+using StormRend.Units;
 using UnityEngine;
 
 namespace StormRend.Defunct
 {
-	public class xDijkstra : MonoBehaviour
+	public class xDijkstra : Singleton<xDijkstra>
 	{
 		//Make this A* because why not
 
@@ -12,14 +15,6 @@ namespace StormRend.Defunct
 		public List<xTile> m_checkedNodes = new List<xTile>();
 		public bool m_DebugPath; // If we want to debug out path
 
-		private void Awake()
-		{
-			// Initialising the instance if its not yet been initialised
-			if (Instance == null)
-				Instance = this;
-			else if (Instance != this)
-				Destroy(gameObject);
-		}
 
 		public void FindValidMoves(xTile _startNode, int allowedTiles, System.Type blockedUnits)
 		{

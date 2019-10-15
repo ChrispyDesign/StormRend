@@ -34,17 +34,18 @@ namespace StormRend.Systems.Mapping
 
 		[Header("Costs")]
 		public float cost = 1;
-		public float G = float.MaxValue;
-		public float H = float.MaxValue;
-		public float F = 0;
+		internal float G = float.MaxValue;
+		internal float H = float.MaxValue;
+		internal float F = 0;
 
 		//Properties
 		public TileHighlight highlight => _highlight;
 
 		//Members
 		TileHighlight _highlight;
+		internal Tile parent;
 
-	#region Core
+		#region Core
 		void Start()
 		{
 			_highlight = GetComponentInChildren<TileHighlight>();

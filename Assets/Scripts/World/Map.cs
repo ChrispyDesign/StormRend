@@ -4,6 +4,7 @@ using System.Linq;
 using pokoro.Patterns.Generic;
 using StormRend.Units;
 using StormRend.Variables;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -84,7 +85,7 @@ namespace StormRend.Systems.Mapping
 		#endregion
 
 #if UNITY_EDITOR
-		#region Assists
+	#region Assists
 		void CreateEditorRaycastPlane(float mapSize)
 		{
 			//Create an extremely large plane colider that is used only for editor raycasting
@@ -103,9 +104,10 @@ namespace StormRend.Systems.Mapping
 			}
 			tiles.Clear();
 		}
-		#endregion
+	#endregion
 #endif
-		#region Connections
+
+	#region Connections
 		/// <summary>
 		/// Clear all tile connections
 		/// </summary>
@@ -115,11 +117,73 @@ namespace StormRend.Systems.Mapping
 				t.DisconnectAll();
 		}
 		public void GetTileTerrainCost(Tile tile) { }
-		#endregion
+	#endregion
 
-		public static Tile[] AStar(Map map, Tile start, Tile end)
+	#region Pathfinding
+		public static List<Tile> GetValidMoves(Map map, Tile start, int range, params Type[] unitTypeToIgnore)
 		{
-			return new Tile[0];
+			List<Tile> validMoves = new List<Tile>();
+			Queue<Tile> openList = new Queue<Tile>();
+			List<Tile> closedList = new List<Tile>();
+
+			//Add starting point to open list
+			openList.Enqueue(start);
+
+			while (openList.Count > 0)
+			{
+				//Init current tile to openlist's first node and remove it from the openlist
+				//Add it to the closed list cuz it's being searched
+				var currentTile = openList.Dequeue();
+
+				if (!closedList.Contains(currentTile))
+					closedList.Add(currentTile);
+
+				List<Tile> neighbours = currentTile.connections.ToList();
+
+				//Search through the neighbours until we find the best travel cost to another tile
+				foreach (var n in neighbours)
+				{
+					//Pass if neighbour tile is unwalkable
+					if (n is UnWalkableTile) continue;
+
+					//Pass if neighbour tile has a unit that needs to be ignored
+					foreach (var u in map.mapUnits)
+						//If unit is a type that needs to be ignored...
+						if (unitTypeToIgnore.Contains(u.GetType()))
+							//If unit is on this neighbour tile...
+							if (u.currentTile == n)
+								continue;
+
+					//connected tile checked
+					if (!closedList.Contains(n))
+						closedList.Add(n);
+
+					//Set some costs???
+					var newMovementCostToNeighbour = currentTile.G + 1;
+					if (newMovementCostToNeighbour < n.G || !openList.Contains(n))
+					{
+						n.G = newMovementCostToNeighbour;
+						n.H = 1;
+						n.parent = currentTile;
+
+						if (n.G <= range)
+							openList.Enqueue(n);
+					}
+				}
+
+				//Can this be optimized?
+				if (currentTile.G > 0 && currentTile.G <= range && !validMoves.Contains(currentTile))
+					validMoves.Add(currentTile);
+			}
+
+			foreach (var t in closedList)
+			{
+				t.G = 0;
+				t.H = 0;
+			}
+
+			return validMoves;
 		}
+	#endregion
 	}
 }

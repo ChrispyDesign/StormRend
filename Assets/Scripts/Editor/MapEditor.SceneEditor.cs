@@ -199,7 +199,7 @@ namespace StormRend.Editors
 		}
 		void PerformStamp()
 		{
-			EditorGUIUtility.AddCursorRect(SceneView.lastActiveSceneView.position, MouseCursor.ArrowPlus);
+			EditorGUIUtility.AddCursorRect(new Rect(0, 0, 10000, 10000), MouseCursor.ArrowPlus);
 
 			//Make sure there are no tiles in the current position
 			if (IsOverTile(gridCursor, m.tileSize * 0.95f, out GameObject tileHit))
@@ -210,7 +210,7 @@ namespace StormRend.Editors
 
 			//Instantiate a new tile prefab
 			var rotation = randomizePaintDirection ? Quaternion.AngleAxis(90 * UnityEngine.Random.Range(0, 4), Vector3.up) : Quaternion.identity;
-			var newTile = Instantiate(m.selectedTilePrefab, gridCursor, rotation);	//Instatiate
+			var newTile = Instantiate(m.selectedTilePrefab, gridCursor, rotation);	//Instantiate
 			newTile.transform.SetParent(m.transform);		//Parent
 			newTile.gameObject.layer = m.gameObject.layer;	//Layer
 			newTile.owner = m;	//Owner
@@ -222,7 +222,7 @@ namespace StormRend.Editors
 		}
 		void PerformErase()
 		{
-			EditorGUIUtility.AddCursorRect(SceneView.lastActiveSceneView.position, MouseCursor.ArrowMinus);
+			EditorGUIUtility.AddCursorRect(new Rect(0, 0, 10000, 10000), MouseCursor.ArrowMinus);
 
 			if (IsOverTile(gridCursor, m.tileSize * 0.95f, out GameObject tileToErase))
 			{
