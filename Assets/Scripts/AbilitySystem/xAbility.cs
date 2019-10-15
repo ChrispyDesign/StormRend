@@ -60,7 +60,7 @@ namespace StormRend.Abilities
 		public void GetSelectableTiles(ref xUnit _player)
 		{
 			//Q. WTF is this doing?
-			//A. I think this populates the passed in ally unit's 
+			//A. I think this populates the passed in ally unit's
 			//tiles that this ability can be applied to
 
 			int center = (m_castArea.Length / 2) + (m_castArea.Length % 2);

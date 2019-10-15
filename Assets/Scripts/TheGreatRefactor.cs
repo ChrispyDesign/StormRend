@@ -23,9 +23,9 @@ namespace The.Great.Refactor.Brainstorm
 
     >> Game Data
     [ActiveUnits] : UnitListVar
-		- Used to get units, attack a type of unit, 
+		- Used to get units, attack a type of unit,
     [DeadUnits]? : UnitListVar, Can check if game is over or not
-	
+
     [EnemyTargetList] : UnitListVar
         Working unit target list for enemies. Updated and controlled by the enemy's AI system
 
@@ -106,7 +106,7 @@ namespace The.Great.Refactor.Brainstorm
 		- Eliminate RowData; Use Array[7][7] instead
 		- TargetableTiles > Convert to bitmask
 		Important APIs to expose:
-		- 
+		-
 
 	[Units]
 		Refactor goals:

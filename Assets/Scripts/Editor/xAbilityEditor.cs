@@ -22,7 +22,7 @@ public class xAbilityEditor : SmartEditor
         m_effectEditor = new EffectEditor(t.GetEffects());
     }
 
-    public override void OnPostInspector()
+    public override void OnInspectorGUI()
     {
         // update the ability
         serializedObject.Update();
