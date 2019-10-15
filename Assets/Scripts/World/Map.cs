@@ -55,7 +55,7 @@ namespace StormRend.Systems.Mapping
 		void Start()
 		{
 			//Transfer semi-global highlight colours over to static tile highlight colours
-			Tile.tileHighlights = tileHighlightsSettings;
+			Tile.highlightColors = tileHighlightsSettings;
 		}
 		void OnDisable()
 		{

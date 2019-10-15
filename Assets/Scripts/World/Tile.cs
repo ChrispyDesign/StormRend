@@ -14,8 +14,21 @@ namespace StormRend.Systems.Mapping
 	/// </summary>
 	public abstract class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler 
 	{
-		public static List<TileHighlightColor> tileHighlights = new List<TileHighlightColor>();
+		//Static
+		public static List<TileHighlightColor> highlightColors = new List<TileHighlightColor>();
+		public static TileHighlightColor FindHighlightColor(string highlightName)
+		{
+			foreach (var h in highlightColors)
+			{
+				//Highlight color found in static list of highlights
+				if (h.name == highlightName)
+					return h;
+			}
+			//Nothing found return null
+			return null;
+		}
 
+		//Inspector
 		public Map owner;
 		public HashSet<Tile> connections = new HashSet<Tile>();
 
