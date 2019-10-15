@@ -51,5 +51,39 @@ namespace StormRend.Abilities
 			foreach (var e in effects)
 				e.Perform(owner, targets);
 		}
+
+		//TRANSFERRED FROM OLD
+		public void GetSelectableTiles(ref Unit _player)
+		{
+			//Q. WTF is this doing?
+			//A. I think this populates the passed in ally unit's 
+			//tiles that this ability can be applied to
+
+			int center = (castArea.Length / 2) + (castArea.Length % 2);
+			int endPoint = castArea.Length / 2;
+			List<Tile> nodes = new List<Tile>();
+			Vector2Int coords = Vector2Int.zero;
+
+			for (int y = 0; y < castArea.Length; y++)
+			{
+				for (int x = 0; x < castArea.GetLength(0); x++)
+				{
+					if (castArea[y].elements[x])
+					{
+						int _x = -endPoint + x;
+						int _y = endPoint - y;
+
+						coords.x = _player.coords.x + _x;
+						coords.y = _player.coords.y + _y;
+
+						xTile node = xGrid.CoordToTile(coords);
+						if (node != null)
+							nodes.Add(node);
+					}
+				}
+			}
+
+			_player.SetAttackNodes(nodes);
+		}
 	}
 }

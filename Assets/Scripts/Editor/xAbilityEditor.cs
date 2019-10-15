@@ -7,8 +7,6 @@ using StormRend.Editors;
 [CustomEditor(typeof(xAbility))]
 public class xAbilityEditor : SmartEditor
 {
-
-
     EffectEditor m_effectEditor;
 
     // the target ability object

@@ -78,8 +78,8 @@ namespace The.Great.Refactor.Brainstorm
 		[V 90%] MapEditor: Rapidly create, edit and connect tiles
 		[V 75%] PropPainter: Prefab painting tool for use with map
 		[ ] Pathfinder (Proposal): Maybe should be called MapExtentions? Pathfinding functionality
-		[ ] TileHighlight: A sprite renderer child object of a tile
-		
+		[V 90%] TileHighlight: A sprite renderer child object of a tile
+
 
 	[UI]
 		[ ] Meter (for Glory and Blizzard meters)
