@@ -2,6 +2,8 @@
 using UnityEngine;
 using System.Linq;
 using pokoro.Patterns.Generic;
+using StormRend.Units;
+using StormRend.Variables;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -10,19 +12,32 @@ using UnityEditor;
 namespace StormRend.Systems.Mapping
 {
 	[ExecuteInEditMode]
-	public sealed class Map : Singleton<Map>
+	public sealed class Map : MonoBehaviour //Singleton<Map>	//Only one map per scene?
 	{
 		const float maxMapSize = 500f;
 
-		#region Inspector
-		[SerializeField] [Range(1, 5)] [Tooltip("This map's tile XZ scale")] public float tileSize = 2;
-		[HideInInspector] [SerializeField] public List<Tile> tiles = new List<Tile>();
-		[SerializeField] public GameObject[] palette;
-		#endregion
+		//TODO
+		//- Map editor needs to be able to place units and set them accordingly
+		//- Map needs to hold a list of units for other things to be able to reference
 
-		public int selectedPrefabIDX;
-		public GameObject selectedTilePrefab => palette?.Length == 0 ? null : palette?[selectedPrefabIDX];
+		//TEMP WORKFLOW: Edit desired tile highlights settings in here, and on start the settings will get transferred over to Tile.tileHighlights
+		public List<TileHighlightColor> tileHighlightsSettings = new List<TileHighlightColor>();
+
+		//Inspector
+		[SerializeField, Range(1, 5), Tooltip("This map's tile XZ scale")] public float tileSize = 2;
+
+		[Tooltip("Pallette of tile prefabs")]
+		public Tile[] palette;
+		public int selectedPrefabIDX = 0;
+
+		//Properties
+		public Tile selectedTilePrefab => palette?.Length == 0 ? null : palette?[selectedPrefabIDX];
 		public bool isPaletteActive => palette != null && palette.Length != 0;
+		public List<Unit> mapUnits => mapUnits;
+
+		//Members
+		[HideInInspector] public List<Tile> tiles = new List<Tile>();
+		List<Unit> _mapUnits;
 
 #if UNITY_EDITOR
 		[HideInInspector] public BoxCollider editorRaycastPlane;
@@ -37,27 +52,16 @@ namespace StormRend.Systems.Mapping
 			Selection.selectionChanged += OnSelected;
 #endif
 		}
+		void Start()
+		{
+			//Transfer semi-global highlight colours over to static tile highlight colours
+			Tile.tileHighlights = tileHighlightsSettings;
+		}
 		void OnDisable()
 		{
 #if UNITY_EDITOR
 			Selection.selectionChanged -= OnSelected;
 #endif
-		}
-
-		void OnValidate()
-		{
-			//Make sure any prefabs injected are actually tiles
-			if (isPaletteActive)
-			{
-				foreach (var t in palette)
-				{
-					if (!t.GetComponentInChildren<Tile>())
-					{
-						Debug.LogWarningFormat("{0} is not a Tile! Removing...", t.GetType().Name);
-						palette = palette?.Where(x => x != t).ToArray();
-					}
-				}
-			}
 		}
 
 #if UNITY_EDITOR

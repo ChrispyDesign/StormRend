@@ -232,10 +232,10 @@ namespace StormRend.Defunct
 
 		public void OnDeselect()
 		{
-			m_selected = false;
+			m_selected = false;	//Unselect tile
 
 			xUnit unitOnTop = this.GetUnitOnTop();
-			if (unitOnTop)
+			if (unitOnTop)	//If there's a unit on top of this tile
 			{
 				List<xTile> nodes = unitOnTop.GetAvailableTiles();
 

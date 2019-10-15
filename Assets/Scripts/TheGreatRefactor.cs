@@ -23,15 +23,18 @@ namespace The.Great.Refactor.Brainstorm
 
     >> Game Data
     [ActiveUnits] : UnitListVar
-        - Players
-        - Enemies
-    [DeadUnits]? : UnitListVar
+		- Used to get units, attack a type of unit, 
+    [DeadUnits]? : UnitListVar, Can check if game is over or not
+	
     [EnemyTargetList] : UnitListVar
-        Working unit target list for enemies. Updated and controller by the enemy's AI system
+        Working unit target list for enemies. Updated and controlled by the enemy's AI system
+
     [SelectedUnit] : UnitVar
         The currently selected unit
+
     [Glory] : BhaveInt
         Holds the current glory level
+
     [Blizzard] : BhaveInt
         Holds the current blizzard level
 
@@ -75,6 +78,8 @@ namespace The.Great.Refactor.Brainstorm
 		[V 90%] MapEditor: Rapidly create, edit and connect tiles
 		[V 75%] PropPainter: Prefab painting tool for use with map
 		[ ] Pathfinder (Proposal): Maybe should be called MapExtentions? Pathfinding functionality
+		[ ] TileHighlight: A sprite renderer child object of a tile
+		
 
 	[UI]
 		[ ] Meter (for Glory and Blizzard meters)
