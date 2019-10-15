@@ -9,6 +9,6 @@ namespace StormRend.Abilities
 		protected bool isTileAllowed;	//WTF does this mean?
 		public bool isFoldOut { get; set; } = true;
 
-		public abstract bool Execute(Unit owner, Tile[] targets);
+		public abstract bool Perform(Unit owner, Tile[] targets);
 	}
 }
