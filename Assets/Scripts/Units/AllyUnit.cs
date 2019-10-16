@@ -1,6 +1,6 @@
 namespace StormRend.Units
 {
-	public class AllyUnit : Unit
+	public class AllyUnit : AnimateUnit
 	{
 	}
 }

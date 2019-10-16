@@ -2,6 +2,7 @@
 using pokoro.BhaVE.Core;
 using StormRend.Defunct;
 using StormRend.Systems.StateMachines;
+using StormRend.Units;
 using UnityEngine;
 
 namespace StormRend.States
@@ -12,21 +13,18 @@ namespace StormRend.States
 		// - Trigger crystals
 		// - Handle any UI
 
-		// public enum EnemyType
-		// 	{ FrostTroll, FrostHound }
-		// [SerializeField] EnemyType tbaEnemyType;
-
 		[Tooltip("Time between each enemy unit's turn in seconds")]
 		[SerializeField] float aiTurnTime = 2f;
 
-		xUnit[] currentEnemies;
+		Unit[] currentEnemies;
 		BhaveDirector ai;
-		xGameManager gm;
+		UnitRegistry ur;
 
 		void Awake()
 		{
 			ai = BhaveDirector.singleton;
-			gm = xGameManager.singleton;
+			ur = FindObjectOfType<UnitRegistry>();
+			Debug.Assert(ur, "Unit Registry not found!");
 		}
 
 		public override void OnEnter(UltraStateMachine sm)
@@ -34,7 +32,7 @@ namespace StormRend.States
 			base.OnEnter(sm);
 
 			//Get the current enemies & Run AI
-			currentEnemies = gm.GetEnemyUnits();
+			currentEnemies = ur.GetUnits<EnemyUnit>();
 			StartCoroutine(RunAI(sm));
 		}
 
@@ -57,11 +55,12 @@ namespace StormRend.States
 
 		void TickCrystals()
 		{
+			//Get current crystals
+			var crystals = ur.GetUnits<CrystalUnit>();
+
 			//Tick crystals
-			foreach (var c in xGameManager.singleton.GetCrystals())
-			{
-				c.IterateTurns();
-			}
+			foreach (var c in crystals)
+				c.Tick();
 		}
 	}
 }

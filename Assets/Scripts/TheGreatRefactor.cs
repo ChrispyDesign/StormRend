@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using pokoro.BhaVE.Core.Events;
-using StormRend;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace The.Great.Refactor.Brainstorm
 {
-    /*
+	/*
 	>> Brainstorm
 	- Glory and Blizzard are essentially just integer numbers
 		Implementation Ideas:
@@ -119,6 +115,13 @@ namespace The.Great.Refactor.Brainstorm
 		-
 
 	[Units]
+        Inheritance Tree:
+        Unit
+        - CrystalUnit
+        - AnimateUnit
+            - AllyUnit
+            - EnemyUnit
+        - InAnimateUnit?
 		Refactor goals:
 		- Get rid of getters and setters
 		- Simplify and expose only essential APIs ie. Ability.Perform()
@@ -143,60 +146,8 @@ namespace The.Great.Refactor.Brainstorm
 		[ ] Cutscenes; Need to learn more about timeline and cinemachine
 	*/
 
-    public class StateMachineImplementation : Completed
-    {
-        public class State : ScriptableObject
-        {
-            public void OnEnter() { }
-            public void OnUpdate() { }
-            public void OnExit() { }
-        }
-        public class StackState : State
-        {
-            public void OnCover() { }
-            public void OnUncover() { }
-        }
-        // public class TurnState : State
-        // {
-        //     public void OnNext() { }
-        // }
-        public class CoreStateMachine
-        {
-            public virtual State currentState { get; protected set; }
 
-            //--------------------------------
-            public void Switch(State state)
-            {
-                currentState?.OnExit();
-                currentState = state;
-            }
-            protected virtual void Update()
-            {
-
-            }
-        }
-        public class TurnBasedStackStateMachine : CoreStateMachine
-        {
-            protected Stack<State> states = new Stack<State>();
-
-            public new State currentState { get; }
-
-            //-----------------------------------------------
-            public void Push(StackState stackState) { }
-            public StackState Pop()
-            {
-                return new StackState();
-            }
-            //-----------------
-            public void Insert(State state) { }
-            public void Remove(State state) { }
-            public void NextTurn() { }
-            public void PrevTurn() { }   //?
-                                         //-----------------
-        }
-    }
-
-    public class MapImplementation : Completed
+	public class MapImplementation : Completed
     {
         /// <uber>
         /// • Medical
@@ -226,9 +177,6 @@ namespace The.Great.Refactor.Brainstorm
     }
 
     public class Completed { }
-
-
-
 
     //Renames, Cleanups
     // - AbilityEditorUtility > SREditorUtility
