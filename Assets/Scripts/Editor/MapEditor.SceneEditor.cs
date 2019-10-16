@@ -43,7 +43,7 @@ namespace StormRend.Editors
             SetMouseCursor();
             DrawGridCursor();
 
-            if (showConnections) DrawConnections();
+            if (showConnections) DrawConnections(Color.red);
 
             if (!m || !m.selectedTilePrefab) return;
 
