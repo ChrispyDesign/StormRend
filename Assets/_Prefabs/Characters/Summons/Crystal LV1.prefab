@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4052113309130031599}
   - component: {fileID: 4052113309130031596}
   - component: {fileID: 4052113309130031597}
-  - component: {fileID: 2730935275542680700}
+  - component: {fileID: 5541213709217244858}
   m_Layer: 0
   m_Name: Crystal LV1
   m_TagString: Untagged
@@ -55,7 +55,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
   m_Center: {x: 0, y: 0.19554019, z: 0}
---- !u!114 &2730935275542680700
+--- !u!114 &5541213709217244858
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,39 +64,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 4052113309130031594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfbc526fa310a5049b7b33065205fc8d, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e60c5bc07bf344aeb3990fb799f87c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_coordinates: {x: 0, y: 0}
-  m_afterClear: 0
-  m_duplicateMesh: {fileID: 0}
-  m_passiveAbility: {fileID: 11400000, guid: 005888600af3eec4fa9444a967a326e2, type: 2}
-  m_firstAbilities: []
-  m_secondAbilities: []
-  m_maxHP: 1
-  m_maxMoveRange: 4
-  m_onSelect:
+  description: 'Should this be able to damage:
+
+    - Allies? - Other crystals?'
+  _hp: 0
+  _maxHP: 1
+  OnDeath:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_onDeselect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_onHover:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_onUnhover:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_HowManyTurns: 0
-  m_damage: 1
+  turns: 1
+  damage: 1
+  range: 1
+  ignoreUnitMask: 8
 --- !u!1 &4052113309286110429
 GameObject:
   m_ObjectHideFlags: 0
