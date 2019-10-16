@@ -90,11 +90,11 @@ namespace StormRend.Units
 	#region Core
 		public void MoveTo(Tile tile)
 		{
-
+			
 		}
 		public void MoveTo(Vector2Int direction)
 		{
-
+			//Where should the push effect kill logic be implemented?
 		}
 	#endregion
 
@@ -111,8 +111,8 @@ namespace StormRend.Units
 
 		public virtual void Die()
 		{
-			OnDeath.Invoke();
-			onDeath?.Invoke(this);      //Register death here
+			OnDeath.Invoke();			//UnityEvent
+			onDeath?.Invoke(this);      //System.Action
 
 			//Disable unit and whatever else this needs to do upon death
 			gameObject.SetActive(false);
@@ -124,17 +124,17 @@ namespace StormRend.Units
 		{
 			//If unit is movable, show move highlights for the tile this unit is on
 			//Set this unit as current selected unit >> which will move the camera etc
-			throw new System.NotImplementedException();
+			Debug.LogFormat("{0}.OnPointerClick()");
 		}
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			//Show hover highlights for the tile this unit is on
-			throw new System.NotImplementedException();
+			Debug.LogFormat("{0}.OnPointerEnter()");
 		}
 		public void OnPointerExit(PointerEventData eventData)
 		{
 			//Hide hover highlights for the tile this unit is on
-			throw new System.NotImplementedException();
+			Debug.LogFormat("{0}.OnPointerExit()");
 		}
 	#endregion
 	}

@@ -117,12 +117,18 @@ namespace StormRend.Editors
         void RefreshPalettePreviews(Map map)
         {
 			var paletteCount = map.palette.Length;
+			Debug.Log("paletteCount: " + paletteCount);
 
 			if (palettePreviews == null || palettePreviews.Length != paletteCount)
 			{
+				Debug.Log("Refreshing Pallette Previews");
+				
 				palettePreviews = new Texture2D[paletteCount];
+				Debug.Log("palettePreviews: " + palettePreviews);
+
 				for (var i = 0; i < paletteCount; ++i)
 					palettePreviews[i] = AssetPreview.GetAssetPreview(map.palette[i]);
+				Debug.Log("palettePreviews: " + palettePreviews);
 			}
 		}
 		#endregion

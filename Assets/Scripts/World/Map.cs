@@ -33,7 +33,7 @@ namespace StormRend.Systems.Mapping
 
 		//Properties
 		public Tile selectedTilePrefab => palette?.Length == 0 ? null : palette?[selectedPrefabIDX];
-		public bool isPaletteActive => palette != null && palette.Length != 0;
+		public bool isPaletteActive => palette != null && palette.Length > 0;
 		public List<Unit> mapUnits => mapUnits;
 
 		//Members

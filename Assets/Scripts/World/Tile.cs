@@ -29,7 +29,6 @@ namespace StormRend.Systems.Mapping
 		}
 
 		//Inspector
-		public Map owner;
 		public HashSet<Tile> connections = new HashSet<Tile>();
 
 		[Header("Costs")]
@@ -42,8 +41,9 @@ namespace StormRend.Systems.Mapping
 		public TileHighlight highlight => _highlight;
 
 		//Members
+		[HideInInspector] public Map owner;
 		TileHighlight _highlight;
-		internal Tile parent;
+		internal Tile parent;		//Is this really required??
 
 		#region Core
 		void Start()
@@ -65,17 +65,17 @@ namespace StormRend.Systems.Mapping
 	#region Event System Interface Implementations
 		public void OnPointerClick(PointerEventData eventData)
 		{
-			throw new System.NotImplementedException();
+			Debug.LogFormat("{0}.OnPointerClick()");
 		}
 
 		public void OnPointerEnter(PointerEventData eventData)
 		{
-			throw new System.NotImplementedException();
+			Debug.LogFormat("{0}.OnPointerEnter()");
 		}
 
 		public void OnPointerExit(PointerEventData eventData)
 		{
-			throw new System.NotImplementedException();
+			Debug.LogFormat("{0}.OnPointerExit()");
 		}
 	#endregion
 	}
