@@ -1,13 +1,12 @@
-﻿using pokoro.BhaVE.Core.Variables;
+using pokoro.BhaVE.Core.Variables;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace StormRend.Variables.Utils
 {
 	/// <summary>
-	/// Custom variable listener and limiter
+	/// BhaveInt variable limiter
 	/// </summary>
-	public class IntVariableHandler : MonoBehaviour
+	public class BhaveIntLimiter : MonoBehaviour
 	{
 		public enum LimitType { None, Clamp, WrapAround }
 
@@ -20,23 +19,17 @@ namespace StormRend.Variables.Utils
 		[SerializeField] int minLimit = 0;
 		[SerializeField] int maxLimit = 1;
 
-		[Header("Events")]
-		public UnityEvent OnChanged;
-
 		void OnValidate()
 		{
 			//Make sure: min <= max, max >= min
 			if (minLimit > maxLimit) minLimit = maxLimit;
 			if (maxLimit < minLimit) maxLimit = minLimit;
 		}
-		void OnEnable() => intVariable.onChanged += OnVarChanged;
-		void OnDisable() => intVariable.onChanged -= OnVarChanged;
+		void OnEnable() => intVariable.onChanged += ApplyLimitsOnChanged;
+		void OnDisable() => intVariable.onChanged -= ApplyLimitsOnChanged;
 
-		void OnVarChanged()
+		void ApplyLimitsOnChanged()
 		{
-			//Invoke unity event
-			OnChanged.Invoke();
-
 			//Put limits on subject variable
 			if (limitType == LimitType.None)
 				return;

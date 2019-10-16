@@ -22,7 +22,7 @@ namespace pokoro.BhaVE.Core.Variables
 			return self.value;
 		}
 
-		public void Increment(int amount) => value += amount;
-		public void Decrement(int amount) => value -= amount;
+		public void Increment(int amount = 1) => value += amount;
+		public void Decrement(int amount = 1) => value -= amount;
 	}
 }

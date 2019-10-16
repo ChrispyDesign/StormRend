@@ -18,6 +18,5 @@ namespace StormRend.Editors
 			a = target as Ability;
 			ei = new EffectInspector(a);
 		}
-
    	}
 }

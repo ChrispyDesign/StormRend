@@ -4340,6 +4340,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2101356870767717335}
+  - component: {fileID: 2505284297034244265}
   m_Layer: 0
   m_Name: UnitRegistry
   m_TagString: Untagged
@@ -4361,6 +4362,20 @@ Transform:
   m_Father: {fileID: 6841392900819925574}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2505284297034244265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3260328891646769650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 472ec91f3d204eb4493b88e737785b70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aliveUnits: []
+  deadUnits: []
 --- !u!1 &3325017993235086259
 GameObject:
   m_ObjectHideFlags: 0
@@ -6432,9 +6447,9 @@ MonoBehaviour:
   OnNextTurn:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: 587b525c171df6f40a08f1869823cfa7, type: 2}
-        m_MethodName: Increment
-        m_Mode: 3
+      - m_Target: {fileID: 3785408489521488377}
+        m_MethodName: Tick
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9888,7 +9903,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1389559257139785400}
-  - component: {fileID: 2640966389521742481}
+  - component: {fileID: 3785408489521488377}
   m_Layer: 0
   m_Name: Blizzard
   m_TagString: Untagged
@@ -9910,7 +9925,7 @@ Transform:
   m_Father: {fileID: 6841392900819925574}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2640966389521742481
+--- !u!114 &3785408489521488377
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9919,16 +9934,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 8218317179481404406}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 678595010e0c18041ae82210419bfe03, type: 3}
+  m_Script: {fileID: 11500000, guid: 693eaeb74082d4309a9a39b01656e6eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intVariable: {fileID: 11400000, guid: 587b525c171df6f40a08f1869823cfa7, type: 2}
-  description: "Blizzard should be WRAPPED \nso that if it goes above max it will
-    wrap around to min"
-  limitType: 2
-  minLimit: 0
-  maxLimit: 5
-  OnChanged:
+  blizzardVar: {fileID: 11400000, guid: 587b525c171df6f40a08f1869823cfa7, type: 2}
+  maxBlizzardValue: 5
+  targetMask: 1
+  damage: 1
+  unitRegistry: {fileID: 2505284297034244265}
+  OnExecute:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnReset:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
@@ -10517,18 +10536,7 @@ MonoBehaviour:
   maxLimit: 5
   OnChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &9055214985791573538

@@ -47,8 +47,10 @@ namespace The.Great.Refactor.Brainstorm
 		[ ] UndoSystem
 
 	[Game Variables and Events]
-		[V] SO Variables (BhaveVar<T>)
-		[V] SO Events (BhaveEvent)
+		[V] SO Variables (SOVs) ie. BhaveVar<T>
+		[V] SO Events (SOEs) ie. BhaveEvent
+        [ ] SOV limiter
+        [ ] SOV onchanged event trigger
 		[V] IntVariableHandler: Listens for events from variables and limits it's value
 		[X] VariableEventListener: Listens to variable changes and invokes local UnityEvent
 		[X] VariableLimiter: Puts limits on variables (need internal onChanged event?)
@@ -62,6 +64,14 @@ namespace The.Great.Refactor.Brainstorm
             -> BlizzardApplicator : MonoBehaviour
                 - Refs: ActiveUnits, EnemyTargetList
             -> Play sounds, other
+
+    [Blizzard]
+        Brainstorm:
+        (Blizzard.asset) is a BhaveInt SOV that holds the game's global blizzard value.
+        What could trigger this SOV?
+        - BlizzardController, Best: Dedicated MB controller to handle blizzard stuff
+        - UnityEvent, OK: Some MB still has to increment it somehow
+        - SRGameDirector directly, Bad: GameDirector coupled to SOV
 
 	[Camera and Event]
 		[ ] Use unity inbuilt ISelectable/hoverable/etc

@@ -16,17 +16,15 @@ namespace StormRend.Units
 		void Start()
 		{
 			FindAllUnits();
+
+			void FindAllUnits()
+			{
+				aliveUnits = FindObjectsOfType<Unit>().ToList();
+			}
 		}
 
-		void FindAllUnits()
-		{
-			aliveUnits = FindObjectsOfType<Unit>().ToList();
-		}
-
-		//Getters
+		#region Core
 		public Unit[] GetUnits<T>() where T : Unit => aliveUnits.Where(x => (x is T)).ToArray();
-
-		//Core
 		public void RegisterDeath(Unit deadUnit)
 		{
 			if (aliveUnits.Remove(deadUnit))
@@ -38,5 +36,6 @@ namespace StormRend.Units
 				Debug.LogWarningFormat("{0} was not in list of alive units!", deadUnit);
 			}
 		}
-   	}
+		#endregion
+	}
 }
