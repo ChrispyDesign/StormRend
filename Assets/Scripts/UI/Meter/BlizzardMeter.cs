@@ -13,17 +13,22 @@ namespace StormRend.UI
 		[SerializeField] float amount;
 
 		TextMeshProUGUI infoPanelText;
+		GameObject infoPanelParent;
 
 		private void Awake()
 		{
 			{
 				infoPanelText = FindObjectOfType<InfoPanel>().GetComponent<TextMeshProUGUI>();
+				infoPanelParent = infoPanelText.transform.parent.gameObject;
+
+				infoPanelParent.SetActive(false);
+				slider.fillAmount = 0;
 			}
 
 			Debug.Assert(slider, "There is no slider, please add a panel with filled image component on it..");
 			Debug.Assert(blizzardNodes[0], "There are no Blizzard Nodes, please add nodes");
-
-			slider.fillAmount = 0;
+			Debug.Assert(infoPanelText, "There are no Text Mesh Pro Component in Info Panel");
+			Debug.Assert(infoPanelParent, "There are no Info Panel Parent");
 		}
 
 		public void Increase(int _iterate = 1)
@@ -56,13 +61,13 @@ namespace StormRend.UI
 
 		public override void OnPointerEnter(PointerEventData eventData)
 		{
-			infoPanelText.gameObject.SetActive(true);
+			infoPanelParent.SetActive(true);
 			infoPanelText.text = details;
 		}
 
 		public override void OnPointerExit(PointerEventData eventData)
 		{
-			infoPanelText.gameObject.SetActive(false);
+			infoPanelParent.SetActive(false);
 			infoPanelText.text = null;
 		}
 
