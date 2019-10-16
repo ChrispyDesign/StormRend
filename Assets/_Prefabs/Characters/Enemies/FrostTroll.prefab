@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 3093552309022210656}
   - component: {fileID: 3093552309022210590}
   - component: {fileID: 3544623347665122230}
-  - component: {fileID: 752364542293138397}
+  - component: {fileID: 5168873017443203932}
   m_Layer: 0
   m_Name: FrostTroll
   m_TagString: Untagged
@@ -125,7 +125,7 @@ MonoBehaviour:
   variables: []
   _bhaveTreeModule: {fileID: 11400000, guid: 68bab5547e8eb2145956fe15fd9fd9f9, type: 2}
   useCopy: 1
---- !u!114 &752364542293138397
+--- !u!114 &5168873017443203932
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,18 +134,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 3093552309022210591}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8897cc84be85d743bd1d0aab55943f7, type: 3}
+  m_Script: {fileID: 11500000, guid: e546a4721d175854fb953bc1dc778be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HP: 0
-  m_coordinates: {x: 0, y: 0}
-  m_afterClear: 0
-  m_duplicateMesh: {fileID: 0}
-  m_passiveAbility: {fileID: 0}
-  m_firstAbilities: []
-  m_secondAbilities: []
-  m_maxHP: 4
-  m_maxMoveRange: 4
+  description: 
+  _hp: 0
+  _maxHP: 3
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  ghostColor: {r: 0, g: 0, b: 1, a: 1}
+  moveRange: 4
+  abilities: []
 --- !u!1 &3479494762708884028
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,6 +418,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3093552309022210659}
     m_Modifications:
+    - target: {fileID: 100000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
+      propertyPath: m_Name
+      value: Mesh
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -471,10 +477,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.875
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
-      propertyPath: m_Name
-      value: Mesh
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 63d439f71af03a84dae3f24c8bcdd152, type: 3}
       propertyPath: m_Controller
