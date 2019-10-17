@@ -11,9 +11,16 @@ namespace StormRend.Abilities
 	public class Ability : ScriptableObject
 	{
 		//Constants
-		const int seven = 7;	//Cast Area Size Squared
+		const int seven = 7;    //Cast Area Size Squared. Should this be some kind of global?
 
 		//Flags and Enums
+		public enum AbilityType
+		{
+			Passive,
+			Primary,
+			Secondary
+		}
+
 		[Flags]
 		public enum TargetableTileCategory
 		{
@@ -27,6 +34,9 @@ namespace StormRend.Abilities
 		[SerializeField] Sprite _icon = null;
 		[Tooltip("Animation number for this ability in order to send to a corresponding animator")]
 		[SerializeField] int _animNumber;
+
+		public AbilityType _abilityType = AbilityType.Passive;
+
 		[TextArea, SerializeField] string _description = "";
 
 		[Header("Casting"), Space(1), Tooltip("Glory cost required to perform this ability")]
@@ -43,8 +53,9 @@ namespace StormRend.Abilities
 		[HideInInspector] public List<Effect> effects = new List<Effect>();
 
 		//Properties
-		public int animNumber => _animNumber;
 		public Sprite icon => _icon;
+		public int animNumber => _animNumber;
+		public AbilityType abilityType => _abilityType;
 		public string description => _description;
 		public int gloryCost => _gloryCost;
 		public TargetableTileCategory targetableTileCategories => _targetableTileCategories;
@@ -57,7 +68,7 @@ namespace StormRend.Abilities
 		}
 
 		//TRANSFERRED FROM OLD
-		public void GetSelectableTiles(ref Unit _player)
+		public void GetSelectableTiles(ref Unit unit)
 		{
 			//Q. WTF is this doing?
 			//A. I think this populates the passed in ally unit's
@@ -65,16 +76,27 @@ namespace StormRend.Abilities
 
 			int center = (castArea.GetLength(0) / 2) + (castArea.GetLength(0) % 2);
 			int endPoint = castArea.GetLength(0) / 2;
-
 			// int center = (castArea.Length / 2) + (castArea.Length % 2);
 			// int endPoint = castArea.Length / 2;
 
 			List<Tile> tiles = new List<Tile>();
 			Vector2Int coords = new Vector2Int();
-
 			// List<Tile> nodes = new List<Tile>();
 			// Vector2Int coords = Vector2Int.zero;
 
+			for (int x = 0; x < castArea.GetLength(0); x++)
+			{
+				for (int y = 0; y < castArea.GetLength(1); y++)
+				{
+					if (castArea[x, y] == true)
+					{
+						int tx = -endPoint + x;
+						int ty = endPoint - y;
+
+						// coords.x = unit.currentTile.FindConnectedTile()
+					}
+				}
+			}
 
 			// for (int x = 0; x < castArea.GetLength(0); x++)
 			// {
