@@ -4,7 +4,7 @@ namespace StormRend.Systems.StateMachines
 {
     public abstract class State : MonoBehaviour
     {
-		[TextArea] [SerializeField] string Description = "";
+		[TextArea(0, 2), SerializeField] string Description = "";
 
 		public virtual void OnEnter(UltraStateMachine sm) { }
 

@@ -18,15 +18,18 @@ namespace StormRend.Audio
         //Members
         AudioSource audioSource;
 
-        void Awake()
+    #region Core
+        void OnValidate()
         {
-            //No need to check for null because a audio source should always be attached to this gameobject
-            audioSource = GetComponent<AudioSource>();
             audioSource.playOnAwake = false;
             audioSource.mute = false;
             audioSource.loop = false;
         }
-
+        void Awake()
+        {
+            //No need to check for null because a audio source should always be attached to this gameobject
+            audioSource = GetComponent<AudioSource>();
+        }
         public void ChancePlay()
         {
             //if chance is 100 then return true;
@@ -35,11 +38,11 @@ namespace StormRend.Audio
             if (Random.Range(0, 100) < chance)  
                 audioSource.PlayOneShot(sounds[Random.Range(0, sounds.Count-1)]);
         }
-
         public void ChancePlay(AudioClip clip)
         {
             if (Random.Range(0, 100) < chance)  
                 audioSource.PlayOneShot(clip);
         }
+    #endregion
     }
 }
