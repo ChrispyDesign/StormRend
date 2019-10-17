@@ -21,10 +21,10 @@ namespace StormRend.Editors
 		[MenuItem("GameObject/StormRend/Map", false, 10)]
 		static void CreateGameObject(MenuCommand menuCommand)
 		{
-			var newMapObj = new GameObject("Map", typeof(Map));
-			GameObjectUtility.SetParentAndAlign(newMapObj, menuCommand.context as GameObject);
-			Undo.RegisterCreatedObjectUndo(newMapObj, "Create StormRend Map");
-			Selection.activeObject = newMapObj;
+			var newo = new GameObject("Map", typeof(Map));
+			GameObjectUtility.SetParentAndAlign(newo, menuCommand.context as GameObject);
+			Undo.RegisterCreatedObjectUndo(newo, "Create StormRend Map");
+			Selection.activeObject = newo;
 		}
 		void OnEnable()
 		{
