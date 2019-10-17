@@ -60,8 +60,7 @@ namespace StormRend.Editors
 		void AutoConnectNeighbourTiles(Tile subject, bool connectDiagonals = false, float tolerance = 0.1f)
 		{
 			//Find tiles within range (ie. within the distance of the map's tilesize)
-			const float adjDist = 1f;
-			const float diagDist = 1.414213f;
+			const float adjDist = 1f , diagDist = 1.414213f;
 
 			foreach (var t in m.tiles)
 			{

@@ -40,6 +40,8 @@ namespace The.Great.Refactor.Brainstorm
 		[V] GameDirector: Extra component to control the statemachine and other minor game logic
 		[ ] BlizzardApplicator: Applies the blizzard to selected units
 		[ ] UserInputHandler (PlayerController)
+            ? Should this hold the current selected unit's castArea?
+            ? 
 		[ ] UndoSystem
 
 	[Game Variables and Events]

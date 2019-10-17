@@ -34,17 +34,23 @@ namespace StormRend.Systems.Mapping
 		//Properties
 		public Tile selectedTilePrefab => palette?.Length == 0 ? null : palette?[selectedPrefabIDX];
 		public bool isPaletteActive => palette != null && palette.Length > 0;
-		public List<Unit> mapUnits => mapUnits;
 
 		//Members
 		[HideInInspector] public List<Tile> tiles = new List<Tile>();
-		List<Unit> _mapUnits;
+		UnitRegistry ur;
+
+		// public List<Unit> mapUnits => _mapUnits;
+		// List<Unit> _mapUnits;	//Is this required? What should actually set this? Should we just use UnitRegistry
 
 #if UNITY_EDITOR
 		[HideInInspector] public BoxCollider editorRaycastPlane;
 #endif
 
 		#region Core
+		void Awake()
+		{
+			ur = UnitRegistry.singleton;
+		}
 		void OnEnable()
 		{
 #if UNITY_EDITOR
@@ -147,7 +153,7 @@ namespace StormRend.Systems.Mapping
 					if (n is UnWalkableTile) continue;
 
 					//Pass if neighbour tile has a unit that needs to be ignored
-					foreach (var u in map.mapUnits)
+					foreach (var u in map.ur.aliveUnits)
 						//If unit is a type that needs to be ignored...
 						if (unitTypeToIgnore.Contains(u.GetType()))
 							//If unit is on this neighbour tile...
