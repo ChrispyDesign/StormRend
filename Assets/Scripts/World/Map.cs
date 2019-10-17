@@ -107,6 +107,7 @@ namespace StormRend.Systems.Mapping
 		{
 			while (transform.childCount > 0)
 			{
+				//Undo Works
 				Undo.DestroyObjectImmediate(transform.GetChild(0).gameObject);
 			}
 			tiles.Clear();
@@ -171,7 +172,7 @@ namespace StormRend.Systems.Mapping
 					{
 						n.G = newMovementCostToNeighbour;
 						n.H = 1;
-						n.parent = currentTile;
+						// n.parent = currentTile;
 
 						if (n.G <= range)
 							openList.Enqueue(n);

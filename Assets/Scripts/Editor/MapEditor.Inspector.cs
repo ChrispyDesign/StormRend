@@ -49,7 +49,6 @@ namespace StormRend.Editors
 			if (GUILayout.Button("Clear All Tiles"))
 			{
 				m.DeleteAllTiles();
-				Undo.RecordObject(m, "Delete All Tiles");
 			}
 
 			DrawConnectionOptions();

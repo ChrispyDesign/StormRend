@@ -26,7 +26,7 @@ namespace StormRend.Editors
 			}
 		}
 
-		#region Core
+	#region Core
 		public override string[] propertiesToExclude => new [] { "m_Script" };
 		public override void OnPreInspector()
 		{
@@ -43,7 +43,7 @@ namespace StormRend.Editors
 		{
 			if (l.prefabPalette == null || l.prefabPalette.Length == 0)
 			{
-				EditorGUILayout.HelpBox("You must assign prefabs to the Prefab Pallete array.", MessageType.Error);
+				EditorGUILayout.HelpBox("You must assign prefabs to the Prefab Pallette array.", MessageType.Error);
 				return;
 			}
 
@@ -81,6 +81,6 @@ namespace StormRend.Editors
 				}
 			}
 		}
-		#endregion
+	#endregion
 	}
 }

@@ -21,7 +21,7 @@ namespace StormRend.Editors
         bool isEditing;
 
 
-        #region Core
+	#region Core
         void OnSceneGUIBegin()
         {
             oldHandleColor = Handles.color;
@@ -39,7 +39,7 @@ namespace StormRend.Editors
         {
             OnSceneGUIBegin();
 
-            DrawGrid(new Color(1f, 0.5f, 0));
+            DrawGrid(new Color(1f, 0.5f, 0), 0.6f, 1f);
             SetMouseCursor();
             DrawGridCursor();
 
@@ -73,9 +73,9 @@ namespace StormRend.Editors
             Handles.color = oldHandleColor;
             GUI.color = oldGUIColor;
         }
-        #endregion
+	#endregion
 
-        #region Event Handling
+	#region Event Handling
         void HandleEvents()
         {
             editMode = (e.control || e.command) ? EditMode.Erasing : EditMode.Painting;
@@ -114,9 +114,9 @@ namespace StormRend.Editors
                 }
             }
         }
-        #endregion  //Event Handling
+	#endregion  //Event Handling
 
-        #region Draw
+	#region Draw
         void DrawStamp(Vector3 center)
         {
             //Position
@@ -125,10 +125,8 @@ namespace StormRend.Editors
             //Visibility
             stamp.SetActive((editMode == EditMode.Painting) ? true : false);
         }
-        void DrawGrid(Color color, float alpha = 0.9f)
+        void DrawGrid(Color color, float alpha = 0.9f, float dottedLineSize = 2f)
         {
-            var dottedLineSize = 2f;
-
             Handles.color = new Color(color.r, color.g, color.b, alpha);
             var lineLength = kNumOfGridLines * m.tileSize * 0.5f;
             //Z lines
@@ -191,9 +189,9 @@ namespace StormRend.Editors
                 }
             }
         }
-        #endregion
+	#endregion
 
-        #region Edit
+	#region Edit
         void CreateStamp()
         {
             //Kill all children
@@ -221,17 +219,22 @@ namespace StormRend.Editors
                 return;
             }
 
-            //Instantiate a new tile prefab
-            var rotation = randomizePaintDirection ? Quaternion.AngleAxis(90 * UnityEngine.Random.Range(0, 4), Vector3.up) : Quaternion.identity;
-            var newTile = Instantiate(m.selectedTilePrefab, gridCursor, rotation);  //Instantiate
-            newTile.transform.SetParent(m.transform);       //Parent
-            newTile.gameObject.layer = m.gameObject.layer;  //Layer
-            newTile.owner = m;  //Owner
+			//This creates a new undo event for every object instantiated instead of grouping them in all the same operations
+			// Undo.IncrementCurrentGroup();	
 
-            Undo.RegisterCreatedObjectUndo(newTile, "Paint Tile " + m.selectedTilePrefab.name);
+			//Instantiate a new tile prefab
+			var rotation = randomizePaintDirection ? 
+				Quaternion.AngleAxis(90 * UnityEngine.Random.Range(0, 4), Vector3.up) : Quaternion.identity;	//Rotation
+			var newo = Instantiate(m.selectedTilePrefab, gridCursor, rotation);  	//Instantiate
+            newo.transform.SetParent(m.transform);       		//Parent
+            newo.gameObject.layer = m.gameObject.layer;  		//Layer
+            newo.owner = m;  		//Owner
+
+			//UNDO WORKING
+            Undo.RegisterCreatedObjectUndo(newo.gameObject, "Paint Tile " + m.selectedTilePrefab.name);
 
             //Add to map's list of tiles
-            m.tiles.Add(newTile.GetComponent<Tile>());
+            m.tiles.Add(newo.GetComponent<Tile>());
         }
         void PerformErase()
         {
@@ -244,12 +247,13 @@ namespace StormRend.Editors
                 //Erase the found tile
                 m.tiles.Remove(tileToErase.GetComponent<Tile>());
 
+				//UNDO WORKING
                 Undo.DestroyObjectImmediate(tileToErase);
             }
         }
-        #endregion
+	#endregion
 
-        #region Assists
+	#region Assists
         void OnUndoRedo()
         {
             //Clean up mess left behind from Undo system
@@ -260,10 +264,10 @@ namespace StormRend.Editors
                 if (!m.tiles.Contains(childTile))
                     m.tiles.Add(childTile);
             }
-
             //Remove all tiles that are null
-            m.tiles.RemoveAll(x => !x);
+            m.tiles.RemoveAll(x => x == null);
         }
+
         /// <summary>
         /// Returns true if a position is over a tile. Outs the tile it is over
         /// </summary>
@@ -297,6 +301,6 @@ namespace StormRend.Editors
             intersectedTile = null;
             return false;
         }
-        #endregion
+	#endregion
     }
 }

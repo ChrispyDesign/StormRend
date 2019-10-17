@@ -43,7 +43,8 @@ namespace StormRend.Systems.Mapping
 		//Members
 		[HideInInspector] public Map owner;
 		TileHighlight _highlight;
-		internal Tile parent;		//Is this really required??
+		
+		// internal Tile parent;		//Is this really required??
 
 	#region Core
 		void Start()
