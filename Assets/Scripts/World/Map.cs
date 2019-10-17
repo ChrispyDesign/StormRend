@@ -13,7 +13,7 @@ using UnityEditor;
 namespace StormRend.Systems.Mapping
 {
 	[ExecuteInEditMode]
-	public sealed class Map : MonoBehaviour //Singleton<Map>	//Only one map per scene?
+	public sealed class Map : Singleton<Map>	//Only one map per scene?
 	{
 		const float maxMapSize = 500f;
 
@@ -21,15 +21,16 @@ namespace StormRend.Systems.Mapping
 		//- Map editor needs to be able to place units and set them accordingly
 		//- Map needs to hold a list of units for other things to be able to reference
 
-		//TEMP WORKFLOW: Edit desired tile highlights settings in here, and on start the settings will get transferred over to Tile.tileHighlights
-		public List<TileHighlightColor> tileHighlightsSettings = new List<TileHighlightColor>();
 
 		//Inspector
+		[Header("Tiles")]
+		//TEMP WORKFLOW: Edit desired tile highlights settings in here, and on start the settings will get transferred over to Tile.tileHighlights
+		public List<TileHighlightColor> tileHighlightsSettings = new List<TileHighlightColor>();
 		[SerializeField, Range(1, 5), Tooltip("This map's tile XZ scale")] public float tileSize = 2;
 
 		[Tooltip("Pallette of tile prefabs")]
 		public Tile[] palette;
-		public int selectedPrefabIDX = 0;
+		[HideInInspector] public int selectedPrefabIDX = 0;
 
 		//Properties
 		public Tile selectedTilePrefab => palette?.Length == 0 ? null : palette?[selectedPrefabIDX];

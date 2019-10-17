@@ -22,7 +22,8 @@ namespace StormRend.Editors
 
 		public override void OnPreInspector()
 		{
-			DrawDebugInfo();
+			// DrawDebugInfo();
+			DrawHelp();
 
 			using (new EditorGUILayout.HorizontalScope())
 			{
@@ -32,22 +33,36 @@ namespace StormRend.Editors
 		}
 		public override void OnPostInspector()
 		{
-			DrawPreviewSizeSlider();
+			// DrawPreviewSizeSlider();
+
+			//Randomize direction
+			using (new GUILayout.HorizontalScope())
+			{
+				EditorGUILayout.PrefixLabel("Randomize Direction");
+				randomizePaintDirection = EditorGUILayout.Toggle(randomizePaintDirection);
+			}
+
 			DrawPalette();
-			DrawOptions();
+
+			//Clear All tiles
+			GUILayout.Space(5);
+			if (GUILayout.Button("Clear All Tiles"))
+			{
+				m.DeleteAllTiles();
+				Undo.RecordObject(m, "Delete All Tiles");
+			}
+
+			DrawConnectionOptions();
 		}
 		#endregion    //Core
 
 		#region Draws
+		void DrawHelp()
+		{
+			EditorGUILayout.HelpBox("Paint: Left Click\nErase: Ctrl + Left Click", MessageType.Info, true);
+		}
 		void DrawPalette()
 		{
-			//Randomize direction
-			using (new GUILayout.HorizontalScope())
-			{
-				EditorGUILayout.PrefixLabel("Randomize Tile Direction");
-				randomizePaintDirection = EditorGUILayout.Toggle(randomizePaintDirection);
-			}
-
 			//Palette
 			if (m.isPaletteActive)
 			{
@@ -73,14 +88,14 @@ namespace StormRend.Editors
 			}
 		}
 
-		void DrawOptions()
+		void DrawConnectionOptions()
 		{
 			//Connections
 			GUILayout.Space(5);
 			GUILayout.Label("Connections", EditorStyles.boldLabel);
 			using (new GUILayout.HorizontalScope())
 			{
-				EditorGUILayout.PrefixLabel("Show Connections"); showConnections = EditorGUILayout.Toggle(showConnections);				
+				EditorGUILayout.PrefixLabel("Show Connections"); showConnections = EditorGUILayout.Toggle(showConnections);
 				EditorGUILayout.PrefixLabel("Connect Diagonals"); connectDiagonals = EditorGUILayout.Toggle(connectDiagonals);
 			}
 			using (new GUILayout.HorizontalScope())
@@ -95,11 +110,6 @@ namespace StormRend.Editors
 					m.ClearAllTileConnections();
 				}
 			}
-
-			//Clear
-			GUILayout.Space(5);
-			if (GUILayout.Button("Clear All Tiles"))
-				m.DeleteAllTiles();
 		}
 		void DrawPreviewSizeSlider()
 		{
@@ -107,28 +117,21 @@ namespace StormRend.Editors
 			using (new GUILayout.HorizontalScope())
 			{
 				GUILayout.Label(string.Format("Preview Size: {0:0}", previewTileSize), EditorStyles.miniLabel);
-                previewTileSize = GUILayout.HorizontalSlider(previewTileSize, 32, 256);
-            }
-            GUILayout.Space(5);
-        }
-        #endregion
+				previewTileSize = GUILayout.HorizontalSlider(previewTileSize, 32, 256);
+			}
+			GUILayout.Space(5);
+		}
+		#endregion
 
-        #region Assists
-        void RefreshPalettePreviews(Map map)
-        {
-			var paletteCount = map.palette.Length;
-			Debug.Log("paletteCount: " + paletteCount);
-
-			if (palettePreviews == null || palettePreviews.Length != paletteCount)
+		#region Assists
+		void RefreshPalettePreviews(Map map)
+		{
+			//Refresh previews if palette has changed
+			if (palettePreviews == null || palettePreviews.Length != map.palette.Length)
 			{
-				Debug.Log("Refreshing Pallette Previews");
-				
-				palettePreviews = new Texture2D[paletteCount];
-				Debug.Log("palettePreviews: " + palettePreviews);
-
-				for (var i = 0; i < paletteCount; ++i)
-					palettePreviews[i] = AssetPreview.GetAssetPreview(map.palette[i]);
-				Debug.Log("palettePreviews: " + palettePreviews);
+				palettePreviews = new Texture2D[map.palette.Length];
+				for (var i = 0; i < map.palette.Length; ++i)
+					palettePreviews[i] = AssetPreview.GetAssetPreview(map.palette[i].gameObject);   //GetAssetPreview() must take GameObject
 			}
 		}
 		#endregion
