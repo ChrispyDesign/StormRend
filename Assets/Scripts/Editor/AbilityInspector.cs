@@ -1,6 +1,5 @@
 ﻿using StormRend.Abilities;
 using UnityEditor;
-using UnityEngine;
 
 namespace StormRend.Editors
 {
