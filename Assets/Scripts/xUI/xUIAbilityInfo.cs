@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using StormRend;
 using StormRend.Abilities;
 using StormRend.Defunct;
+using StormRend.Systems;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,7 +38,7 @@ namespace StormRend.UI
 			allyUnit = xGameManager.singleton.GetPlayerController().GetCurrentPlayer();
 			if (allyUnit != null)
 			{
-				xGameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.ATTACK);
+				xGameManager.singleton.GetPlayerController().SetCurrentMode(SelectMode.Attack);
 				selector.SetInfoPanelData();
 
 				if (allyUnit.GetAttackTiles() != null &&
@@ -59,7 +60,7 @@ namespace StormRend.UI
 			bool isLockedAbility = xGameManager.singleton.GetPlayerController().GetIsAbilityLocked();
 
 			if (!isLockedAbility)
-				xGameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
+				xGameManager.singleton.GetPlayerController().SetCurrentMode(SelectMode.Move);
 
 			if (allyUnit != null)
 			{
@@ -84,7 +85,7 @@ namespace StormRend.UI
 			Button button = this.gameObject.GetComponent<Button>();
 			if (allyUnit != null && !allyUnit.GetHasAttacked() && button.interactable)
 			{
-				xGameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.ATTACK);
+				xGameManager.singleton.GetPlayerController().SetCurrentMode(SelectMode.Attack);
 				allyUnit.SetSelectedAbility(m_ability);
 				xGameManager.singleton.GetPlayerController().SetIsAbilityLocked(true); ;
 				allyUnit.ShowAttackTiles();

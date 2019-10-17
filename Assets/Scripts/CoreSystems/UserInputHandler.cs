@@ -1,50 +1,59 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using StormRend;
+﻿using StormRend.Systems.Mapping;
+using StormRend.Variables;
 using UnityEngine;
 
-public enum PlayerMode
+
+namespace StormRend.Systems
 {
-    IDLE,
-    ATTACK,
-    MOVE,
+	public enum SelectMode
+	{
+		Idle,
+		Attack,
+		Move,
+	}
 
-    COUNT
-}
+	public class UserInputHandler : MonoBehaviour
+	{
+		//Brainstorm:
+		// - This should hold the selected unit's attack and move tiles
+		// Q Is it efficient that it has to do a pathfinding lookup everytime you select a new player?
+		// Q How could this be improved?
 
-public class UserInputHandler : MonoBehaviour
-{
-	//Rename:
-	// - UserInputHandler
-	// - GameplayInteractionHandler
+		[SerializeField] UnitVar selectedUnit;
 
-    xPlayerUnit currentPlayer;
-    PlayerMode currentMode;
-    bool isAbilityLocked;
+		//Members
+		Tile[] selectedUnitAttackTiles;
+		Tile[] selectedUnitMoveTiles;
 
-    #region GettersAndSetters
-    public xPlayerUnit GetCurrentPlayer() { return currentPlayer; }
-    public PlayerMode GetCurrentMode() { return currentMode; }
-    public bool GetIsAbilityLocked() { return isAbilityLocked; }
+		//------------- OLD --------------------
+		xPlayerUnit currentPlayer;
+		SelectMode currentMode;
+		bool isAbilityLocked;
 
-    public void SetCurrentPlayer(xPlayerUnit _currentPlayer) { currentPlayer = _currentPlayer; }
-    public void SetCurrentMode(PlayerMode _curMode) { currentMode = _curMode; }
-    public void SetIsAbilityLocked(bool _isLocked) { isAbilityLocked = _isLocked; }
-    #endregion
+		#region GettersAndSetters
+		public xPlayerUnit GetCurrentPlayer() { return currentPlayer; }
+		public SelectMode GetCurrentMode() { return currentMode; }
+		public bool GetIsAbilityLocked() { return isAbilityLocked; }
 
-    void Start()
-    {
-        currentMode = PlayerMode.IDLE;
-    }
+		public void SetCurrentPlayer(xPlayerUnit _currentPlayer) { currentPlayer = _currentPlayer; }
+		public void SetCurrentMode(SelectMode _curMode) { currentMode = _curMode; }
+		public void SetIsAbilityLocked(bool _isLocked) { isAbilityLocked = _isLocked; }
+		#endregion
 
-    string oldMode;
-    void Update()
-    {
-        var newMode = currentMode.ToString();
-        if (newMode != oldMode)
-        {
-            // Debug.Log(m_curMode.ToString());
-            oldMode = newMode;
-        }
-    }
+		void Start()
+		{
+			currentMode = SelectMode.Idle;
+		}
+
+		string oldMode;
+		void Update()
+		{
+			var newMode = currentMode.ToString();
+			if (newMode != oldMode)
+			{
+				// Debug.Log(m_curMode.ToString());
+				oldMode = newMode;
+			}
+		}
+	}
 }

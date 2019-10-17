@@ -2,6 +2,7 @@
 using StormRend.Abilities;
 using StormRend.Abilities.Effects;
 using StormRend.CameraSystem;
+using StormRend.Systems;
 using StormRend.UI;
 using UnityEditor;
 using UnityEngine;
@@ -151,7 +152,7 @@ namespace StormRend.Defunct
 			if (currentSelectedUnit.GetAttackTiles().Count > 0)
 				currentSelectedUnit.UnShowAttackTiles();
 
-			if (xGameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.MOVE)
+			if (xGameManager.singleton.GetPlayerController().GetCurrentMode() == SelectMode.Move)
 			{
 				if (currentSelectedUnit && currentSelectedUnit.GetIsSelected())
 				{
@@ -186,7 +187,7 @@ namespace StormRend.Defunct
 				}
 			}
 
-			if (xGameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
+			if (xGameManager.singleton.GetPlayerController().GetCurrentMode() == SelectMode.Attack)
 			{
 				xPlayerUnit player = xGameManager.singleton.GetPlayerController().GetCurrentPlayer();
 
@@ -228,7 +229,7 @@ namespace StormRend.Defunct
 				selector.SelectPlayerUnit(null);
 				selector.GetInfoPanel().SetActive(false);
 			}
-			xGameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.IDLE);
+			xGameManager.singleton.GetPlayerController().SetCurrentMode(SelectMode.Idle);
 		}
 
 		public void OnDeselect()

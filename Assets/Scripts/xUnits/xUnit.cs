@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using StormRend.Abilities;
 using StormRend.CameraSystem;
+using StormRend.Systems;
 using StormRend.Utility.Attributes;
 using UnityEngine;
 using UnityEngine.Events;
@@ -142,7 +143,7 @@ namespace StormRend.Defunct
         public virtual void OnSelect()
         {
 			//Highlight Tile Move
-            if (xGameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.MOVE &&
+            if (xGameManager.singleton.GetPlayerController().GetCurrentMode() == SelectMode.Move &&
                 !m_afterClear)
             {
 
@@ -159,7 +160,7 @@ namespace StormRend.Defunct
                 }
             }
 
-            if (xGameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
+            if (xGameManager.singleton.GetPlayerController().GetCurrentMode() == SelectMode.Attack)
             {
                 xTile node = GetTile();
                 node.OnSelect();

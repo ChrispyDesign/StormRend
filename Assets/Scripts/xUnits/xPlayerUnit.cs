@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using StormRend;
 using StormRend.Defunct;
+using StormRend.Systems;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -48,7 +49,7 @@ namespace StormRend
             if (m_hasMoved && m_hasAttacked)
                 return;
 
-            xGameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
+            xGameManager.singleton.GetPlayerController().SetCurrentMode(SelectMode.Move);
 
             if (!m_afterClear)
             {
