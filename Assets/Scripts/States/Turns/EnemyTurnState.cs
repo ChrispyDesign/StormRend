@@ -1,29 +1,32 @@
 ﻿using System.Collections;
 using pokoro.BhaVE.Core;
-using StormRend.Defunct;
 using StormRend.Systems.StateMachines;
 using StormRend.Units;
 using UnityEngine;
 
 namespace StormRend.States
 {
-	public sealed class EnemyTurnState : TurnState
+    public sealed class EnemyTurnState : TurnState
 	{
 		// - Tick each enemy's AI in sequence
-		// - Trigger crystals
-		// - Handle any UI
+		// - Trigger crystals ! Maybe use UnityEvents and decouple this to another MonoBehaviour
+		// - Handle any UI : Use UnityEvents
 
 		[Tooltip("Time between each enemy unit's turn in seconds")]
 		[SerializeField] float aiTurnTime = 2f;
 
 		Unit[] currentEnemies;
 		BhaveDirector ai;
-		UnitRegistry ur;
+		UnitRegistry ur;	//Kinda bad
 
 		void Awake()
 		{
 			ai = BhaveDirector.singleton;
-			ur = FindObjectOfType<UnitRegistry>();
+			ur = UnitRegistry.singleton;
+		}
+		void Start()
+		{
+			Debug.Assert(ai, "BhaVE director not found!");
 			Debug.Assert(ur, "Unit Registry not found!");
 		}
 
@@ -46,7 +49,7 @@ namespace StormRend.States
 				yield return new WaitForSeconds(aiTurnTime);
 			}
 
-			//Tick crystals
+			//Tick crystals (kinda bad)
 			TickCrystals();
 
 			//Finish enemy turn

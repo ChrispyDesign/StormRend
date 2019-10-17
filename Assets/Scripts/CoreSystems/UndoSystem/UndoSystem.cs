@@ -1,15 +1,12 @@
 ﻿using System.Collections.Generic;
+using StormRend.Utility.Attributes;
 using UnityEngine;
 
-namespace StormRend.Defunct
+namespace StormRend.Systems
 {
-	public class UndoSystem : MonoBehaviour
+    public class UndoSystem : MonoBehaviour
 	{
-		//Stop calling everything managers!
-		//Maybe UndoSystem or just Undo
-		//Static
-		//Doesn't need to be a monobehaviour, maybe a scriptable object
-
+		[ReadOnlyField]
 		public List<ICommand> commands = new List<ICommand>();
 
 		public void ClearCommands()

@@ -19,7 +19,7 @@ namespace StormRend.States
 		[SerializeField] protected UnityEvent OnTurnEnter;
         [SerializeField] protected UnityEvent OnTurnExit;
 
-        /// NOTE! All these methods must be called by overriden methods to preserve correct functionality
+        /// NOTE! All these methods must be called by overridden methods to preserve correct functionality
 
         public override void OnEnter(UltraStateMachine sm)
         {

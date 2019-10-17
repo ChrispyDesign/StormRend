@@ -53,6 +53,49 @@ MonoBehaviour:
   Description: In game settings menu
   uiItems:
   - {fileID: 204516928877031418}
+--- !u!1 &408448336651295369
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7077847878781634460}
+  - component: {fileID: 8584527333361488008}
+  m_Layer: 0
+  m_Name: UndoSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7077847878781634460
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408448336651295369}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 590.19824, y: 290.11038, z: -12.375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6841392900819925574}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8584527333361488008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 408448336651295369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df2607f6e8b4c8643b205c956e6d6a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &473531036070459619
 GameObject:
   m_ObjectHideFlags: 0
@@ -3410,7 +3453,7 @@ Transform:
   m_LocalScale: {x: 1.41375, y: 1.41375, z: 1.41375}
   m_Children: []
   m_Father: {fileID: 6841392900819925574}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2428445562694527430
 MonoBehaviour:
@@ -8586,6 +8629,7 @@ Transform:
   - {fileID: 1389559257139785400}
   - {fileID: 4756992703097569169}
   - {fileID: 2101356870767717335}
+  - {fileID: 7077847878781634460}
   - {fileID: 2428445562694527431}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -8928,6 +8972,17 @@ MonoBehaviour:
       - m_Target: {fileID: 2428445561275290591}
         m_MethodName: set_interactable
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 8584527333361488008}
+        m_MethodName: ClearCommands
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
