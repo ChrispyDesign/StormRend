@@ -1,6 +1,7 @@
 using System;
 using StormRend.Systems.Mapping;
 using StormRend.Utility.Attributes;
+using StormRend.Utility.Events;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -27,8 +28,7 @@ namespace StormRend.Units
 
 		//Events
 		[Header("Events")]
-		[SerializeField] public UnityEvent OnDeath;
-		public static Action<Unit> onDeath;
+		public UnitEvent OnDeath;
 
 		//Privates
 
@@ -50,8 +50,7 @@ namespace StormRend.Units
 
 		public virtual void Die()
 		{
-			OnDeath.Invoke();           //UnityEvent
-			onDeath?.Invoke(this);      //System.Action
+			OnDeath.Invoke(this);
 		}
 		#endregion
 	}

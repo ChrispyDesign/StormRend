@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using StormRend.Utility.Attributes;
+using StormRend.Utility.Events;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -138,8 +139,7 @@ namespace StormRend.Systems.StateMachines
 		/// </summary>
 		public void NextTurn()
 		{
-			OnNextTurn.Invoke();
-			// onNextTurn(currentState);
+			OnNextTurn.Invoke(currentState);
 
 			//Can only go to next turn if in turn based mode
 			if (isInTurnBasedMode)
