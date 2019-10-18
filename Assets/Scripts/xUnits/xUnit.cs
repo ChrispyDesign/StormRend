@@ -143,7 +143,7 @@ namespace StormRend.Defunct
         public virtual void OnSelect()
         {
 			//Highlight Tile Move
-            if (xGameManager.singleton.GetPlayerController().GetCurrentMode() == SelectMode.Move &&
+            if (xGameManager.current.GetPlayerController().GetCurrentMode() == SelectMode.Move &&
                 !m_afterClear)
             {
 
@@ -160,7 +160,7 @@ namespace StormRend.Defunct
                 }
             }
 
-            if (xGameManager.singleton.GetPlayerController().GetCurrentMode() == SelectMode.Attack)
+            if (xGameManager.current.GetPlayerController().GetCurrentMode() == SelectMode.Attack)
             {
                 xTile node = GetTile();
                 node.OnSelect();
@@ -209,7 +209,7 @@ namespace StormRend.Defunct
             xGrid.CoordToTile(this.m_coordinates).SetUnitOnTop(null);
 
             //This should work for any unit regardless of type
-            xGameManager.singleton.RegisterUnitDeath(this);
+            xGameManager.current.RegisterUnitDeath(this);
         }
     }
 }

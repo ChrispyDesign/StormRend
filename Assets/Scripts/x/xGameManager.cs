@@ -15,7 +15,7 @@ namespace StormRend.Defunct
 
 		[Header("Managers")]
 		// [SerializeField] TurnManager m_turnManager = null;
-		[SerializeField] UserInputHandler m_playerController = null;
+		[SerializeField] xPlayerController m_playerController = null;
 		[SerializeField] UndoSystem m_commandManager = null;
 		[SerializeField] xPlayerUnit[] m_players;
 		[SerializeField] xEnemyUnit[] m_enemies;
@@ -25,7 +25,7 @@ namespace StormRend.Defunct
 		public void AddCrystal(xCrystal _crystal) { m_crystal.Add(_crystal); }
 
 		// public TurnManager GetTurnManager() { return m_turnManager; }
-		public UserInputHandler GetPlayerController() { return m_playerController; }
+		public xPlayerController GetPlayerController() { return m_playerController; }
 		public UndoSystem GetCommandManager() { return m_commandManager; }
 
 		public xPlayerUnit[] GetPlayerUnits() { return m_players; }
@@ -34,10 +34,8 @@ namespace StormRend.Defunct
 
 		#endregion
 
-		protected override void Awake()
+		void Awake()
 		{
-			base.Awake();   //Automatic singleton setup
-
 			//Populate unit lists
 			m_enemies = FindObjectsOfType<xEnemyUnit>();
 			m_players = FindObjectsOfType<xPlayerUnit>();

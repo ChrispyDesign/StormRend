@@ -102,7 +102,9 @@ namespace StormRend.Defunct
 			{
 				m_onHoverCover.SetActive(true);
 			}
-			xPlayerUnit currentSelectedUnit = xGameManager.singleton.GetPlayerController().GetCurrentPlayer();
+
+			//if the move current selected unit
+			xPlayerUnit currentSelectedUnit = xGameManager.current.GetPlayerController().GetCurrentPlayer();
 			if (currentSelectedUnit && !m_unitOnTop && currentSelectedUnit.GetAvailableTiles().Contains(this))
 			{
 				currentSelectedUnit.MoveDuplicateTo(this);
@@ -144,7 +146,8 @@ namespace StormRend.Defunct
 
 		public void OnSelect()
 		{
-			xPlayerUnit currentSelectedUnit = xGameManager.singleton.GetPlayerController().GetCurrentPlayer();
+			
+			xPlayerUnit currentSelectedUnit = xGameManager.current.GetPlayerController().GetCurrentPlayer();
 
 			if (currentSelectedUnit == null)
 				return;
@@ -152,7 +155,7 @@ namespace StormRend.Defunct
 			if (currentSelectedUnit.GetAttackTiles().Count > 0)
 				currentSelectedUnit.UnShowAttackTiles();
 
-			if (xGameManager.singleton.GetPlayerController().GetCurrentMode() == SelectMode.Move)
+			if (xGameManager.current.GetPlayerController().GetCurrentMode() == SelectMode.Move)
 			{
 				if (currentSelectedUnit && currentSelectedUnit.GetIsSelected())
 				{
@@ -175,7 +178,7 @@ namespace StormRend.Defunct
 							MoveCommand temp = currentSelectedUnit.GetMoveCommand();
 							temp.Execute();
 
-							xGameManager.singleton.GetCommandManager().commands.Add(temp);
+							xGameManager.current.GetCommandManager().commands.Add(temp);
 						}
 
 						FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 0.5f);
@@ -187,9 +190,9 @@ namespace StormRend.Defunct
 				}
 			}
 
-			if (xGameManager.singleton.GetPlayerController().GetCurrentMode() == SelectMode.Attack)
+			if (xGameManager.current.GetPlayerController().GetCurrentMode() == SelectMode.Attack)
 			{
-				xPlayerUnit player = xGameManager.singleton.GetPlayerController().GetCurrentPlayer();
+				xPlayerUnit player = xGameManager.current.GetPlayerController().GetCurrentPlayer();
 
 				xAbility ability = player.GetSelectedAbility();
 				Animator anim = player.GetComponentInChildren<Animator>();
@@ -207,7 +210,7 @@ namespace StormRend.Defunct
 					}
 					currentSelectedUnit.SetSelectedAbility(null);
 
-					UndoSystem commandManager = xGameManager.singleton.GetCommandManager();
+					UndoSystem commandManager = xGameManager.current.GetCommandManager();
 
 					//UndoController.
 					foreach (MoveCommand move in commandManager.commands)
@@ -229,7 +232,7 @@ namespace StormRend.Defunct
 				selector.SelectPlayerUnit(null);
 				selector.GetInfoPanel().SetActive(false);
 			}
-			xGameManager.singleton.GetPlayerController().SetCurrentMode(SelectMode.Idle);
+			xGameManager.current.GetPlayerController().SetCurrentMode(SelectMode.Idle);
 		}
 
 		public void OnDeselect()

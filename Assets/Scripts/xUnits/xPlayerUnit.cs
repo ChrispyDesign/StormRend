@@ -34,7 +34,7 @@ namespace StormRend
         {
             m_isSelected = true;
 
-            xUnit player = xGameManager.singleton.GetPlayerController().GetCurrentPlayer();
+            xUnit player = xGameManager.current.GetPlayerController().GetCurrentPlayer();
             if (player != null && player != this)
             {
                 if (player.GetAttackTiles() != null &&
@@ -42,18 +42,18 @@ namespace StormRend
                     player.UnShowAttackTiles();
             }
 
-            xGameManager.singleton.GetPlayerController().SetCurrentPlayer(this);
+            xGameManager.current.GetPlayerController().SetCurrentPlayer(this);
             xUIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(this);
             xUIManager.GetInstance().GetAbilitySelector().SelectPlayerUnit(this);
 
             if (m_hasMoved && m_hasAttacked)
                 return;
 
-            xGameManager.singleton.GetPlayerController().SetCurrentMode(SelectMode.Move);
+            xGameManager.current.GetPlayerController().SetCurrentMode(SelectMode.Move);
 
             if (!m_afterClear)
             {
-                foreach (ICommand command in xGameManager.singleton.GetCommandManager().commands)
+                foreach (ICommand command in xGameManager.current.GetCommandManager().commands)
                 {
                     MoveCommand move = command as MoveCommand;
 

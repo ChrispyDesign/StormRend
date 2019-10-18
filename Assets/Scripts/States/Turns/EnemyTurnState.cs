@@ -21,8 +21,8 @@ namespace StormRend.States
 
 		void Awake()
 		{
-			ai = BhaveDirector.singleton;
-			ur = UnitRegistry.singleton;
+			ai = BhaveDirector.current;
+			ur = UnitRegistry.current;
 		}
 		void Start()
 		{

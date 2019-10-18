@@ -25,7 +25,7 @@ namespace StormRend.Abilities.Effects
             unit.coords = _effectedNode.GetCoordinates();
             unit.m_HowManyTurns = m_HowManyTurns;
             _effectedNode.SetUnitOnTop(unit);
-            xGameManager.singleton.AddCrystal(unit);
+            xGameManager.current.AddCrystal(unit);
 
             return true;
         }

@@ -31,7 +31,7 @@ namespace StormRend.Defunct
 		{
 			m_spawnManager = GameObject.FindObjectOfType<xSpawnManager>();
 
-			var gm = xGameManager.singleton;
+			var gm = xGameManager.current;
 
 			m_nodes = new xTile[m_gridSize.x, m_gridSize.y];
 			//int i = 0;

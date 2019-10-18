@@ -35,10 +35,10 @@ namespace StormRend.UI
 
 		public void HoverAbility()
 		{
-			allyUnit = xGameManager.singleton.GetPlayerController().GetCurrentPlayer();
+			allyUnit = xGameManager.current.GetPlayerController().GetCurrentPlayer();
 			if (allyUnit != null)
 			{
-				xGameManager.singleton.GetPlayerController().SetCurrentMode(SelectMode.Attack);
+				xGameManager.current.GetPlayerController().SetCurrentMode(SelectMode.Attack);
 				selector.SetInfoPanelData();
 
 				if (allyUnit.GetAttackTiles() != null &&
@@ -57,10 +57,10 @@ namespace StormRend.UI
 		/// </summary>
 		public void UnhoverAbility()
 		{
-			bool isLockedAbility = xGameManager.singleton.GetPlayerController().GetIsAbilityLocked();
+			bool isLockedAbility = xGameManager.current.GetPlayerController().GetIsAbilityLocked();
 
 			if (!isLockedAbility)
-				xGameManager.singleton.GetPlayerController().SetCurrentMode(SelectMode.Move);
+				xGameManager.current.GetPlayerController().SetCurrentMode(SelectMode.Move);
 
 			if (allyUnit != null)
 			{
@@ -70,8 +70,8 @@ namespace StormRend.UI
 
 			if (isLockedAbility)
 			{
-				xAbility ability = xGameManager.singleton.GetPlayerController().GetCurrentPlayer().GetSelectedAbility();
-				xUnit player = xGameManager.singleton.GetPlayerController().GetCurrentPlayer() as xUnit;
+				xAbility ability = xGameManager.current.GetPlayerController().GetCurrentPlayer().GetSelectedAbility();
+				xUnit player = xGameManager.current.GetPlayerController().GetCurrentPlayer() as xUnit;
 				if (!player)
 				{
 					ability.GetSelectableTiles(ref player);
@@ -85,9 +85,9 @@ namespace StormRend.UI
 			Button button = this.gameObject.GetComponent<Button>();
 			if (allyUnit != null && !allyUnit.GetHasAttacked() && button.interactable)
 			{
-				xGameManager.singleton.GetPlayerController().SetCurrentMode(SelectMode.Attack);
+				xGameManager.current.GetPlayerController().SetCurrentMode(SelectMode.Attack);
 				allyUnit.SetSelectedAbility(m_ability);
-				xGameManager.singleton.GetPlayerController().SetIsAbilityLocked(true); ;
+				xGameManager.current.GetPlayerController().SetIsAbilityLocked(true); ;
 				allyUnit.ShowAttackTiles();
 			}
 			infoPanel.SetActive(false);

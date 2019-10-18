@@ -8,11 +8,9 @@ namespace pokoro.BhaVE.Core.Variables
 		{
 			return new BhaveVector2 { value = rhs };
 		}
-
 		public static implicit operator Vector2(BhaveVector2 self)
 		{
 			return self.value;
 		}
-
 	}
 }

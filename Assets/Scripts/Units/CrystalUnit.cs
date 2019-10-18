@@ -4,6 +4,7 @@ using StormRend.Enums;
 using StormRend.Systems.Mapping;
 using StormRend.Utility.Attributes;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace StormRend.Units
 {
@@ -21,12 +22,16 @@ namespace StormRend.Units
 		[EnumFlags] public TargetUnitMask ignoreUnitMask;
 
 		//Members
+
+		//Singleton refs
 		UnitRegistry ur;
+		UserInputHandler ui;
 
 		//Core
 		void Awake()
 		{
-			ur = UnitRegistry.singleton;
+			ur = UnitRegistry.current;
+			ui = UserInputHandler.current;
 		}
 
 		public void Tick()

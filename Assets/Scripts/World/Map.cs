@@ -50,7 +50,7 @@ namespace StormRend.Systems.Mapping
 		#region Core
 		void Awake()
 		{
-			ur = UnitRegistry.singleton;
+			ur = UnitRegistry.current;
 		}
 		void OnEnable()
 		{

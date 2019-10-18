@@ -30,7 +30,7 @@ namespace StormRend.Systems
     #region Core
         void Awake()
         {
-            ur = UnitRegistry.singleton;
+            ur = UnitRegistry.current;
         }
         public void Tick()
         {

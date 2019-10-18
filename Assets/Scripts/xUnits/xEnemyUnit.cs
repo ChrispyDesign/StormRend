@@ -9,7 +9,7 @@ namespace StormRend
 			xDijkstra.Instance.FindValidMoves(GetTile(), GetMoveRange(), typeof(xPlayerUnit));
 
 			base.OnSelect();
-			xGameManager.singleton.GetPlayerController().SetCurrentPlayer(null);
+			xGameManager.current.GetPlayerController().SetCurrentPlayer(null);
 		}
 	}
 }
