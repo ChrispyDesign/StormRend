@@ -67,7 +67,7 @@ namespace StormRend.Defunct
 
 			m_buttonPanel.SetActive(true);
 
-			xPlayerUnit player = xGameManager.singleton.GetPlayerController().GetCurrentPlayer();
+			xPlayerUnit player = xGameManager.current.GetPlayerController().GetCurrentPlayer();
 
 			if (player != null)
 			{
@@ -99,7 +99,7 @@ namespace StormRend.Defunct
 			else
 				button.interactable = false;
 
-			xPlayerUnit player = xGameManager.singleton.GetPlayerController().GetCurrentPlayer();
+			xPlayerUnit player = xGameManager.current.GetPlayerController().GetCurrentPlayer();
 			if (player.GetHasAttacked())
 				button.interactable = false;
 		}

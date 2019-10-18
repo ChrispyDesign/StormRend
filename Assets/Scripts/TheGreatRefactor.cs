@@ -13,6 +13,14 @@ namespace The.Great.Refactor.Brainstorm
 	- Current active units
 		- Just find all units at start of scene
 
+	- UserInputHandler
+	* Hovering over a Unit will:
+		- Highlight 
+	* Clicking on any Unit will:
+		- Focus/Move camera onto the unit
+		- 
+	* Clicking on a tile will:
+
     >> Custom StormRend Variables
     UnitListVar : BhaveVar<List<Unit>>
     UnitVar : BhaveVar<Unit>

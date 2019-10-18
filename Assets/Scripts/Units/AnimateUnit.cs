@@ -19,10 +19,13 @@ namespace StormRend.Units
 		[SerializeField] protected Ability[] abilities;
 
 		//Properties
+		public Ability currentAbility { get; set; } = null;
 
-		//Privates
+		//Members
 		protected bool hasMoved = false;
-		protected bool hasFinishedTurn = false;		//has peformed an ability and henced been locked and completed its turn
+		public Tile[] possibleMoveTiles { get; set; }
+		//has performed an ability and hence this unit has completed it's turn and is locked until next turn
+		protected bool hasCasted = false;	
 		protected GameObject ghostMesh;
 
 	#region Startup
@@ -55,14 +58,23 @@ namespace StormRend.Units
 	#endregion
 
 	#region Core
-		public void MoveTo(Tile tile)
+		public void MoveTo(Tile tile, bool useGhost = false)
 		{
 
 		}
-		public void MoveTo(Vector2Int direction)
+		public void MoveTo(Vector2Int direction, bool useGhost = false)
 		{
 			//Where should the push effect kill logic be implemented?
 		}
+
+		public override void Die()
+		{
+			base.Die();
+
+			//TEMP
+			gameObject.SetActive(false);
+		}
+
 	#endregion
 
 	#region Event System Interface Implementations

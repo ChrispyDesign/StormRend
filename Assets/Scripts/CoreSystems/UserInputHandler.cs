@@ -1,59 +1,71 @@
-﻿using StormRend.Systems.Mapping;
+using pokoro.Patterns.Generic;
 using StormRend.Variables;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 
 namespace StormRend.Systems
 {
-	public enum SelectMode
-	{
-		Idle,
-		Attack,
-		Move,
-	}
+    public class UserInputHandler : Singleton<UserInputHandler>
+    {
+        public enum Mode
+		{
+			UserTurn,
+			AITurn,
 
-	public class UserInputHandler : MonoBehaviour
-	{
-		//Brainstorm:
-		// - This should hold the selected unit's attack and move tiles
-		// Q Is it efficient that it has to do a pathfinding lookup everytime you select a new player?
-		// Q How could this be improved?
+            Disabled,
+            Select,
+            Action,
+		}
+		
+		/*Brainstorm:
+        ------ UserInputHandler functionality
+        if a unit is selected
+            go into action mode (allows the user to move or perform abilities with the unit)
+            show the appropriate ui for that selected unit
+        else if no unit is selected
+            go into select mode
 
-		[SerializeField] UnitVar selectedUnit;
+
+		------- Possible cast and move tiles
+		Q Where should the possible cast and move tiles be stored?
+		A Possible Cast Tiles should be stored on each Ability SO and updated every time
+		A Possible Move Tiles should be stored on each Unit 
+		A Possible 
+
+		Q When should the possible move tiles be calculated?
+		A At the begginning of the turn, for each unit
+			since the unit can only move once per turn
+
+		Q When should the possible cast tiles be calculated?
+		A Everytime an ability select button is clicked, the input handler will help to calculate
+		*/
+
+		//Inspector
+        [SerializeField] PhysicsRaycaster raycaster;
+		EventSystem eventSystem;
+
+		
+		[Tooltip("Starting game mode")]
+		[SerializeField] Mode mode = Mode.UserTurn;
+
+		[Header("SOVs")]
+		[SerializeField] AnimateUnitVar selectedUnit;
+		[SerializeField] TileVar hoveredTile;
 
 		//Members
-		Tile[] selectedUnitAttackTiles;
-		Tile[] selectedUnitMoveTiles;
 
-		//------------- OLD --------------------
-		xPlayerUnit currentPlayer;
-		SelectMode currentMode;
-		bool isAbilityLocked;
 
-		#region GettersAndSetters
-		public xPlayerUnit GetCurrentPlayer() { return currentPlayer; }
-		public SelectMode GetCurrentMode() { return currentMode; }
-		public bool GetIsAbilityLocked() { return isAbilityLocked; }
-
-		public void SetCurrentPlayer(xPlayerUnit _currentPlayer) { currentPlayer = _currentPlayer; }
-		public void SetCurrentMode(SelectMode _curMode) { currentMode = _curMode; }
-		public void SetIsAbilityLocked(bool _isLocked) { isAbilityLocked = _isLocked; }
-		#endregion
-
-		void Start()
+	#region Core
+		void Awake()
 		{
-			currentMode = SelectMode.Idle;
+			eventSystem = EventSystem.current;
 		}
 
-		string oldMode;
 		void Update()
 		{
-			var newMode = currentMode.ToString();
-			if (newMode != oldMode)
-			{
-				// Debug.Log(m_curMode.ToString());
-				oldMode = newMode;
-			}
+            // raycaster.Raycast()
+			
 		}
-	}
+	#endregion
+    }
 }

@@ -96,8 +96,12 @@ namespace StormRend.Defunct
 			return neighbours;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public void OnHover()
 		{
+			//Activate hover highlight if this tile is walkable and no unit is on top
 			if (m_nodeType == NodeType.WALKABLE && m_unitOnTop != null)
 			{
 				m_onHoverCover.SetActive(true);
@@ -124,6 +128,7 @@ namespace StormRend.Defunct
 
 		public void OnUnhover()
 		{
+			//Hide hover highlight
 			m_onHoverCover.SetActive(false);
 
 			//if (!m_selected)

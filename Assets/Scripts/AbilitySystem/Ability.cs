@@ -16,13 +16,12 @@ namespace StormRend.Abilities
 		//Flags and Enums
 		public enum AbilityType
 		{
-			Passive,
 			Primary,
 			Secondary
 		}
 
 		[Flags]
-		public enum TargetableTileCategory
+		public enum TargetableTile
 		{
 			Empty = 1 << 0,
 			Self = 1 << 1,
@@ -34,10 +33,11 @@ namespace StormRend.Abilities
 		[SerializeField] Sprite _icon = null;
 		[Tooltip("Animation number for this ability in order to send to a corresponding animator")]
 		[SerializeField] int _animNumber;
+		[Range(1, 5), SerializeField] int _abilityLevel = 1;
+		public AbilityType _abilityType = AbilityType.Primary;
 
-		public AbilityType _abilityType = AbilityType.Passive;
 
-		[TextArea, SerializeField] string _description = "";
+		[TextArea(0, 2), SerializeField] string _description = "";
 
 		[Header("Casting"), Space(1), Tooltip("Glory cost required to perform this ability")]
 		[SerializeField] int _gloryCost = 1;
@@ -45,12 +45,13 @@ namespace StormRend.Abilities
 		[Tooltip("The required number of selected tiles this ability needs in order for it to be performed")]
 		[SerializeField] int requiredTiles = 1;
 
-		[Tooltip("The category of tiles this ability can target")]
-		[SerializeField, EnumFlags, Space(5)] TargetableTileCategory _targetableTileCategories;
+		[Tooltip("The category of tiles this ability can target"), Space(5)]
+		[EnumFlags, SerializeField] TargetableTile _targetableTileMask;
 
 		//Members
-		public bool[,] castArea = new bool[seven, seven];
 		[HideInInspector] public List<Effect> effects = new List<Effect>();
+		public bool[,] castArea { get; set; } = new bool[seven, seven];
+		public Tile[] possibleCastTiles { get; set; }
 
 		//Properties
 		public Sprite icon => _icon;
@@ -58,7 +59,7 @@ namespace StormRend.Abilities
 		public AbilityType abilityType => _abilityType;
 		public string description => _description;
 		public int gloryCost => _gloryCost;
-		public TargetableTileCategory targetableTileCategories => _targetableTileCategories;
+		public TargetableTile targetableTileMask => _targetableTileMask;
 
 		//Core
 		public void Perform(Unit owner, Tile[] targets)

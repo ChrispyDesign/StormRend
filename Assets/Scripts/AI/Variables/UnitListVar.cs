@@ -1,23 +1,23 @@
 ﻿using System.Collections.Generic;
 using pokoro.BhaVE.Core.Variables;
-using StormRend.Defunct;
+using StormRend.Units;
 using UnityEngine;
 
 namespace StormRend.Variables
 {
 	[CreateAssetMenu(menuName = "StormRend/Variables/UnitList", fileName = "UnitListVar")]
-	public sealed class UnitListVar : BhaveVar<List<xUnit>>
+	public sealed class UnitListVar : BhaveVar<List<Unit>>
 	{
 		// void OnEnable()
 		// {
 		// 	value = new List<xUnit>();
 		// }
 
-        public static implicit operator UnitListVar(List<xUnit> rhs)
+        public static implicit operator UnitListVar(List<Unit> rhs)
 		{
 			return new UnitListVar { value = rhs };
 		}
-		public static implicit operator List<xUnit>(UnitListVar self)
+		public static implicit operator List<Unit>(UnitListVar self)
 		{
 			return self.value;
 		}

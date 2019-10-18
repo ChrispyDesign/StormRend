@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using StormRend.Enums;
+using StormRend.Systems;
 using StormRend.Systems.Mapping;
 using StormRend.Utility.Attributes;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine.EventSystems;
 
 namespace StormRend.Units
 {
-	public class CrystalUnit : Unit	//Unit =~= InAnimateUnit?
+	public class CrystalUnit : Unit, IPointerClickHandler	//Unit =~= InAnimateUnit?
 	{
 		//Inspector
 		[Header("Crystal")]
@@ -76,5 +77,10 @@ namespace StormRend.Units
 				targetUnits.Add(typeof(CrystalUnit));
 			return targetUnits.ToArray();
 		}
-	}
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+			
+        }
+    }
 }

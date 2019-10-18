@@ -49,10 +49,10 @@ namespace StormRend
 		private void PerformRaycast()
 		{
 			Ray ray = m_camera.ScreenPointToRay(Input.mousePosition);
-			RaycastHit raycastHit;
 
 			// perform raycast
-			Physics.Raycast(ray, out raycastHit);
+			Physics.Raycast(ray, out RaycastHit raycastHit);
+			
 			GameObject hitObject = null;
 
 			// disallow raycasting if UI objects are selected/hovered

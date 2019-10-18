@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace StormRend.Units
 {
-	public abstract class Unit : MonoBehaviour
+	public abstract class Unit : MonoBehaviour 
 	{
 		[TextArea(0,2), SerializeField] string description = "";
 
@@ -23,11 +23,7 @@ namespace StormRend.Units
 		}
 		public int maxHP => _maxHP;
 		public bool isDead => HP <= 0;
-		public Tile currentTile
-		{
-			get => _currentTile;
-			set => _currentTile = value;
-		}
+		public Tile currentTile { get; set; }
 
 		//Events
 		[Header("Events")]
@@ -35,7 +31,6 @@ namespace StormRend.Units
 		public static Action<Unit> onDeath;
 
 		//Privates
-		protected Tile _currentTile = null;       //The tile unit is currently on
 
 		#region Startup
 		void Start()
@@ -50,19 +45,13 @@ namespace StormRend.Units
 		{
 			if (isDead) return;     //Can't beat a dead horse :P
 			HP -= damage;
-			if (HP <= 0)
-			{
-				Die();
-			}
+			if (HP <= 0) Die();
 		}
 
 		public virtual void Die()
 		{
 			OnDeath.Invoke();           //UnityEvent
 			onDeath?.Invoke(this);      //System.Action
-
-			//Disable unit and whatever else this needs to do upon death
-			gameObject.SetActive(false);
 		}
 		#endregion
 	}
