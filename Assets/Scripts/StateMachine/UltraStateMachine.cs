@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using StormRend.Utility.Attributes;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,7 +25,8 @@ namespace StormRend.Systems.StateMachines
 		Stack<State> stackStates = new Stack<State>();
 
 		[Space]
-		public UnityEvent OnNextTurn;
+		public StateEvent OnNextTurn;
+		// public static Action<State> onNextTurn;		//CAREFUL: static
 	#endregion
 	#region Properties
 		public int turnsCount => turnStates.Count;
@@ -137,6 +139,7 @@ namespace StormRend.Systems.StateMachines
 		public void NextTurn()
 		{
 			OnNextTurn.Invoke();
+			// onNextTurn(currentState);
 
 			//Can only go to next turn if in turn based mode
 			if (isInTurnBasedMode)
@@ -149,6 +152,7 @@ namespace StormRend.Systems.StateMachines
 				currentState?.OnEnter(this);
 			}
 		}
+
 		/// <summary>
 		/// Select previous turn state. Probably impractical
 		/// </summary>

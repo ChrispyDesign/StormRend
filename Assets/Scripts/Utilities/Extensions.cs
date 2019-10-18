@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace StormRend.Utility
 {
-    public static class UnityExtensions
+	public static class UnityExtensions
     {
         /// <summary>
         /// Check if a layer is in a layermask
