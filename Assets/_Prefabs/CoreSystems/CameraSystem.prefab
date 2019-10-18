@@ -12,11 +12,12 @@ GameObject:
   - component: {fileID: 1907246085968507643}
   - component: {fileID: 2160891446160555752}
   - component: {fileID: 3958027602835188447}
+  - component: {fileID: 520559493323979101}
   - component: {fileID: 1428738480572617513}
   - component: {fileID: 2145422007893173175}
   - component: {fileID: 2145422007893173174}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: MasterCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 187bf82676d4c2e43820dffc568628ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootTransform: {fileID: 2145422009120968298}
+  root: {fileID: 2145422009120968298}
   moveSpeed: 12.5
   cameraBounds: {fileID: 2941809505071786014}
 --- !u!114 &3958027602835188447
@@ -77,12 +78,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d50acbaab020b2d468a909bc29a6d71b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootTransform: {fileID: 2145422009120968298}
+  root: {fileID: 2145422009120968298}
   zoomSpeed: 10
   near: {fileID: 2145422009628610115}
   far: {fileID: 2145422007922876847}
   anchorPoints: {fileID: 2145422009065853913}
   nearFarSteps: 5
+--- !u!114 &520559493323979101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145422007893173168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a48f3610a4a5d49b68a66ca959a0ef11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  priority: 1
 --- !u!114 &1428738480572617513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,7 +175,7 @@ GameObject:
   m_Layer: 0
   m_Name: Far
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -191,7 +205,7 @@ GameObject:
   m_Layer: 0
   m_Name: Unit View
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -221,7 +235,7 @@ GameObject:
   m_Layer: 0
   m_Name: CameraSystem
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -318,7 +332,7 @@ GameObject:
   m_Layer: 0
   m_Name: Near
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

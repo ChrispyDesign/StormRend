@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using StormRend.Units;
 using UnityEngine;
 
 namespace StormRend.CameraSystem
@@ -10,9 +11,9 @@ namespace StormRend.CameraSystem
     [RequireComponent(typeof(CameraInput))]
     public class CameraMove : MonoBehaviour
     {
-        [SerializeField] Transform rootTransform = null;
+        //Inspector
+        [SerializeField] Transform root = null;
         [SerializeField] float moveSpeed = 10;
-
         [SerializeField] BoxCollider cameraBounds = null;
 
         //Members
@@ -43,34 +44,38 @@ namespace StormRend.CameraSystem
             float speed = moveSpeed * Time.unscaledDeltaTime;
 
             // determine the destination of the end of the movement
-            Vector3 destination = rootTransform.position;
-            destination += axis.z * rootTransform.forward * speed;
-            destination += axis.y * rootTransform.up * speed;
-            destination += axis.x * rootTransform.right * speed;
+            Vector3 destination = root.position;
+            destination += axis.z * root.forward * speed;
+            destination += axis.y * root.up * speed;
+            destination += axis.x * root.right * speed;
 
             // ensure camera stays within bounds
             destination = ClampDestination(destination);
 
             // perform movement
-            rootTransform.position = destination;
+            root.position = destination;
+        }
+
+        public void MoveTo(Unit unit, float smoothTime = 0.3f)
+        {
+            MoveTo(unit.transform.position);
         }
 
         /// <summary>
         /// use this to move the camera to a destination over an arbitrary amount of time!
         /// </summary>
         /// <param name="destination">the position to lerp/move to</param>
-        /// <param name="time">the amount of time it takes to lerp to the destination</param>
-        public void MoveTo(Vector3 destination, float time = 0.3f)
+        /// <param name="smoothTime">the amount of time it takes to lerp to the destination</param>
+        public void MoveTo(Vector3 destination, float smoothTime = 0.3f)
         {
             // stop movement if the MoveTo coroutine is already executing
-            // if (moveTo != null)
-            StopCoroutine(LerpTo(destination, time));
+            StopCoroutine(LerpTo(destination, smoothTime));
 
             // ensure camera stays within bounds
             destination = ClampDestination(destination);
 
             // start new MoveTo coroutine
-            StartCoroutine(LerpTo(destination, time));
+            StartCoroutine(LerpTo(destination, smoothTime));
         }
 
         /// <summary>
@@ -90,7 +95,7 @@ namespace StormRend.CameraSystem
                 timer += Time.unscaledDeltaTime;
 
                 // perform incremental movement
-                rootTransform.position = Vector3.Lerp(rootTransform.position, destination, t);
+                root.position = Vector3.Lerp(root.position, destination, t);
                 yield return null;
             }
         }

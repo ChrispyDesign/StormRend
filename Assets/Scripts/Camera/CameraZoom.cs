@@ -9,13 +9,10 @@ namespace StormRend.CameraSystem
     [RequireComponent(typeof(CameraInput))]
     public class CameraZoom : MonoBehaviour
     {
-        [Header("Root Transform")]
-        [SerializeField] Transform rootTransform = null;
-
-        [Header("Zoom Speed")]
+        [SerializeField] Transform root = null;
         [SerializeField] float zoomSpeed = 10;
 
-        [Header("Zoom Anchors")]
+        [Header("Anchors")]
         [Tooltip("The nearest possible location the camera can zoom in to")]
         [SerializeField] Transform near = null;
         [Tooltip("The furthest possible location the camera can zoom out to")]
@@ -48,7 +45,7 @@ namespace StormRend.CameraSystem
             //And jump to closest anchor
             GameObject closestAnchor = GetClosestAnchor(transform.position);
             m_currentStep = m_anchors.IndexOf(closestAnchor);
-            m_desiredPosition = m_anchors[m_currentStep].transform.position - rootTransform.position;
+            m_desiredPosition = m_anchors[m_currentStep].transform.position - root.position;
         }
 
     #region Core
@@ -72,7 +69,7 @@ namespace StormRend.CameraSystem
             float speed = zoomSpeed * Time.unscaledDeltaTime;
 
             // update position
-            Vector3 desiredPosition = m_desiredPosition + rootTransform.position;
+            Vector3 desiredPosition = m_desiredPosition + root.position;
             transform.position = Vector3.Lerp(currentPosition, desiredPosition, speed);
 
             // update current step based off the closest anchor to the desired position
@@ -123,7 +120,7 @@ namespace StormRend.CameraSystem
             m_currentStep = Mathf.Clamp(m_currentStep, 0, nearFarSteps + 1);
 
             // update desired position
-            m_desiredPosition = m_anchors[m_currentStep].transform.position - rootTransform.position;
+            m_desiredPosition = m_anchors[m_currentStep].transform.position - root.position;
         }
 
         /// <summary>
@@ -132,7 +129,7 @@ namespace StormRend.CameraSystem
         /// <param name="position">the position to zoom to</param>
         public void ZoomTo(Vector3 position)
         {
-            m_desiredPosition = transform.position - rootTransform.position;
+            m_desiredPosition = transform.position - root.position;
         }
 
         /// <summary>
