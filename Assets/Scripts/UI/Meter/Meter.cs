@@ -7,6 +7,8 @@ namespace StormRend.UI
 	{
 		[SerializeField] protected string details;
 
+		protected InfoPanel infoPanel;
+
 		public virtual void OnIncrease()
 		{
 

@@ -1,18 +1,52 @@
-﻿using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using pokoro.BhaVE.Core.Events;
+using StormRend.Variables;
 
 namespace StormRend.UI
 {
-	public class AbilitySelectButton : Button
+	public class AbilitySelectButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
-		public override void OnPointerEnter(PointerEventData eventData)
+		[SerializeField] string details;
+
+		public UnitVar selectedUnit;
+
+		InfoPanel infoPanel;
+
+		void Awake()
 		{
-			base.OnPointerEnter(eventData);
+			infoPanel = FindObjectOfType<InfoPanel>();
+			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(FinishTurn));
 		}
 
-		public override void OnPointerExit(PointerEventData eventData)
+		private void Update()
 		{
-			base.OnPointerExit(eventData);
+			
+		}
+
+		void OnEnable()
+		{
+			//selectedUnit.onChanged += SelectedUnitOnChange;
+		}
+		void OnDisable()
+		{
+			//selectedUnit.onChanged -= SelectedUnitOnChange;
+		}
+
+		void SelectedUnitOnChange()
+		{
+			//selectedUnit.value.GetAbilities()
+		}
+
+		public void OnPointerEnter(PointerEventData eventData)
+		{
+			infoPanel.ShowPanel(details);
+		}
+
+		public void OnPointerExit(PointerEventData eventData)
+		{
+			infoPanel.UnShowPanel();
 		}
 	}
 }

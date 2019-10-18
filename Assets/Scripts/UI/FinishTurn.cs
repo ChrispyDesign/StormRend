@@ -1,18 +1,31 @@
-﻿using UnityEngine.EventSystems;
+﻿using UnityEngine;
+using UnityEditor;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Collections;
 
 namespace StormRend.UI
 {
-	public class FinishTurn : Button
+	public class FinishTurn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
-		public override void OnPointerEnter(PointerEventData eventData)
+		[SerializeField] string details;
+
+		InfoPanel infoPanel;
+
+		void Awake()
 		{
-			base.OnPointerEnter(eventData);
+			infoPanel = FindObjectOfType<InfoPanel>();
+			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(FinishTurn));
 		}
 
-		public override void OnPointerExit(PointerEventData eventData)
+		public void OnPointerEnter(PointerEventData eventData)
 		{
-			base.OnPointerExit(eventData);
+			infoPanel.ShowPanel(details);
+		}
+
+		public void OnPointerExit(PointerEventData eventData)
+		{
+			infoPanel.UnShowPanel();
 		}
 	}
 }

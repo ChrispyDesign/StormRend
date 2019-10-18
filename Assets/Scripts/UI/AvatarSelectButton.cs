@@ -1,18 +1,47 @@
-﻿using UnityEngine.EventSystems;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 namespace StormRend.UI
 {
-	public class AvatarSelectButton : Button
+	public class AvatarSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
-		public override void OnPointerEnter(PointerEventData eventData)
+		[SerializeField] string details;
+
+		List<AbilitySelectButton> abilitySelectButtons;
+		InfoPanel infoPanel;
+
+		void Awake()
 		{
-			base.OnPointerEnter(eventData);
+			infoPanel = FindObjectOfType<InfoPanel>();
+			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(FinishTurn));
+
+			abilitySelectButtons = new List<AbilitySelectButton>();
+			abilitySelectButtons.AddRange(FindObjectsOfType<AbilitySelectButton>());
+
+			foreach (AbilitySelectButton t in abilitySelectButtons)
+			{
+				t.GetComponent<Image>().enabled = false;
+			}
 		}
 
-		public override void OnPointerExit(PointerEventData eventData)
+		public void ShowAbilities()
 		{
-			base.OnPointerExit(eventData);
+			foreach(AbilitySelectButton t in abilitySelectButtons)
+			{
+				t.GetComponent<Image>().enabled = true;
+			}
+		}
+
+		public void OnPointerEnter(PointerEventData eventData)
+		{
+			infoPanel.ShowPanel(details);
+		}
+
+		public void OnPointerExit(PointerEventData eventData)
+		{
+			infoPanel.UnShowPanel();
 		}
 	}
 }
