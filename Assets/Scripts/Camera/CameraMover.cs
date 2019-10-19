@@ -17,29 +17,30 @@ namespace StormRend.CameraSystem
         [SerializeField] BoxCollider cameraBounds = null;
 
         //Members
-        CameraInput input;
+        CameraInput cin;
 
     #region Core
         void Awake()
         {
-            input = GetComponent<CameraInput>();
+            cin = GetComponent<CameraInput>();
         }
         void Update()
         {
-            var moveAxis = new Vector3(input.xAxis, 0, input.yAxis);
-            MoveBy(moveAxis);
+            var moveAxis = new Vector3(cin.xAxis, 0, cin.yAxis);
+			//If there's input then override any current moving coroutines
+			if (!moveAxis.Equals(Vector3.zero))
+            	MoveBy(moveAxis);
         }
     #endregion
 
         /// <summary>
-        /// use this to move the camera by an incremental amount!
+        /// Use this to move the camera by an incremental amount!
         /// </summary>
         /// <param name="axis">the value in each axis to move</param>
         public void MoveBy(Vector3 axis)
         {
-            // stop movement if the MoveTo coroutine is already executing
-            // if (moveTo != null && axis != Vector3.zero)
-            StopCoroutine(LerpTo(Vector3.zero));
+			//Override any current lerps
+			StopAllCoroutines();
 
             float speed = moveSpeed * Time.unscaledDeltaTime;
 
@@ -50,7 +51,7 @@ namespace StormRend.CameraSystem
             destination += axis.x * root.right * speed;
 
             // ensure camera stays within bounds
-            destination = ClampDestination(destination);
+            ClampDestination(ref destination);
 
             // perform movement
             root.position = destination;
@@ -58,30 +59,32 @@ namespace StormRend.CameraSystem
 
         public void MoveTo(Unit unit, float smoothTime = 0.3f)
         {
+			//Override any current lerps
+			StopAllCoroutines();
+
             MoveTo(unit.transform.position, smoothTime);
         }
 
         /// <summary>
-        /// use this to move the camera to a destination over an arbitrary amount of time!
+        /// Use this to move the camera to a destination over an arbitrary amount of time!
         /// </summary>
         /// <param name="destination">the position to lerp/move to</param>
         /// <param name="smoothTime">the amount of time it takes to lerp to the destination</param>
         public void MoveTo(Vector3 destination, float smoothTime = 0.3f)
         {
-            // stop movement if the MoveTo coroutine is already executing
-            // StopCoroutine(LerpTo(destination, smoothTime));
+			//Override any current lerps
 			StopAllCoroutines();
 
-            // ensure camera stays within bounds
-            destination = ClampDestination(destination);
+			//Clamp within bounds
+            ClampDestination(ref destination);
 
-            // start new MoveTo coroutine
+			//Start move
             StartCoroutine(LerpTo(destination, smoothTime));
         }
 
         /// <summary>
-        /// lerp/move coroutine which lerps the camera from it's current position, to a destination in an
-        /// arbitrary amount of time
+        /// Lerp/move coroutine which lerps the camera from it's current position, 
+		/// to a destination in an arbitrary amount of time
         /// </summary>
         /// <param name="destination">the position to lerp/move to</param>
         /// <param name="time">the amount of time it takes to lerp to the destination</param>
@@ -102,13 +105,13 @@ namespace StormRend.CameraSystem
         }
 
         /// <summary>
-        /// magic function, spend hours on writing this one (no joke)
+        /// Magic function, spend hours on writing this one (no joke)
         /// </summary>
         /// <param name="destination">the destination to clamp</param>
         /// <returns>the clamped destination</returns>
-        Vector3 ClampDestination(Vector3 destination)
+        void ClampDestination(ref Vector3 destination)
         {
-            return cameraBounds.ClosestPoint(destination);
+            destination = cameraBounds.ClosestPoint(destination);
         }
     }
 }
