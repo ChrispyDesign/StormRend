@@ -1,13 +1,11 @@
-using System;
-using System.Collections.Generic;
-using StormRend.Systems.Mapping;
+using StormRend.MapSystems.Tiles;
 using UnityEditor;
 using UnityEngine;
 
 namespace StormRend.Editors
 {
-    //------------- Scene Editor --------------
-    public partial class MapEditor : SmartEditor
+	//------------- Scene Editor --------------
+	public partial class MapEditor : SmartEditor
     {
         public enum EditMode { Painting, Erasing }
 
@@ -223,18 +221,19 @@ namespace StormRend.Editors
 			// Undo.IncrementCurrentGroup();	
 
 			//Instantiate a new tile prefab
-			var rotation = randomizePaintDirection ? 
-				Quaternion.AngleAxis(90 * UnityEngine.Random.Range(0, 4), Vector3.up) : Quaternion.identity;	//Rotation
-			var newo = Instantiate(m.selectedTilePrefab, gridCursor, rotation);  	//Instantiate
-            newo.transform.SetParent(m.transform);       		//Parent
-            newo.gameObject.layer = m.gameObject.layer;  		//Layer
-            newo.owner = m;  		//Owner
+			//According to current cursor positions and rotation settings
+			var rotation = randomizePaintDirection ? Quaternion.AngleAxis(90 * UnityEngine.Random.Range(0, 4), Vector3.up) : Quaternion.identity;	//Rotation
+			var t = PrefabUtility.InstantiatePrefab(m.selectedTilePrefab, m.transform) as Tile;
+			t.transform.position = gridCursor;
+			t.transform.rotation = rotation;
+			t.gameObject.layer = m.gameObject.layer;
+			t.owner = m;
 
 			//UNDO WORKING
-            Undo.RegisterCreatedObjectUndo(newo.gameObject, "Paint Tile " + m.selectedTilePrefab.name);
+            Undo.RegisterCreatedObjectUndo(t.gameObject, "Paint Tile " + m.selectedTilePrefab.name);
 
             //Add to map's list of tiles
-            m.tiles.Add(newo.GetComponent<Tile>());
+            m.tiles.Add(t);
         }
         void PerformErase()
         {
