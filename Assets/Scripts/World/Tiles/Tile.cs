@@ -107,7 +107,7 @@ namespace StormRend.MapSystems.Tiles
 			oldColor = highlight.color;
 			highlight.SetColor(new Color(1, 1, 1, 0.5f));
 
-			Debug.LogFormat("{0}.Hover", name);
+			// Debug.LogFormat("{0}.Hover", name);
 		}
 
 		public void OnPointerExit(PointerEventData eventData)
@@ -116,7 +116,7 @@ namespace StormRend.MapSystems.Tiles
 			// if (!oldColor.Equals(Color.clear))
 				// highlight.gameObject.SetActive(false);
 
-			Debug.LogFormat("{0}.UnHover", name);
+			// Debug.LogFormat("{0}.UnHover", name);
 		}
 	#endregion
 	}

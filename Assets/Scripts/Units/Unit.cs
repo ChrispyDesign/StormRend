@@ -54,12 +54,12 @@ namespace StormRend.Units
 	#endregion
 
 	#region Event System
-		public void OnPointerEnter(PointerEventData eventData)
+		public virtual void OnPointerEnter(PointerEventData eventData)
 		{
 			// throw new NotImplementedException();
 		}
 
-		public void OnPointerExit(PointerEventData eventData)
+		public virtual void OnPointerExit(PointerEventData eventData)
 		{
 			// throw new NotImplementedException();
 		}

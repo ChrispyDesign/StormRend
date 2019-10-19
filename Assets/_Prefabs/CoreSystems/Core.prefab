@@ -4418,11 +4418,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dd5973eca1604d438ca776501c72aad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerMask:
+  raycastLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
+  playersState: {fileID: 6841392901105898438}
   selectedUnit: {fileID: 11400000, guid: dbeaf32532764ba4c92635cbce5c280f, type: 2}
-  camMover: {fileID: 0}
+  isUnitHit: 0
+  unit: {fileID: 0}
   OnUnitSelectedChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4433,8 +4435,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  unitHit: 0
-  tileHit: 0
   debug: 0
 --- !u!114 &2505284297034244265
 MonoBehaviour:

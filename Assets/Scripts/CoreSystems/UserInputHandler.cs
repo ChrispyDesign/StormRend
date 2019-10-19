@@ -1,6 +1,7 @@
 using pokoro.Patterns.Generic;
 using StormRend.CameraSystem;
 using StormRend.MapSystems.Tiles;
+using StormRend.Systems.StateMachines;
 using StormRend.Units;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
@@ -55,38 +56,51 @@ namespace StormRend.Systems
 	public class UserInputHandler : MonoBehaviour
     {
 		//Enums
-        public enum Mode { Move, Action }
+        public enum ActivityMode 
+		{ 
+			Move, 	
+			Action 		//Cast spells, attack, summon, etc
+		}
 
 		//Inspector
-		[SerializeField] LayerMask layerMask;
-
-		[Header("SOVs")]
-		[SerializeField] UnitVar selectedUnit;
+		[SerializeField] LayerMask raycastLayerMask;
+		[Tooltip("A reference to the State object that is considered to be the player's state ie. AllyState")]
+		[Space(5), SerializeField] State playersState;
+		[Space(5), SerializeField] UnitVar _currentUnit;
 
 		//Properties
-		public bool isPlayersTurn { get; set; }
-		public bool unitIsSelected => selectedUnit.value != null;
+		public Unit currentUnit 
+		{
+			get => _currentUnit.value;
+			set => _currentUnit.value = value;
+		}
+		public bool isPlayersTurn { get; set; } = true;
+		public bool unitIsSelected => currentUnit != null;
+
+		//Events
+		[Space(5)]
+		public UnitEvent OnUnitSelectedChanged;
+		public UnityEvent OnUnitDeselect;
 
 		//Members
 		FrameEventData e;	//The events that happenned this frame
-		Mode mode = Mode.Move;
-		public CameraMover camMover;
-		// EventSystem eventSystem;
+		ActivityMode mode = ActivityMode.Move;
+		CameraMover camMover;
 
-		//Events
-		public UnitEvent OnUnitSelectedChanged;
-		public UnityEvent OnUnitDeselect;
-		[ReadOnlyField, SerializeField] bool unitHit;
-		[ReadOnlyField, SerializeField] bool tileHit;
+		//Debug
 		[Space] public bool debug;
+		bool isUnitHit;
+		Unit subjectUnit;
 
 		#region Core
 		void Awake()
 		{
+			//Find
 			camMover = MasterCamera.current.linkedCamera.GetComponent<CameraMover>();
 		}
 		void Start()
 		{
+			// Debug.Assert(currentUnit, "Selected Unit SOV not assigned!");
 			Debug.Assert(camMover, "CameraMover could not be located!");
 		}
 
@@ -99,14 +113,14 @@ namespace StormRend.Systems
 		{
 			//Refresh event
 			e.Refresh();
-			unitHit = Raycast<Unit>(out Unit u);
-			tileHit = Raycast<Tile>(out Tile t);
+			isUnitHit = Raycast<Unit>(out subjectUnit);
+			// tileHit = Raycast<Tile>(out Tile t);
 
 			//PLAYERS TURN
 			if (isPlayersTurn)
 			{
 				//UNIT RAY HIT
-				if (unitHit)
+				if (isUnitHit)
 				{
 					//A UNIT SELECTED
 					if (unitIsSelected) { }
@@ -116,17 +130,16 @@ namespace StormRend.Systems
 					//LEFT CLICK
 					if (e.leftClicked)
 					{
-						SelectUnit(u);
 					}
 				}
-				//TILE HIT
-				else if (tileHit)
-				{
-					//A UNIT SELECTED
-					if (unitIsSelected) { }
-					//NO UNIT SELECTED
-					else { }
-				}
+				// //TILE HIT
+				// else if (tileHit)
+				// {
+				// 	//A UNIT SELECTED
+				// 	if (unitIsSelected) { }
+				// 	//NO UNIT SELECTED
+				// 	else { }
+				// }
 			}
 
 			//ALWAYS RUN
@@ -138,9 +151,10 @@ namespace StormRend.Systems
 			//Focus Camera
 			if (e.leftClicked)
 			{
-				if (unitHit)
+				if (isUnitHit)
 				{
-					FocusCamera(u);
+					SelectUnit(subjectUnit);
+					FocusCamera(subjectUnit);
 				}
 			}
 
@@ -151,13 +165,13 @@ namespace StormRend.Systems
 		void OnGUI()
 		{
 			if (!debug) return;
-			
-			GUILayout.Label("Selected Unit: " + selectedUnit?.value);
+			GUILayout.Label("is a unit hit?: " + isUnitHit);
+			GUILayout.Label("is a unit selected?: " + unitIsSelected);
+			GUILayout.Label("Selected Unit: " + currentUnit?.name);
 		}
 	#endregion
 
 	#region Assists
-
 		//Moves to and looks at passed in subject
 		void FocusCamera(Unit u, float smoothTime = 1)
 		{
@@ -168,22 +182,27 @@ namespace StormRend.Systems
 			camMover.MoveTo(t.transform.position, smoothTime);
 		}
 		//Sets the selected unit
-		void SelectUnit(Unit unit)
+		void SelectUnit(Unit u)
 		{
-			OnUnitSelectedChanged.Invoke(unit);
-			selectedUnit.value = unit;
+			OnUnitSelectedChanged.Invoke(u);
+
+			//Set the selected unt
+			currentUnit = u;
+
+			//Update tile highlights based on mode of activity
 		}
 		//Deselects the unit
 		void DeselectAll()
 		{
 			OnUnitDeselect.Invoke();
-			selectedUnit.value = null;
+
+			currentUnit = null;
 		}
 
 		internal bool Raycast<T>(out T hit) where T : MonoBehaviour
 		{
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out RaycastHit hitInfo, float.PositiveInfinity, layerMask.value))
+			if (Physics.Raycast(ray, out RaycastHit hitInfo, float.PositiveInfinity, raycastLayerMask.value))
 			{
 				// Debug.Assert(hitInfo.collider, "hitInfo.collider is null");
 				hit = hitInfo.collider.GetComponent<T>();

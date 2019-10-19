@@ -81,17 +81,19 @@ namespace StormRend.Units
 		{
 			//If unit is movable, show move highlights for the tile this unit is on
 			//Set this unit as current selected unit >> which will move the camera etc
-			Debug.LogFormat("{0}.Click", name);
+			// Debug.LogFormat("{0}.Click", name);
 		}
-		public void OnPointerEnter(PointerEventData eventData)
+		public override void OnPointerEnter(PointerEventData eventData)
 		{
+			base.OnPointerEnter(eventData);
 			//Show hover highlights for the tile this unit is on
-			Debug.LogFormat("{0}.Hover", name);
+			// Debug.LogFormat("{0}.Hover", name);
 		}
-		public void OnPointerExit(PointerEventData eventData)
+		public override void OnPointerExit(PointerEventData eventData)
 		{
+			base.OnPointerExit(eventData);
 			//Hide hover highlights for the tile this unit is on
-			Debug.LogFormat("{0}.UnHover", name);
+			// Debug.LogFormat("{0}.UnHover", name);
 		}
 	#endregion
 	}

@@ -8,10 +8,10 @@ namespace StormRend.Variables
 	[CreateAssetMenu(menuName = "StormRend/Variables/UnitList", fileName = "UnitListVar")]
 	public sealed class UnitListVar : BhaveVar<List<Unit>>
 	{
-		// void OnEnable()
-		// {
-		// 	value = new List<xUnit>();
-		// }
+		void OnEnable()
+		{
+			value = new List<Unit>();
+		}
 
         public static implicit operator UnitListVar(List<Unit> rhs)
 		{

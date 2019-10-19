@@ -14727,7 +14727,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.18417409}
   m_AnchorMax: {x: 1, y: 0.37500003}
-  m_AnchoredPosition: {x: 0, y: 4.2000046}
+  m_AnchoredPosition: {x: 0, y: 4.200012}
   m_SizeDelta: {x: -2, y: -20.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1697616591
@@ -17387,6 +17387,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1924590044}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1948944659 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6523016055183356590, guid: cbd9f60274804884eb28a6716428840f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1955798862}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e74e1bda9c3f0d45ae50a717d100e02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1952051506
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18501,6 +18513,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3499070775871696024, guid: 779cdedd1728828499e8d09414c4c6ee,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3499070775871696103, guid: 779cdedd1728828499e8d09414c4c6ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -19019,6 +19036,22 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1013997117804853895, guid: 7fec0c475c06e4efe88295a53b98033c,
+        type: 3}
+      propertyPath: debug
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1013997117804853895, guid: 7fec0c475c06e4efe88295a53b98033c,
+        type: 3}
+      propertyPath: temp
+      value: 
+      objectReference: {fileID: 1948944659}
+    - target: {fileID: 1013997117804853895, guid: 7fec0c475c06e4efe88295a53b98033c,
+        type: 3}
+      propertyPath: _currentUnit
+      value: 
+      objectReference: {fileID: 11400000, guid: dbeaf32532764ba4c92635cbce5c280f,
+        type: 2}
     - target: {fileID: 3267380040487526950, guid: 7fec0c475c06e4efe88295a53b98033c,
         type: 3}
       propertyPath: OnNextTurn.m_PersistentCalls.m_Calls.Array.size
