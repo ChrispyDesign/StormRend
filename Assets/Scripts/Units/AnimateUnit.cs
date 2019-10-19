@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 using StormRend.Abilities;
-using StormRend.Systems.Mapping;
+using StormRend.MapSystems.Tiles;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -82,17 +81,17 @@ namespace StormRend.Units
 		{
 			//If unit is movable, show move highlights for the tile this unit is on
 			//Set this unit as current selected unit >> which will move the camera etc
-			Debug.LogFormat("{0}.OnPointerClick()");
+			Debug.LogFormat("{0}.Click", name);
 		}
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			//Show hover highlights for the tile this unit is on
-			Debug.LogFormat("{0}.OnPointerEnter()");
+			Debug.LogFormat("{0}.Hover", name);
 		}
 		public void OnPointerExit(PointerEventData eventData)
 		{
 			//Hide hover highlights for the tile this unit is on
-			Debug.LogFormat("{0}.OnPointerExit()");
+			Debug.LogFormat("{0}.UnHover", name);
 		}
 	#endregion
 	}

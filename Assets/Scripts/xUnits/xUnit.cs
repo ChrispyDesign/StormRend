@@ -166,7 +166,7 @@ namespace StormRend.Defunct
                 node.OnSelect();
             }
 
-            FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 1.0f);
+            FindObjectOfType<Camera>().GetComponent<CameraMover>().MoveTo(transform.position, 1.0f);
         }
 
         public virtual void OnDeselect()

@@ -186,7 +186,7 @@ namespace StormRend.Defunct
 							xGameManager.current.GetCommandManager().commands.Add(temp);
 						}
 
-						FindObjectOfType<Camera>().GetComponent<CameraMove>().MoveTo(transform.position, 0.5f);
+						FindObjectOfType<Camera>().GetComponent<CameraMover>().MoveTo(transform.position, 0.5f);
 					}
 					currentSelectedUnit.SetDuplicateMeshVisibilty(false);
 					currentSelectedUnit.SetIsSelected(false);

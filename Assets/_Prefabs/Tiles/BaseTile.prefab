@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2285558684890238423}
   - component: {fileID: 2662589536457230567}
   - component: {fileID: 3158283129481071947}
-  - component: {fileID: 2085276089036530056}
   m_Layer: 0
   m_Name: BaseTile
   m_TagString: Untagged
@@ -91,25 +90,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9999999, y: 0.62499994, z: 2}
-  m_Center: {x: 0.000000059604645, y: -0.4624999, z: 0}
---- !u!114 &2085276089036530056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4758049521519935274}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba2c808e7b48842459e23f411a4442bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  cost: 1
-  G: 3.4028235e+38
-  H: 3.4028235e+38
-  F: 0
+  m_Size: {x: 1.99, y: 0, z: 1.99}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6065424413494142390
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,7 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6313625959680667978}
-  - component: {fileID: 519285249187931062}
+  - component: {fileID: 6535561415342351963}
   - component: {fileID: 5356116125956997780}
   m_Layer: 0
   m_Name: Highlight
@@ -127,7 +109,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6313625959680667978
 Transform:
   m_ObjectHideFlags: 0
@@ -142,7 +124,7 @@ Transform:
   m_Father: {fileID: 4758049521519935278}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &519285249187931062
+--- !u!114 &6535561415342351963
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,7 +133,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6065424413494142390}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 988b91f7837fc7548a18ec756c310260, type: 3}
+  m_Script: {fileID: 11500000, guid: 1bbe4f476a1f20f43b3ae5d647fa3606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &5356116125956997780
@@ -192,7 +174,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1e2108eb1ebe56b49b9cc5e73503f0bd, type: 3}
-  m_Color: {r: 0, g: 0.5997076, b: 1, a: 0.56078434}
+  m_Color: {r: 1, g: 0, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

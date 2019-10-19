@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using StormRend.Enums;
+using StormRend.MapSystems;
 using StormRend.Systems;
-using StormRend.Systems.Mapping;
 using StormRend.Utility.Attributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -32,7 +32,7 @@ namespace StormRend.Units
 		void Awake()
 		{
 			ur = UnitRegistry.current;
-			ui = UserInputHandler.current;
+			// ui = UserInputHandler.current;
 		}
 
 		public void Tick()
@@ -80,7 +80,7 @@ namespace StormRend.Units
 
         public void OnPointerClick(PointerEventData eventData)
         {
-			
+			Debug.Log(this.name);
         }
     }
 }

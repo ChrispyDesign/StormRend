@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &6295665385147324727
+--- !u!114 &1908985644632231776
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1843668882337598350}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3974d554314fef241866b58de1bbd130, type: 3}
+  m_Script: {fileID: 11500000, guid: 2fced283e8c52a54d8619c658661c7d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
   cost: 1
+  owner: {fileID: 0}
+  _highlight: {fileID: 0}
+  oldColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &1648502509277943536
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -93,7 +95,7 @@ PrefabInstance:
     - target: {fileID: 4758049521519935274, guid: 825759d6350b5c34e8ddee39bd360144,
         type: 3}
       propertyPath: m_Name
-      value: NonWalkable
+      value: UnwalkGrassTile
       objectReference: {fileID: 0}
     - target: {fileID: 4758049521519935278, guid: 825759d6350b5c34e8ddee39bd360144,
         type: 3}

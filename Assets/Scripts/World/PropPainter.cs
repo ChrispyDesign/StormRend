@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace StormRend.Tools
+namespace StormRend.MapSystems
 {
 	[ExecuteInEditMode]
 	public class PropPainter : MonoBehaviour	//Rename to Decorator, DecorationPainter, OrnamentPainter

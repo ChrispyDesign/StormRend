@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
 using pokoro.Patterns.Generic;
-using StormRend.Systems.Mapping;
-using StormRend.Units;
-using UnityEngine;
 
 namespace StormRend.Defunct
 {

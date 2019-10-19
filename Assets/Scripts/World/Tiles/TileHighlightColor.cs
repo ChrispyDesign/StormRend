@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace StormRend.Systems.Mapping
+namespace StormRend.MapSystems.Tiles
 {
 	[Serializable, CreateAssetMenu(menuName = "StormRend/TileHighlightColor")]
 	public class TileHighlightColor : ScriptableObject

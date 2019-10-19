@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace StormRend.Systems.Mapping
+namespace StormRend.MapSystems.Tiles
 {
 	/// <summary>
 	/// Base tile class. Holds a list of connections to neighbouring tiles.
@@ -12,10 +12,10 @@ namespace StormRend.Systems.Mapping
 	/// + Any toppers (prefab variants)
 	/// + Any other extra objects
 	/// </summary>
-	public abstract class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+	public abstract class Tile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		//Static
-		public static List<TileHighlightColor> highlightColors = new List<TileHighlightColor>();
+		public static TileHighlightColor[] highlightColors;
 		public static TileHighlightColor FindHighlightColor(string highlightName)
 		{
 			foreach (var h in highlightColors)
@@ -29,9 +29,6 @@ namespace StormRend.Systems.Mapping
 		}
 
 		//Inspector
-		public HashSet<Tile> connections = new HashSet<Tile>();
-
-		[Header("Costs")]
 		public float cost = 1;
 		internal float G = float.MaxValue;
 		internal float H = float.MaxValue;
@@ -41,12 +38,19 @@ namespace StormRend.Systems.Mapping
 		public TileHighlight highlight => _highlight;
 
 		//Members
-		[HideInInspector] public Map owner;
-		TileHighlight _highlight;
-		
-		// internal Tile parent;		//Is this really required??
+		public HashSet<Tile> connections = new HashSet<Tile>();
+		// [HideInInspector]
+		 public Map owner;
+		public TileHighlight _highlight;
+		public Color oldColor;
 
 	#region Core
+		void Awake()
+		{
+			highlightColors = Resources.FindObjectsOfTypeAll<TileHighlightColor>();
+			foreach (var c in highlightColors)
+				Debug.Log(c);
+		}
 		void Start()
 		{
 			_highlight = GetComponentInChildren<TileHighlight>();
@@ -91,19 +95,28 @@ namespace StormRend.Systems.Mapping
 	#endregion
 
 	#region Event System Interface Implementations
-		public void OnPointerClick(PointerEventData eventData)
-		{
-			Debug.LogFormat("{0}.OnPointerClick()");
-		}
+		// public void OnPointerClick(PointerEventData eventData)
+		// {
+		// 	Debug.LogFormat("{0}.OnPointerClick()");
+		// }
 
 		public void OnPointerEnter(PointerEventData eventData)
 		{
-			Debug.LogFormat("{0}.OnPointerEnter()");
+			// eventData.hovered
+			// highlight.gameObject.SetActive(true);
+			oldColor = highlight.color;
+			highlight.SetColor(new Color(1, 1, 1, 0.5f));
+
+			Debug.LogFormat("{0}.Hover", name);
 		}
 
 		public void OnPointerExit(PointerEventData eventData)
 		{
-			Debug.LogFormat("{0}.OnPointerExit()");
+			highlight.SetColor(oldColor);
+			// if (!oldColor.Equals(Color.clear))
+				// highlight.gameObject.SetActive(false);
+
+			Debug.LogFormat("{0}.UnHover", name);
 		}
 	#endregion
 	}

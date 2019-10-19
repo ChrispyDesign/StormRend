@@ -3,14 +3,14 @@ using UnityEngine;
 using System.Linq;
 using pokoro.Patterns.Generic;
 using StormRend.Units;
-using StormRend.Variables;
 using System;
+using StormRend.MapSystems.Tiles;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace StormRend.Systems.Mapping
+namespace StormRend.MapSystems
 {
 	[ExecuteInEditMode]
 	public sealed class Map : Singleton<Map>	//Only one map per scene?
@@ -21,11 +21,8 @@ namespace StormRend.Systems.Mapping
 		//- Map editor needs to be able to place units and set them accordingly
 		//- Map needs to hold a list of units for other things to be able to reference
 
-
 		//Inspector
 		[Header("Tiles")]
-		//TEMP WORKFLOW: Edit desired tile highlights settings in here, and on start the settings will get transferred over to Tile.tileHighlights
-		public List<TileHighlightColor> tileHighlightsSettings = new List<TileHighlightColor>();
 		[SerializeField, Range(1, 5), Tooltip("This map's tile XZ scale")] public float tileSize = 2;
 
 		[Tooltip("Pallette of tile prefabs")]
@@ -63,7 +60,7 @@ namespace StormRend.Systems.Mapping
 		void Start()
 		{
 			//Transfer semi-global highlight colours over to static tile highlight colours
-			Tile.highlightColors = tileHighlightsSettings;
+			// Tile.highlightColors = tileHighlightsSettings;
 		}
 		void OnDisable()
 		{

@@ -1,5 +1,5 @@
-using System.Collections.Generic;
-using StormRend.Systems.Mapping;
+using StormRend.MapSystems;
+using StormRend.MapSystems.Tiles;
 using UnityEditor;
 using UnityEngine;
 
@@ -40,6 +40,9 @@ namespace StormRend.Editors
 
 			//Register events
 			Undo.undoRedoPerformed += OnUndoRedo;
+
+			//Prevent "Some objects were not cleaned up when closing the scene" errors
+			// EditorApplication.playModeStateChanged += OnPlayModeStateChanged; //(PlayModeStateChange stateChange) => { if (stamp) DestroyImmediate(stamp); };
 		}
 		void OnDisable()
 		{

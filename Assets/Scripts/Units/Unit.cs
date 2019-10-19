@@ -1,13 +1,12 @@
-using System;
-using StormRend.Systems.Mapping;
+using StormRend.MapSystems.Tiles;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 namespace StormRend.Units
 {
-	public abstract class Unit : MonoBehaviour 
+	public abstract class Unit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		[TextArea(0,2), SerializeField] string description = "";
 
@@ -38,9 +37,9 @@ namespace StormRend.Units
 			//Reset health
 			HP = maxHP;
 		}
-		#endregion
+	#endregion
 
-		#region Health
+	#region Health
 		public void TakeDamage(int damage)
 		{
 			if (isDead) return;     //Can't beat a dead horse :P
@@ -52,6 +51,18 @@ namespace StormRend.Units
 		{
 			OnDeath.Invoke(this);
 		}
-		#endregion
+	#endregion
+
+	#region Event System
+		public void OnPointerEnter(PointerEventData eventData)
+		{
+			// throw new NotImplementedException();
+		}
+
+		public void OnPointerExit(PointerEventData eventData)
+		{
+			// throw new NotImplementedException();
+		}
+	#endregion
 	}
 }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2145422007893173169}
   - component: {fileID: 1907246085968507643}
-  - component: {fileID: 2160891446160555752}
+  - component: {fileID: 4557954523156530618}
   - component: {fileID: 3958027602835188447}
   - component: {fileID: 520559493323979101}
   - component: {fileID: 1428738480572617513}
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xAxisName: Horizontal
   yAxisName: Vertical
---- !u!114 &2160891446160555752
+--- !u!114 &4557954523156530618
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,11 +60,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2145422007893173168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 187bf82676d4c2e43820dffc568628ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 3efb3b1dfa9405a4090a6f771fe524ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   root: {fileID: 2145422009120968298}
-  moveSpeed: 12.5
+  moveSpeed: 10
   cameraBounds: {fileID: 2941809505071786014}
 --- !u!114 &3958027602835188447
 MonoBehaviour:
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a48f3610a4a5d49b68a66ca959a0ef11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  priority: 1
+  priority: 10
 --- !u!114 &1428738480572617513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,8 +111,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_EventMask:
     serializedVersion: 2
-    m_Bits: 819
-  m_MaxRayIntersections: 0
+    m_Bits: 513
+  m_MaxRayIntersections: 10
 --- !u!20 &2145422007893173175
 Camera:
   m_ObjectHideFlags: 0
