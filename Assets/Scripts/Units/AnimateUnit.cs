@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using StormRend.Abilities;
+using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,16 +20,17 @@ namespace StormRend.Units
 		[SerializeField] protected Ability[] abilities;
 
 		//Properties
+		public Tile nextTile { get; set; }	//The tile this unit wants to move to
 		public Ability currentAbility { get; set; } = null;
 
 		//Members
-		protected bool hasMoved = false;
+		protected bool hasActed = false;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
 		public Tile[] possibleMoveTiles { get; set; }
-		//has performed an ability and hence this unit has completed it's turn and is locked until next turn
-		protected bool hasCasted = false;	
+		public Tile[] possibleActionTiles {get; set; }
+		
 		protected GameObject ghostMesh;
 
-	#region Startup
+		#region Startup
 		void Start()	//This will not block base.Start()
 		{
 			CreateGhostMesh();
@@ -57,13 +60,36 @@ namespace StormRend.Units
 	#endregion
 
 	#region Core
-		public void MoveTo(Tile tile, bool useGhost = false)
+		public void Move(Tile destination, bool useGhost = false)
 		{
+			//Set the new tile
+			currentTile = destination;
 
+			//Move/Position logic	- NEED REVIEW
+			transform.position = currentTile.transform.position;
 		}
-		public void MoveTo(Vector2Int direction, bool useGhost = false)
+		public void Move(Vector2Int vector, bool useGhost = false)
 		{
 			//Where should the push effect kill logic be implemented?
+		}
+		public void TakeAction(Ability ability, params Tile[] targetTiles) 
+		{
+			ability.Perform(this, targetTiles);
+		}
+		public void TakeAction(Ability ability, params Unit[] targetUnits) 
+		{
+			ability.Perform(this, targetUnits.Select(x => x.currentTile).ToArray());
+		}
+
+		/// <summary>
+		/// Calculate the tiles that this unit can currently move to for this point in game time.
+		/// Returns the list of tiles if needed.
+		/// </summary>
+		public void CalculateMoveTiles()
+		{
+			possibleMoveTiles = Map.CalcValidActionArea(currentTile.owner, currentTile, moveRange, 
+				typeof(Unit));	//You shouldn't be able to move onto any unit!
+			// return possibleMoveTiles;
 		}
 
 		public override void Die()
@@ -74,6 +100,10 @@ namespace StormRend.Units
 			gameObject.SetActive(false);
 		}
 
+	#endregion
+
+	#region Filtered Gets
+		public List<Ability> GetAbilitiesByType(AbilityType type) => abilities.Where(x => x.type == type).ToList();
 	#endregion
 
 	#region Event System Interface Implementations

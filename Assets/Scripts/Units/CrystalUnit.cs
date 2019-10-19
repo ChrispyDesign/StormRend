@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using StormRend.Enums;
 using StormRend.MapSystems;
 using StormRend.Systems;
@@ -40,17 +41,17 @@ namespace StormRend.Units
 			//Be careful of this order
 			turns--;
 
-			DealDamage();
+			DealDamageToSurroundingUnits();
 
 			if (turns <= 0) Die();
 		}
 
 		//Helpers
-		void DealDamage()
+		void DealDamageToSurroundingUnits()
 		{
 			//TODO This is slightly confusing
-			//Determine tiles to do damage to (regardless of unit type because it's already ignored and filterd)
-			var tilesToAttack = Map.GetValidMoves(this.currentTile.owner, currentTile, 1, GetIgnoreUnitTypes());
+			//Determine tiles to do damage to (regardless of unit type because it's already ignored and filtered)
+			var tilesToAttack = Map.CalcValidActionArea(this.currentTile.owner, currentTile, 1, GetIgnoreUnitTypes()).ToList();
 
 			//Deal damage
 			foreach (var a in ur.aliveUnits)

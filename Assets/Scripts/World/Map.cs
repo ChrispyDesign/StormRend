@@ -44,7 +44,7 @@ namespace StormRend.MapSystems
 		[HideInInspector] public BoxCollider editorRaycastPlane;
 #endif
 
-		#region Core
+	#region Core
 		void Awake()
 		{
 			ur = UnitRegistry.current;
@@ -56,11 +56,6 @@ namespace StormRend.MapSystems
 			// _root = this.transform;
 			Selection.selectionChanged += OnSelected;
 #endif
-		}
-		void Start()
-		{
-			//Transfer semi-global highlight colours over to static tile highlight colours
-			// Tile.highlightColors = tileHighlightsSettings;
 		}
 		void OnDisable()
 		{
@@ -86,7 +81,7 @@ namespace StormRend.MapSystems
 				transform.localScale = Vector3.one;
 			}
 		}
-		#endregion
+	#endregion
 
 #if UNITY_EDITOR
 	#region Assists
@@ -99,6 +94,7 @@ namespace StormRend.MapSystems
 			editorRaycastPlane.isTrigger = true;
 			editorRaycastPlane.hideFlags = HideFlags.HideAndDontSave | HideFlags.HideInInspector;   //Hide
 		}
+
 		[ContextMenu("Delete All Tiles")]
 		public void DeleteAllTiles()
 		{
@@ -125,7 +121,7 @@ namespace StormRend.MapSystems
 	#endregion
 
 	#region Pathfinding
-		public static List<Tile> GetValidMoves(Map map, Tile start, int range, params Type[] unitTypeToIgnore)
+		public static Tile[] CalcValidActionArea(Map map, Tile start, int range, params Type[] unitTypesToExclude)
 		{
 			List<Tile> validMoves = new List<Tile>();
 			Queue<Tile> openList = new Queue<Tile>();
@@ -154,7 +150,7 @@ namespace StormRend.MapSystems
 					//Pass if neighbour tile has a unit that needs to be ignored
 					foreach (var u in map.ur.aliveUnits)
 						//If unit is a type that needs to be ignored...
-						if (unitTypeToIgnore.Contains(u.GetType()))
+						if (unitTypesToExclude.Contains(u.GetType()))
 							//If unit is on this neighbour tile...
 							if (u.currentTile == n)
 								continue;
@@ -187,7 +183,7 @@ namespace StormRend.MapSystems
 				t.H = 0;
 			}
 
-			return validMoves;
+			return validMoves.ToArray();
 		}
 	#endregion
 	}

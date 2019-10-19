@@ -1,4 +1,5 @@
-using pokoro.Patterns.Generic;
+using System;
+using StormRend.Abilities;
 using StormRend.CameraSystem;
 using StormRend.MapSystems.Tiles;
 using StormRend.Systems.StateMachines;
@@ -16,6 +17,36 @@ if a unit is selected
 	show the appropriate ui for that selected unit
 else if no unit is selected
 	go into select mode
+
+------ Gameplay
+Moving Unit:
+- Click on Unit
+	- Set unit as current/active unit
+	- 
+
+
+Q How does the player do a spell/attack?
+A The player clicks on a unit
+	- UserInput will set selected unit
+	- the camera will focus on unit
+	- AbilityPanel updates AbilitySelectButtons unit's internal abilities
+	- If player selects an ability:
+		- AbilityPanel to send ability assigned to that button back to UserInput
+		- UserInput sets selected ability
+		- Tiles will update to show cast area based on chosen/subject/selected ability
+	- If clicks on one of the tiles it will  
+
+AbilityPanel
++ UpdateButtons(AnimateUnit unit)
+{
+	
+}
+
+UserInputHandler
++ OnAbilityChanged(Ability ability)
+	SetAbility(ability)
+
+Q How
 
 
 ------- Possible cast and move tiles
@@ -54,43 +85,58 @@ namespace StormRend.Systems
 		}
 	}
 	public class UserInputHandler : MonoBehaviour
-    {
+	{
 		//Enums
-        public enum ActivityMode 
-		{ 
-			Move, 	
-			Action 		//Cast spells, attack, summon, etc
+		public enum ActivityMode
+		{
+			Move,
+			Action      //Cast spells, attack, summon, etc
 		}
 
 		//Inspector
 		[SerializeField] LayerMask raycastLayerMask;
+
 		[Tooltip("A reference to the State object that is considered to be the player's state ie. AllyState")]
-		[Space(5), SerializeField] State playersState;
-		[Space(5), SerializeField] UnitVar _currentUnit;
+		[Space(10), SerializeField] State playersState;
+
+		[Space(10), SerializeField] UnitVar _activeUnit;
+		[ReadOnlyField, SerializeField] Ability _activeAbility;
+
+		[Header("Tile Highlight Colors")]
+		[SerializeField] TileHighlightColor moveHighlight;
+		[SerializeField] TileHighlightColor actionHighlight;
+
 
 		//Properties
-		public Unit currentUnit 
+		public Unit activeUnit
 		{
-			get => _currentUnit.value;
-			set => _currentUnit.value = value;
+			get => _activeUnit.value;
+			internal set => _activeUnit.value = value;
+		}
+		public Ability activeAbility
+		{
+			get => _activeAbility;
+			internal set => _activeAbility = value;
 		}
 		public bool isPlayersTurn { get; set; } = true;
-		public bool unitIsSelected => currentUnit != null;
+		public bool unitIsActive => activeUnit != null;
 
 		//Events
 		[Space(5)]
-		public UnitEvent OnUnitSelectedChanged;
-		public UnityEvent OnUnitDeselect;
+		public UnitEvent OnActiveUnitChanged;
+		public UnityEvent OnActiveUnitCleared;
 
 		//Members
-		FrameEventData e;	//The events that happenned this frame
+		FrameEventData e;   //The events that happenned this frame
 		ActivityMode mode = ActivityMode.Move;
 		CameraMover camMover;
 
 		//Debug
-		[Space] public bool debug;
-		bool isUnitHit;
-		Unit subjectUnit;
+		public bool debug;
+		bool unitHit;
+		bool tileHit;
+		Unit interimUnit;
+		Tile interimTile;
 
 		#region Core
 		void Awake()
@@ -100,7 +146,10 @@ namespace StormRend.Systems
 		}
 		void Start()
 		{
-			// Debug.Assert(currentUnit, "Selected Unit SOV not assigned!");
+			//Inits
+			_activeUnit.value = null;
+
+			//Asserts
 			Debug.Assert(camMover, "CameraMover could not be located!");
 		}
 
@@ -111,67 +160,41 @@ namespace StormRend.Systems
 
 		void ProcessEvents()
 		{
-			//Refresh event
-			e.Refresh();
-			isUnitHit = Raycast<Unit>(out subjectUnit);
-			// tileHit = Raycast<Tile>(out Tile t);
+			e.Refresh();	//Refresh all input events
 
-			//PLAYERS TURN
-			if (isPlayersTurn)
-			{
-				//UNIT RAY HIT
-				if (isUnitHit)
-				{
-					//A UNIT SELECTED
-					if (unitIsSelected) { }
-					//NO UNIT SELECTED
-					else { }
-
-					//LEFT CLICK
-					if (e.leftClicked)
-					{
-					}
-				}
-				// //TILE HIT
-				// else if (tileHit)
-				// {
-				// 	//A UNIT SELECTED
-				// 	if (unitIsSelected) { }
-				// 	//NO UNIT SELECTED
-				// 	else { }
-				// }
-			}
-
-			//ALWAYS RUN
-			//A UNIT SELECTED
-			if (unitIsSelected) { }
-			//NO UNIT SELECTED
-			else { }
-
-			//Focus Camera
 			if (e.leftClicked)
 			{
-				if (isUnitHit)
+				unitHit = Raycast<Unit>(out interimUnit);
+				tileHit = Raycast<Tile>(out interimTile);
+
+				if (isPlayersTurn) 
 				{
-					SelectUnit(subjectUnit);
-					FocusCamera(subjectUnit);
+					//Can only select units when it's the player's turn
+					if (unitHit) SetActiveUnit(interimUnit);
+				}
+
+				if (unitHit)
+				{
+					//Clicking on a unit will ALWAYS focus camera on it
+					FocusCamera(interimUnit);
 				}
 			}
-
-			if (e.rightClickUp)
-				DeselectAll();
+			else if (e.rightClickUp)
+			{
+				ClearActiveUnit();
+			}
 		}
 
 		void OnGUI()
 		{
 			if (!debug) return;
-			GUILayout.Label("is a unit hit?: " + isUnitHit);
-			GUILayout.Label("is a unit selected?: " + unitIsSelected);
-			GUILayout.Label("Selected Unit: " + currentUnit?.name);
+			GUILayout.Label("is a unit hit?: " + unitHit);
+			GUILayout.Label("is a unit selected?: " + unitIsActive);
+			GUILayout.Label("Selected Unit: " + _activeUnit?.value?.name);
 		}
-	#endregion
+		#endregion
 
-	#region Assists
+		#region Assists
 		//Moves to and looks at passed in subject
 		void FocusCamera(Unit u, float smoothTime = 1)
 		{
@@ -181,22 +204,83 @@ namespace StormRend.Systems
 		{
 			camMover.MoveTo(t.transform.position, smoothTime);
 		}
+
 		//Sets the selected unit
-		void SelectUnit(Unit u)
+		public void SetActiveUnit(Unit u)
 		{
-			OnUnitSelectedChanged.Invoke(u);
+			OnActiveUnitChanged.Invoke(u);	//ie. Update UI, Play sounds, 
 
 			//Set the selected unt
-			currentUnit = u;
+			activeUnit = u;
 
 			//Update tile highlights based on mode of activity
+			switch (mode)
+			{
+				case ActivityMode.Move:
+					// UpdateMoveTiles(u);
+					break;
+				case ActivityMode.Action:
+					// UpdateActionTiles(u);
+					break;
+			}
 		}
-		//Deselects the unit
-		void DeselectAll()
-		{
-			OnUnitDeselect.Invoke();
 
-			currentUnit = null;
+		internal void UpdateMoveTiles(Unit u)
+		{
+			//NOTE: Active unit's MOVE tiles should be refreshed each turn
+			
+			//Only animate units 
+			var au = u as AnimateUnit;
+			if (!au) return;
+
+			//Make sure there are tiles to highlight
+			if (au.possibleMoveTiles == null)
+				au.CalculateMoveTiles();
+
+			//Highlight
+			foreach (var t in au.possibleMoveTiles)
+			{
+				t.highlight.SetColor(moveHighlight);
+				// t.highlight.SetColor(Tile.TryGetHighlightColor("Move"));
+			}
+		}
+
+		internal void UpdateActionTiles(Unit u)
+		{
+			//NOTE: Active unit's MOVE tiles should be refreshed each OnAbilityChanged
+
+			//Only animate units have possible 
+			var au = u as AnimateUnit;
+			if (!au) return;
+
+			//Make sure there are tiles to highlight
+			if (au.possibleActionTiles == null)
+				activeAbility.CalculateActionableTiles(au);
+
+			//Highlight
+			foreach (var t in au.possibleActionTiles)
+			{
+				t.highlight.SetColor(actionHighlight);
+				// t.highlight.SetColor(Tile.TryGetHighlightColor("Action"));
+			}
+		}
+
+		//Deselects the unit
+		void ClearActiveUnit()
+		{
+			OnActiveUnitCleared.Invoke();
+
+			activeUnit = null;
+		}
+
+		public void ChangeAbility(Ability a)
+		{
+			//Set active ability
+			activeAbility = a;
+
+			//Update active unit's action tiles
+			var au = activeUnit as AnimateUnit;
+			au.possibleActionTiles = activeAbility.CalculateActionableTiles(au);
 		}
 
 		internal bool Raycast<T>(out T hit) where T : MonoBehaviour
@@ -204,15 +288,12 @@ namespace StormRend.Systems
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			if (Physics.Raycast(ray, out RaycastHit hitInfo, float.PositiveInfinity, raycastLayerMask.value))
 			{
-				// Debug.Assert(hitInfo.collider, "hitInfo.collider is null");
 				hit = hitInfo.collider.GetComponent<T>();
-				// Debug.Assert(hit, "hit " + hit.GetType().Name + " was null");
-				
 				return (hit != null) ? true : false;
 			}
 			hit = null;
 			return false;
 		}
-	#endregion
-    }
+		#endregion
+	}
 }

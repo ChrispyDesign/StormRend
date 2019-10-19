@@ -7,6 +7,12 @@ using UnityEngine;
 
 namespace StormRend.Abilities
 {
+	public enum AbilityType
+	{
+		Primary,
+		Secondary
+	}
+
 	[Serializable, CreateAssetMenu(menuName = "StormRend/Ability", fileName = "Ability")]
 	public class Ability : ScriptableObject
 	{
@@ -14,12 +20,6 @@ namespace StormRend.Abilities
 		const int seven = 7;    //Cast Area Size Squared. Should this be some kind of global?
 
 		//Flags and Enums
-		public enum AbilityType
-		{
-			Primary,
-			Secondary
-		}
-
 		[Flags]
 		public enum TargetableTile
 		{
@@ -33,8 +33,8 @@ namespace StormRend.Abilities
 		[SerializeField] Sprite _icon = null;
 		[Tooltip("Animation number for this ability in order to send to a corresponding animator")]
 		[SerializeField] int _animNumber;
-		[Range(1, 5), SerializeField] int _abilityLevel = 1;
-		public AbilityType _abilityType = AbilityType.Primary;
+		[SerializeField] int _level = 1;
+		public AbilityType _type = AbilityType.Primary;
 
 
 		[TextArea(0, 2), SerializeField] string _description = "";
@@ -51,23 +51,35 @@ namespace StormRend.Abilities
 		//Members
 		[HideInInspector] public List<Effect> effects = new List<Effect>();
 		public bool[,] castArea { get; set; } = new bool[seven, seven];
-		public Tile[] possibleCastTiles { get; set; }
+		// public Tile[] possibleCastTiles { get; set; }
+		// public Tile[] tilesToCastTo { get; set; }
 
 		//Properties
 		public Sprite icon => _icon;
 		public int animNumber => _animNumber;
-		public AbilityType abilityType => _abilityType;
+		public AbilityType type => _type;
 		public string description => _description;
 		public int gloryCost => _gloryCost;
 		public TargetableTile targetableTileMask => _targetableTileMask;
 
 		//Core
-		public void Perform(Unit owner, Tile[] targets)
+		public void Perform(Unit owner, params Tile[] targets)
 		{
 			foreach (var e in effects)
 				e.Perform(owner, targets);
 		}
 
+		/// <summary>
+		/// Get the tiles that can be currently acted upon by this ability
+		/// </summary>
+		/// <param name="au">The unit</param>
+		public Tile[] CalculateActionableTiles(AnimateUnit au)
+		{
+			
+			throw new NotImplementedException();
+		}
+
+		//-------------------------------------------------------------
 		//TRANSFERRED FROM OLD
 		public void GetSelectableTiles(ref Unit unit)
 		{
