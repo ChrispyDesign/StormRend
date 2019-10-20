@@ -5,6 +5,10 @@ using StormRend.Units;
 using StormRend.Utility.Attributes;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace StormRend.Abilities
 {
 	public enum AbilityType
@@ -17,11 +21,11 @@ namespace StormRend.Abilities
 	public class Ability : ScriptableObject
 	{
 		//Constants
-		const int seven = 7;    //Cast Area Size Squared. Should this be some kind of global?
+		public const int kCastAreaSqrLen = 7;    //Cast Area Size Squared. Should this be some kind of global?
 
 		//Flags and Enums
 		[Flags]
-		public enum TargetableTile
+		public enum TargetTileMask
 		{
 			Empty = 1 << 0,
 			Self = 1 << 1,
@@ -34,9 +38,7 @@ namespace StormRend.Abilities
 		[Tooltip("Animation number for this ability in order to send to a corresponding animator")]
 		[SerializeField] int _animNumber;
 		[SerializeField] int _level = 1;
-		public AbilityType _type = AbilityType.Primary;
-
-
+		[SerializeField] AbilityType _type = AbilityType.Primary;
 		[TextArea(0, 2), SerializeField] string _description = "";
 
 		[Header("Casting"), Space(1), Tooltip("Glory cost required to perform this ability")]
@@ -45,14 +47,14 @@ namespace StormRend.Abilities
 		[Tooltip("The required number of selected tiles this ability needs in order for it to be performed")]
 		[SerializeField] int requiredTiles = 1;
 
-		[Tooltip("The category of tiles this ability can target"), Space(5)]
-		[EnumFlags, SerializeField] TargetableTile _targetableTileMask;
+		[Tooltip("The type of tiles this ability can target")]
+		//This will be used to determine which tiles the UserInputHandler can pick
+		[EnumFlags, SerializeField] TargetTileMask _targetTileMask;
 
 		//Members
-		[HideInInspector] public List<Effect> effects = new List<Effect>();
-		public bool[,] castArea { get; set; } = new bool[seven, seven];
-		// public Tile[] possibleCastTiles { get; set; }
-		// public Tile[] tilesToCastTo { get; set; }
+		[HideInInspector] 
+		public List<Effect> effects = new List<Effect>();
+		public bool[,] castArea { get; set; } = new bool[kCastAreaSqrLen, kCastAreaSqrLen];
 
 		//Properties
 		public Sprite icon => _icon;
@@ -60,7 +62,7 @@ namespace StormRend.Abilities
 		public AbilityType type => _type;
 		public string description => _description;
 		public int gloryCost => _gloryCost;
-		public TargetableTile targetableTileMask => _targetableTileMask;
+		public TargetTileMask targetTileMask => _targetTileMask;
 
 		//Core
 		public void Perform(Unit owner, params Tile[] targets)
@@ -78,6 +80,36 @@ namespace StormRend.Abilities
 			
 			throw new NotImplementedException();
 		}
+
+		//Add an effect to this ability (Has editor code)
+		public void AddEffect<T>(bool hideInHierarchy = true) where T : Effect
+		{
+			//Add and set owner
+			var newEffect = Effect.CreateInstance<T>();
+			newEffect.SetOwner(this);
+			newEffect.name = newEffect.GetType().Name;
+			this.effects.Add(newEffect);
+
+			//Hide flags
+			if (hideInHierarchy) newEffect.hideFlags = HideFlags.HideInHierarchy;
+
+#if UNITY_EDITOR
+			//Save
+			AssetDatabase.AddObjectToAsset(newEffect, this);
+			AssetDatabase.SaveAssets();
+#endif
+		}
+
+		//Removes an effect from this ability (Has Editor code)
+		public void RemoveEffect(Effect e)
+		{
+			this.effects.Remove(e);
+#if UNITY_EDITOR
+			DestroyImmediate(e, true);
+			AssetDatabase.SaveAssets();
+#endif
+		}
+	
 
 		//-------------------------------------------------------------
 		//TRANSFERRED FROM OLD

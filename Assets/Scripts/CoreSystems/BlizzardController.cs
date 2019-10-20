@@ -17,7 +17,7 @@ namespace StormRend.Systems
         [SerializeField] int maxBlizzardValue = 5;
 
         [Header("Damage")]
-        [SerializeField, EnumFlags] TargetUnitMask unitMask;
+        [SerializeField, EnumFlags] TargetUnitMask targetUnits;
         [SerializeField, Range(1, 10)] int damage = 1;
 
         [Space]
@@ -46,7 +46,7 @@ namespace StormRend.Systems
             OnExecute.Invoke();
 
             //ALLIES
-            if ((unitMask & TargetUnitMask.Allies) == TargetUnitMask.Allies)
+            if ((targetUnits & TargetUnitMask.Allies) == TargetUnitMask.Allies)
             {
                 //Damage all ally units
                 var allyUnits = ur.GetUnits<AllyUnit>();
@@ -54,7 +54,7 @@ namespace StormRend.Systems
             }
 
             //ENEMIES
-            if ((unitMask & TargetUnitMask.Enemies) == TargetUnitMask.Enemies)
+            if ((targetUnits & TargetUnitMask.Enemies) == TargetUnitMask.Enemies)
             {
                 //Deal damage to all enemies
                 var enemyUnits = ur.GetUnits<EnemyUnit>();
@@ -62,7 +62,7 @@ namespace StormRend.Systems
             }
 
             //CRYSTALS
-            if ((unitMask & TargetUnitMask.Crystals) == TargetUnitMask.Crystals)
+            if ((targetUnits & TargetUnitMask.Crystals) == TargetUnitMask.Crystals)
             {
                 //Deal damage to all enemies
                 var crystalUnits = ur.GetUnits<CrystalUnit>();
@@ -70,7 +70,7 @@ namespace StormRend.Systems
             }
 
             //OTHER (ie. Spirit crystals etc)
-            if ((unitMask & TargetUnitMask.InAnimates) == TargetUnitMask.InAnimates)
+            if ((targetUnits & TargetUnitMask.InAnimates) == TargetUnitMask.InAnimates)
             {
                 //Deal blizzard damage to all inanimate enemies
                 Debug.LogError("Blizzard affect on inanimate units not implemented!");

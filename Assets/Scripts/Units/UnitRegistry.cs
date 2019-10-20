@@ -30,6 +30,8 @@ namespace StormRend.Units
 
 		#region Core
 		public T[] GetUnits<T>() where T : Unit => _aliveUnits.Where(x => (x is T)).ToArray() as T[];
+		public Unit[] GetAllAliveUnits() => aliveUnits.ToArray();
+
 		public void RegisterDeath(Unit deadUnit)
 		{
 			if (_aliveUnits.Remove(deadUnit))

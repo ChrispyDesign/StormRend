@@ -102,6 +102,7 @@ namespace The.Great.Refactor.Brainstorm
 		[ ] AvatarSelectButton
 		[ ] AbilitySelectButton
 		[ ] InfoPanel
+		[ ] FinishTurnButton
 		[V] Panels: (Includes states)
 			MainMenu
 			Gameplay
@@ -199,7 +200,7 @@ namespace The.Great.Refactor.Brainstorm
     {
         //Fields/Symbols
         [SerializeField] float privateShownOnInspector;
-        [HideInInspector] [SerializeField] float PrivateNotShownOnInspectorButSerialized;
+        [HideInInspector, SerializeField] float PrivateNotShownOnInspectorButSerialized;
         public float avoidMe;     //Free variable that can be modified by anything and anyone
 
         //Properties

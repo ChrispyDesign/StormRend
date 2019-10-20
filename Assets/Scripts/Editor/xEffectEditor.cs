@@ -7,7 +7,7 @@ using StormRend.Abilities.Effects;
 /// Helper editor class used to display effects in the unity inspector.
 /// Also handles the addition & removal of effects
 /// </summary>
-public class EffectEditor : Editor
+public class xEffectEditor : Editor
 {
     // the effects to edit
     private List<xEffect> m_effects;
@@ -16,7 +16,7 @@ public class EffectEditor : Editor
     /// Constructor which caches a reference to an ability's list of effects
     /// </summary>
     /// <param name="effects"></param>
-    public EffectEditor(List<xEffect> effects)
+    public xEffectEditor(List<xEffect> effects)
     {
         m_effects = effects;
     }

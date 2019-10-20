@@ -97,7 +97,9 @@ namespace StormRend.MapSystems.Tiles
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			oldColor = highlight.color;
-			highlight.SetColor(Tile.TryGetHighlightColor("Hover"));
+			var hoverHighlight = Tile.TryGetHighlightColor("Hover");
+			if (hoverHighlight)
+				highlight.SetColor(hoverHighlight);
 		}
 
 		public void OnPointerExit(PointerEventData eventData)

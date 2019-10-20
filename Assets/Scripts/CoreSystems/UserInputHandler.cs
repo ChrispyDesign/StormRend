@@ -9,6 +9,7 @@ using StormRend.Utility.Events;
 using StormRend.Variables;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 /*Brainstorm:
 ------ UserInputHandler functionality
@@ -37,14 +38,15 @@ A The player clicks on a unit
 	- If clicks on one of the tiles it will  
 
 AbilityPanel
++ currentAbility : Ability
 + UpdateButtons(AnimateUnit unit)
-{
-	
-}
+AbilitySelectButton
++ OnClick()
 
 UserInputHandler
 + OnAbilityChanged(Ability ability)
 	SetAbility(ability)
++ OnAbilityChanged
 
 Q How
 
@@ -71,17 +73,12 @@ namespace StormRend.Systems
 		public bool leftClicked;
 		public bool rightClicked;
 		public bool rightClickUp;
-		// public bool wasTileHit;
-		// public bool wasUnitHit;
-		// public Unit u;
-		// public Tile t;
+
 		public void Refresh()
 		{
 			leftClicked = Input.GetMouseButtonDown(lmb);
 			rightClicked = Input.GetMouseButtonDown(rmb);
 			rightClickUp = Input.GetMouseButtonUp(rmb);
-			// wasUnitHit = UserInputHandler.current.Raycast<Unit>(out u);
-			// wasTileHit = UserInputHandler.current.Raycast<Tile>(out t);
 		}
 	}
 	public class UserInputHandler : MonoBehaviour

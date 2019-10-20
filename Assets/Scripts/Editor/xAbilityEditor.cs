@@ -7,7 +7,7 @@ using StormRend.Editors;
 [CustomEditor(typeof(xAbility))]
 public class xAbilityEditor : SmartEditor
 {
-    EffectEditor m_effectEditor;
+    xEffectEditor m_effectEditor;
 
     // the target ability object
     static xAbility t;
@@ -19,7 +19,7 @@ public class xAbilityEditor : SmartEditor
     void OnEnable()
     {
         t = (xAbility)target;
-        m_effectEditor = new EffectEditor(t.GetEffects());
+        m_effectEditor = new xEffectEditor(t.GetEffects());
     }
 
     public override void OnInspectorGUI()
