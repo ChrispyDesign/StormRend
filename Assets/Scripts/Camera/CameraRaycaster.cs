@@ -4,7 +4,6 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// camera raycasting script responsible for hovering/selecting objects in the scene
 /// </summary>
-/// 
 namespace StormRend
 {
 	[RequireComponent(typeof(Camera))]

@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: Lightfall Level 1
   m_EditorClassIdentifier: 
-  m_name: Lightfall (Level 1)
-  m_icon: {fileID: 0}
-  m_description: Teleport to an unoccupied tile and push adjacent enemies 1 tile.
+  m_name: Lightfall 1
+  animNumber: 2
+  m_icon: {fileID: 21300000, guid: 1ba9e54f6a9aca146a7078b9a4396477, type: 3}
+  m_description: 1. Leap to a tile, then push adjacent units 1 tile.
   m_gloryRequirement: 0
   m_tilesToSelect: 1
   m_castArea:
@@ -31,8 +32,22 @@ MonoBehaviour:
     m_players: 0
     m_self: 0
   m_effects:
-  - {fileID: 114923053855270444}
---- !u!114 &114923053855270444
+  - {fileID: 114493428611937736}
+  - {fileID: 114134291341002062}
+--- !u!114 &114134291341002062
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a689f1c72aecd749bd69b2cc1345b40, type: 3}
+  m_Name: TeleportEffect
+  m_EditorClassIdentifier: 
+  m_target: 0
+--- !u!114 &114493428611937736
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,5 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9119896ddbe049ae3df8859d7fd0d, type: 3}
   m_Name: PushEffect
   m_EditorClassIdentifier: 
-  m_target: 2
+  m_target: 1
   m_pushAmount: 1
+  m_doDamage: 0
+  m_damage: 0

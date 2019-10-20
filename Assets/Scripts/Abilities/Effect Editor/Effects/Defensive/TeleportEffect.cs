@@ -11,14 +11,7 @@ public class TeleportEffect : Effect
 
 		if (!m_isTileAllowed)
 			return false;
-
-		if (_effectedNode.GetUnitOnTop() != null 
-			|| _effectedNode.m_nodeType == NodeType.BLOCKED
-			|| _effectedNode.m_nodeType == NodeType.EMPTY)
-		{
-			_thisUnit.SetHasAttacked(false);
-			return false;
-		}
+ 
 		_thisUnit.MoveTo(_effectedNode);
 
 		return true;

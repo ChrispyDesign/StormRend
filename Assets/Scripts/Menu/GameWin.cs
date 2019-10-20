@@ -17,8 +17,9 @@ public class GameWin : MonoBehaviour
     }
 
     public void Restart()
-    {
-        SceneManager.LoadScene(1);
+	{
+		Time.timeScale = 1.0f;
+		SceneManager.LoadScene(1);
     }
     public void Settings()
     {

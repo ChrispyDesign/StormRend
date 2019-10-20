@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Lightfall Level 3
   m_EditorClassIdentifier: 
   m_name: Lightfall (Level 3)
-  m_icon: {fileID: 0}
-  m_description: Deal 2 damage to adjacent enemies on landing.
+  animNumber: 2
+  m_icon: {fileID: 21300000, guid: 69e71dddb9aa0d942bb5d03508c81cb5, type: 3}
+  m_description: '3. Deal 2 damage to adjacent enemies on landing. (Glory: 3)'
   m_gloryRequirement: 3
   m_tilesToSelect: 1
   m_castArea:
@@ -32,36 +33,7 @@ MonoBehaviour:
     m_self: 0
   m_effects:
   - {fileID: 114923053855270444}
-  - {fileID: 114494440402168048}
-  - {fileID: 114107843705963338}
---- !u!114 &114107843705963338
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
-  m_Name: DamageEffect
-  m_EditorClassIdentifier: 
-  m_target: 0
-  m_damageAmount: 0
---- !u!114 &114494440402168048
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
-  m_Name: RefreshEffect
-  m_EditorClassIdentifier: 
-  m_target: 3
-  m_refreshType: 1
+  - {fileID: 114965102374127540}
 --- !u!114 &114923053855270444
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -74,5 +46,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9119896ddbe049ae3df8859d7fd0d, type: 3}
   m_Name: PushEffect
   m_EditorClassIdentifier: 
-  m_target: 2
+  m_target: 1
   m_pushAmount: 1
+  m_gainProtection: 1
+  m_doDamage: 1
+  m_damage: 2
+--- !u!114 &114965102374127540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a689f1c72aecd749bd69b2cc1345b40, type: 3}
+  m_Name: TeleportEffect
+  m_EditorClassIdentifier: 
+  m_target: 0

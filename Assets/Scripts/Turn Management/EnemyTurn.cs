@@ -26,15 +26,17 @@ public class EnemyTurn : State
     /// <summary>
     /// 
     /// </summary>
-    public override void Enter()
+    public override void OnEnter()
     {
         m_timer = 0;
+
+        GameManager.singleton.DeselectAllUnits<PlayerUnit>();
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public override void Stay(StateMachine stateMachine)
+    public override void OnUpdate(StateMachine stateMachine)
     {
         //while (m_timer < m_enemyTurnTime)
         //{
@@ -48,7 +50,7 @@ public class EnemyTurn : State
     /// <summary>
     /// 
     /// </summary>
-    public override void Exit()
+    public override void OnExit()
     {
 		m_turnManager.ResetPlayerVariables();
     }

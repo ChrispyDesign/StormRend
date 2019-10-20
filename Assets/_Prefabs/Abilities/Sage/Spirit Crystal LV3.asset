@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_name: Spirit Crystal Level 3
   animNumber: 0
-  m_icon: {fileID: 0}
-  m_description: 
+  m_icon: {fileID: 21300000, guid: 467affa39f46f3843b7377c18e8adb86, type: 3}
+  m_description: You can place an additional Spirit Crystal.
   m_gloryRequirement: 3
   m_tilesToSelect: 2
   m_castArea:
@@ -46,11 +46,7 @@ MonoBehaviour:
   m_Name: SummonEffect
   m_EditorClassIdentifier: 
   m_target: 0
-  OnPeformEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  m_inflictCrippling: 0
   m_summon: {fileID: 4052113309130031594, guid: 9402ae4597a818a46a729d0733c4a41f,
     type: 3}
   m_HowManyTurns: 1

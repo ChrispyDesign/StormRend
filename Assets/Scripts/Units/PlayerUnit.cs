@@ -30,7 +30,7 @@ namespace StormRend
 
         public override void OnSelect()
         {
-            m_isSelected = true;
+            isSelected = true;
 
             Unit player = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
             if (player != null && player != this)
@@ -41,15 +41,15 @@ namespace StormRend
             }
 
             GameManager.singleton.GetPlayerController().SetCurrentPlayer(this);
-            UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(this);
+           // UIManager.GetInstance().GetAvatarSelector().SelectPlayerUnit(this);
             UIManager.GetInstance().GetAbilitySelector().SelectPlayerUnit(this);
 
-            if (m_hasMoved && m_hasAttacked)
+            if (hasMoved && hasAttacked)
                 return;
 
             GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
 
-            if (!m_afterClear)
+            if (!isLocked) 
             {
                 foreach (ICommand command in GameManager.singleton.GetCommandManager().m_moves)
                 {
@@ -63,13 +63,13 @@ namespace StormRend
                             return;
 
                         move.Undo();
-                        m_hasMoved = true;
+                        hasMoved = true;
                     }
                 }
 
                 SetDuplicateMeshVisibilty(true);
 
-                Dijkstra.Instance.FindValidMoves(GetTile(), GetMoveRange(), typeof(EnemyUnit));
+                Dijkstra.Instance.GetValidMoves(GetTile(), GetMoveRange(), typeof(EnemyUnit));
             }
 
             base.OnSelect();
@@ -82,13 +82,19 @@ namespace StormRend
             SetDuplicateMeshVisibilty(false);
         }
 
+		public void CheckSoulCommune(Unit _deadUnit)
+		{
+			Dijkstra dijkstra = Dijkstra.Instance;
+			dijkstra.GetValidMoves(Grid.CoordToTile(coords), GetMoveRange(), typeof(EnemyUnit));
 
-		//Could be better implemented
-        public override void Die()
-        {
-            base.Die();
-            GameManager.singleton.playerCount--;
-            GameManager.singleton.CheckEndCondition();
-        }
+			foreach(Tile tile in dijkstra.validMoves)
+			{
+				if(tile.GetUnitOnTop() != null && tile.GetUnitOnTop() == _deadUnit)
+				{
+					UIManager.GetInstance().GetGloryManager().GainGlory(1);
+
+				}
+			}
+		}
     }
 }

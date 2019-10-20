@@ -1,11 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using BhaVE.Core;
 using UnityEngine;
 
 namespace StormRend.AI
 {
-	public class AIController : MonoBehaviour
+    public class AIController : MonoBehaviour
 	{
 		// - Is triggered by player finish turn event
 		// - Runs each enemy's AI one by one
@@ -20,6 +19,7 @@ namespace StormRend.AI
 		GameManager gm = null;
 		BhaveDirector bhd = null;
 
+
 		void Awake()
 		{
 			gm = GameManager.singleton;
@@ -33,7 +33,7 @@ namespace StormRend.AI
 				currentUnits = gm.GetPlayerUnits();
 			else if (aiUnitType == UnitType.Enemy)
 				currentUnits = gm.GetEnemyUnits();
-			
+
 			//Start running the AI
 			StartCoroutine(RunAI());
 		}

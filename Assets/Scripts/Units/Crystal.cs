@@ -6,6 +6,8 @@ using UnityEngine;
 public class Crystal : Unit
 {
 	[HideInInspector]
+	public bool m_inflictCrippling;
+	[HideInInspector]
 	public int m_HowManyTurns;
 
 	[SerializeField] private int m_damage;
@@ -36,26 +38,45 @@ public class Crystal : Unit
 		// Process Left
 		tempCoords = coords - m_left;
 		tempNode = Grid.CoordToTile(tempCoords);
-		if(tempNode.GetUnitOnTop() != null)
-			tempNode.GetUnitOnTop().TakeDamage(m_damage);
+		if (tempNode.GetUnitOnTop() != null)
+		{
+			if(m_inflictCrippling)
+				tempNode.GetUnitOnTop().isCrippled = true;
 
+			tempNode.GetUnitOnTop().TakeDamage(m_damage);
+		}
 		// Process Up
 		tempCoords = coords - m_up;
 		tempNode = Grid.CoordToTile(tempCoords);
 		if (tempNode.GetUnitOnTop() != null)
+		{
+			if (m_inflictCrippling)
+				tempNode.GetUnitOnTop().isCrippled = true;
+
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
+		}
 
 		// Process Right
 		tempCoords = coords - m_right;
 		tempNode = Grid.CoordToTile(tempCoords);
 		if (tempNode.GetUnitOnTop() != null)
+		{
+			if (m_inflictCrippling)
+				tempNode.GetUnitOnTop().isCrippled = true;
+
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
+		}
 
 		// Process Down
 		tempCoords = coords - m_down;
 		tempNode = Grid.CoordToTile(tempCoords);
 		if (tempNode.GetUnitOnTop() != null)
+		{
+			if (m_inflictCrippling)
+				tempNode.GetUnitOnTop().isCrippled = true;
+
 			tempNode.GetUnitOnTop().TakeDamage(m_damage);
+		}
 
 	}
 }

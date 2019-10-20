@@ -38,7 +38,7 @@ public class UIAbilityInfo : MonoBehaviour
     public void HoverAbility()
     {		
         m_player = GameManager.singleton.GetPlayerController().GetCurrentPlayer();
-        if (m_player != null)
+        if (m_player != null && !(m_player.isBlind))
         {
             GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.ATTACK);
             m_selector.SetInfoPanelData();
@@ -64,15 +64,17 @@ public class UIAbilityInfo : MonoBehaviour
 		if(!isLockedAbility)
 			GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.MOVE);
 
-		if (m_player != null)
+		Ability previousAbility = m_player.GetSelectedAbility();
+		if (m_player != null && previousAbility != null)
 		{
-			m_player.UnShowAttackTiles();
+			if (previousAbility.GetTilesToSelect() == previousAbility.GetTiles().Count)
+				m_player.UnShowAttackTiles();
 		}
 		m_infoPanel.SetActive(false);
 
 		if (isLockedAbility)
 		{
-			Ability ability = GameManager.singleton.GetPlayerController().GetCurrentPlayer().GetSelectedAbility();
+			Ability ability = GameManager.singleton.GetPlayerController().GetCurrentPlayer()?.GetSelectedAbility();
 			Unit player = GameManager.singleton.GetPlayerController().GetCurrentPlayer() as Unit;
 			if (!player)
 			{
@@ -84,14 +86,18 @@ public class UIAbilityInfo : MonoBehaviour
 
     public void OnClickAbility()
     {
+		PlayerController controller = GameManager.singleton.GetPlayerController();
+
 		Button button = this.gameObject.GetComponent<Button>();
         if(m_player != null && !m_player.GetHasAttacked() && button.interactable)
         {
-            GameManager.singleton.GetPlayerController().SetCurrentMode(PlayerMode.ATTACK);
+			controller.SetCurrentMode(PlayerMode.ATTACK);
+			m_ability.GetTiles().Clear();
             m_player.SetSelectedAbility(m_ability);
-            GameManager.singleton.GetPlayerController().SetIsAbilityLocked(true); ;
+			controller.SetIsAbilityLocked(true); ;
             m_player.ShowAttackTiles();
 		}
 		m_infoPanel.SetActive(false);
+        UIManager.GetInstance().GetAbilitySelector().GetButtonPanel().SetActive(false);
 	}
 }

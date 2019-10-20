@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9108019807441497514}
-  - component: {fileID: 9108019807441497519}
   - component: {fileID: 1706327281877639260}
+  - component: {fileID: 9108019807441497519}
   m_Layer: 0
   m_Name: Sage
   m_TagString: Untagged
@@ -35,6 +35,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1706327281877639260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108019807441497518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f35686127b2404ca16e9065156b57d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HP: 0
+  m_coordinates: {x: 0, y: 0}
+  isLocked: 0
+  isProtected: 0
+  isBlind: 0
+  isProvoking: 0
+  isCrippled: 0
+  m_duplicateMesh: {fileID: 7897677849403756264}
+  m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
+  m_firstAbilities:
+  - {fileID: 11400000, guid: c824855963fee1e48883b5fcaeb65d5a, type: 2}
+  - {fileID: 11400000, guid: 101add0e257f5a64ab6298cbfef40116, type: 2}
+  - {fileID: 11400000, guid: 515a34a92f0dac849b4ac3430169f6f4, type: 2}
+  m_secondAbilities:
+  - {fileID: 11400000, guid: c9c0ed70651022449b255fec89510099, type: 2}
+  - {fileID: 11400000, guid: c559a20f756db33499a9a6f23526cca9, type: 2}
+  - {fileID: 11400000, guid: ab632f0ea4c4ce54ba8b2c164bcd9424, type: 2}
+  m_maxHP: 3
+  m_maxMoveRange: 4
+  provokeDamage: 0
+  m_unitType: 2
 --- !u!65 &9108019807441497519
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -48,53 +81,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
   m_Center: {x: 0, y: 0.19554019, z: 0}
---- !u!114 &1706327281877639260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9108019807441497518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84f35686127b2404ca16e9065156b57d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_coordinates: {x: 0, y: 0}
-  m_afterClear: 0
-  m_duplicateMesh: {fileID: 7897677849403756264}
-  m_passiveAbility: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4, type: 2}
-  m_firstAbilities:
-  - {fileID: 11400000, guid: 3a61cba9bd6dc19459c364202fa11a6a, type: 2}
-  - {fileID: 11400000, guid: 4b1422d0bf231254b8bea491342722b0, type: 2}
-  - {fileID: 11400000, guid: d08da6c1e4ddb7f43a61c2be208f248f, type: 2}
-  m_secondAbilities:
-  - {fileID: 11400000, guid: f59926acb65149d4f86c34c207ab24a2, type: 2}
-  - {fileID: 11400000, guid: 30f263af1c2a01f42b41351c6a20871d, type: 2}
-  - {fileID: 11400000, guid: a770047c9b761624abb71e10329fb51d, type: 2}
-  m_maxHP: 3
-  m_maxMoveRange: 4
-  m_onSelect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_onDeselect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_onHover:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_onUnhover:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  m_unitType: 2
 --- !u!1001 &2827533052342091546
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -259,6 +245,21 @@ PrefabInstance:
     - target: {fileID: 4460336594618475941, guid: 534138d032de9754c88a7c4793a96b8c,
         type: 3}
       propertyPath: m_isInputParsingRequired
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 455633302327990028, guid: 534138d032de9754c88a7c4793a96b8c,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 455633302327990028, guid: 534138d032de9754c88a7c4793a96b8c,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 455633302327990028, guid: 534138d032de9754c88a7c4793a96b8c,
+        type: 3}
+      propertyPath: m_Color.b
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 681122493872013710, guid: 534138d032de9754c88a7c4793a96b8c,

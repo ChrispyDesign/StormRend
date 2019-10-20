@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: Safe Passage Level 1
   m_EditorClassIdentifier: 
-  m_name: Safe Passage (Level 1)
-  m_icon: {fileID: 0}
-  m_description: 'Choose 2 tiles: swap the units on those tiles.'
+  m_name: Safe Passage 1
+  animNumber: 0
+  m_icon: {fileID: 21300000, guid: 64db83bc82081ce489ade59442cfba1d, type: 3}
+  m_description: '1. Choose 2 tiles: swap the units on those tiles.'
   m_gloryRequirement: 0
   m_tilesToSelect: 2
   m_castArea:
@@ -30,4 +31,21 @@ MonoBehaviour:
     m_enemies: 1
     m_players: 1
     m_self: 0
-  m_effects: []
+  m_effects:
+  - {fileID: 114145748435581280}
+--- !u!114 &114145748435581280
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8276f40f4bf260f4e92f11193e47668e, type: 3}
+  m_Name: SwapUnitEffect
+  m_EditorClassIdentifier: 
+  m_target: 0
+  removeCurses: 0
+  restoreHealth: 0
+  restoreAmount: 0

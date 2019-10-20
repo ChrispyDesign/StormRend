@@ -18,6 +18,8 @@ namespace StormRend
 		[SerializeField] Button m_proceedTurnButton = null;
 
 		int m_currentTurn;
+		GameObject m_playerFlag;
+		GameObject m_enemyFlag;
 
 		// state machine for managing turns
 		StateMachine m_stateMachine;
@@ -45,8 +47,13 @@ namespace StormRend
 			m_playerTurn = new PlayerTurn(this);
 			m_enemyTurn = new EnemyTurn(this);
 
+			m_playerFlag = UIManager.GetInstance().GetPlayerFlag();
+			m_enemyFlag = UIManager.GetInstance().GetEnemyFlag();
+			m_playerFlag.SetActive(true);
+			m_enemyFlag.SetActive(false);
+
 			// player turn by default
-			m_stateMachine.InitialiseState(m_playerTurn);
+			m_stateMachine.InitState(m_playerTurn);
 		}
 
 		/// <summary>
@@ -54,6 +61,8 @@ namespace StormRend
 		/// </summary>
 		public void PlayerTurn()
 		{
+			m_enemyFlag.SetActive(false);
+			m_playerFlag.SetActive(true);
 			List<Crystal> crystal = GameManager.singleton.GetCrystals();
 			foreach (Crystal c in crystal)
 			{
@@ -62,7 +71,7 @@ namespace StormRend
 			m_currentTurn++;
 
 			// ensure blizzard manager exists
-			BlizzardManager blizzardManager = UIManager.GetInstance().GetBlizzardManager();
+			BlizzardController blizzardManager = UIManager.GetInstance().GetBlizzardManager();
 
 			// increment blizzard counter at the start of each turn
 			if (blizzardManager)
@@ -72,7 +81,7 @@ namespace StormRend
 			m_proceedTurnButton.interactable = true;
 
 			// proceed to player turn
-			m_stateMachine.ChangeState(m_playerTurn);
+			m_stateMachine.Switch(m_playerTurn);
 		}
 
 		/// <summary>
@@ -80,17 +89,20 @@ namespace StormRend
 		/// </summary>
 		public void EnemyTurn()
 		{
+			m_playerFlag.SetActive(false);
+			m_enemyFlag.SetActive(true);
 			GameManager.singleton.GetCommandManager().m_moves.Clear();
 			foreach(PlayerUnit player in GameManager.singleton.GetPlayerUnits())
 			{
+				player.OnDeselect();
 				player.SetMoveCommand(null);
 			}
 
-			// disable proceed button
+			// disable proceed buttonPer
 			m_proceedTurnButton.interactable = false;
 
 			// proceed to enemy turn
-			m_stateMachine.ChangeState(m_enemyTurn);
+			m_stateMachine.Switch(m_enemyTurn);
 		}
 
 		public void ResetPlayerVariables()
@@ -101,7 +113,21 @@ namespace StormRend
 			{
 				player.SetHasAttacked(false);
 				player.SetHasMoved(false);
-				player.m_afterClear = false;
+				player.isLocked = false;
+				player.isBlind = false;
+				player.isProtected = false;
+				player.isCrippled = false;
+				player.isProvoking = false;
+			}
+
+			EnemyUnit[] enemyUnits = GameManager.singleton.GetEnemyUnits();
+
+			foreach (EnemyUnit enemy in enemyUnits)
+			{
+				enemy.isBlind = false;
+				enemy.isProtected = false;
+				enemy.isCrippled = false;
+				enemy.isProvoking = false;
 			}
 
 			GameManager.singleton.GetCommandManager().m_moves.Clear();
@@ -115,7 +141,7 @@ namespace StormRend
 			{
 				enemy.SetHasAttacked(false);
 				enemy.SetHasMoved(false);
-				enemy.m_afterClear = false;
+				enemy.isLocked = false;
 			}
 
 			GameManager.singleton.GetCommandManager().m_moves.Clear();

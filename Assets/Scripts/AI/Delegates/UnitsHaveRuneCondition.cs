@@ -6,15 +6,10 @@ using UnityEngine;
 
 namespace StormRend.Bhaviours
 {
-	/// <summary>
-	/// 
-	/// </summary>
 	// [CreateAssetMenu(menuName = "StormRend/Delegates/Conditions/UnitsHaveRune", fileName = "UnitsHaveRune")]
     public class UnitsHaveRuneCondition : BhaveCondition
     {
 		[SerializeField] BhaveUnitList targets;
-
-
 		Unit unit;
 
 		public override void Initiate(BhaveAgent agent)
