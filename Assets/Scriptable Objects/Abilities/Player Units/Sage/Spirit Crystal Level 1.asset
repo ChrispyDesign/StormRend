@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
+  m_Name: Spirit Crystal Level 1
+  m_EditorClassIdentifier: 
+  m_name: Spirit Crystal (Level 1)
+  m_icon: {fileID: 0}
+  m_description: 'Create a Spirit Crystal at an empty tile that blocks movement and
+    has 1 Health. At the start of your turn and when it dies it shatters, dealing
+    1 damage to adjacent units. '
+  m_gloryRequirement: 0
+  m_tilesToSelect: 1
+  m_castArea:
+  - elements: 00000001000000
+  - elements: 00000101010000
+  - elements: 00010101010100
+  - elements: 01010100010101
+  - elements: 00010101010100
+  - elements: 00000101010000
+  - elements: 00000001000000
+  m_targetableTiles:
+    m_empty: 1
+    m_enemies: 0
+    m_players: 0
+    m_self: 0
+  m_effects:
+  - {fileID: 114776763529855574}
+--- !u!114 &114776763529855574
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15f2715bfc5600e4b9a9a9bea62fb22c, type: 3}
+  m_Name: SummonEffect
+  m_EditorClassIdentifier: 
+  m_target: 0
+  m_summon: {fileID: 0}

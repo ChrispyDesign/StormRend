@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
+  m_Name: Passive
+  m_EditorClassIdentifier: 
+  m_name: Passive
+  m_icon: {fileID: 0}
+  m_description: Passive Does Kapposh
+  m_gloryRequirement: 0
+  m_tilesToSelect: 1
+  m_castArea:
+  - elements: 00000001000000
+  - elements: 00000001000000
+  - elements: 00000001000000
+  - elements: 01010100010101
+  - elements: 00000001000000
+  - elements: 00000001000000
+  - elements: 00000001000000
+  m_targetableTiles:
+    m_empty: 1
+    m_enemies: 1
+    m_players: 1
+    m_self: 1
+  m_effects:
+  - {fileID: 114452196164604988}
+--- !u!114 &114452196164604988
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c73d89f3a52747d42ae59231536f0187, type: 3}
+  m_Name: GloryEffect
+  m_EditorClassIdentifier: 
+  m_target: 0
+  OnPeformEffect:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_gloryAmount: 2
