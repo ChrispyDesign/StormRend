@@ -8,7 +8,7 @@ namespace StormRend.Variables.Utils
 	/// Custom variable listener and limiter
 	/// </summary>
 	public class IntVariableHandler : MonoBehaviour
-	{
+	{ 
 		public enum LimitType { None, Clamp, WrapAround }
 
 		[SerializeField] BhaveInt intVariable;

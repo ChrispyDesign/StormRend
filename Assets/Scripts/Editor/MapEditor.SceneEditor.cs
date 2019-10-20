@@ -9,7 +9,7 @@ namespace StormRend.Editors
     {
         public enum EditMode { Painting, Erasing }
 
-        const int kNumOfGridLines = 30;
+        const int kNumOfGridLines = 40;		//Size of the grid
         public override bool RequiresConstantRepaint() => true;
 
         Color oldHandleColor, oldGUIColor;

@@ -12,23 +12,15 @@ namespace StormRend.MapSystems.Tiles
 	/// + Any toppers (prefab variants)
 	/// + Any other extra objects
 	/// </summary>
+	[SelectionBase]
 	public abstract class Tile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		//Highlights
-		public static TileHighlightColor[] highlightColors { get; private set; }
-		public static TileHighlightColor TryGetHighlightColor(string highlightName)
-		{
-			foreach (var h in highlightColors)
-			{
-				//Highlight color found in static list of highlights
-				if (h.name == highlightName)
-					return h;
-			}
-			//Nothing found return null
-			return null;
-		}
+		static bool highlightsScanned = false;
+		public static Dictionary<string, TileHighlightColor> highlightColors { get; private set; } = new Dictionary<string, TileHighlightColor>();
 
 		//Inspector
+		[SerializeField] TileHighlightColor hoverHighlight;
 		public float cost = 1;
 		internal float G = float.MaxValue;
 		internal float H = float.MaxValue;
@@ -47,31 +39,51 @@ namespace StormRend.MapSystems.Tiles
 	#region Core
 		void Awake()
 		{
-			if (highlightColors == null)
-				highlightColors = Resources.FindObjectsOfTypeAll<TileHighlightColor>();
+			LoadHighlightColors();
 		}
 		void Start()
 		{
+			SetupHighlightObject();
+		}
+
+		public void Connect(Tile to) => connections.Add(to);
+		public void Disconnect(Tile from) => connections.Remove(from);
+		public void DisconnectAll() => connections.Clear();
+	#endregion
+
+	#region Inits
+		static void LoadHighlightColors()
+		{
+			if (!highlightsScanned)
+			{
+				var foundHighlights = Resources.FindObjectsOfTypeAll<TileHighlightColor>();
+				foreach (var fh in foundHighlights)
+				{
+					Debug.Log(fh.name);
+					highlightColors.Add(fh.name, fh);
+				}
+				highlightsScanned = true;
+			}
+		}
+		void SetupHighlightObject()
+		{
 			_highlight = GetComponentInChildren<TileHighlight>();
-			
+
 			//Create a highlight object if nothing found
 			if (highlight) return;
 			var go = new GameObject("Highlight");
 			_highlight = go.AddComponent<TileHighlight>();
 			go.transform.SetParent(this.transform);
 		}
-		public void Connect(Tile to) => connections.Add(to);
-		public void Disconnect(Tile from) => connections.Remove(from);
-		public void DisconnectAll() => connections.Clear();
 	#endregion
 
-	#region Uncertain Methods
+	#region Core
 		/// <summary>
 		/// Returns an adjacent tile in a certain direction.
 		/// If no tile found then return null.
 		/// This should work with diagonals too ie. direction = {-1, 1} = forward, left
 		/// </summary>
-		public Tile TryGetConnectedTile(Vector2Int direction, float tolerance = 0.1f)
+		public bool TryGetConnectedTile(Vector2Int direction, out Tile tile, float tolerance = 0.1f)
 		{
 			const float adjDist = 1f;//, diagDist = 1.414213f;
 
@@ -83,13 +95,18 @@ namespace StormRend.MapSystems.Tiles
 				new Vector3(adjDist * owner.tileSize * direction.x, 0, adjDist * owner.tileSize * direction.y);
 
 			//Loop through all connected tiles and see if there are any within tolerance
-			foreach (var c in connections)
+			foreach (var connectedTile in connections)
 			{
-				var dist = Vector3.Distance(c.transform.position, targetTilePos);
+				var dist = Vector3.Distance(connectedTile.transform.position, targetTilePos);
 				if (dist < tolerance)
-					return c;
+				{
+					tile = connectedTile;
+					return true;
+				}
 			}
-			return null;
+			tile = null;
+			return false;
+			
 		}
 	#endregion
 
@@ -97,9 +114,8 @@ namespace StormRend.MapSystems.Tiles
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			oldColor = highlight.color;
-			var hoverHighlight = Tile.TryGetHighlightColor("Hover");
-			if (hoverHighlight)
-				highlight.SetColor(hoverHighlight);
+			if (highlightColors.TryGetValue("Hover", out TileHighlightColor color))
+				highlight.SetColor(color);
 		}
 
 		public void OnPointerExit(PointerEventData eventData)

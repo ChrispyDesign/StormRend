@@ -1,16 +1,20 @@
-﻿using StormRend.Defunct;
+﻿using pokoro.Patterns.Generic;
+using StormRend.Defunct;
 using StormRend.States.UI;
 using StormRend.Systems.StateMachines;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace StormRend.States
+namespace StormRend.Systems
 {
+	/// <summary>
+	/// Class that helps controls the game state machine as well as other side functionality such as:
+	/// Handling pause, has functions to change scenes, go back to main menu, handling end game, etc
+	/// </summary>
 	[RequireComponent(typeof(UltraStateMachine))]
-	public class SRGameDirector : MonoBehaviour
+	public class SRGameDirector : Singleton<SRGameDirector>
 	{
-		[SerializeField] bool debug = false;
-
+		//Inspector
 		[Header("Game Pause")]
 		[SerializeField] KeyCode pauseKey = KeyCode.Escape;
 		[SerializeField] UIState pauseMenuState;
@@ -19,8 +23,18 @@ namespace StormRend.States
 		[SerializeField] State loseState;
 		[SerializeField] State victoryState;
 
+		[Header("Scene Management")]
+		public int mainMenuSceneIdx = 0;
+
+		//Properties
+		public State currentGameState => usm?.currentState;
+
+		//Members
 		UltraStateMachine usm;
 		bool isPaused;
+
+		//Debugs
+		[SerializeField, Space(10)] bool debug = false;
 
 		void Awake()    //Doesn't matter if you override or hide. base.Awake() will be invoked via reflection regardless.
 		{
@@ -63,15 +77,13 @@ namespace StormRend.States
 			usm.ClearStack();
 		}
 
-		//-------- Temp ----------
 		public void ReloadCurrentScene()
 		{
 			var currentScene = SceneManager.GetActiveScene();
 			SceneManager.LoadScene(currentScene.buildIndex);
 		}
 
-		[Header("Scene Management")]
-		public int mainMenuSceneIdx = 0;
+
 		public void LoadMainMenuScene()
 		{
 			SceneManager.LoadScene(mainMenuSceneIdx);

@@ -25,5 +25,9 @@ namespace StormRend.MapSystems.Tiles
 		{
 			sr.color = color;
 		}
+		public void Clear()
+		{
+			sr.color = Color.clear;
+		}
 	}
 }

@@ -110,13 +110,14 @@ namespace StormRend.Systems
 			get => _activeUnit.value;
 			internal set => _activeUnit.value = value;
 		}
+		public bool unitIsActive => activeUnit != null;
 		public Ability activeAbility
 		{
 			get => _activeAbility;
 			internal set => _activeAbility = value;
 		}
-		public bool isPlayersTurn { get; set; } = true;
-		public bool unitIsActive => activeUnit != null;
+		public bool abilityIsActive => activeAbility != null;
+		public bool isPlayersTurn { get; set; } = true;		//If the current game state matches the player's state?
 
 		//Events
 		[Space(5)]
@@ -127,6 +128,7 @@ namespace StormRend.Systems
 		FrameEventData e;   //The events that happenned this frame
 		ActivityMode mode = ActivityMode.Move;
 		CameraMover camMover;
+		SRGameDirector game;
 
 		//Debug
 		public bool debug;
@@ -161,8 +163,8 @@ namespace StormRend.Systems
 
 			if (e.leftClicked)
 			{
-				unitHit = Raycast<Unit>(out interimUnit);
-				tileHit = Raycast<Tile>(out interimTile);
+				unitHit = TryGetRaycast<Unit>(out interimUnit);
+				tileHit = TryGetRaycast<Tile>(out interimTile);
 
 				if (isPlayersTurn) 
 				{
@@ -214,15 +216,15 @@ namespace StormRend.Systems
 			switch (mode)
 			{
 				case ActivityMode.Move:
-					// UpdateMoveTiles(u);
+					// HighlightMoveTiles(u);
 					break;
 				case ActivityMode.Action:
-					// UpdateActionTiles(u);
+					// HighlightActionTiles(u);
 					break;
 			}
 		}
 
-		internal void UpdateMoveTiles(Unit u)
+		internal void HighlightMoveTiles(Unit u)
 		{
 			//NOTE: Active unit's MOVE tiles should be refreshed each turn
 			
@@ -230,7 +232,7 @@ namespace StormRend.Systems
 			var au = u as AnimateUnit;
 			if (!au) return;
 
-			//Make sure there are tiles to highlight
+			//Make sure there are tiles to highlight (Hopefully this is done before the unit has moved)
 			if (au.possibleMoveTiles == null)
 				au.CalculateMoveTiles();
 
@@ -242,7 +244,7 @@ namespace StormRend.Systems
 			}
 		}
 
-		internal void UpdateActionTiles(Unit u)
+		internal void HighlightActionTiles(Unit u)
 		{
 			//NOTE: Active unit's MOVE tiles should be refreshed each OnAbilityChanged
 
@@ -267,7 +269,23 @@ namespace StormRend.Systems
 		{
 			OnActiveUnitCleared.Invoke();
 
+			//Clear tile highlights first
+			// ClearActiveUnitTileHighlights();
+
+			//Clear
 			activeUnit = null;
+		}
+
+		internal void ClearActiveUnitTileHighlights()
+		{
+			var au = activeUnit as AnimateUnit;
+			if (!au) return;
+
+			//Clear all move and action tiles
+			foreach (var t in au.possibleMoveTiles)
+				t.highlight.Clear();
+			foreach (var t in au.possibleActionTiles)
+				t.highlight.Clear();
 		}
 
 		public void ChangeAbility(Ability a)
@@ -280,7 +298,7 @@ namespace StormRend.Systems
 			au.possibleActionTiles = activeAbility.CalculateActionableTiles(au);
 		}
 
-		internal bool Raycast<T>(out T hit) where T : MonoBehaviour
+		internal bool TryGetRaycast<T>(out T hit) where T : MonoBehaviour
 		{
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			if (Physics.Raycast(ray, out RaycastHit hitInfo, float.PositiveInfinity, raycastLayerMask.value))

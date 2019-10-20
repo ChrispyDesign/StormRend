@@ -12,12 +12,12 @@ namespace StormRend.Units
 	public abstract class AnimateUnit : Unit, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 	{
 		//Inspector
-		[Header("Color")]
-		[SerializeField] protected Color ghostColor = Color.blue;
-
 		[Header("Abilities")]
 		[SerializeField] protected int moveRange = 4;
 		[SerializeField] protected Ability[] abilities;
+
+		[Header("Color")]
+		[SerializeField] protected Color ghostColor = Color.blue;
 
 		//Properties
 		public Tile nextTile { get; set; }	//The tile this unit wants to move to
