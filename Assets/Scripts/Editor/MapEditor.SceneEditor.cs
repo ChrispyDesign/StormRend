@@ -169,6 +169,8 @@ namespace StormRend.Editors
         }
         void DrawConnections(Color? color = null)
         {
+			if (!m) return;
+
             Handles.color = color == null ? Color.white : color.Value;
 
             foreach (var t in m?.tiles)

@@ -40,15 +40,14 @@ namespace StormRend.Editors
 
 			//Register events
 			Undo.undoRedoPerformed += OnUndoRedo;
-
-			//Prevent "Some objects were not cleaned up when closing the scene" errors
-			// EditorApplication.playModeStateChanged += OnPlayModeStateChanged; //(PlayModeStateChange stateChange) => { if (stamp) DestroyImmediate(stamp); };
+			EditorApplication.playModeStateChanged += OnPlayModeStateChanged; //(PlayModeStateChange stateChange) => { if (stamp) DestroyImmediate(stamp); };
 		}
 		void OnDisable()
 		{
 			if (stamp) DestroyImmediate(stamp);
 
 			Undo.undoRedoPerformed += OnUndoRedo;
+			EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
 		}
 		#endregion
 
@@ -57,6 +56,24 @@ namespace StormRend.Editors
 			style = new GUIStyle();
 			style.fontSize = 15;
 			style.fontStyle = FontStyle.Bold;
+		}
+
+		void OnPlayModeStateChanged(PlayModeStateChange stateChange)
+		{
+			switch (stateChange)
+			{
+				//Prevent "Some objects were not cleaned up when closing the scene" errors
+				case PlayModeStateChange.ExitingEditMode:
+					//Unselect map to prevent dumb errors
+					if (stamp) DestroyImmediate(stamp);
+					Selection.activeGameObject = null;
+					break;
+					
+				//This doesn't really work anyways...
+				// case PlayModeStateChange.EnteredEditMode:
+				// 	Selection.activeGameObject = m.gameObject;
+				// 	break;
+			}
 		}
 
 		#region Utility

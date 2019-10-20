@@ -240,7 +240,9 @@ namespace StormRend.Systems
 			foreach (var t in au.possibleMoveTiles)
 			{
 				t.highlight.SetColor(moveHighlight);
-				// t.highlight.SetColor(Tile.TryGetHighlightColor("Move"));
+
+				// if (Tile.highlightColors.TryGetValue("Move", out TileHighlightColor color))
+				// 	t.highlight.SetColor(color);
 			}
 		}
 
@@ -260,7 +262,9 @@ namespace StormRend.Systems
 			foreach (var t in au.possibleActionTiles)
 			{
 				t.highlight.SetColor(actionHighlight);
-				// t.highlight.SetColor(Tile.TryGetHighlightColor("Action"));
+
+				// if (Tile.highlightColors.TryGetValue("Action", out TileHighlightColor color))
+				// 	t.highlight.SetColor(color);
 			}
 		}
 
