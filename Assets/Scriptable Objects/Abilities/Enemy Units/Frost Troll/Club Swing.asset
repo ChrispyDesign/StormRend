@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Club Swing
   m_EditorClassIdentifier: 
   m_name: Club Swing
+  animNumber: 0
   m_icon: {fileID: 0}
   m_description: 
   m_gloryRequirement: 0
@@ -30,6 +31,22 @@ MonoBehaviour:
     m_enemies: 0
     m_players: 1
     m_self: 0
+  m_effects:
+  - {fileID: 114513002912999926}
+--- !u!114 &114513002912999926
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
+  m_Name: DamageEffect
+  m_EditorClassIdentifier: 
+  m_target: 0
+  m_damageAmount: 2
 --- !u!114 &114948348214354872
 MonoBehaviour:
   m_ObjectHideFlags: 1

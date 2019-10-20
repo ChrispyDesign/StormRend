@@ -51,9 +51,11 @@ namespace StormRend
 
             if (!isLocked) 
             {
-                foreach (ICommand command in GameManager.singleton.GetCommandManager().m_moves)
+				MoveCommand move = null;
+
+				foreach (ICommand command in GameManager.singleton.GetCommandManager().m_moves)
                 {
-                    MoveCommand move = command as MoveCommand;
+                    move = command as MoveCommand;
 
                     if (move.m_unit == this)
                     {
@@ -62,17 +64,21 @@ namespace StormRend
                         if (previousNode.GetUnitOnTop() != this && previousNode.GetUnitOnTop() != null)
                             return;
 
-                        move.Undo();
+                        //move.Undo();
                         hasMoved = true;
-                    }
+					}
+					else
+					{
+						Dijkstra.Instance.GetValidMoves(GetTile(), GetMoveRange(), typeof(EnemyUnit));
+					}
                 }
 
+				Tile tile = move?.GetOrigCoordinates() != null ? Grid.CoordToTile(move.GetOrigCoordinates()) : GetTile();
+				Dijkstra.Instance.GetValidMoves(tile, GetMoveRange(), typeof(EnemyUnit));
                 SetDuplicateMeshVisibilty(true);
+			}
 
-                Dijkstra.Instance.GetValidMoves(GetTile(), GetMoveRange(), typeof(EnemyUnit));
-            }
-
-            base.OnSelect();
+			base.OnSelect();
         }
 
         public override void OnDeselect()

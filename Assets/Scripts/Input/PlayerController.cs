@@ -18,10 +18,13 @@ public class PlayerController : MonoBehaviour
 	// - UserInputHandler
 	// - GameplayInteractionHandler
 
+	public PauseMenu m_pauseMenu;
+
     private PlayerUnit m_currentPlayer;
     private PlayerMode m_curMode;
     private PlayerMode m_prevMode;
     private bool m_isAbilityLocked;
+    string oldMode;
 
     #region GettersAndSetters
     public PlayerUnit GetCurrentPlayer() { return m_currentPlayer; }
@@ -47,7 +50,6 @@ public class PlayerController : MonoBehaviour
         m_curMode = PlayerMode.IDLE;
     }
 
-    string oldMode;
     private void Update()
     {
         var newMode = m_curMode.ToString();
@@ -56,5 +58,16 @@ public class PlayerController : MonoBehaviour
             // Debug.Log(m_curMode.ToString());
             oldMode = newMode;
         }
+
+		if (m_currentPlayer != null && Input.GetKeyUp(KeyCode.Escape) || Input.GetMouseButtonUp(1))
+		{
+			m_currentPlayer.OnDeselect();
+			m_currentPlayer = null;
+			UIManager.GetInstance().GetAbilitySelector().GetButtonPanel().SetActive(false);
+		}
+		else if (Input.GetKeyUp(KeyCode.Escape))
+		{
+			m_pauseMenu.GamePause();
+		}
     }
 }
