@@ -9,6 +9,7 @@ namespace StormRend.Units
 {
 	public abstract class Unit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
+		[ReadOnlyField] public Tile currentTile;//{ get; set; }	//The tile this unit is currently/originally on
 		[TextArea(0,2)] public string description = "";
 
 		//Inspector
@@ -16,23 +17,20 @@ namespace StormRend.Units
 		[ReadOnlyField, SerializeField] protected int _hp;        //Current HP
 		[SerializeField] protected int _maxHP = 3;
 
-		//Properties
-		public int HP
-		{
-			get => _hp;
-			set => _hp = Mathf.Clamp(value, 0, _hp);
-		}
-		public int maxHP => _maxHP;
-		public bool isDead => HP <= 0;
-		[ReadOnlyField] public Tile currentTile;//{ get; set; }	//The tile this unit is currently/originally on
-
 		//Events
 		[Header("Events")]
 		public UnitEvent OnDeath;
 
-		//Privates
+		//Properties
+		public int HP
+		{
+			get => _hp;
+			set => _hp = Mathf.Clamp(value, 0, maxHP);
+		}
+		public int maxHP => _maxHP;
+		public bool isDead => HP <= 0;
 
-		#region Startup
+	#region Startup
 		protected virtual void Start()
 		{
 			//Reset health

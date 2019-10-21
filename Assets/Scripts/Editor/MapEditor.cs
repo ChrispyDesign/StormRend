@@ -86,30 +86,30 @@ namespace StormRend.Editors
 
 				if ((dist - (adjDist * m.tileSize - tolerance)) * ((adjDist * m.tileSize + tolerance) - dist) >= 0)
 				{
+					//Prevents duplicates because we can't use hashsets
 					if (subject.Contains(t))
 					{
 						Debug.LogFormat("{0} is already connected to {1}", t, subject);
 						continue;
 					}
-					subject.Connect(t);	//Prevents duplicates because can't use hashsets
+					subject.Connect(t);
 				}
 				//Diagonals
 				if (connectDiagonals)
 				{
 					if ((dist - (diagDist * m.tileSize - tolerance)) * ((diagDist * m.tileSize + tolerance) - dist) >= 0)
 					{
+						//Prevents duplicates because we can't use hashsets
 						if (subject.Contains(t))
 						{
 							Debug.LogFormat("{0} is already connected to {1}", t, subject);
 							continue;
 						}
-						subject.Connect(t); //Prevents duplicates because can't use hashsets
+						subject.Connect(t);
 					}
 				}
 			}
-
-			EditorUtility.SetDirty(subject);
-			// AssetDatabase.SaveAssets();
+			EditorUtility.SetDirty(subject);	//Persist data in editor
 		}
 		#endregion
 	}

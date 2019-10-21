@@ -79,9 +79,8 @@ namespace StormRend.Abilities
 		/// <param name="au">The unit</param>
 		public Tile[] CalculateTargetableTiles(AnimateUnit au)
 		{
-
-
-			throw new NotImplementedException();
+			Debug.Log("CalculateTargetableTiles not implemented yet");
+			return null;
 		}
 
 		public bool CanAcceptTileType(Unit user, Tile t)
