@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 namespace StormRend.Units
 {
 	[SelectionBase] //Avoid clicking on child objects
-	public abstract class AnimateUnit : Unit, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+	public abstract class AnimateUnit : Unit, IPointerEnterHandler, IPointerExitHandler
 	{
 		//Inspector
 		[Header("Abilities")]
@@ -26,11 +26,11 @@ namespace StormRend.Units
 		//Members
 		protected bool hasActed = false;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
 		public Tile[] possibleMoveTiles { get; set; }
-		public Tile[] possibleActionTiles {get; set; }
+		public Tile[] possibleTargetTiles {get; set; }
 		
 		protected GameObject ghostMesh;
 
-		#region Startup
+	#region Startup
 		void Start()	//This will not block base.Start()
 		{
 			CreateGhostMesh();
@@ -72,11 +72,12 @@ namespace StormRend.Units
 		{
 			//Where should the push effect kill logic be implemented?
 		}
-		public void TakeAction(Ability ability, params Tile[] targetTiles) 
+
+		public void PerformAbility(Ability ability, params Tile[] targetTiles) 
 		{
 			ability.Perform(this, targetTiles);
 		}
-		public void TakeAction(Ability ability, params Unit[] targetUnits) 
+		public void PerformAbility(Ability ability, params Unit[] targetUnits) 
 		{
 			ability.Perform(this, targetUnits.Select(x => x.currentTile).ToArray());
 		}
@@ -107,12 +108,6 @@ namespace StormRend.Units
 	#endregion
 
 	#region Event System Interface Implementations
-		public void OnPointerClick(PointerEventData eventData)
-		{
-			//If unit is movable, show move highlights for the tile this unit is on
-			//Set this unit as current selected unit >> which will move the camera etc
-			// Debug.LogFormat("{0}.Click", name);
-		}
 		public override void OnPointerEnter(PointerEventData eventData)
 		{
 			base.OnPointerEnter(eventData);

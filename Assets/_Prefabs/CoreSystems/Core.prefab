@@ -4379,16 +4379,27 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   playersState: {fileID: 6841392901105898438}
-  _activeUnit: {fileID: 11400000, guid: dbeaf32532764ba4c92635cbce5c280f, type: 2}
-  _activeAbility: {fileID: 0}
+  _selectedUnit: {fileID: 11400000, guid: dbeaf32532764ba4c92635cbce5c280f, type: 2}
+  _selectedAbility: {fileID: 0}
   moveHighlight: {fileID: 11400000, guid: bd479e016eb1cf740a52682990892065, type: 2}
   actionHighlight: {fileID: 11400000, guid: 4f4691faa28f1ae4c92e9c587aec16e0, type: 2}
-  OnActiveUnitChanged:
+  cameraSmoothSpeed: 1.25
+  OnSelectedUnitChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  OnActiveUnitCleared:
+  OnSelectedUnitCleared:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnSelectedAbilityChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StormRend.Utility.Events.AbilityEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnSelectedAbilityCleared:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
@@ -6453,12 +6464,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b59e3d21cc725244810ec43db3b17ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 0
   pauseKey: 27
   pauseMenuState: {fileID: 6841392902387126551}
   loseState: {fileID: 9015395174224637444}
   victoryState: {fileID: 6841392901622992971}
   mainMenuSceneIdx: 0
+  debug: 0
 --- !u!114 &3267380040487526950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9971,7 +9982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blizzardVar: {fileID: 11400000, guid: 587b525c171df6f40a08f1869823cfa7, type: 2}
   maxBlizzardValue: 5
-  unitMask: 1
+  targetUnits: 0
   damage: 1
   OnExecute:
     m_PersistentCalls:

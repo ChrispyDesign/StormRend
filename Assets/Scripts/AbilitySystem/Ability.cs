@@ -27,10 +27,11 @@ namespace StormRend.Abilities
 		[Flags]
 		public enum TargetTileMask
 		{
-			Empty = 1 << 0,
-			Self = 1 << 1,
-			Allies = 1 << 2,
-			Enemies = 1 << 3,
+			// Empty = 1 << 0,		//Empty is when no bits are selected!
+			Self = 1 << 0,
+			Allies = 1 << 1,
+			Enemies = 1 << 2,
+			InAnimates = 1 << 3,	//Such as crystals
 		}
 
 		//Inspector
@@ -45,11 +46,11 @@ namespace StormRend.Abilities
 		[SerializeField] int _gloryCost = 1;
 
 		[Tooltip("The required number of selected tiles this ability needs in order for it to be performed")]
-		[SerializeField] int requiredTiles = 1;
+		[SerializeField] int _requiredTiles = 1;
 
 		[Tooltip("The type of tiles this ability can target")]
 		//This will be used to determine which tiles the UserInputHandler can pick
-		[EnumFlags, SerializeField] TargetTileMask _targetTileMask;
+		[EnumFlags, SerializeField] TargetTileMask _targetTileTypes;
 
 		//Members
 		[HideInInspector] 
@@ -62,7 +63,8 @@ namespace StormRend.Abilities
 		public AbilityType type => _type;
 		public string description => _description;
 		public int gloryCost => _gloryCost;
-		public TargetTileMask targetTileMask => _targetTileMask;
+		public int requiredTiles => _requiredTiles;
+		public TargetTileMask targetTileTypes => _targetTileTypes;
 
 		//Core
 		public void Perform(Unit owner, params Tile[] targets)
@@ -75,10 +77,46 @@ namespace StormRend.Abilities
 		/// Get the tiles that can be currently acted upon by this ability
 		/// </summary>
 		/// <param name="au">The unit</param>
-		public Tile[] CalculateActionableTiles(AnimateUnit au)
+		public Tile[] CalculateTargetableTiles(AnimateUnit au)
 		{
 			
+
 			throw new NotImplementedException();
+		}
+
+		public bool CanAcceptTileType(Unit user, Tile t)
+		{
+			//Only one of the masks have to pass for the whole thing to pass
+			//Empty == No bitmask
+
+			//Self: Return true if the user is standing on this tile
+			if ((targetTileTypes & TargetTileMask.Self) == TargetTileMask.Self)
+				if (user.currentTile == t) return true;
+
+			var aliveUnits = UnitRegistry.current.aliveUnits;
+
+			foreach (var unit in aliveUnits)
+			{
+				switch (unit)
+				{
+					case AllyUnit ally:
+						//Allies: Return true if any allies are standing on this tile
+						if ((targetTileTypes & TargetTileMask.Allies) == TargetTileMask.Allies)
+							if (ally.currentTile == t) return true;
+						break;
+					case EnemyUnit enemy:
+						//Enemies: Return true if any enemies are standing on this tile
+						if ((targetTileTypes & TargetTileMask.Enemies) == TargetTileMask.Enemies)
+							if (enemy.currentTile == t) return true;
+						break;
+					case InAnimateUnit inAnimate:
+						//Inanimates: Return true if any inanimate units are on this tile
+						if ((targetTileTypes & TargetTileMask.InAnimates) == TargetTileMask.InAnimates)
+							if (inAnimate.currentTile == t) return true;
+						break;
+				}
+			}
+			return false;
 		}
 
 		//Add an effect to this ability (Has editor code)
@@ -168,5 +206,6 @@ namespace StormRend.Abilities
 
 			// _player.SetAttackNodes(nodes);
 		}
+
 	}
 }

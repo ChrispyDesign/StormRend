@@ -8,7 +8,7 @@ namespace StormRend.Units
 {
 	public abstract class Unit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
-		[TextArea(0,2), SerializeField] string description = "";
+		[TextArea(0,2)] public string description = "";
 
 		//Inspector
 		[Header("Stats")]

@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 
 namespace StormRend.Units
 {
-	public class CrystalUnit : Unit, IPointerClickHandler	//Unit =~= InAnimateUnit?
+	public class CrystalUnit : InAnimateUnit, IPointerClickHandler	//Unit =~= InAnimateUnit?
 	{
 		//Inspector
 		[Header("Crystal")]

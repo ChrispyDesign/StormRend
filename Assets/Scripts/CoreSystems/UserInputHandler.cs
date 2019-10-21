@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using StormRend.Abilities;
 using StormRend.CameraSystem;
 using StormRend.MapSystems.Tiles;
@@ -20,13 +21,40 @@ else if no unit is selected
 	go into select mode
 
 ------ Gameplay
+Move mode: 
+- You can click a valid tile to move unit there
+- Clicking on another unit will select it OR focus camera on it?
+
+Action mode:
+- You cannot select another unit. Only action tiles. You'll need to right click back a mode first
+
 Moving Unit:
-- Click on Unit
-	- Set unit as current/active unit
-	- 
+1 Nothing initially selected
+2 Select unit > ActivityMode : Move > camera focus
+3 highlight Move tiles except origin tile is highlighted differently
+4 ghost mesh follows cursor, snapping to tiles
+5 click on moveable tile to move unit there immediately (interim move)
+	- main mesh is repositioned facing correctly
+	- Camera focus
+	- back to step 2 except tiles remain move highlighted
+6 right click resets unit back to origin position of turn
 
+Performing an ability:
+1 Unit is selected. has moved optional
+2 UI: Click on a ability select button > UIH: sets selected ability > ActivityMode : Action
+3 Hide move highlights + Show action highlights
+4 player clicks on an targetable tile to add to stack of targeting tiles (present vs progressive tense)
+5 check with selected ability to see if it needs any more targeting tile > repeat step 4 if necessary
+	- right click pop off a stack of targeting tiles (undo)
+6 Once required number of tiles selected perform ability immediately
+	- Camera focus
 
-Q How does the player do a spell/attack?
+UI Update:
+1 On player select change
+	- if null clear UI
+	- if active then update ui with unit's abilities
+2 On player
+
 A The player clicks on a unit
 	- UserInput will set selected unit
 	- the camera will focus on unit
@@ -50,7 +78,6 @@ UserInputHandler
 
 Q How
 
-
 ------- Possible cast and move tiles
 Q Where should the possible cast and move tiles be stored?
 A Possible Cast Tiles should be stored on each Ability SO and updated every time
@@ -67,7 +94,7 @@ A Everytime an ability select button is clicked, the input handler will help to 
 
 namespace StormRend.Systems
 {
-	struct FrameEventData
+	public struct FrameEventData
 	{
 		public const int lmb = 0, rmb = 1;
 		public bool leftClicked;
@@ -81,13 +108,15 @@ namespace StormRend.Systems
 			rightClickUp = Input.GetMouseButtonUp(rmb);
 		}
 	}
+
 	public class UserInputHandler : MonoBehaviour
 	{
 		//Enums
 		public enum ActivityMode
 		{
 			Move,
-			Action      //Cast spells, attack, summon, etc
+			Action,      //Cast spells, attack, summon, etc
+			Idle
 		}
 
 		//Inspector
@@ -96,48 +125,71 @@ namespace StormRend.Systems
 		[Tooltip("A reference to the State object that is considered to be the player's state ie. AllyState")]
 		[Space(10), SerializeField] State playersState;
 
-		[Space(10), SerializeField] UnitVar _activeUnit;
-		[ReadOnlyField, SerializeField] Ability _activeAbility;
+		[Space(10), SerializeField] UnitVar _selectedUnit;
+		[ReadOnlyField, SerializeField] Ability _selectedAbility;
 
 		[Header("Tile Highlight Colors")]
 		[SerializeField] TileHighlightColor moveHighlight;
 		[SerializeField] TileHighlightColor actionHighlight;
 
+		[Header("Camera")]
+		[SerializeField] float cameraSmoothTime = 1.5f;
 
 		//Properties
-		public Unit activeUnit
+		ActivityMode mode
 		{
-			get => _activeUnit.value;
-			internal set => _activeUnit.value = value;
+			get 
+			{
+				//If an ability is current selected then the player can perform ability
+				if (isAbilitySelected)
+					return ActivityMode.Action;
+				//If an ability isn't selected then the player can move
+				else if (isUnitSelected)
+					return ActivityMode.Move;
+				//Player can't take any major actions ie. waiting for ai to finish
+				else
+					return ActivityMode.Idle;
+			}
 		}
-		public bool unitIsActive => activeUnit != null;
-		public Ability activeAbility
+		public Unit selectedUnit
 		{
-			get => _activeAbility;
-			internal set => _activeAbility = value;
+			get => _selectedUnit.value;
+			internal set => _selectedUnit.value = value;
 		}
-		public bool abilityIsActive => activeAbility != null;
+		public AnimateUnit selectedAnimateUnit
+		{
+			get => (selectedUnit != null) ? selectedUnit as AnimateUnit : null;
+		}
+		public bool isUnitSelected => selectedUnit != null;
+		public Ability selectedAbility
+		{
+			get => _selectedAbility;
+			internal set => _selectedAbility = value;
+		}
+		public bool isAbilitySelected => selectedAbility != null;
 		public bool isPlayersTurn { get; set; } = true;		//If the current game state matches the player's state?
 
 		//Events
 		[Space(5)]
-		public UnitEvent OnActiveUnitChanged;
-		public UnityEvent OnActiveUnitCleared;
+		public UnitEvent OnSelectedUnitChanged;
+		public UnityEvent OnSelectedUnitCleared;
+		public AbilityEvent OnSelectedAbilityChanged;
+		public UnityEvent OnSelectedAbilityCleared;
 
 		//Members
 		FrameEventData e;   //The events that happenned this frame
-		ActivityMode mode = ActivityMode.Move;
 		CameraMover camMover;
-		SRGameDirector game;
 
 		//Debug
 		public bool debug;
-		bool unitHit;
-		bool tileHit;
+		bool isUnitHit;
+		bool isTileHit;
 		Unit interimUnit;
 		Tile interimTile;
+		Stack<Tile> targetTiles = new Stack<Tile>();
+		bool notEnoughTargetTilesSelected = false;
 
-		#region Core
+	#region Core
 		void Awake()
 		{
 			//Find
@@ -146,10 +198,12 @@ namespace StormRend.Systems
 		void Start()
 		{
 			//Inits
-			_activeUnit.value = null;
+			_selectedUnit.value = null;
+			_selectedAbility = null;
 
 			//Asserts
 			Debug.Assert(camMover, "CameraMover could not be located!");
+			Debug.Assert(_selectedUnit, "No Selected Unit SOV!");
 		}
 
 		void Update()
@@ -163,54 +217,79 @@ namespace StormRend.Systems
 
 			if (e.leftClicked)
 			{
-				unitHit = TryGetRaycast<Unit>(out interimUnit);
-				tileHit = TryGetRaycast<Tile>(out interimTile);
+				isUnitHit = TryGetRaycast<Unit>(out interimUnit);
+				isTileHit = TryGetRaycast<Tile>(out interimTile);
 
 				if (isPlayersTurn) 
 				{
-					//Can only select units when it's the player's turn
-					if (unitHit) SetActiveUnit(interimUnit);
+					switch (mode)
+					{
+						case ActivityMode.Action:
+							if (isTileHit)
+								AddTargetTile(interimTile);
+							break;
+						case ActivityMode.Move:
+						case ActivityMode.Idle:
+							if (isUnitHit)
+								SelectUnit(interimUnit);
+							break;
+					}
 				}
-
-				if (unitHit)
+				if (isUnitHit)
 				{
-					//Clicking on a unit will ALWAYS focus camera on it
-					FocusCamera(interimUnit);
+					//Clicking on a unit will focus camera on it unless in action mode?
+					if (mode != ActivityMode.Action)
+						FocusCamera(interimUnit, cameraSmoothTime);
 				}
 			}
 			else if (e.rightClickUp)
 			{
-				ClearActiveUnit();
+				switch (mode)
+				{
+					case ActivityMode.Action:
+						if (notEnoughTargetTilesSelected && targetTiles.Count > 0)
+							targetTiles.Pop();
+						else
+							ClearSelectedAbility();
+						break;
+					case ActivityMode.Move:
+						ClearSelectedUnit();
+						break;
+				}
+			}
+			else if (mode == ActivityMode.Move)
+			{
+				//Move ghost on hover
+				if (TryGetRaycast<Tile>(out interimTile))
+				{
+				}
 			}
 		}
 
 		void OnGUI()
 		{
 			if (!debug) return;
-			GUILayout.Label("is a unit hit?: " + unitHit);
-			GUILayout.Label("is a unit selected?: " + unitIsActive);
-			GUILayout.Label("Selected Unit: " + _activeUnit?.value?.name);
+			GUILayout.Label("ActivityMode: " + mode);
+			GUILayout.Label("is a unit hit?: " + isUnitHit);
+			GUILayout.Label("is a unit selected?: " + isUnitSelected);
+			GUILayout.Label("Selected Unit: " + _selectedUnit?.value?.name);
 		}
-		#endregion
+	#endregion
 
-		#region Assists
+	#region Camera
 		//Moves to and looks at passed in subject
-		void FocusCamera(Unit u, float smoothTime = 1)
-		{
-			camMover.MoveTo(u, smoothTime);
-		}
-		void FocusCamera(Tile t, float smoothTime = 1)
-		{
-			camMover.MoveTo(t.transform.position, smoothTime);
-		}
+		void FocusCamera(Unit u, float smoothTime = 1) => camMover.MoveTo(u, smoothTime);
+		void FocusCamera(Tile t, float smoothTime = 1) => camMover.MoveTo(t.transform.position, smoothTime);
+	#endregion
 
-		//Sets the selected unit
-		public void SetActiveUnit(Unit u)
+	#region Sets
+		//Public; can be called via unity events
+		public void SelectUnit(Unit u)
 		{
-			OnActiveUnitChanged.Invoke(u);	//ie. Update UI, Play sounds, 
+			OnSelectedUnitChanged.Invoke(u);	//ie. Update UI, Play sounds, 
 
 			//Set the selected unt
-			activeUnit = u;
+			selectedUnit = u;
 
 			//Update tile highlights based on mode of activity
 			switch (mode)
@@ -223,85 +302,110 @@ namespace StormRend.Systems
 					break;
 			}
 		}
+		public void SelectAbility(Ability a)
+		{
+			OnSelectedAbilityChanged.Invoke(a);
 
-		internal void HighlightMoveTiles(Unit u)
+			//Set active ability
+			selectedAbility = a;
+
+			//Update active unit's action tiles
+			var au = selectedUnit as AnimateUnit;
+			au.possibleTargetTiles = selectedAbility.CalculateTargetableTiles(au);
+		}
+
+		void AddTargetTile(Tile t)
+		{
+			//Check ability can accept this tile type
+			if (selectedAbility.CanAcceptTileType(selectedUnit, t))
+				targetTiles.Push(t);
+
+			//Perform ability once required number of tiles reached
+			if (targetTiles.Count == selectedAbility.requiredTiles)
+				selectedAbility.Perform(selectedUnit, targetTiles.ToArray());
+		}
+	#endregion
+
+	#region Tile Highlighting
+		void HighlightMoveTiles()
 		{
 			//NOTE: Active unit's MOVE tiles should be refreshed each turn
-			
-			//Only animate units 
-			var au = u as AnimateUnit;
-			if (!au) return;
-
 			//Make sure there are tiles to highlight (Hopefully this is done before the unit has moved)
-			if (au.possibleMoveTiles == null)
-				au.CalculateMoveTiles();
+			if (selectedAnimateUnit.possibleMoveTiles == null)
+			{
+				Debug.LogWarning("Unit's move tile was not calculate at the start of turn!!");
+				selectedAnimateUnit.CalculateMoveTiles();
+			}
 
 			//Highlight
-			foreach (var t in au.possibleMoveTiles)
+			foreach (var t in selectedAnimateUnit.possibleMoveTiles)
 			{
 				t.highlight.SetColor(moveHighlight);
-
 				// if (Tile.highlightColors.TryGetValue("Move", out TileHighlightColor color))
 				// 	t.highlight.SetColor(color);
 			}
 		}
-
-		internal void HighlightActionTiles(Unit u)
+		void HighlightActionTiles()
 		{
 			//NOTE: Active unit's MOVE tiles should be refreshed each OnAbilityChanged
-
-			//Only animate units have possible 
-			var au = u as AnimateUnit;
-			if (!au) return;
+			if (!isUnitSelected) return;
 
 			//Make sure there are tiles to highlight
-			if (au.possibleActionTiles == null)
-				activeAbility.CalculateActionableTiles(au);
+			if (selectedAnimateUnit.possibleTargetTiles == null)
+				selectedAbility.CalculateTargetableTiles(selectedAnimateUnit);
 
 			//Highlight
-			foreach (var t in au.possibleActionTiles)
+			foreach (var t in selectedAnimateUnit.possibleTargetTiles)
 			{
 				t.highlight.SetColor(actionHighlight);
-
 				// if (Tile.highlightColors.TryGetValue("Action", out TileHighlightColor color))
 				// 	t.highlight.SetColor(color);
 			}
 		}
+	#endregion
 
+	#region Clears
 		//Deselects the unit
-		void ClearActiveUnit()
+		void ClearSelectedUnit()
 		{
-			OnActiveUnitCleared.Invoke();
-
-			//Clear tile highlights first
-			// ClearActiveUnitTileHighlights();
+			OnSelectedUnitCleared.Invoke();
 
 			//Clear
-			activeUnit = null;
-		}
+			selectedUnit = null;
 
-		internal void ClearActiveUnitTileHighlights()
+			//Clear move highlights (don't need to clear ability highlights since that would have been already done)
+			ClearSelectedUnitTileHighlights();
+		}
+		void ClearSelectedAbility(bool redrawMoveTiles = true)
 		{
-			var au = activeUnit as AnimateUnit;
-			if (!au) return;
+			OnSelectedAbilityCleared.Invoke();
 
-			//Clear all move and action tiles
-			foreach (var t in au.possibleMoveTiles)
-				t.highlight.Clear();
-			foreach (var t in au.possibleActionTiles)
-				t.highlight.Clear();
+			//Clear
+			selectedAbility = null;
+
+			//Clear action highlights
+			ClearSelectedAbilityTileHighlights();
+
+			//Redraw move highlights
+			if (redrawMoveTiles) HighlightMoveTiles();
 		}
-
-		public void ChangeAbility(Ability a)
+		void ClearSelectedUnitTileHighlights()
 		{
-			//Set active ability
-			activeAbility = a;
-
-			//Update active unit's action tiles
-			var au = activeUnit as AnimateUnit;
-			au.possibleActionTiles = activeAbility.CalculateActionableTiles(au);
+			if (!isUnitSelected) return;
+			//Clear highlights
+			foreach (var t in selectedAnimateUnit.possibleMoveTiles)
+				t.highlight.Clear();
 		}
+		void ClearSelectedAbilityTileHighlights()
+		{
+			if (!isUnitSelected) return;
+			//Clear highlights
+			foreach (var t in selectedAnimateUnit.possibleTargetTiles)
+				t.highlight.Clear();
+		}
+	#endregion
 
+	#region Assists
 		internal bool TryGetRaycast<T>(out T hit) where T : MonoBehaviour
 		{
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -313,6 +417,6 @@ namespace StormRend.Systems
 			hit = null;
 			return false;
 		}
-		#endregion
+	#endregion
 	}
 }
