@@ -24,7 +24,7 @@ namespace StormRend.Units
 		}
 		public int maxHP => _maxHP;
 		public bool isDead => HP <= 0;
-		public Tile currentTile;//{ get; set; }	//The tile this unit is currently/originally on
+		[ReadOnlyField] public Tile currentTile;//{ get; set; }	//The tile this unit is currently/originally on
 
 		//Events
 		[Header("Events")]

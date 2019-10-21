@@ -32,7 +32,7 @@ namespace StormRend.MapSystems.Tiles
 		public Color currentHighlightColor => highlight.color;
 
 		//Members
-		public List<Tile> connections = new List<Tile>();
+		[ReadOnlyField] public List<Tile> connections = new List<Tile>();	//List because HashSets don't serialize
 
 		//Debugs
 		[ReadOnlyField] public Map owner;
@@ -50,7 +50,8 @@ namespace StormRend.MapSystems.Tiles
 		}
 
 		public void Connect(Tile to) => connections.Add(to);
-		public void Disconnect(Tile from) => connections.Remove(from);
+		public bool Disconnect(Tile from) => connections.Remove(from);
+		public bool Contains(Tile t) => connections.Contains(t);
 		public void DisconnectAll() => connections.Clear();
 	#endregion
 
@@ -117,8 +118,9 @@ namespace StormRend.MapSystems.Tiles
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			oldColor = highlight.color;
-			if (highlightColors.TryGetValue("Hover", out TileHighlightColor color))
-				highlight.SetColor(color);
+			if (hoverHighlight) highlight.SetColor(hoverHighlight);
+			// if (highlightColors.TryGetValue("Hover", out TileHighlightColor color))
+			// 	highlight.SetColor(color);
 		}
 
 		public void OnPointerExit(PointerEventData eventData)

@@ -36,7 +36,7 @@ namespace StormRend.Bhaviours
         	au = agent.GetComponent<AnimateUnit>();
 
         	//Find the valid moves
-			validMoves = Map.CalcValidActionArea(au.currentTile.owner, au.currentTile, turns, au.GetType());	//Just ignore the same unit type as this unit
+			validMoves = Map.CalculateTileRange(au.currentTile.owner, au.currentTile, turns, au.GetType());	//Just ignore the same unit type as this unit
 
         	//Check to see if the target is already next to this agent before moving
         	if (TargetIsAdjacent()) return NodeState.Success;

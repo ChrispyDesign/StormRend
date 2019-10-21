@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using System.Linq;
 using pokoro.Patterns.Generic;
@@ -115,13 +116,16 @@ namespace StormRend.MapSystems
 		public void ClearAllTileConnections()
 		{
 			foreach (var t in tiles)
+			{
 				t.DisconnectAll();
+				EditorUtility.SetDirty(t);		//Actually saves the data
+			}
 		}
 		public void GetTileTerrainCost(Tile tile) { }
 	#endregion
 
 	#region Pathfinding
-		public static Tile[] CalcValidActionArea(Map map, Tile start, int range, params Type[] unitTypesToExclude)
+		public static Tile[] CalculateTileRange(Map map, Tile start, int range, params Type[] unitTypesToExclude)
 		{
 			List<Tile> validMoves = new List<Tile>();
 			Queue<Tile> openList = new Queue<Tile>();
@@ -182,9 +186,19 @@ namespace StormRend.MapSystems
 				t.G = 0;
 				t.H = 0;
 			}
-
+			PrintCollection(validMoves);
 			return validMoves.ToArray();
 		}
 	#endregion
+
+		static void PrintCollection(IEnumerable collection)
+		{
+			print("Printing: " + collection);
+			int i = 0;
+			foreach (var item in collection)
+			{
+				print(i++ + ": " + item);
+			}
+		}
 	}
 }

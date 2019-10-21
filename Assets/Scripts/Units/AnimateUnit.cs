@@ -90,14 +90,10 @@ namespace StormRend.Units
 		/// </summary>
 		public void CalculateMoveTiles()
 		{
-			Debug.LogFormat("{0}, {1}, {2}, {3}",
-				currentTile.owner, currentTile, moveRange, typeof(Unit));
+			// Debug.LogFormat("{0}, {1}, {2}, {3}", currentTile.owner, currentTile, moveRange, typeof(Unit));
 
-			possibleMoveTiles = Map.CalcValidActionArea(
-				currentTile.owner,
-				currentTile,
-				moveRange,
-				typeof(Unit));	//You shouldn't be able to move directly onto any unit!
+			possibleMoveTiles =
+				Map.CalculateTileRange(currentTile.owner, currentTile, moveRange,typeof(Unit)); //You shouldn't be able to move directly onto any unit!
 
 			Debug.Log(possibleMoveTiles);
 			foreach (var t in possibleMoveTiles)

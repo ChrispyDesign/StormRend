@@ -11,10 +11,8 @@ namespace StormRend.Editors
 	{
 		Vector3 gridCursor;
 		GameObject stamp;
-
 		Map m;
 		Event e;
-
 		GUIStyle style;
 
 		#region Cores
@@ -36,11 +34,11 @@ namespace StormRend.Editors
 			CreateStyles();
 
 			//Prevent a blank stamp from show on startup
-			CreateStamp();		
+			CreateStamp();
 
 			//Register events
 			Undo.undoRedoPerformed += OnUndoRedo;
-			EditorApplication.playModeStateChanged += OnPlayModeStateChanged; //(PlayModeStateChange stateChange) => { if (stamp) DestroyImmediate(stamp); };
+			EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
 		}
 		void OnDisable()
 		{
@@ -68,7 +66,6 @@ namespace StormRend.Editors
 					if (stamp) DestroyImmediate(stamp);
 					Selection.activeGameObject = null;
 					break;
-					
 				//This doesn't really work anyways...
 				// case PlayModeStateChange.EnteredEditMode:
 				// 	Selection.activeGameObject = m.gameObject;
@@ -89,17 +86,30 @@ namespace StormRend.Editors
 
 				if ((dist - (adjDist * m.tileSize - tolerance)) * ((adjDist * m.tileSize + tolerance) - dist) >= 0)
 				{
-					subject.Connect(t);
+					if (subject.Contains(t))
+					{
+						Debug.LogFormat("{0} is already connected to {1}", t, subject);
+						continue;
+					}
+					subject.Connect(t);	//Prevents duplicates because can't use hashsets
 				}
 				//Diagonals
 				if (connectDiagonals)
 				{
 					if ((dist - (diagDist * m.tileSize - tolerance)) * ((diagDist * m.tileSize + tolerance) - dist) >= 0)
 					{
-						subject.Connect(t);
+						if (subject.Contains(t))
+						{
+							Debug.LogFormat("{0} is already connected to {1}", t, subject);
+							continue;
+						}
+						subject.Connect(t); //Prevents duplicates because can't use hashsets
 					}
 				}
 			}
+
+			EditorUtility.SetDirty(subject);
+			// AssetDatabase.SaveAssets();
 		}
 		#endregion
 	}

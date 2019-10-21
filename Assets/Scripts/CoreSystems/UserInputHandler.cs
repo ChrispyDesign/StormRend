@@ -21,7 +21,7 @@ else if no unit is selected
 	go into select mode
 
 ------ Gameplay
-Move mode: 
+Move mode:
 - You can click a valid tile to move unit there
 - Clicking on another unit will select it OR focus camera on it?
 
@@ -63,7 +63,7 @@ A The player clicks on a unit
 		- AbilityPanel to send ability assigned to that button back to UserInput
 		- UserInput sets selected ability
 		- Tiles will update to show cast area based on chosen/subject/selected ability
-	- If clicks on one of the tiles it will  
+	- If clicks on one of the tiles it will
 
 AbilityPanel
 + currentAbility : Ability
@@ -81,8 +81,8 @@ Q How
 ------- Possible cast and move tiles
 Q Where should the possible cast and move tiles be stored?
 A Possible Cast Tiles should be stored on each Ability SO and updated every time
-A Possible Move Tiles should be stored on each Unit 
-A Possible 
+A Possible Move Tiles should be stored on each Unit
+A Possible
 
 Q When should the possible move tiles be calculated?
 A At the begginning of the turn, for each unit
@@ -138,7 +138,7 @@ namespace StormRend.Systems
 		//Properties
 		ActivityMode mode
 		{
-			get 
+			get
 			{
 				//If an ability is current selected then the player can perform ability
 				if (isAbilitySelected)
@@ -156,10 +156,7 @@ namespace StormRend.Systems
 			get => _selectedUnit.value;
 			internal set => _selectedUnit.value = value;
 		}
-		public AnimateUnit selectedAnimateUnit
-		{
-			get => (selectedUnit != null) ? selectedUnit as AnimateUnit : null;
-		}
+		public AnimateUnit selectedAnimateUnit => (selectedUnit != null) ? selectedUnit as AnimateUnit : null;
 		public bool isUnitSelected => selectedUnit != null;
 		public Ability selectedAbility
 		{
@@ -220,7 +217,7 @@ namespace StormRend.Systems
 				isUnitHit = TryGetRaycast<Unit>(out interimUnit);
 				isTileHit = TryGetRaycast<Tile>(out interimTile);
 
-				if (isPlayersTurn) 
+				if (isPlayersTurn)
 				{
 					switch (mode)
 					{
@@ -230,8 +227,8 @@ namespace StormRend.Systems
 							break;
 						case ActivityMode.Move:
 						case ActivityMode.Idle:
-							if (isUnitHit)
-								SelectUnit(interimUnit);
+							if (isUnitHit && interimUnit is AnimateUnit)
+								SelectUnit(interimUnit as AnimateUnit);
 							break;
 					}
 				}
@@ -284,9 +281,12 @@ namespace StormRend.Systems
 
 	#region Sets
 		//Public; can be called via unity events
-		public void SelectUnit(Unit u)
+		public void SelectUnit(AnimateUnit u)
 		{
-			OnSelectedUnitChanged.Invoke(u);	//ie. Update UI, Play sounds, 
+			OnSelectedUnitChanged.Invoke(u);	//ie. Update UI, Play sounds,
+
+			//Clear tile highlights if a unit was already selected
+			if (isUnitSelected) ClearSelectedUnitTileMoveHighlights();
 
 			//Set the selected unt
 			selectedUnit = u;
@@ -295,7 +295,7 @@ namespace StormRend.Systems
 			switch (mode)
 			{
 				case ActivityMode.Move:
-					// HighlightMoveTiles(u);
+					HighlightMoveTiles();
 					break;
 				case ActivityMode.Action:
 					// HighlightActionTiles(u);
@@ -329,9 +329,10 @@ namespace StormRend.Systems
 	#region Tile Highlighting
 		void HighlightMoveTiles()
 		{
+			// Debug.Log("HighlightMoveTiles. possibleMoveTiles.Length: " + selectedAnimateUnit.possibleMoveTiles.Length);
 			//NOTE: Active unit's MOVE tiles should be refreshed each turn
 			//Make sure there are tiles to highlight (Hopefully this is done before the unit has moved)
-			if (selectedAnimateUnit.possibleMoveTiles == null)
+			if (selectedAnimateUnit.possibleMoveTiles.Length <= 0)
 			{
 				Debug.LogWarning("Unit's move tile was not calculate at the start of turn!!");
 				selectedAnimateUnit.CalculateMoveTiles();
@@ -370,11 +371,18 @@ namespace StormRend.Systems
 		{
 			OnSelectedUnitCleared.Invoke();
 
+			//Clear tile move and action highlights
+			if (isUnitSelected)
+			{
+				ClearSelectedUnitTileMoveHighlights();
+				// ClearSelectedAbilityTileHighlights();
+			}
+
 			//Clear
 			selectedUnit = null;
 
 			//Clear move highlights (don't need to clear ability highlights since that would have been already done)
-			ClearSelectedUnitTileHighlights();
+			ClearSelectedUnitTileMoveHighlights();
 		}
 		void ClearSelectedAbility(bool redrawMoveTiles = true)
 		{
@@ -389,7 +397,7 @@ namespace StormRend.Systems
 			//Redraw move highlights
 			if (redrawMoveTiles) HighlightMoveTiles();
 		}
-		void ClearSelectedUnitTileHighlights()
+		void ClearSelectedUnitTileMoveHighlights()
 		{
 			if (!isUnitSelected) return;
 			//Clear highlights
