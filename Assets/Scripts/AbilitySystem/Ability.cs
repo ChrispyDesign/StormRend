@@ -53,7 +53,7 @@ namespace StormRend.Abilities
 		[EnumFlags, SerializeField] TargetTileMask _targetTileTypes;
 
 		//Members
-		[HideInInspector] 
+		[HideInInspector]
 		public List<Effect> effects = new List<Effect>();
 		public bool[,] castArea { get; set; } = new bool[kCastAreaSqrLen, kCastAreaSqrLen];
 
@@ -79,7 +79,7 @@ namespace StormRend.Abilities
 		/// <param name="au">The unit</param>
 		public Tile[] CalculateTargetableTiles(AnimateUnit au)
 		{
-			
+
 
 			throw new NotImplementedException();
 		}
@@ -147,7 +147,7 @@ namespace StormRend.Abilities
 			AssetDatabase.SaveAssets();
 #endif
 		}
-	
+
 
 		//-------------------------------------------------------------
 		//TRANSFERRED FROM OLD
@@ -163,7 +163,7 @@ namespace StormRend.Abilities
 			// int endPoint = castArea.Length / 2;
 
 			List<Tile> tiles = new List<Tile>();
-			Vector2Int coords = new Vector2Int();
+			// Vector2Int coords = new Vector2Int();
 			// List<Tile> nodes = new List<Tile>();
 			// Vector2Int coords = Vector2Int.zero;
 

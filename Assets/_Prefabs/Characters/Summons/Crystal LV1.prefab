@@ -72,10 +72,11 @@ MonoBehaviour:
     - Allies? - Other crystals?'
   _hp: 0
   _maxHP: 1
+  currentTile: {fileID: 0}
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+    m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   turns: 1
   damage: 1
@@ -108,7 +109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4052113309286110429}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.9, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 0.41172, y: 0.741096, z: 0.41172}
   m_Children: []
   m_Father: {fileID: 4052113309130031599}

@@ -140,14 +140,15 @@ MonoBehaviour:
   description: 
   _hp: 0
   _maxHP: 3
+  currentTile: {fileID: 0}
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+    m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  ghostColor: {r: 0, g: 0, b: 1, a: 1}
   moveRange: 4
   abilities: []
+  ghostColor: {r: 0, g: 0, b: 1, a: 1}
 --- !u!1 &3479494762708884028
 GameObject:
   m_ObjectHideFlags: 0

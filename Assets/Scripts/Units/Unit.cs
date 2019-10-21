@@ -1,3 +1,4 @@
+using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
@@ -23,7 +24,7 @@ namespace StormRend.Units
 		}
 		public int maxHP => _maxHP;
 		public bool isDead => HP <= 0;
-		public Tile currentTile { get; set; }	//The tile this unit is currently/originally on
+		public Tile currentTile;//{ get; set; }	//The tile this unit is currently/originally on
 
 		//Events
 		[Header("Events")]
@@ -32,10 +33,23 @@ namespace StormRend.Units
 		//Privates
 
 		#region Startup
-		void Start()
+		protected virtual void Start()
 		{
 			//Reset health
 			HP = maxHP;
+
+			//TEMP Scan below
+			float scanRange = 0.2f;
+			foreach (var t in Map.current.tiles)
+			{
+				//If a tile is within a certain range then set it as the current tile
+				if (Vector3.Distance(t.transform.position, transform.position) < scanRange)
+				{
+					currentTile = t;
+					return;
+				}
+			}
+			Debug.Assert(currentTile, name + "does not have a current tile!");
 		}
 	#endregion
 

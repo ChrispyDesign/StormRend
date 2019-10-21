@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using StormRend.Utility.Attributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -31,9 +32,11 @@ namespace StormRend.MapSystems.Tiles
 		public Color currentHighlightColor => highlight.color;
 
 		//Members
-		public HashSet<Tile> connections = new HashSet<Tile>();
-		[HideInInspector] public Map owner;
-		[HideInInspector] public TileHighlight _highlight;
+		public List<Tile> connections = new List<Tile>();
+
+		//Debugs
+		[ReadOnlyField] public Map owner;
+		[ReadOnlyField] public TileHighlight _highlight;
 		[HideInInspector] public Color oldColor;
 
 	#region Core
@@ -59,7 +62,7 @@ namespace StormRend.MapSystems.Tiles
 				var foundHighlights = Resources.FindObjectsOfTypeAll<TileHighlightColor>();
 				foreach (var fh in foundHighlights)
 				{
-					Debug.Log(fh.name);
+					// Debug.Log(fh.name);
 					highlightColors.Add(fh.name, fh);
 				}
 				highlightsScanned = true;
@@ -91,7 +94,7 @@ namespace StormRend.MapSystems.Tiles
 			direction.Clamp(new Vector2Int(-1, -1), Vector2Int.one);
 
 			//Determine where to scan for a connected tile
-			var targetTilePos = transform.position + 
+			var targetTilePos = transform.position +
 				new Vector3(adjDist * owner.tileSize * direction.x, 0, adjDist * owner.tileSize * direction.y);
 
 			//Loop through all connected tiles and see if there are any within tolerance
@@ -106,7 +109,7 @@ namespace StormRend.MapSystems.Tiles
 			}
 			tile = null;
 			return false;
-			
+
 		}
 	#endregion
 

@@ -36,13 +36,10 @@ namespace StormRend.Systems
 		//Debugs
 		[SerializeField, Space(10)] bool debug = false;
 
-		void Awake()    //Doesn't matter if you override or hide. base.Awake() will be invoked via reflection regardless.
-		{
-			usm = GetComponent<UltraStateMachine>();
-		}
-
 		void Start()
 		{
+			usm = GetComponent<UltraStateMachine>();
+
 			if (!pauseMenuState)
 			{
 				Debug.LogWarning("No pause menu state found!");

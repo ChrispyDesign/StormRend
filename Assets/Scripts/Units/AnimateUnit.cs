@@ -25,14 +25,16 @@ namespace StormRend.Units
 
 		//Members
 		protected bool hasActed = false;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
-		public Tile[] possibleMoveTiles { get; set; }
+		public Tile[] possibleMoveTiles;
 		public Tile[] possibleTargetTiles {get; set; }
-		
+
 		protected GameObject ghostMesh;
 
 	#region Startup
-		void Start()	//This will not block base.Start()
+		protected override void Start()	//This will not block base.Start()
 		{
+			base.Start();
+
 			CreateGhostMesh();
 		}
 
@@ -73,24 +75,33 @@ namespace StormRend.Units
 			//Where should the push effect kill logic be implemented?
 		}
 
-		public void PerformAbility(Ability ability, params Tile[] targetTiles) 
+		public void PerformAbility(Ability ability, params Tile[] targetTiles)
 		{
 			ability.Perform(this, targetTiles);
 		}
-		public void PerformAbility(Ability ability, params Unit[] targetUnits) 
+		public void PerformAbility(Ability ability, params Unit[] targetUnits)
 		{
 			ability.Perform(this, targetUnits.Select(x => x.currentTile).ToArray());
 		}
 
 		/// <summary>
-		/// Calculate the tiles that this unit can currently move to for this point in game time.
+		/// Calculate the tiles that this unit can currently move to for this turn and point in game time.
 		/// Returns the list of tiles if needed.
 		/// </summary>
 		public void CalculateMoveTiles()
 		{
-			possibleMoveTiles = Map.CalcValidActionArea(currentTile.owner, currentTile, moveRange, 
-				typeof(Unit));	//You shouldn't be able to move onto any unit!
-			// return possibleMoveTiles;
+			Debug.LogFormat("{0}, {1}, {2}, {3}",
+				currentTile.owner, currentTile, moveRange, typeof(Unit));
+
+			possibleMoveTiles = Map.CalcValidActionArea(
+				currentTile.owner,
+				currentTile,
+				moveRange,
+				typeof(Unit));	//You shouldn't be able to move directly onto any unit!
+
+			Debug.Log(possibleMoveTiles);
+			foreach (var t in possibleMoveTiles)
+				Debug.Log(t);
 		}
 
 		public override void Die()
