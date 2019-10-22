@@ -122,7 +122,6 @@ namespace StormRend.MapSystems.Tiles
 			// if (highlightColors.TryGetValue("Hover", out TileHighlightColor color))
 			// 	highlight.SetColor(color);
 		}
-
 		public void OnPointerExit(PointerEventData eventData)
 		{
 			highlight.SetColor(oldColor);

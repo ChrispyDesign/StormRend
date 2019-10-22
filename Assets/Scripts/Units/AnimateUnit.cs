@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using StormRend.Abilities;
+using StormRend.Enums;
 using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
+using StormRend.Utility.Attributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -14,19 +17,21 @@ namespace StormRend.Units
 		//Inspector
 		[Header("Abilities")]
 		[SerializeField] protected int moveRange = 4;
+		[Tooltip("The unit types of that this unit cannot walk through ie. opponents")]
+		[EnumFlags, SerializeField] TargetUnitMask pathblockingUnitTypes = TargetUnitMask.Enemies;
 		[SerializeField] protected Ability[] abilities;
 
 		[Header("Color")]
 		[SerializeField] protected Color ghostColor = Color.blue;
 
 		//Properties
-		public Tile nextTile { get; set; }	//The tile this unit wants to move to
+		public Tile nextTile { get; set; } = null;	//The tile this unit wants to move to
 		public Ability currentAbility { get; set; } = null;
 
 		//Members
 		protected bool hasActed = false;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
 		public Tile[] possibleMoveTiles;
-		public Tile[] possibleTargetTiles {get; set; }
+		public Tile[] possibleTargetTiles { get; set; }
 
 		protected GameObject ghostMesh;
 
@@ -70,9 +75,17 @@ namespace StormRend.Units
 			//Move/Position logic	- NEED REVIEW
 			transform.position = currentTile.transform.position;
 		}
-		public void Move(Vector2Int vector, bool useGhost = false)
+		/// <summary>
+		/// Move Unit by direction ie. Move({2, 1}) means the unit to move right 2 and forward 1.
+		/// Returns false if the unit moved onto an empty space
+		/// </summary>
+		/// <param name="vector"></param>
+		/// <param name="useGhost"></param>
+		/// <returns></returns>
+		public bool Move(Vector2Int vector, bool useGhost = false)
 		{
 			//Where should the push effect kill logic be implemented?
+			return false;
 		}
 
 		public void PerformAbility(Ability ability, params Tile[] targetTiles)
@@ -86,18 +99,34 @@ namespace StormRend.Units
 
 		/// <summary>
 		/// Calculate the tiles that this unit can currently move to for this turn and point in game time.
+		/// Filters based on which unit type cannot be traversed through.
 		/// Returns the list of tiles if needed.
 		/// </summary>
-		public void CalculateMoveTiles()
+		public Tile[] CalculateMoveTiles()
 		{
-			// Debug.LogFormat("{0}, {1}, {2}, {3}", currentTile.owner, currentTile, moveRange, typeof(Unit));
+			var pathblockers = new List<Type>();
 
-			possibleMoveTiles =
-				Map.CalculateTileRange(currentTile.owner, currentTile, moveRange,typeof(Unit)); //You shouldn't be able to move directly onto any unit!
+			//Allies
+			if ((pathblockingUnitTypes & TargetUnitMask.Allies) == TargetUnitMask.Allies)
+				pathblockers.Add(typeof(AllyUnit));
 
-			Debug.Log(possibleMoveTiles);
-			foreach (var t in possibleMoveTiles)
-				Debug.Log(t);
+			//Enemies
+			if ((pathblockingUnitTypes & TargetUnitMask.Enemies) == TargetUnitMask.Enemies)
+				pathblockers.Add(typeof(EnemyUnit));
+
+			//Crystals
+			if ((pathblockingUnitTypes & TargetUnitMask.Crystals) == TargetUnitMask.Crystals)
+				pathblockers.Add(typeof(CrystalUnit));
+
+			//InAnimates
+			if ((pathblockingUnitTypes & TargetUnitMask.InAnimates) == TargetUnitMask.InAnimates)
+				pathblockers.Add(typeof(InAnimateUnit));
+
+			//Animates
+			if ((pathblockingUnitTypes & TargetUnitMask.Animates) == TargetUnitMask.Animates)
+				pathblockers.Add(typeof(AnimateUnit));
+
+			return possibleMoveTiles = Map.GetPossibleTiles(currentTile.owner, currentTile, moveRange, pathblockers.ToArray());
 		}
 
 		public override void Die()

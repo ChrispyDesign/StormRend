@@ -51,7 +51,7 @@ namespace StormRend.Units
 		{
 			//TODO This is slightly confusing
 			//Determine tiles to do damage to (regardless of unit type because it's already ignored and filtered)
-			var tilesToAttack = Map.CalculateTileRange(this.currentTile.owner, currentTile, 1, GetIgnoreUnitTypes()).ToList();
+			var tilesToAttack = Map.GetPossibleTiles(this.currentTile.owner, currentTile, 1, GetIgnoreUnitTypes()).ToList();
 
 			//Deal damage
 			foreach (var a in ur.aliveUnits)

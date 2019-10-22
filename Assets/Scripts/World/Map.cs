@@ -14,7 +14,7 @@ using UnityEditor;
 namespace StormRend.MapSystems
 {
 	[ExecuteInEditMode]
-	public sealed class Map : Singleton<Map>	//Only one map per scene?
+	public sealed class Map : Singleton<Map>    //Only one map per scene?
 	{
 		const float maxMapSize = 500f;
 
@@ -36,10 +36,7 @@ namespace StormRend.MapSystems
 
 		//Members
 		[HideInInspector] public List<Tile> tiles = new List<Tile>();
-		UnitRegistry ur;
-
-		// public List<Unit> mapUnits => _mapUnits;
-		// List<Unit> _mapUnits;	//Is this required? What should actually set this? Should we just use UnitRegistry
+		static UnitRegistry ur;
 
 #if UNITY_EDITOR
 		[HideInInspector] public BoxCollider editorRaycastPlane;
@@ -118,15 +115,25 @@ namespace StormRend.MapSystems
 			foreach (var t in tiles)
 			{
 				t.DisconnectAll();
-				EditorUtility.SetDirty(t);		//Actually saves the data
+				EditorUtility.SetDirty(t);      //Actually saves the data
 			}
 		}
 		public void GetTileTerrainCost(Tile tile) { }
 	#endregion
 
 	#region Pathfinding
-		public static Tile[] CalculateTileRange(Map map, Tile start, int range, params Type[] unitTypesToExclude)
+		/// <summary>
+		/// Calculates and returns a possible pathfinding solution
+		/// </summary>
+		/// <param name="map">The map</param>
+		/// <param name="start">Starting tile</param>
+		/// <param name="range">The range of movement</param>
+		/// <param name="pathblockingUnitTypes">The type of units on tiles that blocks the path and will be filtered out</param>
+		/// <returns></returns>
+		public static Tile[] GetPossibleTiles(Map map, Tile start, int range, params Type[] pathblockingUnitTypes)
 		{
+			//TODO Check to make sure exlude
+
 			List<Tile> validMoves = new List<Tile>();
 			Queue<Tile> openList = new Queue<Tile>();
 			List<Tile> closedList = new List<Tile>();
@@ -148,16 +155,13 @@ namespace StormRend.MapSystems
 				//Search through the neighbours until we find the best travel cost to another tile
 				foreach (var n in neighbours)
 				{
-					//Pass if neighbour tile is unwalkable
-					if (n is UnWalkableTile) continue;
+					//PASS if neighbour tile is unwalkable
+					if (n is UnWalkableTile)
+						continue;
 
-					//Pass if neighbour tile has a unit that needs to be ignored
-					foreach (var u in map.ur.aliveUnits)
-						//If unit is a type that needs to be ignored...
-						if (unitTypesToExclude.Contains(u.GetType()))
-							//If unit is on this neighbour tile...
-							if (u.currentTile == n)
-								continue;
+					//PASS if neighbour tile has a unit on top that needs to be ignored
+					if (areTypesOnTile(n, pathblockingUnitTypes))
+						continue;
 
 					//connected tile checked
 					if (!closedList.Contains(n))
@@ -170,9 +174,7 @@ namespace StormRend.MapSystems
 						n.G = newMovementCostToNeighbour;
 						n.H = 1;
 						// n.parent = currentTile;
-
-						if (n.G <= range)
-							openList.Enqueue(n);
+						if (n.G <= range) openList.Enqueue(n);
 					}
 				}
 
@@ -186,8 +188,30 @@ namespace StormRend.MapSystems
 				t.G = 0;
 				t.H = 0;
 			}
-			PrintCollection(validMoves);
 			return validMoves.ToArray();
+		}
+
+		/// <summary>
+		///	Returns true if unit is standing on tile t and is not in the list of excluded types
+		/// </summary>
+		/// <param name="excludeTypes">The types to excludes. Should be units</param>
+		/// <returns>True if any unit is standing on tile t and also is or is derived from one of the excludedTypes</returns>
+		static bool areTypesOnTile(Tile t, params Type[] excludedTypes)
+		{
+			foreach (var u in ur.aliveUnits)
+			{
+				//Check if unit is on tile first
+				if (u.currentTile == t)
+				{
+					//Check if its off the excluded type or is derived from the excluded type
+					foreach (var et in excludedTypes)
+					{
+						if (u.GetType().IsSubclassOf(et) || (u.GetType() == et))
+							return true;
+					}
+				}
+			}
+			return false;
 		}
 	#endregion
 

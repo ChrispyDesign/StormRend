@@ -4,6 +4,7 @@ using StormRend.Utility.Attributes;
 using StormRend.Units;
 using pokoro.BhaVE.Core.Variables;
 using StormRend.Enums;
+using System.Collections.Generic;
 
 namespace StormRend.Systems
 {
@@ -45,36 +46,29 @@ namespace StormRend.Systems
         {
             OnExecute.Invoke();
 
+            var unitsToDamage = new List<Unit>();
+
             //ALLIES
             if ((targetUnits & TargetUnitMask.Allies) == TargetUnitMask.Allies)
-            {
-                //Damage all ally units
-                var allyUnits = ur.GetUnits<AllyUnit>();
-                DealDamageToUnits(allyUnits);
-            }
+                unitsToDamage.AddRange(ur.GetUnits<AllyUnit>());
 
             //ENEMIES
             if ((targetUnits & TargetUnitMask.Enemies) == TargetUnitMask.Enemies)
-            {
-                //Deal damage to all enemies
-                var enemyUnits = ur.GetUnits<EnemyUnit>();
-                DealDamageToUnits(enemyUnits);
-            }
+                unitsToDamage.AddRange(ur.GetUnits<EnemyUnit>());
 
             //CRYSTALS
             if ((targetUnits & TargetUnitMask.Crystals) == TargetUnitMask.Crystals)
-            {
-                //Deal damage to all enemies
-                var crystalUnits = ur.GetUnits<CrystalUnit>();
-                DealDamageToUnits(crystalUnits);
-            }
+                unitsToDamage.AddRange(ur.GetUnits<CrystalUnit>());
 
-            //OTHER (ie. Spirit crystals etc)
+            //INANIMATES
             if ((targetUnits & TargetUnitMask.InAnimates) == TargetUnitMask.InAnimates)
-            {
-                //Deal blizzard damage to all inanimate enemies
-                Debug.LogError("Blizzard affect on inanimate units not implemented!");
-            }
+                unitsToDamage.AddRange(ur.GetUnits<InAnimateUnit>());
+
+            //ANIMATES
+            if ((targetUnits & TargetUnitMask.Animates) == TargetUnitMask.Animates)
+                unitsToDamage.AddRange(ur.GetUnits<AnimateUnit>());
+
+            DealDamageToUnits(unitsToDamage.ToArray());
 
             void DealDamageToUnits(Unit[] units)
             {
