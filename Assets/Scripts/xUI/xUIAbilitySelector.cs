@@ -13,9 +13,9 @@ namespace StormRend.Defunct
 
 		// ability buttons, passive, ability 1/2
 		[Header("Ability Buttons")]
-		[SerializeField] private RectTransform m_passivePanel;
-		[SerializeField] private RectTransform m_firstAbilityPanel;
-		[SerializeField] private RectTransform m_secondAbilityPanel;
+		[SerializeField] private RectTransform m_passivePanel = null;
+		[SerializeField] private RectTransform m_firstAbilityPanel = null;
+		[SerializeField] private RectTransform m_secondAbilityPanel = null;
 
 		// panel for activation/deactivation
 		[Header("Ability Info Panel")]
@@ -23,19 +23,19 @@ namespace StormRend.Defunct
 
 		// ability info text elements
 		[Header("Ability Text Elements")]
-		[SerializeField] private Text m_abilityTitle;
-		[SerializeField] private Text m_abilityLevel1;
-		[SerializeField] private Text m_abilityLevel2;
-		[SerializeField] private Text m_abilityLevel3;
+		[SerializeField] private Text m_abilityTitle = null;
+		[SerializeField] private Text m_abilityLevel1 = null;
+		[SerializeField] private Text m_abilityLevel2 = null;
+		[SerializeField] private Text m_abilityLevel3 = null;
 
 		[Header("Ability Individual Buttons")]
 		[SerializeField] private Button m_passiveButton = null;
 		[SerializeField] private Button[] m_firstAbilityButtons = null;
 		[SerializeField] private Button[] m_secondAbilityButtons = null;
 
-		private xAbility m_passiveAbility;
-		private xAbility[] m_firstAbilities;
-		private xAbility[] m_secondAbilities;
+		private xAbility m_passiveAbility = null;
+		private xAbility[] m_firstAbilities = null;
+		private xAbility[] m_secondAbilities = null;
 
 		#region GettersAndSetters
 

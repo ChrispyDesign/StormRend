@@ -17,7 +17,7 @@ namespace StormRend.Bhaviours
 	[CreateAssetMenu(menuName = "StormRend/Delegates/Actions/MoveToUnit", fileName = "MoveToUnit")]
     public class MoveToUnitAction : BhaveAction
     {
-        [SerializeField] UnitListVar targets;
+        [SerializeField] UnitListVar targets = null;
         [Tooltip("The number of turns to cast out in order find the range of this unit")]
         [SerializeField] int turns = 1;
 

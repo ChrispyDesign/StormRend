@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class UIHealthBars : MonoBehaviour
 {
-    [SerializeField] private GameObject m_healthBarPrefab;
+    [SerializeField] private GameObject m_healthBarPrefab = null;
 
     private Dictionary<xUnit, Slider> m_unitHealthBars;
 
@@ -18,7 +18,7 @@ public class UIHealthBars : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="units"></param>
     private void InitialiseHealthBars(xUnit[] units)

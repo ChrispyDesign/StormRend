@@ -8,8 +8,8 @@ namespace StormRend.Abilities.Effects
 {
     public class SummonEffect : xEffect
     {
-        [SerializeField] GameObject m_summon;
-        [SerializeField] int m_HowManyTurns;
+        [SerializeField] GameObject m_summon = null;
+        [SerializeField] int m_HowManyTurns = 1;
 
         public override bool PerformEffect(xTile _effectedNode, xUnit _thisUnit)
         {

@@ -13,19 +13,19 @@ namespace StormRend.Systems
 	public class BlizzardController : MonoBehaviour
     {
         //Inspector
-        [SerializeField] BhaveInt blizzardVar;
+        [SerializeField] BhaveInt blizzardVar = null;
         [SerializeField] int maxBlizzardValue = 5;
 
         [Header("Damage")]
-        [SerializeField, EnumFlags] TargetUnitMask targetUnits;
+        [SerializeField, EnumFlags] TargetUnitMask targetUnits = TargetUnitMask.Allies;
         [SerializeField, Range(1, 10)] int damage = 1;
 
         [Space]
         [Header("Events")]
-        [SerializeField] UnityEvent OnExecute;
-        [SerializeField] UnityEvent OnReset;
+        [SerializeField] UnityEvent OnExecute = null;
+        [SerializeField] UnityEvent OnReset = null;
 
-        UnitRegistry ur;
+        UnitRegistry ur = null;
 
     #region Core
         void Awake()

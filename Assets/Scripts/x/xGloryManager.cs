@@ -11,12 +11,12 @@ public class xGloryManager : MonoBehaviour
 {
     // glory meter
     [Tooltip("Glory meter transform, contains toggle child elements")]
-    [SerializeField] private Transform m_gloryMeter;
+    [SerializeField] private Transform m_gloryMeter = null;
 
     [Space]
-    [SerializeField] UnityEvent OnGain;
-    [SerializeField] UnityEvent OnSpend;
-    
+    [SerializeField] UnityEvent OnGain = null;
+    [SerializeField] UnityEvent OnSpend = null;
+
     // group of glory UI toggles
     #region Variables
     private static Toggle[] m_gloryNodes;
@@ -36,14 +36,14 @@ public class xGloryManager : MonoBehaviour
 
         gloryCount = 0;
     }
-    
+
     /// <summary>
     /// use this function to gain glory!
     /// </summary>
     /// <param name="value">the amount of glory to gain</param>
     public void GainGlory(int value)
     {
-        OnGain.Invoke();       
+        OnGain.Invoke();
 
         // increment
         gloryCount += value;
@@ -78,7 +78,7 @@ public class xGloryManager : MonoBehaviour
 
         // turn on/off the right amount of glory nodes
         UpdateGloryMeter();
-        
+
         return true; // glory spent successfully
     }
 

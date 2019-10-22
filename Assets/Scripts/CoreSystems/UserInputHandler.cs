@@ -123,14 +123,14 @@ namespace StormRend.Systems
 		[SerializeField] LayerMask raycastLayerMask;
 
 		[Tooltip("A reference to the State object that is considered to be the player's state ie. AllyState")]
-		[Space(10), SerializeField] State playersState;
+		[Space(10), SerializeField] State playersState = null;
 
-		[Space(10), SerializeField] UnitVar _selectedUnit;
-		[ReadOnlyField, SerializeField] Ability _selectedAbility;
+		[Space(10), SerializeField] UnitVar _selectedUnit = null;
+		[ReadOnlyField, SerializeField] Ability _selectedAbility = null;
 
 		[Header("Tile Highlight Colors")]
-		[SerializeField] TileHighlightColor moveHighlight;
-		[SerializeField] TileHighlightColor actionHighlight;
+		[SerializeField] TileHighlightColor moveHighlight = null;
+		[SerializeField] TileHighlightColor actionHighlight = null;
 
 		[Header("Camera")]
 		[SerializeField] float cameraSmoothTime = 1.5f;
@@ -340,7 +340,7 @@ namespace StormRend.Systems
 			//Make sure there are tiles to highlight (Hopefully this is done before the unit has moved)
 			if (selectedAnimateUnit.possibleMoveTiles.Length <= 0)
 			{
-				Debug.LogWarning("Unit's move tile was not calculate at the start of turn!!");
+				Debug.LogWarning("Unit's move tile should be calculated at the beginning of the turn!!");
 				selectedAnimateUnit.CalculateMoveTiles();
 			}
 
@@ -403,13 +403,15 @@ namespace StormRend.Systems
 		{
 			if (!isUnitSelected) return;
 
-			//Clear highlights
-			foreach (var t in selectedAnimateUnit.possibleMoveTiles)
-				t.highlight.Clear();
+			//Clear move highlights
+			if (selectedAnimateUnit.possibleMoveTiles != null)
+				foreach (var t in selectedAnimateUnit.possibleMoveTiles)
+					t.highlight.Clear();
 
-			//Clear highlights
-			foreach (var t in selectedAnimateUnit.possibleTargetTiles)
-				t.highlight.Clear();
+			//Clear target highlights
+			if (selectedAnimateUnit.possibleTargetTiles != null)
+				foreach (var t in selectedAnimateUnit.possibleTargetTiles)
+					t.highlight.Clear();
 		}
 	#endregion
 

@@ -8,7 +8,7 @@ namespace StormRend.Variables.Utils
 	/// Custom variable listener and limiter
 	/// </summary>
 	public class IntVariableHandler : MonoBehaviour
-	{ 
+	{
 		public enum LimitType { None, Clamp, WrapAround }
 
 		[SerializeField] BhaveInt intVariable;
@@ -16,7 +16,7 @@ namespace StormRend.Variables.Utils
 		[TextArea(0, 2), SerializeField, Space(5)] string description = "";
 
 		[Header("Limits")]
-		[SerializeField] LimitType limitType;
+		[SerializeField] LimitType limitType = LimitType.None;
 		[SerializeField] int minLimit = 0;
 		[SerializeField] int maxLimit = 1;
 

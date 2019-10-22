@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Rune : MonoBehaviour
 {
-    [SerializeField] List<Transform> nodes;
+    [SerializeField] List<Transform> nodes = new List<Transform>();
     [SerializeField] Transform target;
     [SerializeField] Transform start;
 
@@ -19,7 +19,7 @@ public class Rune : MonoBehaviour
 
     void Update()
     {
-        if(Vector3.Distance(transform.position, target.position) <= 0.01f)        
+        if(Vector3.Distance(transform.position, target.position) <= 0.01f)
             NewNode();
 
         percent += Time.deltaTime * speed;
@@ -34,7 +34,7 @@ public class Rune : MonoBehaviour
 
         if (nodes[rand] == target)
             NewNode();
-        else        
+        else
             target = nodes[rand];
 
     }

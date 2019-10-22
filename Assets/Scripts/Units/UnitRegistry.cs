@@ -10,7 +10,7 @@ namespace StormRend.Units
 	public class UnitRegistry : Singleton<UnitRegistry>
 	{
 		//Inspector
-		[Header("Auto load units upon start. Do not load in manually")]
+		[Header("Units loaded in automatically. DO NOT load in manually")]
 		[ReadOnlyField, SerializeField] List<Unit> _aliveUnits = new List<Unit>();
 		[ReadOnlyField, SerializeField] List<Unit> _deadUnits = new List<Unit>();
 

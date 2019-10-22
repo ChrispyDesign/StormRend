@@ -22,9 +22,5 @@ public class Grass : MonoBehaviour
 			var randomMaterialIDX = Random.Range(0, grassMaterials.Count - 1);
 			GetComponentInChildren<Renderer>().material = grassMaterials[randomMaterialIDX];
 		}
-		else
-		{
-			Debug.LogWarning("No grass materials!");
-		}
 	}
 }

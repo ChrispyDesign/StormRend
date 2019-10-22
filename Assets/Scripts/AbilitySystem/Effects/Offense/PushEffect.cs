@@ -16,9 +16,9 @@ namespace StormRend.Abilities.Effects
     public class PushEffect : xEffect
     {
         //[SerializeField] private EffectedTile m_direction;
-        [SerializeField] int m_pushAmount;
-        [SerializeField] bool m_doDamage;
-        [SerializeField] int m_damage;
+        [SerializeField] int m_pushAmount = 1;
+        [SerializeField] bool m_doDamage = false;
+        [SerializeField] int m_damage = 1;
 
 		//SO DUMB!!! Just use Vector2Int.left/right/up/down etc...
         Vector2Int m_left = Vector2Int.left;

@@ -21,7 +21,7 @@ namespace StormRend.MapSystems.Tiles
 		public static Dictionary<string, TileHighlightColor> highlightColors { get; private set; } = new Dictionary<string, TileHighlightColor>();
 
 		//Inspector
-		[SerializeField] TileHighlightColor hoverHighlight;
+		[SerializeField] TileHighlightColor hoverHighlight = null;
 		public float cost = 1;
 		internal float G = float.MaxValue;
 		internal float H = float.MaxValue;

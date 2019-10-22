@@ -37,7 +37,7 @@ namespace StormRend.Abilities
 		//Inspector
 		[SerializeField] Sprite _icon = null;
 		[Tooltip("Animation number for this ability in order to send to a corresponding animator")]
-		[SerializeField] int _animNumber;
+		[SerializeField] int _animNumber = 0;
 		[SerializeField] int _level = 1;
 		[SerializeField] AbilityType _type = AbilityType.Primary;
 		[TextArea(0, 2), SerializeField] string _description = "";
@@ -50,7 +50,7 @@ namespace StormRend.Abilities
 
 		[Tooltip("The type of tiles this ability can target")]
 		//This will be used to determine which tiles the UserInputHandler can pick
-		[EnumFlags, SerializeField] TargetTileMask _targetTileTypes;
+		[EnumFlags, SerializeField] TargetTileMask _targetTileTypes = (TargetTileMask)~0;
 
 		//Members
 		[HideInInspector]

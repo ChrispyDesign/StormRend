@@ -21,7 +21,7 @@ namespace StormRend.Systems.StateMachines
 
 	#region Inspector
 		[ReadOnlyField] [SerializeField] int _currentStateIDX = 0;
-		[SerializeField] State entryState;
+		[SerializeField] State entryState = null;
 		[SerializeField] List<State> turnStates = new List<State>();  //They have to be StackStates because they can be covered/uncovered
 		Stack<State> stackStates = new Stack<State>();
 

@@ -27,16 +27,16 @@ namespace StormRend.Abilities
 		private List<xTile> m_tiles = new List<xTile>();
 
 		// ability info (for UI display purposes)
-		[SerializeField] int animNumber;
+		[SerializeField] int animNumber = 0;
 		[SerializeField] Sprite m_icon = null;
 		[TextArea]
-		[SerializeField] string m_description;
+		[SerializeField] string m_description = "";
 
 		[SerializeField] int m_gloryRequirement = 0;
 		[SerializeField] int m_tilesToSelect = 1;
 
 		public RowData[] m_castArea = new RowData[7];
-		[SerializeField] TargetableTiles m_targetableTiles;
+		[SerializeField] TargetableTiles m_targetableTiles = new TargetableTiles();
 		[SerializeField] List<xEffect> m_effects = new List<xEffect>();
 
 		#region getters

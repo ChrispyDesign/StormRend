@@ -17,7 +17,7 @@ namespace StormRend.Systems
 		//Inspector
 		[Header("Game Pause")]
 		[SerializeField] KeyCode pauseKey = KeyCode.Escape;
-		[SerializeField] UIState pauseMenuState;
+		[SerializeField] UIState pauseMenuState = null;
 
 		[Header("End Game")]
 		[SerializeField] State loseState;

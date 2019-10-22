@@ -9,7 +9,7 @@ namespace StormRend.Abilities.Effects
 {
     public class DamageEffect : Effect
     {
-        [SerializeField] int damageAmount;
+        [SerializeField] int damageAmount = 1;
 
 		public override bool Perform(Unit owner, Tile[] targetTiles)
         {

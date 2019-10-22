@@ -5,7 +5,7 @@ namespace StormRend.Abilities.Effects
 {
     public class GloryEffect : xEffect
     {
-        [SerializeField] private int m_gloryAmount;
+        [SerializeField] private int m_gloryAmount = 1;
 
         public override bool PerformEffect(xTile _effectedNode, xUnit _thisUnit)
         {

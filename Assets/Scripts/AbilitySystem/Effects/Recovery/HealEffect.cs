@@ -5,7 +5,7 @@ namespace StormRend.Abilities.Effects
 {
     public class HealEffect : xEffect
     {
-        [SerializeField] int m_healAmount;
+        [SerializeField] int m_healAmount = 1;
 
         public override bool PerformEffect(xTile _effectedNode, xUnit _thisUnit)
         {
