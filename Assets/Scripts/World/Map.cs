@@ -160,7 +160,7 @@ namespace StormRend.MapSystems
 						continue;
 
 					//PASS if neighbour tile has a unit on top that needs to be ignored
-					if (areTypesOnTile(n, pathblockingUnitTypes))
+					if (CheckTypesOnTile(n, pathblockingUnitTypes))
 						continue;
 
 					//connected tile checked
@@ -196,7 +196,7 @@ namespace StormRend.MapSystems
 		/// </summary>
 		/// <param name="excludeTypes">The types to excludes. Should be units</param>
 		/// <returns>True if any unit is standing on tile t and also is or is derived from one of the excludedTypes</returns>
-		static bool areTypesOnTile(Tile t, params Type[] excludedTypes)
+		static bool CheckTypesOnTile(Tile t, params Type[] excludedTypes)
 		{
 			foreach (var u in ur.aliveUnits)
 			{

@@ -148,21 +148,21 @@ namespace StormRend.Editors
 			GenericMenu m = new GenericMenu();
 
 			m.AddItem(new GUIContent("Damage"), false, () => a.AddEffect<DamageEffect>());
-			m.AddItem(new GUIContent("Push"), false, () => a.AddEffect<DamageEffect>());
-			m.AddItem(new GUIContent("Summon"), false, () => a.AddEffect<DamageEffect>());
-			m.AddItem(new GUIContent("Glory Gain"), false, () => a.AddEffect<DamageEffect>());
+			m.AddItem(new GUIContent("Push"), false, () => a.AddEffect<PushEffect>());
+			m.AddItem(new GUIContent("Summon"), false, () => a.AddEffect<SummonEffect>());
+			m.AddItem(new GUIContent("Gain Glory"), false, () => a.AddEffect<GainGloryEffect>());
 			m.AddSeparator("");
-			m.AddItem(new GUIContent("Teleport"), false, () => a.AddEffect<DamageEffect>());
-			m.AddItem(new GUIContent("Swap Units"), false, () => a.AddEffect<DamageEffect>());
+			m.AddItem(new GUIContent("Teleport"), false, () => a.AddEffect<TeleportEffect>());
+			m.AddItem(new GUIContent("Swap Units"), false, () => a.AddEffect<SwapUnitEffect>());
 			m.AddSeparator("");
-			m.AddItem(new GUIContent("Heal"), false, () => a.AddEffect<DamageEffect>());
-			m.AddItem(new GUIContent("Refresh?"), false, () => a.AddEffect<DamageEffect>());
+			m.AddItem(new GUIContent("Heal"), false, () => a.AddEffect<HealEffect>());
+			m.AddItem(new GUIContent("Refresh?"), false, () => a.AddEffect<RefreshEffect>());
 			m.AddSeparator("");
-			m.AddItem(new GUIContent("Protection"), false, () => a.AddEffect<DamageEffect>());
-			m.AddItem(new GUIContent("Taunting"), false, () => a.AddEffect<DamageEffect>());
+			// m.AddItem(new GUIContent("Protection"), false, () => a.AddEffect<ProtectEffect>());
+			// m.AddItem(new GUIContent("Taunting"), false, () => a.AddEffect<TauntEffect>());
 			m.AddSeparator("");
-			m.AddItem(new GUIContent("Blinding"), false, () => a.AddEffect<DamageEffect>());
-			m.AddItem(new GUIContent("Crippling"), false, () => a.AddEffect<DamageEffect>());
+			m.AddItem(new GUIContent("Blinding"), false, () => a.AddEffect<BlindEffect>());
+			m.AddItem(new GUIContent("Crippling"), false, () => a.AddEffect<CrippleEffect>());
 
 			m.DropDown(rect);
 		}

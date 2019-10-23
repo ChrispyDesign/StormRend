@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using StormRend.Units;
 using StormRend.Utility.Attributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -91,7 +92,7 @@ namespace StormRend.MapSystems.Tiles
 		}
 	#endregion
 
-	#region Core
+	#region Utility
 		/// <summary>
 		/// Returns an adjacent tile in a certain direction.
 		/// If no tile found then return null.
@@ -120,14 +121,16 @@ namespace StormRend.MapSystems.Tiles
 			}
 			tile = null;
 			return false;
-
 		}
 	#endregion
 
 	#region Event System Interface Implementations
 		public void OnPointerEnter(PointerEventData eventData)
 		{
+			//TODO should we use the event system?
+			// eventData.selectedObject
 			oldColor = highlight.color;
+
 			if (hoverHighlight) highlight.SetColor(hoverHighlight);
 			// if (highlightColors.TryGetValue("Hover", out TileHighlightColor color))
 			// 	highlight.SetColor(color);

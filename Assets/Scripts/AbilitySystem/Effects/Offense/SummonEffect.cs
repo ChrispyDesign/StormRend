@@ -1,31 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using StormRend.Defunct;
+using StormRend.MapSystems.Tiles;
+using StormRend.Units;
 
 namespace StormRend.Abilities.Effects
 {
-    public class SummonEffect : xEffect
+    public class SummonEffect : Effect
     {
-        [SerializeField] GameObject m_summon = null;
-        [SerializeField] int m_HowManyTurns = 1;
+        [SerializeField] GameObject summon = null;
 
-        public override bool PerformEffect(xTile _effectedNode, xUnit _thisUnit)
+		public override bool Perform(Unit owner, Tile[] targetTiles)
         {
-            base.PerformEffect(_effectedNode, _thisUnit);
-
-            if (!m_isTileAllowed)
-                return false;
-
-            Transform go = Instantiate(m_summon,
-                            _effectedNode.gameObject.transform.position,
-                            Quaternion.identity, null).transform;
-            xCrystal unit = go.GetComponent<xCrystal>();
-            unit.coords = _effectedNode.GetCoordinates();
-            unit.m_HowManyTurns = m_HowManyTurns;
-            _effectedNode.SetUnitOnTop(unit);
-            xGameManager.current.AddCrystal(unit);
+			//Summon at each target tile
+			foreach (var t in targetTiles)
+			{
+				var inanimate = Instantiate(summon, t.gameObject.transform.position, Quaternion.identity, null).GetComponent<InAnimateUnit>();
+				ur.RegisterUnit(inanimate);
+			}
 
             return true;
         }

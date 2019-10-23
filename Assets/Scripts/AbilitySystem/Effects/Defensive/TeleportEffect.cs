@@ -1,25 +1,25 @@
 ﻿using StormRend.Defunct;
+using StormRend.MapSystems.Tiles;
+using StormRend.Units;
 
 namespace StormRend.Abilities.Effects
 {
-    public class TeleportEffect : xEffect
+    public class TeleportEffect : Effect
     {
-        public override bool PerformEffect(xTile _effectedNode, xUnit _thisUnit)
+		public override bool Perform(Unit owner, Tile[] targetTiles)
         {
-            base.PerformEffect(_effectedNode, _thisUnit);
+			//Make sure there is atleast one tile
+			if (targetTiles.Length <= 0) return false;
 
-            if (!m_isTileAllowed)
-                return false;
+			//Get the tile
+			var t = targetTiles[0];
 
-            if (_effectedNode.GetUnitOnTop() != null
-                || _effectedNode.m_nodeType == NodeType.BLOCKED
-                || _effectedNode.m_nodeType == NodeType.EMPTY)
-            {
-                _thisUnit.SetHasAttacked(false);
-                return false;
-            }
-            _thisUnit.MoveTo(_effectedNode);
-
+			//This can only take one target tile so ignore the rest
+			if (!UnitRegistry.IsUnitOnTile(t, out Unit ignoreMe))
+			{
+				var au = owner as AnimateUnit;		//Cast
+				au.Move(t, false);					//Teleport
+			}
             return true;
         }
     }

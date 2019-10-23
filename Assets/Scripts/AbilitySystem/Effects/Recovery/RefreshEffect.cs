@@ -1,29 +1,25 @@
 ﻿using StormRend.Defunct;
+using StormRend.MapSystems.Tiles;
+using StormRend.Units;
+using StormRend.Utility.Attributes;
 using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
-    public enum RefreshType
+    public class RefreshEffect : Effect
     {
-        AttackAgain,
-        MoveAgain
-    }
+		// public enum RefreshType
+		// {
+		// 	AttackAgain,
+		// 	MoveAgain
+		// }
+        // [SerializeField] RefreshType refreshType;
+		// [HelpBox, SerializeField] string info = "wtf mate";
 
-    public class RefreshEffect : xEffect
-    {
-        [SerializeField] RefreshType m_refreshType;
-
-        public override bool PerformEffect(xTile _effectedNode, xUnit _thisUnit)
+		public override bool Perform(Unit owner, Tile[] targetTiles)
         {
-            base.PerformEffect(_effectedNode, _thisUnit);
-
-            if (!m_isTileAllowed)
-                return false;
-
-            _thisUnit.SetHasMoved(false);
-            _thisUnit.SetHasAttacked(false);
-            _thisUnit.m_afterClear = false;
-
+			var au = owner as AnimateUnit;
+			au.SetActed(false);		//You should always be able to move again right?
             return true;
         }
     }

@@ -12,7 +12,7 @@ using UnityEngine.EventSystems;
 namespace StormRend.Units
 {
 	[SelectionBase] //Avoid clicking on child objects
-	public abstract class AnimateUnit : Unit, IPointerEnterHandler, IPointerExitHandler
+	public abstract class AnimateUnit : Unit, IPointerEnterHandler, IPointerExitHandler //, IDeselectHandler, ISelectHandler
 	{
 		//Inspector
 		[Header("Abilities")]
@@ -30,7 +30,10 @@ namespace StormRend.Units
 		public Ability currentAbility { get; set; } = null;
 
 		//Members
-		protected bool hasActed = false;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
+		bool _hasActed = false;
+		public bool hasActed => _hasActed;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
+		public void SetActed(bool value) => _hasActed = value;
+
 		public Tile[] possibleMoveTiles;
 		public Tile[] possibleTargetTiles { get; set; }
 
@@ -112,13 +115,19 @@ namespace StormRend.Units
 
 		/// <summary>
 		/// Move Unit by direction ie. Move({2, 1}) means the unit to move right 2 and forward 1.
-		/// Returns false if the unit moved onto an empty space
+		/// Returns false if the unit moved onto an empty space.
+		/// Can set to kill unit if it does move onto an empty space.
 		/// </summary>
 		/// <param name="vector"></param>
-		/// <param name="useGhost"></param>
+		/// <param name="kill"></param>
 		/// <returns></returns>
-		public bool Move(Vector2Int vector, bool useGhost = false)
+		public bool Move(Vector2Int vector, bool kill = false)
 		{
+			// if (Tile.TryGetConnectedTile(vector, out Tile tile))
+			{
+				
+			}
+
 			//Where should the push effect kill logic be implemented?
 			throw new NotImplementedException();
 		}

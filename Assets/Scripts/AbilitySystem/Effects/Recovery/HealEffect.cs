@@ -1,27 +1,27 @@
 ﻿using StormRend.Defunct;
+using StormRend.MapSystems.Tiles;
+using StormRend.Units;
 using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
-    public class HealEffect : xEffect
+    public class HealEffect : Effect
     {
-        [SerializeField] int m_healAmount = 1;
+        [SerializeField] int healAmount = 1;
 
-        public override bool PerformEffect(xTile _effectedNode, xUnit _thisUnit)
-        {
-            base.PerformEffect(_effectedNode, _thisUnit);
-
-            if (!m_isTileAllowed)
-                return false;
-
-            xUnit unit = _effectedNode.GetUnitOnTop();
-
-            if (unit != null)
-            {
-                unit.HP += m_healAmount;
-            }
-
-            return true;
-        }
+		/// <summary>
+		/// Heal any units that are on the passed in tiles
+		/// </summary>
+		public override bool Perform(Unit owner, Tile[] targetTiles)
+		{
+			foreach (var t in targetTiles)
+			{
+				if (UnitRegistry.IsUnitOnTile(t, out Unit u))		//Try getting a unit on top
+				{
+					u.HP += healAmount;		//Heal
+				}
+			}
+			return true;
+		}
     }
 }

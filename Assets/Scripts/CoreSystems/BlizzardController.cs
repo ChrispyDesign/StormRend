@@ -50,23 +50,23 @@ namespace StormRend.Systems
 
             //ALLIES
             if ((targetUnits & TargetUnitMask.Allies) == TargetUnitMask.Allies)
-                unitsToDamage.AddRange(ur.GetUnits<AllyUnit>());
+                unitsToDamage.AddRange(ur.GetUnitsByType<AllyUnit>());
 
             //ENEMIES
             if ((targetUnits & TargetUnitMask.Enemies) == TargetUnitMask.Enemies)
-                unitsToDamage.AddRange(ur.GetUnits<EnemyUnit>());
+                unitsToDamage.AddRange(ur.GetUnitsByType<EnemyUnit>());
 
             //CRYSTALS
             if ((targetUnits & TargetUnitMask.Crystals) == TargetUnitMask.Crystals)
-                unitsToDamage.AddRange(ur.GetUnits<CrystalUnit>());
+                unitsToDamage.AddRange(ur.GetUnitsByType<CrystalUnit>());
 
             //INANIMATES
             if ((targetUnits & TargetUnitMask.InAnimates) == TargetUnitMask.InAnimates)
-                unitsToDamage.AddRange(ur.GetUnits<InAnimateUnit>());
+                unitsToDamage.AddRange(ur.GetUnitsByType<InAnimateUnit>());
 
             //ANIMATES
             if ((targetUnits & TargetUnitMask.Animates) == TargetUnitMask.Animates)
-                unitsToDamage.AddRange(ur.GetUnits<AnimateUnit>());
+                unitsToDamage.AddRange(ur.GetUnitsByType<AnimateUnit>());
 
             DealDamageToUnits(unitsToDamage.ToArray());
 
