@@ -131,6 +131,7 @@ namespace StormRend.Systems
 		[ReadOnlyField, SerializeField] Ability _selectedAbility = null;
 
 		[Header("Tile Highlight Colors")]
+		[SerializeField] TileHighlightColor hoverHighlight = null;
 		[SerializeField] TileHighlightColor moveHighlight = null;
 		[SerializeField] TileHighlightColor actionHighlight = null;
 
@@ -272,20 +273,26 @@ namespace StormRend.Systems
 						break;
 				}
 			}
-			else 
+			else 	//HOVER
 			{
-				if (mode == ActivityMode.Move) 	//MOVE MODE
+				switch (mode)
 				{
-					//Poll events
-					isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
-					if (isTileHit) isTileHitEmpty = !UnitRegistry.TryGetUnitOnTile(interimTile, out interimUnit);	//Check tile is empty
+					// case ActivityMode.Idle:
+					// 	isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
+					// 	if (isTileHit)
+					// 	break;
+					case ActivityMode.Move:		//MOVE
+						//Poll events
+						isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
+						if (isTileHit) isTileHitEmpty = !UnitRegistry.TryGetUnitOnTile(interimTile, out interimUnit);	//Check tile is empty
 
-					//Move ghost on hover if the tile is empty
-					if (isTileHit && isTileHitEmpty)
-					{
-						//MOVE GHOST
-						selectedAnimateUnit.Move(interimTile, true);
-					}
+						//Move ghost on hover if the tile is empty
+						if (isTileHit && isTileHitEmpty)
+						{
+							//MOVE GHOST
+							selectedAnimateUnit.Move(interimTile, true);
+						}
+						break;
 				}
 			}
 		}
@@ -391,9 +398,9 @@ namespace StormRend.Systems
 			//Highlight
 			foreach (var t in selectedAnimateUnit.possibleMoveTiles)
 			{
-				// t.highlight.SetColor(moveHighlight);
-				if (Tile.highlightColors.TryGetValue("Move", out TileHighlightColor color))
-					t.highlight.SetColor(color);
+				t.highlight.SetColor(moveHighlight);
+				// if (Tile.highlightColors.TryGetValue("Move", out TileHighlightColor color))
+				// 	t.highlight.SetColor(color);
 			}
 		}
 
