@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using StormRend.Abilities;
 using StormRend.CameraSystem;
 using StormRend.MapSystems.Tiles;
@@ -177,22 +178,22 @@ namespace StormRend.Systems
 		FrameEventData e;   //The events that happenned this frame
 		CameraMover camMover;
 		Camera cam;
-
-		//Debug
+		Stack<Tile> targetTiles = new Stack<Tile>();
+		UnitRegistry ur;
 		public bool debug;
 		bool isUnitHit;
 		bool isTileHit;
 		Unit interimUnit;
 		Tile interimTile;
-		Stack<Tile> targetTiles = new Stack<Tile>();
 		bool notEnoughTargetTilesSelected = false;
 
 	#region Core
 		void Awake()
 		{
-			//Find
-			camMover = MasterCamera.current.linkedCamera.GetComponent<CameraMover>();
+			//Inits
 			cam = MasterCamera.current.linkedCamera;
+			camMover = cam.GetComponent<CameraMover>();
+			ur = UnitRegistry.current;
 		}
 		void Start()
 		{
@@ -217,7 +218,7 @@ namespace StormRend.Systems
 			if (e.leftClicked)	//LEFT CLICKED
 			{
 				isUnitHit = TryGetRaycast<Unit>(out interimUnit);
-				isTileHit = TryGetRaycast<Tile>(out interimTile);
+				// isTileHit = TryGetRaycast<Tile>(out interimTile);
 
 				//PLAYER'S TURN
 				if (isPlayersTurn)
@@ -261,12 +262,16 @@ namespace StormRend.Systems
 			}
 			else if (mode == ActivityMode.Move)
 			{
-				isTileHit = TryGetRaycast<Tile>(out interimTile);		//!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
+				isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
 
 				//Move ghost on hover
 				if (isTileHit)
 				{
-					selectedAnimateUnit.Move(interimTile, true);
+					//Only move ghost if tile is empty
+					if (!IsUnitOnTile<Unit>(interimTile))
+					{
+						selectedAnimateUnit.Move(interimTile, true);
+					}
 				}
 			}
 		}
@@ -300,7 +305,11 @@ namespace StormRend.Systems
 			OnSelectedUnitChanged.Invoke(au);	//ie. Update UI, Play sounds,
 
 			//Clear tile highlights if a unit was already selected
-			if (isUnitSelected) ClearSelectUnitTileHighlights();
+			if (isUnitSelected) 
+			{
+				ClearSelectUnitTileHighlights();
+				selectedAnimateUnit.ClearGhost();
+			}
 
 			//Set the selected unt
 			selectedUnit = au;
@@ -316,6 +325,7 @@ namespace StormRend.Systems
 					break;
 			}
 		}
+
 		public void SelectAbility(Ability a)	//aka. OnAbilityChanged()
 		{
 			//Check
@@ -334,6 +344,11 @@ namespace StormRend.Systems
 			//Update active unit's action tiles
 			selectedAnimateUnit.possibleTargetTiles = selectedAbility.CalculateTargetableTiles(selectedAnimateUnit);
 		}
+
+		/// <summary>
+		/// Add a target tile to the stack and if the selected ability required target input is reached then perform the ability
+		/// </summary>
+		/// <param name="t"></param>
 		void AddTargetTile(Tile t)
 		{
 			//Check ability can accept this tile type
@@ -366,10 +381,11 @@ namespace StormRend.Systems
 					t.highlight.SetColor(color);
 			}
 		}
+
 		void HighlightActionTiles()
 		{
 			//NOTE: Active unit's ACTION highlights should be refreshed each OnAbilityChanged
-			if (!isUnitSelected) return;
+			if (!isUnitSelected) return;	//A unit should already be selected
 
 			//Make sure there are tiles to highlight
 			if (selectedAnimateUnit.possibleTargetTiles == null)
@@ -389,7 +405,7 @@ namespace StormRend.Systems
 		//Deselects the unit
 		void ClearSelectedUnit()
 		{
-			if (!isUnitSelected) return;
+			if (!isUnitSelected) return;	//A unit should be selected
 
 			OnSelectedUnitCleared.Invoke();
 
@@ -400,8 +416,11 @@ namespace StormRend.Systems
 			//Clear
 			selectedUnit = null;
 		}
+
 		void ClearSelectedAbility(bool redrawMoveTiles = true)
 		{
+			if (!isUnitSelected) return;	//A unit should be selected
+
 			OnSelectedAbilityCleared.Invoke();
 
 			//Clear
@@ -413,9 +432,10 @@ namespace StormRend.Systems
 			//Redraw move highlights
 			if (redrawMoveTiles) HighlightMoveTiles();
 		}
+
 		void ClearSelectUnitTileHighlights()
 		{
-			if (!isUnitSelected) return;
+			if (!isUnitSelected) return;	//A unit should be selected
 
 			//Clear move highlights
 			if (selectedAnimateUnit.possibleMoveTiles != null)
@@ -427,9 +447,18 @@ namespace StormRend.Systems
 				foreach (var t in selectedAnimateUnit.possibleTargetTiles)
 					t.highlight.Clear();
 		}
-	#endregion
+		#endregion
 
 	#region Assists
+		//If T object is on tile then return true
+		internal bool IsUnitOnTile<T>(Tile t) where T : Unit
+		{
+			var filteredUnits = ur.aliveUnits.Where(x => x is T);
+			foreach (var u in filteredUnits)
+				if (u.currentTile == t) return true;
+			return false;
+		}
+		//If T object hit then return true and output it
 		bool TryGetRaycast<T>(out T hit) where T : MonoBehaviour
 		{
 			Ray ray = cam.ScreenPointToRay(Input.mousePosition);
