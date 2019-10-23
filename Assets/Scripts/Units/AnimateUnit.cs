@@ -67,14 +67,17 @@ namespace StormRend.Units
 	#endregion
 
 	#region Core
+		public void ClearGhost()
+		{
+			ghostMesh.SetActive(false);
+		}
 		public void Move(Tile destination, bool useGhost = false)
 		{
 			//Only set the position of the ghsot
 			if (useGhost)
 			{
-				Debug.Log("Use Ghost");
-				//Filter
-				// if (!possibleMoveTiles.Contains(destination)) return;
+				//Filter out non-moving tiles
+				if (!possibleMoveTiles.Contains(destination)) return;
 
 				//Move
 				ghostTile = destination;
@@ -86,14 +89,14 @@ namespace StormRend.Units
 			//Move the actual unit (permanent)
 			else
 			{
+				//Ghost was probably just active so deactivate ghost ??? Should this be here?
+				ghostMesh.SetActive(false);
+
 				//Filter
 				if (!possibleMoveTiles.Contains(destination)) return;
 
 				//Move
 				currentTile = destination;
-
-				//Deactivate ghost ??? Should this be here?
-				ghostMesh.SetActive(false);
 			}
 
 			// //Set the new tile

@@ -176,6 +176,7 @@ namespace StormRend.Systems
 		//Members
 		FrameEventData e;   //The events that happenned this frame
 		CameraMover camMover;
+		Camera cam;
 
 		//Debug
 		public bool debug;
@@ -191,6 +192,7 @@ namespace StormRend.Systems
 		{
 			//Find
 			camMover = MasterCamera.current.linkedCamera.GetComponent<CameraMover>();
+			cam = MasterCamera.current.linkedCamera;
 		}
 		void Start()
 		{
@@ -259,8 +261,7 @@ namespace StormRend.Systems
 			}
 			else if (mode == ActivityMode.Move)
 			{
-				Debug.Log("Activity Mode: " + mode);
-				isTileHit = TryGetRaycast<Tile>(out interimTile);
+				isTileHit = TryGetRaycast<Tile>(out interimTile);		//!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
 
 				//Move ghost on hover
 				if (isTileHit)
@@ -388,16 +389,16 @@ namespace StormRend.Systems
 		//Deselects the unit
 		void ClearSelectedUnit()
 		{
+			if (!isUnitSelected) return;
+
 			OnSelectedUnitCleared.Invoke();
 
-			//Clear tile move and action highlights
-			if (isUnitSelected) ClearSelectUnitTileHighlights();
+			//Clear tile highlights and ghost
+			ClearSelectUnitTileHighlights();
+			selectedAnimateUnit.ClearGhost();
 
 			//Clear
 			selectedUnit = null;
-
-			//Clear move highlights (don't need to clear ability highlights since that would have been already done)
-			ClearSelectUnitTileHighlights();
 		}
 		void ClearSelectedAbility(bool redrawMoveTiles = true)
 		{
@@ -429,9 +430,9 @@ namespace StormRend.Systems
 	#endregion
 
 	#region Assists
-		internal bool TryGetRaycast<T>(out T hit) where T : MonoBehaviour
+		bool TryGetRaycast<T>(out T hit) where T : MonoBehaviour
 		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 			if (Physics.Raycast(ray, out RaycastHit hitInfo, float.PositiveInfinity, raycastLayerMask.value))
 			{
 				hit = hitInfo.collider.GetComponent<T>();
