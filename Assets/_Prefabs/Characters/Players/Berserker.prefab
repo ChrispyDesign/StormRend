@@ -5313,18 +5313,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e74e1bda9c3f0d45ae50a717d100e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentTile: {fileID: 0}
   description: 
   _hp: 0
   _maxHP: 5
-  currentTile: {fileID: 0}
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   moveRange: 4
+  pathblockingUnitTypes: 8
   abilities: []
   ghostColor: {r: 1, g: 0.5513562, b: 0, a: 1}
+  possibleMoveTiles: []
 --- !u!1001 &687955930633490119
 PrefabInstance:
   m_ObjectHideFlags: 0

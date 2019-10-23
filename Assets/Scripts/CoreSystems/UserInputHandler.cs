@@ -186,8 +186,9 @@ namespace StormRend.Systems
 		Unit interimUnit;
 		Tile interimTile;
 		bool notEnoughTargetTilesSelected = false;
+		bool isTileHitEmpty;
 
-	#region Core
+		#region Core
 		void Awake()
 		{
 			//Inits
@@ -211,14 +212,17 @@ namespace StormRend.Systems
 			ProcessEvents();
 		}
 
+		//--------------------- PROCESS EVENTS -----------------------------
 		void ProcessEvents()
 		{
 			e.Refresh();	//Refresh all input events
 
 			if (e.leftClicked)	//LEFT CLICKED
 			{
+				//Poll events
 				isUnitHit = TryGetRaycast<Unit>(out interimUnit);
-				// isTileHit = TryGetRaycast<Tile>(out interimTile);
+				isTileHit = TryGetRaycast<Tile>(out interimTile);
+				if (isTileHit) isTileHitEmpty = !(IsUnitOnTile<Unit>(interimTile));
 
 				//PLAYER'S TURN
 				if (isPlayersTurn)
@@ -230,7 +234,9 @@ namespace StormRend.Systems
 								AddTargetTile(interimTile);
 							break;
 						case ActivityMode.Move:     //MOVE MODE
-
+							if (isTileHit && isTileHitEmpty)
+								selectedAnimateUnit.Move(interimTile);
+							goto case ActivityMode.Idle;
 						case ActivityMode.Idle:     //IDLE MODE
 							if (isUnitHit && interimUnit is AnimateUnit)
 								SelectUnit(interimUnit as AnimateUnit);
@@ -260,22 +266,32 @@ namespace StormRend.Systems
 						break;
 				}
 			}
-			else if (mode == ActivityMode.Move)
+			else 
 			{
-				isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
-
-				//Move ghost on hover
-				if (isTileHit)
+				if (mode == ActivityMode.Move) 	//MOVE MODE
 				{
-					//Only move ghost if tile is empty
-					if (!IsUnitOnTile<Unit>(interimTile))
+					//Poll events
+					isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
+					if (isTileHit) isTileHitEmpty = !(IsUnitOnTile<Unit>(interimTile));
+
+					if (e.leftClicked)		//LEFT CLICK
 					{
+						if (isTileHit && isTileHitEmpty)
+						{
+							//MOVE UNIT
+							selectedAnimateUnit.Move(interimTile);
+						}
+					}
+					//Move ghost on hover if the tile is empty
+					if (isTileHit && isTileHitEmpty)
+					{
+						//MOVE GHOST
 						selectedAnimateUnit.Move(interimTile, true);
 					}
 				}
 			}
 		}
-
+		//----------------------------------------------------------------
 		void OnGUI()
 		{
 			if (!debug) return;

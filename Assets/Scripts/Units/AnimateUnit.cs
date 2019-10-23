@@ -25,7 +25,8 @@ namespace StormRend.Units
 		[SerializeField] protected Color ghostColor = Color.blue;
 
 		//Properties
-		public Tile ghostTile { get; set; } = null;	//The tile this unit wants to move to
+		public Tile originTile { get; set; } = null;  	//The tile this unit was originally on at the beginning of each turn
+		public Tile ghostTile { get; set; } = null;		//The tile the ghost is on
 		public Ability currentAbility { get; set; } = null;
 
 		//Members
@@ -39,6 +40,9 @@ namespace StormRend.Units
 		protected override void Start()	//This will not block base.Start()
 		{
 			base.Start();
+
+			//Init origin tile
+			originTile = currentTile;
 
 			CreateGhostMesh();
 		}
@@ -71,22 +75,24 @@ namespace StormRend.Units
 		{
 			ghostMesh.SetActive(false);
 		}
+
 		public void Move(Tile destination, bool useGhost = false)
 		{
-			//Only set the position of the ghsot
+			//Only set the position of the ghost
 			if (useGhost)
 			{
 				//Filter out non-moving tiles
 				if (!possibleMoveTiles.Contains(destination)) return;
 
-				//Move
+				//Set
 				ghostTile = destination;
 
-				//Activate ghost
+				//Move ghost
 				ghostMesh.SetActive(true);
 				ghostMesh.transform.position = ghostTile.transform.position;
 			}
-			//Move the actual unit (permanent)
+			//Move the actual unit
+			//TODO as soon as the unit has acted, 
 			else
 			{
 				//Ghost was probably just active so deactivate ghost ??? Should this be here?
@@ -95,16 +101,14 @@ namespace StormRend.Units
 				//Filter
 				if (!possibleMoveTiles.Contains(destination)) return;
 
-				//Move
+				//Set
 				currentTile = destination;
+
+				//Move
+				transform.position = destination.transform.position;
 			}
-
-			// //Set the new tile
-			// currentTile = destination;
-
-			// //Move/Position logic	- NEED REVIEW
-			// transform.position = currentTile.transform.position;
 		}
+
 		/// <summary>
 		/// Move Unit by direction ie. Move({2, 1}) means the unit to move right 2 and forward 1.
 		/// Returns false if the unit moved onto an empty space
@@ -156,7 +160,7 @@ namespace StormRend.Units
 			if ((pathblockingUnitTypes & TargetUnitMask.Animates) == TargetUnitMask.Animates)
 				pathblockers.Add(typeof(AnimateUnit));
 
-			return possibleMoveTiles = Map.GetPossibleTiles(currentTile.owner, currentTile, moveRange, pathblockers.ToArray());
+			return possibleMoveTiles = Map.GetPossibleTiles(currentTile.owner, originTile, moveRange, pathblockers.ToArray());
 		}
 
 		public override void Die()
