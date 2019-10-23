@@ -14,6 +14,7 @@ namespace StormRend.MapSystems.Tiles
 	/// + Any other extra objects
 	/// </summary>
 	[SelectionBase]
+	[RequireComponent(typeof(Collider))]
 	public abstract class Tile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		//Highlights
@@ -33,20 +34,25 @@ namespace StormRend.MapSystems.Tiles
 
 		//Members
 		[ReadOnlyField] public List<Tile> connections = new List<Tile>();	//List because HashSets don't serialize
+		protected Renderer rend;
 
 		//Debugs
 		[ReadOnlyField] public Map owner;
 		[ReadOnlyField] public TileHighlight _highlight;
-		[HideInInspector] public Color oldColor;
+		Color oldColor;
 
 	#region Core
 		void Awake()
 		{
-			LoadHighlightColors();
+			LoadStaticHighlightColors();
+		}
+		void OnValidate()	//Need to get the renderer in editor for gizmos to work
+		{
+			rend = GetComponent<Renderer>();
 		}
 		void Start()
 		{
-			SetupHighlightObject();
+			SetupHighlight();
 		}
 
 		public void Connect(Tile to) => connections.Add(to);
@@ -56,7 +62,11 @@ namespace StormRend.MapSystems.Tiles
 	#endregion
 
 	#region Inits
-		static void LoadHighlightColors()
+		/// <summary>
+		/// To create extra tile highlights: Create Asset Menu >>> Tile Highlight Color.
+		/// The can be placed anywhere in the project and this function will find them on Awake()
+		/// </summary>
+		static void LoadStaticHighlightColors()
 		{
 			if (!highlightsScanned)
 			{
@@ -69,7 +79,7 @@ namespace StormRend.MapSystems.Tiles
 				highlightsScanned = true;
 			}
 		}
-		void SetupHighlightObject()
+		void SetupHighlight()
 		{
 			_highlight = GetComponentInChildren<TileHighlight>();
 
