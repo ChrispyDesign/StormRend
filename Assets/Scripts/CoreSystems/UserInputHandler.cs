@@ -11,6 +11,7 @@ using StormRend.Utility.Events;
 using StormRend.Variables;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /*Brainstorm:
@@ -152,6 +153,7 @@ namespace StormRend.Systems
 					return ActivityMode.Idle;
 			}
 		}
+		//Unit selection
 		public Unit selectedUnit
 		{
 			get => _selectedUnit.value;
@@ -159,6 +161,7 @@ namespace StormRend.Systems
 		}
 		public AnimateUnit selectedAnimateUnit => (selectedUnit != null) ? selectedUnit as AnimateUnit : null;
 		public bool isUnitSelected => selectedUnit != null;
+		//Ability selection
 		public Ability selectedAbility
 		{
 			get => _selectedAbility;
@@ -176,10 +179,10 @@ namespace StormRend.Systems
 
 		//Members
 		FrameEventData e;   //The events that happenned this frame
+		EventSystem es;
 		CameraMover camMover;
 		Camera cam;
 		Stack<Tile> targetTiles = new Stack<Tile>();
-		UnitRegistry ur;
 		public bool debug;
 		bool isUnitHit;
 		bool isTileHit;
@@ -194,7 +197,7 @@ namespace StormRend.Systems
 			//Inits
 			cam = MasterCamera.current.linkedCamera;
 			camMover = cam.GetComponent<CameraMover>();
-			ur = UnitRegistry.current;
+			es = EventSystem.current;
 		}
 		void Start()
 		{
@@ -222,7 +225,7 @@ namespace StormRend.Systems
 				//Poll events
 				isUnitHit = TryGetRaycast<Unit>(out interimUnit);
 				isTileHit = TryGetRaycast<Tile>(out interimTile);
-				if (isTileHit) isTileHitEmpty = !(IsUnitOnTile<Unit>(interimTile));
+				if (isTileHit) isTileHitEmpty = !(UnitRegistry.IsUnitTypeOnTile<Unit>(interimTile));
 
 				//PLAYER'S TURN
 				if (isPlayersTurn)
@@ -275,7 +278,7 @@ namespace StormRend.Systems
 				{
 					//Poll events
 					isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
-					if (isTileHit) isTileHitEmpty = !(IsUnitOnTile<Unit>(interimTile));
+					if (isTileHit) isTileHitEmpty = !UnitRegistry.TryGetUnitOnTile(interimTile, out interimUnit);	//Check tile is empty
 
 					//Move ghost on hover if the tile is empty
 					if (isTileHit && isTileHitEmpty)
@@ -324,6 +327,7 @@ namespace StormRend.Systems
 
 			//Set the selected unt
 			selectedUnit = au;
+			es.SetSelectedGameObject(au.gameObject);
 
 			//Update tile highlights based on mode of activity
 			switch (mode)
@@ -461,14 +465,6 @@ namespace StormRend.Systems
 		#endregion
 
 	#region Assists
-		//If T object is on tile then return true
-		internal bool IsUnitOnTile<T>(Tile t) where T : Unit
-		{
-			var filteredUnits = ur.aliveUnits.Where(x => x is T);
-			foreach (var u in filteredUnits)
-				if (u.currentTile == t) return true;
-			return false;
-		}
 		//If T object hit then return true and output it
 		bool TryGetRaycast<T>(out T hit) where T : MonoBehaviour
 		{

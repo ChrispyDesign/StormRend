@@ -16,7 +16,7 @@ namespace StormRend.Abilities.Effects
 		{
 			foreach (var t in targetTiles)
 			{
-				if (UnitRegistry.IsUnitOnTile(t, out Unit u))		//Try getting a unit on top
+				if (UnitRegistry.TryGetUnitOnTile(t, out Unit u))		//Try getting a unit on top
 				{
 					u.HP += healAmount;		//Heal
 				}

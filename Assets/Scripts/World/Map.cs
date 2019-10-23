@@ -132,8 +132,7 @@ namespace StormRend.MapSystems
 		/// <returns></returns>
 		public static Tile[] GetPossibleTiles(Map map, Tile start, int range, params Type[] pathblockingUnitTypes)
 		{
-			//TODO Check to make sure exlude
-
+			//TODO Check to make sure exclude
 			List<Tile> validMoves = new List<Tile>();
 			Queue<Tile> openList = new Queue<Tile>();
 			List<Tile> closedList = new List<Tile>();
@@ -160,7 +159,7 @@ namespace StormRend.MapSystems
 						continue;
 
 					//PASS if neighbour tile has a unit on top that needs to be ignored
-					if (CheckTypesOnTile(n, pathblockingUnitTypes))
+					if (UnitRegistry.AreUnitTypesOnTile(n, pathblockingUnitTypes))
 						continue;
 
 					//connected tile checked
@@ -189,29 +188,6 @@ namespace StormRend.MapSystems
 				t.H = 0;
 			}
 			return validMoves.ToArray();
-		}
-
-		/// <summary>
-		///	Returns true if unit is standing on tile t and is not in the list of excluded types
-		/// </summary>
-		/// <param name="excludeTypes">The types to excludes. Should be units</param>
-		/// <returns>True if any unit is standing on tile t and also is or is derived from one of the excludedTypes</returns>
-		static bool CheckTypesOnTile(Tile t, params Type[] excludedTypes)
-		{
-			foreach (var u in ur.aliveUnits)
-			{
-				//Check if unit is on tile first
-				if (u.currentTile == t)
-				{
-					//Check if its off the excluded type or is derived from the excluded type
-					foreach (var et in excludedTypes)
-					{
-						if (u.GetType().IsSubclassOf(et) || (u.GetType() == et))
-							return true;
-					}
-				}
-			}
-			return false;
 		}
 	#endregion
 
