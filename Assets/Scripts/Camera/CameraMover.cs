@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using StormRend.MapSystems.Tiles;
 using StormRend.Units;
 using UnityEngine;
 
@@ -63,6 +64,14 @@ namespace StormRend.CameraSystem
 			StopAllCoroutines();
 
             MoveTo(unit.transform.position, smoothTime);
+        }
+
+        public void MoveTo(Tile tile, float smoothTime = 0.3f)
+        {
+			//Override any current lerps
+			StopAllCoroutines();
+
+            MoveTo(tile.transform.position, smoothTime);
         }
 
         /// <summary>

@@ -235,8 +235,11 @@ namespace StormRend.Systems
 							break;
 						case ActivityMode.Move:     //MOVE MODE
 							if (isTileHit && isTileHitEmpty)
-								selectedAnimateUnit.Move(interimTile);
-							goto case ActivityMode.Idle;
+							{
+								if (selectedAnimateUnit.Move(interimTile))	//Move unit
+									camMover.MoveTo(interimTile, cameraSmoothTime);	//If move successful then focus camera
+							}
+							goto case ActivityMode.Idle;	//Fall through
 						case ActivityMode.Idle:     //IDLE MODE
 							if (isUnitHit && interimUnit is AnimateUnit)
 								SelectUnit(interimUnit as AnimateUnit);
@@ -246,9 +249,9 @@ namespace StormRend.Systems
 				//LEFT CLICK ALWAYS
 				if (isUnitHit)
 				{
-					//Clicking on a unit will focus camera on it unless in action mode?
+					//Clicking on any unit will focus camera on it unless in action mode?
 					if (mode != ActivityMode.Action)
-						FocusCamera(interimUnit, cameraSmoothTime);
+						camMover.MoveTo(interimUnit, cameraSmoothTime);
 				}
 			}
 			else if (e.rightClickUp)	//RIGHT CLICK RELEASED
@@ -274,14 +277,6 @@ namespace StormRend.Systems
 					isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
 					if (isTileHit) isTileHitEmpty = !(IsUnitOnTile<Unit>(interimTile));
 
-					if (e.leftClicked)		//LEFT CLICK
-					{
-						if (isTileHit && isTileHitEmpty)
-						{
-							//MOVE UNIT
-							selectedAnimateUnit.Move(interimTile);
-						}
-					}
 					//Move ghost on hover if the tile is empty
 					if (isTileHit && isTileHitEmpty)
 					{
@@ -311,7 +306,7 @@ namespace StormRend.Systems
 	#region Camera
 		//Moves to and looks at passed in subject
 		void FocusCamera(Unit u, float smoothTime = 1) => camMover.MoveTo(u, smoothTime);
-		void FocusCamera(Tile t, float smoothTime = 1) => camMover.MoveTo(t.transform.position, smoothTime);
+		void FocusCamera(Tile t, float smoothTime = 1) => camMover.MoveTo(t, smoothTime);
 	#endregion
 
 	#region Sets

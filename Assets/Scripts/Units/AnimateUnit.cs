@@ -76,13 +76,13 @@ namespace StormRend.Units
 			ghostMesh.SetActive(false);
 		}
 
-		public void Move(Tile destination, bool useGhost = false)
+		public bool Move(Tile destination, bool useGhost = false)
 		{
 			//Only set the position of the ghost
 			if (useGhost)
 			{
 				//Filter out non-moving tiles
-				if (!possibleMoveTiles.Contains(destination)) return;
+				if (!possibleMoveTiles.Contains(destination)) return false;
 
 				//Set
 				ghostTile = destination;
@@ -99,7 +99,7 @@ namespace StormRend.Units
 				ghostMesh.SetActive(false);
 
 				//Filter
-				if (!possibleMoveTiles.Contains(destination)) return;
+				if (!possibleMoveTiles.Contains(destination)) return false;
 
 				//Set
 				currentTile = destination;
@@ -107,6 +107,7 @@ namespace StormRend.Units
 				//Move
 				transform.position = destination.transform.position;
 			}
+			return true;
 		}
 
 		/// <summary>
