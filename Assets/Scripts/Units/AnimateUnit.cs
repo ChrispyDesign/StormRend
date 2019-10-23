@@ -25,7 +25,7 @@ namespace StormRend.Units
 		[SerializeField] protected Color ghostColor = Color.blue;
 
 		//Properties
-		public Tile nextTile { get; set; } = null;	//The tile this unit wants to move to
+		public Tile ghostTile { get; set; } = null;	//The tile this unit wants to move to
 		public Ability currentAbility { get; set; } = null;
 
 		//Members
@@ -69,11 +69,38 @@ namespace StormRend.Units
 	#region Core
 		public void Move(Tile destination, bool useGhost = false)
 		{
-			//Set the new tile
-			currentTile = destination;
+			//Only set the position of the ghsot
+			if (useGhost)
+			{
+				Debug.Log("Use Ghost");
+				//Filter
+				// if (!possibleMoveTiles.Contains(destination)) return;
 
-			//Move/Position logic	- NEED REVIEW
-			transform.position = currentTile.transform.position;
+				//Move
+				ghostTile = destination;
+
+				//Activate ghost
+				ghostMesh.SetActive(true);
+				ghostMesh.transform.position = ghostTile.transform.position;
+			}
+			//Move the actual unit (permanent)
+			else
+			{
+				//Filter
+				if (!possibleMoveTiles.Contains(destination)) return;
+
+				//Move
+				currentTile = destination;
+
+				//Deactivate ghost ??? Should this be here?
+				ghostMesh.SetActive(false);
+			}
+
+			// //Set the new tile
+			// currentTile = destination;
+
+			// //Move/Position logic	- NEED REVIEW
+			// transform.position = currentTile.transform.position;
 		}
 		/// <summary>
 		/// Move Unit by direction ie. Move({2, 1}) means the unit to move right 2 and forward 1.
@@ -85,7 +112,7 @@ namespace StormRend.Units
 		public bool Move(Vector2Int vector, bool useGhost = false)
 		{
 			//Where should the push effect kill logic be implemented?
-			return false;
+			throw new NotImplementedException();
 		}
 
 		public void PerformAbility(Ability ability, params Tile[] targetTiles)

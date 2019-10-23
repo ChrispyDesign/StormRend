@@ -212,26 +212,29 @@ namespace StormRend.Systems
 		{
 			e.Refresh();	//Refresh all input events
 
-			if (e.leftClicked)
+			if (e.leftClicked)	//LEFT CLICKED
 			{
 				isUnitHit = TryGetRaycast<Unit>(out interimUnit);
 				isTileHit = TryGetRaycast<Tile>(out interimTile);
 
+				//PLAYER'S TURN
 				if (isPlayersTurn)
 				{
 					switch (mode)
 					{
-						case ActivityMode.Action:
+						case ActivityMode.Action:   //ACTION MODE
 							if (isTileHit)
 								AddTargetTile(interimTile);
 							break;
-						case ActivityMode.Move:
-						case ActivityMode.Idle:
+						case ActivityMode.Move:     //MOVE MODE
+
+						case ActivityMode.Idle:     //IDLE MODE
 							if (isUnitHit && interimUnit is AnimateUnit)
 								SelectUnit(interimUnit as AnimateUnit);
 							break;
 					}
 				}
+				//LEFT CLICK ALWAYS
 				if (isUnitHit)
 				{
 					//Clicking on a unit will focus camera on it unless in action mode?
@@ -239,26 +242,30 @@ namespace StormRend.Systems
 						FocusCamera(interimUnit, cameraSmoothTime);
 				}
 			}
-			else if (e.rightClickUp)
+			else if (e.rightClickUp)	//RIGHT CLICK RELEASED
 			{
 				switch (mode)
 				{
-					case ActivityMode.Action:
+					case ActivityMode.Action:	//ACTION MODE
 						if (notEnoughTargetTilesSelected && targetTiles.Count > 0)
-							targetTiles.Pop();
+							targetTiles.Pop();	//UNDO 1 TARGET TILE SELECT
 						else
-							ClearSelectedAbility();
+							ClearSelectedAbility();	//CLEAR ABILITY
 						break;
-					case ActivityMode.Move:
-						ClearSelectedUnit();
+					case ActivityMode.Move:		//MOVE MODE
+						ClearSelectedUnit();		//CLEAR UNIT
 						break;
 				}
 			}
 			else if (mode == ActivityMode.Move)
 			{
+				Debug.Log("Activity Mode: " + mode);
+				isTileHit = TryGetRaycast<Tile>(out interimTile);
+
 				//Move ghost on hover
-				if (TryGetRaycast<Tile>(out interimTile))
+				if (isTileHit)
 				{
+					selectedAnimateUnit.Move(interimTile, true);
 				}
 			}
 		}
@@ -267,9 +274,15 @@ namespace StormRend.Systems
 		{
 			if (!debug) return;
 			GUILayout.Label("ActivityMode: " + mode);
+
 			GUILayout.Label("is a unit hit?: " + isUnitHit);
+			GUILayout.Label("is a tile hit?: " + isTileHit);
+
 			GUILayout.Label("is a unit selected?: " + isUnitSelected);
 			GUILayout.Label("Selected Unit: " + _selectedUnit?.value?.name);
+
+			GUILayout.Label("is an ability selected?: " + isAbilitySelected);
+			GUILayout.Label("Selected Unit: " + _selectedAbility?.name);
 		}
 	#endregion
 
