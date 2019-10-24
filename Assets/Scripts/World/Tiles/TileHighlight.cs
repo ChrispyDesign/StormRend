@@ -27,8 +27,7 @@ namespace StormRend.MapSystems.Tiles
 		}
 		public void Clear()
 		{
-			if (Tile.highlightColors.TryGetValue("None", out TileHighlightColor highlightColor))
-				SetColor(highlightColor);
+			sr.color = Color.clear;
 		}
 	}
 }
