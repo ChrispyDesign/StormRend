@@ -94,7 +94,7 @@ namespace StormRend.Editors
 						if (i == rows / 2 && j == cols / 2)
 						{
 							GUI.color = Color.red;
-							GUI.enabled = false;
+							// GUI.enabled = false;
 						}
 
 						//Print "Tile"
@@ -102,7 +102,7 @@ namespace StormRend.Editors
 
 						//Reset
 						GUI.color = oldGUICol;
-						GUI.enabled = true;
+						// GUI.enabled = true;
 					}
 					GUILayout.FlexibleSpace();
 				}

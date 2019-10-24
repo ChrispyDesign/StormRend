@@ -22,7 +22,7 @@ namespace StormRend.Editors
 		void OnEnable()
 		{
 			//Create a bold foldout GUI style
-			boldFoldoutStyle = new GUIStyle(EditorStyles.foldout)
+			boldFoldoutStyle = new GUIStyle()
 			{
 				fontStyle = FontStyle.Bold
 			};

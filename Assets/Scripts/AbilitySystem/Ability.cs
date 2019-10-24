@@ -73,14 +73,35 @@ namespace StormRend.Abilities
 				e.Perform(owner, targets);
 		}
 
-		/// <summary>
-		/// Get the tiles that can be currently acted upon by this ability
-		/// </summary>
-		/// <param name="au">The unit</param>
-		public Tile[] CalculateTargetableTiles(AnimateUnit au)
+
+		public Tile[] GetTargetableTiles(AnimateUnit au)
 		{
-			Debug.Log("CalculateTargetableTiles not implemented yet");
-			return null;
+			List<Tile> result = new List<Tile>();
+
+			//Find the center of the cast area
+			Vector2Int center = 
+				new Vector2Int((castArea.GetLength(0) / 2) + (castArea.GetLength(0) % 2),
+								(castArea.GetLength(1) / 2) + (castArea.GetLength(1) % 2));
+
+			//Go through castArea
+			for (int row = 0; row < 0; castArea.GetLength(0))	//rows
+			{
+				for (int col = 0; col < 0; castArea.GetLength(1))	//columns
+				{
+					//If 
+					if (castArea[row, col])
+					{
+						Vector2Int temp = new Vector2Int(row, col);
+						var offset = temp - center;
+
+						if (au.currentTile.TryGetConnectedTile(offset, out Tile t))
+						{
+							result.Add(t);
+						}
+					}
+				}
+			}
+			return au.possibleTargetTiles = result.ToArray();
 		}
 
 		public bool CanAcceptTileType(Unit user, Tile t)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using StormRend.Abilities;
 using StormRend.CameraSystem;
+using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
 using StormRend.Systems.StateMachines;
 using StormRend.Units;
@@ -214,10 +215,21 @@ namespace StormRend.Systems
 		void Update()
 		{
 			ProcessEvents();
+
+			tempTriggerAbility();
 		}
 
-		//--------------------- PROCESS EVENTS -----------------------------
-		void ProcessEvents()
+		public Ability debugAbility;
+        private void tempTriggerAbility()
+        {
+			if (Input.GetKeyDown(KeyCode.Backslash))
+            {
+				SelectAbility(debugAbility);
+            }
+        }
+
+        //--------------------- PROCESS EVENTS -----------------------------
+        void ProcessEvents()
 		{
 			e.Refresh();	//Refresh all input events
 
@@ -309,7 +321,7 @@ namespace StormRend.Systems
 			GUILayout.Label("Selected Unit: " + _selectedUnit?.value?.name);
 
 			GUILayout.Label("is an ability selected?: " + isAbilitySelected);
-			GUILayout.Label("Selected Unit: " + _selectedAbility?.name);
+			GUILayout.Label("Selected Ability: " + _selectedAbility?.name);
 		}
 	#endregion
 
@@ -328,24 +340,28 @@ namespace StormRend.Systems
 			//Clear tile highlights if a unit was already selected
 			if (isUnitSelected) 
 			{
-				ClearSelectUnitTileHighlights();
 				selectedAnimateUnit.ClearGhost();
+				ClearSelectedUnitTileHighlights();
+				selectedAbility = null;
 			}
 
-			//Set the selected unt
+			//Set the selected unit
 			selectedUnit = au;
-			es.SetSelectedGameObject(au.gameObject);
+			es.SetSelectedGameObject(au.gameObject);	//Trial run
+
+			//Calling this function should mean that the it is in Move activity mode
+			HighlightMoveTiles();
 
 			//Update tile highlights based on mode of activity
-			switch (mode)
-			{
-				case ActivityMode.Move:
-					HighlightMoveTiles();
-					break;
-				case ActivityMode.Action:
-					// HighlightActionTiles(u);
-					break;
-			}
+			// switch (mode)
+			// {
+			// 	case ActivityMode.Move:
+			// 		HighlightMoveTiles();
+			// 		break;
+			// 	case ActivityMode.Action:
+			// 		// HighlightActionTiles(u);
+			// 		break;
+			// }
 		}
 
 		public void SelectAbility(Ability a)	//aka. OnAbilityChanged()
@@ -363,8 +379,8 @@ namespace StormRend.Systems
 			//Set
 			selectedAbility = a;
 
-			//Update active unit's action tiles
-			selectedAnimateUnit.possibleTargetTiles = selectedAbility.CalculateTargetableTiles(selectedAnimateUnit);
+			//Highlight ability target tiles
+			HighlightActionTiles();
 		}
 
 		/// <summary>
@@ -407,11 +423,12 @@ namespace StormRend.Systems
 		void HighlightActionTiles()
 		{
 			//NOTE: Active unit's ACTION highlights should be refreshed each OnAbilityChanged
-			if (!isUnitSelected) return;	//A unit should already be selected
+			if (!isAbilitySelected) return;	//A unit should already be selected
 
 			//Make sure there are tiles to highlight
-			if (selectedAnimateUnit.possibleTargetTiles == null)
-				selectedAbility.CalculateTargetableTiles(selectedAnimateUnit);
+			// if (selectedAnimateUnit.possibleTargetTiles.Length <= 0)
+				selectedAnimateUnit.CalculateTargetableTiles(selectedAbility);
+				// selectedAbility.GetTargetableTiles(selectedAnimateUnit);
 
 			//Highlight
 			foreach (var t in selectedAnimateUnit.possibleTargetTiles)
@@ -420,6 +437,8 @@ namespace StormRend.Systems
 				// if (Tile.highlightColors.TryGetValue("Action", out TileHighlightColor color))
 				// 	t.highlight.SetColor(color);
 			}
+			// //Update active unit's action tiles
+			// selectedAnimateUnit.possibleTargetTiles = selectedAbility.CalculateTargetableTiles(selectedAnimateUnit);
 		}
 	#endregion
 
@@ -432,14 +451,15 @@ namespace StormRend.Systems
 			OnSelectedUnitCleared.Invoke();
 
 			//Clear tile highlights and ghost
-			ClearSelectUnitTileHighlights();
+			ClearAllTileHighlights();
+			// ClearSelectUnitTileHighlights();
 			selectedAnimateUnit.ClearGhost();
 
 			//Clear
 			selectedUnit = null;
 		}
 
-		void ClearSelectedAbility(bool redrawMoveTiles = true)
+        void ClearSelectedAbility(bool redrawMoveTiles = true)
 		{
 			if (!isUnitSelected) return;	//A unit should be selected
 
@@ -449,13 +469,13 @@ namespace StormRend.Systems
 			selectedAbility = null;
 
 			//Clear tile highlights
-			if (isUnitSelected) ClearSelectUnitTileHighlights();
+			if (isUnitSelected) ClearSelectedUnitTileHighlights();
 
 			//Redraw move highlights
 			if (redrawMoveTiles) HighlightMoveTiles();
 		}
 
-		void ClearSelectUnitTileHighlights()
+		void ClearSelectedUnitTileHighlights()
 		{
 			if (!isUnitSelected) return;	//A unit should be selected
 
@@ -469,6 +489,14 @@ namespace StormRend.Systems
 				foreach (var t in selectedAnimateUnit.possibleTargetTiles)
 					t.highlight.Clear();
 		}
+
+		void ClearAllTileHighlights()
+        {
+			foreach (var t in Map.current.tiles)
+			{
+				t.highlight.Clear();
+			}
+        }
 		#endregion
 
 	#region Assists

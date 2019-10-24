@@ -43,16 +43,13 @@ namespace StormRend.MapSystems.Tiles
 		Color oldColor;
 
 	#region Core
-		void Awake()
-		{
-			LoadStaticHighlightColors();
-		}
 		void OnValidate()	//Need to get the renderer in editor for gizmos to work
 		{
 			rend = GetComponent<Renderer>();
 		}
 		void Start()
 		{
+			LoadStaticHighlightColors();	//NOTE! Awake is too early sometimes? Which means it doesn't always grab all the Tile Highlight Colors
 			SetupHighlight();
 		}
 
@@ -72,9 +69,10 @@ namespace StormRend.MapSystems.Tiles
 			if (!highlightsScanned)
 			{
 				var foundHighlights = Resources.FindObjectsOfTypeAll<TileHighlightColor>();
+				// var foundHighlights = Resources.LoadAll("", typeof(TileHighlightColor)) as TileHighlightColor[];
 				foreach (var fh in foundHighlights)
 				{
-					// Debug.Log(fh.name);
+					Debug.Log(fh.name);
 					highlightColors.Add(fh.name, fh);
 				}
 				highlightsScanned = true;
@@ -100,14 +98,14 @@ namespace StormRend.MapSystems.Tiles
 		/// </summary>
 		public bool TryGetConnectedTile(Vector2Int direction, out Tile tile, float tolerance = 0.1f)
 		{
-			const float adjDist = 1f;//, diagDist = 1.414213f;
+			const float adjacentDist = 1f;//, diagDist = 1.414213f;
 
-			//Vector2Int crude lossy normalization?
+			//Vector2Int crude lossy normalization? TODO might be problematic!!
 			direction.Clamp(new Vector2Int(-1, -1), Vector2Int.one);
 
 			//Determine where to scan for a connected tile
 			var targetTilePos = transform.position +
-				new Vector3(adjDist * owner.tileSize * direction.x, 0, adjDist * owner.tileSize * direction.y);
+				new Vector3(adjacentDist * owner.tileSize * direction.x, 0, adjacentDist * owner.tileSize * direction.y);
 
 			//Loop through all connected tiles and see if there are any within tolerance
 			foreach (var connectedTile in connections)
@@ -115,10 +113,12 @@ namespace StormRend.MapSystems.Tiles
 				var dist = Vector3.Distance(connectedTile.transform.position, targetTilePos);
 				if (dist < tolerance)
 				{
+					//Tile found
 					tile = connectedTile;
 					return true;
 				}
 			}
+			//Nothing found
 			tile = null;
 			return false;
 		}

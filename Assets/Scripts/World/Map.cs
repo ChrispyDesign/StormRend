@@ -190,7 +190,6 @@ namespace StormRend.MapSystems
 			return validMoves.ToArray();
 		}
 	#endregion
-
 		static void PrintCollection(IEnumerable collection)
 		{
 			print("Printing: " + collection);

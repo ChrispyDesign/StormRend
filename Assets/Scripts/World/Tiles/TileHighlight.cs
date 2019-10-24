@@ -17,9 +17,9 @@ namespace StormRend.MapSystems.Tiles
 			Debug.Assert(sr, "Sprite renderer not found!");
 		}
 
-		public void SetColor(TileHighlightColor setting)
+		public void SetColor(TileHighlightColor highlightColor)
 		{
-			sr.color = setting.color;
+			sr.color = highlightColor.color;
 		}
 		public void SetColor(Color color)
 		{
@@ -27,7 +27,8 @@ namespace StormRend.MapSystems.Tiles
 		}
 		public void Clear()
 		{
-			sr.color = Color.clear;
+			if (Tile.highlightColors.TryGetValue("None", out TileHighlightColor highlightColor))
+				SetColor(highlightColor);
 		}
 	}
 }

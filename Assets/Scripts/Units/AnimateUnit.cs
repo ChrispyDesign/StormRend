@@ -28,14 +28,15 @@ namespace StormRend.Units
 		public Tile originTile { get; set; } = null;  	//The tile this unit was originally on at the beginning of each turn
 		public Tile ghostTile { get; set; } = null;		//The tile the ghost is on
 		public Ability currentAbility { get; set; } = null;
+		public Tile[] possibleMoveTiles { get; set; } = new Tile[0];
+		public Tile[] possibleTargetTiles { get; set; } = new Tile[0];
+		public List<Effect> statusEffects { get; set; } = new List<Effect>();
 
 		//Members
 		bool _hasActed = false;
 		public bool hasActed => _hasActed;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
 		public void SetActed(bool value) => _hasActed = value;
 
-		public Tile[] possibleMoveTiles;
-		public Tile[] possibleTargetTiles { get; set; }
 
 		protected GameObject ghostMesh;
 
@@ -171,6 +172,41 @@ namespace StormRend.Units
 				pathblockers.Add(typeof(AnimateUnit));
 
 			return possibleMoveTiles = Map.GetPossibleTiles(currentTile.owner, originTile, moveRange, pathblockers.ToArray());
+		}
+
+		/// <summary>
+		/// Get the tiles that can be currently acted upon by this ability
+		/// </summary>
+		/// <param name="au">The unit</param>
+		public Tile[] CalculateTargetableTiles(Ability a)
+		{
+			var result = new List<Tile>();
+			
+			//Find the center of the cast area
+			Vector2Int center = 
+				new Vector2Int((a.castArea.GetLength(0) / 2) + (a.castArea.GetLength(0) % 2),
+								(a.castArea.GetLength(1) / 2) + (a.castArea.GetLength(1) % 2));
+
+			//Go through castArea
+			for (int row = 0; row < a.castArea.GetLength(0); row++)	//rows
+			{
+				for (int col = 0; col < a.castArea.GetLength(1); col++)	//columns
+				{
+					//If 
+					if (a.castArea[row, col])
+					{
+						Vector2Int temp = new Vector2Int(row, col);
+						var offset = temp - center;
+
+						if (currentTile.TryGetConnectedTile(offset, out Tile t))
+						{
+							result.Add(t);
+						}
+					}
+				}
+			}
+			Debug.Log()
+			return possibleTargetTiles = result.ToArray();
 		}
 
 		public override void Die()

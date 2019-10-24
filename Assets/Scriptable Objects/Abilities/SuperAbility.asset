@@ -19,10 +19,25 @@ MonoBehaviour:
   _description: 
   _gloryCost: 1
   _requiredTiles: 1
-  _targetTileTypes: 14
+  _targetTileTypes: 7
   effects:
   - {fileID: 114626861942451468}
   - {fileID: 114631141800411434}
+  - {fileID: 114564911566373340}
+  - {fileID: 114893824411326476}
+  - {fileID: 114861404271827812}
+--- !u!114 &114564911566373340
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a689f1c72aecd749bd69b2cc1345b40, type: 3}
+  m_Name: TeleportEffect
+  m_EditorClassIdentifier: 
 --- !u!114 &114626861942451468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -50,3 +65,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amount: 1
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
+--- !u!114 &114861404271827812
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
+  m_Name: RefreshEffect
+  m_EditorClassIdentifier: 
+--- !u!114 &114893824411326476
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8276f40f4bf260f4e92f11193e47668e, type: 3}
+  m_Name: SwapUnitEffect
+  m_EditorClassIdentifier: 
