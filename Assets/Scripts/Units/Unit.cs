@@ -3,6 +3,7 @@ using StormRend.MapSystems.Tiles;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace StormRend.Units
@@ -20,6 +21,10 @@ namespace StormRend.Units
 		//Events
 		[Header("Events")]
 		public UnitEvent OnDeath;
+
+        //Debug
+        public KeyCode debugKey = KeyCode.O;
+        public UnityEvent DebugEvent;
 
 		//Properties
 		public int HP
@@ -49,6 +54,12 @@ namespace StormRend.Units
 			}
 			Debug.Assert(currentTile, name + "does not have a current tile!");
 		}
+
+        void Update()
+        {
+            if (Input.GetKeyDown(debugKey))
+                DebugEvent.Invoke();
+        }
 	#endregion
 
 	#region Health

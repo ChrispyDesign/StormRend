@@ -37,7 +37,7 @@ namespace StormRend.Audio
             //if chance is 50 then return true half the time;
             //if chance is 0 then always return false;
             if (Random.Range(0, 100) < chance)  
-                audioSource.PlayOneShot(sounds[Random.Range(0, sounds.Count-1)]);
+                audioSource.PlayOneShot(sounds[Random.Range(0, sounds.Count)]);
         }
         public void ChancePlay(AudioClip clip)
         {
