@@ -65,11 +65,18 @@ namespace StormRend.Units
 		/// <summary>
 		/// Check if the unit of specified type is on the tile
 		/// </summary>
-		public static bool IsUnitTypeOnTile<T>(Tile tile) where T : Unit
+		public static bool IsUnitTypeOnTile<T>(Tile tile, out T unit) where T : Unit
 		{
 			var filteredUnits = current.aliveUnits.Where(x => x is T);
 			foreach (var u in filteredUnits)
-				if (u.currentTile == tile) return true;
+			{
+				if (u.currentTile == tile) 
+				{
+					unit = u as T;
+					return true;
+				}
+			}
+			unit = null;
 			return false;
 		}
 
