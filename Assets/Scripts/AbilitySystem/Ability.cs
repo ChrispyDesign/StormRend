@@ -21,7 +21,7 @@ namespace StormRend.Abilities
 	public class Ability : ScriptableObject
 	{
 		//Constants
-		public const int kCastAreaSqrLen = 7;    //Cast Area Size Squared. Should this be some kind of global?
+		public const int castAreaSqrLen = 7;    //Cast Area Size Squared. Should this be some kind of global?
 
 		//Flags and Enums
 		[Flags]
@@ -55,7 +55,7 @@ namespace StormRend.Abilities
 		//Members
 		[HideInInspector]
 		public List<Effect> effects = new List<Effect>();
-		public bool[,] castArea { get; set; } = new bool[kCastAreaSqrLen, kCastAreaSqrLen];
+		public bool[] castArea { get; set; } = new bool[castAreaSqrLen * castAreaSqrLen];
 
 		//Properties
 		public Sprite icon => _icon;
@@ -71,37 +71,6 @@ namespace StormRend.Abilities
 		{
 			foreach (var e in effects)
 				e.Perform(owner, targets);
-		}
-
-
-		public Tile[] GetTargetableTiles(AnimateUnit au)
-		{
-			List<Tile> result = new List<Tile>();
-
-			//Find the center of the cast area
-			Vector2Int center = 
-				new Vector2Int((castArea.GetLength(0) / 2) + (castArea.GetLength(0) % 2),
-								(castArea.GetLength(1) / 2) + (castArea.GetLength(1) % 2));
-
-			//Go through castArea
-			for (int row = 0; row < 0; castArea.GetLength(0))	//rows
-			{
-				for (int col = 0; col < 0; castArea.GetLength(1))	//columns
-				{
-					//If 
-					if (castArea[row, col])
-					{
-						Vector2Int temp = new Vector2Int(row, col);
-						var offset = temp - center;
-
-						if (au.currentTile.TryGetConnectedTile(offset, out Tile t))
-						{
-							result.Add(t);
-						}
-					}
-				}
-			}
-			return au.possibleTargetTiles = result.ToArray();
 		}
 
 		public bool CanAcceptTileType(Unit user, Tile t)
@@ -167,65 +136,5 @@ namespace StormRend.Abilities
 			AssetDatabase.SaveAssets();
 #endif
 		}
-
-
-		//-------------------------------------------------------------
-		//TRANSFERRED FROM OLD
-		public void GetSelectableTiles(ref Unit unit)
-		{
-			//Q. WTF is this doing?
-			//A. I think this populates the passed in ally unit's
-			//tiles that this ability can be applied to
-
-			int center = (castArea.GetLength(0) / 2) + (castArea.GetLength(0) % 2);
-			int endPoint = castArea.GetLength(0) / 2;
-			// int center = (castArea.Length / 2) + (castArea.Length % 2);
-			// int endPoint = castArea.Length / 2;
-
-			List<Tile> tiles = new List<Tile>();
-			// Vector2Int coords = new Vector2Int();
-			// List<Tile> nodes = new List<Tile>();
-			// Vector2Int coords = Vector2Int.zero;
-
-			for (int x = 0; x < castArea.GetLength(0); x++)
-			{
-				for (int y = 0; y < castArea.GetLength(1); y++)
-				{
-					if (castArea[x, y] == true)
-					{
-						int tx = -endPoint + x;
-						int ty = endPoint - y;
-
-						// coords.x = unit.currentTile.FindConnectedTile()
-					}
-				}
-			}
-
-			// for (int x = 0; x < castArea.GetLength(0); x++)
-			// {
-			// 	for (int y = 0; y < castArea.GetLength(1); y++)
-			// 	{
-			// 		if (castArea[x, y] == true)
-			// 		{
-			// 			int _x = -endPoint + x;
-			// 			int _y = endPoint - y;
-
-			// 			coords.x = _player.coords.x + _x;
-			// 			coords.y = _player.coords.y + _y;
-
-			// 			Tile tile =
-			// 			if (tile != null)
-			// 				tiles.Add(tile);
-
-			// 			xGrid.CoordToTile(coords);
-			// 			if (node != null)
-			// 				nodes.Add(node);
-			// 		}
-			// 	}
-			// }
-
-			// _player.SetAttackNodes(nodes);
-		}
-
 	}
 }

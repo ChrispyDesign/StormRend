@@ -80,25 +80,24 @@ namespace StormRend.Editors
 			if (!areaOfEffectFoldout) return;
 
 			Color oldGUICol = GUI.color;
-			var rows = a.castArea.GetLength(0);
-			var cols = a.castArea.GetLength(1);
+			int sqrLen = Ability.castAreaSqrLen;
 
 			EditorGUIUtility.labelWidth = 1;
-			for (int i = 0; i < rows; ++i)
+			for (int i = 0; i < sqrLen; ++i)
 			{
 				using (new EditorGUILayout.HorizontalScope())
 				{
-					for (int j = 0; j < cols; ++j)
+					for (int j = 0; j < sqrLen; ++j)
 					{
 						//Highlight middle tile
-						if (i == rows / 2 && j == cols / 2)
+						if (i == sqrLen / 2 && j == sqrLen / 2)
 						{
 							GUI.color = Color.red;
 							// GUI.enabled = false;
 						}
 
 						//Print "Tile"
-						a.castArea[i, j] = EditorGUILayout.Toggle(a.castArea[i, j]);
+						a.castArea[i * sqrLen + j] = EditorGUILayout.Toggle(a.castArea[i * sqrLen + j]);
 
 						//Reset
 						GUI.color = oldGUICol;

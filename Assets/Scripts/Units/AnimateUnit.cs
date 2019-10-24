@@ -188,23 +188,21 @@ namespace StormRend.Units
 		/// <summary>
 		/// Get the tiles that can be currently acted upon by this ability
 		/// </summary>
-		/// <param name="au">The unit</param>
 		public Tile[] CalculateTargetableTiles(Ability a)
 		{
 			var result = new List<Tile>();
-			var rows = a.castArea.GetLength(0);
-			var columns = a.castArea.GetLength(1);
-			Debug.LogFormat("Rows: {0}, Columns: {1}", rows, columns);
+			var sqrLen = Ability.castAreaSqrLen;
+			// Debug.LogFormat("Rows: {0}, Columns: {1}", rows, columns);
 			
 			//Find the center of the cast area
-			Vector2Int center = new Vector2Int((rows / 2) + (rows % 2), (columns / 2) + (columns % 2));
+			Vector2Int center = new Vector2Int((sqrLen / 2) + (sqrLen % 2), (sqrLen / 2) + (sqrLen % 2));
 
 			//Go through castArea
-			for (int row = 0; row < rows; row++)	//rows
+			for (int row = 0; row < sqrLen; row++)	//rows
 			{
-				for (int col = 0; col < columns; col++)	//columns
+				for (int col = 0; col < sqrLen; col++)	//columns
 				{
-					if (a.castArea[row, col])
+					if (a.castArea[row * sqrLen + col])
 					{
 						Vector2Int temp = new Vector2Int(row, col);
 						var offset = temp - center;
