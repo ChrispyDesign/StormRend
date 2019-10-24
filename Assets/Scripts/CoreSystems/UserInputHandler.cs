@@ -238,7 +238,7 @@ namespace StormRend.Systems
 				//Poll events
 				isUnitHit = TryGetRaycast<Unit>(out interimUnit);
 				isTileHit = TryGetRaycast<Tile>(out interimTile);
-				if (isTileHit) isTileHitEmpty = !(UnitRegistry.IsUnitTypeOnTile<Unit>(interimTile));
+				if (isTileHit) isTileHitEmpty = !(UnitRegistry.IsUnitTypeOnTile<Unit>(interimTile, out Unit unitOnTile));
 
 				//PLAYER'S TURN
 				if (isPlayersTurn)
@@ -289,10 +289,6 @@ namespace StormRend.Systems
 			{
 				switch (mode)
 				{
-					// case ActivityMode.Idle:
-					// 	isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
-					// 	if (isTileHit)
-					// 	break;
 					case ActivityMode.Move:		//MOVE
 						//Poll events
 						isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
@@ -305,6 +301,10 @@ namespace StormRend.Systems
 							selectedAnimateUnit.Move(interimTile, true);
 						}
 						break;
+					// case ActivityMode.Idle:
+					// 	isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
+					// 	if (isTileHit)
+					// 	break;
 				}
 			}
 		}

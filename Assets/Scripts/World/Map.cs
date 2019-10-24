@@ -190,14 +190,5 @@ namespace StormRend.MapSystems
 			return validMoves.ToArray();
 		}
 	#endregion
-		static void PrintCollection(IEnumerable collection)
-		{
-			print("Printing: " + collection);
-			int i = 0;
-			foreach (var item in collection)
-			{
-				print(i++ + ": " + item);
-			}
-		}
 	}
 }

@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using StormRend.Abilities;
+using StormRend.Abilities.Effects;
 using StormRend.Enums;
 using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
+using StormRend.Utility;
 using StormRend.Utility.Attributes;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace StormRend.Units
@@ -36,9 +39,14 @@ namespace StormRend.Units
 		bool _hasActed = false;
 		public bool hasActed => _hasActed;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
 		public void SetActed(bool value) => _hasActed = value;
-
-
 		protected GameObject ghostMesh;
+
+		//Events
+		[SerializeField] UnityEvent OnAddStatusEffect;
+
+	#region Filtered Gets
+		public List<Ability> GetAbilitiesByType(AbilityType type) => abilities.Where(x => x.type == type).ToList();
+	#endregion
 
 	#region Startup
 		protected override void Start()	//This will not block base.Start()
@@ -72,14 +80,24 @@ namespace StormRend.Units
 			//Hide
 			ghostMesh.SetActive(false);
 		}
-	#endregion
+		#endregion
 
 	#region Core
-		public void ClearGhost()
+		//------------------- STATS
+		public void AddStatusEffect(StatusEffect statusEffect)
 		{
-			ghostMesh.SetActive(false);
-		}
+			OnAddStatusEffect.Invoke();
 
+			statusEffects.Add(statusEffect);
+		}
+		public override void Die()
+		{
+			base.Die();     //OnDeath will invoke
+
+			//TEMP
+			gameObject.SetActive(false);
+		}
+		//------------------ MOVE
 		public bool Move(Tile destination, bool useGhost = false)
 		{
 			//Only set the position of the ghost
@@ -119,20 +137,13 @@ namespace StormRend.Units
 		/// Returns false if the unit moved onto an empty space.
 		/// Can set to kill unit if it does move onto an empty space.
 		/// </summary>
-		/// <param name="vector"></param>
-		/// <param name="kill"></param>
-		/// <returns></returns>
 		public bool Move(Vector2Int vector, bool kill = false)
 		{
 			// if (Tile.TryGetConnectedTile(vector, out Tile tile))
-			{
-				
-			}
-
-			//Where should the push effect kill logic be implemented?
+			//Where should the push effect kill logic be implemented? A: HERE!
 			throw new NotImplementedException();
 		}
-
+		//------------------- PERFORM ABILITY
 		public void PerformAbility(Ability ability, params Tile[] targetTiles)
 		{
 			ability.Perform(this, targetTiles);
@@ -141,7 +152,7 @@ namespace StormRend.Units
 		{
 			ability.Perform(this, targetUnits.Select(x => x.currentTile).ToArray());
 		}
-
+		//------------------- CALCULATE TILES
 		/// <summary>
 		/// Calculate the tiles that this unit can currently move to for this turn and point in game time.
 		/// Filters based on which unit type cannot be traversed through.
@@ -181,18 +192,18 @@ namespace StormRend.Units
 		public Tile[] CalculateTargetableTiles(Ability a)
 		{
 			var result = new List<Tile>();
+			var rows = a.castArea.GetLength(0);
+			var columns = a.castArea.GetLength(1);
+			Debug.LogFormat("Rows: {0}, Columns: {1}", rows, columns);
 			
 			//Find the center of the cast area
-			Vector2Int center = 
-				new Vector2Int((a.castArea.GetLength(0) / 2) + (a.castArea.GetLength(0) % 2),
-								(a.castArea.GetLength(1) / 2) + (a.castArea.GetLength(1) % 2));
+			Vector2Int center = new Vector2Int((rows / 2) + (rows % 2), (columns / 2) + (columns % 2));
 
 			//Go through castArea
-			for (int row = 0; row < a.castArea.GetLength(0); row++)	//rows
+			for (int row = 0; row < rows; row++)	//rows
 			{
-				for (int col = 0; col < a.castArea.GetLength(1); col++)	//columns
+				for (int col = 0; col < columns; col++)	//columns
 				{
-					//If 
 					if (a.castArea[row, col])
 					{
 						Vector2Int temp = new Vector2Int(row, col);
@@ -205,22 +216,15 @@ namespace StormRend.Units
 					}
 				}
 			}
-			Debug.Log()
+			SRDebug.PrintCollection(possibleTargetTiles);
 			return possibleTargetTiles = result.ToArray();
 		}
 
-		public override void Die()
+		//------------------ OTHER
+		public void ClearGhost()
 		{
-			base.Die();
-
-			//TEMP
-			gameObject.SetActive(false);
+			ghostMesh.SetActive(false);
 		}
-
-	#endregion
-
-	#region Filtered Gets
-		public List<Ability> GetAbilitiesByType(AbilityType type) => abilities.Where(x => x.type == type).ToList();
 	#endregion
 
 	#region Event System Interface Implementations
