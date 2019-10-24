@@ -6,14 +6,6 @@ namespace StormRend.Abilities
 {
 	public abstract class Effect : ScriptableObject
 	{
-		// public enum Target
-		// {
-		// 	Self,
-		// 	SelectedTiles,
-		// 	SelectedTilesWithBreadth,
-		// 	AdjacentTiles
-		// }
-
 		public bool isFoldOut { get; set; } = true;
 		protected UnitRegistry ur;
 		Ability owner;
@@ -33,3 +25,21 @@ namespace StormRend.Abilities
 	#endregion
 	}
 }
+
+/* Effect Categories
+----------------------
+Benefits
+Curses
+Defensive
+Offensive
+Recovery
+Runes
+ */
+
+// public enum Target
+// {
+// 	Self,
+// 	SelectedTiles,
+// 	SelectedTilesWithBreadth,
+// 	AdjacentTiles
+// }

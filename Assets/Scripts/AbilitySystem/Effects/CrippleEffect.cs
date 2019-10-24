@@ -4,13 +4,17 @@ using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
-    public class BlindEffect : Effect
+    public class CrippleEffect : StatusEffect
     {
-        [SerializeField] int affectedTurns = 1;
-
 		public override bool Perform(Unit owner, Tile[] targetTiles)
 		{
-			//TO BE COMPLETED
+			AddStatusAffectToAnimateUnits(targetTiles);
+			return true;
+		}
+
+		public override void Perform(AnimateUnit affectedUnit)
+		{
+			//Cripple the bearer
 			throw new System.NotImplementedException();
 		}
 	}
