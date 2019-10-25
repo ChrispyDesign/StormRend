@@ -42,10 +42,11 @@ namespace StormRend.Editors
             a = target as Ability;
             ei = new EffectInspector(a);
 
-            titleStyle = new GUIStyle(EditorStyles.boldLabel)
+            titleStyle = new GUIStyle()
             {
                 alignment = TextAnchor.MiddleCenter,
-                fontSize = 14,
+				fontStyle = FontStyle.Bold,
+                fontSize = 16,
             };
         }
 
@@ -80,7 +81,7 @@ namespace StormRend.Editors
             if (!areaOfEffectFoldout) return;
 
             Color oldGUICol = GUI.color;
-            int sqrLen = Ability.castAreaSqrLen;
+            int sqrLen = Ability.caSize;
 
             using (new EditorGUILayout.HorizontalScope())
             {
@@ -103,7 +104,6 @@ namespace StormRend.Editors
                                 if (i == sqrLen / 2 && j == sqrLen / 2)
                                 {
                                     GUI.color = Color.red;
-                                    // GUI.enabled = false;
                                 }
 
                                 //Print "Tile"
@@ -111,7 +111,6 @@ namespace StormRend.Editors
 
                                 //Reset
                                 GUI.color = oldGUICol;
-                                // GUI.enabled = true;
                             }
                             GUILayout.FlexibleSpace();
                         }

@@ -21,7 +21,7 @@ namespace StormRend.Abilities
 	public class Ability : ScriptableObject
 	{
 		//Constants
-		public const int castAreaSqrLen = 7;    //Cast Area Size Squared. Should this be some kind of global?
+		public const int caSize = 7;    //Cast Area Size Squared
 
 		//Flags and Enums
 		[Flags]
@@ -55,7 +55,7 @@ namespace StormRend.Abilities
 		//Members
 		[HideInInspector]
 		public List<Effect> effects = new List<Effect>();
-		public bool[] castArea { get; set; } = new bool[castAreaSqrLen * castAreaSqrLen];
+		public bool[] castArea { get; set; } = new bool[caSize * caSize];
 
 		//Properties
 		public Sprite icon => _icon;

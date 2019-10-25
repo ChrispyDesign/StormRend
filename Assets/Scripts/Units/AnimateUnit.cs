@@ -15,7 +15,7 @@ using UnityEngine.EventSystems;
 namespace StormRend.Units
 {
 	[SelectionBase] //Avoid clicking on child objects
-	public abstract class AnimateUnit : Unit, IPointerEnterHandler, IPointerExitHandler //, IDeselectHandler, ISelectHandler
+	public abstract class AnimateUnit : Unit, IPointerEnterHandler, IPointerExitHandler
 	{
 		//Inspector
 		[Header("Abilities")]
@@ -89,6 +89,7 @@ namespace StormRend.Units
 
 			statusEffects.Add(statusEffect);
 		}
+
 		public override void Die()
 		{
 			base.Die();     //OnDeath will invoke
@@ -96,6 +97,7 @@ namespace StormRend.Units
 			//TEMP
 			gameObject.SetActive(false);
 		}
+
 		//------------------ MOVE
 		public bool Move(Tile destination, bool useGhost = false)
 		{
@@ -136,12 +138,22 @@ namespace StormRend.Units
 		/// Returns false if the unit moved onto an empty space.
 		/// Can set to kill unit if it does move onto an empty space.
 		/// </summary>
-		public bool Move(Vector2Int vector, bool kill = false)
+		public bool Move(Vector2Int direction, bool kill = true)
 		{
-			// if (Tile.TryGetConnectedTile(vector, out Tile tile))
-			//Where should the push effect kill logic be implemented? A: HERE!
-			throw new NotImplementedException();
+			if (currentTile.TryGetTile(direction, out Tile t))
+			{
+				//Pushed
+				Move(t);
+				return true;
+			}
+			else
+			{
+				//Pushed off the edge
+				if (kill) Die();
+				return false;
+			}
 		}
+
 		//------------------- PERFORM ABILITY
 		public void PerformAbility(Ability ability, params Tile[] targetTiles)
 		{
@@ -151,6 +163,7 @@ namespace StormRend.Units
 		{
 			ability.Perform(this, targetUnits.Select(x => x.currentTile).ToArray());
 		}
+
 		//------------------- CALCULATE TILES
 		/// <summary>
 		/// Calculate the tiles that this unit can currently move to for this turn and point in game time.
@@ -190,20 +203,20 @@ namespace StormRend.Units
 		public Tile[] CalculateTargetTiles(Ability a)
 		{
 			var result = new List<Tile>();
-			var sqrLen = Ability.castAreaSqrLen;
+			var sqrLen = Ability.caSize;
 			// Debug.LogFormat("Rows: {0}, Columns: {1}", rows, columns);
 			
 			//Find the center of the cast area
 			Vector2Int center = new Vector2Int(sqrLen / 2, sqrLen / 2);
 
-            //Go through castArea
-            for (int row = 0; row < sqrLen; row++)  //rows
-            {
-                for (int col = 0; col < sqrLen; col++)  //columns
-                {
+			//Go through castArea
+			for (int row = 0; row < sqrLen; row++)  //rows
+			{
+				for (int col = 0; col < sqrLen; col++)  //columns
+				{
 					if (a.castArea[row * sqrLen + col] == true)
 					{
-						Vector2Int offset = new Vector2Int(col, row) - center;
+						Vector2Int offset = new Vector2Int(row, col) - center;
 
 						if (currentTile.TryGetTile(offset, out Tile t))
 						{

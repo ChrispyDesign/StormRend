@@ -11,6 +11,7 @@ using StormRend.Variables;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 /*Brainstorm:
 ------ UserInputHandler functionality
@@ -171,10 +172,11 @@ namespace StormRend.Systems
 
 		//Events
 		[Space(5)]
-		public UnitEvent OnSelectedUnitChanged;
-		public UnityEvent OnSelectedUnitCleared;
-		public AbilityEvent OnSelectedAbilityChanged;
-		public UnityEvent OnSelectedAbilityCleared;
+		public UnitEvent OnUnitChanged;
+		public UnityEvent OnUnitCleared;
+		public AbilityEvent OnAbilityChanged;
+		public AbilityEvent OnAbilityPerformed;
+		public UnityEvent OnAbilityCleared;
 
 		//Members
 		FrameEventData e;   //The events that happenned this frame
@@ -189,6 +191,8 @@ namespace StormRend.Systems
 		Tile interimTile;
 		bool notEnoughTargetTilesSelected => targetTileStack.Count < selectedAbility.requiredTiles;
 		bool isTileHitEmpty;
+		GraphicRaycaster gr;
+		List<RaycastResult> GUIhits = new List<RaycastResult>();
 
 		#region Core
 		void Awake()
@@ -197,6 +201,7 @@ namespace StormRend.Systems
 			cam = MasterCamera.current.linkedCamera;
 			camMover = cam.GetComponent<CameraMover>();
 			es = EventSystem.current;
+			gr = FindObjectOfType<GraphicRaycaster>();
 		}
 		void Start()
 		{
@@ -207,23 +212,13 @@ namespace StormRend.Systems
 			//Asserts
 			Debug.Assert(camMover, "CameraMover could not be located!");
 			Debug.Assert(_selectedUnit, "No Selected Unit SOV!");
+			Debug.Assert(gr, "No graphics raycaster found!");
 		}
 
 		void Update()
 		{
 			ProcessEvents();
-
-			tempTriggerAbility();
 		}
-
-		public Ability debugAbility;
-        private void tempTriggerAbility()
-        {
-			if (Input.GetKeyDown(KeyCode.E))
-            {
-				SelectAbility(debugAbility);
-            }
-        }
 
         //--------------------- PROCESS EVENTS -----------------------------
         void ProcessEvents()
@@ -323,23 +318,19 @@ namespace StormRend.Systems
 			GUILayout.Label("is an ability selected?: " + isAbilitySelected);
 			GUILayout.Label("Selected Ability: " + _selectedAbility?.name);
 
+			GUILayout.Label("GUI hits count: " + GUIhits.Count);
+
 			GUILayout.Label(string.Format("targetTileStack ({0}):", targetTileStack.Count));
 			foreach (var t in targetTileStack)
 				GUILayout.Label(t.name);
 		}
 	#endregion
 
-	#region Camera
-		//Moves to and looks at passed in subject
-		void FocusCamera(Unit u, float smoothTime = 1) => camMover.MoveTo(u, smoothTime);
-		void FocusCamera(Tile t, float smoothTime = 1) => camMover.MoveTo(t, smoothTime);
-	#endregion
-
 	#region Sets
 		//Public; can be called via unity events
 		public void SelectUnit(AnimateUnit au)
 		{
-			OnSelectedUnitChanged.Invoke(au);	//ie. Update UI, Play sounds,
+			OnUnitChanged.Invoke(au);	//ie. Update UI, Play sounds,
 
 			//Clear tile highlights if a unit was already selected
 			if (isUnitSelected) 
@@ -367,7 +358,7 @@ namespace StormRend.Systems
 			}
 
 			//Raise
-			OnSelectedAbilityChanged.Invoke(a);
+			OnAbilityChanged.Invoke(a);
 
 			//Set
 			selectedAbility = a;
@@ -384,7 +375,6 @@ namespace StormRend.Systems
 		/// <summary>
 		/// Add a target tile to the stack and if the selected ability required target input is reached then perform the ability
 		/// </summary>
-		/// <param name="t"></param>
 		void AddTargetTile(Tile t)
 		{
 			//Check ability can accept this tile type
@@ -396,25 +386,48 @@ namespace StormRend.Systems
 			//Perform ability once required number of tiles reached
 			if (targetTileStack.Count >= selectedAbility.requiredTiles)
 			{
-				selectedAbility.Perform(selectedUnit, targetTileStack.ToArray());
-				targetTileStack.Clear();
+				PerformSelectedAbility();
 			}
+		}
+
+		//Enough tile targets chosen by user. Execute the selected ability
+		void PerformSelectedAbility()
+		{
+			//Events
+			OnAbilityPerformed.Invoke(selectedAbility);
+
+			//Perform
+			selectedAbility.Perform(selectedUnit, targetTileStack.ToArray());
+
+			//Clear target stack
+			targetTileStack.Clear();
+
+			//Set unit as having acted
+			
 		}
 	#endregion
 
 	#region Tile Highlighting
-
 		//Show a preview of target tiles 
-		public void OnPreviewTargetHighlight(Ability a)
+		public void OnPointerEnterPreview(Ability a)
 		{
+			//Has to be in Move mode
+			if (mode != ActivityMode.Move) return;
+
 			selectedAnimateUnit.CalculateTargetTiles(a);
+			selectedAnimateUnit.ClearGhost();
 			ShowTargetTiles();
+			// Debug.LogFormat("OnPreviewTargetHighlight({0})", a.name);
 		}
-		public void OffPreviewTargetHighlight()
+		public void OnPointerExitPreview()
 		{
+			//Must be in move mode
+			if (mode != ActivityMode.Move) return;
+
 			//Redraw
-			ClearSelectedUnitTileHighlights();
+			ClearAllTileHighlights();
 			ShowMoveTiles();
+			// Debug.Log("OffPreview");
 		}
 
 		void ShowMoveTiles()
@@ -438,7 +451,7 @@ namespace StormRend.Systems
 		void ShowTargetTiles()
 		{
 			//NOTE: Active unit's ACTION highlights should be refreshed each time the selected ability is changed
-			if (!isAbilitySelected) return;	//A unit should already be selected
+			// if (!isAbilitySelected) return;	//A unit should already be selected
 
 			//FAILSAFE: Make sure there are tiles to highlight
 			if (selectedAnimateUnit.possibleTargetTiles.Length <= 0)
@@ -461,7 +474,7 @@ namespace StormRend.Systems
 		{
 			if (!isUnitSelected) return;	//A unit should be selected
 
-			OnSelectedUnitCleared.Invoke();
+			OnUnitCleared.Invoke();
 
 			//Clear tile highlights and ghost
 			ClearSelectedUnitTileHighlights();
@@ -475,16 +488,18 @@ namespace StormRend.Systems
 		{
 			if (!isUnitSelected) return;	//A unit should be selected
 
-			OnSelectedAbilityCleared.Invoke();
+			OnAbilityCleared.Invoke();
 
 			//Clear
 			selectedAbility = null;
 
 			//Clear tile highlights
-			if (isUnitSelected) ClearSelectedUnitTileHighlights();
+			if (isUnitSelected) 
+				ClearSelectedUnitTileHighlights();
 
 			//Redraw move highlights
-			if (redrawMoveTiles) ShowMoveTiles();
+			if (redrawMoveTiles) 
+				ShowMoveTiles();
 		}
 
 		void ClearSelectedUnitTileHighlights()
@@ -516,13 +531,41 @@ namespace StormRend.Systems
 		//If T object hit then return true and output it
 		bool TryGetRaycast<T>(out T hit) where T : MonoBehaviour
 		{
+			if (IsPointerOverGUIObject())	//Prevent click through
+			{
+				Debug.Log("GUIObjectHit");
+				hit = null;
+				return false;
+			}
+
 			Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out RaycastHit hitInfo, float.PositiveInfinity, raycastLayerMask.value))
+			if (Physics.Raycast(ray, out RaycastHit hitInfo, 5000f, raycastLayerMask.value))
 			{
 				hit = hitInfo.collider.GetComponent<T>();
 				return (hit != null) ? true : false;
 			}
 			hit = null;
+			return false;
+		}
+
+		bool IsPointerOverGUIObject()
+		{
+			//Set up the new Pointer Event
+			var ped = new PointerEventData(EventSystem.current);
+
+			//Set the Pointer Event Position to that of the mouse position
+			ped.position = Input.mousePosition;
+
+			//Raycast using the Graphics Raycaster and mouse click position
+			GUIhits.Clear();
+			gr.Raycast(ped, GUIhits);
+
+			//For every result returned, output the name of the GameObject on the Canvas hit by the Ray
+			// foreach (RaycastResult result in GUIhits)
+			// 	Debug.Log("Hit " + result.gameObject.name);
+			
+			if (GUIhits.Count > 0)
+				return true;
 			return false;
 		}
 	#endregion

@@ -4,6 +4,7 @@ using StormRend.Abilities;
 using StormRend.Utility.Events;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace StormRend.Test
 {
@@ -18,18 +19,23 @@ namespace StormRend.Test
         void Awake()
         {
             button = GetComponent<Button>();
+			button.GetComponentInChildren<TextMeshProUGUI>().text = ability?.name;
         }
-        void Start()
+        void OnEnable()
         {
             button.onClick.AddListener(OnClick);
         }
+		void OnDisable()
+		{
+			button.onClick.RemoveAllListeners();
+		}
 
         void OnClick()
         {
             onClick.Invoke(ability);
         }
 
-        void OnHover()
+        public void OnHover()
         {
             onHover.Invoke(ability);
         }
