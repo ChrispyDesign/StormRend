@@ -72,7 +72,7 @@ namespace StormRend.MapSystems.Tiles
 				// var foundHighlights = Resources.LoadAll("", typeof(TileHighlightColor)) as TileHighlightColor[];
 				foreach (var fh in foundHighlights)
 				{
-					Debug.Log(fh.name);
+					Debug.Log("Loading Tile Highlight Color: " + fh.name);
 					highlightColors.Add(fh.name, fh);
 				}
 				highlightsScanned = true;
@@ -96,25 +96,23 @@ namespace StormRend.MapSystems.Tiles
 		/// If no tile found then return null.
 		/// This should work with diagonals too ie. direction = {-1, 1} = forward, left
 		/// </summary>
-		public bool TryGetConnectedTile(Vector2Int direction, out Tile tile, float tolerance = 0.1f)
+		public bool TryGetTile(Vector2Int direction, out Tile tile, float tolerance = 0.1f)
 		{
-			const float adjacentDist = 1f;//, diagDist = 1.414213f;
+			const int adjacentDist = 1;
 
-			//Vector2Int crude lossy normalization? TODO might be problematic!!
-			direction.Clamp(new Vector2Int(-1, -1), Vector2Int.one);
-
-			//Determine where to scan for a connected tile
+			//Determine where to scan for a tile
 			var targetTilePos = transform.position +
-				new Vector3(adjacentDist * owner.tileSize * direction.x, 0, adjacentDist * owner.tileSize * direction.y);
+				new Vector3(direction.x * owner.tileSize * adjacentDist, 0, 
+							direction.y * owner.tileSize * adjacentDist);
 
 			//Loop through all connected tiles and see if there are any within tolerance
-			foreach (var connectedTile in connections)
+			foreach (var t in owner.tiles)
 			{
-				var dist = Vector3.Distance(connectedTile.transform.position, targetTilePos);
+				var dist = Vector3.Distance(t.transform.position, targetTilePos);
 				if (dist < tolerance)
 				{
 					//Tile found
-					tile = connectedTile;
+					tile = t;
 					return true;
 				}
 			}

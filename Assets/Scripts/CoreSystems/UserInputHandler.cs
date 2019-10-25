@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using StormRend.Abilities;
 using StormRend.CameraSystem;
 using StormRend.MapSystems;
@@ -13,7 +11,6 @@ using StormRend.Variables;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 /*Brainstorm:
 ------ UserInputHandler functionality
@@ -97,7 +94,7 @@ A Everytime an ability select button is clicked, the input handler will help to 
 
 namespace StormRend.Systems
 {
-	public struct FrameEventData
+    public struct FrameEventData
 	{
 		public const int lmb = 0, rmb = 1;
 		public bool leftClicked;
@@ -222,7 +219,7 @@ namespace StormRend.Systems
 		public Ability debugAbility;
         private void tempTriggerAbility()
         {
-			if (Input.GetKeyDown(KeyCode.Backslash))
+			if (Input.GetKeyDown(KeyCode.E))
             {
 				SelectAbility(debugAbility);
             }
@@ -379,7 +376,11 @@ namespace StormRend.Systems
 			//Set
 			selectedAbility = a;
 
-			//Highlight ability target tiles
+			//Recalculate target tiles
+			selectedAnimateUnit.CalculateTargetableTiles(selectedAbility);
+
+			//Clear move tiles + Show target tiles
+			ClearAllTileHighlights();
 			HighlightActionTiles();
 		}
 
@@ -425,10 +426,12 @@ namespace StormRend.Systems
 			//NOTE: Active unit's ACTION highlights should be refreshed each OnAbilityChanged
 			if (!isAbilitySelected) return;	//A unit should already be selected
 
-			//Make sure there are tiles to highlight
-			// if (selectedAnimateUnit.possibleTargetTiles.Length <= 0)
+			//FAILSAFE: Make sure there are tiles to highlight
+			if (selectedAnimateUnit.possibleTargetTiles.Length <= 0)
+			{
+				Debug.LogWarning("Unit's move tile should be calculated before calling this method!");
 				selectedAnimateUnit.CalculateTargetableTiles(selectedAbility);
-				// selectedAbility.GetTargetableTiles(selectedAnimateUnit);
+			}
 
 			//Highlight
 			foreach (var t in selectedAnimateUnit.possibleTargetTiles)

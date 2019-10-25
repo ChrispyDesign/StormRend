@@ -22,7 +22,7 @@ namespace StormRend.Units
 		[SerializeField] protected int moveRange = 4;
 		[Tooltip("The unit types of that this unit cannot walk through ie. opponents")]
 		[EnumFlags, SerializeField] TargetUnitMask pathblockingUnitTypes = TargetUnitMask.Enemies;
-		[SerializeField] protected Ability[] abilities;
+		[SerializeField] internal Ability[] abilities;
 
 		[Header("Color")]
 		[SerializeField] protected Color ghostColor = Color.blue;
@@ -30,7 +30,6 @@ namespace StormRend.Units
 		//Properties
 		public Tile originTile { get; set; } = null;  	//The tile this unit was originally on at the beginning of each turn
 		public Tile ghostTile { get; set; } = null;		//The tile the ghost is on
-		public Ability currentAbility { get; set; } = null;
 		public Tile[] possibleMoveTiles { get; set; } = new Tile[0];
 		public Tile[] possibleTargetTiles { get; set; } = new Tile[0];
 		public List<Effect> statusEffects { get; set; } = new List<Effect>();
@@ -195,19 +194,18 @@ namespace StormRend.Units
 			// Debug.LogFormat("Rows: {0}, Columns: {1}", rows, columns);
 			
 			//Find the center of the cast area
-			Vector2Int center = new Vector2Int((sqrLen / 2) + (sqrLen % 2), (sqrLen / 2) + (sqrLen % 2));
+			Vector2Int center = new Vector2Int(sqrLen / 2, sqrLen / 2);
 
-			//Go through castArea
-			for (int row = 0; row < sqrLen; row++)	//rows
-			{
-				for (int col = 0; col < sqrLen; col++)	//columns
-				{
-					if (a.castArea[row * sqrLen + col])
+            //Go through castArea
+            for (int row = 0; row < sqrLen; row++)  //rows
+            {
+                for (int col = 0; col < sqrLen; col++)  //columns
+                {
+					if (a.castArea[row * sqrLen + col] == true)
 					{
-						Vector2Int temp = new Vector2Int(row, col);
-						var offset = temp - center;
+						Vector2Int offset = new Vector2Int(col - center.x, row - center.y);
 
-						if (currentTile.TryGetConnectedTile(offset, out Tile t))
+						if (currentTile.TryGetTile(offset, out Tile t))
 						{
 							result.Add(t);
 						}
@@ -215,7 +213,8 @@ namespace StormRend.Units
 				}
 			}
 			SRDebug.PrintCollection(possibleTargetTiles);
-			return possibleTargetTiles = result.ToArray();
+			possibleTargetTiles = result.ToArray();
+			return possibleTargetTiles;
 		}
 
 		//------------------ OTHER
