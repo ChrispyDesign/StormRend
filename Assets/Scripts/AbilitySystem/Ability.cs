@@ -69,18 +69,19 @@ namespace StormRend.Abilities
 		//Core
 		public void Perform(Unit owner, params Tile[] targets)
 		{
+			Debug.Log("Peforming Ability: " + this.name);
 			foreach (var e in effects)
 				e.Perform(owner, targets);
 		}
 
-		public bool CanAcceptTileType(Unit user, Tile t)
+		public bool CanAcceptTileType(Unit u, Tile t)
 		{
 			//Only one of the masks have to pass for the whole thing to pass
 			//Empty == No bitmask
 
 			//Self: Return true if the user is standing on this tile
 			if ((targetTileTypes & TargetTileMask.Self) == TargetTileMask.Self)
-				if (user.currentTile == t) return true;
+				if (u.currentTile == t) return true;
 
 			var aliveUnits = UnitRegistry.current.aliveUnits;
 

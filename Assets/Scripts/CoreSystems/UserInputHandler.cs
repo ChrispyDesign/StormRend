@@ -187,7 +187,7 @@ namespace StormRend.Systems
 		bool isTileHit;
 		Unit interimUnit;
 		Tile interimTile;
-		bool notEnoughTargetTilesSelected = false;
+		bool notEnoughTargetTilesSelected => targetTileStack.Count < selectedAbility.requiredTiles;
 		bool isTileHitEmpty;
 
 		#region Core
@@ -269,17 +269,20 @@ namespace StormRend.Systems
 			}
 			else if (e.rightClickUp)	//RIGHT CLICK RELEASED
 			{
-				switch (mode)
+				if (isPlayersTurn)
 				{
-					case ActivityMode.Action:	//ACTION MODE
-						if (notEnoughTargetTilesSelected && targetTileStack.Count > 0)
-							targetTileStack.Pop();	//UNDO 1 TARGET TILE SELECT
-						else
-							ClearSelectedAbility();	//CLEAR ABILITY
-						break;
-					case ActivityMode.Move:		//MOVE MODE
-						ClearSelectedUnit();		//CLEAR UNIT
-						break;
+					switch (mode)
+					{
+						case ActivityMode.Action:	//ACTION MODE
+							if (notEnoughTargetTilesSelected && targetTileStack.Count > 0)
+								targetTileStack.Pop();	//UNDO 1 TARGET TILE SELECT
+							else
+								ClearSelectedAbility();	//CLEAR ABILITY
+							break;
+						case ActivityMode.Move:		//MOVE MODE
+							ClearSelectedUnit();		//CLEAR UNIT
+							break;
+					}
 				}
 			}
 			else 	//HOVER
@@ -320,11 +323,9 @@ namespace StormRend.Systems
 			GUILayout.Label("is an ability selected?: " + isAbilitySelected);
 			GUILayout.Label("Selected Ability: " + _selectedAbility?.name);
 
-			GUILayout.Label("targetTileStack:");
+			GUILayout.Label(string.Format("targetTileStack ({0}):", targetTileStack.Count));
 			foreach (var t in targetTileStack)
-			{
 				GUILayout.Label(t.name);
-			}
 		}
 	#endregion
 
@@ -387,15 +388,17 @@ namespace StormRend.Systems
 		void AddTargetTile(Tile t)
 		{
 			//Check ability can accept this tile type
-			if (selectedAbility.CanAcceptTileType(selectedUnit, t))
+			// if (selectedAbility.CanAcceptTileType(selectedUnit, t))
 			{
-				Debug.Log("Adding tile" + t.name);
-				targetTileStack.Push(t);
 			}
+				targetTileStack.Push(t);
 
 			//Perform ability once required number of tiles reached
 			if (targetTileStack.Count >= selectedAbility.requiredTiles)
+			{
 				selectedAbility.Perform(selectedUnit, targetTileStack.ToArray());
+				targetTileStack.Clear();
+			}
 		}
 	#endregion
 
