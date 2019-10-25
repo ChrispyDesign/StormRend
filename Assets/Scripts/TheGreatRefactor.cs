@@ -21,6 +21,8 @@ namespace The.Great.Refactor.Brainstorm
 		-
 	* Clicking on a tile will:
 
+	* General/Gameplay/AI/UI/Tools Programmer, Software Architect
+
     >> Custom StormRend Variables
     UnitListVar : BhaveVar<List<Unit>>
     UnitVar : BhaveVar<Unit>

@@ -212,7 +212,7 @@ namespace StormRend.Units
 					}
 				}
 			}
-			SRDebug.PrintCollection(possibleTargetTiles);
+			// SRDebug.PrintCollection(possibleTargetTiles);
 			possibleTargetTiles = result.ToArray();
 			return possibleTargetTiles;
 		}

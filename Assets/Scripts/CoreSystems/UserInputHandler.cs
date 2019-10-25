@@ -235,7 +235,7 @@ namespace StormRend.Systems
 				//Poll events
 				isUnitHit = TryGetRaycast<Unit>(out interimUnit);
 				isTileHit = TryGetRaycast<Tile>(out interimTile);
-				if (isTileHit) isTileHitEmpty = !(UnitRegistry.IsUnitTypeOnTile<Unit>(interimTile, out Unit unitOnTile));
+				if (isTileHit) isTileHitEmpty = !(UnitRegistry.IsUnitTypeOnTile<Unit>(interimTile, out Unit notEmpty));
 
 				//PLAYER'S TURN
 				if (isPlayersTurn)
@@ -379,7 +379,8 @@ namespace StormRend.Systems
 			//Recalculate target tiles
 			selectedAnimateUnit.CalculateTargetableTiles(selectedAbility);
 
-			//Clear move tiles + Show target tiles
+			//Clear move tiles + Show target tiles + clear ghosts
+			selectedAnimateUnit.ClearGhost();
 			ClearAllTileHighlights();
 			HighlightActionTiles();
 		}
@@ -390,6 +391,7 @@ namespace StormRend.Systems
 		/// <param name="t"></param>
 		void AddTargetTile(Tile t)
 		{
+			Debug.Log("Adding tile" + t.name);
 			//Check ability can accept this tile type
 			if (selectedAbility.CanAcceptTileType(selectedUnit, t))
 				targetTiles.Push(t);
