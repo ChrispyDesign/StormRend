@@ -187,7 +187,7 @@ namespace StormRend.Units
 		/// <summary>
 		/// Get the tiles that can be currently acted upon by this ability
 		/// </summary>
-		public Tile[] CalculateTargetableTiles(Ability a)
+		public Tile[] CalculateTargetTiles(Ability a)
 		{
 			var result = new List<Tile>();
 			var sqrLen = Ability.castAreaSqrLen;
@@ -203,7 +203,7 @@ namespace StormRend.Units
                 {
 					if (a.castArea[row * sqrLen + col] == true)
 					{
-						Vector2Int offset = new Vector2Int(col - center.x, row - center.y);
+						Vector2Int offset = new Vector2Int(col, row) - center;
 
 						if (currentTile.TryGetTile(offset, out Tile t))
 						{
@@ -228,14 +228,10 @@ namespace StormRend.Units
 		public override void OnPointerEnter(PointerEventData eventData)
 		{
 			base.OnPointerEnter(eventData);
-			//Show hover highlights for the tile this unit is on
-			// Debug.LogFormat("{0}.Hover", name);
 		}
 		public override void OnPointerExit(PointerEventData eventData)
 		{
 			base.OnPointerExit(eventData);
-			//Hide hover highlights for the tile this unit is on
-			// Debug.LogFormat("{0}.UnHover", name);
 		}
 	#endregion
 	}
