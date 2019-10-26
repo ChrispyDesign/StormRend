@@ -23,24 +23,20 @@ namespace StormRend.MapSystems.Tiles
 		public static Dictionary<string, TileHighlightColor> highlightColors { get; private set; } = new Dictionary<string, TileHighlightColor>();
 
 		//Inspector
-		[SerializeField] TileHighlightColor hoverHighlight = null;
 		public float cost = 1;
 		internal float G = float.MaxValue;
 		internal float H = float.MaxValue;
 		internal float F = 0;
 
 		//Properties
-		public TileHighlight highlight => _highlight;
-		public Color currentHighlightColor => highlight.color;
+		public Map owner { get; set; }
 
 		//Members
 		[ReadOnlyField] public List<Tile> connections = new List<Tile>();	//List because HashSets don't serialize
-		protected Renderer rend;
-
-		//Debugs
-		[ReadOnlyField] public Map owner;
-		[ReadOnlyField] public TileHighlight _highlight;
-		Color oldColor;
+		[HideInInspector, SerializeField] protected Renderer rend;
+		TileHighlightColor internalColor;		//This kinda acts like a more reliable oldColor value
+		TileHighlightColor clearColor;
+		TileHighlight highlight;
 
 	#region Core
 		void OnValidate()	//Need to get the renderer in editor for gizmos to work
@@ -49,14 +45,33 @@ namespace StormRend.MapSystems.Tiles
 		}
 		void Start()
 		{
-			LoadStaticHighlightColors();	//NOTE! Awake is too early sometimes? Which means it doesn't always grab all the Tile Highlight Colors
+			LoadStaticHighlightColors();    //NOTE! Awake is too early sometimes? Which means it doesn't always grab all the Tile Highlight Colors
 			SetupHighlight();
+			SetupInternalColours();
+
+			//Failsafe
+			if (!owner) owner = Map.current;
 		}
 
 		public void Connect(Tile to) => connections.Add(to);
 		public bool Disconnect(Tile from) => connections.Remove(from);
 		public bool Contains(Tile t) => connections.Contains(t);
 		public void DisconnectAll() => connections.Clear();
+		public void SetColor(TileHighlightColor tileHighlightColor)
+		{
+			internalColor = tileHighlightColor;
+			highlight.color = internalColor.color;
+		}
+		public void SetColor(Color color)
+		{
+			internalColor.color = color;
+			highlight.color = internalColor.color;
+		}
+		public void ClearColor()
+		{
+			internalColor = clearColor;
+			highlight.color = internalColor.color;
+		}
 	#endregion
 
 	#region Inits
@@ -72,7 +87,7 @@ namespace StormRend.MapSystems.Tiles
 				// var foundHighlights = Resources.LoadAll("", typeof(TileHighlightColor)) as TileHighlightColor[];
 				foreach (var fh in foundHighlights)
 				{
-					// Debug.Log("Loading Tile Highlight Color: " + fh.name);
+					Debug.Log("Loading Tile Highlight Color: " + fh.name);
 					highlightColors.Add(fh.name, fh);
 				}
 				highlightsScanned = true;
@@ -80,13 +95,22 @@ namespace StormRend.MapSystems.Tiles
 		}
 		void SetupHighlight()
 		{
-			_highlight = GetComponentInChildren<TileHighlight>();
+			highlight = GetComponentInChildren<TileHighlight>();
 
 			//Create a highlight object if nothing found
 			if (highlight) return;
 			var go = new GameObject("Highlight");
-			_highlight = go.AddComponent<TileHighlight>();
+			highlight = go.AddComponent<TileHighlight>();
 			go.transform.SetParent(this.transform);
+		}
+
+		void SetupInternalColours()
+		{
+			//Setup internal tile highlight color
+			internalColor = ScriptableObject.CreateInstance<TileHighlightColor>();
+			clearColor = ScriptableObject.CreateInstance<TileHighlightColor>();
+			clearColor.color = Color.clear;		//Clear
+			internalColor = clearColor;			//Set default to clear
 		}
 	#endregion
 
@@ -125,17 +149,15 @@ namespace StormRend.MapSystems.Tiles
 	#region Event System Interface Implementations
 		public void OnPointerEnter(PointerEventData eventData)
 		{
-			//TODO should we use the event system?
-			// eventData.selectedObject
-			oldColor = highlight.color;
+			// if (hoverHighlight) highlight.SetColor(hoverHighlight);
 
-			if (hoverHighlight) highlight.SetColor(hoverHighlight);
-			// if (highlightColors.TryGetValue("Hover", out TileHighlightColor color))
-			// 	highlight.SetColor(color);
+			if (highlightColors.TryGetValue("Hover", out TileHighlightColor color))
+				highlight.color = color.color;
 		}
 		public void OnPointerExit(PointerEventData eventData)
 		{
-			highlight.SetColor(oldColor);
+			//Reset back
+			highlight.color = internalColor.color;
 		}
 	#endregion
 	}

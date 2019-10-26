@@ -131,8 +131,7 @@ namespace StormRend.Systems
 		[Space(10), SerializeField] UnitVar _selectedUnit = null;
 		[ReadOnlyField, SerializeField] Ability _selectedAbility = null;
 
-		[Header("Tile Highlight Colors")]
-		[SerializeField] TileHighlightColor hoverHighlight = null;
+		[Header("Tile Colors")]
 		[SerializeField] TileHighlightColor moveHighlight = null;
 		[SerializeField] TileHighlightColor actionHighlight = null;
 
@@ -462,7 +461,7 @@ namespace StormRend.Systems
 			//Highlight
 			foreach (var t in selectedAnimateUnit.possibleMoveTiles)
 			{
-				t.highlight.SetColor(moveHighlight);
+				t.SetColor(moveHighlight);
 			}
 		}
 
@@ -481,7 +480,7 @@ namespace StormRend.Systems
 			//Highlight
 			foreach (var t in selectedAnimateUnit.possibleTargetTiles)
 			{
-				t.highlight.SetColor(actionHighlight);
+				t.SetColor(actionHighlight);
 			}
 		}
 	#endregion
@@ -527,12 +526,12 @@ namespace StormRend.Systems
 			//Clear move highlights
 			if (selectedAnimateUnit.possibleMoveTiles != null)
 				foreach (var t in selectedAnimateUnit.possibleMoveTiles)
-					t.highlight.Clear();
+					t.ClearColor();
 
 			//Clear target highlights
 			if (selectedAnimateUnit.possibleTargetTiles != null)
 				foreach (var t in selectedAnimateUnit.possibleTargetTiles)
-					t.highlight.Clear();
+					t.ClearColor();
 		}
 
 		//Trying to avoid the accidental unhover glitch but still doesn't solve it
@@ -540,7 +539,7 @@ namespace StormRend.Systems
         {
 			foreach (var t in Map.current.tiles)
 			{
-				t.highlight.Clear();
+				t.ClearColor();
 			}
         }
 		#endregion

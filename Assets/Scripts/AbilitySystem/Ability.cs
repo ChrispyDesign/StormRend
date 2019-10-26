@@ -92,19 +92,16 @@ namespace StormRend.Abilities
 				switch (unit)
 				{
 					case AllyUnit ally:
-						if (!ally) break;
 						//Allies: Return true if any allies are standing on this tile but not self
 						if ((targetTileTypes & TargetTileMask.Allies) == TargetTileMask.Allies)
 							if (ally.currentTile == t && u.currentTile != t) return true;
 						break;
 					case EnemyUnit enemy:
-						if (!enemy) break;
 						//Enemies: Return true if any enemies are standing on this tile but not self
 						if ((targetTileTypes & TargetTileMask.Enemies) == TargetTileMask.Enemies)
 							if (enemy.currentTile == t && u.currentTile != t) return true;
 						break;
 					case InAnimateUnit inAnimate:
-						if (!inAnimate) break;
 						//Inanimates: Return true if any inanimate units are on this tile
 						if ((targetTileTypes & TargetTileMask.InAnimates) == TargetTileMask.InAnimates)
 							if (inAnimate.currentTile == t) return true;
