@@ -398,7 +398,8 @@ namespace StormRend.Systems
 		{
 			if (selectedAbility.IsAcceptableTileType(selectedUnit, t))		//Check ability can accept this tile type
 				if (selectedAnimateUnit.possibleTargetTiles.Contains(t))	//Check tile is within possible target tiles
-					targetTileStack.Push(t);
+					if (!targetTileStack.Contains(t))						//Can't select the same tile twice
+						targetTileStack.Push(t);
 
 			//Perform ability once required number of tiles reached
 			if (targetTileStack.Count >= selectedAbility.requiredTiles)
