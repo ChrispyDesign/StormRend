@@ -4,14 +4,14 @@ using System.Runtime.Serialization.Formatters.Binary;
 /// <summary>
 /// static file manager which allows the reading and writing of binary SaveData
 /// </summary>
-public static class FileManager
+public static class xFileManager
 {
     /// <summary>
     /// save function, uses binary formatting to serialize SaveData
     /// </summary>
     /// <param name="saveData">a custom class containing raw save data</param>
     /// <param name="path">the path to save (e.g. Application.persistentDataPath + "data.sav")</param>
-    public static void Save(SaveData saveData, string path)
+    public static void Save(xSaveData saveData, string path)
     {
         // create file stream for writing
         FileStream file = new FileStream(path, FileMode.Create);
@@ -30,7 +30,7 @@ public static class FileManager
     /// </summary>
     /// <param name="path">the path to save (e.g. Application.persistentDataPath + "data.sav")</param>
     /// <returns>a custom class containing raw save data</returns>
-    public static SaveData Load(string path)
+    public static xSaveData Load(string path)
     {
         // check if save data exists
         if (!File.Exists(path))
@@ -41,7 +41,7 @@ public static class FileManager
 
         // open the binary data
         BinaryFormatter binaryFormatter = new BinaryFormatter();
-        SaveData saveData = binaryFormatter.Deserialize(file) as SaveData;
+        xSaveData saveData = binaryFormatter.Deserialize(file) as xSaveData;
 
         // done with file stream
         file.Close();

@@ -4,7 +4,7 @@
 /// Save Data container class, contains relevant floats, ints and strings to be saved
 /// </summary>
 [System.Serializable]
-public class SaveData
+public class xSaveData
 {
     // the date/time of save
     [SerializeField] private string m_dateTime;
@@ -19,7 +19,7 @@ public class SaveData
     /// constructor which initialises all of the raw save data
     /// </summary>
     /// <param name="dateTime"></param>
-    public SaveData(string dateTime)
+    public xSaveData(string dateTime)
     {
         m_dateTime = dateTime;
     }

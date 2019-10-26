@@ -5,7 +5,7 @@ using StormRend.Defunct;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIHealthBars : MonoBehaviour
+public class xUIHealthBars : MonoBehaviour
 {
     [SerializeField] private GameObject m_healthBarPrefab = null;
 

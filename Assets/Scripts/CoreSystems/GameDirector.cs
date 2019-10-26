@@ -12,7 +12,7 @@ namespace StormRend.Systems
 	/// Handling pause, has functions to change scenes, go back to main menu, handling end game, etc
 	/// </summary>
 	[RequireComponent(typeof(UltraStateMachine))]
-	public class SRGameDirector : Singleton<SRGameDirector>
+	public class GameDirector : Singleton<GameDirector>
 	{
 		//Inspector
 		[Header("Game Pause")]
