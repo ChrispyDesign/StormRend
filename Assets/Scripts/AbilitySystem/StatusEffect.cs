@@ -9,22 +9,28 @@ namespace StormRend.Abilities.Effects
 		[SerializeField] protected int affectedTurns = 1;
 		protected int turnCount = 0;
 
-		/// <summary>
-		/// "Inflict" status effect on victim
-		/// </summary>
-		public abstract void Perform(AnimateUnit victim);
+	#region Inflicts / Buffs / Debuffs
+		/// "Inflict" status effect on victim at the beginning of the turn
+		public virtual void OnBeginTurn(AnimateUnit victim) {}
 
-		protected void AddStatusAffectToAnimateUnits(Tile[] targetTiles)
+		/// "Inflict" status effect on victim right after it performed it's ability
+		public virtual void OnActed(AnimateUnit victim) {}
+
+		/// "Inflict" status effect on victim 
+		public virtual void OnEndTurn(AnimateUnit victim) {}
+	#endregion
+
+		//Assist
+		protected void AddStatusEffectToAnimateUnits(Tile[] targetTiles)
 		{
 			//Apply this status effect to any animate units on the targeted tiles
 			foreach (var t in targetTiles)
 			{
-				if (UnitRegistry.IsUnitTypeOnTile<AnimateUnit>(t, out AnimateUnit au))
+				if (UnitRegistry.TryGetUnitTypeOnTile<AnimateUnit>(t, out AnimateUnit au))
 				{
 					au.AddStatusEffect(this);
 				}
 			}
-
 			//Reset turn count
 			turnCount = 0;
 		}

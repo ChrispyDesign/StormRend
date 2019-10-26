@@ -15,7 +15,7 @@ namespace StormRend.Abilities.Effects
 			var t = targetTiles[0];
 
 			//This can only take one target tile so ignore the rest
-			if (!UnitRegistry.TryGetUnitOnTile(t, out Unit ignoreMe))
+			if (!UnitRegistry.TryGetAnyUnitOnTile(t, out Unit ignoreMe))
 			{
 				var au = owner as AnimateUnit;		//Cast
 				au.Move(t, false);					//Teleport

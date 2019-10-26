@@ -69,7 +69,7 @@ namespace StormRend.Abilities
 		//Core
 		public void Perform(Unit owner, params Tile[] targets)
 		{
-			Debug.Log("Peforming Ability: " + this.name);
+			Debug.Log("Performing Ability: " + this.name);
 			foreach (var e in effects)
 				e.Perform(owner, targets);
 		}
@@ -79,7 +79,7 @@ namespace StormRend.Abilities
 			//NOTE: Only one of the masks have to pass for the whole thing to pass
 			//Empty: Return true if no units standing on the tile
 			if ((targetTileTypes & TargetTileMask.Empty) == TargetTileMask.Empty)
-				if (!UnitRegistry.TryGetUnitOnTile(t, out Unit empty)) return true;
+				if (!UnitRegistry.IsAnyUnitOnTile(t)) return true;
 
 			//Self: Return true if the user is standing on this tile
 			if ((targetTileTypes & TargetTileMask.Self) == TargetTileMask.Self)

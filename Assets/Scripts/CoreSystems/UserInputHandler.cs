@@ -99,12 +99,14 @@ namespace StormRend.Systems
 	{
 		public const int lmb = 0, rmb = 1;
 		public bool leftClicked;
+		public bool leftClickUp;
 		public bool rightClicked;
 		public bool rightClickUp;
 
 		public void Refresh()
 		{
 			leftClicked = Input.GetMouseButtonDown(lmb);
+			leftClickUp = Input.GetMouseButtonUp(lmb);
 			rightClicked = Input.GetMouseButtonDown(rmb);
 			rightClickUp = Input.GetMouseButtonUp(rmb);
 		}
@@ -145,8 +147,8 @@ namespace StormRend.Systems
 				//If an ability is current selected then the player can perform ability
 				if (isAbilitySelected)
 					return ActivityMode.Action;
-				//If an ability isn't selected then the player can move
-				else if (isUnitSelected)
+				//If an ability isn't selected then the unit can move
+				else if (isUnitSelected && !selectedAnimateUnit.hasActed)
 					return ActivityMode.Move;
 				//Player can't take any major actions ie. waiting for ai to finish
 				else
@@ -200,7 +202,7 @@ namespace StormRend.Systems
 			cam = MasterCamera.current.linkedCamera;
 			camMover = cam.GetComponent<CameraMover>();
 			es = EventSystem.current;
-			gr = FindObjectOfType<GraphicRaycaster>();
+			gr = FindObjectOfType<GraphicRaycaster>();	//On the one and only canvas
 		}
 		void Start()
 		{
@@ -231,12 +233,22 @@ namespace StormRend.Systems
 		{
 			e.Refresh();	//Refresh all input events
 
+
 			if (e.leftClicked)	//LEFT CLICKED
 			{
 				//Poll events
 				isUnitHit = TryGetRaycast<Unit>(out interimUnit);
-				isTileHit = TryGetRaycast<Tile>(out interimTile);
-				if (isTileHit) isTileHitEmpty = !(UnitRegistry.IsUnitTypeOnTile<Unit>(interimTile, out Unit notEmpty));
+				if (!isUnitHit) isTileHit = TryGetRaycast<Tile>(out interimTile);
+				if (isTileHit) isTileHitEmpty = !UnitRegistry.IsAnyUnitOnTile(interimTile);
+
+				//LEFT CLICK ALWAYS
+				if (isUnitHit)
+				{
+					//!!! This logic needs to run first otherwise the camera will move on final add target tile
+					//Clicking on any unit will focus camera on it unless in action mode?
+					if (mode != ActivityMode.Action)
+						camMover.MoveTo(interimUnit, cameraSmoothTime);
+				}
 
 				//PLAYER'S TURN
 				if (isPlayersTurn)
@@ -262,13 +274,7 @@ namespace StormRend.Systems
 							break;
 					}
 				}
-				//LEFT CLICK ALWAYS
-				if (isUnitHit)
-				{
-					//Clicking on any unit will focus camera on it unless in action mode?
-					if (mode != ActivityMode.Action)
-						camMover.MoveTo(interimUnit, cameraSmoothTime);
-				}
+
 			}
 			else if (e.rightClickUp)	//RIGHT CLICK RELEASED
 			{
@@ -295,7 +301,7 @@ namespace StormRend.Systems
 					case ActivityMode.Move:		//MOVE
 						//Poll events
 						isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
-						if (isTileHit) isTileHitEmpty = !UnitRegistry.TryGetUnitOnTile(interimTile, out interimUnit);	//Check tile is empty
+						if (isTileHit) isTileHitEmpty = !UnitRegistry.IsAnyUnitOnTile(interimTile);	//Check tile is empty
 
 						//Move ghost on hover if the tile is empty
 						if (isTileHit && isTileHitEmpty)
@@ -349,23 +355,26 @@ namespace StormRend.Systems
 
 			//Set the selected unit
 			selectedUnit = au;
-			es.SetSelectedGameObject(au.gameObject);	//Trial run
+			// es.SetSelectedGameObject(au.gameObject);	//Trial run
 
 			//Calling this function should mean that the it is in Move activity mode
-			ShowMoveTiles();
+			if (!au.hasActed) 	//Don't show move tiles if the unit has already acted
+				ShowMoveTiles();
 		}
 
 		public void SelectAbility(Ability a)	//aka. OnAbilityChanged()
 		{
-			//Check
+			//Checks
 			if (!isUnitSelected)
 			{
-				Debug.LogWarning("No unit selected! Cannot select ability. Exiting...");
+				Debug.LogWarning("No unit selected! Cannot select ability");
 				return;
 			}
-
-			//Raise
-			OnAbilityChanged.Invoke(a);
+			if (selectedAnimateUnit.hasActed)
+			{
+				Debug.LogWarning("Unit has moved and acted. Cannot select any more abilities this turn");
+				return;
+			}
 
 			//Set
 			selectedAbility = a;
@@ -377,41 +386,42 @@ namespace StormRend.Systems
 			selectedAnimateUnit.ClearGhost();
 			ClearAllTileHighlights();
 			ShowTargetTiles();
+
+			//Raise
+			OnAbilityChanged.Invoke(a);
 		}
 
 		/// <summary>
-		/// Add a target tile to the stack and if the selected ability required target input is reached then perform the ability
+		/// Add a target tile to the casting stack and if the selected ability required target input is reached then perform the ability
 		/// </summary>
 		void AddTargetTile(Tile t)
 		{
 			//Check ability can accept this tile type
 			if (selectedAbility.IsAcceptableTileType(selectedUnit, t))
-			{
 				targetTileStack.Push(t);
-			}
 
 			//Perform ability once required number of tiles reached
 			if (targetTileStack.Count >= selectedAbility.requiredTiles)
 			{
-				PerformSelectedAbility();
+				SelectedUnitPerformAbility();
 			}
 		}
 		void AddTargetTile(Unit u) => AddTargetTile(u.currentTile);		//Redirect because sometimes the raycast can only hit a unit
 
 		//Enough tile targets chosen by user. Execute the selected ability
-		void PerformSelectedAbility()
+		void SelectedUnitPerformAbility()
 		{
-			//Events
-			OnAbilityPerformed.Invoke(selectedAbility);
-
 			//Perform
-			selectedAbility.Perform(selectedUnit, targetTileStack.ToArray());
+			selectedAnimateUnit.Act(selectedAbility, targetTileStack.ToArray());
 
 			//Clear target stack
 			targetTileStack.Clear();
 
-			//Set unit as having acted
-			
+			//clear ability
+			ClearSelectedAbility(false);
+
+			//Events
+			OnAbilityPerformed.Invoke(selectedAbility);
 		}
 	#endregion
 
@@ -541,7 +551,7 @@ namespace StormRend.Systems
 		{
 			if (IsPointerOverGUIObject())	//Prevent click through
 			{
-				Debug.Log("GUIObjectHit");
+				// Debug.Log("GUIObjectHit");
 				hit = null;
 				return false;
 			}

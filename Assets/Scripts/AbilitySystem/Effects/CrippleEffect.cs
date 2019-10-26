@@ -8,11 +8,11 @@ namespace StormRend.Abilities.Effects
     {
 		public override bool Perform(Unit owner, Tile[] targetTiles)
 		{
-			AddStatusAffectToAnimateUnits(targetTiles);
+			AddStatusEffectToAnimateUnits(targetTiles);
 			return true;
 		}
 
-		public override void Perform(AnimateUnit affectedUnit)
+		public override void OnBeginTurn(AnimateUnit affectedUnit)
 		{
 			//Cripple the bearer
 			throw new System.NotImplementedException();

@@ -8,6 +8,7 @@ using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
 using StormRend.Utility;
 using StormRend.Utility.Attributes;
+using StormRend.Utility.Events;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -32,7 +33,7 @@ namespace StormRend.Units
 		public Tile ghostTile { get; set; } = null;		//The tile the ghost is on
 		public Tile[] possibleMoveTiles { get; set; } = new Tile[0];
 		public Tile[] possibleTargetTiles { get; set; } = new Tile[0];
-		public List<Effect> statusEffects { get; set; } = new List<Effect>();
+		public List<StatusEffect> statusEffects { get; set; } = new List<StatusEffect>();
 
 		//Members
 		bool _hasActed = false;
@@ -41,7 +42,10 @@ namespace StormRend.Units
 		protected GameObject ghostMesh;
 
 		//Events
-		[SerializeField] UnityEvent OnAddStatusEffect;
+		[SerializeField] EffectEvent onAddStatusEffect;
+		[SerializeField] UnityEvent onBeginTurn;
+		[SerializeField] AbilityEvent onActed;
+		[SerializeField] UnityEvent onEndTurn;
 
 	#region Filtered Gets
 		public List<Ability> GetAbilitiesByType(AbilityType type) => abilities.Where(x => x.type == type).ToList();
@@ -83,11 +87,31 @@ namespace StormRend.Units
 
 	#region Core
 		//------------------- STATS
+		//State machine / game director / Unit registry to run through all these on ally turn enter?
+		public void BeginTurn()		//Reset necessary stats and get unit ready for the next turn
+		{
+			SetActed(false);		//Be able to move again
+
+			//Status effects
+			foreach (var se in statusEffects)
+				se.OnBeginTurn(this);
+			
+			onBeginTurn.Invoke();
+		}
+		public void EndTurn()			//Run before 
+		{
+			//Status effects
+			foreach (var se in statusEffects)
+				se.OnEndTurn(this);
+
+			onEndTurn.Invoke();
+		}
+
 		public void AddStatusEffect(StatusEffect statusEffect)
 		{
-			OnAddStatusEffect.Invoke();
-
 			statusEffects.Add(statusEffect);
+
+			onAddStatusEffect.Invoke(statusEffect);
 		}
 
 		public override void Die()
@@ -155,14 +179,21 @@ namespace StormRend.Units
 		}
 
 		//------------------- PERFORM ABILITY
-		public void PerformAbility(Ability ability, params Tile[] targetTiles)
+		public void Act(Ability ability, params Tile[] targetTiles)
 		{
+			SetActed(true);
+
+			//Perform Ability
 			ability.Perform(this, targetTiles);
+
+			//Run status effects
+			foreach (var se in statusEffects)
+				se.OnActed(this);
+
+			onActed.Invoke(ability);
 		}
-		public void PerformAbility(Ability ability, params Unit[] targetUnits)
-		{
-			ability.Perform(this, targetUnits.Select(x => x.currentTile).ToArray());
-		}
+		public void Act(Ability ability, params Unit[] targetUnits)
+			=> Act(ability, targetUnits.Select(x => x.currentTile).ToArray());
 
 		//------------------- CALCULATE TILES
 		/// <summary>
@@ -234,6 +265,7 @@ namespace StormRend.Units
 		public void ClearGhost()
 		{
 			ghostMesh.SetActive(false);
+			ghostMesh.transform.position = transform.position;
 		}
 	#endregion
 
