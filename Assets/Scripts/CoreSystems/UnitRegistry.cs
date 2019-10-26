@@ -32,15 +32,24 @@ namespace StormRend.Units
 		public void FindAllUnits()
 		{
 			_aliveUnits = FindObjectsOfType<Unit>().ToList();
-			foreach (var a in _aliveUnits)
-				if (a.isDead)
-					RegisterDeath(a);
+			if (_aliveUnits.Count > 0)
+				foreach (var a in _aliveUnits)
+					if (a.isDead)
+						RegisterDeath(a);
 		}
 
 	#region Core
 		//Adds a new unit to the alive registry
 		public void RegisterUnit(Unit u) => _aliveUnits.Add(u);
-		public T[] GetUnitsByType<T>() where T : Unit => _aliveUnits.Where(x => (x is T)).ToArray() as T[];
+		public T[] GetUnitsByType<T>() where T : Unit => (from u in aliveUnits where u is T select u as T).ToArray();
+		// List<T> units = new List<T>();
+		// foreach (var u in aliveUnits)
+		// {
+		// 	T t = u as T;	//Try cast
+		// 	if (t) units.Add(t);	//If not null then it's the right type
+		// }
+		// return units.ToArray();
+
 		//Register's the death of a unit and moves it from the alive to dead list
 		public void RegisterDeath(Unit deadUnit)
 		{

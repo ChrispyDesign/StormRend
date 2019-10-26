@@ -52,9 +52,9 @@ namespace StormRend.Units
 	#endregion
 
 	#region Startup
-		protected override void Start()	//This will not block base.Start()
+		protected override void Awake()	//This will not block base.Start()
 		{
-			base.Start();
+			base.Awake();
 
 			//Init origin tile
 			originTile = currentTile;
@@ -251,7 +251,8 @@ namespace StormRend.Units
 
 						if (currentTile.TryGetTile(offset, out Tile t))
 						{
-							result.Add(t);
+							if (!(t is UnWalkableTile))
+								result.Add(t);
 						}
 					}
 				}

@@ -255,10 +255,10 @@ namespace StormRend.Systems
 					switch (mode)
 					{
 						case ActivityMode.Action:   //ACTION MODE
-							if (isTileHit)
-								AddTargetTile(interimTile);
-							else if (isUnitHit)
+							if (isUnitHit)
 								AddTargetTile(interimUnit);
+							else if (isTileHit)
+								AddTargetTile(interimTile);
 							break;
 						case ActivityMode.Move:     //MOVE MODE
 							if (isTileHit && isTileHitEmpty)

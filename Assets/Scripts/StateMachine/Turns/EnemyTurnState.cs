@@ -15,7 +15,7 @@ namespace StormRend.States
 		[Tooltip("Time between each enemy unit's turn in seconds")]
 		[SerializeField] float aiTurnTime = 2f;
 
-		Unit[] currentEnemies;
+		EnemyUnit[] enemies = new EnemyUnit[0];
 		BhaveDirector ai;
 		UnitRegistry ur;	//Kinda bad
 
@@ -35,14 +35,15 @@ namespace StormRend.States
 			base.OnEnter(sm);
 
 			//Get the current enemies & Run AI
-			currentEnemies = ur.GetUnitsByType<EnemyUnit>();
-			StartCoroutine(RunAI(sm));
+			enemies = ur.GetUnitsByType<EnemyUnit>();
+			if (enemies?.Length > 0)
+				StartCoroutine(RunAI(sm));
 		}
 
 		IEnumerator RunAI(UltraStateMachine sm)
 		{
 			//Run through each unit's turn then finish turn
-			foreach (var u in currentEnemies)
+			foreach (var u in enemies)
 			{
 				var agent = u.GetComponent<BhaveAgent>();
 				ai.Tick(agent);

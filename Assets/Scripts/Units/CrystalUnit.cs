@@ -30,10 +30,10 @@ namespace StormRend.Units
 		UserInputHandler ui;
 
 		//Core
-		void Awake()
+		protected override void Awake()
 		{
+			base.Awake();
 			ur = UnitRegistry.current;
-			// ui = UserInputHandler.current;
 		}
 
 		public void Tick()

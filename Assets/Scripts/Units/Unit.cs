@@ -31,11 +31,16 @@ namespace StormRend.Units
 		public bool isDead => HP <= 0;
 
 	#region Startup
-		protected virtual void Start()
+		protected virtual void Awake()
 		{
 			//Reset health
 			HP = maxHP;
 
+			tTryGetTileBelow();
+		}
+
+		void tTryGetTileBelow()
+		{
 			//TEMP Scan below
 			float scanRange = 0.2f;
 			foreach (var t in Map.current.tiles)
@@ -49,9 +54,9 @@ namespace StormRend.Units
 			}
 			Debug.Assert(currentTile, name + "does not have a current tile!");
 		}
-	#endregion
+		#endregion
 
-	#region Health
+		#region Health
 		public void TakeDamage(int damage)
 		{
 			if (isDead) return;     //Can't beat a dead horse :P
