@@ -27,11 +27,11 @@ namespace StormRend.Abilities
 		[Flags]
 		public enum TargetTileMask
 		{
-			// Empty = 1 << 0,		//Empty is when no bits are selected!
-			Self = 1 << 0,
-			Allies = 1 << 1,
-			Enemies = 1 << 2,
-			InAnimates = 1 << 3,	//Such as crystals
+			Empty = 1 << 0,		//Empty is when no bits are selected!
+			Self = 1 << 1,
+			Allies = 1 << 2,
+			Enemies = 1 << 3,
+			InAnimates = 1 << 4,    //Such as crystals
 		}
 
 		//Inspector
@@ -74,10 +74,12 @@ namespace StormRend.Abilities
 				e.Perform(owner, targets);
 		}
 
-		public bool CanAcceptTileType(Unit u, Tile t)
+		public bool IsAcceptableTileType(Unit u, Tile t)
 		{
-			//Only one of the masks have to pass for the whole thing to pass
-			//Empty == No bitmask
+			//NOTE: Only one of the masks have to pass for the whole thing to pass
+			//Empty: Return true if no units standing on the tile
+			if ((targetTileTypes & TargetTileMask.Empty) == TargetTileMask.Empty)
+				if (!UnitRegistry.TryGetUnitOnTile(t, out Unit empty)) return true;
 
 			//Self: Return true if the user is standing on this tile
 			if ((targetTileTypes & TargetTileMask.Self) == TargetTileMask.Self)
@@ -90,16 +92,19 @@ namespace StormRend.Abilities
 				switch (unit)
 				{
 					case AllyUnit ally:
-						//Allies: Return true if any allies are standing on this tile
+						if (!ally) break;
+						//Allies: Return true if any allies are standing on this tile but not self
 						if ((targetTileTypes & TargetTileMask.Allies) == TargetTileMask.Allies)
-							if (ally.currentTile == t) return true;
+							if (ally.currentTile == t && u.currentTile != t) return true;
 						break;
 					case EnemyUnit enemy:
-						//Enemies: Return true if any enemies are standing on this tile
+						if (!enemy) break;
+						//Enemies: Return true if any enemies are standing on this tile but not self
 						if ((targetTileTypes & TargetTileMask.Enemies) == TargetTileMask.Enemies)
-							if (enemy.currentTile == t) return true;
+							if (enemy.currentTile == t && u.currentTile != t) return true;
 						break;
 					case InAnimateUnit inAnimate:
+						if (!inAnimate) break;
 						//Inanimates: Return true if any inanimate units are on this tile
 						if ((targetTileTypes & TargetTileMask.InAnimates) == TargetTileMask.InAnimates)
 							if (inAnimate.currentTile == t) return true;

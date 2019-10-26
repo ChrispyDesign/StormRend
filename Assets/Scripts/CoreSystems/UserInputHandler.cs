@@ -153,7 +153,6 @@ namespace StormRend.Systems
 					return ActivityMode.Idle;
 			}
 		}
-		//Unit selection
 		public Unit selectedUnit
 		{
 			get => _selectedUnit.value;
@@ -169,6 +168,7 @@ namespace StormRend.Systems
 		}
 		public bool isAbilitySelected => selectedAbility != null;
 		public bool isPlayersTurn { get; set; } = true;		//If the current game state matches the player's state?
+		bool notEnoughTargetTilesSelected => targetTileStack.Count < selectedAbility.requiredTiles;
 
 		//Events
 		[Space(5)]
@@ -189,7 +189,6 @@ namespace StormRend.Systems
 		bool isTileHit;
 		Unit interimUnit;
 		Tile interimTile;
-		bool notEnoughTargetTilesSelected => targetTileStack.Count < selectedAbility.requiredTiles;
 		bool isTileHitEmpty;
 		GraphicRaycaster gr;
 		List<RaycastResult> GUIhits = new List<RaycastResult>();
@@ -219,9 +218,16 @@ namespace StormRend.Systems
 		{
 			ProcessEvents();
 		}
+		
+		// internal void BeginRunStatusEffects()
+		// {
+		// 	foreach (var e in selectedAnimateUnit?.statusEffects)
+		// 		e.OnBeginTurn(selectedAnimateUnit);
+		// }
 
-        //--------------------- PROCESS EVENTS -----------------------------
-        void ProcessEvents()
+	#endregion
+		//--------------------- PROCESS EVENTS -----------------------------
+		void ProcessEvents()
 		{
 			e.Refresh();	//Refresh all input events
 
@@ -240,6 +246,8 @@ namespace StormRend.Systems
 						case ActivityMode.Action:   //ACTION MODE
 							if (isTileHit)
 								AddTargetTile(interimTile);
+							else if (isUnitHit)
+								AddTargetTile(interimUnit);
 							break;
 						case ActivityMode.Move:     //MOVE MODE
 							if (isTileHit && isTileHitEmpty)
@@ -324,7 +332,6 @@ namespace StormRend.Systems
 			foreach (var t in targetTileStack)
 				GUILayout.Label(t.name);
 		}
-	#endregion
 
 	#region Sets
 		//Public; can be called via unity events
@@ -378,10 +385,10 @@ namespace StormRend.Systems
 		void AddTargetTile(Tile t)
 		{
 			//Check ability can accept this tile type
-			// if (selectedAbility.CanAcceptTileType(selectedUnit, t))
+			if (selectedAbility.IsAcceptableTileType(selectedUnit, t))
 			{
-			}
 				targetTileStack.Push(t);
+			}
 
 			//Perform ability once required number of tiles reached
 			if (targetTileStack.Count >= selectedAbility.requiredTiles)
@@ -389,6 +396,7 @@ namespace StormRend.Systems
 				PerformSelectedAbility();
 			}
 		}
+		void AddTargetTile(Unit u) => AddTargetTile(u.currentTile);		//Redirect because sometimes the raycast can only hit a unit
 
 		//Enough tile targets chosen by user. Execute the selected ability
 		void PerformSelectedAbility()
