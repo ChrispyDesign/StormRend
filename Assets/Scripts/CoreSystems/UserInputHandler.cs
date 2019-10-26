@@ -5,6 +5,7 @@ using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
 using StormRend.Systems.StateMachines;
 using StormRend.Units;
+using StormRend.Utility;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using StormRend.Variables;
@@ -395,9 +396,9 @@ namespace StormRend.Systems
 		/// </summary>
 		void AddTargetTile(Tile t)
 		{
-			//Check ability can accept this tile type
-			if (selectedAbility.IsAcceptableTileType(selectedUnit, t))
-				targetTileStack.Push(t);
+			if (selectedAbility.IsAcceptableTileType(selectedUnit, t))		//Check ability can accept this tile type
+				if (selectedAnimateUnit.possibleTargetTiles.Contains(t))	//Check tile is within possible target tiles
+					targetTileStack.Push(t);
 
 			//Perform ability once required number of tiles reached
 			if (targetTileStack.Count >= selectedAbility.requiredTiles)
