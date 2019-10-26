@@ -29,7 +29,7 @@ namespace StormRend.Units
 		[SerializeField] protected Color ghostColor = Color.blue;
 
 		//Properties
-		public Tile originTile { get; set; } = null;  	//The tile this unit was originally on at the beginning of each turn
+		public Tile originTile { get; set; } = null;  	//The tile this unit was originally on at the beginning of each turn; Used to set a different texture to that tile so the user knows where he originated from
 		public Tile ghostTile { get; set; } = null;		//The tile the ghost is on
 		public Tile[] possibleMoveTiles { get; set; } = new Tile[0];
 		public Tile[] possibleTargetTiles { get; set; } = new Tile[0];
@@ -123,17 +123,15 @@ namespace StormRend.Units
 		}
 
 		//------------------ MOVE
-		public bool Move(Tile destination, bool useGhost = false)
+		public bool Move(Tile destination, bool useGhost = false, bool limitToMoveTiles = true)
 		{
 			//Only set the position of the ghost
 			if (useGhost)
 			{
 				//Filter out non-moving tiles
-				if (!possibleMoveTiles.Contains(destination)) return false;
-
+				if (limitToMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
 				//Set
 				ghostTile = destination;
-
 				//Move ghost
 				ghostMesh.SetActive(true);
 				ghostMesh.transform.position = ghostTile.transform.position;
@@ -144,17 +142,14 @@ namespace StormRend.Units
 			{
 				//Ghost was probably just active so deactivate ghost ??? Should this be here?
 				ghostMesh.SetActive(false);
-
 				//Filter
-				if (!possibleMoveTiles.Contains(destination)) return false;
-
+				if (limitToMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
 				//Set
 				currentTile = destination;
-
 				//Move
 				transform.position = destination.transform.position;
 			}
-			return true;
+			return true;	//Successful move
 		}
 
 		/// <summary>
@@ -167,7 +162,7 @@ namespace StormRend.Units
 			if (currentTile.TryGetTile(direction, out Tile t))
 			{
 				//Pushed
-				Move(t);
+				Move(t, false, false);
 				return true;
 			}
 			else
@@ -181,7 +176,9 @@ namespace StormRend.Units
 		//------------------- PERFORM ABILITY
 		public void Act(Ability ability, params Tile[] targetTiles)
 		{
+			//Lock in movement and new position
 			SetActed(true);
+			originTile = currentTile;
 
 			//Perform Ability
 			ability.Perform(this, targetTiles);
