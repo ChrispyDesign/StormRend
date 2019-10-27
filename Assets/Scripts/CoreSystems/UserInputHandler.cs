@@ -219,13 +219,15 @@ namespace StormRend.Systems
 		void Update()
 		{
 			ProcessEvents();
+			// tMoveByV2ITest();
 		}
-		
-		// internal void BeginRunStatusEffects()
-		// {
-		// 	foreach (var e in selectedAnimateUnit?.statusEffects)
-		// 		e.OnBeginTurn(selectedAnimateUnit);
-		// }
+
+		void tMoveByV2ITest()	//Move by Vector 2 Int Test
+		{
+			Vector2Int moveDir = new Vector2Int((int)Input.GetAxisRaw("Horizontal"), (int)Input.GetAxisRaw("Vertical"));
+			if (isUnitSelected)
+				selectedAnimateUnit.Move(moveDir, true);
+		}
 
 	#endregion
 		//--------------------- PROCESS EVENTS -----------------------------

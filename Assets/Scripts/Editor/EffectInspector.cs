@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using StormRend.Abilities;
 using UnityEditor;
@@ -19,14 +16,14 @@ namespace StormRend.Editors
 			owner = ability;
 		}
 
-		void OnEnable()
-		{
-			//Create a bold foldout GUI style
-			boldFoldoutStyle = new GUIStyle()
-			{
-				fontStyle = FontStyle.Bold
-			};
-		}
+		// void OnEnable()
+		// {
+		// 	//Create a bold foldout GUI style
+		// 	boldFoldoutStyle = new GUIStyle(EditorStyles.foldout)
+		// 	{
+		// 		fontStyle = FontStyle.Bold,
+		// 	};
+		// }
 
 		public void DrawGUI()
 		{
@@ -51,6 +48,8 @@ namespace StormRend.Editors
 			GUILayout.Space(3);
 			using (new EditorGUILayout.HorizontalScope(EditorStyles.helpBox))
 			{
+				boldFoldoutStyle = new GUIStyle(EditorStyles.foldout) 
+					{ fontStyle = FontStyle.Bold };
 				var formattedName = Regex.Replace(e.name, "[E-e]ffect", "");
 				// var formattedName = Regex.Replace(e.name, "[([a-z])([A-Z])]", "$1 $2");
 				e.isFoldOut = EditorGUILayout.Foldout(e.isFoldOut, formattedName, true, boldFoldoutStyle);
@@ -62,9 +61,9 @@ namespace StormRend.Editors
 				{
 					owner.RemoveEffect(e);
 					return true;
-				} 
+				}
+				return false;
 			}
-			return false;
 		}
 	}
 }

@@ -14,7 +14,7 @@ namespace StormRend.Abilities.Effects
 		public override bool Perform(Unit owner, Tile[] targetTiles)
         {
  			//Get and convert to lists where required
-			Unit[] units = ur.aliveUnits;
+			Unit[] units = UnitRegistry.current.aliveUnits;
 			List<Tile> tt = targetTiles.ToList();
 
 			//Damage units that are standing on target tiles
@@ -23,7 +23,6 @@ namespace StormRend.Abilities.Effects
 				if (tt.Contains(u.currentTile))
 					u.TakeDamage(damageAmount);
 			}
-
             return true;
         }
     }

@@ -132,6 +132,9 @@ namespace StormRend.MapSystems
 		/// <returns></returns>
 		public static Tile[] GetPossibleTiles(Map map, Tile start, int range, params Type[] pathblockingUnitTypes)
 		{
+			Debug.Assert(start, "Invalid Start tile");
+			Debug.Assert(map, "Invalid map parameter");
+
 			//TODO Check to make sure exclude
 			List<Tile> validMoves = new List<Tile>();
 			Queue<Tile> openList = new Queue<Tile>();

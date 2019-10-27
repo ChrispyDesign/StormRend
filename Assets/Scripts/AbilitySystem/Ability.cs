@@ -4,6 +4,7 @@ using StormRend.MapSystems.Tiles;
 using StormRend.Units;
 using StormRend.Utility.Attributes;
 using UnityEngine;
+using StormRend.Enums;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -18,21 +19,10 @@ namespace StormRend.Abilities
 	}
 
 	[Serializable, CreateAssetMenu(menuName = "StormRend/Ability", fileName = "Ability")]
-	public class Ability : ScriptableObject
+	public partial class Ability : ScriptableObject
 	{
 		//Constants
 		public const int caSize = 7;    //Cast Area Size Squared
-
-		//Flags and Enums
-		[Flags]
-		public enum TargetTileMask
-		{
-			Empty = 1 << 0,		//Empty is when no bits are selected!
-			Self = 1 << 1,
-			Allies = 1 << 2,
-			Enemies = 1 << 3,
-			InAnimates = 1 << 4,    //Such as crystals
-		}
 
 		//Inspector
 		[SerializeField] Sprite _icon = null;
@@ -93,12 +83,12 @@ namespace StormRend.Abilities
 				{
 					case AllyUnit ally:
 						//Allies: Return true if any allies are standing on this tile but not self
-						if ((targetTileTypes & TargetTileMask.Allies) == TargetTileMask.Allies)
+						if ((targetTileTypes & TargetTileMask.AllyUnits) == TargetTileMask.AllyUnits)
 							if (ally.currentTile == t && u.currentTile != t) return true;
 						break;
 					case EnemyUnit enemy:
 						//Enemies: Return true if any enemies are standing on this tile but not self
-						if ((targetTileTypes & TargetTileMask.Enemies) == TargetTileMask.Enemies)
+						if ((targetTileTypes & TargetTileMask.EnemyUnits) == TargetTileMask.EnemyUnits)
 							if (enemy.currentTile == t && u.currentTile != t) return true;
 						break;
 					case InAnimateUnit inAnimate:
