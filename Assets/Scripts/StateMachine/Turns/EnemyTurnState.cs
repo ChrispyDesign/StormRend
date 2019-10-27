@@ -12,12 +12,12 @@ namespace StormRend.States
 		// - Trigger crystals ! Maybe use UnityEvents and decouple this to another MonoBehaviour
 		// - Handle any UI : Use UnityEvents
 
-		[Tooltip("Time between each enemy unit's turn in seconds")]
+		[Header("AI"), Tooltip("Time between each enemy unit's turn in seconds")]
 		[SerializeField] float aiTurnTime = 2f;
 
 		EnemyUnit[] enemies = new EnemyUnit[0];
 		BhaveDirector ai;
-		UnitRegistry ur;	//Kinda bad
+		UnitRegistry ur;
 
 		void Awake()
 		{

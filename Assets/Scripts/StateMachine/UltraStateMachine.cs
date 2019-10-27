@@ -26,9 +26,10 @@ namespace StormRend.Systems.StateMachines
 		Stack<State> stackStates = new Stack<State>();
 
 		[Space]
-		public StateEvent OnNextTurn;
-		// public static Action<State> onNextTurn;		//CAREFUL: static
+		public StateEvent onExitCurrentTurn;
+		public StateEvent onEnterNextTurn;
 	#endregion
+
 	#region Properties
 		public int turnsCount => turnStates.Count;
 		public int stackCount => stackStates.Count;
@@ -139,17 +140,19 @@ namespace StormRend.Systems.StateMachines
 		/// </summary>
 		public void NextTurn()
 		{
-			OnNextTurn.Invoke(currentState);
-
 			//Can only go to next turn if in turn based mode
 			if (isInTurnBasedMode)
 			{
 				//Exit current state
+				onExitCurrentTurn.Invoke(currentState);
 				currentState?.OnExit(this);
+
 				//Set next state index
 				currentStateIDX++;
+
 				//Enter next state
 				currentState?.OnEnter(this);
+				onEnterNextTurn.Invoke(currentState);
 			}
 		}
 

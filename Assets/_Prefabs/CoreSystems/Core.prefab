@@ -211,7 +211,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6841392900819925574}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2177819233072501
 MonoBehaviour:
@@ -2281,7 +2281,7 @@ GameObject:
   - component: {fileID: 2428445561950147825}
   - component: {fileID: 2428445561950147824}
   m_Layer: 5
-  m_Name: UI
+  m_Name: UI States
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2855,7 +2855,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6841392900819925574}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2428445562694527430
 MonoBehaviour:
@@ -3409,6 +3409,51 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1 &3078568901041975783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7565347559415896426}
+  - component: {fileID: 4714817229119878404}
+  m_Layer: 0
+  m_Name: UnitRegistry
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7565347559415896426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3078568901041975783}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6841392900819925574}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4714817229119878404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3078568901041975783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 472ec91f3d204eb4493b88e737785b70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _aliveUnits: []
+  _deadUnits: []
 --- !u!1 &3100346579098970599
 GameObject:
   m_ObjectHideFlags: 0
@@ -3659,7 +3704,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2101356870767717335}
   - component: {fileID: 1013997117804853895}
-  - component: {fileID: 2505284297034244265}
   m_Layer: 0
   m_Name: UserInputHandler
   m_TagString: Untagged
@@ -3679,7 +3723,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6841392900819925574}
-  m_RootOrder: 6
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1013997117804853895
 MonoBehaviour:
@@ -3699,7 +3743,6 @@ MonoBehaviour:
   playersState: {fileID: 6841392901105898438}
   _selectedUnit: {fileID: 11400000, guid: dbeaf32532764ba4c92635cbce5c280f, type: 2}
   _selectedAbility: {fileID: 0}
-  hoverHighlight: {fileID: 11400000, guid: ab97a2887b4e6bc4f8dec52dba11fc36, type: 2}
   moveHighlight: {fileID: 11400000, guid: bd479e016eb1cf740a52682990892065, type: 2}
   actionHighlight: {fileID: 11400000, guid: 4f4691faa28f1ae4c92e9c587aec16e0, type: 2}
   cameraSmoothTime: 1
@@ -3729,20 +3772,6 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   debug: 1
---- !u!114 &2505284297034244265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3260328891646769650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 472ec91f3d204eb4493b88e737785b70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _aliveUnits: []
-  _deadUnits: []
 --- !u!1 &3325017993235086259
 GameObject:
   m_ObjectHideFlags: 0
@@ -5339,7 +5368,7 @@ GameObject:
   - component: {fileID: 1985736633484383828}
   - component: {fileID: 3267380040487526950}
   m_Layer: 0
-  m_Name: StateMachine
+  m_Name: GameControllers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5394,9 +5423,36 @@ MonoBehaviour:
   turnStates:
   - {fileID: 6841392901105898438}
   - {fileID: 6841392900814874489}
-  OnNextTurn:
+  onExitCurrentTurn:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4714817229119878404}
+        m_MethodName: RunStatusEffectsOnTurnExit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StormRend.Utility.Events.StateEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onEnterNextTurn:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4714817229119878404}
+        m_MethodName: RunStatusEffectOnTurnEnter
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: StormRend.Utility.Events.StateEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &5348906679215612099
@@ -7312,10 +7368,11 @@ Transform:
   - {fileID: 328110563357484235}
   - {fileID: 6841392900826536576}
   - {fileID: 2428445561950147831}
+  - {fileID: 2101356870767717335}
+  - {fileID: 7565347559415896426}
   - {fileID: 5150136796973514098}
   - {fileID: 1389559257139785400}
   - {fileID: 4756992703097569169}
-  - {fileID: 2101356870767717335}
   - {fileID: 2428445562694527431}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -7961,7 +8018,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6841392900819925574}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3785408489521488377
 MonoBehaviour:
@@ -8277,7 +8334,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6841392900819925574}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &14088391093314869
 MonoBehaviour:
