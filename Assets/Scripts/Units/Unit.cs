@@ -3,6 +3,7 @@ using StormRend.MapSystems.Tiles;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace StormRend.Units
@@ -19,7 +20,9 @@ namespace StormRend.Units
 
 		//Events
 		[Header("Events")]
-		public UnitEvent OnDeath;
+		public UnitEvent onDeath;
+		public UnityEvent onDamage;
+		public UnityEvent onHeal;
 
 		//Properties
 		public int HP
@@ -62,11 +65,19 @@ namespace StormRend.Units
 			if (isDead) return;     //Can't beat a dead horse :P
 			HP -= damage;
 			if (HP <= 0) Die();
+
+			onDamage.Invoke();
+		}
+		public void Heal(int amount)
+		{
+			HP += amount;
+
+			onHeal.Invoke();
 		}
 
 		public virtual void Die()
 		{
-			OnDeath.Invoke(this);
+			onDeath.Invoke(this);
 		}
 	#endregion
 

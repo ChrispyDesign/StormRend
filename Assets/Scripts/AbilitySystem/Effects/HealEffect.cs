@@ -18,7 +18,7 @@ namespace StormRend.Abilities.Effects
 			{
 				if (UnitRegistry.TryGetAnyUnitOnTile(t, out Unit u))		//Try getting a unit on top
 				{
-					u.HP += healAmount;		//Heal
+					u.Heal(healAmount);
 				}
 			}
 			return true;
