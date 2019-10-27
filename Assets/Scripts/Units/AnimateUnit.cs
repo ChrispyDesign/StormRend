@@ -152,9 +152,9 @@ namespace StormRend.Units
 				//Filter
 				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
 				//Set
-				baseTile = destination;
+				currentTile = destination;
 				//Move
-				transform.position = baseTile.transform.position;
+				transform.position = currentTile.transform.position;
 			}
 			return true;	//Successful move
 		}
@@ -166,7 +166,7 @@ namespace StormRend.Units
 		/// </summary>
 		public bool Move(Vector2Int direction, bool kill = true)
 		{
-			if (baseTile.TryGetTile(direction, out Tile t))
+			if (currentTile.TryGetTile(direction, out Tile t))
 			{
 				//Pushed
 				Move(t, false, false);
@@ -186,9 +186,10 @@ namespace StormRend.Units
 		/// </summary>
 		public void Act(Ability ability, params Tile[] targetTiles)
 		{
-			//Lock in movement and set new base tile for next round
+			//Lock in movement
 			SetActed(true);
-			baseTile = currentTile;
+			// baseTile = currentTile;	
+			//Base tile should be updated at the start of this unit's turn in case this unit is pushed around during the enemie's turn	
 
 			//Perform Ability
 			ability.Perform(this, targetTiles);

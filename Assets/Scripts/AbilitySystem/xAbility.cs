@@ -21,7 +21,7 @@ namespace StormRend.Abilities
 	}
 
 	[System.Serializable]
-	[CreateAssetMenu(fileName = "xAbility", menuName = "StormRend/xAbility")]
+	// [CreateAssetMenu(fileName = "xAbility", menuName = "StormRend/xAbility")]
 	public class xAbility : ScriptableObject
 	{
 		private List<xTile> m_tiles = new List<xTile>();

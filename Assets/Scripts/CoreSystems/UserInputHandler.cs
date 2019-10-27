@@ -137,7 +137,7 @@ namespace StormRend.Systems
 		[SerializeField] TileHighlightColor actionHighlight = null;
 
 		[Header("Camera")]
-		[SerializeField] float cameraSmoothTime = 1.5f;
+		[SerializeField] float cameraSmoothTime = 1.75f;
 
 		//Properties
 		ActivityMode mode
@@ -260,7 +260,7 @@ namespace StormRend.Systems
 						case ActivityMode.Action:   //ACTION MODE
 							if (isUnitHit)
 								AddTargetTile(interimUnit);
-							else if (isTileHit)
+							if (isTileHit)
 								AddTargetTile(interimTile);
 							break;
 						case ActivityMode.Move:     //MOVE MODE
@@ -416,6 +416,9 @@ namespace StormRend.Systems
 		{
 			//Perform
 			selectedAnimateUnit.Act(selectedAbility, targetTileStack.ToArray());
+
+			//Focus camera
+			camMover.MoveTo(selectedAnimateUnit, cameraSmoothTime);
 
 			//Clear target stack
 			targetTileStack.Clear();
