@@ -79,24 +79,35 @@ namespace StormRend.Abilities
 
 			foreach (var unit in aliveUnits)
 			{
+				bool isAnimate = false, isInAnimate = false;
 				switch (unit)
 				{
 					case AllyUnit ally:
+						isAnimate = true;
 						//Allies: Return true if any allies are standing on this tile but not self
 						if ((targetTileTypes & TargetMask.Allies) == TargetMask.Allies)
 							if (ally.currentTile == t && u.currentTile != t) return true;
 						break;
 					case EnemyUnit enemy:
-						//Enemies: Return true if any enemies are standing on this tile but not self
+						isAnimate = true;
+						//Enemies
 						if ((targetTileTypes & TargetMask.Enemies) == TargetMask.Enemies)
 							if (enemy.currentTile == t && u.currentTile != t) return true;
 						break;
-					case InAnimateUnit inAnimate:
-						//Inanimates: Return true if any inanimate units are on this tile
-						if ((targetTileTypes & TargetMask.InAnimates) == TargetMask.InAnimates)
-							if (inAnimate.currentTile == t) return true;
+					case CrystalUnit crystal:
+						isInAnimate = true;
+						//Enemies
+						if ((targetTileTypes & TargetMask.Crystals) == TargetMask.Crystals)
+							if (crystal.currentTile == t && u.currentTile != t) return true;
 						break;
 				}
+				//Catch the abstracts
+				//Animates
+				if (isAnimate && (targetTileTypes & TargetMask.Animates) == TargetMask.Animates)
+					if (unit.currentTile == t && u.currentTile != t) return true;
+				//InAnimates
+				if (isInAnimate && (targetTileTypes & TargetMask.InAnimates) == TargetMask.InAnimates)
+					if (unit.currentTile == t && u.currentTile != t) return true;
 			}
 			return false;
 		}
