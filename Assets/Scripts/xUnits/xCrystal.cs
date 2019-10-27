@@ -7,7 +7,7 @@ public class xCrystal : xUnit
 	[HideInInspector]
 	public int m_HowManyTurns;
 
-	[SerializeField] private int m_damage;
+	[SerializeField] private int m_damage = 1;
 
 	Vector2Int m_left = new Vector2Int(-1, 0);
 	Vector2Int m_up = new Vector2Int(0, 1);

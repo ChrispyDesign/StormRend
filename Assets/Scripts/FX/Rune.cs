@@ -8,8 +8,8 @@ public class Rune : MonoBehaviour
     [SerializeField] Transform target;
     [SerializeField] Transform start;
 
-    [SerializeField] float speed;
-    [SerializeField] float percent;
+    [SerializeField] float speed = 1;
+    [SerializeField] float percent = 1;
 
 
     void Start()

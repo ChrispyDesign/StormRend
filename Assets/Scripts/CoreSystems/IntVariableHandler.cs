@@ -21,7 +21,7 @@ namespace StormRend.Variables.Utils
 		[SerializeField] int maxLimit = 1;
 
 		[Header("Events")]
-		public UnityEvent OnChanged;
+		public UnityEvent OnChanged = null;
 
 		void OnValidate()
 		{

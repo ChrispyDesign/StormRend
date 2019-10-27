@@ -11,16 +11,17 @@ namespace StormRend.Test
     [RequireComponent(typeof(Button))]
     public class tAbilityButton : MonoBehaviour
     {
-        [SerializeField] Ability ability;
-        [SerializeField] AbilityEvent onHover;
-        [SerializeField] AbilityEvent onClick;
+        [SerializeField] Ability ability = null;
+        [SerializeField] AbilityEvent onHover = null;
+        [SerializeField] AbilityEvent onClick = null;
         Button button;
 
         void Awake()
         {
             button = GetComponent<Button>();
-			button.GetComponentInChildren<TextMeshProUGUI>().text = ability?.name;
-        }
+			button.GetComponentInChildren<TextMeshProUGUI>().text = ability?.name;	//Lazy
+			button.GetComponentInChildren<Image>().sprite = ability?.icon;			//Lazy
+        }	
         void OnEnable()
         {
             button.onClick.AddListener(OnClick);

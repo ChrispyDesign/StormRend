@@ -23,8 +23,8 @@ namespace StormRend.Systems
 
         [Space]
         [Header("Events")]
-        [SerializeField] UnityEvent OnExecute = null;
-        [SerializeField] UnityEvent OnReset = null;
+        [SerializeField] UnityEvent onExecute = null;
+        [SerializeField] UnityEvent onReset = null;
 
         UnitRegistry ur = null;
 
@@ -44,7 +44,7 @@ namespace StormRend.Systems
         }
         internal void Execute()
         {
-            OnExecute.Invoke();
+            onExecute.Invoke();
 
             var unitsToDamage = new List<Unit>();
 
@@ -71,7 +71,7 @@ namespace StormRend.Systems
 
         internal void Reset()
         {
-            OnReset.Invoke();
+            onReset.Invoke();
             blizzardVar = 0;
         }
     #endregion
