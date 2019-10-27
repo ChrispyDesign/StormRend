@@ -79,6 +79,15 @@ namespace StormRend.Units
 		{
 			onDeath.Invoke(this);
 		}
+
+		// void Update()
+		// {
+		// 	if (Map.current.TryGetNearestTile(transform.position, out Tile nearest))
+		// 	{
+		// 		currentTile = nearest;
+		// 		transform.position = currentTile.transform.position;
+		// 	}
+		// }
 	#endregion
 
 	#region Event System
