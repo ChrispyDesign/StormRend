@@ -1,11 +1,17 @@
 ﻿using StormRend.Defunct;
 using StormRend.MapSystems.Tiles;
 using StormRend.Units;
+using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
+	/// <summary>
+	/// Teleport owner to a tile. This effect only requires one tile
+	/// </summary>
     public class TeleportEffect : Effect
     {
+		[Tooltip("Can only teleport to tiles that can be pathfound to")]
+		[SerializeField] bool restrictToMoveTiles = false;
 		public override bool Perform(Unit owner, Tile[] targetTiles)
         {
 			//Make sure there is atleast one tile
@@ -18,7 +24,7 @@ namespace StormRend.Abilities.Effects
 			if (!UnitRegistry.TryGetAnyUnitOnTile(t, out Unit ignoreMe))
 			{
 				var au = owner as AnimateUnit;		//Cast
-				au.Move(t, false);					//Teleport
+				au.Move(t, false, restrictToMoveTiles);					//Teleport
 			}
             return true;
         }

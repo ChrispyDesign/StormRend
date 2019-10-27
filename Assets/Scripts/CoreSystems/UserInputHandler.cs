@@ -236,7 +236,6 @@ namespace StormRend.Systems
 		{
 			e.Refresh();	//Refresh all input events
 
-
 			if (e.leftClicked)	//LEFT CLICKED
 			{
 				//Poll events
@@ -265,7 +264,7 @@ namespace StormRend.Systems
 								AddTargetTile(interimTile);
 							break;
 						case ActivityMode.Move:     //MOVE MODE
-							if (isTileHit && isTileHitEmpty)
+							if (isTileHit && isTileHitEmpty)	//Restrict to empty tiles only
 							{
 								if (selectedAnimateUnit.Move(interimTile))	//Move unit
 									camMover.MoveTo(interimTile, cameraSmoothTime);	//If move successful then focus camera
@@ -399,7 +398,7 @@ namespace StormRend.Systems
 		/// </summary>
 		void AddTargetTile(Tile t)
 		{
-			if (selectedAbility.IsAcceptableTileType(selectedUnit, t))		//Check ability can accept this tile type
+			if (selectedAbility.IsAcceptableTileType(selectedAnimateUnit, t))		//Check ability can accept this tile type
 				if (selectedAnimateUnit.possibleTargetTiles.Contains(t))	//Check tile is within possible target tiles
 					if (!targetTileStack.Contains(t))						//Can't select the same tile twice
 						targetTileStack.Push(t);

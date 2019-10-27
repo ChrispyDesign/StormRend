@@ -29,7 +29,7 @@ namespace StormRend.Units
 		[SerializeField] protected Color ghostColor = Color.blue;
 
 		//Properties
-		public Tile originTile { get; set; } = null;  	//The tile this unit was originally on at the beginning of each turn; Used to set a different texture to that tile so the user knows where he originated from
+		public Tile baseTile { get; set; } = null;  	//The tile this unit was originally on at the beginning of each turn; Used to set a different texture to that tile so the user knows where he originated from
 		public Tile ghostTile { get; set; } = null;		//The tile the ghost is on
 		public Tile[] possibleMoveTiles { get; set; } = new Tile[0];
 		public Tile[] possibleTargetTiles { get; set; } = new Tile[0];
@@ -54,10 +54,10 @@ namespace StormRend.Units
 	#region Startup
 		protected override void Awake()	//This will not block base.Start()
 		{
-			base.Awake();
+			base.Awake();   //This sets the current tile
 
-			//Init origin tile
-			originTile = currentTile;
+			//Record origin tile
+			baseTile = currentTile;
 
 			CreateGhostMesh();
 		}
@@ -123,13 +123,20 @@ namespace StormRend.Units
 		}
 
 		//------------------ MOVE
-		public bool Move(Tile destination, bool useGhost = false, bool limitToMoveTiles = true)
+		/// <summary>
+		/// Move unit to the destination tile. Option to move the ghost only and to restrict movement within confines of current possible move tiles.
+		/// </summary>
+		/// <param name="destination">The destination tile to move this unit to</param>
+		/// <param name="useGhost">Move the unit's ghost instead</param>
+		/// <param name="restrictToPossibleMoveTiles">Only move if the destination tile is within this unit's list of possible move tiles</param>
+		/// <returns></returns>
+		public bool Move(Tile destination, bool useGhost = false, bool restrictToPossibleMoveTiles = true)
 		{
 			//Only set the position of the ghost
 			if (useGhost)
 			{
 				//Filter out non-moving tiles
-				if (limitToMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
+				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
 				//Set
 				ghostTile = destination;
 				//Move ghost
@@ -143,11 +150,11 @@ namespace StormRend.Units
 				//Ghost was probably just active so deactivate ghost ??? Should this be here?
 				ghostMesh.SetActive(false);
 				//Filter
-				if (limitToMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
+				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
 				//Set
-				currentTile = destination;
+				baseTile = destination;
 				//Move
-				transform.position = destination.transform.position;
+				transform.position = baseTile.transform.position;
 			}
 			return true;	//Successful move
 		}
@@ -159,7 +166,7 @@ namespace StormRend.Units
 		/// </summary>
 		public bool Move(Vector2Int direction, bool kill = true)
 		{
-			if (currentTile.TryGetTile(direction, out Tile t))
+			if (baseTile.TryGetTile(direction, out Tile t))
 			{
 				//Pushed
 				Move(t, false, false);
@@ -174,11 +181,14 @@ namespace StormRend.Units
 		}
 
 		//------------------- PERFORM ABILITY
+		/// <summary>
+		/// Perform the ability and lock unit for this turn
+		/// </summary>
 		public void Act(Ability ability, params Tile[] targetTiles)
 		{
-			//Lock in movement and new position
+			//Lock in movement and set new base tile for next round
 			SetActed(true);
-			originTile = currentTile;
+			baseTile = currentTile;
 
 			//Perform Ability
 			ability.Perform(this, targetTiles);
@@ -189,6 +199,9 @@ namespace StormRend.Units
 
 			onActed.Invoke(ability);
 		}
+		/// <summary>
+		/// Override to perform ability on units instead of tiles
+		/// </summary>
 		public void Act(Ability ability, params Unit[] targetUnits)
 			=> Act(ability, targetUnits.Select(x => x.currentTile).ToArray());
 
@@ -222,7 +235,7 @@ namespace StormRend.Units
 			if ((pathblockingUnitTypes & TargetMask.Animates) == TargetMask.Animates)
 				pathblockers.Add(typeof(AnimateUnit));
 
-			return possibleMoveTiles = Map.GetPossibleTiles(currentTile.owner, originTile, moveRange, pathblockers.ToArray());
+			return possibleMoveTiles = Map.GetPossibleTiles(currentTile.owner, baseTile, moveRange, pathblockers.ToArray());
 		}
 
 		/// <summary>

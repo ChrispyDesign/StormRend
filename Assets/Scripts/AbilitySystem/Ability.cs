@@ -64,16 +64,16 @@ namespace StormRend.Abilities
 				e.Perform(owner, targets);
 		}
 
-		public bool IsAcceptableTileType(Unit u, Tile t)
+		public bool IsAcceptableTileType(AnimateUnit owner, Tile tile)
 		{
 			//NOTE: Only one of the masks have to pass for the whole thing to pass
 			//Empty: Return true if no units standing on the tile
 			if ((targetTileTypes & TargetMask.Empty) == TargetMask.Empty)
-				if (!UnitRegistry.IsAnyUnitOnTile(t)) return true;
+				if (!UnitRegistry.IsAnyUnitOnTile(tile)) return true;
 
 			//Self: Return true if the user is standing on this tile
 			if ((targetTileTypes & TargetMask.Self) == TargetMask.Self)
-				if (u.currentTile == t) return true;
+				if (owner.currentTile == tile) return true;
 
 			var aliveUnits = UnitRegistry.current.aliveUnits;
 
@@ -86,28 +86,28 @@ namespace StormRend.Abilities
 						isAnimate = true;
 						//Allies: Return true if any allies are standing on this tile but not self
 						if ((targetTileTypes & TargetMask.Allies) == TargetMask.Allies)
-							if (ally.currentTile == t && u.currentTile != t) return true;
+							if (ally.currentTile == tile && owner.currentTile != tile) return true;
 						break;
 					case EnemyUnit enemy:
 						isAnimate = true;
 						//Enemies
 						if ((targetTileTypes & TargetMask.Enemies) == TargetMask.Enemies)
-							if (enemy.currentTile == t && u.currentTile != t) return true;
+							if (enemy.currentTile == tile && owner.currentTile != tile) return true;
 						break;
 					case CrystalUnit crystal:
 						isInAnimate = true;
 						//Enemies
 						if ((targetTileTypes & TargetMask.Crystals) == TargetMask.Crystals)
-							if (crystal.currentTile == t && u.currentTile != t) return true;
+							if (crystal.currentTile == tile && owner.currentTile != tile) return true;
 						break;
 				}
 				//Catch the abstracts
 				//Animates
 				if (isAnimate && (targetTileTypes & TargetMask.Animates) == TargetMask.Animates)
-					if (unit.currentTile == t && u.currentTile != t) return true;
+					if (unit.currentTile == tile && owner.currentTile != tile) return true;
 				//InAnimates
 				if (isInAnimate && (targetTileTypes & TargetMask.InAnimates) == TargetMask.InAnimates)
-					if (unit.currentTile == t && u.currentTile != t) return true;
+					if (unit.currentTile == tile && owner.currentTile != tile) return true;
 			}
 			return false;
 		}
