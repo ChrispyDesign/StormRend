@@ -232,7 +232,6 @@ namespace StormRend.Units
 		{
 			var result = new List<Tile>();
 			var sqrLen = Ability.caSize;
-			// Debug.LogFormat("Rows: {0}, Columns: {1}", rows, columns);
 			
 			//Find the center of the cast area
 			Vector2Int center = new Vector2Int(sqrLen / 2, sqrLen / 2);
@@ -242,7 +241,7 @@ namespace StormRend.Units
 			{
 				for (int col = 0; col < sqrLen; col++)  //columns
 				{
-					if (a.castArea[row * sqrLen + col] == true)
+					if (a.castArea[row * sqrLen + col])
 					{
 						Vector2Int offset = new Vector2Int(row, col) - center;
 

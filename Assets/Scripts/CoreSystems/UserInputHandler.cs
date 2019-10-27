@@ -199,7 +199,7 @@ namespace StormRend.Systems
 		void Awake()
 		{
 			//Inits
-			cam = MasterCamera.current.linkedCamera;
+			cam = MasterCamera.current.camera;
 			camMover = cam.GetComponent<CameraMover>();
 			es = EventSystem.current;
 			gr = FindObjectOfType<GraphicRaycaster>();	//On the one and only canvas
@@ -211,6 +211,7 @@ namespace StormRend.Systems
 			_selectedAbility = null;
 
 			//Asserts
+			Debug.Assert(cam, "Camera could not be located!");
 			Debug.Assert(camMover, "CameraMover could not be located!");
 			Debug.Assert(_selectedUnit, "No Selected Unit SOV!");
 			Debug.Assert(gr, "No graphics raycaster found!");
@@ -448,44 +449,30 @@ namespace StormRend.Systems
 			//Redraw
 			ClearAllTileHighlights();
 			ShowMoveTiles();
-			// Debug.Log("OffPreview");
 		}
 
 		void ShowMoveTiles()
 		{
-			// Debug.Log("HighlightMoveTiles. possibleMoveTiles.Length: " + selectedAnimateUnit.possibleMoveTiles.Length);
-			//NOTE: Active unit's MOVE highlights should be refreshed each turn
-			//Make sure there are tiles to highlight (Hopefully this is done before the unit has moved)
+			//NOTE: Active unit's MOVE highlights should be refreshed:
+			// - At the start of each turn
+			// - After another unit has summoned something
 			if (selectedAnimateUnit.possibleMoveTiles.Length <= 0)
-			{
-				Debug.LogWarning("Unit's move tile should be calculated at the beginning of the turn!!");
 				selectedAnimateUnit.CalculateMoveTiles();
-			}
 
 			//Highlight
-			foreach (var t in selectedAnimateUnit.possibleMoveTiles)
-			{
+			foreach (var t in selectedAnimateUnit?.possibleMoveTiles)
 				t.SetColor(moveHighlight);
-			}
 		}
 
 		void ShowTargetTiles()
 		{
-			//NOTE: Active unit's ACTION highlights should be refreshed each time the selected ability is changed
-			// if (!isAbilitySelected) return;	//A unit should already be selected
-
-			//FAILSAFE: Make sure there are tiles to highlight
-			if (selectedAnimateUnit.possibleTargetTiles.Length <= 0)
-			{
-				Debug.LogWarning("Unit's move tile should be calculated before calling this method!");
-				selectedAnimateUnit.CalculateTargetTiles(selectedAbility);
-			}
+			//NOTE: Active unit's ACTION highlights should be refreshed
+			// - each time the selected ability is changed
+			if (selectedAnimateUnit.possibleTargetTiles.Length <= 0) return;
 
 			//Highlight
-			foreach (var t in selectedAnimateUnit.possibleTargetTiles)
-			{
+			foreach (var t in selectedAnimateUnit?.possibleTargetTiles)
 				t.SetColor(actionHighlight);
-			}
 		}
 	#endregion
 
