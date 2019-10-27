@@ -22,7 +22,7 @@ namespace StormRend.Units
 		[Header("Abilities")]
 		[SerializeField] protected int moveRange = 4;
 		[Tooltip("The unit types of that this unit cannot walk through ie. opponents")]
-		[EnumFlags, SerializeField] TargetUnitMask pathblockingUnitTypes = TargetUnitMask.Enemies;
+		[EnumFlags, SerializeField] TargetMask pathblockingUnitTypes = TargetMask.Enemies;
 		[SerializeField] internal Ability[] abilities;
 
 		[Header("Color")]
@@ -203,23 +203,23 @@ namespace StormRend.Units
 			var pathblockers = new List<Type>();
 
 			//Allies
-			if ((pathblockingUnitTypes & TargetUnitMask.Allies) == TargetUnitMask.Allies)
+			if ((pathblockingUnitTypes & TargetMask.Allies) == TargetMask.Allies)
 				pathblockers.Add(typeof(AllyUnit));
 
 			//Enemies
-			if ((pathblockingUnitTypes & TargetUnitMask.Enemies) == TargetUnitMask.Enemies)
+			if ((pathblockingUnitTypes & TargetMask.Enemies) == TargetMask.Enemies)
 				pathblockers.Add(typeof(EnemyUnit));
 
 			//Crystals
-			if ((pathblockingUnitTypes & TargetUnitMask.Crystals) == TargetUnitMask.Crystals)
+			if ((pathblockingUnitTypes & TargetMask.Crystals) == TargetMask.Crystals)
 				pathblockers.Add(typeof(CrystalUnit));
 
 			//InAnimates
-			if ((pathblockingUnitTypes & TargetUnitMask.InAnimates) == TargetUnitMask.InAnimates)
+			if ((pathblockingUnitTypes & TargetMask.InAnimates) == TargetMask.InAnimates)
 				pathblockers.Add(typeof(InAnimateUnit));
 
 			//Animates
-			if ((pathblockingUnitTypes & TargetUnitMask.Animates) == TargetUnitMask.Animates)
+			if ((pathblockingUnitTypes & TargetMask.Animates) == TargetMask.Animates)
 				pathblockers.Add(typeof(AnimateUnit));
 
 			return possibleMoveTiles = Map.GetPossibleTiles(currentTile.owner, originTile, moveRange, pathblockers.ToArray());

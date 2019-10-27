@@ -40,7 +40,7 @@ namespace StormRend.Abilities
 
 		[Tooltip("The type of tiles this ability can target")]
 		//This will be used to determine which tiles the UserInputHandler can pick
-		[EnumFlags, SerializeField] TargetTileMask _targetTileTypes = (TargetTileMask)~0;
+		[EnumFlags, SerializeField] TargetMask _targetTileTypes = (TargetMask)~0;
 
 		//Members
 		[HideInInspector]
@@ -54,7 +54,7 @@ namespace StormRend.Abilities
 		public string description => _description;
 		public int gloryCost => _gloryCost;
 		public int requiredTiles => _requiredTiles;
-		public TargetTileMask targetTileTypes => _targetTileTypes;
+		public TargetMask targetTileTypes => _targetTileTypes;
 
 		//Core
 		public void Perform(Unit owner, params Tile[] targets)
@@ -68,11 +68,11 @@ namespace StormRend.Abilities
 		{
 			//NOTE: Only one of the masks have to pass for the whole thing to pass
 			//Empty: Return true if no units standing on the tile
-			if ((targetTileTypes & TargetTileMask.Empty) == TargetTileMask.Empty)
+			if ((targetTileTypes & TargetMask.Empty) == TargetMask.Empty)
 				if (!UnitRegistry.IsAnyUnitOnTile(t)) return true;
 
 			//Self: Return true if the user is standing on this tile
-			if ((targetTileTypes & TargetTileMask.Self) == TargetTileMask.Self)
+			if ((targetTileTypes & TargetMask.Self) == TargetMask.Self)
 				if (u.currentTile == t) return true;
 
 			var aliveUnits = UnitRegistry.current.aliveUnits;
@@ -83,17 +83,17 @@ namespace StormRend.Abilities
 				{
 					case AllyUnit ally:
 						//Allies: Return true if any allies are standing on this tile but not self
-						if ((targetTileTypes & TargetTileMask.AllyUnits) == TargetTileMask.AllyUnits)
+						if ((targetTileTypes & TargetMask.Allies) == TargetMask.Allies)
 							if (ally.currentTile == t && u.currentTile != t) return true;
 						break;
 					case EnemyUnit enemy:
 						//Enemies: Return true if any enemies are standing on this tile but not self
-						if ((targetTileTypes & TargetTileMask.EnemyUnits) == TargetTileMask.EnemyUnits)
+						if ((targetTileTypes & TargetMask.Enemies) == TargetMask.Enemies)
 							if (enemy.currentTile == t && u.currentTile != t) return true;
 						break;
 					case InAnimateUnit inAnimate:
 						//Inanimates: Return true if any inanimate units are on this tile
-						if ((targetTileTypes & TargetTileMask.InAnimates) == TargetTileMask.InAnimates)
+						if ((targetTileTypes & TargetMask.InAnimates) == TargetMask.InAnimates)
 							if (inAnimate.currentTile == t) return true;
 						break;
 				}

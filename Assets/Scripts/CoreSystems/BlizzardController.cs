@@ -18,7 +18,7 @@ namespace StormRend.Systems
         [SerializeField] int maxBlizzardValue = 5;
 
         [Header("Damage")]
-        [SerializeField, EnumFlags] TargetUnitMask targetUnits = TargetUnitMask.Allies;
+        [SerializeField, EnumFlags] TargetMask targetUnits = TargetMask.Allies;
         [SerializeField, Range(1, 10)] int damage = 1;
 
         [Space]
@@ -29,7 +29,7 @@ namespace StormRend.Systems
         UnitRegistry ur = null;
 
     #region Core
-        void Awake()
+        void Start()
         {
             ur = UnitRegistry.current;
         }
@@ -49,34 +49,24 @@ namespace StormRend.Systems
             var unitsToDamage = new List<Unit>();
 
             //ALLIES
-            if ((targetUnits & TargetUnitMask.Allies) == TargetUnitMask.Allies)
+            if ((targetUnits & TargetMask.Allies) == TargetMask.Allies)
                 unitsToDamage.AddRange(ur.GetUnitsByType<AllyUnit>());
-
             //ENEMIES
-            if ((targetUnits & TargetUnitMask.Enemies) == TargetUnitMask.Enemies)
+            if ((targetUnits & TargetMask.Enemies) == TargetMask.Enemies)
                 unitsToDamage.AddRange(ur.GetUnitsByType<EnemyUnit>());
-
-            //CRYSTALS
-            if ((targetUnits & TargetUnitMask.Crystals) == TargetUnitMask.Crystals)
+			//CRYSTALS
+            if ((targetUnits & TargetMask.Crystals) == TargetMask.Crystals)
                 unitsToDamage.AddRange(ur.GetUnitsByType<CrystalUnit>());
-
             //INANIMATES
-            if ((targetUnits & TargetUnitMask.InAnimates) == TargetUnitMask.InAnimates)
+            if ((targetUnits & TargetMask.InAnimates) == TargetMask.InAnimates)
                 unitsToDamage.AddRange(ur.GetUnitsByType<InAnimateUnit>());
-
             //ANIMATES
-            if ((targetUnits & TargetUnitMask.Animates) == TargetUnitMask.Animates)
+            if ((targetUnits & TargetMask.Animates) == TargetMask.Animates)
                 unitsToDamage.AddRange(ur.GetUnitsByType<AnimateUnit>());
-
-            DealDamageToUnits(unitsToDamage.ToArray());
-
-            void DealDamageToUnits(Unit[] units)
-            {
-                foreach (var u in units)
-                {
-                    u.TakeDamage(damage);
-                }
-            }
+			
+			//Deal damage to selected units
+			foreach (var u in unitsToDamage)
+				u.TakeDamage(damage);
         }
 
         internal void Reset()
