@@ -93,22 +93,24 @@ namespace StormRend.MapSystems
 			editorRaycastPlane.hideFlags = HideFlags.HideAndDontSave | HideFlags.HideInInspector;   //Hide
 		}
 
-		public bool TryGetNearestTile(Vector3 position, out Tile nearest)
+		/// <summary>
+		/// Gets the nearest tile
+		/// </summary>
+		public bool TryGetNearestTile(Vector3 position, out Tile nearestTile)
 		{
-			float nearestDist = float.PositiveInfinity;
-			foreach (var t in tiles)
+			nearestTile = null;
+			float nearestSqrDist = Mathf.Infinity;
+			//Loop through all tiles and find the nearest tile
+			foreach (Tile t in tiles)
 			{
-				// var sqrDist = Vector3.SqrMagnitude(position - t.transform.position);
-				var sqrDist = Vector3.Distance(position, t.transform.position);
-				if (sqrDist < nearestDist)
+				var sqrDist = Vector3.SqrMagnitude(t.transform.position - position);
+				if (sqrDist < nearestSqrDist)
 				{
-					nearestDist = sqrDist;
-					nearest = t;
-					return true;
+					nearestSqrDist = sqrDist;
+					nearestTile = t;
 				}
 			}
-			nearest = null;
-			return false;
+			return nearestTile ? true : false;
 		}
 
 		[ContextMenu("Delete All Tiles")]
