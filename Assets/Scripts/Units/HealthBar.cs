@@ -25,7 +25,7 @@ namespace StormRend.Units
 		}
 		void Update()
 		{
-			transform.rotation = Quaternion.AngleAxis(Camera.main.transform.rotation.eulerAngles.y - 180f, Vector3.up);
+			transform.rotation = Quaternion.AngleAxis(MasterCamera.current.transform.rotation.eulerAngles.y - 180f, Vector3.up);
 		}
 	}
 }

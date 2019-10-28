@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 
 namespace StormRend.Units
 {
+	[SelectionBase]
 	public abstract class Unit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		[ReadOnlyField] public Tile currentTile;//{ get; set; }	//The tile this unit is currently/originally on
