@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using pokoro.Patterns.Generic;
 using StormRend.Abilities;
 using StormRend.CameraSystem;
 using StormRend.MapSystems;
@@ -13,86 +14,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
-/*Brainstorm:
------- UserInputHandler functionality
-if a unit is selected
-	go into action mode (allows the user to move or perform abilities with the unit)
-	show the appropriate ui for that selected unit
-else if no unit is selected
-	go into select mode
-
------- Gameplay
-Move mode:
-- You can click a valid tile to move unit there
-- Clicking on another unit will select it OR focus camera on it?
-
-Action mode:
-- You cannot select another unit. Only action tiles. You'll need to right click back a mode first
-
-Moving Unit:
-1 Nothing initially selected
-2 Select unit > ActivityMode : Move > camera focus
-3 highlight Move tiles except origin tile is highlighted differently
-4 ghost mesh follows cursor, snapping to tiles
-5 click on moveable tile to move unit there immediately (interim move)
-	- main mesh is repositioned facing correctly
-	- Camera focus
-	- back to step 2 except tiles remain move highlighted
-6 right click resets unit back to origin position of turn
-
-Performing an ability:
-1 Unit is selected. has moved optional
-2 UI: Click on a ability select button > UIH: sets selected ability > ActivityMode : Action
-3 Hide move highlights + Show action highlights
-4 player clicks on an targetable tile to add to stack of targeting tiles (present vs progressive tense)
-5 check with selected ability to see if it needs any more targeting tile > repeat step 4 if necessary
-	- right click pop off a stack of targeting tiles (undo)
-6 Once required number of tiles selected perform ability immediately
-	- Camera focus
-
-UI Update:
-1 On player select change
-	- if null clear UI
-	- if active then update ui with unit's abilities
-2 On player
-
-A The player clicks on a unit
-	- UserInput will set selected unit
-	- the camera will focus on unit
-	- AbilityPanel updates AbilitySelectButtons unit's internal abilities
-	- If player selects an ability:
-		- AbilityPanel to send ability assigned to that button back to UserInput
-		- UserInput sets selected ability
-		- Tiles will update to show cast area based on chosen/subject/selected ability
-	- If clicks on one of the tiles it will
-
-AbilityPanel
-+ currentAbility : Ability
-+ UpdateButtons(AnimateUnit unit)
-AbilitySelectButton
-+ OnClick()
-
-UserInputHandler
-+ OnAbilityChanged(Ability ability)
-	SetAbility(ability)
-+ OnAbilityChanged
-
-Q How
-
-------- Possible cast and move tiles
-Q Where should the possible cast and move tiles be stored?
-A Possible Cast Tiles should be stored on each Ability SO and updated every time
-A Possible Move Tiles should be stored on each Unit
-A Possible
-
-Q When should the possible move tiles be calculated?
-A At the begginning of the turn, for each unit
-	since the unit can only move once per turn
-
-Q When should the possible cast tiles be calculated?
-A Everytime an ability select button is clicked, the input handler will help to calculate
-*/
 
 namespace StormRend.Systems
 {
@@ -113,7 +34,7 @@ namespace StormRend.Systems
 		}
 	}
 
-	public class UserInputHandler : MonoBehaviour
+	public class UserInputHandler : Singleton<UserInputHandler>
 	{
 		//Enums
 		public enum ActivityMode
@@ -144,13 +65,13 @@ namespace StormRend.Systems
 		{
 			get
 			{
-				//If an ability is current selected then the player can perform ability
-				if (isAbilitySelected)
+				//If an ability is current selected then unit can perform ACTION
+				if (isAbilitySelected && selectedAnimateUnit.canAct)
 					return ActivityMode.Action;
-				//If an ability isn't selected then the unit can move
-				else if (isUnitSelected && !selectedAnimateUnit.hasActed)
+				//If only unit selected and can move the unit can perform MOVE
+				else if (isUnitSelected && selectedAnimateUnit.canMove)
 					return ActivityMode.Move;
-				//Player can't take any major actions ie. waiting for ai to finish
+				//Unit not selected
 				else
 					return ActivityMode.Idle;
 			}
@@ -182,7 +103,6 @@ namespace StormRend.Systems
 
 		//Members
 		FrameEventData e;   //The events that happenned this frame
-		EventSystem es;
 		CameraMover camMover;
 		Camera cam;
 		Stack<Tile> targetTileStack = new Stack<Tile>();
@@ -195,18 +115,13 @@ namespace StormRend.Systems
 		GraphicRaycaster gr;
 		List<RaycastResult> GUIhits = new List<RaycastResult>();
 
-		#region Core
-		void Awake()
+	#region Core
+		void Start()
 		{
 			//Inits
 			cam = MasterCamera.current.camera;
 			camMover = cam.GetComponent<CameraMover>();
-			es = EventSystem.current;
 			gr = FindObjectOfType<GraphicRaycaster>();	//On the one and only canvas
-		}
-		void Start()
-		{
-			//Inits
 			_selectedUnit.value = null;
 			_selectedAbility = null;
 
@@ -345,8 +260,6 @@ namespace StormRend.Systems
 		//Public; can be called via unity events
 		public void SelectUnit(AnimateUnit au)
 		{
-			OnUnitChanged.Invoke(au);	//ie. Update UI, Play sounds,
-
 			//Clear tile highlights if a unit was already selected
 			if (isUnitSelected) 
 			{
@@ -357,11 +270,11 @@ namespace StormRend.Systems
 
 			//Set the selected unit
 			selectedUnit = au;
-			// es.SetSelectedGameObject(au.gameObject);	//Trial run
 
-			//Calling this function should mean that the it is in Move activity mode
-			if (!au.hasActed) 	//Don't show move tiles if the unit has already acted
-				ShowMoveTiles();
+			//Show move tile if unit is able to move
+			if (au.canMove)	ShowMoveTiles();
+
+			OnUnitChanged.Invoke(au);	//ie. Update UI, Play sounds,
 		}
 
 		public void SelectAbility(Ability a)	//aka. OnAbilityChanged()
@@ -372,7 +285,7 @@ namespace StormRend.Systems
 				Debug.LogWarning("No unit selected! Cannot select ability");
 				return;
 			}
-			if (selectedAnimateUnit.hasActed)
+			if (!selectedAnimateUnit.canAct)
 			{
 				Debug.LogWarning("Unit has moved and acted. Cannot select any more abilities this turn");
 				return;
@@ -424,7 +337,7 @@ namespace StormRend.Systems
 			targetTileStack.Clear();
 
 			//clear ability
-			ClearSelectedAbility(false);
+			ClearSelectedAbility(selectedAnimateUnit.canMove);
 
 			//Events
 			OnAbilityPerformed.Invoke(selectedAbility);

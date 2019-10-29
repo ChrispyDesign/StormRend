@@ -10,7 +10,7 @@ namespace StormRend.Abilities
 		Ability owner;
 
 	#region Core
-		public void SetOwner(Ability owner)
+		public virtual void Prepare(Unit owner) { if (!this.owner) this.owner = owner; }		
 		{
 			this.owner = owner;
 		}

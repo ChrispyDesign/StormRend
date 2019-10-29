@@ -34,11 +34,14 @@ namespace StormRend.Units
 		public Tile[] possibleMoveTiles { get; set; } = new Tile[0];
 		public Tile[] possibleTargetTiles { get; set; } = new Tile[0];
 		public List<StatusEffect> statusEffects { get; set; } = new List<StatusEffect>();
+		public bool canMove => _canMove;
+		public void SetCanMove(bool value) => _canMove = value;
+		public bool canAct => _canAct;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
+		public void SetCanAct(bool value) => _canAct = value;
 
 		//Members
-		bool _hasActed = false;
-		public bool hasActed => _hasActed;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
-		public void SetActed(bool value) => _hasActed = value;
+		public bool _canMove = true;
+		public bool _canAct = true;
 		protected GameObject ghostMesh;
 
 		//Events
@@ -100,7 +103,15 @@ namespace StormRend.Units
 		//State machine / game director / Unit registry to run through all these on ally turn enter?
 		public void BeginTurn()		//Reset necessary stats and get unit ready for the next turn
 		{
-			SetActed(false);		//Be able to move again
+			SetCanAct(true);		//Be able to move again
+			SetCanMove(true);
+
+			baseTile = currentTile; 	//Set the base tile
+
+			//Prep effects (reset counts etc)
+			foreach (var a in abilities)
+				foreach (var e in a.effects)
+					e.Prepare(this);
 
 			//Status effects
 			foreach (var se in statusEffects)
@@ -110,7 +121,7 @@ namespace StormRend.Units
 		}
 		public void EndTurn()			//Run before 
 		{
-			//Status effects
+			//Status effects 
 			foreach (var se in statusEffects)
 				se.OnEndTurn(this);
 
@@ -126,7 +137,7 @@ namespace StormRend.Units
 		{
 			base.Die();     //onDeath will invoke
 
-			//Status effect
+			//Status effect 
 			foreach (var se in statusEffects)
 				se.OnDeath(this);
 
@@ -140,10 +151,14 @@ namespace StormRend.Units
 		/// </summary>
 		/// <param name="destination">The destination tile to move this unit to</param>
 		/// <param name="useGhost">Move the unit's ghost instead</param>
-		/// <param name="restrictToPossibleMoveTiles">Only move if the destination tile is within this unit's list of possible move tiles</param>
-		/// <returns></returns>
-		public bool Move(Tile destination, bool useGhost = false, bool restrictToPossibleMoveTiles = true)
+		/// <param name="restrictToPossibleMoveTiles">Only move if the destination tile is within this unit's list of possible move tiles (Optional for teleport)</param>
+		/// <param name="forcedMove">Overrides moved status or any immobilising status effects</param>
+		/// <returns>return true if successfully moved (Required for the camera)</returns>
+		public bool Move(Tile destination, bool useGhost = false, bool restrictToPossibleMoveTiles = true, bool forcedMove = false)
 		{
+			//Check can move
+			if (!forcedMove && !canMove) return false;
+
 			//Only set the position of the ghost
 			if (useGhost)
 			{
@@ -156,7 +171,6 @@ namespace StormRend.Units
 				ghostMesh.transform.position = ghostTile.transform.position;
 			}
 			//Move the actual unit
-			//TODO as soon as the unit has acted, 
 			else
 			{
 				//Ghost was probably just active so deactivate ghost ??? Should this be here?
@@ -168,25 +182,25 @@ namespace StormRend.Units
 				//Move
 				transform.position = currentTile.transform.position;
 			}
+			//NOTE: Unit can still move
 			return true;	//Successful move
 		}
 
 		/// <summary>
-		/// Move Unit by direction ie. Move({2, 1}) means the unit to move right 2 and forward 1.
+		/// FORCE Move Unit by direction ie. Move({2, 1}) means the unit to move right 2 and forward 1.
 		/// Returns false if the unit moved onto an empty space.
 		/// Can set to kill unit if it does move onto an empty space.
 		/// </summary>
-		public bool Move(Vector2Int direction, bool kill = true)
+		public bool Move(Vector2Int direction, bool kill = true)		//FORCED MOVE (IE. PUSH)
 		{
 			if (currentTile.TryGetTile(direction, out Tile t))
 			{
-				//Pushed
-				Move(t, false, false);
-				return true;
+				//Push unit
+				return Move(t, false, false, true);
 			}
 			else
 			{
-				//Pushed off the edge
+				//Pushed out of bounds
 				if (kill) Die();
 				return false;
 			}
@@ -194,29 +208,31 @@ namespace StormRend.Units
 
 		//------------------- PERFORM ABILITY
 		/// <summary>
+		/// Override to for when raycasts hits units instead of tiles
+		/// </summary>
+		public void Act(Ability ability, params Unit[] targetUnits)
+			=> Act(ability, targetUnits.Select(x => x.currentTile).ToArray());
+		/// <summary>
 		/// Perform the ability and lock unit for this turn
 		/// </summary>
 		public void Act(Ability ability, params Tile[] targetTiles)
 		{
-			//Lock in movement
-			SetActed(true);
-			// baseTile = currentTile;	
-			//Base tile should be updated at the start of this unit's turn in case this unit is pushed around during the enemy's turn	
+			//Only take action if able to ie. not affected by status effects
+			if (!canAct) return;
+
+			//Lock in movement and action
+			SetCanAct(false);
+			SetCanMove(false);
 
 			//Perform Ability
 			ability.Perform(this, targetTiles);
 
-			//Run status effects
+			//Status effects
 			foreach (var se in statusEffects)
 				se.OnActed(this);
 
 			onActed.Invoke(ability);
 		}
-		/// <summary>
-		/// Override to perform ability on units instead of tiles
-		/// </summary>
-		public void Act(Ability ability, params Unit[] targetUnits)
-			=> Act(ability, targetUnits.Select(x => x.currentTile).ToArray());
 
 		//------------------- CALCULATE TILES
 		/// <summary>

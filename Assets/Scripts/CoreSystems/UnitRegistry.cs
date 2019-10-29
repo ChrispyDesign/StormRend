@@ -60,13 +60,14 @@ namespace StormRend.Units
 		}
 	#endregion
 
-	#region Status Effect Runners
-		public void RunStatusEffectOnTurnEnter(State state)
+	#region Turn Enter/Exit logic
+		public void RunUnitsBeginTurn(State state)
 		{
 			switch (state)
 			{
 				case AllyTurnState allyTurnState:
 					var allies = GetUnitsByType<AllyUnit>();
+					//Status effects
 					foreach (var a in allies)
 						a.BeginTurn();
 					break;
@@ -77,7 +78,7 @@ namespace StormRend.Units
 					break;
 			}
 		}
-		public void RunStatusEffectsOnTurnExit(State state)
+		public void RunUnitsEndTurn(State state)
 		{
 			switch (state)
 			{
