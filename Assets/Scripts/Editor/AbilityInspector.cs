@@ -181,13 +181,13 @@ namespace StormRend.Editors
             m.AddItem(new GUIContent("Swap Units"), false, () => a.AddEffect<SwapUnitEffect>());
             m.AddSeparator("");
             m.AddItem(new GUIContent("Heal"), false, () => a.AddEffect<HealEffect>());
-            m.AddItem(new GUIContent("Refresh?"), false, () => a.AddEffect<RefreshEffect>());
+            m.AddItem(new GUIContent("Refresh"), false, () => a.AddEffect<RefreshEffect>());
             m.AddSeparator("");
-            // m.AddItem(new GUIContent("Protection"), false, () => a.AddEffect<ProtectEffect>());
-            // m.AddItem(new GUIContent("Taunting"), false, () => a.AddEffect<TauntEffect>());
+            m.AddItem(new GUIContent("Protect"), false, () => a.AddEffect<ProtectEffect>());
+            m.AddItem(new GUIContent("Taunt"), false, () => a.AddEffect<TauntEffect>());
             m.AddSeparator("");
-            m.AddItem(new GUIContent("Blinding"), false, () => a.AddEffect<BlindEffect>());
-            m.AddItem(new GUIContent("Crippling"), false, () => a.AddEffect<CrippleEffect>());
+            m.AddItem(new GUIContent("Blind"), false, () => a.AddEffect<BlindEffect>());
+            m.AddItem(new GUIContent("Immobilise"), false, () => a.AddEffect<ImmobiliseEffect>());
 
             m.DropDown(rect);
         }
