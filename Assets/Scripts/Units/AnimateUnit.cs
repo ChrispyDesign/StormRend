@@ -61,8 +61,6 @@ namespace StormRend.Units
 
 			CreateGhostMesh();
 		}
-		void OnEnable() => onDamage.AddListener(OnTakeDamage);
-		void OnDisable() => onDamage.RemoveListener(OnTakeDamage);
 
 		/// <summary>
 		///  Semi-auto create a tinted ghost mesh for moving etc
@@ -89,9 +87,11 @@ namespace StormRend.Units
 
 		#region Core
 		//------------------ CALLBACKS
-		public void OnTakeDamage(DamageData damageData)
+		public override void TakeDamage(DamageData damageData)
 		{
-			//Status effect
+			base.TakeDamage(damageData);
+			
+			//Status effect 
 			foreach (var se in statusEffects)
 				se.OnTakeDamage(this, damageData.attacker);
 		}
