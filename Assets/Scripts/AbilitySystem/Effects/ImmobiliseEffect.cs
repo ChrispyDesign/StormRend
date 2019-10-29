@@ -1,10 +1,12 @@
 ﻿using StormRend.MapSystems.Tiles;
 using StormRend.Units;
-using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
-    public class CrippleEffect : StatusEffect
+	/// <summary>
+	/// Prevents the unit from moving
+	/// </summary>
+	public class ImmobiliseEffect : StatusEffect
     {
 		public override void Perform(Unit owner, Tile[] targetTiles)
 		{
@@ -13,8 +15,10 @@ namespace StormRend.Abilities.Effects
 
 		public override void OnBeginTurn(AnimateUnit affectedUnit)
 		{
-			//Cripple the bearer
-			throw new System.NotImplementedException();
+			base.OnBeginTurn(affectedUnit);	//Housekeeping
+
+			//Cripple the bearer for this turn
+			affectedUnit.SetCanMove(false);
 		}
 	}
 }

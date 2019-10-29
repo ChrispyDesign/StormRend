@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using StormRend.Defunct;
+﻿using UnityEngine;
 using StormRend.MapSystems.Tiles;
 using StormRend.Units;
 
 namespace StormRend.Abilities.Effects
 {
-    public class SummonEffect : Effect
+	public class SummonEffect : Effect
     {
         [SerializeField] GameObject summon = null;
 

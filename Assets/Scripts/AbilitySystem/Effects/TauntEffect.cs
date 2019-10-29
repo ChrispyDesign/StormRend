@@ -4,12 +4,11 @@ using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
+	/// <summary>
+	/// Deals reflex damage when affectunit is attacked
+	/// </summary>
     public class TauntEffect : StatusEffect
     {
-		/* Brainstorm:
-		- When an unit attacks a unit that has taunt cast on him, the enemy gets damage
-		- Could put this in takedamage
-		 */
         [SerializeField] int reflexDamage = 1;
 
 		public override void Perform(Unit owner, Tile[] targetTiles)
@@ -17,10 +16,15 @@ namespace StormRend.Abilities.Effects
 			AddStatusEffectToAnimateUnits(targetTiles);
 		}
 
-		public override void OnTakeDamage(Unit victim, Unit attacker)
+		public override void OnBeginTurn(AnimateUnit affectedUnit)
+		{
+			base.OnBeginTurn(affectedUnit);		//Housekeeping
+		}
+
+		public override void OnTakeDamage(Unit affectedUnit, Unit attacker)
 		{
 			//Apply reflex damage; The victim attacks back
-			attacker.TakeDamage(new DamageData(victim, reflexDamage));
+			attacker.TakeDamage(new DamageData(affectedUnit, reflexDamage));
 		}
 	}
 }

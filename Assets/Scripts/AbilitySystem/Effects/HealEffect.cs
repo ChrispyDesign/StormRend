@@ -1,11 +1,10 @@
-﻿using StormRend.Defunct;
-using StormRend.MapSystems.Tiles;
+﻿using StormRend.MapSystems.Tiles;
 using StormRend.Units;
 using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
-    public class HealEffect : Effect
+	public class HealEffect : Effect
     {
         [SerializeField] int healAmount = 1;
 

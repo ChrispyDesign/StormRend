@@ -25,8 +25,8 @@ namespace StormRend.Abilities.Effects
 			var au2 = u2 as AnimateUnit;
 			Tile u1tile;
 			u1tile = u1.currentTile;
-			au1.Move(au2.currentTile, false, false);
-			au2.Move(u1tile, false, false);
+			au1.Move(au2.currentTile, false, false, true);
+			au2.Move(u1tile, false, false, true);
 		}
 	}
 }

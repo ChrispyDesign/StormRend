@@ -11,19 +11,33 @@ namespace StormRend.Abilities.Effects
 
 	#region Inflicts / Buffs / Debuffs
 		/// "Inflict" status effect on victim at the beginning of the turn
-		public virtual void OnBeginTurn(AnimateUnit victim) {}
+		public virtual void OnBeginTurn(AnimateUnit affectedUnit) 
+		{
+			//On start check if this status effect has expired
+			if (turnCount >= affectedTurns)
+			{
+				//Expired. Remove from unit
+				affectedUnit.statusEffects.Remove(this);
+				return;
+			}
+			else
+			{
+				//Increment number of turns this effect has operated
+				++turnCount;
+			}
+		}
 
 		/// "Inflict" status effect on victim right after it performed it's ability
-		public virtual void OnActed(AnimateUnit victim) {}
+		public virtual void OnActed(AnimateUnit affectedUnit) {}
 
 		/// "Inflict" status effect on victim when taking damage
-		public virtual void OnTakeDamage(Unit victim, Unit attacker) {}
+		public virtual void OnTakeDamage(Unit affectedUnit, Unit attacker) {}	//Unit type because crystals and blizzard can also apply damage
 
 		/// "Inflict" status effect on victim when taking damage
-		public virtual void OnDeath(AnimateUnit victim) {}
+		public virtual void OnDeath(AnimateUnit affectedUnit) {}
 
 		/// "Inflict" status effect on victim 
-		public virtual void OnEndTurn(AnimateUnit victim) {}
+		public virtual void OnEndTurn(AnimateUnit affectedUnit) {}
 	#endregion
 
 		//Assist

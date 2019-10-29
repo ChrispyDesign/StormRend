@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using StormRend.Defunct;
 using StormRend.MapSystems.Tiles;
 using StormRend.Units;
 using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
-    public class DamageEffect : Effect
+	public class DamageEffect : Effect
     {
         [SerializeField] int damage = 1;
 

@@ -1,5 +1,4 @@
 ﻿using pokoro.BhaVE.Core.Variables;
-using StormRend.Defunct;
 using StormRend.MapSystems.Tiles;
 using StormRend.Units;
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace StormRend.Abilities.Effects
 		public override void Perform(Unit owner, Tile[] targetTiles)
 		{
 			Debug.Assert(glory, "No glory SOV found!");
-			glory += amount;
+			if (glory) glory += amount;
         }
     }
 }

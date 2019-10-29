@@ -117,7 +117,7 @@ namespace StormRend.Abilities
 		{
 			//Add and set owner
 			var newEffect = Effect.CreateInstance<T>();
-			newEffect.SetOwner(this);
+			newEffect.SetContainer(this);
 			newEffect.name = newEffect.GetType().Name;
 			this.effects.Add(newEffect);
 
