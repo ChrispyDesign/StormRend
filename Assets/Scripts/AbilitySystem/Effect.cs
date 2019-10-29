@@ -15,7 +15,7 @@ namespace StormRend.Abilities
 			this.owner = owner;
 		}
 
-		public abstract bool Perform(Unit owner, Tile[] targetTiles);
+		public abstract void Perform(Unit owner, Tile[] targetTiles);
 	#endregion
 	}
 }

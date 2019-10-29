@@ -1,9 +1,14 @@
-﻿using UnityEngine;
+﻿using StormRend.MapSystems.Tiles;
+using StormRend.Units;
+using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
-    public class ProtectEffect : xEffect
+    public class ProtectEffect : StatusEffect
     {
-        [SerializeField] int m_durationInTurns = 1;
-    }
+		public override void Perform(Unit owner, Tile[] targetTiles)
+		{
+			AddStatusEffectToAnimateUnits(targetTiles);
+		}
+	}
 }

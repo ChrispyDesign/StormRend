@@ -61,6 +61,8 @@ namespace StormRend.Units
 
 			CreateGhostMesh();
 		}
+		void OnEnable() => onDamage.AddListener(OnTakeDamage);
+		void OnDisable() => onDamage.RemoveListener(OnTakeDamage);
 
 		/// <summary>
 		///  Semi-auto create a tinted ghost mesh for moving etc
@@ -85,7 +87,15 @@ namespace StormRend.Units
 		}
 		#endregion
 
-	#region Core
+		#region Core
+		//------------------ CALLBACKS
+		public void OnTakeDamage(DamageData damageData)
+		{
+			//Status effect
+			foreach (var se in statusEffects)
+				se.OnTakeDamage(this, damageData.attacker);
+		}
+
 		//------------------- STATS
 		//State machine / game director / Unit registry to run through all these on ally turn enter?
 		public void BeginTurn()		//Reset necessary stats and get unit ready for the next turn
@@ -106,17 +116,19 @@ namespace StormRend.Units
 
 			onEndTurn.Invoke();
 		}
-
 		public void AddStatusEffect(StatusEffect statusEffect)
 		{
 			statusEffects.Add(statusEffect);
 
 			onAddStatusEffect.Invoke(statusEffect);
 		}
-
 		public override void Die()
 		{
-			base.Die();     //OnDeath will invoke
+			base.Die();     //onDeath will invoke
+
+			//Status effect
+			foreach (var se in statusEffects)
+				se.OnDeath(this);
 
 			//TEMP
 			gameObject.SetActive(false);
@@ -189,7 +201,7 @@ namespace StormRend.Units
 			//Lock in movement
 			SetActed(true);
 			// baseTile = currentTile;	
-			//Base tile should be updated at the start of this unit's turn in case this unit is pushed around during the enemie's turn	
+			//Base tile should be updated at the start of this unit's turn in case this unit is pushed around during the enemy's turn	
 
 			//Perform Ability
 			ability.Perform(this, targetTiles);
@@ -284,6 +296,8 @@ namespace StormRend.Units
 		public override void OnPointerEnter(PointerEventData eventData)
 		{
 			base.OnPointerEnter(eventData);
+
+			//InfoPanel.current.SetText()
 		}
 		public override void OnPointerExit(PointerEventData eventData)
 		{

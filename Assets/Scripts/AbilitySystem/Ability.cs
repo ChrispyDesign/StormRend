@@ -45,7 +45,7 @@ namespace StormRend.Abilities
 		//Members
 		[HideInInspector]
 		public List<Effect> effects = new List<Effect>();
-		public bool[] castArea { get; set; }
+		[HideInInspector] public bool[] castArea = new bool[caSize * caSize];		//this sometimes resets
 
 		//Properties
 		public Sprite icon => _icon;

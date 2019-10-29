@@ -12,7 +12,7 @@ namespace StormRend.Abilities.Effects
 		/// <summary>
 		/// Heal any units that are on the passed in tiles
 		/// </summary>
-		public override bool Perform(Unit owner, Tile[] targetTiles)
+		public override void Perform(Unit owner, Tile[] targetTiles)
 		{
 			foreach (var t in targetTiles)
 			{
@@ -21,7 +21,6 @@ namespace StormRend.Abilities.Effects
 					u.Heal(healAmount);
 				}
 			}
-			return true;
 		}
     }
 }

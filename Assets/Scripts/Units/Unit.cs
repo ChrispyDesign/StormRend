@@ -22,7 +22,7 @@ namespace StormRend.Units
 		//Events
 		[Header("Events")]
 		public UnitEvent onDeath;
-		public UnityEvent onDamage;
+		public DamageEvent onDamage;
 		public UnityEvent onHeal;
 
 		//Properties
@@ -40,10 +40,11 @@ namespace StormRend.Units
 			//Reset health
 			HP = maxHP;
 
-			tTryGetTileBelow();
+			//Find a tile if it's not already set
+			if (!currentTile) ScanTileBelow();
 		}
 
-		void tTryGetTileBelow()
+		void ScanTileBelow()
 		{
 			//TEMP Scan below
 			float scanRange = 0.2f;
@@ -61,13 +62,13 @@ namespace StormRend.Units
 		#endregion
 
 		#region Health
-		public void TakeDamage(int damage)
+		public void TakeDamage(DamageData damageData)
 		{
 			if (isDead) return;     //Can't beat a dead horse :P
-			HP -= damage;
+			HP -= damageData.amount;	
 			if (HP <= 0) Die();
 
-			onDamage.Invoke();
+			onDamage.Invoke(damageData);
 		}
 		public void Heal(int amount)
 		{
@@ -94,3 +95,4 @@ namespace StormRend.Units
 	#endregion
 	}
 }
+

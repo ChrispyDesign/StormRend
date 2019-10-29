@@ -12,10 +12,10 @@ namespace StormRend.Abilities.Effects
     {
 		[Tooltip("Can only teleport to tiles that can be pathfound to")]
 		[SerializeField] bool restrictToMoveTiles = false;
-		public override bool Perform(Unit owner, Tile[] targetTiles)
+		public override void Perform(Unit owner, Tile[] targetTiles)
         {
 			//Make sure there is atleast one tile
-			if (targetTiles.Length <= 0) return false;
+			if (targetTiles.Length <= 0) { Debug.LogWarning("Not enough target tiles! Exiting..."); return; }
 
 			//Get the tile
 			var t = targetTiles[0];
@@ -26,7 +26,6 @@ namespace StormRend.Abilities.Effects
 				var au = owner as AnimateUnit;		//Cast
 				au.Move(t, false, restrictToMoveTiles);					//Teleport
 			}
-            return true;
         }
     }
 }

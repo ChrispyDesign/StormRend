@@ -16,6 +16,12 @@ namespace StormRend.Abilities.Effects
 		/// "Inflict" status effect on victim right after it performed it's ability
 		public virtual void OnActed(AnimateUnit victim) {}
 
+		/// "Inflict" status effect on victim when taking damage
+		public virtual void OnTakeDamage(Unit victim, Unit attacker) {}
+
+		/// "Inflict" status effect on victim when taking damage
+		public virtual void OnDeath(AnimateUnit victim) {}
+
 		/// "Inflict" status effect on victim 
 		public virtual void OnEndTurn(AnimateUnit victim) {}
 	#endregion

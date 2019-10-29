@@ -66,7 +66,7 @@ namespace StormRend.Systems
 			
 			//Deal damage to selected units
 			foreach (var u in unitsToDamage)
-				u.TakeDamage(damage);
+				u.TakeDamage(new DamageData(null, damage));
         }
 
         internal void Reset()

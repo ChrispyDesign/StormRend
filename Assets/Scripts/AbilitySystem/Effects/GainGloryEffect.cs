@@ -14,11 +14,10 @@ namespace StormRend.Abilities.Effects
         [SerializeField] int amount = 1;
 		[SerializeField] BhaveInt glory;
 
-		public override bool Perform(Unit owner, Tile[] targetTiles)
+		public override void Perform(Unit owner, Tile[] targetTiles)
 		{
 			Debug.Assert(glory, "No glory SOV found!");
 			glory += amount;
-            return true;
         }
     }
 }

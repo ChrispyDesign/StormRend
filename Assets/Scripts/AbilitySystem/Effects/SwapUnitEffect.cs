@@ -9,14 +9,14 @@ namespace StormRend.Abilities.Effects
 		/// <summary>
 		/// Swap units. Target Tile types should be set to Animate Objects or maybe even Inanimate
 		/// </summary>
-		public override bool Perform(Unit owner, Tile[] targetTiles)
+		public override void Perform(Unit owner, Tile[] targetTiles)
 		{
 			//Make sure there is atleast 2 tiles passed in
-			if (!(targetTiles.Length >= 2)) return false;
+			if (!(targetTiles.Length >= 2)) { Debug.LogWarning("Not enough target tiles! Exiting..."); return; }
 
 			//Make sure the tiles have units on them
 			foreach (var t in targetTiles)
-				if (!UnitRegistry.IsAnyUnitOnTile(t)) return false;
+				if (!UnitRegistry.IsAnyUnitOnTile(t)) return;
 
 			//Perform swap
 			UnitRegistry.TryGetAnyUnitOnTile(targetTiles[0], out Unit u1);
@@ -27,8 +27,6 @@ namespace StormRend.Abilities.Effects
 			u1tile = u1.currentTile;
 			au1.Move(au2.currentTile, false, false);
 			au2.Move(u1tile, false, false);
-
-			return true;
 		}
 	}
 }

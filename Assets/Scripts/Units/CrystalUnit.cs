@@ -58,7 +58,7 @@ namespace StormRend.Units
 			{
 				if (tilesToAttack.Contains(a.currentTile))
 				{
-					a.TakeDamage(damage);
+					a.TakeDamage(new DamageData(this, damage));
 				}
 			}
 		}

@@ -10,19 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
-  m_Name: swapunit
+  m_Name: damage2
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: a28e1bdffa8f52c4fb10811082ed6730, type: 3}
+  _icon: {fileID: 0}
   _animNumber: 0
   _level: 1
   _type: 0
   _description: 
   _gloryCost: 1
-  _requiredTiles: 2
-  _targetTileTypes: 66
+  _requiredTiles: 1
+  _targetTileTypes: -1
   effects:
-  - {fileID: 114978442260658384}
---- !u!114 &114978442260658384
+  - {fileID: 114207176888038576}
+  - {fileID: 114593079902942644}
+--- !u!114 &114207176888038576
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31,6 +32,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8276f40f4bf260f4e92f11193e47668e, type: 3}
-  m_Name: SwapUnitEffect
+  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
+  m_Name: DamageEffect
+  m_EditorClassIdentifier: 
+  damageAmount: 3
+--- !u!114 &114593079902942644
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
+  m_Name: RefreshEffect
   m_EditorClassIdentifier: 

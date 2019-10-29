@@ -11,7 +11,7 @@ namespace StormRend.Abilities.Effects
     {
         [SerializeField] GameObject summon = null;
 
-		public override bool Perform(Unit owner, Tile[] targetTiles)
+		public override void Perform(Unit owner, Tile[] targetTiles)
         {
 			//Summon at each target tile
 			foreach (var t in targetTiles)
@@ -19,8 +19,6 @@ namespace StormRend.Abilities.Effects
 				var inanimate = Instantiate(summon, t.gameObject.transform.position, Quaternion.identity, null).GetComponent<InAnimateUnit>();
 				UnitRegistry.current.RegisterUnit(inanimate);
 			}
-
-            return true;
         }
     }
 }

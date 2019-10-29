@@ -22,8 +22,11 @@ namespace StormRend.Abilities.Effects
         //[SerializeField] private EffectedTile m_direction;
         [SerializeField] int pushAmount = 1;
         [SerializeField] int damage = 1;
-		public override bool Perform(Unit owner, Tile[] targetTiles)
+		public override void Perform(Unit owner, Tile[] targetTiles)
         {
+			//vector = destination - position
+
+
             // base.PerformEffect(_effectedNode, _thisUnit);
 
             // if (!m_isTileAllowed)
@@ -103,7 +106,6 @@ namespace StormRend.Abilities.Effects
             //         unit.MoveTo(newNode);
             // }
 
-            return true;
         }
 	}
 }

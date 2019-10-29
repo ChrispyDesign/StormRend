@@ -9,9 +9,9 @@ namespace StormRend.Abilities.Effects
 {
     public class DamageEffect : Effect
     {
-        [SerializeField] int damageAmount = 1;
+        [SerializeField] int damage = 1;
 
-		public override bool Perform(Unit owner, Tile[] targetTiles)
+		public override void Perform(Unit owner, Tile[] targetTiles)
         {
  			//Get and convert to lists where required
 			Unit[] units = UnitRegistry.current.aliveUnits;
@@ -21,9 +21,8 @@ namespace StormRend.Abilities.Effects
 			foreach (var u in units)
 			{
 				if (tt.Contains(u.currentTile))
-					u.TakeDamage(damageAmount);
+					u.TakeDamage(new DamageData(owner, damage));
 			}
-            return true;
         }
     }
 }

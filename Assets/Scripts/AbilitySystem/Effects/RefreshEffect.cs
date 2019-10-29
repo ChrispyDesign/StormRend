@@ -16,11 +16,9 @@ namespace StormRend.Abilities.Effects
         // [SerializeField] RefreshType refreshType;
 		// [HelpBox, SerializeField] string info = "wtf mate";
 
-		public override bool Perform(Unit owner, Tile[] targetTiles)
+		public override void Perform(Unit owner, Tile[] targetTiles)
         {
-			var au = owner as AnimateUnit;
-			au.SetActed(false);		//You should always be able to move again right?
-            return true;
+			(owner as AnimateUnit).SetActed(false);     //You should always be able to move again right?
         }
     }
 }
