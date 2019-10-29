@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 using StormRend.Abilities.Effects;
+using StormRend.Defunct;
 
 /// <summary>
 /// Helper editor class used to display effects in the unity inspector.

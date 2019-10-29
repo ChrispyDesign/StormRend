@@ -22,12 +22,12 @@ namespace StormRend
         [Header("Player Relevant Variables")]
         [SerializeField] PlayerClass m_unitType = PlayerClass.BERSERKER;
 
-        MoveCommand movePlayer;
+        xMoveCommand movePlayer;
 
         #region gettersAndSetters
 		public PlayerClass unitType => m_unitType;
-        public MoveCommand GetMoveCommand() { return movePlayer; }
-        public void SetMoveCommand(MoveCommand _move) { movePlayer = _move; }
+        public xMoveCommand GetMoveCommand() { return movePlayer; }
+        public void SetMoveCommand(xMoveCommand _move) { movePlayer = _move; }
         #endregion
 
         public override void OnSelect()
@@ -53,9 +53,9 @@ namespace StormRend
 
             if (!m_afterClear)
             {
-                foreach (ICommand command in xGameManager.current.GetCommandManager().commands)
+                foreach (xICommand command in xGameManager.current.GetCommandManager().commands)
                 {
-                    MoveCommand move = command as MoveCommand;
+                    xMoveCommand move = command as xMoveCommand;
 
                     if (move.m_unit == this)
                     {

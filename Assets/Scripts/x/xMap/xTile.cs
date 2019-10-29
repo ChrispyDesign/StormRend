@@ -171,16 +171,16 @@ namespace StormRend.Defunct
 						if (currentSelectedUnit.GetHasMoved() &&
 							currentSelectedUnit.GetMoveCommand() != null)
 						{
-							MoveCommand move = currentSelectedUnit.GetMoveCommand();
+							xMoveCommand move = currentSelectedUnit.GetMoveCommand();
 							move.SetCoordinates(m_coordinate);
 							currentSelectedUnit.GetMoveCommand().Execute();
 						}
 						else
 						{
-							currentSelectedUnit.SetMoveCommand(new MoveCommand(
+							currentSelectedUnit.SetMoveCommand(new xMoveCommand(
 																   currentSelectedUnit,
 																   m_coordinate));
-							MoveCommand temp = currentSelectedUnit.GetMoveCommand();
+							xMoveCommand temp = currentSelectedUnit.GetMoveCommand();
 							temp.Execute();
 
 							xGameManager.current.GetCommandManager().commands.Add(temp);
@@ -215,10 +215,10 @@ namespace StormRend.Defunct
 					}
 					currentSelectedUnit.SetSelectedAbility(null);
 
-					UndoSystem commandManager = xGameManager.current.GetCommandManager();
+					xUndoSystem commandManager = xGameManager.current.GetCommandManager();
 
 					//UndoController.
-					foreach (MoveCommand move in commandManager.commands)
+					foreach (xMoveCommand move in commandManager.commands)
 					{
 						xUnit unit = move.m_unit;
 						unit.m_afterClear = true;

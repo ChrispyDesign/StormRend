@@ -16,7 +16,7 @@ namespace StormRend.Defunct
 		[Header("Managers")]
 		// [SerializeField] TurnManager m_turnManager = null;
 		[SerializeField] xPlayerController m_playerController = null;
-		[SerializeField] UndoSystem m_commandManager = null;
+		[SerializeField] xUndoSystem m_commandManager = null;
 		[SerializeField] xPlayerUnit[] m_players;
 		[SerializeField] xEnemyUnit[] m_enemies;
 		[SerializeField] List<xCrystal> m_crystal;
@@ -26,7 +26,7 @@ namespace StormRend.Defunct
 
 		// public TurnManager GetTurnManager() { return m_turnManager; }
 		public xPlayerController GetPlayerController() { return m_playerController; }
-		public UndoSystem GetCommandManager() { return m_commandManager; }
+		public xUndoSystem GetCommandManager() { return m_commandManager; }
 
 		public xPlayerUnit[] GetPlayerUnits() { return m_players; }
 		public xEnemyUnit[] GetEnemyUnits() { return m_enemies; }

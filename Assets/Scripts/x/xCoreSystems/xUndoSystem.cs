@@ -2,12 +2,12 @@
 using StormRend.Utility.Attributes;
 using UnityEngine;
 
-namespace StormRend.Systems
+namespace StormRend.Defunct
 {
-    public class UndoSystem : MonoBehaviour
+    public class xUndoSystem : MonoBehaviour
 	{
 		[ReadOnlyField]
-		public List<ICommand> commands = new List<ICommand>();
+		public List<xICommand> commands = new List<xICommand>();
 
 		public void ClearCommands()
 		{
