@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace StormRend.Systems
+namespace StormRend.Defunct
 {
     public enum SelectMode
 	{

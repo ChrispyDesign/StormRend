@@ -6,7 +6,7 @@ using StormRend.Systems;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace StormRend
+namespace StormRend.Defunct
 {
     public enum PlayerClass
     {

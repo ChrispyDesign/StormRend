@@ -1,6 +1,6 @@
 ﻿using StormRend.Defunct;
 
-namespace StormRend
+namespace StormRend.Defunct
 {
 	public class xEnemyUnit : xUnit
 	{

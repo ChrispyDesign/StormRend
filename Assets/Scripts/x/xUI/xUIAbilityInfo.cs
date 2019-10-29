@@ -7,7 +7,7 @@ using StormRend.Systems;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace StormRend.UI
+namespace StormRend.Defunct
 {
 	public class xUIAbilityInfo : MonoBehaviour
 	{
