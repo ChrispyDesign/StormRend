@@ -16,11 +16,16 @@ namespace StormRend.Abilities.Effects
 			Unit[] units = UnitRegistry.current.aliveUnits;
 			List<Tile> tt = targetTiles.ToList();
 
-			//Damage units that are standing on target tiles
 			foreach (var u in units)
 			{
 				if (tt.Contains(u.currentTile))
-					u.TakeDamage(new DamageData(owner, damage));
+				{
+                    //Damage units that are standing on target tiles
+                    u.TakeDamage(new DamageData(owner, damage));
+
+					//Play animation
+					owner.animator.SetTrigger(container.animation);
+				}
 			}
         }
     }

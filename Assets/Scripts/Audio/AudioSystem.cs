@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using StormRend.Utility.Attributes;
 using UnityEngine;
 
 namespace StormRend.Audio
@@ -7,6 +7,9 @@ namespace StormRend.Audio
     [RequireComponent(typeof(AudioSource))]
     public class AudioSystem : MonoBehaviour
     {
+        //Helpbox
+        [HelpBox, SerializeField] string help = "Animation Event Callbacks: \nPlayOnce(AudioClip)";
+
         //Inspector
         [TextArea(0, 2), SerializeField] string description = "";
 
@@ -33,9 +36,6 @@ namespace StormRend.Audio
         }
         public void ChancePlay()
         {
-            //if chance is 100 then return true;
-            //if chance is 50 then return true half the time;
-            //if chance is 0 then always return false;
             if (Random.Range(0, 100) < chance)  
                 audioSource.PlayOneShot(sounds[Random.Range(0, sounds.Count)]);
         }
@@ -43,6 +43,16 @@ namespace StormRend.Audio
         {
             if (Random.Range(0, 100) < chance)  
                 audioSource.PlayOneShot(clip);
+        }
+
+        /// <summary>
+        /// For animation events
+        /// </summary>
+        /// <param name="o">The sound that is passed in and will be casted to an audio clip</param>
+        public void PlayOnce(Object o)
+        {
+            AudioClip c = o as AudioClip;
+            audioSource.PlayOneShot(c);
         }
     #endregion
     }

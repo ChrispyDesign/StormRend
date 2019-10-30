@@ -33,6 +33,7 @@ namespace StormRend.Units
 		}
 		public int maxHP => _maxHP;
 		public bool isDead => HP <= 0;
+		public Animator animator { get; private set; }
 
 	#region Startup
 		protected virtual void Awake()
@@ -42,7 +43,13 @@ namespace StormRend.Units
 
 			//Find a tile if it's not already set
 			if (!currentTile) ScanTileBelow();
+
 		}
+		void Start()
+		{
+			//Get animator
+			animator = GetComponentInChildren<Animator>();
+		}		
 
 		void ScanTileBelow()
 		{
