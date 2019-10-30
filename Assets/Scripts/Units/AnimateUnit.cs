@@ -93,8 +93,8 @@ namespace StormRend.Units
 		public override void TakeDamage(DamageData damageData)
 		{
 			base.TakeDamage(damageData);
-			
-			//Status effect 
+
+			//Status effect
 			foreach (var se in statusEffects)
 				se.OnTakeDamage(this, damageData.attacker);
 		}
@@ -116,12 +116,12 @@ namespace StormRend.Units
 			//Status effects
 			foreach (var se in statusEffects)
 				se.OnBeginTurn(this);
-			
+
 			onBeginTurn.Invoke();
 		}
-		public void EndTurn()			//Run before 
+		public void EndTurn()			//Run before
 		{
-			//Status effects 
+			//Status effects
 			foreach (var se in statusEffects)
 				se.OnEndTurn(this);
 
@@ -137,7 +137,7 @@ namespace StormRend.Units
 		{
 			base.Die();     //onDeath will invoke
 
-			//Status effect 
+			//Status effect
 			foreach (var se in statusEffects)
 				se.OnDeath(this);
 
@@ -195,12 +195,12 @@ namespace StormRend.Units
 			if (currentTile.TryGetTile(direction, out Tile t))
 			{
 				//Check for any units or obstacles
-				if (UnitRegistry.IsAnyUnitOnTile(t)) 
-					return PushResult.Unit;
+				if (UnitRegistry.IsAnyUnitOnTile(t))
+					return PushResult.Unit;		//Don't push
 
 				//Check if pushed onto an unwalkable tile
 				if (t is UnWalkableTile)
-					return PushResult.UnWalkableTile;
+					return PushResult.UnWalkableTile;	//Don't push
 
 				//Push unit
 				Move(t, false, false, true);
@@ -282,7 +282,7 @@ namespace StormRend.Units
 		{
 			var result = new List<Tile>();
 			var sqrLen = Ability.caSize;
-			
+
 			//Find the center of the cast area
 			Vector2Int center = new Vector2Int(sqrLen / 2, sqrLen / 2);
 

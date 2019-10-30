@@ -19,10 +19,7 @@ namespace StormRend.Abilities.Effects
         [SerializeField] bool canPushOffEdge = true;
         List<Type> typesToCheck = new List<Type>();
 
-        void OnValidate()
-        {
-            Prepare();
-        }
+        void OnValidate() => Prepare();
 
         public override void Prepare(Unit owner = null)
         {
@@ -45,7 +42,7 @@ namespace StormRend.Abilities.Effects
                 for (int i = 0; i < 360; i += 90)
                 {
                     // var deg = i * Mathf.Deg2Rad;
-                    // var direction = new Vector2Int(Mathf.RoundToInt(Mathf.Cos(i)), -Mathf.RoundToInt(Mathf.Sin(i)));	//4 directions
+                    // var direction = new Vector2Int(Mathf.RoundToInt(Mathf.Cos(i)), -Mathf.RoundToInt(Mathf.Sin(i)));	//Set directions
                     Vector2Int direction = new Vector2Int();
                     switch (i)
                     {
@@ -63,9 +60,13 @@ namespace StormRend.Abilities.Effects
                         {
                             var au = unit as AnimateUnit;
 
-                            //Push the unit in the vector direction from target tile to adjacent tile
-                            au.Push(direction * pushAmount, canPushOffEdge);
-                            
+                            //Do incremental pushes to avoid moving through obstacles
+                            for (int j = 0; j < pushAmount; ++j)
+                            {
+                                //Push the unit in the vector direction from target tile to adjacent tile
+                                au.Push(direction, canPushOffEdge);
+                            }
+
                             //Do damage (where needed)
                             unit.TakeDamage(new DamageData(owner, damage));
                         }
@@ -75,11 +76,3 @@ namespace StormRend.Abilities.Effects
         }
     }
 }
-
-// for (int j = 0; j < pushAmount; ++j)
-// {
-//     if (!au.Push(direction * j, canPushOffEdge))
-//     {
-//         //Pushed off edge OR pushed to the edge of an obstacle
-//     }
-// }
