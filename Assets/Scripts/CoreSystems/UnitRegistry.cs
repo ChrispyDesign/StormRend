@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using pokoro.Patterns.Generic;
@@ -42,13 +41,6 @@ namespace StormRend.Units
 		//Adds a new unit to the alive registry
 		public void RegisterUnit(Unit u) => _aliveUnits.Add(u);
 		public T[] GetUnitsByType<T>() where T : Unit => (from u in aliveUnits where u is T select u as T).ToArray();
-		// List<T> units = new List<T>();
-		// foreach (var u in aliveUnits)
-		// {
-		// 	T t = u as T;	//Try cast
-		// 	if (t) units.Add(t);	//If not null then it's the right type
-		// }
-		// return units.ToArray();
 
 		//Register's the death of a unit and moves it from the alive to dead list
 		public void RegisterDeath(Unit deadUnit)
@@ -124,7 +116,7 @@ namespace StormRend.Units
 		}
 
 		/// <summary>
-		/// Check if the unit of specified type is on the tile
+		/// Returns true if the unit of specified type is on the tile and out the unit
 		/// </summary>
 		public static bool TryGetUnitTypeOnTile<T>(Tile tile, out T unit) where T : Unit
 		{
@@ -139,6 +131,68 @@ namespace StormRend.Units
 			}
 			unit = null;
 			return false;
+		}
+		/// <summary>
+		/// Returns true if the unit is within specified types and is on the tile and out the unit
+		/// </summary>
+		/// <param name="typesToCheck">List of types to check against</param>
+		public static bool TryGetUnitTypeOnTile(Tile tile, out Unit unit, params Type[] typesToCheck)
+		{
+			var filteredUnits = current.aliveUnits.Where(u => typesToCheck.Contains(u.GetType()));
+			// var filteredUnits = current.aliveUnits;
+			foreach (var u in filteredUnits)
+			{
+				if (u.currentTile == tile) 
+				{
+					// if (typesToCheck.Contains(u.GetType()))
+					{
+						unit = u;
+                        return true;
+					}
+				}
+			}
+			unit = null;
+			return false;
+		}
+
+		/// <summary>
+		/// Returns multiple units (WHOOPS! There can only be one unit on a tile. This is useless)
+		/// </summary>
+		public static bool TryGetUnitTypesOnTile(Tile tile, out Unit[] units, params Type[] typesToCheck)
+		{
+			//Check they are units
+			foreach (var t in typesToCheck)
+			{
+				if (t.GetType().IsSubclassOf(typeof(Unit)) || t.GetType() == typeof(Unit))
+				{
+					Debug.LogWarning("Types passed in are not of type 'Unit'. Exiting.");
+					units = null;
+					return false;
+				}
+			}
+
+			//Loop through each unit, check if they're standing on the tile, check if they're the right type
+			var filteredUnits = current.aliveUnits.Where(u => typesToCheck.Contains(u.GetType()));
+			var results = new List<Unit>();
+			foreach (var u in filteredUnits)
+			{
+				if (u.currentTile == tile) 
+				{
+					results.Add(u);
+				}
+			}
+
+			//Out results
+			if (results.Count > 0)
+			{
+				units = results.ToArray();
+				return true;
+			}
+			else
+			{
+				units = null;
+				return false;
+			}
 		}
 
 		/// <summary>

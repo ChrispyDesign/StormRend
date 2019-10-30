@@ -99,17 +99,17 @@ namespace StormRend.Editors
 			using (new GUILayout.HorizontalScope())
 			{
 				if (GUILayout.Button("Connect Neighbours"))
-				{
-					foreach (var t in m.tiles)
-						AutoConnectNeighbourTiles(t, connectDiagonals ? true : false, 0.2f);
-				}
-				if (GUILayout.Button("Clear Connections"))
+                {
+                    ConnectAllTiles();
+                }
+                if (GUILayout.Button("Clear Connections"))
 				{
 					m.ClearAllTileConnections();
 				}
 			}
 		}
-		void DrawPreviewSizeSlider()
+
+        void DrawPreviewSizeSlider()
 		{
 			GUILayout.Space(5);
 			using (new GUILayout.HorizontalScope())

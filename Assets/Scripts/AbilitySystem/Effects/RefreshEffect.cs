@@ -17,7 +17,7 @@ namespace StormRend.Abilities.Effects
 
         [EnumFlags, SerializeField] RefreshType refreshType;
 		[SerializeField] int allowedRefreshes = 1;
-		public int refreshCount = 0;		//internal refresh count
+		[ReadOnlyField, SerializeField] int refreshCount = 0;		//internal refresh count
 
 		public override void Prepare(Unit owner)
 		{

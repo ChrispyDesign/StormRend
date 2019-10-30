@@ -84,7 +84,6 @@ namespace StormRend.Systems.StateMachines
 				currentStateIDX = turnStates.IndexOf(entryState);
 				//Events
 				onEnterNextTurn.Invoke(currentState);	//This should invoke UnitRegistry.RunUnitsBeginTurn()
-				Debug.Log("Entry state: " + currentState);
 			}
 		}
 

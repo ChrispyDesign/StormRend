@@ -60,20 +60,23 @@ namespace StormRend.Editors
 		{
 			switch (stateChange)
 			{
-				//Prevent "Some objects were not cleaned up when closing the scene" errors
 				case PlayModeStateChange.ExitingEditMode:
-					//Unselect map to prevent dumb errors
-					if (stamp) DestroyImmediate(stamp);
+                    //Unselect map to prevent dumb errors; Prevent "Some objects were not cleaned up when closing the scene" errors
+                    if (stamp) DestroyImmediate(stamp);
 					Selection.activeGameObject = null;
+
+					//Auto connect all tiles
+					ConnectAllTiles();
 					break;
-				//This doesn't really work anyways...
-				// case PlayModeStateChange.EnteredEditMode:
-				// 	Selection.activeGameObject = m.gameObject;
-				// 	break;
 			}
 		}
 
 		#region Utility
+		void ConnectAllTiles()
+        {
+            foreach (var t in m.tiles)
+                AutoConnectNeighbourTiles(t, connectDiagonals, 0.2f);
+        }
 		void AutoConnectNeighbourTiles(Tile subject, bool connectDiagonals = false, float tolerance = 0.1f)
 		{
 			//Find tiles within range (ie. within the distance of the map's tilesize)

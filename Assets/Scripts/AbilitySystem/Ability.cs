@@ -61,7 +61,10 @@ namespace StormRend.Abilities
 		{
 			Debug.Log("Performing Ability: " + this.name);
 			foreach (var e in effects)
+			{
+				Debug.Log("Performing Effect: " + e.name);
 				e.Perform(owner, targets);
+			}
 		}
 
 		public bool IsAcceptableTileType(AnimateUnit owner, Tile tile)
