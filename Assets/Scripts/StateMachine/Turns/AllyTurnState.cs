@@ -1,6 +1,4 @@
-﻿using StormRend.Systems;
-using StormRend.Systems.StateMachines;
-using UnityEngine;
+﻿using StormRend.Systems.StateMachines;
 
 namespace StormRend.States
 {

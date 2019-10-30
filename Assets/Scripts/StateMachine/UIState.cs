@@ -6,7 +6,7 @@ namespace StormRend.States.UI
 	/// <summary>
 	/// Automatically reveals on state enter and uncover, hide on state exit and cover
 	/// </summary>
-	public abstract class UIState : State
+	public class UIState : State
 	{
 		[Tooltip("The UI/GameObjects to show and hide on entering and exiting state, respectively")]
 		[SerializeField] GameObject[] uiItems = null;

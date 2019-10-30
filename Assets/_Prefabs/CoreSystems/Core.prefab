@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8674382356117450513}
-  - component: {fileID: 6841392902371587220}
+  - component: {fileID: 8756483541272633458}
   m_Layer: 0
   m_Name: Settings
   m_TagString: Untagged
@@ -38,7 +38,7 @@ RectTransform:
   m_AnchoredPosition: {x: -0.000030517578, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6841392902371587220
+--- !u!114 &8756483541272633458
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,10 +47,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 204516928877031418}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e726e674b94a2e24c80c02634727fa66, type: 3}
+  m_Script: {fileID: 11500000, guid: 6dee39808f10944f187114e9570985f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Description: In game settings menu
+  Description: 
   uiItems:
   - {fileID: 204516928877031418}
 --- !u!1 &473531036070459619
@@ -644,7 +644,7 @@ MonoBehaviour:
         m_MethodName: Stack
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 6841392902371587220}
+          m_ObjectArgument: {fileID: 8756483541272633458}
           m_ObjectArgumentAssemblyTypeName: StormRend.Systems.StateMachines.State,
             Assembly-CSharp
           m_IntArgument: 0
@@ -3298,7 +3298,7 @@ MonoBehaviour:
         m_MethodName: Insert
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 6841392902371587220}
+          m_ObjectArgument: {fileID: 8756483541272633458}
           m_ObjectArgumentAssemblyTypeName: StormRend.Systems.StateMachines.State,
             Assembly-CSharp
           m_IntArgument: 0
@@ -4974,7 +4974,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2828046761603909175}
-  - component: {fileID: 6841392901622992971}
+  - component: {fileID: 7039662999267371009}
   m_Layer: 5
   m_Name: Victory
   m_TagString: Untagged
@@ -5005,7 +5005,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6841392901622992971
+--- !u!114 &7039662999267371009
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5014,10 +5014,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4253472180937816188}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c29c96076267c40869ade636c86bbce2, type: 3}
+  m_Script: {fileID: 11500000, guid: 6dee39808f10944f187114e9570985f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Description: Win screen (required?)
+  Description: 
   uiItems:
   - {fileID: 4253472180937816188}
 --- !u!1 &4397642114689996310
@@ -5467,8 +5467,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseKey: 27
   pauseMenuState: {fileID: 6841392902387126551}
-  loseState: {fileID: 9015395174224637444}
-  victoryState: {fileID: 6841392901622992971}
+  loseState: {fileID: 3100449952084107043}
+  victoryState: {fileID: 7039662999267371009}
   mainMenuSceneIdx: 0
   debug: 0
 --- !u!114 &3267380040487526950
@@ -5492,7 +5492,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4714817229119878404}
-        m_MethodName: RunStatusEffectsOnTurnExit
+        m_MethodName: RunUnitsEndTurn
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5508,7 +5508,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4714817229119878404}
-        m_MethodName: RunStatusEffectOnTurnEnter
+        m_MethodName: RunUnitsBeginTurn
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7713,7 +7713,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8915570360049266705}
-  - component: {fileID: 9015395174224637444}
+  - component: {fileID: 3100449952084107043}
   m_Layer: 5
   m_Name: Lose
   m_TagString: Untagged
@@ -7744,7 +7744,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &9015395174224637444
+--- !u!114 &3100449952084107043
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7753,10 +7753,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6962013832118132037}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 004a5c26c66b946bdbd3e1da53909d6d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6dee39808f10944f187114e9570985f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Description: Lose screen (Required?)
+  Description: 
   uiItems:
   - {fileID: 6962013832118132037}
 --- !u!1 &7652918077435659037
@@ -8231,7 +8231,7 @@ MonoBehaviour:
         m_MethodName: Stack
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 6841392902371587220}
+          m_ObjectArgument: {fileID: 8756483541272633458}
           m_ObjectArgumentAssemblyTypeName: StormRend.Systems.StateMachines.State,
             Assembly-CSharp
           m_IntArgument: 0
@@ -8432,11 +8432,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 562070246305184845}
     m_Modifications:
-    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
-        type: 3}
-      propertyPath: m_Name
-      value: AbilityButton
-      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034492, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8542,6 +8537,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
+        type: 3}
+      propertyPath: m_Name
+      value: AbilityButton
+      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034243, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -8598,11 +8598,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 562070246305184845}
     m_Modifications:
-    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
-        type: 3}
-      propertyPath: m_Name
-      value: AbilityButton (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034492, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8708,6 +8703,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
+        type: 3}
+      propertyPath: m_Name
+      value: AbilityButton (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034243, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -8764,11 +8764,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 562070246305184845}
     m_Modifications:
-    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
-        type: 3}
-      propertyPath: m_Name
-      value: AbilityButton (4)
-      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034492, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8874,6 +8869,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
+        type: 3}
+      propertyPath: m_Name
+      value: AbilityButton (4)
+      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034243, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -8930,11 +8930,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 562070246305184845}
     m_Modifications:
-    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
-        type: 3}
-      propertyPath: m_Name
-      value: AbilityButton (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034492, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9040,6 +9035,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
+        type: 3}
+      propertyPath: m_Name
+      value: AbilityButton (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034243, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -9096,11 +9096,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 562070246305184845}
     m_Modifications:
-    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
-        type: 3}
-      propertyPath: m_Name
-      value: AbilityButton (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034492, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9205,6 +9200,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
+        type: 3}
+      propertyPath: m_Name
+      value: AbilityButton (3)
       objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034243, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
