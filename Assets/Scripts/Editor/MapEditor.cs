@@ -11,18 +11,20 @@ namespace StormRend.Editors
 	{
 		Vector3 gridCursor;
 		GameObject stamp;
+
 		Map m;
 		Event e;
+
 		GUIStyle style;
 
 		#region Cores
 		[MenuItem("GameObject/StormRend/Map", false, 10)]
 		static void CreateGameObject(MenuCommand menuCommand)
 		{
-			var map = new GameObject("Map", typeof(Map));
-			GameObjectUtility.SetParentAndAlign(map, menuCommand.context as GameObject);
-			Undo.RegisterCreatedObjectUndo(map, "Create StormRend Map");
-			Selection.activeObject = map;
+			var newo = new GameObject("Map", typeof(Map));
+			GameObjectUtility.SetParentAndAlign(newo, menuCommand.context as GameObject);
+			Undo.RegisterCreatedObjectUndo(newo, "Create StormRend Map");
+			Selection.activeObject = newo;
 		}
 		void OnEnable()
 		{
@@ -34,18 +36,19 @@ namespace StormRend.Editors
 			CreateStyles();
 
 			//Prevent a blank stamp from show on startup
-			CreateStamp();
+			CreateStamp();		
 
 			//Register events
 			Undo.undoRedoPerformed += OnUndoRedo;
-			EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+
+			//Prevent "Some objects were not cleaned up when closing the scene" errors
+			// EditorApplication.playModeStateChanged += OnPlayModeStateChanged; //(PlayModeStateChange stateChange) => { if (stamp) DestroyImmediate(stamp); };
 		}
 		void OnDisable()
 		{
 			if (stamp) DestroyImmediate(stamp);
 
 			Undo.undoRedoPerformed += OnUndoRedo;
-			EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
 		}
 		#endregion
 
@@ -54,23 +57,6 @@ namespace StormRend.Editors
 			style = new GUIStyle();
 			style.fontSize = 15;
 			style.fontStyle = FontStyle.Bold;
-		}
-
-		void OnPlayModeStateChanged(PlayModeStateChange stateChange)
-		{
-			switch (stateChange)
-			{
-				//Prevent "Some objects were not cleaned up when closing the scene" errors
-				case PlayModeStateChange.ExitingEditMode:
-					//Unselect map to prevent dumb errors
-					if (stamp) DestroyImmediate(stamp);
-					Selection.activeGameObject = null;
-					break;
-				//This doesn't really work anyways...
-				// case PlayModeStateChange.EnteredEditMode:
-				// 	Selection.activeGameObject = m.gameObject;
-				// 	break;
-			}
 		}
 
 		#region Utility
@@ -86,12 +72,6 @@ namespace StormRend.Editors
 
 				if ((dist - (adjDist * m.tileSize - tolerance)) * ((adjDist * m.tileSize + tolerance) - dist) >= 0)
 				{
-					//Prevents duplicates because we can't use hashsets
-					if (subject.Contains(t))
-					{
-						Debug.LogFormat("{0} is already connected to {1}", t, subject);
-						continue;
-					}
 					subject.Connect(t);
 				}
 				//Diagonals
@@ -99,17 +79,10 @@ namespace StormRend.Editors
 				{
 					if ((dist - (diagDist * m.tileSize - tolerance)) * ((diagDist * m.tileSize + tolerance) - dist) >= 0)
 					{
-						//Prevents duplicates because we can't use hashsets
-						if (subject.Contains(t))
-						{
-							Debug.LogFormat("{0} is already connected to {1}", t, subject);
-							continue;
-						}
 						subject.Connect(t);
 					}
 				}
 			}
-			EditorUtility.SetDirty(subject);	//Persist data in editor
 		}
 		#endregion
 	}

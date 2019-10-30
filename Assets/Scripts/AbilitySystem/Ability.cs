@@ -4,11 +4,6 @@ using StormRend.MapSystems.Tiles;
 using StormRend.Units;
 using StormRend.Utility.Attributes;
 using UnityEngine;
-using StormRend.Enums;
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace StormRend.Abilities
 {
@@ -19,33 +14,45 @@ namespace StormRend.Abilities
 	}
 
 	[Serializable, CreateAssetMenu(menuName = "StormRend/Ability", fileName = "Ability")]
-	public partial class Ability : ScriptableObject
+	public class Ability : ScriptableObject
 	{
 		//Constants
-		public const int caSize = 7;    //Cast Area Size Squared
+		const int seven = 7;    //Cast Area Size Squared. Should this be some kind of global?
+
+		//Flags and Enums
+		[Flags]
+		public enum TargetableTile
+		{
+			Empty = 1 << 0,
+			Self = 1 << 1,
+			Allies = 1 << 2,
+			Enemies = 1 << 3,
+		}
 
 		//Inspector
 		[SerializeField] Sprite _icon = null;
 		[Tooltip("Animation number for this ability in order to send to a corresponding animator")]
-		[SerializeField] int _animNumber = 0;
+		[SerializeField] int _animNumber;
 		[SerializeField] int _level = 1;
-		[SerializeField] AbilityType _type = AbilityType.Primary;
+		public AbilityType _type = AbilityType.Primary;
+
+
 		[TextArea(0, 2), SerializeField] string _description = "";
 
 		[Header("Casting"), Space(1), Tooltip("Glory cost required to perform this ability")]
 		[SerializeField] int _gloryCost = 1;
 
 		[Tooltip("The required number of selected tiles this ability needs in order for it to be performed")]
-		[SerializeField] int _requiredTiles = 1;
+		[SerializeField] int requiredTiles = 1;
 
-		[Tooltip("The type of tiles this ability can target")]
-		//This will be used to determine which tiles the UserInputHandler can pick
-		[EnumFlags, SerializeField] TargetMask _targetTileTypes = (TargetMask)~0;
+		[Tooltip("The category of tiles this ability can target"), Space(5)]
+		[EnumFlags, SerializeField] TargetableTile _targetableTileMask;
 
 		//Members
-		[HideInInspector]
-		public List<Effect> effects = new List<Effect>();
-		[HideInInspector] public bool[] castArea = new bool[caSize * caSize];		//this sometimes resets
+		[HideInInspector] public List<Effect> effects = new List<Effect>();
+		public bool[,] castArea { get; set; } = new bool[seven, seven];
+		// public Tile[] possibleCastTiles { get; set; }
+		// public Tile[] tilesToCastTo { get; set; }
 
 		//Properties
 		public Sprite icon => _icon;
@@ -53,92 +60,81 @@ namespace StormRend.Abilities
 		public AbilityType type => _type;
 		public string description => _description;
 		public int gloryCost => _gloryCost;
-		public int requiredTiles => _requiredTiles;
-		public TargetMask targetTileTypes => _targetTileTypes;
+		public TargetableTile targetableTileMask => _targetableTileMask;
 
 		//Core
 		public void Perform(Unit owner, params Tile[] targets)
 		{
-			Debug.Log("Performing Ability: " + this.name);
 			foreach (var e in effects)
 				e.Perform(owner, targets);
 		}
 
-		public bool IsAcceptableTileType(AnimateUnit owner, Tile tile)
+		/// <summary>
+		/// Get the tiles that can be currently acted upon by this ability
+		/// </summary>
+		/// <param name="au">The unit</param>
+		public Tile[] CalculateActionableTiles(AnimateUnit au)
 		{
-			//NOTE: Only one of the masks have to pass for the whole thing to pass
-			//Empty: Return true if no units standing on the tile
-			if ((targetTileTypes & TargetMask.Empty) == TargetMask.Empty)
-				if (!UnitRegistry.IsAnyUnitOnTile(tile)) return true;
+			
+			throw new NotImplementedException();
+		}
 
-			//Self: Return true if the user is standing on this tile
-			if ((targetTileTypes & TargetMask.Self) == TargetMask.Self)
-				if (owner.currentTile == tile) return true;
+		//-------------------------------------------------------------
+		//TRANSFERRED FROM OLD
+		public void GetSelectableTiles(ref Unit unit)
+		{
+			//Q. WTF is this doing?
+			//A. I think this populates the passed in ally unit's
+			//tiles that this ability can be applied to
 
-			var aliveUnits = UnitRegistry.current.aliveUnits;
+			int center = (castArea.GetLength(0) / 2) + (castArea.GetLength(0) % 2);
+			int endPoint = castArea.GetLength(0) / 2;
+			// int center = (castArea.Length / 2) + (castArea.Length % 2);
+			// int endPoint = castArea.Length / 2;
 
-			foreach (var unit in aliveUnits)
+			List<Tile> tiles = new List<Tile>();
+			Vector2Int coords = new Vector2Int();
+			// List<Tile> nodes = new List<Tile>();
+			// Vector2Int coords = Vector2Int.zero;
+
+			for (int x = 0; x < castArea.GetLength(0); x++)
 			{
-				bool isAnimate = false, isInAnimate = false;
-				switch (unit)
+				for (int y = 0; y < castArea.GetLength(1); y++)
 				{
-					case AllyUnit ally:
-						isAnimate = true;
-						//Allies: Return true if any allies are standing on this tile but not self
-						if ((targetTileTypes & TargetMask.Allies) == TargetMask.Allies)
-							if (ally.currentTile == tile && owner.currentTile != tile) return true;
-						break;
-					case EnemyUnit enemy:
-						isAnimate = true;
-						//Enemies
-						if ((targetTileTypes & TargetMask.Enemies) == TargetMask.Enemies)
-							if (enemy.currentTile == tile && owner.currentTile != tile) return true;
-						break;
-					case CrystalUnit crystal:
-						isInAnimate = true;
-						//Enemies
-						if ((targetTileTypes & TargetMask.Crystals) == TargetMask.Crystals)
-							if (crystal.currentTile == tile && owner.currentTile != tile) return true;
-						break;
+					if (castArea[x, y] == true)
+					{
+						int tx = -endPoint + x;
+						int ty = endPoint - y;
+
+						// coords.x = unit.currentTile.FindConnectedTile()
+					}
 				}
-				//Catch the abstracts
-				//Animates
-				if (isAnimate && (targetTileTypes & TargetMask.Animates) == TargetMask.Animates)
-					if (unit.currentTile == tile && owner.currentTile != tile) return true;
-				//InAnimates
-				if (isInAnimate && (targetTileTypes & TargetMask.InAnimates) == TargetMask.InAnimates)
-					if (unit.currentTile == tile && owner.currentTile != tile) return true;
 			}
-			return false;
-		}
 
-		//Add an effect to this ability (Has editor code)
-		public void AddEffect<T>(bool hideInHierarchy = true) where T : Effect
-		{
-			//Add and set owner
-			var newEffect = Effect.CreateInstance<T>();
-			newEffect.SetOwner(this);
-			newEffect.name = newEffect.GetType().Name;
-			this.effects.Add(newEffect);
+			// for (int x = 0; x < castArea.GetLength(0); x++)
+			// {
+			// 	for (int y = 0; y < castArea.GetLength(1); y++)
+			// 	{
+			// 		if (castArea[x, y] == true)
+			// 		{
+			// 			int _x = -endPoint + x;
+			// 			int _y = endPoint - y;
 
-			//Hide flags
-			if (hideInHierarchy) newEffect.hideFlags = HideFlags.HideInHierarchy;
+			// 			coords.x = _player.coords.x + _x;
+			// 			coords.y = _player.coords.y + _y;
 
-#if UNITY_EDITOR
-			//Save
-			AssetDatabase.AddObjectToAsset(newEffect, this);
-			AssetDatabase.SaveAssets();
-#endif
-		}
+			// 			Tile tile =
+			// 			if (tile != null)
+			// 				tiles.Add(tile);
 
-		//Removes an effect from this ability (Has Editor code)
-		public void RemoveEffect(Effect e)
-		{
-			this.effects.Remove(e);
-#if UNITY_EDITOR
-			DestroyImmediate(e, true);
-			AssetDatabase.SaveAssets();
-#endif
+			// 			xGrid.CoordToTile(coords);
+			// 			if (node != null)
+			// 				nodes.Add(node);
+			// 		}
+			// 	}
+			// }
+
+			// _player.SetAttackNodes(nodes);
 		}
 	}
 }

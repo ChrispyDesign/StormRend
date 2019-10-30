@@ -8,8 +8,8 @@ namespace StormRend.States.UI
 	/// </summary>
 	public abstract class UIState : State
 	{
-		[Tooltip("The UI/GameObjects to show and hide on entering and exiting state, respectively")]
-		[SerializeField] GameObject[] uiItems = null;
+		[Tooltip("The UI elements to display and activate on entering or uncovering of this state")]
+		[SerializeField] GameObject[] uiItems;
 
 		///NOTE! All these methods must be called from override methods to preserve correct functionality
 

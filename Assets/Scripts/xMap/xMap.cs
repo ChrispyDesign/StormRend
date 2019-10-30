@@ -19,9 +19,9 @@ namespace StormRend.Defunct
 	[RequireComponent(typeof(xGridImporter))]
 	public class xMap : MonoBehaviour
 	{
-		[SerializeField] private xGrid m_grid = null;
-		[SerializeField] private int m_nodeSize = 2;
-		[SerializeField] private Transform m_tilePrefab = null;
+		[SerializeField] private xGrid m_grid;
+		[SerializeField] private int m_nodeSize;
+		[SerializeField] private Transform m_tilePrefab;
 
 		private TileData m_gridData;
 

@@ -15,13 +15,11 @@ namespace The.Great.Refactor.Brainstorm
 
 	- UserInputHandler
 	* Hovering over a Unit will:
-		- Highlight
+		- Highlight 
 	* Clicking on any Unit will:
 		- Focus/Move camera onto the unit
-		-
+		- 
 	* Clicking on a tile will:
-
-	* General/Gameplay/AI/UI/Tools Programmer, Software Architect
 
     >> Custom StormRend Variables
     UnitListVar : BhaveVar<List<Unit>>
@@ -51,7 +49,7 @@ namespace The.Great.Refactor.Brainstorm
 		[ ] BlizzardApplicator: Applies the blizzard to selected units
 		[ ] UserInputHandler (PlayerController)
             ? Should this hold the current selected unit's castArea?
-            ?
+            ? 
 		[ ] UndoSystem
 
 	[Game Variables and Events]
@@ -91,65 +89,63 @@ namespace The.Great.Refactor.Brainstorm
 		- Use PhysicsRaycaster instead of CameraRaycaster
 
 	[Map System]
-	[V 90%] Tile: A tile holds a list of other connected tiles and its traversal costs
-	[V 90%] Map: A map is mostly a list of tiles
-	[V 90%] MapEditor: Rapidly create, edit and connect tiles
-	[V 75%] PropPainter: Prefab painting tool for use with map
-	[ ] Pathfinder (Proposal): Maybe should be called MapExtentions? Pathfinding functionality
-	[V 90%] TileHighlight: A sprite renderer child object of a tile
+		[V 90%] Tile: A tile holds a list of other connected tiles and its traversal costs
+		[V 90%] Map: A map is mostly a list of tiles
+		[V 90%] MapEditor: Rapidly create, edit and connect tiles
+		[V 75%] PropPainter: Prefab painting tool for use with map
+		[ ] Pathfinder (Proposal): Maybe should be called MapExtentions? Pathfinding functionality
+		[V 90%] TileHighlight: A sprite renderer child object of a tile
+
 
 	[UI]
-	[ ] Meter (for Glory and Blizzard meters)
-	[ ] AvatarSelectButton
-	[ ] AbilitySelectButton
-	[ ] InfoPanel
-	[ ] FinishTurnButton
-	[V] Panels: (Includes states)
-		MainMenu
-		Gameplay
-		Settings
-		Pause
-		Win/Lose?
+		[ ] Meter (for Glory and Blizzard meters)
+		[ ] AvatarSelectButton
+		[ ] AbilitySelectButton
+		[ ] InfoPanel
+		[V] Panels: (Includes states)
+			MainMenu
+			Gameplay
+			Settings
+			Pause
+			Win/Lose?
 
 	[Ability System]
-	---------- Refactor goals:
-	- Get rid of getters and setters
-	- Simplify and expose only essential APIs ie. Ability.Perform()
-	- Decouple from UI stuff
-	- Work with new improved map system
-	- AbilityType : Enum ie. Passive, First, Second, Third, etc
-	---------- Important members:
-	- ability name, Not Required! Just use Object.name
-	- animNumber? Maybe this could hold the actual animation
-	- Eliminate RowData; Use Array[7][7] instead
-	- TargetableTiles > Convert to bitmask
-	---------- Important APIs to expose:
-	-
+		Refactor goals:
+		- Get rid of getters and setters
+		- Simplify and expose only essential APIs ie. Ability.Perform()
+		- Decouple from UI stuff
+		- Work with new improved map system
+		- AbilityType : Enum ie. Passive, First, Second, Third, etc
+		Important members:
+		- ability name, Not Required! Just use Object.name
+		- animNumber? Maybe this could hold the actual animation
+		- Eliminate RowData; Use Array[7][7] instead
+		- TargetableTiles > Convert to bitmask
+		Important APIs to expose:
+		-
 
 	[Units]
-	----------
-
-	---------- Inheritance Tree:
-	Unit
-	- CrystalUnit
-	- AnimateUnit
-		- AllyUnit
-		- EnemyUnit
-	- InAnimateUnit?
-	---------- Refactor goals:
-	- Get rid of getters and setters
-	- Simplify and expose only essential APIs ie. Ability.Perform()
-	- Decouple from UI stuff
-	- Work with new improved map system
-	- Use unity inbuilt event system
-	- Duplicate mesh > ghost mesh
-	- Just hold a single list of abilities instead of multiple lists; sort by AbilityType
-	- Get rid of current UnityEvents
-	------------ Important APIs to expose:
-	- MoveTo(Tile tile), MoveTo(Vector2Int direction)?
-	- ProposeMove(Tile tile); displays the ghost mesh
-	- TakeDamage(int damage); current one is OK (Because I wrote it)
-	- Die(); OK
+        Inheritance Tree:
+        Unit
+        - CrystalUnit
+        - AnimateUnit
+            - AllyUnit
+            - EnemyUnit
+        - InAnimateUnit?
+		Refactor goals:
+		- Get rid of getters and setters
+		- Simplify and expose only essential APIs ie. Ability.Perform()
+		- Decouple from UI stuff
+		- Work with new improved map system
+		- Use unity inbuilt event system
+		- Duplicate mesh > ghost mesh
+		- Just hold a single list of abilities instead of multiple lists; sort by AbilityType
+		- Get rid of current UnityEvents
+		Important APIs to expose:
+		- MoveTo(Tile tile), MoveTo(Vector2Int direction)?
+		- ProposeMove(Tile tile); displays the ghost mesh
+		- TakeDamage(int damage); current one is OK (Because I wrote it)
+		- Die(); OK
 
 	[BhaVE (AI): Awesome Behaviour Tree Editor!]
 		[V] BhaVE segregated into Runtime and Editor Dlls
@@ -198,51 +194,51 @@ namespace The.Great.Refactor.Brainstorm
 
     //Unit Testing
 
-    // #region Conventions
-    // internal class Conventions
-    // {
-    //     //Fields/Symbols
-    //     [SerializeField] float privateShownOnInspector;
-    //     [HideInInspector, SerializeField] float PrivateNotShownOnInspectorButSerialized;
-    //     public float avoidMe = 0f;     //Free variable that can be modified by anything and anyone
+    #region Conventions
+    internal class Conventions
+    {
+        //Fields/Symbols
+        [SerializeField] float privateShownOnInspector;
+        [HideInInspector] [SerializeField] float PrivateNotShownOnInspectorButSerialized;
+        public float avoidMe;     //Free variable that can be modified by anything and anyone
 
-    //     //Properties
-    //     //Shown on inspector, but read only in the assembly/codebase
-    //     [SerializeField] float _propertyBackingField = 0;
-    //     public float propertyBackingField
-    //     {
-    //         get => _propertyBackingField;
+        //Properties
+        //Shown on inspector, but read only in the assembly/codebase
+        [SerializeField] float _propertyBackingField;
+        public float propertyBackingField
+        {
+            get => _propertyBackingField;
 
-    //     }
+        }
 
-    //     void Something()
-    //     {
-    //         Debug.Log("somethign");
-    //     }
+        void Something()
+        {
+            Debug.Log("somethign");
+        }
 
-    //     void UseExpressionBodyMethodsForCleanerCode() => Debug.Log("This is clean!");
+        void UseExpressionBodyMethodsForCleanerCode() => Debug.Log("This is clean!");
 
 
-    //     //Privates
-    //     bool isPrivate = true;      //Implicit private
+        //Privates
+        bool isPrivate = true;      //Implicit private
 
-    //     /*
-	// 	Big classes
-	// 	- Classes over 200-300 lines of code should be split up using partial
+        /*
+		Big classes
+		- Classes over 200-300 lines of code should be split up using partial
 
-	// 	Try catch blocks
-	// 	try
-	// 	{
-	// 		if (blah)
-	// 		else if (bleh)
-	// 		else
-	// 			throw new InvalidOperationException("This is illegal!");
-	// 	}
-	// 	catch (Exception e)
-	// 	{
-	// 		Debug.LogWarning(e);
-	// 	}
-	// */
-    // }
-    // #endregion
+		Try catch blocks
+		try
+		{
+			if (blah)
+			else if (bleh)
+			else
+				throw new InvalidOperationException("This is illegal!");
+		}
+		catch (Exception e)
+		{
+			Debug.LogWarning(e);
+		}
+	*/
+    }
+    #endregion
 }

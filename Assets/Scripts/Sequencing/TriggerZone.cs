@@ -9,15 +9,15 @@ using UnityEditor;
 namespace StormRend.Sequencing
 {
 	/// <summary>
-	/// NOTE!: Maybe cinemachine already has somethinglike this
-	/// Attach to objects that will be used to detect objects
+	/// NOTE!: Maybe cinemachine already has somethinglike this	
+	/// Attach to objects that will be used to detect objects 
 	/// and then trigger it's sequence controller
 	/// </summary>
 	[RequireComponent(typeof(Collider))]
 	[RequireComponent(typeof(Rigidbody))]
 	public class TriggerZone : MonoBehaviour
 	{
-		[SerializeField] SequenceController sequenceController = null;
+		[SerializeField] SequenceController sequenceController;
 
 		[Tooltip("If empty will detect ANY object with collider, otherwise detect only these objects")]
 		[SerializeField] LayerMask layerMask = ~0;
@@ -55,7 +55,7 @@ namespace StormRend.Sequencing
 			{
 				var triggerObjectHit = col.GetComponent<TriggerObject>();
 				if (triggerObjects.Contains(triggerObjectHit) && layerMask.Contains(triggerObjectHit.gameObject.layer))
-					sequenceController.Play();
+					sequenceController.Play();	
 			}
 		}
 

@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 
 namespace StormRend.Units
 {
-	public class CrystalUnit : InAnimateUnit, IPointerClickHandler	//Unit =~= InAnimateUnit?
+	public class CrystalUnit : Unit, IPointerClickHandler	//Unit =~= InAnimateUnit?
 	{
 		//Inspector
 		[Header("Crystal")]
@@ -21,7 +21,7 @@ namespace StormRend.Units
 		[Tooltip("The range of the damage")]
 		public int range = 1;
 		[Tooltip("The type of units that won't get damaged")]
-		[EnumFlags] public TargetMask ignoreUnitMask;
+		[EnumFlags] public TargetUnitMask ignoreUnitMask;
 
 		//Members
 
@@ -30,10 +30,10 @@ namespace StormRend.Units
 		UserInputHandler ui;
 
 		//Core
-		protected override void Awake()
+		void Awake()
 		{
-			base.Awake();
 			ur = UnitRegistry.current;
+			// ui = UserInputHandler.current;
 		}
 
 		public void Tick()
@@ -51,14 +51,14 @@ namespace StormRend.Units
 		{
 			//TODO This is slightly confusing
 			//Determine tiles to do damage to (regardless of unit type because it's already ignored and filtered)
-			var tilesToAttack = Map.GetPossibleTiles(this.currentTile.owner, currentTile, 1, GetIgnoreUnitTypes()).ToList();
+			var tilesToAttack = Map.CalcValidActionArea(this.currentTile.owner, currentTile, 1, GetIgnoreUnitTypes()).ToList();
 
 			//Deal damage
 			foreach (var a in ur.aliveUnits)
 			{
 				if (tilesToAttack.Contains(a.currentTile))
 				{
-					a.TakeDamage(new DamageData(this, damage));
+					a.TakeDamage(damage);
 				}
 			}
 		}
@@ -67,22 +67,15 @@ namespace StormRend.Units
 		{
 			List<Type> targetUnits = new List<Type>();
 
-			//Allies
-			if ((ignoreUnitMask & TargetMask.Allies) == TargetMask.Allies)
+			//Add allies
+			if ((ignoreUnitMask & TargetUnitMask.Allies) == TargetUnitMask.Allies)
 				targetUnits.Add(typeof(AllyUnit));
-			//Enemies
-			if ((ignoreUnitMask & TargetMask.Enemies) == TargetMask.Enemies)
+			//Add enemies
+			if ((ignoreUnitMask & TargetUnitMask.Enemies) == TargetUnitMask.Enemies)
 				targetUnits.Add(typeof(EnemyUnit));
-			//Crystals
-			if ((ignoreUnitMask & TargetMask.Crystals) == TargetMask.Crystals)
+			//Add crystals
+			if ((ignoreUnitMask & TargetUnitMask.Allies) == TargetUnitMask.Allies)
 				targetUnits.Add(typeof(CrystalUnit));
-			//InAnimates
-			if ((ignoreUnitMask & TargetMask.InAnimates) == TargetMask.InAnimates)
-				targetUnits.Add(typeof(InAnimateUnit));
-			//Animates
-			if ((ignoreUnitMask & TargetMask.Animates) == TargetMask.Animates)
-				targetUnits.Add(typeof(AnimateUnit));
-				
 			return targetUnits.ToArray();
 		}
 

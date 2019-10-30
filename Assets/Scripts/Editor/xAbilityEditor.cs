@@ -7,7 +7,7 @@ using StormRend.Editors;
 [CustomEditor(typeof(xAbility))]
 public class xAbilityEditor : SmartEditor
 {
-    xEffectEditor m_effectEditor;
+    EffectEditor m_effectEditor;
 
     // the target ability object
     static xAbility t;
@@ -19,7 +19,7 @@ public class xAbilityEditor : SmartEditor
     void OnEnable()
     {
         t = (xAbility)target;
-        m_effectEditor = new xEffectEditor(t.GetEffects());
+        m_effectEditor = new EffectEditor(t.GetEffects());
     }
 
     public override void OnInspectorGUI()
@@ -80,7 +80,7 @@ public class xAbilityEditor : SmartEditor
                 genericMenu.AddItem(new GUIContent("Add Effect/Offense/Damage"), false, () => m_effectEditor.AddEffect(typeof(DamageEffect)));
                 genericMenu.AddItem(new GUIContent("Add Effect/Offense/Push"), false, () => m_effectEditor.AddEffect(typeof(PushEffect)));
                 genericMenu.AddItem(new GUIContent("Add Effect/Offense/Summon"), false, () => m_effectEditor.AddEffect(typeof(SummonEffect)));
-                genericMenu.AddItem(new GUIContent("Add Effect/Glory Gain"), false, () => m_effectEditor.AddEffect(typeof(GainGloryEffect)));
+                genericMenu.AddItem(new GUIContent("Add Effect/Glory Gain"), false, () => m_effectEditor.AddEffect(typeof(GloryEffect)));
 
 				//Defensive
                 genericMenu.AddItem(new GUIContent("Add Effect/Defensive/Teleport"), false, () => m_effectEditor.AddEffect(typeof(TeleportEffect)));

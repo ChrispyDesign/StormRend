@@ -15,7 +15,7 @@ namespace StormRend.Variables.Utils
 		[SerializeField, TextArea, Space(5)] string description = "";
 
 		[Header("Limits")]
-		[SerializeField] LimitType limitType = LimitType.None;
+		[SerializeField] LimitType limitType;
 		[SerializeField] int minLimit = 0;
 		[SerializeField] int maxLimit = 1;
 

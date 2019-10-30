@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 using System.Linq;
 using pokoro.Patterns.Generic;
@@ -14,7 +13,7 @@ using UnityEditor;
 namespace StormRend.MapSystems
 {
 	[ExecuteInEditMode]
-	public sealed class Map : Singleton<Map>    //Only one map per scene?
+	public sealed class Map : Singleton<Map>	//Only one map per scene?
 	{
 		const float maxMapSize = 500f;
 
@@ -36,7 +35,10 @@ namespace StormRend.MapSystems
 
 		//Members
 		[HideInInspector] public List<Tile> tiles = new List<Tile>();
-		static UnitRegistry ur;
+		UnitRegistry ur;
+
+		// public List<Unit> mapUnits => _mapUnits;
+		// List<Unit> _mapUnits;	//Is this required? What should actually set this? Should we just use UnitRegistry
 
 #if UNITY_EDITOR
 		[HideInInspector] public BoxCollider editorRaycastPlane;
@@ -93,26 +95,6 @@ namespace StormRend.MapSystems
 			editorRaycastPlane.hideFlags = HideFlags.HideAndDontSave | HideFlags.HideInInspector;   //Hide
 		}
 
-		/// <summary>
-		/// Gets the nearest tile
-		/// </summary>
-		public bool TryGetNearestTile(Vector3 position, out Tile nearestTile)
-		{
-			nearestTile = null;
-			float nearestSqrDist = Mathf.Infinity;
-			//Loop through all tiles and find the nearest tile
-			foreach (Tile t in tiles)
-			{
-				var sqrDist = Vector3.SqrMagnitude(t.transform.position - position);
-				if (sqrDist < nearestSqrDist)
-				{
-					nearestSqrDist = sqrDist;
-					nearestTile = t;
-				}
-			}
-			return nearestTile ? true : false;
-		}
-
 		[ContextMenu("Delete All Tiles")]
 		public void DeleteAllTiles()
 		{
@@ -133,29 +115,14 @@ namespace StormRend.MapSystems
 		public void ClearAllTileConnections()
 		{
 			foreach (var t in tiles)
-			{
 				t.DisconnectAll();
-				EditorUtility.SetDirty(t);      //Actually saves the data
-			}
 		}
 		public void GetTileTerrainCost(Tile tile) { }
 	#endregion
 
 	#region Pathfinding
-		/// <summary>
-		/// Calculates and returns a possible pathfinding solution
-		/// </summary>
-		/// <param name="map">The map</param>
-		/// <param name="start">Starting tile</param>
-		/// <param name="range">The range of movement</param>
-		/// <param name="pathblockingUnitTypes">The type of units on tiles that blocks the path and will be filtered out</param>
-		/// <returns></returns>
-		public static Tile[] GetPossibleTiles(Map map, Tile start, int range, params Type[] pathblockingUnitTypes)
+		public static Tile[] CalcValidActionArea(Map map, Tile start, int range, params Type[] unitTypesToExclude)
 		{
-			Debug.Assert(start, "Invalid Start tile");
-			Debug.Assert(map, "Invalid map parameter");
-
-			//TODO Check to make sure exclude
 			List<Tile> validMoves = new List<Tile>();
 			Queue<Tile> openList = new Queue<Tile>();
 			List<Tile> closedList = new List<Tile>();
@@ -177,13 +144,16 @@ namespace StormRend.MapSystems
 				//Search through the neighbours until we find the best travel cost to another tile
 				foreach (var n in neighbours)
 				{
-					//PASS if neighbour tile is unwalkable
-					if (n is UnWalkableTile)
-						continue;
+					//Pass if neighbour tile is unwalkable
+					if (n is UnWalkableTile) continue;
 
-					//PASS if neighbour tile has a unit on top that needs to be ignored
-					if (UnitRegistry.AreUnitTypesOnTile(n, pathblockingUnitTypes))
-						continue;
+					//Pass if neighbour tile has a unit that needs to be ignored
+					foreach (var u in map.ur.aliveUnits)
+						//If unit is a type that needs to be ignored...
+						if (unitTypesToExclude.Contains(u.GetType()))
+							//If unit is on this neighbour tile...
+							if (u.currentTile == n)
+								continue;
 
 					//connected tile checked
 					if (!closedList.Contains(n))
@@ -196,7 +166,9 @@ namespace StormRend.MapSystems
 						n.G = newMovementCostToNeighbour;
 						n.H = 1;
 						// n.parent = currentTile;
-						if (n.G <= range) openList.Enqueue(n);
+
+						if (n.G <= range)
+							openList.Enqueue(n);
 					}
 				}
 
@@ -210,6 +182,7 @@ namespace StormRend.MapSystems
 				t.G = 0;
 				t.H = 0;
 			}
+
 			return validMoves.ToArray();
 		}
 	#endregion

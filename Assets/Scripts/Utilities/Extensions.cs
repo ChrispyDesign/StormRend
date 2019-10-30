@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace StormRend.Utility
@@ -12,16 +11,5 @@ namespace StormRend.Utility
         {
             return mask == (mask | (1 << layer));
         }
-
-		/// <summary>
-		/// Check if an object is in an array
-		/// </summary>
-		public static bool Contains(this Array array, object item)
-		{
-			foreach (var i in array)
-				if (i == item)
-					return true;
-			return false;
-		}
     }
 }

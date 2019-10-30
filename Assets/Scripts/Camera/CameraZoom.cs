@@ -18,13 +18,13 @@ namespace StormRend.CameraSystem
         [Tooltip("The furthest possible location the camera can zoom out to")]
         [SerializeField] Transform far = null;
         [Tooltip("The transform containing all of the camera zoom anchor points")]
-        [SerializeField] Transform anchorPoints = null;
+        [SerializeField] Transform anchorPoints;
         [Tooltip("The amount of transforms/snapping points to generate between near and far")]
         [SerializeField] int nearFarSteps = 5;
 
         // step/snapping point helper variables
         private List<GameObject> m_anchors = new List<GameObject>();
-        private int m_currentStep = 0;
+        private int m_currentStep;
 
         // the position that the camera will consistently attempt to zoom to
         private Vector3 m_desiredPosition;

@@ -21,22 +21,22 @@ namespace StormRend.Abilities
 	}
 
 	[System.Serializable]
-	// [CreateAssetMenu(fileName = "xAbility", menuName = "StormRend/xAbility")]
+	[CreateAssetMenu(fileName = "xAbility", menuName = "StormRend/xAbility")]
 	public class xAbility : ScriptableObject
 	{
 		private List<xTile> m_tiles = new List<xTile>();
 
 		// ability info (for UI display purposes)
-		[SerializeField] int animNumber = 0;
+		[SerializeField] int animNumber;
 		[SerializeField] Sprite m_icon = null;
 		[TextArea]
-		[SerializeField] string m_description = "";
+		[SerializeField] string m_description;
 
 		[SerializeField] int m_gloryRequirement = 0;
 		[SerializeField] int m_tilesToSelect = 1;
 
 		public RowData[] m_castArea = new RowData[7];
-		[SerializeField] TargetableTiles m_targetableTiles = new TargetableTiles();
+		[SerializeField] TargetableTiles m_targetableTiles;
 		[SerializeField] List<xEffect> m_effects = new List<xEffect>();
 
 		#region getters

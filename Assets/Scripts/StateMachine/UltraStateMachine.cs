@@ -21,15 +21,14 @@ namespace StormRend.Systems.StateMachines
 
 	#region Inspector
 		[ReadOnlyField] [SerializeField] int _currentStateIDX = 0;
-		[SerializeField] State entryState = null;
+		[SerializeField] State entryState;
 		[SerializeField] List<State> turnStates = new List<State>();  //They have to be StackStates because they can be covered/uncovered
 		Stack<State> stackStates = new Stack<State>();
 
 		[Space]
-		public StateEvent onExitCurrentTurn;
-		public StateEvent onEnterNextTurn;
+		public StateEvent OnNextTurn;
+		// public static Action<State> onNextTurn;		//CAREFUL: static
 	#endregion
-
 	#region Properties
 		public int turnsCount => turnStates.Count;
 		public int stackCount => stackStates.Count;
@@ -140,19 +139,17 @@ namespace StormRend.Systems.StateMachines
 		/// </summary>
 		public void NextTurn()
 		{
+			OnNextTurn.Invoke(currentState);
+
 			//Can only go to next turn if in turn based mode
 			if (isInTurnBasedMode)
 			{
 				//Exit current state
-				onExitCurrentTurn.Invoke(currentState);
 				currentState?.OnExit(this);
-
 				//Set next state index
 				currentStateIDX++;
-
 				//Enter next state
 				currentState?.OnEnter(this);
-				onEnterNextTurn.Invoke(currentState);
 			}
 		}
 
