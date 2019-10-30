@@ -7,8 +7,8 @@ namespace StormRend.Abilities
 	public abstract class Effect : ScriptableObject
 	{
 		public bool isFoldOut { get; set; } = true;
-		Ability container;
-		Unit owner;
+		protected Ability container;
+		protected Unit owner;
 
 	#region Core
 		public virtual void Prepare(Unit owner) { if (!this.owner) this.owner = owner; }		

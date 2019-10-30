@@ -138,12 +138,12 @@ namespace StormRend.Systems
 			// tMoveByV2ITest();
 		}
 
-		void tMoveByV2ITest()	//Move by Vector 2 Int Test
-		{
-			Vector2Int moveDir = new Vector2Int((int)Input.GetAxisRaw("Horizontal"), (int)Input.GetAxisRaw("Vertical"));
-			if (isUnitSelected)
-				selectedAnimateUnit.Move(moveDir, true);
-		}
+		// void tMoveByV2ITest()	//Move by Vector 2 Int Test
+		// {
+		// 	Vector2Int moveDir = new Vector2Int((int)Input.GetAxisRaw("Horizontal"), (int)Input.GetAxisRaw("Vertical"));
+		// 	if (isUnitSelected)
+		// 		selectedAnimateUnit.Move(moveDir, true);
+		// }
 
 	#endregion
 		//--------------------- PROCESS EVENTS -----------------------------

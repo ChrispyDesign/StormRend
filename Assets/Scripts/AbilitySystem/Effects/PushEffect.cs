@@ -61,8 +61,10 @@ namespace StormRend.Abilities.Effects
                         //Try getting animate units on the tile
                         if (UnitRegistry.TryGetUnitTypeOnTile(t, out Unit unit, typesToCheck.ToArray()))
                         {
+                            var au = unit as AnimateUnit;
+
                             //Push the unit in the vector direction from target tile to adjacent tile
-                            (unit as AnimateUnit).Move(direction * pushAmount, canPushOffEdge);
+                            au.Push(direction * pushAmount, canPushOffEdge);
                             
                             //Do damage (where needed)
                             unit.TakeDamage(new DamageData(owner, damage));
@@ -73,3 +75,11 @@ namespace StormRend.Abilities.Effects
         }
     }
 }
+
+// for (int j = 0; j < pushAmount; ++j)
+// {
+//     if (!au.Push(direction * j, canPushOffEdge))
+//     {
+//         //Pushed off edge OR pushed to the edge of an obstacle
+//     }
+// }

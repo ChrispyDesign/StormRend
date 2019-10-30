@@ -27,7 +27,7 @@ namespace StormRend.Abilities
 		//Inspector
 		[SerializeField] Sprite _icon = null;
 		[Tooltip("Animation number for this ability in order to send to a corresponding animator")]
-		[SerializeField] int _animNumber = 0;
+		[SerializeField] string _animation = "";
 		[SerializeField] int _level = 1;
 		[SerializeField] AbilityType _type = AbilityType.Primary;
 		[TextArea(0, 2), SerializeField] string _description = "";
@@ -49,7 +49,7 @@ namespace StormRend.Abilities
 
 		//Properties
 		public Sprite icon => _icon;
-		public int animNumber => _animNumber;
+		public string animation => _animation;
 		public AbilityType type => _type;
 		public string description => _description;
 		public int gloryCost => _gloryCost;

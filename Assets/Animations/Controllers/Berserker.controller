@@ -14,19 +14,19 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Provoke
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: BerserkerHitReact
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -40,19 +40,6 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!114 &114153846140664552
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3864920c20d64784fab604389e33af26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerName: FuriousSwing
 --- !u!114 &114232244923029244
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,7 +88,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8cb443555d83c149854869582a5134a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trigger: Trigger
 --- !u!114 &114863263462099918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -432,8 +418,7 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101222894724131798}
-  m_StateMachineBehaviours:
-  - {fileID: 114153846140664552}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

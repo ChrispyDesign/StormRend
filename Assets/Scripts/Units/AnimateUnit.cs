@@ -15,8 +15,8 @@ using UnityEngine.EventSystems;
 
 namespace StormRend.Units
 {
-	[SelectionBase] //Avoid clicking on child objects
-	public abstract class AnimateUnit : Unit, IPointerEnterHandler, IPointerExitHandler
+    [SelectionBase] //Avoid clicking on child objects
+	public abstract partial class AnimateUnit : Unit, IPointerEnterHandler, IPointerExitHandler
 	{
 		//Inspector
 		[Header("Abilities")]
@@ -187,22 +187,30 @@ namespace StormRend.Units
 		}
 
 		/// <summary>
-		/// FORCE Move Unit by direction ie. Move({2, 1}) means the unit to move right 2 and forward 1.
-		/// Returns false if the unit moved onto an empty space.
-		/// Can set to kill unit if it does move onto an empty space.
+		/// Force Move Unit by direction ie. (0, 1) means the unit to moves forward 1 tile.
+		/// Can set to kill unit pushed over the edge.
 		/// </summary>
-		public bool Move(Vector2Int direction, bool kill = true)		//FORCED MOVE (IE. PUSH)
+		public PushResult Push(Vector2Int direction, bool kill = true)
 		{
 			if (currentTile.TryGetTile(direction, out Tile t))
 			{
+				//Check for any units or obstacles
+				if (UnitRegistry.IsAnyUnitOnTile(t)) 
+					return PushResult.Unit;
+
+				//Check if pushed onto an unwalkable tile
+				if (t is UnWalkableTile)
+					return PushResult.UnWalkableTile;
+
 				//Push unit
-				return Move(t, false, false, true);
+				Move(t, false, false, true);
+				return PushResult.Nothing;
 			}
 			else
 			{
 				//Pushed out of bounds
 				if (kill) Die();
-				return false;
+				return PushResult.OverEdge;
 			}
 		}
 
