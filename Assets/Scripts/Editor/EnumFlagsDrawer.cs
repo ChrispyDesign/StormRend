@@ -4,7 +4,7 @@ using StormRend.Utility.Attributes;
 
 namespace StormRend.Editors.PropDrawers
 {
-    [CustomPropertyDrawer(typeof(EnumFlagsAttribute))]
+	[CustomPropertyDrawer(typeof(EnumFlagsAttribute))]
     public class EnumFlagsDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)

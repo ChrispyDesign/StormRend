@@ -4,6 +4,7 @@ using StormRend.Utility.Attributes;
 using StormRend.Units;
 using pokoro.BhaVE.Core.Variables;
 using StormRend.Enums;
+using System.Collections.Generic;
 
 namespace StormRend.Systems
 {
@@ -13,22 +14,22 @@ namespace StormRend.Systems
 	public class BlizzardController : MonoBehaviour
     {
         //Inspector
-        [SerializeField] BhaveInt blizzardVar;
+        [SerializeField] BhaveInt blizzardVar = null;
         [SerializeField] int maxBlizzardValue = 5;
 
         [Header("Damage")]
-        [SerializeField, EnumFlags] TargetUnitMask unitMask;
+        [SerializeField, EnumFlags] TargetMask targetUnits = TargetMask.Allies;
         [SerializeField, Range(1, 10)] int damage = 1;
 
         [Space]
         [Header("Events")]
-        [SerializeField] UnityEvent OnExecute;
-        [SerializeField] UnityEvent OnReset;
+        [SerializeField] UnityEvent onExecute = null;
+        [SerializeField] UnityEvent onReset = null;
 
-        UnitRegistry ur;
+        UnitRegistry ur = null;
 
     #region Core
-        void Awake()
+        void Start()
         {
             ur = UnitRegistry.current;
         }
@@ -43,51 +44,34 @@ namespace StormRend.Systems
         }
         internal void Execute()
         {
-            OnExecute.Invoke();
+            onExecute.Invoke();
+
+            var unitsToDamage = new List<Unit>();
 
             //ALLIES
-            if ((unitMask & TargetUnitMask.Allies) == TargetUnitMask.Allies)
-            {
-                //Damage all ally units
-                var allyUnits = ur.GetUnits<AllyUnit>();
-                DealDamageToUnits(allyUnits);
-            }
-
+            if ((targetUnits & TargetMask.Allies) == TargetMask.Allies)
+                unitsToDamage.AddRange(ur.GetUnitsByType<AllyUnit>());
             //ENEMIES
-            if ((unitMask & TargetUnitMask.Enemies) == TargetUnitMask.Enemies)
-            {
-                //Deal damage to all enemies
-                var enemyUnits = ur.GetUnits<EnemyUnit>();
-                DealDamageToUnits(enemyUnits);
-            }
-
-            //CRYSTALS
-            if ((unitMask & TargetUnitMask.Crystals) == TargetUnitMask.Crystals)
-            {
-                //Deal damage to all enemies
-                var crystalUnits = ur.GetUnits<CrystalUnit>();
-                DealDamageToUnits(crystalUnits);
-            }
-
-            //OTHER (ie. Spirit crystals etc)
-            if ((unitMask & TargetUnitMask.InAnimates) == TargetUnitMask.InAnimates)
-            {
-                //Deal blizzard damage to all inanimate enemies
-                Debug.LogError("Blizzard affect on inanimate units not implemented!");
-            }
-
-            void DealDamageToUnits(Unit[] units)
-            {
-                foreach (var u in units)
-                {
-                    u.TakeDamage(damage);
-                }
-            }
+            if ((targetUnits & TargetMask.Enemies) == TargetMask.Enemies)
+                unitsToDamage.AddRange(ur.GetUnitsByType<EnemyUnit>());
+			//CRYSTALS
+            if ((targetUnits & TargetMask.Crystals) == TargetMask.Crystals)
+                unitsToDamage.AddRange(ur.GetUnitsByType<CrystalUnit>());
+            //INANIMATES
+            if ((targetUnits & TargetMask.InAnimates) == TargetMask.InAnimates)
+                unitsToDamage.AddRange(ur.GetUnitsByType<InAnimateUnit>());
+            //ANIMATES
+            if ((targetUnits & TargetMask.Animates) == TargetMask.Animates)
+                unitsToDamage.AddRange(ur.GetUnitsByType<AnimateUnit>());
+			
+			//Deal damage to selected units
+			foreach (var u in unitsToDamage)
+				u.TakeDamage(new DamageData(null, damage));
         }
 
         internal void Reset()
         {
-            OnReset.Invoke();
+            onReset.Invoke();
             blizzardVar = 0;
         }
     #endregion

@@ -78,7 +78,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197eb9973ce1cda40a9cdebfbc070dde, type: 3}
   m_Name: AttackUnit[COPY]
   m_EditorClassIdentifier: 
-  targets: {fileID: 11400000, guid: c8add33a65b30a347bd1530394bd15fd, type: 2}
 --- !u!114 &114081762246916880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,7 +106,6 @@ MonoBehaviour:
   children:
   - {fileID: 114409420985139542}
   - {fileID: 114747288300816962}
-  - {fileID: 114663625168489100}
 --- !u!114 &114134749382122290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,9 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b1f1a99687b412c802b457903ceede, type: 3}
   m_Name: FindUnitsInRange[COPY]
   m_EditorClassIdentifier: 
-  unitTypeToFind: 0
-  targets: {fileID: 11400000, guid: c8add33a65b30a347bd1530394bd15fd, type: 2}
-  turns: 2
 --- !u!114 &114166318178614652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +138,7 @@ MonoBehaviour:
       y: 415
       width: 95
       height: 65
-    breakpoint: 0
+    breakpoint: 1
   ID: 4
   description: 
   _state: -1
@@ -217,7 +212,7 @@ MonoBehaviour:
   ID: 9
   description: 
   _state: -1
-  _parent: {fileID: 114747288300816962}
+  _parent: {fileID: 0}
 --- !u!114 &114409420985139542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,7 +242,6 @@ MonoBehaviour:
   - {fileID: 114864527018219270}
   - {fileID: 114001613169364612}
   - {fileID: 114166318178614652}
-  - {fileID: 114883664047879428}
 --- !u!114 &114426332051439364
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -274,9 +268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b1f1a99687b412c802b457903ceede, type: 3}
   m_Name: FindUnitsInRange[COPY]
   m_EditorClassIdentifier: 
-  unitTypeToFind: 0
-  targets: {fileID: 11400000, guid: c8add33a65b30a347bd1530394bd15fd, type: 2}
-  turns: 1
 --- !u!114 &114663625168489100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,15 +284,15 @@ MonoBehaviour:
     owner: {fileID: 11400000}
     rect:
       serializedVersion: 2
-      x: 773.5
-      y: 300
+      x: 775.5
+      y: 295
       width: 95
       height: 65
-    breakpoint: 0
+    breakpoint: 1
   ID: 10
   description: 
   _state: -1
-  _parent: {fileID: 114081762246916880}
+  _parent: {fileID: 0}
 --- !u!114 &114747288300816962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,7 +310,7 @@ MonoBehaviour:
     rect:
       serializedVersion: 2
       x: 649.5
-      y: 298
+      y: 292
       width: 95
       height: 65
     breakpoint: 0
@@ -330,7 +321,6 @@ MonoBehaviour:
   children:
   - {fileID: 114855049180117026}
   - {fileID: 114223994784296196}
-  - {fileID: 114258608254384058}
 --- !u!114 &114855049180117026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,7 +366,7 @@ MonoBehaviour:
     rect:
       serializedVersion: 2
       x: 176.5
-      y: 413
+      y: 418
       width: 95
       height: 65
     breakpoint: 0
@@ -411,4 +401,4 @@ MonoBehaviour:
   ID: 5
   description: 
   _state: -1
-  _parent: {fileID: 114409420985139542}
+  _parent: {fileID: 0}

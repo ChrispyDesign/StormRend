@@ -5,10 +5,11 @@ namespace StormRend.MapSystems.Tiles
 	[RequireComponent(typeof(SpriteRenderer))]
 	public class TileHighlight : MonoBehaviour
 	{
-		SpriteRenderer sr;
+		public SpriteRenderer sr;
 		public Color color 
 		{
 			get => sr.color;
+			set => sr.color = value;
 		}
 
 		void Awake()
@@ -17,13 +18,17 @@ namespace StormRend.MapSystems.Tiles
 			Debug.Assert(sr, "Sprite renderer not found!");
 		}
 
-		public void SetColor(TileHighlightColor setting)
-		{
-			sr.color = setting.color;
-		}
-		public void SetColor(Color color)
-		{
-			sr.color = color;
-		}
+		// public void SetColor(TileHighlightColor highlightColor)
+		// {
+		// 	sr.color = highlightColor.color;
+		// }
+		// public void SetColor(Color color)
+		// {
+		// 	sr.color = color;
+		// }
+		// public void Clear()
+		// {
+		// 	sr.color = Color.clear;
+		// }
 	}
 }

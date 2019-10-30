@@ -6,9 +6,32 @@ namespace StormRend.Abilities
 {
 	public abstract class Effect : ScriptableObject
 	{
-		protected bool isTileAllowed;	//WTF does this mean?
 		public bool isFoldOut { get; set; } = true;
+		protected Ability container;
+		protected Unit owner;
 
-		public abstract bool Perform(Unit owner, Tile[] targets);
+	#region Core
+		public virtual void Prepare(Unit owner) { if (!this.owner) this.owner = owner; }		
+		public abstract void Perform(Unit owner, Tile[] targetTiles);
+		public void SetContainer(Ability container) => this.container = container;
+	#endregion
 	}
 }
+
+/* Effect Categories
+----------------------
+Benefits
+Curses
+Defensive
+Offensive
+Recovery
+Runes
+ */
+
+// public enum Target
+// {
+// 	Self,
+// 	SelectedTiles,
+// 	SelectedTilesWithBreadth,
+// 	AdjacentTiles
+// }

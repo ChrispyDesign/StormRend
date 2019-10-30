@@ -11,28 +11,28 @@ namespace StormRend.CameraSystem
 	public class MasterCamera : Singleton<MasterCamera>
 	{
 		public int priority = 10;
-		public Camera linkedCamera 
+		public new Camera camera 
 		{
 			get 
 			{
-				if (!_linkedCamera) Reset();
-				return _linkedCamera;
+				if (!_cam) Reset();
+				return _cam;
 			}
-			private set => linkedCamera = value;
+			private set => camera = value;
 		}
-		Camera _linkedCamera;
+		Camera _cam;
 
 		void Reset()
 		{
-			_linkedCamera = GetComponent<Camera>();
-			if (_linkedCamera) return;
-			_linkedCamera = GetComponentInChildren<Camera>();	//Find below
-			if (_linkedCamera) return;
-			_linkedCamera = GetComponentInParent<Camera>();		//Find above
-			Debug.Assert(_linkedCamera, "No camera found on this object!");
+			_cam = GetComponent<Camera>();
+			if (_cam) return;
+			_cam = GetComponentInChildren<Camera>();	//Find below
+			if (_cam) return;
+			_cam = GetComponentInParent<Camera>();		//Find above
+			Debug.Assert(_cam, "No camera found on this object!");
 		}
 
 		//Returns the attached camera
-		public static implicit operator Camera(MasterCamera rhs) => rhs.linkedCamera;
+		// public static imp licit operator Camera(MasterCamera rhs) => rhs.cam;
 	}
 }

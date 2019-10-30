@@ -16,12 +16,12 @@ namespace StormRend.Variables.Utils
 		[TextArea(0, 2), SerializeField, Space(5)] string description = "";
 
 		[Header("Limits")]
-		[SerializeField] LimitType limitType;
+		[SerializeField] LimitType limitType = LimitType.None;
 		[SerializeField] int minLimit = 0;
 		[SerializeField] int maxLimit = 1;
 
 		[Header("Events")]
-		public UnityEvent OnChanged;
+		public UnityEvent OnChanged = null;
 
 		void OnValidate()
 		{

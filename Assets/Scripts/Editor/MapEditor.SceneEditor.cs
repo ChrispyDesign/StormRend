@@ -9,7 +9,7 @@ namespace StormRend.Editors
     {
         public enum EditMode { Painting, Erasing }
 
-        const int kNumOfGridLines = 30;
+        const int kNumOfGridLines = 40;		//Size of the grid
         public override bool RequiresConstantRepaint() => true;
 
         Color oldHandleColor, oldGUIColor;
@@ -41,7 +41,7 @@ namespace StormRend.Editors
             SetMouseCursor();
             DrawGridCursor();
 
-            if (showConnections) DrawConnections(Color.red);
+            if (showConnections) DrawConnections(new Color(1, 0.65f, 0));
 
             if (!m || !m.selectedTilePrefab) return;
 
@@ -169,6 +169,8 @@ namespace StormRend.Editors
         }
         void DrawConnections(Color? color = null)
         {
+			if (!m) return;
+
             Handles.color = color == null ? Color.white : color.Value;
 
             foreach (var t in m?.tiles)

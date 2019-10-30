@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Grass : MonoBehaviour
@@ -21,10 +20,6 @@ public class Grass : MonoBehaviour
 		{
 			var randomMaterialIDX = Random.Range(0, grassMaterials.Count - 1);
 			GetComponentInChildren<Renderer>().material = grassMaterials[randomMaterialIDX];
-		}
-		else
-		{
-			Debug.LogWarning("No grass materials!");
 		}
 	}
 }

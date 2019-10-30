@@ -1,4 +1,3 @@
-using StormRend.Defunct;
 using StormRend.States.UI;
 using StormRend.Systems.StateMachines;
 using StormRend.Utility.Attributes;
@@ -7,7 +6,7 @@ using UnityEngine.Events;
 
 namespace StormRend.States
 {
-    public abstract class TurnState : UIState
+    public class TurnState : UIState
     {
         [Header("Stats")]
         [ReadOnlyField] public float turnCount = 0;

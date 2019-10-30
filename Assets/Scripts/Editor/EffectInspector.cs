@@ -1,39 +1,33 @@
-using System;
-using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using StormRend.Abilities;
 using UnityEditor;
 using UnityEngine;
 
 namespace StormRend.Editors
 {
-	public class EffectInspector : SmartEditor
+	public class EffectInspector : Editor
 	{
 		//Members
 		Ability owner;
-		List<Effect> effects;
 		GUIStyle boldFoldoutStyle;
 
 		public EffectInspector(Ability ability)
 		{
 			owner = ability;
-			this.effects = ability.effects;
 		}
 
-		public EffectInspector(List<Effect> effects)    //Probably don't need this
-		{
-			this.effects = effects;
-		}
-
-		void OnEnable()
-		{
-			//Create a bold foldout GUI style
-			// boldFoldoutStyle = new GUIStyle(EditorStyles.foldout);
-			// boldFoldoutStyle.fontStyle = FontStyle.Bold;
-		}
+		// void OnEnable()
+		// {
+		// 	//Create a bold foldout GUI style
+		// 	boldFoldoutStyle = new GUIStyle(EditorStyles.foldout)
+		// 	{
+		// 		fontStyle = FontStyle.Bold,
+		// 	};
+		// }
 
 		public void DrawGUI()
 		{
-			foreach (var e in effects)
+			foreach (var e in owner.effects)
 			{
 				DrawHeader(e);
 
@@ -45,44 +39,31 @@ namespace StormRend.Editors
 			}
 		}
 
-		void DrawHeader(Effect e)
+		/// <summary>
+		/// Draws the header for the effect.
+		/// </summary>
+		/// <returns>Returns true if the close button is pressed</returns>
+		public bool DrawHeader(Effect e)
 		{
-			EditorGUILayout.Space();
+			GUILayout.Space(3);
 			using (new EditorGUILayout.HorizontalScope(EditorStyles.helpBox))
 			{
-				//Fold out
-				e.isFoldOut = EditorGUILayout.Foldout(e.isFoldOut, e.name, true, boldFoldoutStyle);
+				boldFoldoutStyle = new GUIStyle(EditorStyles.foldout) 
+					{ fontStyle = FontStyle.Bold };
+				var formattedName = Regex.Replace(e.name, "[E-e]ffect", "");
+				// var formattedName = Regex.Replace(e.name, "[([a-z])([A-Z])]", "$1 $2");
+				e.isFoldOut = EditorGUILayout.Foldout(e.isFoldOut, formattedName, true, boldFoldoutStyle);
 
 				GUILayout.FlexibleSpace();
 
 				//Close button
-				if (GUILayout.Button("×")) RemoveEffect(e);
+				if (GUILayout.Button("×"))
+				{
+					owner.RemoveEffect(e);
+					return true;
+				}
+				return false;
 			}
-		}
-
-		/// <summary>
-		/// Adds an effect of type T to the declared owner
-		/// </summary>
-		public void AddEffect<T>() where T : Effect
-		{
-			//Create
-			var eNew = CreateInstance<T>();
-			eNew.name = eNew.GetType().Name;
-			owner.effects.Add(eNew);
-
-			//Add to ability SO
-			AssetDatabase.AddObjectToAsset(eNew, owner);
-
-			//Hide
-			eNew.hideFlags = HideFlags.HideInHierarchy;
-			AssetDatabase.SaveAssets();
-		}
-
-		void RemoveEffect(Effect e)
-		{
-			owner.effects.Remove(e);
-			DestroyImmediate(e, true);
-			AssetDatabase.SaveAssets();
 		}
 	}
 }

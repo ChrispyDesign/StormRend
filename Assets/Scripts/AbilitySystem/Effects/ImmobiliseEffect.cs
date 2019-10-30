@@ -1,0 +1,24 @@
+﻿using StormRend.MapSystems.Tiles;
+using StormRend.Units;
+
+namespace StormRend.Abilities.Effects
+{
+	/// <summary>
+	/// Prevents the unit from moving
+	/// </summary>
+	public class ImmobiliseEffect : StatusEffect
+    {
+		public override void Perform(Unit owner, Tile[] targetTiles)
+		{
+			AddStatusEffectToAnimateUnits(targetTiles);
+		}
+
+		public override void OnBeginTurn(AnimateUnit affectedUnit)
+		{
+			base.OnBeginTurn(affectedUnit);	//Housekeeping
+
+			//Cripple the bearer for this turn
+			affectedUnit.SetCanMove(false);
+		}
+	}
+}

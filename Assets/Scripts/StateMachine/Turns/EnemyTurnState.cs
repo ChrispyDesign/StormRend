@@ -12,12 +12,12 @@ namespace StormRend.States
 		// - Trigger crystals ! Maybe use UnityEvents and decouple this to another MonoBehaviour
 		// - Handle any UI : Use UnityEvents
 
-		[Tooltip("Time between each enemy unit's turn in seconds")]
+		[Header("AI"), Tooltip("Time between each enemy unit's turn in seconds")]
 		[SerializeField] float aiTurnTime = 2f;
 
-		Unit[] currentEnemies;
+		EnemyUnit[] enemies = new EnemyUnit[0];
 		BhaveDirector ai;
-		UnitRegistry ur;	//Kinda bad
+		UnitRegistry ur;
 
 		void Awake()
 		{
@@ -35,14 +35,15 @@ namespace StormRend.States
 			base.OnEnter(sm);
 
 			//Get the current enemies & Run AI
-			currentEnemies = ur.GetUnits<EnemyUnit>();
-			StartCoroutine(RunAI(sm));
+			enemies = ur.GetUnitsByType<EnemyUnit>();
+			if (enemies?.Length > 0)
+				StartCoroutine(RunAI(sm));
 		}
 
 		IEnumerator RunAI(UltraStateMachine sm)
 		{
 			//Run through each unit's turn then finish turn
-			foreach (var u in currentEnemies)
+			foreach (var u in enemies)
 			{
 				var agent = u.GetComponent<BhaveAgent>();
 				ai.Tick(agent);
@@ -59,7 +60,7 @@ namespace StormRend.States
 		void TickCrystals()
 		{
 			//Get current crystals
-			var crystals = ur.GetUnits<CrystalUnit>();
+			var crystals = ur.GetUnitsByType<CrystalUnit>();
 
 			//Tick crystals
 			foreach (var c in crystals)
