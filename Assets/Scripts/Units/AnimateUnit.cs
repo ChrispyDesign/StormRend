@@ -196,11 +196,11 @@ namespace StormRend.Units
 			{
 				//Check for any units or obstacles
 				if (UnitRegistry.IsAnyUnitOnTile(t))
-					return PushResult.Unit;		//Don't push
+					return PushResult.HitUnit;		//Don't push
 
 				//Check if pushed onto an unwalkable tile
 				if (t is UnWalkableTile)
-					return PushResult.UnWalkableTile;	//Don't push
+					return PushResult.HitBlockedTile;	//Don't push
 
 				//Push unit
 				Move(t, false, false, true);

@@ -41,8 +41,9 @@ namespace StormRend.Abilities.Effects
                 //Try getting tiles around it
                 for (int i = 0; i < 360; i += 90)
                 {
+                    //Set directions
+                    // var direction = new Vector2Int(Mathf.RoundToInt(Mathf.Cos(i)), -Mathf.RoundToInt(Mathf.Sin(i)));
                     // var deg = i * Mathf.Deg2Rad;
-                    // var direction = new Vector2Int(Mathf.RoundToInt(Mathf.Cos(i)), -Mathf.RoundToInt(Mathf.Sin(i)));	//Set directions
                     Vector2Int direction = new Vector2Int();
                     switch (i)
                     {
@@ -59,16 +60,19 @@ namespace StormRend.Abilities.Effects
                         if (UnitRegistry.TryGetUnitTypeOnTile(t, out Unit unit, typesToCheck.ToArray()))
                         {
                             var au = unit as AnimateUnit;
-
                             //Do incremental pushes to avoid moving through obstacles
                             for (int j = 0; j < pushAmount; ++j)
                             {
                                 //Push the unit in the vector direction from target tile to adjacent tile
-                                au.Push(direction, canPushOffEdge);
+                                var pushResult = au.Push(direction, canPushOffEdge);
+                                if (pushResult == PushResult.HitUnit ||
+                                    pushResult == PushResult.HitBlockedTile)
+                                    break;  //Break out of loop; Cannot move anymore
+                                else if (pushResult == PushResult.OverEdge)
+                                    return; //Unit is dead; Break out of function
                             }
-
                             //Do damage (where needed)
-                            unit.TakeDamage(new DamageData(owner, damage));
+                            if (damage > 0) unit.TakeDamage(new DamageData(owner, damage));
                         }
                     }
                 }
