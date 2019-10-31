@@ -7,26 +7,47 @@ namespace StormRend.UI
 {
 	public class GloryMeter : Meter
 	{
-		[SerializeField] float increasePerNode;
-		[SerializeField] Image slider;
+		[SerializeField] Image[] gloryNodes;
+		int currentIndex;
 
 		private void Awake()
 		{
 			infoPanel = FindObjectOfType<InfoPanel>();
-			slider.fillAmount = 0f;
+			foreach (Image img in gloryNodes)
+			{
+				img.fillAmount = 0f;
+			}
+			currentIndex--;
 
-			Debug.Assert(slider, "There is no slider, please add a panel with filled image component on it. " + typeof(GloryMeter));
+			Debug.Assert(gloryNodes[0], "There is no slider, please add a panel with filled image component on it. " + typeof(GloryMeter));
 			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(GloryMeter));
 		}
-		
+
+		private void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.B))
+				OnIncrease();
+
+			if (Input.GetKeyDown(KeyCode.N))
+				OnDecrease();
+		}
+
 		public override void OnIncrease()
 		{
-			StartCoroutine(IncreaseGlory());
+			if (currentIndex + 1 == gloryNodes.Length)
+				return;
+
+			StartCoroutine(IncreaseBlizzard(currentIndex + 1));
+			currentIndex++;
 		}
 
 		public override void OnDecrease()
 		{
-			StartCoroutine(DecreaseGlory());
+			if (currentIndex - 1 == -1)
+				return;
+
+			StartCoroutine(DecreaseBlizzard(currentIndex));
+			currentIndex--;
 		}
 
 		public override void OnPointerEnter(PointerEventData eventData)
@@ -39,21 +60,21 @@ namespace StormRend.UI
 			infoPanel.UnShowPanel();
 		}
 
-		private IEnumerator IncreaseGlory()
+		private IEnumerator IncreaseBlizzard(int _index)
 		{
-			for (float i = 0f; i <= increasePerNode; i += 0.01f)
+			for (float i = 0f; i <= 1; i += 0.01f)
 			{
-				slider.fillAmount += 0.01f;
+				gloryNodes[_index].fillAmount += 0.01f;
 				yield return new WaitForSeconds(0.01f);
 			}
 			yield return null;
 		}
 
-		private IEnumerator DecreaseGlory()
+		private IEnumerator DecreaseBlizzard(int _index)
 		{
-			for (float i = 0f; i <= increasePerNode; i += 0.01f)
+			for (float i = 0f; i <= 1; i += 0.01f)
 			{
-				slider.fillAmount -= 0.01f;
+				gloryNodes[_index].fillAmount -= 0.01f;
 				yield return new WaitForSeconds(0.01f);
 			}
 			yield return null;
