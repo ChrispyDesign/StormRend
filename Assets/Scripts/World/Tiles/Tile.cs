@@ -122,11 +122,11 @@ namespace StormRend.MapSystems.Tiles
 		/// </summary>
 		public bool TryGetTile(Vector2Int direction, out Tile tile, float tolerance = 0.1f)
 		{
-			const int adjacentDist = 1;
+			const float adjacentDist = 1f;
 
 			//Determine where to scan for a tile
 			var targetTilePos = transform.position +
-				new Vector3(direction.x * owner.tileSize * adjacentDist, 0, 
+				new Vector3(direction.x * owner.tileSize * adjacentDist, 0,
 							direction.y * owner.tileSize * adjacentDist);
 
 			//Loop through all connected tiles and see if there are any within tolerance
