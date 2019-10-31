@@ -161,17 +161,19 @@ namespace StormRend.Units
 
 			//Only set the position of the ghost
 			if (useGhost)
-			{
-				//Filter out non-moving tiles
-				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
-				//Set
-				ghostTile = destination;
-				//Move ghost
-				ghostMesh.SetActive(true);
-				ghostMesh.transform.position = ghostTile.transform.position;
-			}
-			//Move the actual unit
-			else
+            {
+                //Filter out non-moving tiles
+                if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
+                //Set
+                ghostTile = destination;
+                //Move and face
+                ghostMesh.SetActive(true);
+				var facingDir = ghostTile.transform.position - transform.position;
+                ghostMesh.transform.position = ghostTile.transform.position;
+				ghostMesh.transform.rotation = GetSnappedRotation(facingDir, 90f);
+            }
+            //Move the actual unit
+            else
 			{
 				//Ghost was probably just active so deactivate ghost ??? Should this be here?
 				ghostMesh.SetActive(false);
@@ -179,18 +181,28 @@ namespace StormRend.Units
 				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
 				//Set
 				currentTile = destination;
-				//Move
+                //Move and face
+                var facingDir = currentTile.transform.position - transform.position;
 				transform.position = currentTile.transform.position;
+				transform.rotation = GetSnappedRotation(facingDir, 90f);
 			}
 			//NOTE: Unit can still move
 			return true;	//Successful move
+
 		}
 
-		/// <summary>
-		/// Force Move Unit by direction ie. (0, 1) means the unit to moves forward 1 tile.
-		/// Can set to kill unit pushed over the edge.
-		/// </summary>
-		public PushResult Push(Vector2Int direction, bool kill = true)
+        Quaternion GetSnappedRotation(Vector3 direction, float snapAngle)
+        {
+            var angle = -Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg + snapAngle;
+            angle = Mathf.Round(angle / snapAngle) * snapAngle;
+            return Quaternion.AngleAxis(angle, Vector3.up);
+        }
+
+        /// <summary>
+        /// Force Move Unit by direction ie. (0, 1) means the unit to moves forward 1 tile.
+        /// Can set to kill unit pushed over the edge.
+        /// </summary>
+        public PushResult Push(Vector2Int direction, bool kill = true)
 		{
 			if (currentTile.TryGetTile(direction, out Tile t))
 			{
