@@ -75,7 +75,7 @@ namespace StormRend.Units
 			HP -= damageData.amount;
 			if (HP <= 0) Die();
 
-			onDamage.Invoke(damageData);
+			onDamage.Invoke(damageData);	//ie. Update health bar etc
 		}
 		public void Heal(int amount)
 		{

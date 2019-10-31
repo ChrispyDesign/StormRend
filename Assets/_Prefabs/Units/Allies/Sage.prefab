@@ -2178,8 +2178,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0.000000002114868, y: -0.0000011175871, z: -0.02688308}
-    m_Extent: {x: 0.034095414, y: 0.007933529, z: 0.03284432}
+    m_Center: {x: 0.0000000019633697, y: -0.0000011175871, z: -0.02688308}
+    m_Extent: {x: 0.03233186, y: 0.007933529, z: 0.03284432}
   m_DirtyAABB: 0
 --- !u!183 &7344916309360044327
 Cloth:
@@ -2647,6 +2647,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  lookSnap: 0
   moveRange: 4
   pathblockingUnitTypes: 8
   abilities: []
@@ -2680,6 +2681,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9108019807441497514}
     m_Modifications:
+    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     - target: {fileID: 8649027571778799567, guid: e1fbb2b94b8040740927f9ac8f85e701,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2734,11 +2740,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1fbb2b94b8040740927f9ac8f85e701, type: 3}

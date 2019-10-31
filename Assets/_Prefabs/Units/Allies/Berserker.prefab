@@ -4370,18 +4370,34 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   onDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2869347458523019360}
+        m_MethodName: OnHealthChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: StormRend.Utility.Events.DamageEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onHeal:
     m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  debugKey: 111
-  DebugEvent:
-    m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2869347458523019360}
+        m_MethodName: OnHealthChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   lookSnap: 0
@@ -4389,6 +4405,7 @@ MonoBehaviour:
   pathblockingUnitTypes: 8
   abilities: []
   ghostColor: {r: 1, g: 0.5513562, b: 0, a: 1}
+  statusEffects: []
   _canMove: 1
   _canAct: 1
   onAddStatusEffect:
@@ -4486,6 +4503,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4873959505318915483}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2869347458523019360 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7237900428195862011, guid: e1fbb2b94b8040740927f9ac8f85e701,
+    type: 3}
+  m_PrefabInstance: {fileID: 4873959505318915483}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b7bb8b91af7b6843b2c5832194e42fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6008102999671594069
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4493,6 +4522,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4783116619369225118}
     m_Modifications:
+    - target: {fileID: 6205012047602493075, guid: 0e02e19f26804ce469af88d28738253b,
+        type: 3}
+      propertyPath: m_Name
+      value: Axe
+      objectReference: {fileID: 0}
     - target: {fileID: 6205012047602268851, guid: 0e02e19f26804ce469af88d28738253b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4548,11 +4582,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
-    - target: {fileID: 6205012047602493075, guid: 0e02e19f26804ce469af88d28738253b,
-        type: 3}
-      propertyPath: m_Name
-      value: Axe
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e02e19f26804ce469af88d28738253b, type: 3}
 --- !u!4 &395666184373561062 stripped
@@ -4568,6 +4597,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4783116619369225116}
     m_Modifications:
+    - target: {fileID: 6205012047602493075, guid: 0e02e19f26804ce469af88d28738253b,
+        type: 3}
+      propertyPath: m_Name
+      value: Axe
+      objectReference: {fileID: 0}
     - target: {fileID: 6205012047602268851, guid: 0e02e19f26804ce469af88d28738253b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4622,11 +4656,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6205012047602493075, guid: 0e02e19f26804ce469af88d28738253b,
-        type: 3}
-      propertyPath: m_Name
-      value: Axe
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e02e19f26804ce469af88d28738253b, type: 3}

@@ -117,12 +117,15 @@ namespace StormRend.Units
 		{
 			base.TakeDamage(damageData);
 
+			//Face attack
+			transform.rotation = GetSnappedRotation(damageData.attacker.transform.position, snapAngle);
+
+			//Hit react animation
+			animator.SetTrigger("HitReact");
+
 			//Status effect
 			foreach (var se in statusEffects)
 				se.OnTakeDamage(this, damageData.attacker);
-
-			//Face attack
-			transform.rotation = GetSnappedRotation(damageData.attacker.transform.position, snapAngle);
 		}
 
 		//------------------- STATS

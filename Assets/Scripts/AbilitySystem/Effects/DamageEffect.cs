@@ -24,7 +24,7 @@ namespace StormRend.Abilities.Effects
                     u.TakeDamage(new DamageData(owner, damage));
 
 					//Play animation
-					owner.animator.SetTrigger(container.animation);
+					owner.animator.SetTrigger(container.animationTrigger);
 				}
 			}
         }
