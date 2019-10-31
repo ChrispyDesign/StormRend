@@ -424,36 +424,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1239179288940063149, guid: 9b2ddff21ff764c4383bac507ca99f07,
-        type: 3}
-      propertyPath: m_AABB.m_Center.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1239179288940063149, guid: 9b2ddff21ff764c4383bac507ca99f07,
-        type: 3}
-      propertyPath: m_AABB.m_Center.z
-      value: -0.026883066
-      objectReference: {fileID: 0}
-    - target: {fileID: 1239179288940063149, guid: 9b2ddff21ff764c4383bac507ca99f07,
-        type: 3}
-      propertyPath: m_AABB.m_Extent.x
-      value: 0.03409541
-      objectReference: {fileID: 0}
-    - target: {fileID: 1239179288940063149, guid: 9b2ddff21ff764c4383bac507ca99f07,
-        type: 3}
-      propertyPath: m_AABB.m_Extent.z
-      value: 0.032844316
-      objectReference: {fileID: 0}
-    - target: {fileID: 5620367471101316635, guid: 9b2ddff21ff764c4383bac507ca99f07,
-        type: 3}
-      propertyPath: barrierUnitTypes
-      value: 24
-      objectReference: {fileID: 0}
-    - target: {fileID: 5620367471101316635, guid: 9b2ddff21ff764c4383bac507ca99f07,
-        type: 3}
-      propertyPath: pathblockingUnitTypes
-      value: 24
-      objectReference: {fileID: 0}
     - target: {fileID: 1706327281877639260, guid: 9b2ddff21ff764c4383bac507ca99f07,
         type: 3}
       propertyPath: m_secondAbilities.Array.size
@@ -521,11 +491,41 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: ff4984669f63ef943bbe9c7ab21bf1d4,
         type: 2}
+    - target: {fileID: 5620367471101316635, guid: 9b2ddff21ff764c4383bac507ca99f07,
+        type: 3}
+      propertyPath: barrierUnitTypes
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620367471101316635, guid: 9b2ddff21ff764c4383bac507ca99f07,
+        type: 3}
+      propertyPath: pathblockingUnitTypes
+      value: 24
+      objectReference: {fileID: 0}
     - target: {fileID: 7109107742331148600, guid: 9b2ddff21ff764c4383bac507ca99f07,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 4c0ef1b5edb2ee8479bad5ed7f129bb6, type: 2}
+    - target: {fileID: 1239179288940063149, guid: 9b2ddff21ff764c4383bac507ca99f07,
+        type: 3}
+      propertyPath: m_AABB.m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239179288940063149, guid: 9b2ddff21ff764c4383bac507ca99f07,
+        type: 3}
+      propertyPath: m_AABB.m_Center.z
+      value: -0.026883066
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239179288940063149, guid: 9b2ddff21ff764c4383bac507ca99f07,
+        type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 0.03409541
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239179288940063149, guid: 9b2ddff21ff764c4383bac507ca99f07,
+        type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 0.032844316
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b2ddff21ff764c4383bac507ca99f07, type: 3}
 --- !u!1001 &20482693
@@ -12787,7 +12787,7 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 0.86378574, b: 0.7216981, a: 1}
-  m_Intensity: 2.5
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -39101,32 +39101,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3841930061851047593, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
-        type: 3}
-      propertyPath: abilities.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3841930061851047593, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
-        type: 3}
-      propertyPath: barrierUnitTypes
-      value: 24
-      objectReference: {fileID: 0}
-    - target: {fileID: 3841930061851047593, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
-        type: 3}
-      propertyPath: pathblockingUnitTypes
-      value: 24
-      objectReference: {fileID: 0}
-    - target: {fileID: 3841930061851047593, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
-        type: 3}
-      propertyPath: abilities.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 005f4e490406a56468d547102c18f5bc,
-        type: 2}
-    - target: {fileID: 4034798055218701637, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
-        type: 3}
-      propertyPath: help
-      value: "Animation Event Callbacks: \nPlayOnce(AudioClip)"
-      objectReference: {fileID: 0}
     - target: {fileID: 3219090337822490080, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
         type: 3}
       propertyPath: m_AABB.m_Center.x
@@ -39246,6 +39220,32 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AABB.m_Extent.z
       value: 0.13601112
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841930061851047593, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
+        type: 3}
+      propertyPath: abilities.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841930061851047593, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
+        type: 3}
+      propertyPath: barrierUnitTypes
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841930061851047593, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
+        type: 3}
+      propertyPath: pathblockingUnitTypes
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3841930061851047593, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
+        type: 3}
+      propertyPath: abilities.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 005f4e490406a56468d547102c18f5bc,
+        type: 2}
+    - target: {fileID: 4034798055218701637, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
+        type: 3}
+      propertyPath: help
+      value: "Animation Event Callbacks: \nPlayOnce(AudioClip)"
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 807133841866943131, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f, type: 3}
