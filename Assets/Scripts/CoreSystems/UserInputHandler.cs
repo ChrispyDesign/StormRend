@@ -95,11 +95,11 @@ namespace StormRend.Systems
 
 		//Events
 		[Space(5)]
-		public UnitEvent OnUnitChanged;
-		public UnityEvent OnUnitCleared;
-		public AbilityEvent OnAbilityChanged;
-		public AbilityEvent OnAbilityPerformed;
-		public UnityEvent OnAbilityCleared;
+		public UnitEvent onUnitChanged;
+		public UnityEvent onUnitCleared;
+		public AbilityEvent onAbilityChanged;
+		public AbilityEvent onAbilityPerformed;
+		public UnityEvent onAbilityCleared;
 
 		//Members
 		FrameEventData e;   //The events that happenned this frame
@@ -144,9 +144,7 @@ namespace StormRend.Systems
 		// 	if (isUnitSelected)
 		// 		selectedAnimateUnit.Move(moveDir, true);
 		// }
-
-	#endregion
-		//--------------------- PROCESS EVENTS -----------------------------
+	
 		void ProcessEvents()
 		{
 			e.Refresh();	//Refresh all input events
@@ -195,6 +193,7 @@ namespace StormRend.Systems
 			}
 			else if (e.rightClickUp)	//RIGHT CLICK RELEASED
 			{
+				//PLAYER'S TURN	
 				if (isPlayersTurn)
 				{
 					switch (mode)
@@ -227,34 +226,10 @@ namespace StormRend.Systems
 							selectedAnimateUnit.Move(interimTile, true);
 						}
 						break;
-					// case ActivityMode.Idle:
-					// 	isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
-					// 	if (isTileHit)
-					// 	break;
 				}
 			}
 		}
-		//----------------------------------------------------------------
-		void OnGUI()
-		{
-			if (!debug) return;
-			GUILayout.Label("ActivityMode: " + mode);
-
-			GUILayout.Label("is a unit hit?: " + isUnitHit);
-			GUILayout.Label("is a tile hit?: " + isTileHit);
-
-			GUILayout.Label("is a unit selected?: " + isUnitSelected);
-			GUILayout.Label("Selected Unit: " + _selectedUnit?.value?.name);
-
-			GUILayout.Label("is an ability selected?: " + isAbilitySelected);
-			GUILayout.Label("Selected Ability: " + _selectedAbility?.name);
-
-			GUILayout.Label("GUI hits count: " + GUIhits.Count);
-
-			GUILayout.Label(string.Format("targetTileStack ({0}):", targetTileStack.Count));
-			foreach (var t in targetTileStack)
-				GUILayout.Label(t.name);
-		}
+	#endregion	
 
 	#region Sets
 		//Public; can be called via unity events
@@ -274,7 +249,7 @@ namespace StormRend.Systems
 			//Show move tile if unit is able to move
 			if (au.canMove)	ShowMoveTiles();
 
-			OnUnitChanged.Invoke(au);	//ie. Update UI, Play sounds,
+			onUnitChanged.Invoke(au);	//ie. Update UI, Play sounds,
 		}
 
 		public void SelectAbility(Ability a)	//aka. OnAbilityChanged()
@@ -307,7 +282,7 @@ namespace StormRend.Systems
 				AddTargetTile(selectedAnimateUnit.currentTile);
 
 			//Raise
-			OnAbilityChanged.Invoke(a);
+			onAbilityChanged.Invoke(a);
 		}
 
 		/// <summary>
@@ -344,7 +319,21 @@ namespace StormRend.Systems
 			ClearSelectedAbility(selectedAnimateUnit.canMove);
 
 			//Events
-			OnAbilityPerformed.Invoke(selectedAbility);
+			onAbilityPerformed.Invoke(selectedAbility);
+		}
+
+		public void OnStateChanged(State newState)
+		{
+			//Clear highlights etc if current state changed
+			if (playersState != newState)
+			{
+				ClearSelectedUnit();
+				ClearSelectedAbility();
+				ClearAllTileHighlights();
+			}
+
+			//Set the player's turn flag
+			isPlayersTurn = (playersState == newState);
 		}
 	#endregion
 
@@ -401,7 +390,7 @@ namespace StormRend.Systems
 		{
 			if (!isUnitSelected) return;	//A unit should be selected
 
-			OnUnitCleared.Invoke();
+			onUnitCleared.Invoke();
 
 			//Clear tile highlights and ghost
 			ClearSelectedUnitTileHighlights();
@@ -415,7 +404,7 @@ namespace StormRend.Systems
 		{
 			if (!isUnitSelected) return;	//A unit should be selected
 
-			OnAbilityCleared.Invoke();
+			onAbilityCleared.Invoke();
 
 			//Clear
 			selectedAbility = null;
@@ -494,6 +483,29 @@ namespace StormRend.Systems
 			if (GUIhits.Count > 0)
 				return true;
 			return false;
+		}
+	#endregion
+
+	#region Debug
+		void OnGUI()
+		{
+			if (!debug) return;
+			GUILayout.Label("ActivityMode: " + mode);
+
+			GUILayout.Label("is a unit hit?: " + isUnitHit);
+			GUILayout.Label("is a tile hit?: " + isTileHit);
+
+			GUILayout.Label("is a unit selected?: " + isUnitSelected);
+			GUILayout.Label("Selected Unit: " + _selectedUnit?.value?.name);
+
+			GUILayout.Label("is an ability selected?: " + isAbilitySelected);
+			GUILayout.Label("Selected Ability: " + _selectedAbility?.name);
+
+			GUILayout.Label("GUI hits count: " + GUIhits.Count);
+
+			GUILayout.Label(string.Format("targetTileStack ({0}):", targetTileStack.Count));
+			foreach (var t in targetTileStack)
+				GUILayout.Label(t.name);
 		}
 	#endregion
 	}

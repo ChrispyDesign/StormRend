@@ -13,7 +13,21 @@ namespace The.Great.Refactor.Brainstorm
 	- Current active units
 		- Just find all units at start of scene
 
-	------------------- 
+	------------------- Next Turn Sequence
+	NextTurnButton.OnClick() => UltraStateMachine.NextTurn()
+
+	USM:
+	currentState.OnExit()
+	UltraStateMachine.currentState = nextState;
+	currentState.OnEnter()
+
+	EnemyTurnState
+	foreach e in enemies
+		e.ai.Tick()
+	TickCrystals()
+
+	
+
 	*/
 
 	#region Conventions

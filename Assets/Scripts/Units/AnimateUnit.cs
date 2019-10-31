@@ -27,23 +27,33 @@ namespace StormRend.Units
 		}
 
 		//Inspector
+		[ReadOnlyField] public Tile beginTurnTile = null;   //The tile this unit starts from at the beginning of each turn
+		public bool _canMove = true;
+		public bool _canAct = true;
 		[SerializeField] LookSnap lookSnap = LookSnap.RightAngle;
 
-		[Header("Abilities")]
+		[Header("Abilities & Effects")]
 		[SerializeField] protected int moveRange = 4;
 		[Tooltip("The unit types of that this unit cannot walk through ie. opponents")]
 		[EnumFlags, SerializeField] TargetMask pathblockingUnitTypes = TargetMask.Enemies;
 		[SerializeField] internal Ability[] abilities;
+		[ReadOnlyField,SerializeField] internal List<StatusEffect> statusEffects = new List<StatusEffect>();
 
 		[Header("Ghost")]
 		[SerializeField] protected Color ghostColor = Color.blue;
+		[SerializeField] protected Material tbcGhostMaterial = null;
+
+		//Events
+		[Header("Animate Unit Events")]
+		[SerializeField] EffectEvent onAddStatusEffect;
+		[SerializeField] UnityEvent onBeginTurn;
+		[SerializeField] AbilityEvent onActed;
+		[SerializeField] UnityEvent onEndTurn;
 
 		//Properties
-		public Tile baseTile { get; set; } = null;  	//The tile this unit was originally on at the beginning of each turn; Used to set a different texture to that tile so the user knows where he originated from
 		public Tile ghostTile { get; set; } = null;		//The tile the ghost is on
 		public Tile[] possibleMoveTiles { get; set; } = new Tile[0];
 		public Tile[] possibleTargetTiles { get; set; } = new Tile[0];
-		public List<StatusEffect> statusEffects { get; set; } = new List<StatusEffect>();
 		public bool canMove => _canMove;
 		public void SetCanMove(bool value) => _canMove = value;
 		public bool canAct => _canAct;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
@@ -63,15 +73,8 @@ namespace StormRend.Units
 		}
 
 		//Members
-		public bool _canMove = true;
-		public bool _canAct = true;
 		protected GameObject ghostMesh;
 
-		//Events
-		[SerializeField] EffectEvent onAddStatusEffect;
-		[SerializeField] UnityEvent onBeginTurn;
-		[SerializeField] AbilityEvent onActed;
-		[SerializeField] UnityEvent onEndTurn;
 
 	#region Filtered Gets
 		public List<Ability> GetAbilitiesByType(AbilityType type) => abilities.Where(x => x.type == type).ToList();
@@ -83,7 +86,7 @@ namespace StormRend.Units
 			base.Awake();   //This sets the current tile
 
 			//Record origin tile
-			baseTile = currentTile;
+			beginTurnTile = currentTile;
 
 			CreateGhostMesh();
 		}
@@ -132,10 +135,13 @@ namespace StormRend.Units
 		//State machine / game director / Unit registry to run through all these on ally turn enter?
 		public void BeginTurn()		//Reset necessary stats and get unit ready for the next turn
 		{
-			SetCanAct(true);		//Be able to move again
+			//Can take action again
+			SetCanAct(true);
 			SetCanMove(true);
 
-			baseTile = currentTile; 	//Set the base tile
+			//Calculate new move tiles
+			beginTurnTile = currentTile;
+			CalculateMoveTiles();
 
 			//Prep effects (reset counts etc)
 			foreach (var a in abilities)
@@ -148,7 +154,7 @@ namespace StormRend.Units
 
 			onBeginTurn.Invoke();
 		}
-		public void EndTurn()			//Run before
+		public void EndTurn()			//Run before next turn
 		{
 			//Status effects
 			foreach (var se in statusEffects)
@@ -324,7 +330,7 @@ namespace StormRend.Units
 			if ((pathblockingUnitTypes & TargetMask.Animates) == TargetMask.Animates)
 				pathblockers.Add(typeof(AnimateUnit));
 
-			return possibleMoveTiles = Map.GetPossibleTiles(currentTile.owner, baseTile, moveRange, pathblockers.ToArray());
+			return possibleMoveTiles = Map.GetPossibleTiles(beginTurnTile.owner, beginTurnTile, moveRange, pathblockers.ToArray());
 		}
 
 		/// <summary>

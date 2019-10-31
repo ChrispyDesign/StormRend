@@ -25882,7 +25882,7 @@ PrefabInstance:
     - target: {fileID: 9108019807441497514, guid: 9b2ddff21ff764c4383bac507ca99f07,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9108019807441497514, guid: 9b2ddff21ff764c4383bac507ca99f07,
         type: 3}
@@ -25923,6 +25923,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AABB.m_Center.y
       value: -0.0000011175871
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620367471101316635, guid: 9b2ddff21ff764c4383bac507ca99f07,
+        type: 3}
+      propertyPath: pathblockingUnitTypes
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b2ddff21ff764c4383bac507ca99f07, type: 3}
@@ -26107,10 +26112,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 615751300}
   - {fileID: 1244538721}
   - {fileID: 1823306201}
   - {fileID: 2104662979}
+  - {fileID: 615751300}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -30119,7 +30124,7 @@ PrefabInstance:
     - target: {fileID: 4159071878291178778, guid: daec9893be12174409e5d742b0c859b7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4159071878291178778, guid: daec9893be12174409e5d742b0c859b7,
         type: 3}
@@ -46846,7 +46851,7 @@ PrefabInstance:
     - target: {fileID: 653011552559127036, guid: cbd9f60274804884eb28a6716428840f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 653011552559127036, guid: cbd9f60274804884eb28a6716428840f,
         type: 3}
@@ -46865,25 +46870,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6523016055183356590, guid: cbd9f60274804884eb28a6716428840f,
         type: 3}
-      propertyPath: abilities.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6523016055183356590, guid: cbd9f60274804884eb28a6716428840f,
-        type: 3}
-      propertyPath: barrierUnitTypes
-      value: 24
+      propertyPath: statusEffects.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6523016055183356590, guid: cbd9f60274804884eb28a6716428840f,
         type: 3}
       propertyPath: pathblockingUnitTypes
-      value: 24
+      value: 40
       objectReference: {fileID: 0}
-    - target: {fileID: 6523016055183356590, guid: cbd9f60274804884eb28a6716428840f,
-        type: 3}
-      propertyPath: abilities.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 2d15adf397f419348a9de34636947293,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbd9f60274804884eb28a6716428840f, type: 3}
 --- !u!1001 &1957562346
@@ -51198,7 +51192,7 @@ PrefabInstance:
     - target: {fileID: 9108019807441497514, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9108019807441497514, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
         type: 3}
@@ -51348,7 +51342,7 @@ PrefabInstance:
     - target: {fileID: 3841930061851047593, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
         type: 3}
       propertyPath: pathblockingUnitTypes
-      value: 24
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 3841930061851047593, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
         type: 3}
@@ -52639,22 +52633,22 @@ PrefabInstance:
     - target: {fileID: 6474169512895744338, guid: 7fec0c475c06e4efe88295a53b98033c,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6474169512895744338, guid: 7fec0c475c06e4efe88295a53b98033c,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6474169512895744338, guid: 7fec0c475c06e4efe88295a53b98033c,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6474169512895744338, guid: 7fec0c475c06e4efe88295a53b98033c,
         type: 3}
       propertyPath: m_textInfo.pageCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3717277924275086326, guid: 7fec0c475c06e4efe88295a53b98033c,
         type: 3}

@@ -11,7 +11,6 @@ namespace StormRend.Units
 	[SelectionBase]
 	public abstract class Unit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
-		[ReadOnlyField] public Tile currentTile;//{ get; set; }	//The tile this unit is currently/originally on
 		[TextArea(0,2)] public string description = "";
 
 		//Inspector
@@ -20,10 +19,13 @@ namespace StormRend.Units
 		[SerializeField] protected int _maxHP = 3;
 
 		//Events
-		[Header("Events")]
+		[Header("Unit Events")]
 		public UnitEvent onDeath;
 		public DamageEvent onDamage;
 		public UnityEvent onHeal;
+
+		[Header("Movement")]
+		[ReadOnlyField] public Tile currentTile;//{ get; set; }	//The tile this unit is currently/originally on
 
 		//Properties
 		public int HP
