@@ -15,40 +15,66 @@ using UnityEngine.EventSystems;
 
 namespace StormRend.Units
 {
-    [SelectionBase] //Avoid clicking on child objects
-	public abstract partial class AnimateUnit : Unit, IPointerEnterHandler, IPointerExitHandler
+	[SelectionBase] //Avoid clicking on child objects
+	public abstract class AnimateUnit : Unit, IPointerEnterHandler, IPointerExitHandler
 	{
+		//Enums
+		public enum LookSnap
+		{
+			RightAngle,
+			Diagonals_BUGGY,
+			Free_BUGGY,
+		}
+
 		//Inspector
-		[Header("Abilities")]
+		[ReadOnlyField] public Tile beginTurnTile = null;   //The tile this unit starts from at the beginning of each turn
+		public bool _canMove = true;
+		public bool _canAct = true;
+		[SerializeField] LookSnap lookSnap = LookSnap.RightAngle;
+
+		[Header("Abilities & Effects")]
 		[SerializeField] protected int moveRange = 4;
 		[Tooltip("The unit types of that this unit cannot walk through ie. opponents")]
 		[EnumFlags, SerializeField] TargetMask pathblockingUnitTypes = TargetMask.Enemies;
 		[SerializeField] internal Ability[] abilities;
+		[ReadOnlyField,SerializeField] internal List<StatusEffect> statusEffects = new List<StatusEffect>();
 
-		[Header("Color")]
+		[Header("Ghost")]
 		[SerializeField] protected Color ghostColor = Color.blue;
-
-		//Properties
-		public Tile baseTile { get; set; } = null;  	//The tile this unit was originally on at the beginning of each turn; Used to set a different texture to that tile so the user knows where he originated from
-		public Tile ghostTile { get; set; } = null;		//The tile the ghost is on
-		public Tile[] possibleMoveTiles { get; set; } = new Tile[0];
-		public Tile[] possibleTargetTiles { get; set; } = new Tile[0];
-		public List<StatusEffect> statusEffects { get; set; } = new List<StatusEffect>();
-		public bool canMove => _canMove;
-		public void SetCanMove(bool value) => _canMove = value;
-		public bool canAct => _canAct;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
-		public void SetCanAct(bool value) => _canAct = value;
-
-		//Members
-		public bool _canMove = true;
-		public bool _canAct = true;
-		protected GameObject ghostMesh;
+		[SerializeField] protected Material tbcGhostMaterial = null;
 
 		//Events
+		[Header("Animate Unit Events")]
 		[SerializeField] EffectEvent onAddStatusEffect;
 		[SerializeField] UnityEvent onBeginTurn;
 		[SerializeField] AbilityEvent onActed;
 		[SerializeField] UnityEvent onEndTurn;
+
+		//Properties
+		public Tile ghostTile { get; set; } = null;		//The tile the ghost is on
+		public Tile[] possibleMoveTiles { get; set; } = new Tile[0];
+		public Tile[] possibleTargetTiles { get; set; } = new Tile[0];
+		public bool canMove => _canMove;
+		public void SetCanMove(bool value) => _canMove = value;
+		public bool canAct => _canAct;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
+		public void SetCanAct(bool value) => _canAct = value;
+		float snapAngle
+		{
+			get
+			{
+				switch (lookSnap)
+				{
+					case LookSnap.RightAngle: return 90f;
+					case LookSnap.Diagonals_BUGGY: return 45f;
+					case LookSnap.Free_BUGGY: return 1f;
+					default: return 90f;
+				}
+			}
+		}
+
+		//Members
+		protected GameObject ghostMesh;
+
 
 	#region Filtered Gets
 		public List<Ability> GetAbilitiesByType(AbilityType type) => abilities.Where(x => x.type == type).ToList();
@@ -60,7 +86,7 @@ namespace StormRend.Units
 			base.Awake();   //This sets the current tile
 
 			//Record origin tile
-			baseTile = currentTile;
+			beginTurnTile = currentTile;
 
 			CreateGhostMesh();
 		}
@@ -94,6 +120,12 @@ namespace StormRend.Units
 		{
 			base.TakeDamage(damageData);
 
+			//Face attack
+			transform.rotation = GetSnappedRotation(damageData.attacker.transform.position, snapAngle);
+
+			//Hit react animation
+			animator.SetTrigger("HitReact");
+
 			//Status effect
 			foreach (var se in statusEffects)
 				se.OnTakeDamage(this, damageData.attacker);
@@ -103,10 +135,13 @@ namespace StormRend.Units
 		//State machine / game director / Unit registry to run through all these on ally turn enter?
 		public void BeginTurn()		//Reset necessary stats and get unit ready for the next turn
 		{
-			SetCanAct(true);		//Be able to move again
+			//Can take action again
+			SetCanAct(true);
 			SetCanMove(true);
 
-			baseTile = currentTile; 	//Set the base tile
+			//Calculate new move tiles
+			beginTurnTile = currentTile;
+			CalculateMoveTiles();
 
 			//Prep effects (reset counts etc)
 			foreach (var a in abilities)
@@ -119,7 +154,7 @@ namespace StormRend.Units
 
 			onBeginTurn.Invoke();
 		}
-		public void EndTurn()			//Run before
+		public void EndTurn()			//Run before next turn
 		{
 			//Status effects
 			foreach (var se in statusEffects)
@@ -142,7 +177,7 @@ namespace StormRend.Units
 				se.OnDeath(this);
 
 			//TEMP
-			gameObject.SetActive(false);
+			// gameObject.SetActive(false);
 		}
 
 		//------------------ MOVE
@@ -166,24 +201,27 @@ namespace StormRend.Units
 				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
 				//Set
 				ghostTile = destination;
-				//Move ghost
-				ghostMesh.SetActive(true);
+				//Move and look
+				ghostMesh?.SetActive(true);
+				ghostMesh.transform.rotation = GetSnappedRotation(ghostTile.transform.position, snapAngle);
 				ghostMesh.transform.position = ghostTile.transform.position;
 			}
 			//Move the actual unit
 			else
 			{
 				//Ghost was probably just active so deactivate ghost ??? Should this be here?
-				ghostMesh.SetActive(false);
+				if (ghostMesh != null) ghostMesh.SetActive(false);
 				//Filter
 				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
 				//Set
 				currentTile = destination;
-				//Move
+				//Move and look
+				transform.rotation = GetSnappedRotation(currentTile.transform.position, snapAngle);
 				transform.position = currentTile.transform.position;
 			}
 			//NOTE: Unit can still move
 			return true;	//Successful move
+
 		}
 
 		/// <summary>
@@ -213,6 +251,26 @@ namespace StormRend.Units
 				return PushResult.OverEdge;
 			}
 		}
+
+		public void SnappedLookAt(Vector3 lookAt) => transform.rotation = GetSnappedRotation(lookAt, snapAngle);
+		Quaternion GetSnappedRotation(Vector3 lookTarget, float snapAng)
+		{
+			var dir = lookTarget - transform.position;
+			var angle = -Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg + snapAng;
+			angle = Mathf.Round(angle / snapAng) * snapAng;
+			return Quaternion.AngleAxis(angle, Vector3.up);
+			
+			// var angle = Vector3.Angle(dir, Vector3.up);
+			// if (angle < snapAngle / 2f) 
+			// 	return Quaternion.LookRotation(Vector3.up * dir.magnitude);
+			// if (angle > 180f - snapAngle / 2f)
+			// 	return Quaternion.LookRotation(Vector3.down * dir.magnitude);
+
+			// float t = Mathf.Round(angle / snapAngle);
+			// float deltaAngle = (t * snapAngle) - angle;
+			// return Quaternion.AngleAxis(deltaAngle, Vector3.Cross(Vector3.up, dir));
+		}
+
 
 		//------------------- PERFORM ABILITY
 		/// <summary>
@@ -272,7 +330,7 @@ namespace StormRend.Units
 			if ((pathblockingUnitTypes & TargetMask.Animates) == TargetMask.Animates)
 				pathblockers.Add(typeof(AnimateUnit));
 
-			return possibleMoveTiles = Map.GetPossibleTiles(currentTile.owner, baseTile, moveRange, pathblockers.ToArray());
+			return possibleMoveTiles = Map.GetPossibleTiles(beginTurnTile.owner, beginTurnTile, moveRange, pathblockers.ToArray());
 		}
 
 		/// <summary>

@@ -12,27 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: Provoke Level 1
   m_EditorClassIdentifier: 
-  m_name: Provoke (Level 1)
-  m_icon: {fileID: 0}
-  m_description: 'Gain a Rune of Taunting. Until the start of your next turn, whenever
-    a unit damages you deal 1 damage back to them. '
-  m_gloryRequirement: 0
-  m_tilesToSelect: 1
-  m_castArea:
-  - elements: 00000000000000
-  - elements: 00000000000000
-  - elements: 00000000000000
-  - elements: 00000001000000
-  - elements: 00000000000000
-  - elements: 00000000000000
-  - elements: 00000000000000
-  m_targetableTiles:
-    m_empty: 0
-    m_enemies: 0
-    m_players: 0
-    m_self: 1
-  m_effects:
-  - {fileID: 114286334617455646}
+  _icon: {fileID: 21300000, guid: fdc72c3861a2baa4f822da878a33012b, type: 3}
+  _animationTrigger: Provoke
+  _level: 1
+  _type: 1
+  _description: 
+  _gloryCost: 1
+  _requiredTiles: 0
+  _targetTileTypes: 2
+  effects:
+  - {fileID: 114679432023497332}
+  castArea: 00000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000
 --- !u!114 &114286334617455646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -45,6 +35,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
-  m_target: 1
-  m_durationInTurns: 1
-  m_damageOnHit: 1
+  container: {fileID: 0}
+  owner: {fileID: 0}
+  affectedTurns: 1
+  reflexDamage: 1
+--- !u!114 &114679432023497332
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
+  m_Name: TauntEffect
+  m_EditorClassIdentifier: 
+  container: {fileID: 11400000}
+  owner: {fileID: 0}
+  affectedTurns: 1
+  reflexDamage: 1

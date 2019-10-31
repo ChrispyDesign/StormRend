@@ -6,10 +6,6 @@ public class Test_Pannels : MonoBehaviour
 {
     [SerializeField] List<GameObject> textboxes;
 
-
-
-
-
     public void Update()
     {
         if(Input.GetKeyDown(KeyCode.Keypad1))

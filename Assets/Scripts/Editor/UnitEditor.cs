@@ -1,3 +1,4 @@
+using System;
 using StormRend.CameraSystem;
 using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
@@ -8,6 +9,7 @@ using UnityEngine;
 namespace StormRend.Editors
 {
 	[CustomEditor(typeof(Unit), true)]
+	[CanEditMultipleObjects]
 	public class UnitEditor : SmartEditor
 	{
 		Unit u;     //Target
@@ -23,11 +25,34 @@ namespace StormRend.Editors
 
 		void OnSceneGUI()
 		{
+			var e = Event.current;
 			DrawRotateButtons(buttonColour);
-			SnapToNearestTile();
+			SnapToNearestTile(e);
+			MoveByWASD(e);
 		}
 
-		void DrawRotateButtons(Color color)
+        void MoveByWASD(Event e)
+        {
+			var au = u as AnimateUnit;
+			if (e.type == EventType.KeyDown)
+				switch (e.keyCode)
+				{
+					case KeyCode.H:
+						au.Push(new Vector2Int((int)au.transform.forward.x, (int)au.transform.forward.z), false);
+						break;
+					case KeyCode.B:
+						u.transform.Rotate(Vector3.up, -90);
+						break;
+					case KeyCode.N:
+						au.Push(new Vector2Int((int)-au.transform.forward.x, (int)-au.transform.forward.z), false);
+						break;
+					case KeyCode.M:
+						u.transform.Rotate(Vector3.up, 90);
+						break;
+				}
+        }
+
+        void DrawRotateButtons(Color color)
 		{
 			Vector2 offset = new Vector2(10, 0);
 			const float bSize = 30f;
@@ -45,9 +70,9 @@ namespace StormRend.Editors
 			GUI.color = oldColor;
 		}
 
-		void SnapToNearestTile()
+		void SnapToNearestTile(Event e)
 		{
-			if (Event.current.type == EventType.MouseUp)
+			if (e.type == EventType.MouseUp)
 				if (map.TryGetNearestTile(u.transform.position, out Tile nearest))
 				{
 					u.transform.position = nearest.transform.position;

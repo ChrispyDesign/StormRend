@@ -14,6 +14,8 @@ namespace StormRend.Abilities.Effects
 		public override void Perform(Unit owner, Tile[] targetTiles)
 		{
 			AddStatusEffectToAnimateUnits(targetTiles);
+
+			owner.animator.SetTrigger(container.animationTrigger);
 		}
 
 		public override void OnBeginTurn(AnimateUnit affectedUnit)

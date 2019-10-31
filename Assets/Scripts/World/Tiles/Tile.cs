@@ -29,7 +29,7 @@ namespace StormRend.MapSystems.Tiles
 		internal float F = 0;
 
 		//Properties
-		public Map owner { get; set; }
+		public Map owner => Map.current;
 
 		//Members
 		[ReadOnlyField] public List<Tile> connections = new List<Tile>();	//List because HashSets don't serialize
@@ -43,14 +43,11 @@ namespace StormRend.MapSystems.Tiles
 		{
 			rend = GetComponent<Renderer>();
 		}
-		void Start()
+		void Awake()
 		{
 			LoadStaticHighlightColors();    //NOTE! Awake is too early sometimes? Which means it doesn't always grab all the Tile Highlight Colors
-			SetupHighlight();
+			SetupTileHighlightObject();
 			SetupInternalColours();
-
-			//Failsafe
-			if (!owner) owner = Map.current;
 		}
 
 		public void Connect(Tile to) => connections.Add(to);
@@ -87,13 +84,13 @@ namespace StormRend.MapSystems.Tiles
 				// var foundHighlights = Resources.LoadAll("", typeof(TileHighlightColor)) as TileHighlightColor[];
 				foreach (var fh in foundHighlights)
 				{
-					// Debug.Log("Loading Tile Highlight Color: " + fh.name);
+					Debug.Log("Loading Tile Highlight Color: " + fh.name);
 					highlightColors.Add(fh.name, fh);
 				}
 				highlightsScanned = true;
 			}
 		}
-		void SetupHighlight()
+		void SetupTileHighlightObject()
 		{
 			highlight = GetComponentInChildren<TileHighlight>();
 

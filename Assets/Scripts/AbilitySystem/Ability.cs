@@ -26,8 +26,8 @@ namespace StormRend.Abilities
 
 		//Inspector
 		[SerializeField] Sprite _icon = null;
-		[Tooltip("Animation number for this ability in order to send to a corresponding animator")]
-		[SerializeField] string _animation = "";
+		[Tooltip("Animation trigger for this ability that will be sent to animator")]
+		[SerializeField] string _animationTrigger = "";
 		[SerializeField] int _level = 1;
 		[SerializeField] AbilityType _type = AbilityType.Primary;
 		[TextArea(0, 2), SerializeField] string _description = "";
@@ -35,7 +35,7 @@ namespace StormRend.Abilities
 		[Header("Casting"), Space(1), Tooltip("Glory cost required to perform this ability")]
 		[SerializeField] int _gloryCost = 1;
 
-		[Tooltip("The required number of selected tiles this ability needs in order for it to be performed")]
+		[Tooltip("The required number of selected tiles this ability needs in order for it to be performed. NOTE: Setting this to zero will instantly perform ability on self upon clicking on ability")]
 		[SerializeField] int _requiredTiles = 1;
 
 		[Tooltip("The type of tiles this ability can target")]
@@ -49,7 +49,7 @@ namespace StormRend.Abilities
 
 		//Properties
 		public Sprite icon => _icon;
-		public string animation => _animation;
+		public string animationTrigger => _animationTrigger;
 		public AbilityType type => _type;
 		public string description => _description;
 		public int gloryCost => _gloryCost;

@@ -6,7 +6,7 @@ namespace StormRend.States.UI
     /// <summary>
     /// * Auto handles game timescale changes
     /// </summary>
-    public class PauseMenuState : UIState
+    public class PauseMenuState : OnState
     {
         [SerializeField] float pauseTimeScale = 0.3f;
 

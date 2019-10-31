@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using pokoro.Patterns.Generic;
+using StormRend.Enums;
 using StormRend.MapSystems.Tiles;
 using StormRend.States;
 using StormRend.Systems.StateMachines;
@@ -55,36 +56,35 @@ namespace StormRend.Units
 	#region Turn Enter/Exit logic
 		public void RunUnitsBeginTurn(State state)
 		{
-			switch (state)
+			var turnState = state as TurnState;
+			AnimateUnit[] animateUnits = new AnimateUnit[0];
+			switch (turnState.controllableUnitType)
 			{
-				case AllyTurnState allyTurnState:
-					var allies = GetUnitsByType<AllyUnit>();
-					//Status effects
-					foreach (var a in allies)
-						a.BeginTurn();
+				case TargetMask.Allies:
+					animateUnits = GetUnitsByType<AllyUnit>();
 					break;
-				case EnemyTurnState enemyTurnState:
-					var enemies = GetUnitsByType<EnemyUnit>();
-					foreach (var e in enemies)
-						e.BeginTurn();
+				case TargetMask.Enemies:
+					animateUnits = GetUnitsByType<EnemyUnit>();
 					break;
 			}
+			foreach (var u in animateUnits)
+				u.BeginTurn();
 		}
 		public void RunUnitsEndTurn(State state)
 		{
-			switch (state)
+			var turnState = state as TurnState;
+			AnimateUnit[] animateUnits = new AnimateUnit[0];
+			switch (turnState.controllableUnitType)
 			{
-				case AllyTurnState allyTurnState:
-					var allies = GetUnitsByType<AllyUnit>();
-					foreach (var a in allies)
-						a.EndTurn();
+				case TargetMask.Allies:
+					animateUnits = GetUnitsByType<AllyUnit>();
 					break;
-				case EnemyTurnState enemyTurnState:
-					var enemies = GetUnitsByType<EnemyUnit>();
-					foreach (var e in enemies)
-						e.EndTurn();
+				case TargetMask.Enemies:
+					animateUnits = GetUnitsByType<EnemyUnit>();
 					break;
 			}
+			foreach (var u in animateUnits)
+				u.BeginTurn();
 		}
 	#endregion
 
