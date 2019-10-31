@@ -15,17 +15,27 @@ using UnityEngine.EventSystems;
 
 namespace StormRend.Units
 {
-    [SelectionBase] //Avoid clicking on child objects
+	[SelectionBase] //Avoid clicking on child objects
 	public abstract partial class AnimateUnit : Unit, IPointerEnterHandler, IPointerExitHandler
 	{
+		//Enums
+		public enum LookSnap
+		{
+			RightAngle,
+			Diagonals_BUGGY,
+			Free_BUGGY,
+		}
+
 		//Inspector
+		[SerializeField] LookSnap lookSnap = LookSnap.RightAngle;
+
 		[Header("Abilities")]
 		[SerializeField] protected int moveRange = 4;
 		[Tooltip("The unit types of that this unit cannot walk through ie. opponents")]
 		[EnumFlags, SerializeField] TargetMask pathblockingUnitTypes = TargetMask.Enemies;
 		[SerializeField] internal Ability[] abilities;
 
-		[Header("Color")]
+		[Header("Ghost")]
 		[SerializeField] protected Color ghostColor = Color.blue;
 
 		//Properties
@@ -38,6 +48,19 @@ namespace StormRend.Units
 		public void SetCanMove(bool value) => _canMove = value;
 		public bool canAct => _canAct;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
 		public void SetCanAct(bool value) => _canAct = value;
+		float snapAngle
+		{
+			get
+			{
+				switch (lookSnap)
+				{
+					case LookSnap.RightAngle: return 90f;
+					case LookSnap.Diagonals_BUGGY: return 45f;
+					case LookSnap.Free_BUGGY: return 1f;
+					default: return 90f;
+				}
+			}
+		}
 
 		//Members
 		public bool _canMove = true;
@@ -161,19 +184,18 @@ namespace StormRend.Units
 
 			//Only set the position of the ghost
 			if (useGhost)
-            {
-                //Filter out non-moving tiles
-                if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
-                //Set
-                ghostTile = destination;
-                //Move and face
-                ghostMesh.SetActive(true);
-				var facingDir = ghostTile.transform.position - transform.position;
-                ghostMesh.transform.position = ghostTile.transform.position;
-				ghostMesh.transform.rotation = GetSnappedRotation(facingDir, 90f);
-            }
-            //Move the actual unit
-            else
+			{
+				//Filter out non-moving tiles
+				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
+				//Set
+				ghostTile = destination;
+				//Move and look
+				ghostMesh.SetActive(true);
+				ghostMesh.transform.rotation = GetSnappedRotation(ghostTile.transform.position, snapAngle);
+				ghostMesh.transform.position = ghostTile.transform.position;
+			}
+			//Move the actual unit
+			else
 			{
 				//Ghost was probably just active so deactivate ghost ??? Should this be here?
 				ghostMesh.SetActive(false);
@@ -181,28 +203,20 @@ namespace StormRend.Units
 				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
 				//Set
 				currentTile = destination;
-                //Move and face
-                var facingDir = currentTile.transform.position - transform.position;
+				//Move and look
+				transform.rotation = GetSnappedRotation(currentTile.transform.position, snapAngle);
 				transform.position = currentTile.transform.position;
-				transform.rotation = GetSnappedRotation(facingDir, 90f);
 			}
 			//NOTE: Unit can still move
 			return true;	//Successful move
 
 		}
 
-        Quaternion GetSnappedRotation(Vector3 direction, float snapAngle)
-        {
-            var angle = -Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg + snapAngle;
-            angle = Mathf.Round(angle / snapAngle) * snapAngle;
-            return Quaternion.AngleAxis(angle, Vector3.up);
-        }
-
-        /// <summary>
-        /// Force Move Unit by direction ie. (0, 1) means the unit to moves forward 1 tile.
-        /// Can set to kill unit pushed over the edge.
-        /// </summary>
-        public PushResult Push(Vector2Int direction, bool kill = true)
+		/// <summary>
+		/// Force Move Unit by direction ie. (0, 1) means the unit to moves forward 1 tile.
+		/// Can set to kill unit pushed over the edge.
+		/// </summary>
+		public PushResult Push(Vector2Int direction, bool kill = true)
 		{
 			if (currentTile.TryGetTile(direction, out Tile t))
 			{
@@ -225,6 +239,26 @@ namespace StormRend.Units
 				return PushResult.OverEdge;
 			}
 		}
+
+		public void SnappedLookAt(Vector3 lookAt) => transform.rotation = GetSnappedRotation(lookAt, snapAngle);
+		Quaternion GetSnappedRotation(Vector3 lookTarget, float snapAng)
+		{
+			var dir = lookTarget - transform.position;
+			var angle = -Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg + snapAng;
+			angle = Mathf.Round(angle / snapAng) * snapAng;
+			return Quaternion.AngleAxis(angle, Vector3.up);
+			
+			// var angle = Vector3.Angle(dir, Vector3.up);
+			// if (angle < snapAngle / 2f) 
+			// 	return Quaternion.LookRotation(Vector3.up * dir.magnitude);
+			// if (angle > 180f - snapAngle / 2f)
+			// 	return Quaternion.LookRotation(Vector3.down * dir.magnitude);
+
+			// float t = Mathf.Round(angle / snapAngle);
+			// float deltaAngle = (t * snapAngle) - angle;
+			// return Quaternion.AngleAxis(deltaAngle, Vector3.Cross(Vector3.up, dir));
+		}
+
 
 		//------------------- PERFORM ABILITY
 		/// <summary>
