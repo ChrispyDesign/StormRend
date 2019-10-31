@@ -282,7 +282,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -326,8 +326,24 @@ ModelImporter:
       - time: 0
         functionName: ChancePlayAudioContainer
         data: 
-        objectReferenceParameter: {fileID: 11400000, guid: bb37071ab8112654eae2905a2a5a0edd,
+        objectReferenceParameter: {fileID: 11400000, guid: 1e3149333e1b57c4a96f49b189edd070,
           type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.012499988
+        functionName: PlayOnce
+        data: 
+        objectReferenceParameter: {fileID: 8300000, guid: 61b2285a0b4453943b16090635f64e88,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.33559275
+        functionName: PlayOnce
+        data: 
+        objectReferenceParameter: {fileID: 8300000, guid: dfaf00f5261e801459cab11a74b8e5e9,
+          type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -358,7 +374,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: ChancePlayAudioContainer
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: bb37071ab8112654eae2905a2a5a0edd,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.15625
+        functionName: PlayOnce
+        data: 
+        objectReferenceParameter: {fileID: 8300000, guid: 0547e642e247d5c4fb933c9cd229f5e2,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -414,7 +446,15 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: ChancePlayAudioContainer
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: 4a39606b507722f4680920af4f307aad,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
