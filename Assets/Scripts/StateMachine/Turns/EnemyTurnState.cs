@@ -35,7 +35,7 @@ namespace StormRend.States
 			base.OnEnter(sm);
 
 			//Get the current enemies & Run AI
-			enemies = ur.GetUnitsByType<EnemyUnit>();
+			enemies = ur.GetUnitsByType<EnemyUnit>();	//Hardcore
 			if (enemies?.Length > 0)
 				StartCoroutine(RunAI(sm));
 		}

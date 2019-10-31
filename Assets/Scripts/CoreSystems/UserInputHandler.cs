@@ -37,11 +37,11 @@ namespace StormRend.Systems
 	public class UserInputHandler : Singleton<UserInputHandler>
 	{
 		//Enums
-		public enum ActivityMode
+		public enum Mode
 		{
+			Select,
 			Move,
 			Action,      //Cast spells, attack, summon, etc
-			Idle
 		}
 
 		//Inspector
@@ -61,19 +61,19 @@ namespace StormRend.Systems
 		[SerializeField] float cameraSmoothTime = 1.75f;
 
 		//Properties
-		ActivityMode mode
+		Mode mode
 		{
 			get
 			{
 				//If an ability is current selected then unit can perform ACTION
 				if (isAbilitySelected && selectedAnimateUnit.canAct)
-					return ActivityMode.Action;
+					return Mode.Action;
 				//If only unit selected and can move the unit can perform MOVE
 				else if (isUnitSelected && selectedAnimateUnit.canMove)
-					return ActivityMode.Move;
+					return Mode.Move;
 				//Unit not selected
 				else
-					return ActivityMode.Idle;
+					return Mode.Select;
 			}
 		}
 		public Unit selectedUnit
@@ -163,7 +163,7 @@ namespace StormRend.Systems
 				{
 					//!!! This logic needs to run first otherwise the camera will move on final add target tile
 					//Clicking on any unit will focus camera on it unless in action mode?
-					if (mode != ActivityMode.Action)
+					if (mode != Mode.Action)
 						camMover.MoveTo(interimUnit, cameraSmoothTime);
 				}
 
@@ -172,20 +172,20 @@ namespace StormRend.Systems
 				{
 					switch (mode)
 					{
-						case ActivityMode.Action:   //ACTION MODE
+						case Mode.Action:   //ACTION MODE
 							if (isUnitHit)
 								AddTargetTile(interimUnit);
 							if (isTileHit)
 								AddTargetTile(interimTile);
 							break;
-						case ActivityMode.Move:     //MOVE MODE
+						case Mode.Move:     //MOVE MODE
 							if (isTileHit && isTileHitEmpty)	//Restrict to empty tiles only
 							{
 								if (selectedAnimateUnit.Move(interimTile))	//Move unit
 									camMover.MoveTo(interimTile, cameraSmoothTime);	//If move successful then focus camera
 							}
-							goto case ActivityMode.Idle;	//Fall through
-						case ActivityMode.Idle:     //IDLE MODE
+							goto case Mode.Select;	//Fall through
+						case Mode.Select:     //IDLE MODE
 							if (isUnitHit && interimUnit is AnimateUnit)
 								SelectUnit(interimUnit as AnimateUnit);
 							break;
@@ -199,13 +199,13 @@ namespace StormRend.Systems
 				{
 					switch (mode)
 					{
-						case ActivityMode.Action:	//ACTION MODE
+						case Mode.Action:	//ACTION MODE
 							if (notEnoughTargetTilesSelected && targetTileStack.Count > 0)
 								targetTileStack.Pop();	//UNDO 1 TARGET TILE SELECT
 							else
 								ClearSelectedAbility();	//CLEAR ABILITY
 							break;
-						case ActivityMode.Move:		//MOVE MODE
+						case Mode.Move:		//MOVE MODE
 							ClearSelectedUnit();		//CLEAR UNIT
 							break;
 					}
@@ -215,7 +215,7 @@ namespace StormRend.Systems
 			{
 				switch (mode)
 				{
-					case ActivityMode.Move:		//MOVE
+					case Mode.Move:		//MOVE
 						//Poll events
 						isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
 						if (isTileHit) isTileHitEmpty = !UnitRegistry.IsAnyUnitOnTile(interimTile);	//Check tile is empty
@@ -349,7 +349,7 @@ namespace StormRend.Systems
 		public void OnPointerEnterPreview(Ability a)
 		{
 			//Has to be in Move mode
-			if (mode != ActivityMode.Move) return;
+			if (mode != Mode.Move) return;
 
 			selectedAnimateUnit.CalculateTargetTiles(a);
 			selectedAnimateUnit.ClearGhost();
@@ -359,7 +359,7 @@ namespace StormRend.Systems
 		public void OnPointerExitPreview()
 		{
 			//Must be in move mode
-			if (mode != ActivityMode.Move) return;
+			if (mode != Mode.Move) return;
 
 			//Redraw
 			ClearAllTileHighlights();

@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace StormRend.States
 {
-    public class TurnState : UIState
+    public class TurnState : OnState
     {
         [Header("Stats")]
         [ReadOnlyField] public float turnCount = 0;
