@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using pokoro.Patterns.Generic;
 using StormRend.Abilities;
 using StormRend.CameraSystem;
+using StormRend.Enums;
 using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
+using StormRend.States;
 using StormRend.Systems.StateMachines;
 using StormRend.Units;
 using StormRend.Utility;
@@ -45,13 +48,11 @@ namespace StormRend.Systems
 		}
 
 		//Inspector
-		[SerializeField] LayerMask raycastLayerMask;
-
-		[Tooltip("A reference to the State object that is considered to be the player's state ie. AllyState")]
-		[Space(10), SerializeField] State playersState = null;
-
+		// [Tooltip("A reference to the State object that is considered to be the player's state ie. AllyState")]
+		[Header("State")]
+		[ReadOnlyField, SerializeField] TurnState currentTurnState = null;
 		[Space(10), SerializeField] UnitVar _selectedUnit = null;
-		[ReadOnlyField, SerializeField] Ability _selectedAbility = null;
+		[SerializeField] Ability _selectedAbility = null;
 
 		[Header("Tile Colors")]
 		[SerializeField] TileHighlightColor moveHighlight = null;
@@ -59,6 +60,7 @@ namespace StormRend.Systems
 
 		[Header("Camera")]
 		[SerializeField] float cameraSmoothTime = 1.75f;
+		[SerializeField] LayerMask raycastLayerMask;
 
 		//Properties
 		Mode mode
@@ -90,7 +92,6 @@ namespace StormRend.Systems
 			internal set => _selectedAbility = value;
 		}
 		public bool isAbilitySelected => selectedAbility != null;
-		public bool isPlayersTurn { get; set; } = true;		//If the current game state matches the player's state?
 		bool notEnoughTargetTilesSelected => targetTileStack.Count < selectedAbility.requiredTiles;
 
 		//Events
@@ -102,7 +103,7 @@ namespace StormRend.Systems
 		public UnityEvent onAbilityCleared;
 
 		//Members
-		FrameEventData e;   //The events that happenned this frame
+		FrameEventData e;   //The events that happened this frame
 		CameraMover camMover;
 		Camera cam;
 		Stack<Tile> targetTileStack = new Stack<Tile>();
@@ -114,6 +115,7 @@ namespace StormRend.Systems
 		bool isTileHitEmpty;
 		GraphicRaycaster gr;
 		List<RaycastResult> GUIhits = new List<RaycastResult>();
+		List<Type> currentControllableUnitTypes = new List<Type>();		//Holds the list of types that can be controlled for this game turn
 
 	#region Core
 		void Start()
@@ -165,49 +167,43 @@ namespace StormRend.Systems
 						camMover.MoveTo(interimUnit, cameraSmoothTime);
 				}
 
-				//PLAYER'S TURN
-				if (isPlayersTurn)
+				switch (mode)
 				{
-					switch (mode)
-					{
-						case Mode.Action:   //ACTION MODE
-							if (isUnitHit)
-								AddTargetTile(interimUnit);
-							if (isTileHit)
-								AddTargetTile(interimTile);
-							break;
-						case Mode.Move:     //MOVE MODE
-							if (isTileHit && isTileHitEmpty)	//Restrict to empty tiles only
-							{
-								if (selectedAnimateUnit.Move(interimTile))	//Move unit
-									camMover.MoveTo(interimTile, cameraSmoothTime);	//If move successful then focus camera
-							}
-							goto case Mode.Select;	//Fall through
-						case Mode.Select:     //IDLE MODE
-							if (isUnitHit && interimUnit is AnimateUnit)
-								SelectUnit(interimUnit as AnimateUnit);
-							break;
-					}
+					case Mode.Action:   //ACTION MODE
+						if (isUnitHit)
+							AddTargetTile(interimUnit);
+						if (isTileHit)
+							AddTargetTile(interimTile);
+						break;
+
+					case Mode.Move:     //MOVE MODE
+						if (isTileHit && isTileHitEmpty)	//Restrict to empty tiles only
+						{
+							if (selectedAnimateUnit.Move(interimTile))	//Try Move unit
+								camMover.MoveTo(interimTile, cameraSmoothTime);	//If move successful then focus camera
+						}
+						goto case Mode.Select;	//Fall through
+
+					case Mode.Select:     //SELECT MODE
+						if (isUnitHit && currentControllableUnitTypes.Contains(interimUnit.GetType()))	//Filter controllable units
+							SelectUnit(interimUnit as AnimateUnit);
+						break;
 				}
 
 			}
 			else if (e.rightClickUp)	//RIGHT CLICK RELEASED
 			{
-				//PLAYER'S TURN	
-				if (isPlayersTurn)
+				switch (mode)
 				{
-					switch (mode)
-					{
-						case Mode.Action:	//ACTION MODE
-							if (notEnoughTargetTilesSelected && targetTileStack.Count > 0)
-								targetTileStack.Pop();	//UNDO 1 TARGET TILE SELECT
-							else
-								ClearSelectedAbility();	//CLEAR ABILITY
-							break;
-						case Mode.Move:		//MOVE MODE
-							ClearSelectedUnit();		//CLEAR UNIT
-							break;
-					}
+					case Mode.Action:	//ACTION MODE
+						if (notEnoughTargetTilesSelected && targetTileStack.Count > 0)
+							targetTileStack.Pop();	//UNDO 1 TARGET TILE SELECT
+						else
+							ClearSelectedAbility();	//CLEAR ABILITY
+						break;
+					case Mode.Move:		//MOVE MODE
+						ClearSelectedUnit();		//CLEAR UNIT
+						break;
 				}
 			}
 			else 	//HOVER
@@ -229,8 +225,29 @@ namespace StormRend.Systems
 				}
 			}
 		}
-	#endregion	
+		#endregion
 
+	#region Callbacks
+		public void OnStateChanged(State newState)
+		{
+			var newTurnState = newState as TurnState;
+
+			//Clear highlights etc if current state changed
+			if (currentTurnState != newTurnState)
+			{
+				ClearSelectedUnit();
+				ClearSelectedAbility();
+				ClearAllTileHighlights();
+				
+				//Set new turn state
+				currentTurnState = newTurnState;
+
+				//Setup new controllable units
+				PopulateControllableUnitTypes();
+			}
+		}
+	#endregion
+	
 	#region Sets
 		//Public; can be called via unity events
 		public void SelectUnit(AnimateUnit au)
@@ -320,20 +337,6 @@ namespace StormRend.Systems
 
 			//Events
 			onAbilityPerformed.Invoke(selectedAbility);
-		}
-
-		public void OnStateChanged(State newState)
-		{
-			//Clear highlights etc if current state changed
-			if (playersState != newState)
-			{
-				ClearSelectedUnit();
-				ClearSelectedAbility();
-				ClearAllTileHighlights();
-			}
-
-			//Set the player's turn flag
-			isPlayersTurn = (playersState == newState);
 		}
 	#endregion
 
@@ -483,6 +486,17 @@ namespace StormRend.Systems
 			if (GUIhits.Count > 0)
 				return true;
 			return false;
+		}
+
+		void PopulateControllableUnitTypes()
+		{
+			currentControllableUnitTypes.Clear();
+			//Allies
+			if ((currentTurnState.controllableUnitType & TargetMask.Allies) == TargetMask.Allies)
+				currentControllableUnitTypes.Add(typeof(AllyUnit));
+			//Enemies
+			if ((currentTurnState.controllableUnitType & TargetMask.Enemies) == TargetMask.Enemies)
+				currentControllableUnitTypes.Add(typeof(EnemyUnit));
 		}
 	#endregion
 

@@ -1,3 +1,4 @@
+using StormRend.Enums;
 using StormRend.States.UI;
 using StormRend.Systems.StateMachines;
 using StormRend.Utility.Attributes;
@@ -9,6 +10,9 @@ namespace StormRend.States
 {
     public class TurnState : OnState
     {
+		[Header("Unit Filtering"), Tooltip("The unit type that can be controlled when game is in this state")]
+		public TargetMask controllableUnitType;
+
         [Header("Stats")]
         [ReadOnlyField] public float turnCount = 0;
         [ReadOnlyField] public float currentStateTime;
