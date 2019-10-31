@@ -68,7 +68,7 @@ namespace StormRend.Units
 					return;
 				}
 			}
-			Debug.Assert(currentTile, name + "does not have a current tile!");
+			Debug.Assert(currentTile, name + " does not have a current tile!");
 		}
 		#endregion
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: damage2
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 6f20816157e9a4c4282ef20c6c9f807e, type: 3}
   _animation: FuriousSwing
   _level: 1
   _type: 0
@@ -21,10 +21,23 @@ MonoBehaviour:
   _requiredTiles: 1
   _targetTileTypes: 64
   effects:
-  - {fileID: 114607656634939698}
-  - {fileID: 114145342194451638}
+  - {fileID: 114099541421676632}
+  - {fileID: 114714482581773146}
   castArea: 00000000000000000000000000000000000100000000000100010000000000010000000000000000000000000000000000
---- !u!114 &114145342194451638
+--- !u!114 &114099541421676632
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
+  m_Name: DamageEffect
+  m_EditorClassIdentifier: 
+  damage: 3
+--- !u!114 &114714482581773146
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -37,18 +50,5 @@ MonoBehaviour:
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
   refreshType: 2
-  allowedRefreshes: 4
-  refreshCount: 0
---- !u!114 &114607656634939698
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
-  m_Name: DamageEffect
-  m_EditorClassIdentifier: 
-  damage: 2
+  allowedRefreshes: 6
+  refreshCount: 6
