@@ -36,13 +36,19 @@ namespace StormRend.Audio
         }
         public void ChancePlay()
         {
-            if (Random.Range(0, 100) < chance)  
+            if (Random.Range(0, 100) < chance)
                 audioSource.PlayOneShot(sounds[Random.Range(0, sounds.Count)]);
         }
         public void ChancePlay(AudioClip clip)
         {
-            if (Random.Range(0, 100) < chance)  
+            if (Random.Range(0, 100) < chance)
                 audioSource.PlayOneShot(clip);
+        }
+        public void ChancePlayAudioContainer(Object o)
+        {
+            AudioContainer ac = (AudioContainer)o;
+            if (Random.Range(0, 100) < ac.chance)
+                audioSource.PlayOneShot(ac.clips[Random.Range(0, ac.clips.Count)]);
         }
 
         /// <summary>

@@ -25,6 +25,10 @@ namespace StormRend.Units
 		public DamageEvent onDamage;
 		public UnityEvent onHeal;
 
+        //Debug
+        public KeyCode debugKey = KeyCode.O;
+        public UnityEvent DebugEvent;
+
 		//Properties
 		public int HP
 		{
