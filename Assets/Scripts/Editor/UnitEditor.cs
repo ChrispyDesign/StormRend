@@ -1,3 +1,4 @@
+using System;
 using StormRend.CameraSystem;
 using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
@@ -23,11 +24,25 @@ namespace StormRend.Editors
 
 		void OnSceneGUI()
 		{
+			var e = Event.current;
 			DrawRotateButtons(buttonColour);
-			SnapToNearestTile();
+			SnapToNearestTile(e);
+			MoveByWASD(e);
 		}
 
-		void DrawRotateButtons(Color color)
+        void MoveByWASD(Event e)
+        {
+			var au = u as AnimateUnit;
+			if (e.type == EventType.KeyDown)
+				switch (e.keyCode)
+				{
+					case KeyCode.W:
+						au.Push(new Vector2Int((int)au.transform.forward.x, (int)au.transform.forward.z), false);
+						break;
+				}
+        }
+
+        void DrawRotateButtons(Color color)
 		{
 			Vector2 offset = new Vector2(10, 0);
 			const float bSize = 30f;
@@ -45,9 +60,9 @@ namespace StormRend.Editors
 			GUI.color = oldColor;
 		}
 
-		void SnapToNearestTile()
+		void SnapToNearestTile(Event e)
 		{
-			if (Event.current.type == EventType.MouseUp)
+			if (e.type == EventType.MouseUp)
 				if (map.TryGetNearestTile(u.transform.position, out Tile nearest))
 				{
 					u.transform.position = nearest.transform.position;
