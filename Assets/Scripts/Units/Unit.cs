@@ -25,10 +25,6 @@ namespace StormRend.Units
 		public DamageEvent onDamage;
 		public UnityEvent onHeal;
 
-        //Debug
-        public KeyCode debugKey = KeyCode.O;
-        public UnityEvent DebugEvent;
-
 		//Properties
 		public int HP
 		{
@@ -53,7 +49,7 @@ namespace StormRend.Units
 		{
 			//Get animator
 			animator = GetComponentInChildren<Animator>();
-		}		
+		}
 
 		void ScanTileBelow()
 		{
@@ -68,7 +64,7 @@ namespace StormRend.Units
 					return;
 				}
 			}
-			Debug.Assert(currentTile, name + "does not have a current tile!");
+			Debug.Assert(currentTile, name + " does not have a current tile!");
 		}
 		#endregion
 
@@ -76,7 +72,7 @@ namespace StormRend.Units
 		public virtual void TakeDamage(DamageData damageData)
 		{
 			if (isDead) return;     //Can't beat a dead horse :P
-			HP -= damageData.amount;	
+			HP -= damageData.amount;
 			if (HP <= 0) Die();
 
 			onDamage.Invoke(damageData);
@@ -106,4 +102,3 @@ namespace StormRend.Units
 	#endregion
 	}
 }
-

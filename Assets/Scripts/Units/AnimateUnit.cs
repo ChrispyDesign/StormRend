@@ -16,7 +16,7 @@ using UnityEngine.EventSystems;
 namespace StormRend.Units
 {
 	[SelectionBase] //Avoid clicking on child objects
-	public abstract partial class AnimateUnit : Unit, IPointerEnterHandler, IPointerExitHandler
+	public abstract class AnimateUnit : Unit, IPointerEnterHandler, IPointerExitHandler
 	{
 		//Enums
 		public enum LookSnap

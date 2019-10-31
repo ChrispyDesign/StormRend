@@ -11,7 +11,7 @@ namespace StormRend.Abilities
 		protected Unit owner;
 
 	#region Core
-		public virtual void Prepare(Unit owner) { if (!this.owner) this.owner = owner; }		
+		public virtual void Prepare(Unit owner) { if (!this.owner) this.owner = owner; }
 		public abstract void Perform(Unit owner, Tile[] targetTiles);
 		public void SetContainer(Ability container) => this.container = container;
 	#endregion
