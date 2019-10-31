@@ -2178,8 +2178,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0.0000000019633697, y: -0.0000011175871, z: -0.02688308}
-    m_Extent: {x: 0.03233186, y: 0.007933529, z: 0.03284432}
+    m_Center: {x: 0.000000002114868, y: -0.0000011175871, z: -0.02688308}
+    m_Extent: {x: 0.034095414, y: 0.007933529, z: 0.03284432}
   m_DirtyAABB: 0
 --- !u!183 &7344916309360044327
 Cloth:
@@ -2639,12 +2639,34 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   onDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4951238597628664451}
+        m_MethodName: OnHealthChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: StormRend.Utility.Events.DamageEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onHeal:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4951238597628664451}
+        m_MethodName: OnHealthChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   lookSnap: 0
@@ -2652,6 +2674,7 @@ MonoBehaviour:
   pathblockingUnitTypes: 8
   abilities: []
   ghostColor: {r: 1, g: 0, b: 0.6938925, a: 1}
+  statusEffects: []
   _canMove: 1
   _canAct: 1
   onAddStatusEffect:
@@ -2749,3 +2772,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2361123511665102712}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4951238597628664451 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7237900428195862011, guid: e1fbb2b94b8040740927f9ac8f85e701,
+    type: 3}
+  m_PrefabInstance: {fileID: 2361123511665102712}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b7bb8b91af7b6843b2c5832194e42fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -20,6 +20,11 @@ namespace StormRend.Abilities.Effects
 			{
 				if (tt.Contains(u.currentTile))
 				{
+					var au = owner as AnimateUnit;
+
+					//Face victim
+					au.SnappedLookAt(u.transform.position);
+
                     //Damage units that are standing on target tiles
                     u.TakeDamage(new DamageData(owner, damage));
 
