@@ -302,6 +302,10 @@ namespace StormRend.Systems
 			ClearAllTileHighlights();
 			ShowTargetTiles();
 
+			//Auto perform ability on self if required tiles set to 0
+			if (selectedAbility.requiredTiles == 0)
+				AddTargetTile(selectedAnimateUnit.currentTile);
+
 			//Raise
 			OnAbilityChanged.Invoke(a);
 		}
