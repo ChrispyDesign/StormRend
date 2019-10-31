@@ -29,7 +29,7 @@ namespace StormRend.MapSystems.Tiles
 		internal float F = 0;
 
 		//Properties
-		public Map owner { get; set; }
+		public Map owner => Map.current;
 
 		//Members
 		[ReadOnlyField] public List<Tile> connections = new List<Tile>();	//List because HashSets don't serialize
@@ -50,7 +50,7 @@ namespace StormRend.MapSystems.Tiles
 			SetupInternalColours();
 
 			//Failsafe
-			if (!owner) owner = Map.current;
+			// if (!owner) owner = Map.current;w
 		}
 
 		public void Connect(Tile to) => connections.Add(to);

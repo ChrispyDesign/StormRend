@@ -190,7 +190,7 @@ namespace StormRend.Units
 				//Set
 				ghostTile = destination;
 				//Move and look
-				ghostMesh.SetActive(true);
+				ghostMesh?.SetActive(true);
 				ghostMesh.transform.rotation = GetSnappedRotation(ghostTile.transform.position, snapAngle);
 				ghostMesh.transform.position = ghostTile.transform.position;
 			}
@@ -198,7 +198,7 @@ namespace StormRend.Units
 			else
 			{
 				//Ghost was probably just active so deactivate ghost ??? Should this be here?
-				ghostMesh.SetActive(false);
+				if (ghostMesh != null) ghostMesh.SetActive(false);
 				//Filter
 				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
 				//Set

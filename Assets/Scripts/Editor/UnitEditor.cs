@@ -9,6 +9,7 @@ using UnityEngine;
 namespace StormRend.Editors
 {
 	[CustomEditor(typeof(Unit), true)]
+	[CanEditMultipleObjects]
 	public class UnitEditor : SmartEditor
 	{
 		Unit u;     //Target
@@ -36,8 +37,17 @@ namespace StormRend.Editors
 			if (e.type == EventType.KeyDown)
 				switch (e.keyCode)
 				{
-					case KeyCode.W:
+					case KeyCode.H:
 						au.Push(new Vector2Int((int)au.transform.forward.x, (int)au.transform.forward.z), false);
+						break;
+					case KeyCode.B:
+						u.transform.Rotate(Vector3.up, -90);
+						break;
+					case KeyCode.N:
+						au.Push(new Vector2Int((int)-au.transform.forward.x, (int)-au.transform.forward.z), false);
+						break;
+					case KeyCode.M:
+						u.transform.Rotate(Vector3.up, 90);
 						break;
 				}
         }

@@ -229,7 +229,7 @@ namespace StormRend.Editors
 			t.transform.position = gridCursor;
 			t.transform.rotation = rotation;
 			t.gameObject.layer = m.gameObject.layer;
-			t.owner = m;
+			// t.owner = m;
 
 			//UNDO WORKING
             Undo.RegisterCreatedObjectUndo(t.gameObject, "Paint Tile " + m.selectedTilePrefab.name);
