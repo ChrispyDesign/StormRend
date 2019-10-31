@@ -120,6 +120,9 @@ namespace StormRend.Units
 			//Status effect
 			foreach (var se in statusEffects)
 				se.OnTakeDamage(this, damageData.attacker);
+
+			//Face attack
+			transform.rotation = GetSnappedRotation(damageData.attacker.transform.position, snapAngle);
 		}
 
 		//------------------- STATS
@@ -165,7 +168,7 @@ namespace StormRend.Units
 				se.OnDeath(this);
 
 			//TEMP
-			gameObject.SetActive(false);
+			// gameObject.SetActive(false);
 		}
 
 		//------------------ MOVE
