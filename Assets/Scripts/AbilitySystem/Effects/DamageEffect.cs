@@ -27,9 +27,6 @@ namespace StormRend.Abilities.Effects
 
                     //Damage units that are standing on target tiles
                     u.TakeDamage(new DamageData(owner, damage));
-
-					//Play animation
-					owner.animator.SetTrigger(container.animationTrigger);
 				}
 			}
         }

@@ -9,12 +9,12 @@ namespace StormRend.AnimatorBehaviours
     public class HandleDeathAnimation : StateMachineBehaviour
     {
 		[SerializeField] string deathParam = "isDead";
-        AnimateUnit unit;   //The unit attached to this animator
+        AnimateUnit au;   //The unit attached to this animator
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            unit = animator.GetComponentInParent<AnimateUnit>();
+			if (!au) au = animator.GetComponentInParent<AnimateUnit>();		//get once?
             //If unit has died then go int death animation
-			animator.SetBool(deathParam, unit.isDead);
+			animator.SetBool(deathParam, au.isDead);
         }
     }
 }

@@ -84,7 +84,7 @@ namespace StormRend.MapSystems.Tiles
 				// var foundHighlights = Resources.LoadAll("", typeof(TileHighlightColor)) as TileHighlightColor[];
 				foreach (var fh in foundHighlights)
 				{
-					Debug.Log("Loading Tile Highlight Color: " + fh.name);
+					// Debug.Log("Loading Tile Highlight Color: " + fh.name);
 					highlightColors.Add(fh.name, fh);
 				}
 				highlightsScanned = true;
