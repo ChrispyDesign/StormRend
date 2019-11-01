@@ -25,7 +25,7 @@ namespace StormRend.UI
 
 		public void OnEnter()
 		{
-			infoPanel.ShowPanel(title, details);
+			infoPanel.ShowPanel(title, details, 1);
 			animator.SetInteger("Animation", 1);
 		}
 

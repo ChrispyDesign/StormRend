@@ -26,6 +26,7 @@ namespace StormRend.UI
 
 		public void ShowPanel(string title, string details, int levels)
 		{
+			for(int i = )
 			StopAllCoroutines();
 			StartCoroutine(FadeIn());
 		}
@@ -38,7 +39,6 @@ namespace StormRend.UI
 
 		IEnumerator FadeIn()
 		{
-			Debug.Log("Hello");
 			for (float i = 0f; i <= 1f; i += fadeDuration)
 			{
 				Vector4 color;

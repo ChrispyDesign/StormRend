@@ -42,7 +42,7 @@ namespace StormRend.UI
 
 		public void OnPointerEnter(PointerEventData eventData)
 		{
-			infoPanel.ShowPanel(title, details);
+			infoPanel.ShowPanel(title, details, 1);
 		}
 
 		public void OnPointerExit(PointerEventData eventData)
