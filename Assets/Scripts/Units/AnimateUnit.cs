@@ -274,10 +274,27 @@ namespace StormRend.Units
 
 		//------------------- PERFORM ABILITY
 		/// <summary>
-		/// Override to for when raycasts hits units instead of tiles
+		/// Override for when raycasts hits units instead of tiles
 		/// </summary>
 		public void Act(Ability ability, params Unit[] targetUnits)
 			=> Act(ability, targetUnits.Select(x => x.currentTile).ToArray());
+		public void FilteredAct(Ability ability, params Unit[] targetUnits)
+			=> FilteredAct(ability, targetUnits.Select(x => x.currentTile).ToArray());
+		
+		/// <summary>
+		/// Filter target tiles based on ability's tile type settings before performing ability
+		/// </summary>
+		public void FilteredAct(Ability ability, params Tile[] targetTiles)
+		{
+			var filteredTargetTiles = new List<Tile>();
+			foreach (var t in targetTiles)
+			{
+				if (ability.IsAcceptableTileType(this, t))
+					filteredTargetTiles.Add(t);
+			}
+			Act(ability, filteredTargetTiles.ToArray());
+		}
+
 		/// <summary>
 		/// Perform the ability and lock unit for this turn
 		/// </summary>

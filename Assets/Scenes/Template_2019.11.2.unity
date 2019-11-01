@@ -5287,24 +5287,6 @@ Transform:
   m_Father: {fileID: 1878195013}
   m_RootOrder: 139
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &171831385 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6841392901105898436, guid: 7fec0c475c06e4efe88295a53b98033c,
-    type: 3}
-  m_PrefabInstance: {fileID: 6841392901248324932}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &171831386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 171831385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a8be896136785742a2ba41629f39f10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &171944441
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14390,7 +14372,7 @@ PrefabInstance:
     - target: {fileID: 2145422007893173175, guid: 04784432bcac92441b9ad259dcc7f360,
         type: 3}
       propertyPath: field of view
-      value: 40
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 2941809505071786009, guid: 04784432bcac92441b9ad259dcc7f360,
         type: 3}
@@ -37152,6 +37134,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5168873017443203932, guid: 918271937d9712644afea95d7cd0c6a3,
+        type: 3}
+      propertyPath: pathBlockers
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 918271937d9712644afea95d7cd0c6a3, type: 3}
 --- !u!114 &1129093276 stripped
@@ -37515,6 +37502,16 @@ PrefabInstance:
     - target: {fileID: 5620367471101316635, guid: 9b2ddff21ff764c4383bac507ca99f07,
         type: 3}
       propertyPath: pathblockingUnitTypes
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620367471101316635, guid: 9b2ddff21ff764c4383bac507ca99f07,
+        type: 3}
+      propertyPath: pathBlockingTypes
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620367471101316635, guid: 9b2ddff21ff764c4383bac507ca99f07,
+        type: 3}
+      propertyPath: pathBlockers
       value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -43071,6 +43068,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8394477178119149605, guid: daec9893be12174409e5d742b0c859b7,
+        type: 3}
+      propertyPath: invulnerableTypes
+      value: 64
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: daec9893be12174409e5d742b0c859b7, type: 3}
@@ -56180,7 +56182,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.18417409}
   m_AnchorMax: {x: 1, y: 0.37500003}
-  m_AnchoredPosition: {x: 0, y: 4.1999817}
+  m_AnchoredPosition: {x: 0, y: 4.200012}
   m_SizeDelta: {x: -2, y: -20.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1697616591
@@ -66299,6 +66301,11 @@ PrefabInstance:
       propertyPath: pathblockingUnitTypes
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 6523016055183356590, guid: cbd9f60274804884eb28a6716428840f,
+        type: 3}
+      propertyPath: pathBlockers
+      value: 40
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbd9f60274804884eb28a6716428840f, type: 3}
 --- !u!4 &1956310906 stripped
@@ -71774,6 +71781,11 @@ PrefabInstance:
       propertyPath: onActed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 3841930061851047593, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
+        type: 3}
+      propertyPath: pathBlockers
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 4783116619361809436, guid: 56805c2ea74b1be4b8bdc7e9c7f5154f,
         type: 3}
       propertyPath: m_Controller
@@ -73700,17 +73712,6 @@ PrefabInstance:
       propertyPath: onTurnEnter.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 1129093276}
-    - target: {fileID: 6841392901105898438, guid: 7fec0c475c06e4efe88295a53b98033c,
-        type: 3}
-      propertyPath: Description
-      value: 'Turn state for ally units ie. The Player''s turn.
-
-        OnTurnEnter(State):
-
-        - NextTurnButton.button.interactable = true
-
-        - UnitRegistry.RunUnitsBe'
-      objectReference: {fileID: 0}
     - target: {fileID: 7475280827714721598, guid: 7fec0c475c06e4efe88295a53b98033c,
         type: 3}
       propertyPath: m_AnchoredPosition.x

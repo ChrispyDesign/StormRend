@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
-  m_Name: Spirit Crystal Level 1
+  m_Name: ClubSwing
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 467affa39f46f3843b7377c18e8adb86, type: 3}
-  _animationTrigger: SpiritCrystal
+  _icon: {fileID: 0}
+  _animationTrigger: ClubSwing
   _type: 0
   _description: 
-  _gloryCost: 1
+  _gloryCost: 0
   _requiredTiles: 1
-  _targetTileTypes: 1
+  _targetTileTypes: 4
   effects:
-  - {fileID: 114731120626100668}
-  castArea: 00000101010000000101010101000101010101010101010100010101010101010101010001010101010000000101010000
---- !u!114 &114731120626100668
+  - {fileID: 114008655095880326}
+  castArea: 00000000000000000000000000000000000100000000000100010000000000010000000000000000000000000000000000
+--- !u!114 &114008655095880326
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31,13 +31,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15f2715bfc5600e4b9a9a9bea62fb22c, type: 3}
-  m_Name: SummonEffect
+  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
+  m_Name: DamageEffect
   m_EditorClassIdentifier: 
   container: {fileID: 11400000}
   owner: {fileID: 0}
-  summon: {fileID: 3266679734864301431, guid: daec9893be12174409e5d742b0c859b7, type: 3}
---- !u!114 &114776763529855574
+  damage: 1
+--- !u!114 &114948348214354872
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,9 +46,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15f2715bfc5600e4b9a9a9bea62fb22c, type: 3}
-  m_Name: SummonEffect
+  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
+  m_Name: DamageEffect
   m_EditorClassIdentifier: 
   container: {fileID: 0}
   owner: {fileID: 0}
-  summon: {fileID: 0}
+  damage: 1
