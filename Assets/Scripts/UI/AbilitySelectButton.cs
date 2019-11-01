@@ -8,6 +8,7 @@ namespace StormRend.UI
 {
 	public class AbilitySelectButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
+		[SerializeField] string title;
 		[SerializeField] string details;
 
 		public UnitVar selectedUnit;
@@ -41,7 +42,7 @@ namespace StormRend.UI
 
 		public void OnPointerEnter(PointerEventData eventData)
 		{
-			infoPanel.ShowPanel(details);
+			infoPanel.ShowPanel(title, details);
 		}
 
 		public void OnPointerExit(PointerEventData eventData)

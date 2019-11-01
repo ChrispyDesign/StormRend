@@ -43,7 +43,7 @@ namespace StormRend.UI
 
 		public override void OnDecrease()
 		{
-			if (currentIndex - 1 == -1)
+			if (currentIndex - 1 == -2)
 				return;
 
 			StartCoroutine(DecreaseBlizzard(currentIndex));
@@ -52,7 +52,7 @@ namespace StormRend.UI
 
 		public override void OnPointerEnter(PointerEventData eventData)
 		{
-			infoPanel.ShowPanel(details);
+			infoPanel.ShowPanel(title, details);
 		}
 
 		public override void OnPointerExit(PointerEventData eventData)
