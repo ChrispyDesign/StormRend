@@ -16,12 +16,15 @@ namespace StormRend.Units
 		[Header("Crystal")]
 		[Tooltip("Number of turns before this crystal explodes")]
 		public int turns = 1;
+		
 		[Tooltip("The damage this crystal does to ")]
 		public int damage = 1;
+
 		[Tooltip("The range of the damage")]
 		public int range = 1;
+
 		[Tooltip("The type of units that won't get damaged")]
-		[EnumFlags] public TargetMask ignoreUnitMask;
+		[EnumFlags, SerializeField] TargetType invulnerableTypes = TargetType.Animates;
 
 		//Members
 
@@ -68,19 +71,19 @@ namespace StormRend.Units
 			List<Type> targetUnits = new List<Type>();
 
 			//Allies
-			if ((ignoreUnitMask & TargetMask.Allies) == TargetMask.Allies)
+			if ((invulnerableTypes & TargetType.Allies) == TargetType.Allies)
 				targetUnits.Add(typeof(AllyUnit));
 			//Enemies
-			if ((ignoreUnitMask & TargetMask.Enemies) == TargetMask.Enemies)
+			if ((invulnerableTypes & TargetType.Enemies) == TargetType.Enemies)
 				targetUnits.Add(typeof(EnemyUnit));
 			//Crystals
-			if ((ignoreUnitMask & TargetMask.Crystals) == TargetMask.Crystals)
+			if ((invulnerableTypes & TargetType.Crystals) == TargetType.Crystals)
 				targetUnits.Add(typeof(CrystalUnit));
 			//InAnimates
-			if ((ignoreUnitMask & TargetMask.InAnimates) == TargetMask.InAnimates)
+			if ((invulnerableTypes & TargetType.InAnimates) == TargetType.InAnimates)
 				targetUnits.Add(typeof(InAnimateUnit));
 			//Animates
-			if ((ignoreUnitMask & TargetMask.Animates) == TargetMask.Animates)
+			if ((invulnerableTypes & TargetType.Animates) == TargetType.Animates)
 				targetUnits.Add(typeof(AnimateUnit));
 				
 			return targetUnits.ToArray();

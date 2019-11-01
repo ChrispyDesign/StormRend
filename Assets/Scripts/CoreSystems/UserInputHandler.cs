@@ -492,10 +492,10 @@ namespace StormRend.Systems
 		{
 			currentControllableUnitTypes.Clear();
 			//Allies
-			if ((currentTurnState.controllableUnitType & TargetMask.Allies) == TargetMask.Allies)
+			if ((currentTurnState.controllableUnitType & TargetType.Allies) == TargetType.Allies)
 				currentControllableUnitTypes.Add(typeof(AllyUnit));
 			//Enemies
-			if ((currentTurnState.controllableUnitType & TargetMask.Enemies) == TargetMask.Enemies)
+			if ((currentTurnState.controllableUnitType & TargetType.Enemies) == TargetType.Enemies)
 				currentControllableUnitTypes.Add(typeof(EnemyUnit));
 		}
 	#endregion

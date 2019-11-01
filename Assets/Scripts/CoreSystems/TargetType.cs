@@ -2,9 +2,11 @@ using System;
 
 namespace StormRend.Enums
 {
-	//Flags and Enums
+	/// <summary>
+	/// Target and Unit type enum. Can be used as a bitmask
+	/// </summary>
 	[Flags]
-	public enum TargetMask
+	public enum TargetType
 	{
 		Empty = 1 << 0,     //Empty is when no bits are selected!
 		Self = 1 << 1,

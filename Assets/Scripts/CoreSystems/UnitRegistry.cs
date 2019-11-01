@@ -60,10 +60,10 @@ namespace StormRend.Units
 			AnimateUnit[] animateUnits = new AnimateUnit[0];
 			switch (turnState.controllableUnitType)
 			{
-				case TargetMask.Allies:
+				case TargetType.Allies:
 					animateUnits = GetUnitsByType<AllyUnit>();
 					break;
-				case TargetMask.Enemies:
+				case TargetType.Enemies:
 					animateUnits = GetUnitsByType<EnemyUnit>();
 					break;
 			}
@@ -76,10 +76,10 @@ namespace StormRend.Units
 			AnimateUnit[] animateUnits = new AnimateUnit[0];
 			switch (turnState.controllableUnitType)
 			{
-				case TargetMask.Allies:
+				case TargetType.Allies:
 					animateUnits = GetUnitsByType<AllyUnit>();
 					break;
-				case TargetMask.Enemies:
+				case TargetType.Enemies:
 					animateUnits = GetUnitsByType<EnemyUnit>();
 					break;
 			}

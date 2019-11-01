@@ -5,6 +5,7 @@ using StormRend.Units;
 using pokoro.BhaVE.Core.Variables;
 using StormRend.Enums;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace StormRend.Systems
 {
@@ -18,13 +19,13 @@ namespace StormRend.Systems
         [SerializeField] int maxBlizzardValue = 5;
 
         [Header("Damage")]
-        [SerializeField, EnumFlags] TargetMask targetUnits = TargetMask.Allies;
+        [SerializeField, EnumFlags] TargetType typesToDamage = TargetType.Allies;
         [SerializeField, Range(1, 10)] int damage = 1;
 
         [Space]
         [Header("Events")]
-        [SerializeField] UnityEvent onExecute = null;
-        [SerializeField] UnityEvent onReset = null;
+        public UnityEvent onExecute = null;
+        public UnityEvent onReset = null;
 
         UnitRegistry ur = null;
 
@@ -49,19 +50,19 @@ namespace StormRend.Systems
             var unitsToDamage = new List<Unit>();
 
             //ALLIES
-            if ((targetUnits & TargetMask.Allies) == TargetMask.Allies)
+            if ((typesToDamage & TargetType.Allies) == TargetType.Allies)
                 unitsToDamage.AddRange(ur.GetUnitsByType<AllyUnit>());
             //ENEMIES
-            if ((targetUnits & TargetMask.Enemies) == TargetMask.Enemies)
+            if ((typesToDamage & TargetType.Enemies) == TargetType.Enemies)
                 unitsToDamage.AddRange(ur.GetUnitsByType<EnemyUnit>());
 			//CRYSTALS
-            if ((targetUnits & TargetMask.Crystals) == TargetMask.Crystals)
+            if ((typesToDamage & TargetType.Crystals) == TargetType.Crystals)
                 unitsToDamage.AddRange(ur.GetUnitsByType<CrystalUnit>());
             //INANIMATES
-            if ((targetUnits & TargetMask.InAnimates) == TargetMask.InAnimates)
+            if ((typesToDamage & TargetType.InAnimates) == TargetType.InAnimates)
                 unitsToDamage.AddRange(ur.GetUnitsByType<InAnimateUnit>());
             //ANIMATES
-            if ((targetUnits & TargetMask.Animates) == TargetMask.Animates)
+            if ((typesToDamage & TargetType.Animates) == TargetType.Animates)
                 unitsToDamage.AddRange(ur.GetUnitsByType<AnimateUnit>());
 			
 			//Deal damage to selected units
