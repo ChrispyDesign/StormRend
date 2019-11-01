@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace StormRend.Utility
@@ -22,6 +23,19 @@ namespace StormRend.Utility
 				if (i == item)
 					return true;
 			return false;
+		}
+
+		/// <summary>
+		/// Debug logs any IEnumerable collection 
+		/// </summary>
+		public static void Print(this IEnumerable collection)
+		{
+			Debug.Log("Printing: " + collection);
+			int i = 0;
+			foreach (var item in collection)
+			{
+				Debug.Log(i++ + ": " + item);
+			}
 		}
     }
 }
