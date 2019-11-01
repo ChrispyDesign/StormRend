@@ -36,7 +36,7 @@ namespace StormRend.Units
 		[SerializeField] protected int moveRange = 4;
 		[Tooltip("The unit types of that this unit cannot walk through ie. opponents")]
 		[EnumFlags, SerializeField] TargetMask pathblockingUnitTypes = TargetMask.Enemies;
-		[SerializeField] internal Ability[] abilities;
+		[SerializeField] internal Ability[] abilities = new Ability[0];
 		[ReadOnlyField,SerializeField] internal List<StatusEffect> statusEffects = new List<StatusEffect>();
 
 		[Header("Ghost")]
@@ -45,10 +45,10 @@ namespace StormRend.Units
 
 		//Events
 		[Header("Animate Unit Events")]
-		[SerializeField] EffectEvent onAddStatusEffect;
-		[SerializeField] UnityEvent onBeginTurn;
-		[SerializeField] AbilityEvent onActed;
-		[SerializeField] UnityEvent onEndTurn;
+		[SerializeField] EffectEvent onAddStatusEffect = null;
+		[SerializeField] UnityEvent onBeginTurn = null;
+		[SerializeField] AbilityEvent onActed = null;
+		[SerializeField] UnityEvent onEndTurn = null;
 
 		//Properties
 		public Tile ghostTile { get; set; } = null;		//The tile the ghost is on

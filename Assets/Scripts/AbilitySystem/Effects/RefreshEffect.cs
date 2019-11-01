@@ -15,7 +15,7 @@ namespace StormRend.Abilities.Effects
 			ActAgain = 1 << 1,
 		}
 
-        [EnumFlags, SerializeField] RefreshType refreshType;
+        [EnumFlags, SerializeField] RefreshType refreshType = 0;
 		[SerializeField] int allowedRefreshes = 1;
 		[ReadOnlyField, SerializeField] int refreshCount = 0;		//internal refresh count
 

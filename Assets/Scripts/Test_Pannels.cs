@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Test_Pannels : MonoBehaviour
 {
-    [SerializeField] List<GameObject> textboxes;
+    [SerializeField] List<GameObject> textboxes = new List<GameObject>();
 
     public void Update()
     {

@@ -28,7 +28,6 @@ namespace StormRend.Abilities
 		[SerializeField] Sprite _icon = null;
 		[Tooltip("Animation trigger for this ability that will be sent to animator")]
 		[SerializeField] string _animationTrigger = "";
-		[SerializeField] int _level = 1;
 		[SerializeField] AbilityType _type = AbilityType.Primary;
 		[TextArea(0, 2), SerializeField] string _description = "";
 

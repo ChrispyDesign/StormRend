@@ -19,7 +19,7 @@ namespace StormRend.Defunct
 		[SerializeField] xUndoSystem m_commandManager = null;
 		[SerializeField] xPlayerUnit[] m_players;
 		[SerializeField] xEnemyUnit[] m_enemies;
-		[SerializeField] List<xCrystal> m_crystal;
+		[SerializeField] List<xCrystal> m_crystal = new List<xCrystal>();
 
 		#region GettersAndSetters
 		public void AddCrystal(xCrystal _crystal) { m_crystal.Add(_crystal); }

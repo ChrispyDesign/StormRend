@@ -13,7 +13,7 @@ namespace StormRend.Abilities.Effects
     /// </summary>
     public class PushEffect : Effect
     {
-        [EnumFlags, SerializeField, Tooltip("ONLY THESE TYPES CAN BE PUSHED: Allies, Enemies")] TargetMask unitTypesToPush;
+        [EnumFlags, SerializeField, Tooltip("ONLY THESE TYPES CAN BE PUSHED: Allies, Enemies")] TargetMask unitTypesToPush = TargetMask.Enemies | TargetMask.Allies;
         [SerializeField] int pushAmount = 1;
         [SerializeField] int damage = 0;
         [SerializeField] bool canPushOffEdge = true;

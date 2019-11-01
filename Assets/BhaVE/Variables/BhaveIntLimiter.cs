@@ -12,7 +12,7 @@ namespace StormRend.Variables.Utils
 
 		[SerializeField] BhaveInt intVariable;
 
-		[SerializeField, TextArea, Space(5)] string description = "";
+		[SerializeField, TextArea, Space(5)] string description = " ";
 
 		[Header("Limits")]
 		[SerializeField] LimitType limitType = LimitType.None;
