@@ -43,9 +43,8 @@ namespace StormRend.Units
 			//Reset health
 			HP = maxHP;
 
-			//Find a tile if it's not already set
-			if (!currentTile) ScanTileBelow();
-
+			//Always scan the tile below to prevent previous tile value from locking unit on a tile
+			ScanTileBelow();
 		}
 		void Start()
 		{
