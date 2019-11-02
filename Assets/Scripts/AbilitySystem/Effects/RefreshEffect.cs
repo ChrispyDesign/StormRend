@@ -19,12 +19,12 @@ namespace StormRend.Abilities.Effects
 		[SerializeField] int allowedRefreshes = 1;
 		[ReadOnlyField, SerializeField] int refreshCount = 0;		//internal refresh count
 
-		public override void Prepare(Unit owner)
+		public override void Prepare(Ability ability, Unit owner)
 		{
 			refreshCount = 0;	//Reset the refresh count
 		}
 
-		public override void Perform(Unit owner, Tile[] targetTiles)
+		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
         {
 			if (refreshCount >= allowedRefreshes) return;
 			

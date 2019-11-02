@@ -62,7 +62,7 @@ namespace StormRend.Abilities
 			foreach (var e in effects)
 			{
 				Debug.Log("Performing Effect: " + e.name);
-				e.Perform(owner, targets);
+				e.Perform(this, owner, targets);
 			}
 		}
 
@@ -119,7 +119,6 @@ namespace StormRend.Abilities
 		{
 			//Add and set owner
 			var newEffect = Effect.CreateInstance<T>();
-			newEffect.SetContainer(this);
 			newEffect.name = newEffect.GetType().Name;
 			this.effects.Add(newEffect);
 

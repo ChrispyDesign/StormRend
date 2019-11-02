@@ -10,7 +10,7 @@ namespace StormRend.Abilities.Effects
     {
         [SerializeField] int damage = 1;
 
-		public override void Perform(Unit owner, Tile[] targetTiles)
+		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
         {
  			//Get and convert to lists where required
 			Unit[] units = UnitRegistry.current.aliveUnits;

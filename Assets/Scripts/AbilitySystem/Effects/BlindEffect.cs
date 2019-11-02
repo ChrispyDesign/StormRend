@@ -8,7 +8,7 @@ namespace StormRend.Abilities.Effects
 	/// </summary>
 	public class BlindEffect : StatusEffect
     {
-		public override void Perform(Unit owner, Tile[] targetTiles)
+		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
 			AddStatusEffectToAnimateUnits(targetTiles);
 		}

@@ -1,13 +1,14 @@
 using StormRend.MapSystems.Tiles;
 using StormRend.Units;
+using StormRend.Utility.Attributes;
 using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
 	public abstract class StatusEffect : Effect
 	{
+		[ReadOnlyField, SerializeField] protected int turnCount = 0;
 		[SerializeField] protected int affectedTurns = 1;
-		protected int turnCount = 0;
 
 	#region Inflicts / Buffs / Debuffs
 		/// "Inflict" status effect on victim at the beginning of the turn

@@ -28,8 +28,8 @@ namespace StormRend.Units
 
 		//Inspector
 		[ReadOnlyField] public Tile beginTurnTile = null;   //The tile this unit starts from at the beginning of each turn
-		public bool _canMove = true;
-		public bool _canAct = true;
+		[ReadOnlyField] public bool _canMove = true;
+		[ReadOnlyField] public bool _canAct = true;
 		[SerializeField] LookSnap lookSnap = LookSnap.RightAngle;
 
 		[Header("Abilities & Effects")]
@@ -123,7 +123,7 @@ namespace StormRend.Units
 			//Face attack
 			transform.rotation = GetSnappedRotation(damageData.attacker.transform.position, snapAngle);
 
-			//Hit react animation
+			//Animate
 			animator.SetTrigger("HitReact");
 
 			//Status effect
@@ -146,7 +146,7 @@ namespace StormRend.Units
 			//Prep effects (reset counts etc)
 			foreach (var a in abilities)
 				foreach (var e in a.effects)
-					e.Prepare(this);
+					e.Prepare(a, this);
 
 			//Status effects
 			foreach (var se in statusEffects)

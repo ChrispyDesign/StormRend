@@ -11,7 +11,7 @@ namespace StormRend.Abilities.Effects
     {
         [SerializeField] int reflexDamage = 1;
 
-		public override void Perform(Unit owner, Tile[] targetTiles)
+		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
 			AddStatusEffectToAnimateUnits(targetTiles);
 		}

@@ -21,7 +21,7 @@ namespace StormRend.Abilities.Effects
 
         void OnValidate() => Prepare();
 
-        public override void Prepare(Unit owner = null)
+        public override void Prepare(Ability ability = null, Unit owner = null)
         {
             //Populate unit type array
             typesToCheck.Clear();
@@ -33,7 +33,7 @@ namespace StormRend.Abilities.Effects
                 typesToCheck.Add(typeof(EnemyUnit));
         }
 
-        public override void Perform(Unit owner, Tile[] targetTiles)
+        public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
         {
             //Foreach target tile
             foreach (var tt in targetTiles)

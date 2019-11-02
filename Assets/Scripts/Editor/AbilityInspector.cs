@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace StormRend.Editors
 {
-    [CustomEditor(typeof(Ability))]
+    [CustomEditor(typeof(Ability)), CanEditMultipleObjects]
     public class AbilityInspector : SmartEditor
     {
         /* Brainstorm

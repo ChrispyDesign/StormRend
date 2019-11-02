@@ -8,13 +8,10 @@ namespace StormRend.Abilities
 	public abstract class Effect : ScriptableObject
 	{
 		public bool isFoldOut { get; set; } = true;
-		[ReadOnlyField, SerializeField] protected Ability container;
-		[ReadOnlyField, SerializeField] protected Unit owner;
 
 	#region Core
-		public virtual void Prepare(Unit owner) { this.owner = owner; }
-		public abstract void Perform(Unit owner, Tile[] targetTiles);
-		public void SetContainer(Ability container) => this.container = container;
+		public virtual void Prepare(Ability ability, Unit owner) { }
+		public abstract void Perform(Ability ability, Unit owner, Tile[] targetTiles);
 	#endregion
 	}
 }

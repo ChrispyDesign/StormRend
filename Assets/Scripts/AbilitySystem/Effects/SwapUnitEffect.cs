@@ -9,7 +9,7 @@ namespace StormRend.Abilities.Effects
 		/// <summary>
 		/// Swap units. Target Tile types should be set to Animate Objects or maybe even Inanimate
 		/// </summary>
-		public override void Perform(Unit owner, Tile[] targetTiles)
+		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
 			//Make sure there is atleast 2 tiles passed in
 			if (!(targetTiles.Length >= 2)) { Debug.LogWarning("Not enough target tiles! Exiting..."); return; }

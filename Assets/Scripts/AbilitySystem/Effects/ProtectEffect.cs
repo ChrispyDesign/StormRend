@@ -5,7 +5,7 @@ namespace StormRend.Abilities.Effects
 {
 	public class ProtectEffect : StatusEffect
     {
-		public override void Perform(Unit owner, Tile[] targetTiles)
+		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
 			AddStatusEffectToAnimateUnits(targetTiles);
 		}
