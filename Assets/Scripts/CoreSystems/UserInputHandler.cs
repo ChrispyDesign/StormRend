@@ -24,16 +24,16 @@ namespace StormRend.Systems
 	{
 		public const int lmb = 0, rmb = 1;
 		public bool leftClicked;
-		public bool leftClickUp;
+		public bool leftReleased;
 		public bool rightClicked;
-		public bool rightClickUp;
+		public bool rightReleased;
 
 		public void Refresh()
 		{
 			leftClicked = Input.GetMouseButtonDown(lmb);
-			leftClickUp = Input.GetMouseButtonUp(lmb);
+			leftReleased = Input.GetMouseButtonUp(lmb);
 			rightClicked = Input.GetMouseButtonDown(rmb);
-			rightClickUp = Input.GetMouseButtonUp(rmb);
+			rightReleased = Input.GetMouseButtonUp(rmb);
 		}
 	}
 
@@ -51,8 +51,8 @@ namespace StormRend.Systems
 		// [Tooltip("A reference to the State object that is considered to be the player's state ie. AllyState")]
 		[Header("State")]
 		[ReadOnlyField, SerializeField] TurnState currentTurnState = null;
-		[Space(10), SerializeField] UnitVar _selectedUnit = null;
-		[SerializeField] Ability _selectedAbility = null;
+		[Space(10), SerializeField] UnitVar _selectedUnitVar = null;
+		[SerializeField] AbilityVar _selectedAbilityVar = null;
 
 		[Header("Tile Colors")]
 		[SerializeField] TileHighlightColor moveHighlight = null;
@@ -80,16 +80,16 @@ namespace StormRend.Systems
 		}
 		public Unit selectedUnit
 		{
-			get => _selectedUnit.value;
-			internal set => _selectedUnit.value = value;
+			get => _selectedUnitVar.value;
+			internal set => _selectedUnitVar.value = value;
 		}
 		public AnimateUnit selectedAnimateUnit => (selectedUnit != null) ? selectedUnit as AnimateUnit : null;
 		public bool isUnitSelected => selectedUnit != null;
 		//Ability selection
 		public Ability selectedAbility
 		{
-			get => _selectedAbility;
-			internal set => _selectedAbility = value;
+			get => _selectedAbilityVar.value;
+			internal set => _selectedAbilityVar.value = value;
 		}
 		public bool isAbilitySelected => selectedAbility != null;
 		bool notEnoughTargetTilesSelected => targetTileStack.Count < selectedAbility.requiredTiles;
@@ -124,13 +124,14 @@ namespace StormRend.Systems
 			cam = MasterCamera.current.camera;
 			camMover = cam.GetComponent<CameraMover>();
 			gr = FindObjectOfType<GraphicRaycaster>();	//On the one and only canvas
-			_selectedUnit.value = null;
-			_selectedAbility = null;
+			_selectedUnitVar.value = null;
+			_selectedAbilityVar.value = null;
 
 			//Asserts
 			Debug.Assert(cam, "Camera could not be located!");
 			Debug.Assert(camMover, "CameraMover could not be located!");
-			Debug.Assert(_selectedUnit, "No Selected Unit SOV!");
+			Debug.Assert(_selectedUnitVar, "No Selected Unit SOV!");
+			Debug.Assert(_selectedAbilityVar, "No Selected Ability SOV!");
 			Debug.Assert(gr, "No graphics raycaster found!");
 		}
 
@@ -191,7 +192,7 @@ namespace StormRend.Systems
 				}
 
 			}
-			else if (e.rightClickUp)	//RIGHT CLICK RELEASED
+			else if (e.rightReleased)	//RIGHT CLICK RELEASED
 			{
 				switch (mode)
 				{
@@ -342,7 +343,7 @@ namespace StormRend.Systems
 
 	#region Tile Highlighting
 		//Show a preview of target tiles 
-		public void OnPointerEnterPreview(Ability a)
+		public void OnHoverPreview(Ability a)
 		{
 			//Has to be in Move mode
 			if (mode != Mode.Move) return;
@@ -352,7 +353,7 @@ namespace StormRend.Systems
 			ShowTargetTiles();
 			// Debug.LogFormat("OnPreviewTargetHighlight({0})", a.name);
 		}
-		public void OnPointerExitPreview()
+		public void OnUnhoverPreview()
 		{
 			//Must be in move mode
 			if (mode != Mode.Move) return;
@@ -510,10 +511,10 @@ namespace StormRend.Systems
 			GUILayout.Label("is a tile hit?: " + isTileHit);
 
 			GUILayout.Label("is a unit selected?: " + isUnitSelected);
-			GUILayout.Label("Selected Unit: " + _selectedUnit?.value?.name);
+			GUILayout.Label("Selected Unit: " + _selectedUnitVar?.value?.name);
 
 			GUILayout.Label("is an ability selected?: " + isAbilitySelected);
-			GUILayout.Label("Selected Ability: " + _selectedAbility?.name);
+			GUILayout.Label("Selected Ability: " + _selectedAbilityVar?.value?.name);
 
 			GUILayout.Label("GUI hits count: " + GUIhits.Count);
 

@@ -1,15 +1,15 @@
-﻿using System;
+using System;
 using pokoro.BhaVE.Core.Variables;
-using StormRend.Units;
+using StormRend.Abilities;
 using UnityEngine;
 
 namespace StormRend.Variables
 {
-    [Serializable, CreateAssetMenu(menuName = "StormRend/Variables/Unit", fileName = "UnitVar")]
-	public sealed class UnitVar : BhaveVar<Unit>
-	{
+	[Serializable, CreateAssetMenu(menuName = "StormRend/Variables/AbilityVar", fileName = "AbilityVar")]
+    public class AbilityVar : BhaveVar<Ability>
+    {
 		public override event Action onChanged;
-		public override Unit value
+		public override Ability value
 		{
 			get => _value;
 			set
@@ -22,5 +22,5 @@ namespace StormRend.Variables
 				}
 			}
 		}
-   	}
+    }
 }
