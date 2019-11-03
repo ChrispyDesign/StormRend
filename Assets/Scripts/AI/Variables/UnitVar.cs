@@ -14,12 +14,16 @@ namespace StormRend.Variables
 			get => _value;
 			set
 			{
-				if (_value != value)
+				//NOTE: this apparently prevents null ref exception on startup. Not 100% trustworthy though
+				if (value && _value != value)
 				{
 					_value = value;
 					OnChanged?.Raise();
 					onChanged?.Invoke();
 				}
+				//If the value is null just set the value to
+				else
+					_value = value;
 			}
 		}
    	}
