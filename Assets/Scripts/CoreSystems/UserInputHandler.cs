@@ -280,7 +280,7 @@ namespace StormRend.Systems
 			}
 			if (!selectedAnimateUnit.canAct)
 			{
-				Debug.LogWarning("Unit has moved and acted. Cannot select any more abilities this turn");
+				Debug.LogWarning("Unit cannot perform any more abilities this turn");
 				return;
 			}
 
@@ -348,10 +348,12 @@ namespace StormRend.Systems
 			//Has to be in Move mode
 			if (mode != Mode.Move) return;
 
+			//Has to be able to act
+			if (!selectedAnimateUnit.canAct) return;
+
 			selectedAnimateUnit.CalculateTargetTiles(a);
 			selectedAnimateUnit.ClearGhost();
 			ShowTargetTiles();
-			// Debug.LogFormat("OnPreviewTargetHighlight({0})", a.name);
 		}
 		public void OnUnhoverPreview()
 		{

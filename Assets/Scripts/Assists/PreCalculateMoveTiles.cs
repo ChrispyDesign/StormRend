@@ -1,5 +1,7 @@
-﻿using StormRend.Enums;
+﻿using System.Collections.Generic;
+using StormRend.Enums;
 using StormRend.Units;
+using StormRend.Utility.Attributes;
 using UnityEngine;
 
 namespace StormRend.Assists 

@@ -52,8 +52,8 @@ namespace StormRend.Units
 
 		//Properties
 		public Tile ghostTile { get; set; } = null;		//The tile the ghost is on
-		public Tile[] possibleMoveTiles { get; set; } = new Tile[0];
-		public Tile[] possibleTargetTiles { get; set; } = new Tile[0];
+		public Tile[] possibleMoveTiles;// { get; set; } = new Tile[0];
+		public Tile[] possibleTargetTiles;// { get; set; } = new Tile[0];
 		public bool canMove => _canMove;
 		public void SetCanMove(bool value) => _canMove = value;
 		public bool canAct => _canAct;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
@@ -148,7 +148,7 @@ namespace StormRend.Units
 				foreach (var e in a.effects)
 					e.Prepare(a, this);
 
-			//Status effects
+			//Begin Status effects (ie. blind, cripple, etc)
 			foreach (var se in statusEffects)
 				se.OnBeginTurn(this);
 
@@ -156,7 +156,7 @@ namespace StormRend.Units
 		}
 		public void EndTurn()			//Run before next turn
 		{
-			//Status effects
+			//Status effects (Nothing so far)
 			foreach (var se in statusEffects)
 				se.OnEndTurn(this);
 

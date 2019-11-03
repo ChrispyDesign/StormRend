@@ -84,7 +84,7 @@ namespace StormRend.Units
 					break;
 			}
 			foreach (var u in animateUnits)
-				u.BeginTurn();
+				u.EndTurn();
 		}
 	#endregion
 
