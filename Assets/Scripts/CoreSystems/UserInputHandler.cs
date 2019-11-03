@@ -117,6 +117,34 @@ namespace StormRend.Systems
 		List<RaycastResult> GUIhits = new List<RaycastResult>();
 		List<Type> currentControllableUnitTypes = new List<Type>();		//Holds the list of types that can be controlled for this game turn
 
+	// #region Callback Registration
+	// 	void OnEnable()
+	// 	{
+	// 		_selectedUnitVar.onChanged += OnSelectedUnitChanged;
+	// 		_selectedAbilityVar.onChanged += OnSelectedAbilityChanged;
+	// 	}
+	// 	void OnDisable()
+	// 	{
+	// 		_selectedUnitVar.onChanged -= OnSelectedUnitChanged;
+	// 		_selectedAbilityVar.onChanged -= OnSelectedAbilityChanged;
+	// 	}
+	// 	void OnSelectedUnitChanged()
+	// 	{
+	// 		//
+	// 		if (selectedUnit)
+	// 			SelectUnit(selectedUnit as AnimateUnit);
+	// 		else
+	// 			ClearSelectedUnit();
+	// 	}
+	// 	void OnSelectedAbilityChanged()
+	// 	{
+	// 		if (selectedAbility)
+	// 			SelectAbility(selectedAbility);
+	// 		else
+	// 			ClearSelectedAbility();
+	// 	}
+	// #endregion
+
 	#region Core
 		void Start()
 		{
@@ -124,8 +152,8 @@ namespace StormRend.Systems
 			cam = MasterCamera.current.camera;
 			camMover = cam.GetComponent<CameraMover>();
 			gr = FindObjectOfType<GraphicRaycaster>();	//On the one and only canvas
-			_selectedUnitVar.value = null;
-			_selectedAbilityVar.value = null;
+			selectedUnit = null;
+			selectedAbility = null;
 
 			//Asserts
 			Debug.Assert(cam, "Camera could not be located!");
@@ -265,7 +293,7 @@ namespace StormRend.Systems
 			selectedUnit = au;
 
 			//Show move tile if unit is able to move
-			if (au.canMove)	ShowMoveTiles();
+			ShowMoveTiles();
 
 			onUnitChanged.Invoke(au);	//ie. Update UI, Play sounds,
 		}
@@ -370,6 +398,8 @@ namespace StormRend.Systems
 			//NOTE: Active unit's MOVE highlights should be refreshed:
 			// - At the start of each turn
 			// - After another unit has summoned something
+			if (!selectedAnimateUnit.canMove) return;
+
 			if (selectedAnimateUnit.possibleMoveTiles.Length <= 0)
 				selectedAnimateUnit.CalculateMoveTiles();
 
@@ -513,10 +543,10 @@ namespace StormRend.Systems
 			GUILayout.Label("is a tile hit?: " + isTileHit);
 
 			GUILayout.Label("is a unit selected?: " + isUnitSelected);
-			GUILayout.Label("Selected Unit: " + _selectedUnitVar?.value?.name);
+			if (_selectedAbilityVar.value) GUILayout.Label("Selected Unit: " + _selectedUnitVar?.value?.name);
 
 			GUILayout.Label("is an ability selected?: " + isAbilitySelected);
-			GUILayout.Label("Selected Ability: " + _selectedAbilityVar?.value?.name);
+			if (_selectedAbilityVar.value) GUILayout.Label("Selected Ability: " + _selectedAbilityVar?.value?.name);
 
 			GUILayout.Label("GUI hits count: " + GUIhits.Count);
 

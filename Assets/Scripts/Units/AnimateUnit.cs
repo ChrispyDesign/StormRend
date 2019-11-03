@@ -307,6 +307,10 @@ namespace StormRend.Units
 			SetCanAct(false);
 			SetCanMove(false);
 
+			//Face the the last tile that was passed in
+			if (targetTiles.Length > 0)
+				SnappedLookAt(targetTiles[targetTiles.Length-1].transform.position);
+
 			//Perform Ability
 			ability.Perform(this, targetTiles);
 
