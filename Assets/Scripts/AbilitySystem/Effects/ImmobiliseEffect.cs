@@ -11,6 +11,7 @@ namespace StormRend.Abilities.Effects
 		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
 			AddStatusEffectToAnimateUnits(targetTiles);
+			ImmobiliseTargetUnitsImmediately(targetTiles);
 		}
 
 		public override void OnBeginTurn(AnimateUnit affectedUnit)
@@ -19,6 +20,13 @@ namespace StormRend.Abilities.Effects
 
 			//Cripple the bearer for this turn
 			affectedUnit.SetCanMove(false);
+		}
+
+		void ImmobiliseTargetUnitsImmediately(Tile[] targetTiles)
+		{
+			foreach (var tt in targetTiles)
+				if (UnitRegistry.TryGetUnitTypeOnTile<AnimateUnit>(tt, out AnimateUnit au))
+					au.SetCanMove(false);
 		}
 	}
 }

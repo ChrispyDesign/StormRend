@@ -24,7 +24,6 @@ namespace StormRend.Abilities.Effects
 
 		void BlindTargetUnitsImmediately(Tile[] targetTiles)
 		{
-			//Also blind the units immediately
 			foreach (var tt in targetTiles)
 				if (UnitRegistry.TryGetUnitTypeOnTile<AnimateUnit>(tt, out AnimateUnit au))
 					au.SetCanAct(false);
