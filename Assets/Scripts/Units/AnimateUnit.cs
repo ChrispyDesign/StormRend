@@ -128,7 +128,7 @@ namespace StormRend.Units
 
 			//Status effect
 			foreach (var se in statusEffects)
-				se.OnTakeDamage(this, damageData.attacker);
+				se.OnTakeDamage(this, damageData);
 		}
 
 		//------------------- STATS

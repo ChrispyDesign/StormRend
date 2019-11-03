@@ -32,7 +32,7 @@ namespace StormRend.Abilities.Effects
 		public virtual void OnActed(AnimateUnit affectedUnit) {}
 
 		/// "Inflict" status effect on victim when taking damage
-		public virtual void OnTakeDamage(Unit affectedUnit, Unit attacker) {}	//Unit type because crystals and blizzard can also apply damage
+		public virtual void OnTakeDamage(Unit affectedUnit, DamageData damageData) {}	//Unit type because crystals and blizzard can also apply damage
 
 		/// "Inflict" status effect on victim when taking damage
 		public virtual void OnDeath(AnimateUnit affectedUnit) {}

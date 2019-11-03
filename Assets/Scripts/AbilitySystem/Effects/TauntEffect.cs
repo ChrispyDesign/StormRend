@@ -21,10 +21,10 @@ namespace StormRend.Abilities.Effects
 			base.OnBeginTurn(affectedUnit);		//Housekeeping
 		}
 
-		public override void OnTakeDamage(Unit affectedUnit, Unit attacker)
+		public override void OnTakeDamage(Unit affectedUnit, DamageData damageData)
 		{
 			//Apply reflex damage; The victim attacks back
-			attacker.TakeDamage(new DamageData(affectedUnit, reflexDamage));
+			damageData.attacker.TakeDamage(new DamageData(affectedUnit, reflexDamage));
 		}
 	}
 }
