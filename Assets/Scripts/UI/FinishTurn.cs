@@ -17,7 +17,7 @@ namespace StormRend.UI
 		void Awake()
 		{
 			infoPanel = FindObjectOfType<InfoPanel>();
-			animator = FindObjectOfType<Animator>();
+			animator = GetComponent<Animator>();
 
 			Debug.Assert(animator, "There are no Animator in the scene. " + typeof(FinishTurn));
 			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(FinishTurn));
@@ -25,8 +25,8 @@ namespace StormRend.UI
 
 		public void OnEnter()
 		{
-			infoPanel.ShowPanel(title, details, 1);
 			animator.SetInteger("Animation", 1);
+			infoPanel.ShowPanel(title, details, 1);
 		}
 
 		public void OnExit()

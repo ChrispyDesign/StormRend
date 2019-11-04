@@ -12,71 +12,42 @@ namespace StormRend.UI
 		[SerializeField] float fadeDuration;
 		[SerializeField] GameObject[] panels;
 
+		Animator anim;
 		List<TextMeshProUGUI> text = new List<TextMeshProUGUI>();
 		List<Image> backgrounds = new List<Image>();
 
 		private void Awake()
 		{
-			foreach(GameObject gameobject in panels)
+			anim = GetComponent<Animator>();
+			foreach (GameObject panel in panels)
 			{
-				text.Add(gameObject.GetComponentInChildren<TextMeshProUGUI>());
-				backgrounds.Add(gameObject.GetComponent<Image>());
+				text.Add(panel.GetComponentInChildren<TextMeshProUGUI>());
+				backgrounds.Add(panel.GetComponent<Image>());
+				panel.SetActive(false);
 			}
+			panels[0].SetActive(true);
 		}
 
 		public void ShowPanel(string title, string details, int levels)
 		{
-			for(int i = )
-			StopAllCoroutines();
-			StartCoroutine(FadeIn());
+			text[0].text = title;
+			text[1].text = details;
+			anim.SetInteger("textBoxAnimation", levels);
+		}
+
+		public void ShowPanel(string title, string[] details, int levels)
+		{
+			text[0].text = title;
+			for(int i = 0; i < details.Length; i++)
+			{
+				text[i + 1].text = details[i];
+			}
+			anim.SetInteger("textBoxAnimation", levels);
 		}
 
 		public void UnShowPanel()
 		{
-			StopAllCoroutines();
-			StartCoroutine(FadeOut());
-		}
-
-		IEnumerator FadeIn()
-		{
-			for (float i = 0f; i <= 1f; i += fadeDuration)
-			{
-				Vector4 color;
-				{
-					//color = background.color;
-					//color.w = i;
-					//background.color = color;
-				}
-
-				{
-					//color = text.color;
-					color.w = i;
-					//text.color = color;
-				}
-				yield return new WaitForSeconds(0.01f);
-			}
-			yield return null;
-		}
-
-		IEnumerator FadeOut()
-		{
-			for (float i = 1f; i >= -0.05f; i -= fadeDuration)
-			{
-				Vector4 color;
-				{
-					//color = background.color;
-					//color.w = i;
-					//background.color = color;
-				}
-
-				{
-					//color = text.color;
-					color.w = i;
-					//text.color = color;
-				}
-				yield return new WaitForSeconds(0.01f);
-			}
-			yield return null;
+			anim.SetInteger("textBoxAnimation", 0);
 		}
 	}
 }
