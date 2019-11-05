@@ -146,7 +146,7 @@ namespace StormRend.Editors
 
 		void RotateStamp(Vector2 delta)
 		{
-			var rotation = Quaternion.AngleAxis(delta.x, Vector3.up);
+			var rotation = Quaternion.AngleAxis(delta.y, Vector3.up);
 			foreach (Transform t in stamp.transform)
 			{
 				t.localPosition = rotation * t.localPosition;

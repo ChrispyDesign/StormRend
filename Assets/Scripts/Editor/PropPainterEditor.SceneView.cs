@@ -46,7 +46,7 @@ namespace StormRend.Editors
 					}
 					if (e.alt)
 					{
-						pp.brushRadius *= e.delta.y < 0 ? 0.9f : 1.1f;
+						pp.brushRadius *= -e.delta.y < 0 ? 0.9f : 1.1f;
 						CreateNewStamp();
 						e.Use();
 					}
