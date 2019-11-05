@@ -149,7 +149,7 @@ namespace StormRend.Editors
 
             var ray = HandleUtility.GUIPointToWorldRay(e.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, 1 << m.gameObject.layer))      //The hidden editor raycast plane will always be on the same layer as the map object
+            if (Physics.Raycast(ray, out RaycastHit hit, 100000f, 1 << m.gameObject.layer))      //The hidden editor raycast plane will always be on the same layer as the map object
             {
                 Handles.color = color.Value;
 
@@ -165,6 +165,9 @@ namespace StormRend.Editors
                 Handles.RectangleHandleCap(0, gridCursor, Quaternion.AngleAxis(90, Vector3.right), m.tileSize * 0.499f, EventType.Repaint);
                 Handles.RectangleHandleCap(1, gridCursor, Quaternion.AngleAxis(90, Vector3.right), m.tileSize * 0.5f, EventType.Repaint);
                 Handles.RectangleHandleCap(2, gridCursor, Quaternion.AngleAxis(90, Vector3.right), m.tileSize * 0.501f, EventType.Repaint);
+
+				//Debug draw the hit point
+				// Handles.SphereHandleCap(10, hit.point, Quaternion.identity, 0.2f, EventType.Repaint);
             }
         }
         void DrawConnections(Color? color = null)
@@ -218,14 +221,12 @@ namespace StormRend.Editors
 			//This creates a new undo event for every object instantiated instead of grouping them in all the same operations
 			// Undo.IncrementCurrentGroup();	
 
-			//Instantiate a new tile prefab
-			//According to current cursor positions and rotation settings
-			var rotation = randomizePaintDirection ? Quaternion.AngleAxis(90 * UnityEngine.Random.Range(0, 4), Vector3.up) : Quaternion.identity;	//Rotation
+			//Instantiate a new tile prefab according to current cursor positions and rotation settings
 			var t = PrefabUtility.InstantiatePrefab(m.selectedTilePrefab, m.transform) as Tile;
-			t.transform.position = gridCursor;
-			t.transform.rotation = rotation;
+			var position = isRandomizeYOffset ? gridCursor + Vector3.up * Random.Range(-yOffsetRandRange, yOffsetRandRange) : gridCursor;
+			var rotation = isRandomizePaintDirection ? Quaternion.AngleAxis(90 * UnityEngine.Random.Range(0, 4), Vector3.up) : Quaternion.identity;
+			t.transform.SetPositionAndRotation(position, rotation);
 			t.gameObject.layer = m.gameObject.layer;
-			// t.owner = m;
 
 			//UNDO WORKING
             Undo.RegisterCreatedObjectUndo(t.gameObject, "Paint Tile " + m.selectedTilePrefab.name);

@@ -157,14 +157,8 @@ namespace StormRend.MapSystems
 
 #if UNITY_EDITOR
 		//Hook up OnSelected.
-		void OnEnable()
-		{
-			Selection.selectionChanged += OnSelected;
-		}
-		void OnDisable()
-		{
-			Selection.selectionChanged -= OnSelected;
-		}
+		void OnEnable() => Selection.selectionChanged += OnSelected;
+		void OnDisable() => Selection.selectionChanged -= OnSelected;
 		void OnSelected()
 		{
 			//Refresh editor raycast plane
@@ -178,7 +172,7 @@ namespace StormRend.MapSystems
 		{
 			//Create an extremely large plane colider that is used only for editor raycasting
 			editorRaycastPlane = gameObject.AddComponent<BoxCollider>();
-			editorRaycastPlane.center = transform.position;    //Position; neg y offset otherwise it will conflict with tiles
+			editorRaycastPlane.center = transform.localPosition;    //Position; neg y offset otherwise it will conflict with tiles
 			editorRaycastPlane.size = new Vector3(mapSize, 0, mapSize);     //Size
 			editorRaycastPlane.isTrigger = true;
 			editorRaycastPlane.hideFlags = HideFlags.HideAndDontSave | HideFlags.HideInInspector;   //Hide

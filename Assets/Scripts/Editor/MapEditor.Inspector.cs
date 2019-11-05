@@ -8,13 +8,23 @@ namespace StormRend.Editors
 	public partial class MapEditor : SmartEditor
 	{
 		public enum BoundsType { RendererBounds, ColliderBounds }
+		BoundsType boundsType;
+
+		bool isRandomizePaintDirection;
+
+		bool isRandomizeYOffset;
+		float _yOffsetRandRange = 0.1f;
+		float yOffsetRandRange 
+		{
+			get => _yOffsetRandRange;
+			set => _yOffsetRandRange = Mathf.Clamp(value, 0, 2f);
+		}
 
 		float previewTileSize = 128;
 		Texture2D[] palettePreviews;
-		bool randomizePaintDirection;
-		BoundsType boundsType;
 		bool connectDiagonals;
 		bool showConnections;
+
 
 		#region Core
 		public override string[] propertiesToExclude => new[] { "m_Script" };
@@ -33,22 +43,14 @@ namespace StormRend.Editors
 		public override void OnPostInspector()
 		{
 			// DrawPreviewSizeSlider();
-			//Randomize direction
-			using (new GUILayout.HorizontalScope())
-			{
-				EditorGUILayout.PrefixLabel("Randomize Direction");
-				randomizePaintDirection = EditorGUILayout.Toggle(randomizePaintDirection);
-			}
-
+			DrawRandomizeOptions();
 			DrawPalette();
-
 			//Clear All tiles
 			GUILayout.Space(5);
 			if (GUILayout.Button("Clear All Tiles"))
 			{
 				m.DeleteAllTiles();
 			}
-
 			DrawConnectionOptions();
 		}
 		#endregion    //Core
@@ -58,6 +60,22 @@ namespace StormRend.Editors
 		{
 			EditorGUILayout.HelpBox("Paint: Left Click\nErase: Ctrl + Left Click", MessageType.Info, true);
 		}
+
+		void DrawRandomizeOptions()
+		{
+			//Randomize direction
+			using (new GUILayout.HorizontalScope())
+			{
+				isRandomizePaintDirection = EditorGUILayout.Toggle("Randomize Direction", isRandomizePaintDirection);
+			}
+			using (new GUILayout.HorizontalScope())
+			{
+				isRandomizeYOffset = EditorGUILayout.Toggle("Randomize Y Offset", isRandomizeYOffset);
+
+				yOffsetRandRange = EditorGUILayout.FloatField("Random Range", yOffsetRandRange);
+			}
+		}
+
 		void DrawPalette()
 		{
 			//Palette
