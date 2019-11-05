@@ -6,97 +6,116 @@ namespace StormRend.Editors
 {
 	public partial class PropPainterEditor : SmartEditor
 	{
+		const float cylinderCastSize = 1000f;
+
 		void OnSceneGUI()
 		{
-			SceneView.RepaintAll();
-			if (l == null || l.SelectedPrefab == null) return;
-			var isErasing = Event.current.control;
-			var controlId = GUIUtility.GetControlID(FocusType.Passive);
-			var mousePos = Event.current.mousePosition;
+			//Get current event
+			var e = Event.current;
 
-			var ray = HandleUtility.GUIPointToWorldRay(mousePos);
+			SceneView.RepaintAll();
+			if (pp == null || pp.SelectedPrefab == null) return;
+			bool isErasing = e.control;
+			var controlId = GUIUtility.GetControlID(FocusType.Passive);
+			Vector2 mousePos = e.mousePosition;
+			Ray ray = HandleUtility.GUIPointToWorldRay(mousePos);
 
 			//Draw stamp if an appropriate surface detected
-			if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, l.layerMask))
+			if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, pp.layerMask))
 			{
-				worldCursor = hit.point;
-				var up = l.followOnSurface ? hit.normal : Vector3.up;
-				Handles.color = isErasing ? Color.red : Color.white;
-				Handles.DrawWireDisc(worldCursor, up, l.brushRadius);
-				Handles.color = Color.white * 0.5f;
-				Handles.DrawWireDisc(worldCursor + up * l.brushHeight, up, l.brushRadius);
-				Handles.DrawWireDisc(worldCursor - up * l.brushHeight, up, l.brushRadius);
-				OverlapCapsule(worldCursor + hit.normal * 10, worldCursor - hit.normal * 10, l.brushRadius, l.layerMask);
+				worldCursor = hit.point;											//Position
+				// Vector3 up = pp.followOnSurface ? hit.normal : Vector3.up;		//Normal
+				Handles.color = isErasing ? Color.red : Color.white;				//Mode Color
+				Handles.DrawWireDisc(worldCursor, Vector3.up, pp.brushRadius);		//Draw cursor
+
+				//Draw stamp
+				CalculateOverlappingObjects(worldCursor + Vector3.up * 1000f, worldCursor + Vector3.down * 1000f, pp.brushRadius);
 				if (isErasing)
 					DrawEraser(worldCursor, hit.normal);
 				else
 					DrawStamp(worldCursor, hit.normal);
 			}
 
-			switch (Event.current.type)
+			switch (e.type)
 			{
 				case EventType.ScrollWheel:
-					if (Event.current.shift)
+					if (e.shift)
 					{
-						RotateStamp(Event.current.delta);
-						Event.current.Use();
+						RotateStamp(e.delta);
+						e.Use();
 					}
-					if (Event.current.alt)
+					if (e.alt)
 					{
-						l.brushRadius *= Event.current.delta.y < 0 ? 0.9f : 1.1f;
+						pp.brushRadius *= e.delta.y < 0 ? 0.9f : 1.1f;
 						CreateNewStamp();
-						Event.current.Use();
+						e.Use();
 					}
 					break;
+
 				case EventType.KeyDown:
-					HandleKey(Event.current.keyCode);
+					HandleKey(e.keyCode);
 					break;
+
 				case EventType.MouseDown:
 					//If not using the default orbit mode...
-					if (Event.current.button == 0 && !Event.current.alt)
+					if (e.button == 0 && !e.alt)
 					{
 						if (isErasing)
 							PerformErase();
 						else
 							PerformStamp();
 						GUIUtility.hotControl = controlId;
-						Event.current.Use();
+						e.Use();
 					}
 					break;
 			}
 		}
 
-		private void OverlapCapsule(Vector3 top, Vector3 bottom, float brushRadius, LayerMask layerMask)
+
+		/// <summary>
+		/// Detects any objects that are overlapping
+		/// </summary>
+		void CalculateOverlappingObjects(Vector3 top, Vector3 bottom, float brushRadius)
 		{
 			overlaps.Clear();
 			overlappedGameObjects.Clear();
-			if (l.collisionTest == PropPainter.CollisionTest.ColliderBounds)
-			{
-				foreach (var c in Physics.OverlapCapsule(top, bottom, brushRadius))
-				{
-					if (c.transform.parent == l.rootTransform)
-					{
-						overlaps.Add(c.bounds);
-						overlappedGameObjects.Add(c.gameObject);
-					}
-				}
-			}
-			if (l.collisionTest == PropPainter.CollisionTest.RendererBounds)
-			{
-				//TODO: This might need an oct-tree later. Brute force for now.
-				var capsule = new Bounds(Vector3.Lerp(top, bottom, 0.5f), new Vector3(brushRadius * 2, brushRadius * 2 + (top - bottom).magnitude, brushRadius * 2));
-				for (var i = 0; i < l.rootTransform.childCount; i++)
-				{
-					var child = l.rootTransform.GetChild(i);
-					var bounds = child.GetComponentInChildren<Renderer>().bounds;
-					if (capsule.Intersects(bounds))
-					{
-						overlaps.Add(bounds);
-						overlappedGameObjects.Add(child.gameObject);
-					}
-				}
-			}
 
+			switch (pp.collisionTest)
+			{
+				case PropPainter.CollisionTest.ColliderBounds:
+				{
+					foreach (var c in Physics.OverlapCapsule(top, bottom, brushRadius))
+					{
+						//Make sure found object is in the root transform
+						if (c.transform.parent == pp.rootTransform)
+						{
+							overlaps.Add(c.bounds);
+							overlappedGameObjects.Add(c.gameObject);
+						}
+					}
+				}
+				break;
+
+				case PropPainter.CollisionTest.RendererBounds:
+				{
+					//TODO: This might need an oct-tree later. Brute force for now.
+					var overlapBounds = new Bounds(Vector3.Lerp(top, bottom, 0.5f), new Vector3(brushRadius * 2, (brushRadius * 2) + (top - bottom).magnitude, brushRadius * 2));
+					for (var i = 0; i < pp.rootTransform.childCount; i++)
+					{
+						Transform child = pp.rootTransform.GetChild(i);
+
+						var rendBounds = child.GetComponentInChildren<Renderer>().bounds;
+
+						//Only add if the objects don't intersect
+						if (overlapBounds.Intersects(rendBounds))
+						{
+							overlaps.Add(rendBounds);
+							overlappedGameObjects.Add(child.gameObject);
+						}
+					}
+				}
+				break;
+			}
 		}
 
 		void HandleKey(KeyCode keyCode)
@@ -110,12 +129,12 @@ namespace StormRend.Editors
 					AdjustMaxScale(1.1f);
 					break;
 				case KeyCode.Minus:
-					l.brushDensity *= 0.9f;
+					pp.brushDensity *= 0.9f;
 					CreateNewStamp();
 					Event.current.Use();
 					break;
 				case KeyCode.Equals:
-					l.brushDensity *= 1.1f;
+					pp.brushDensity *= 1.1f;
 					CreateNewStamp();
 					Event.current.Use();
 					break;
@@ -125,12 +144,12 @@ namespace StormRend.Editors
 					Event.current.Use();
 					break;
 				case KeyCode.LeftBracket:
-					l.brushRadius *= 0.9f;
+					pp.brushRadius *= 0.9f;
 					CreateNewStamp();
 					Event.current.Use();
 					break;
 				case KeyCode.RightBracket:
-					l.brushRadius *= 1.1f;
+					pp.brushRadius *= 1.1f;
 					CreateNewStamp();
 					Event.current.Use();
 					break;
@@ -140,71 +159,45 @@ namespace StormRend.Editors
 
 		void DrawStamp(Vector3 center, Vector3 normal)
 		{
-			stamp.transform.position = center;
-
-			//
-			if (l.followOnSurface)
-			{
-				var tangent = Vector3.Cross(normal, Vector3.forward);
-				if (tangent.magnitude == 0)
-					tangent = Vector3.Cross(normal, Vector3.up);
-				if (Mathf.Approximately(normal.magnitude, tangent.magnitude)) return;
-				stamp.transform.rotation = Quaternion.LookRotation(tangent, normal);
-			}
-			else
-			{
-				stamp.transform.rotation = Quaternion.identity;
-			}
+			//Position stamp
+			stamp.transform.SetPositionAndRotation(center, Quaternion.identity);
 
 			//Loop through all dummy objects in the stamp
 			for (var i = 0; i < stamp.transform.childCount; i++)
 			{
 				//Get this dummy object
 				var child = stamp.transform.GetChild(i);
+
 				//Level child
 				child.localPosition = Vector3.Scale(child.localPosition, new Vector3(1, 0, 1));
 
-				if (Physics.Raycast(
-						child.position + (child.up * l.brushHeight),
-						-child.up,
-						out RaycastHit hit,
-						l.brushHeight * 2, l.layerMask))
+				//Do a cylinder cast, return true if anything hit
+				//Raycast(origin, direction, raycasthit, maxDistance, layermask)
+				if (Physics.Raycast(child.position + (child.up * cylinderCastSize), -child.up, out RaycastHit hit, cylinderCastSize * 2f, pp.layerMask))
 				{
-					var slope = Vector3.Angle(normal, hit.normal);
-					if (slope > l.maxSlope)
-					{
-						child.gameObject.SetActive(false);
-						continue;
-					}
 					child.gameObject.SetActive(true);
 					var dummy = child.GetChild(0);
 					dummy.position = hit.point;
-					if (l.alignToNormal)
-					{
-						var tangent = Vector3.Cross(hit.normal, child.forward);
-						if (tangent.magnitude == 0)
-							tangent = Vector3.Cross(hit.normal, child.up);
-						dummy.rotation = Quaternion.LookRotation(tangent, hit.normal);
-					}
-					else
-						dummy.rotation = Quaternion.LookRotation(child.forward, child.up);
+
+					dummy.rotation = Quaternion.LookRotation(child.forward, child.up);
 
 					var bounds = child.GetComponentInChildren<Renderer>().bounds;
 					var childVolume = bounds.size.x * bounds.size.y * bounds.size.z;
 					foreach (var b in overlaps)
 					{
+
 						if (b.Intersects(bounds))
 						{
 							var overlapVolume = b.size.x * b.size.y * b.size.z;
 							var intersection = Intersection(b, bounds);
 							var intersectionVolume = intersection.size.x * intersection.size.y * intersection.size.z;
+
 							// Handles.DrawWireCube(intersection.center, intersection.size);
 							var maxIntersection = Mathf.Max(intersectionVolume / overlapVolume, intersectionVolume / childVolume);
+
 							// Handles.Label(intersection.center, maxIntersection.ToString());
-							if (maxIntersection > l.maxIntersectionVolume)
-							{
+							if (maxIntersection > pp.maxDensity)
 								child.gameObject.SetActive(false);
-							}
 						}
 					}
 				}
@@ -212,9 +205,7 @@ namespace StormRend.Editors
 				{
 					child.gameObject.SetActive(false);
 				}
-
 			}
-
 		}
 
 		Bounds Intersection(Bounds A, Bounds B)
@@ -230,19 +221,7 @@ namespace StormRend.Editors
 			for (var i = 0; i < stamp.transform.childCount; i++)
 				stamp.transform.GetChild(i).gameObject.SetActive(false);
 
-			stamp.transform.position = center;
-			if (l.followOnSurface)
-			{
-				var tangent = Vector3.Cross(normal, Vector3.forward);
-				if (tangent.magnitude == 0)
-					tangent = Vector3.Cross(normal, Vector3.up);
-				if (normal.magnitude < Mathf.Epsilon || tangent.magnitude < Mathf.Epsilon) return;
-				stamp.transform.rotation = Quaternion.LookRotation(tangent, normal);
-			}
-			else
-			{
-				stamp.transform.rotation = Quaternion.identity;
-			}
+			stamp.transform.SetPositionAndRotation(center, Quaternion.identity);
 
 			for (var i = 0; i < overlaps.Count; i++)
 			{

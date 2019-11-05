@@ -25,9 +25,6 @@ namespace The.Great.Refactor.Brainstorm
 	foreach e in enemies
 		e.ai.Tick()
 	TickCrystals()
-
-	
-
 	*/
 
 	#region Conventions
