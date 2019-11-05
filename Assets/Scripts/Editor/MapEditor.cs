@@ -13,7 +13,6 @@ namespace StormRend.Editors
 		GameObject stamp;
 		Map m;
 		Event e;
-		GUIStyle style;
 
 		#region Cores
 		[MenuItem("GameObject/StormRend/Map", false, 10)]
@@ -30,10 +29,7 @@ namespace StormRend.Editors
 			stamp = new GameObject("TileStamp");
 			stamp.hideFlags = HideFlags.HideAndDontSave;
 
-			//Create a internal style for this inspector to use
-			CreateStyles();
-
-			//Prevent a blank stamp from show on startup
+			//Prevent a blank stamp on startup
 			CreateStamp();
 
 			//Register events
@@ -48,13 +44,6 @@ namespace StormRend.Editors
 			EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
 		}
 		#endregion
-
-		void CreateStyles()
-		{
-			style = new GUIStyle();
-			style.fontSize = 15;
-			style.fontStyle = FontStyle.Bold;
-		}
 
 		void OnPlayModeStateChanged(PlayModeStateChange stateChange)
 		{

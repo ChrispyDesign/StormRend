@@ -41,7 +41,7 @@ namespace StormRend.Editors
             SetMouseCursor();
             DrawGridCursor();
 
-            if (showConnections) DrawConnections(new Color(1, 0.65f, 0));
+            if (showConnections) DrawConnections(new Color(1, 0, 0));
 
             if (!m || !m.selectedTilePrefab) return;
 
@@ -182,10 +182,6 @@ namespace StormRend.Editors
                     Vector3 end = c.transform.position;
 
                     Handles.DrawLine(start, end);
-
-                    // Handles.DrawBezier(start, end, start + Vector3.up, end + Vector3.up, Color.red, null, 2);
-                    // Handles.DrawSphere(0, start, Quaternion.identity, m.tileSize / 20f);
-                    // Handles.color = new Color(0.6f, 1, 0.1f);
                 }
             }
         }

@@ -14,7 +14,7 @@ namespace StormRend.Editors
 		bool randomizePaintDirection;
 		BoundsType boundsType;
 		bool connectDiagonals;
-		private bool showConnections;
+		bool showConnections;
 
 		#region Core
 		public override string[] propertiesToExclude => new[] { "m_Script" };
@@ -33,7 +33,6 @@ namespace StormRend.Editors
 		public override void OnPostInspector()
 		{
 			// DrawPreviewSizeSlider();
-
 			//Randomize direction
 			using (new GUILayout.HorizontalScope())
 			{
@@ -99,13 +98,10 @@ namespace StormRend.Editors
 			using (new GUILayout.HorizontalScope())
 			{
 				if (GUILayout.Button("Connect Neighbours"))
-                {
                     ConnectAllTiles();
-                }
+
                 if (GUILayout.Button("Clear Connections"))
-				{
 					m.ClearAllTileConnections();
-				}
 			}
 		}
 

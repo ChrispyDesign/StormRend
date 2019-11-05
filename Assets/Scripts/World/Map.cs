@@ -18,10 +18,6 @@ namespace StormRend.MapSystems
 	{
 		const float maxMapSize = 500f;
 
-		//TODO
-		//- Map editor needs to be able to place units and set them accordingly
-		//- Map needs to hold a list of units for other things to be able to reference
-
 		//Inspector
 		[Header("Tiles")]
 		[SerializeField, Range(1, 5), Tooltip("This map's tile XZ scale")] public float tileSize = 2;
@@ -38,37 +34,12 @@ namespace StormRend.MapSystems
 		[HideInInspector] public List<Tile> tiles = new List<Tile>();
 		static UnitRegistry ur;
 
-#if UNITY_EDITOR
-		[HideInInspector] public BoxCollider editorRaycastPlane;
-#endif
-
 	#region Core
 		void Awake()
 		{
 			ur = UnitRegistry.current;
 		}
-		void OnEnable()
-		{
-#if UNITY_EDITOR
-			// layerMask = 1 << gameObject.layer;
-			// _root = this.transform;
-			Selection.selectionChanged += OnSelected;
-#endif
-		}
-		void OnDisable()
-		{
-#if UNITY_EDITOR
-			Selection.selectionChanged -= OnSelected;
-#endif
-		}
 
-#if UNITY_EDITOR
-		void OnSelected()
-		{
-			//Create a new raycast plane if it doesn't exist
-			if (!editorRaycastPlane) CreateEditorRaycastPlane(maxMapSize);
-		}
-#endif
 		void Update()
 		{
 			LockRotationAndScale();
@@ -81,52 +52,6 @@ namespace StormRend.MapSystems
 		}
 	#endregion
 
-#if UNITY_EDITOR
-	#region Assists
-		void CreateEditorRaycastPlane(float mapSize)
-		{
-			//Create an extremely large plane colider that is used only for editor raycasting
-			editorRaycastPlane = gameObject.AddComponent<BoxCollider>();
-			editorRaycastPlane.center = transform.position;                 //Position
-			editorRaycastPlane.size = new Vector3(mapSize, 0, mapSize);     //Size
-			editorRaycastPlane.isTrigger = true;
-			editorRaycastPlane.hideFlags = HideFlags.HideAndDontSave | HideFlags.HideInInspector;   //Hide
-		}
-
-		/// <summary>
-		/// Gets the nearest tile
-		/// </summary>
-		public bool TryGetNearestTile(Vector3 position, out Tile nearestTile)
-		{
-			nearestTile = null;
-			float nearestSqrDist = Mathf.Infinity;
-			//Loop through all tiles and find the nearest tile
-			foreach (Tile t in tiles)
-			{
-				var sqrDist = Vector3.SqrMagnitude(t.transform.position - position);
-				if (sqrDist < nearestSqrDist)
-				{
-					nearestSqrDist = sqrDist;
-					nearestTile = t;
-				}
-			}
-			return nearestTile ? true : false;
-		}
-
-		[ContextMenu("Delete All Tiles")]
-		public void DeleteAllTiles()
-		{
-			while (transform.childCount > 0)
-			{
-				//Undo Works
-				Undo.DestroyObjectImmediate(transform.GetChild(0).gameObject);
-			}
-			tiles.Clear();
-		}
-	#endregion
-#endif
-
-	#region Connections
 		/// <summary>
 		/// Clear all tile connections
 		/// </summary>
@@ -138,10 +63,7 @@ namespace StormRend.MapSystems
 				EditorUtility.SetDirty(t);      //Actually saves the data
 			}
 		}
-		public void GetTileTerrainCost(Tile tile) { }
-	#endregion
 
-	#region Pathfinding
 		/// <summary>
 		/// Calculates and returns a possible pathfinding solution
 		/// </summary>
@@ -212,6 +134,66 @@ namespace StormRend.MapSystems
 			}
 			return validMoves.ToArray();
 		}
-	#endregion
+
+		/// <summary>
+		/// Gets the nearest tile
+		/// </summary>
+		public bool TryGetNearestTile(Vector3 position, out Tile nearestTile)
+		{
+			nearestTile = null;
+			float nearestSqrDist = Mathf.Infinity;
+			//Loop through all tiles and find the nearest tile
+			foreach (Tile t in tiles)
+			{
+				var sqrDist = Vector3.SqrMagnitude(t.transform.position - position);
+				if (sqrDist < nearestSqrDist)
+				{
+					nearestSqrDist = sqrDist;
+					nearestTile = t;
+				}
+			}
+			return nearestTile ? true : false;
+		}
+
+#if UNITY_EDITOR
+		//Hook up OnSelected.
+		void OnEnable()
+		{
+			Selection.selectionChanged += OnSelected;
+		}
+		void OnDisable()
+		{
+			Selection.selectionChanged -= OnSelected;
+		}
+		void OnSelected()
+		{
+			//Refresh editor raycast plane
+			if (editorRaycastPlane) DestroyImmediate(editorRaycastPlane);
+			CreateEditorRaycastPlane(maxMapSize);
+		}
+
+		//Editor raycast plane; This is simply an invisible collider that is attached to the map for editor raycasts to hit
+		[HideInInspector] public BoxCollider editorRaycastPlane;
+		void CreateEditorRaycastPlane(float mapSize)
+		{
+			//Create an extremely large plane colider that is used only for editor raycasting
+			editorRaycastPlane = gameObject.AddComponent<BoxCollider>();
+			editorRaycastPlane.center = transform.position;    //Position; neg y offset otherwise it will conflict with tiles
+			editorRaycastPlane.size = new Vector3(mapSize, 0, mapSize);     //Size
+			editorRaycastPlane.isTrigger = true;
+			editorRaycastPlane.hideFlags = HideFlags.HideAndDontSave | HideFlags.HideInInspector;   //Hide
+		}
+
+		[ContextMenu("Delete All Tiles")]
+		public void DeleteAllTiles()
+		{
+			while (transform.childCount > 0)
+			{
+				//Undo Works
+				Undo.DestroyObjectImmediate(transform.GetChild(0).gameObject);
+			}
+			tiles.Clear();
+		}
+#endif
 	}
 }
