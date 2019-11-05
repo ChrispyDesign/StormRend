@@ -10,7 +10,7 @@ namespace StormRend.MapSystems.Tiles
 		{
 			//Draw an X over the tile in editor
 			var oldColor = Gizmos.color;
-			Gizmos.color = Color.red * 0.9f;
+			Gizmos.color = Color.black * 0.9f;
 			var min = rend.bounds.min;
 			var max = rend.bounds.max;
 			var flatbox = new Vector3(rend.bounds.size.x, lily, rend.bounds.size.z);
