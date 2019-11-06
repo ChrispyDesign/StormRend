@@ -1,6 +1,6 @@
 ﻿namespace StormRend.States.UI
 {
-    public class MainMenuState : UIState
+    public class MainMenuState : OnState
     {
     }
 }

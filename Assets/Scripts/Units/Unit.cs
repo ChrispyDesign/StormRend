@@ -11,7 +11,6 @@ namespace StormRend.Units
 	[SelectionBase]
 	public abstract class Unit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
-		[ReadOnlyField] public Tile currentTile;//{ get; set; }	//The tile this unit is currently/originally on
 		[TextArea(0,2)] public string description = "";
 
 		//Inspector
@@ -20,10 +19,13 @@ namespace StormRend.Units
 		[SerializeField] protected int _maxHP = 3;
 
 		//Events
-		[Header("Events")]
+		[Header("Unit Events")]
 		public UnitEvent onDeath;
 		public DamageEvent onDamage;
 		public UnityEvent onHeal;
+
+		[Header("Movement")]
+		[ReadOnlyField] public Tile currentTile;//{ get; set; }	//The tile this unit is currently/originally on
 
 		//Properties
 		public int HP
@@ -41,15 +43,14 @@ namespace StormRend.Units
 			//Reset health
 			HP = maxHP;
 
-			//Find a tile if it's not already set
-			if (!currentTile) ScanTileBelow();
-
+			//Always scan the tile below to prevent previous tile value from locking unit on a tile
+			ScanTileBelow();
 		}
 		void Start()
 		{
 			//Get animator
 			animator = GetComponentInChildren<Animator>();
-		}		
+		}
 
 		void ScanTileBelow()
 		{
@@ -72,10 +73,10 @@ namespace StormRend.Units
 		public virtual void TakeDamage(DamageData damageData)
 		{
 			if (isDead) return;     //Can't beat a dead horse :P
-			HP -= damageData.amount;	
+			HP -= damageData.amount;
 			if (HP <= 0) Die();
 
-			onDamage.Invoke(damageData);
+			onDamage.Invoke(damageData);	//ie. Update health bar etc
 		}
 		public void Heal(int amount)
 		{
@@ -102,4 +103,3 @@ namespace StormRend.Units
 	#endregion
 	}
 }
-

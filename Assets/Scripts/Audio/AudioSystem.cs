@@ -8,10 +8,10 @@ namespace StormRend.Audio
     public class AudioSystem : MonoBehaviour
     {
         //Helpbox
-        [HelpBox, SerializeField] string help = "Animation Event Callbacks: \nPlayOnce(AudioClip)";
+        [HelpBox, SerializeField] string help = "Animation Event Callbacks: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)";
 
         //Inspector
-        [TextArea(0, 2), SerializeField] string description = "";
+        [TextArea(0, 2), SerializeField] string description = " ";
 
         [Tooltip("Chance of playing a sound when triggered as a percentage")]
         [Range(0, 100), SerializeField] int chance = 50;
@@ -21,7 +21,6 @@ namespace StormRend.Audio
         //Members
         AudioSource audioSource;
 
-    #region Core
         void OnValidate()
         {
             //No need to check for null because a audio source should always be attached to this gameobject
@@ -34,24 +33,34 @@ namespace StormRend.Audio
         {
             if (!audioSource) audioSource = GetComponent<AudioSource>();
         }
+    #region Play by Chance
         public void ChancePlay()
         {
-            if (Random.Range(0, 100) < chance)  
+            if (Random.Range(0, 100) < chance)
                 audioSource.PlayOneShot(sounds[Random.Range(0, sounds.Count)]);
         }
         public void ChancePlay(AudioClip clip)
         {
-            if (Random.Range(0, 100) < chance)  
+            if (Random.Range(0, 100) < chance)
                 audioSource.PlayOneShot(clip);
         }
+    #endregion
 
-        /// <summary>
-        /// For animation events
-        /// </summary>
-        /// <param name="o">The sound that is passed in and will be casted to an audio clip</param>
-        public void PlayOnce(Object o)
+    #region Animation Event Callbacks
+        /// <summary> Play one audio clip out of a magazine according to chance </summary>
+        /// <param name="audioMagazine">AudioMagazine scriptable object</param>
+        public void ChancePlayMagazine(Object audioMagazine)
         {
-            AudioClip c = o as AudioClip;
+            AudioMagazine am = audioMagazine as AudioMagazine;
+            if (Random.Range(0, 100) < am.chance)
+                audioSource.PlayOneShot(am.clips[Random.Range(0, am.clips.Count)]);
+        }
+
+        /// <summary> Play one audio clip once </summary>
+        /// <param name="audioClip">Single AudioClip</param>
+        public void PlayOnce(Object audioClip)
+        {
+            AudioClip c = audioClip as AudioClip;
             audioSource.PlayOneShot(c);
         }
     #endregion

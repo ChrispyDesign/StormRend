@@ -5,6 +5,9 @@ namespace StormRend.Units
     /// </summary>
     public enum PushResult
     {
-        Nothing, Unit, UnWalkableTile, OverEdge
+        Nothing,    //Nothing hit
+        HitUnit,       //Unit hit
+        HitBlockedTile,     //Unwalkable tile hit
+        OverEdge    //Pushed over the edge
     }
 }

@@ -13,15 +13,17 @@ MonoBehaviour:
   m_Name: Furious Swing Level 1
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: 6f20816157e9a4c4282ef20c6c9f807e, type: 3}
-  _animNumber: 0
+  _animationTrigger: FuriousSwing
   _level: 1
   _type: 0
   _description: 
   _gloryCost: 0
   _requiredTiles: 1
-  _targetTileTypes: 8
+  _targetTileTypes: 64
   effects:
-  - {fileID: 114846777406261706}
+  - {fileID: 114500643382445322}
+  - {fileID: 114304587474110974}
+  castArea: 00000000000000000000000000000000000100000000000100010000000000010000000000000000000000000000000000
 --- !u!114 &114186159587013604
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -34,7 +36,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
-  damageAmount: 1
+  container: {fileID: 0}
+  owner: {fileID: 0}
+  damage: 1
+--- !u!114 &114304587474110974
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
+  m_Name: RefreshEffect
+  m_EditorClassIdentifier: 
+  container: {fileID: 11400000}
+  owner: {fileID: 0}
+  refreshType: -1
+  allowedRefreshes: 50
+  refreshCount: 0
+--- !u!114 &114500643382445322
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
+  m_Name: DamageEffect
+  m_EditorClassIdentifier: 
+  container: {fileID: 11400000}
+  owner: {fileID: 0}
+  damage: 2
 --- !u!114 &114615408424896200
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -49,16 +85,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_target: 1
   m_gloryAmount: 1
---- !u!114 &114846777406261706
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
-  m_Name: DamageEffect
-  m_EditorClassIdentifier: 
-  damageAmount: 2

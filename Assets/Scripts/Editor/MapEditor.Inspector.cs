@@ -1,3 +1,4 @@
+using StormRend.Enums;
 using StormRend.MapSystems;
 using UnityEditor;
 using UnityEngine;
@@ -7,14 +8,17 @@ namespace StormRend.Editors
 	//------------ Inspector ---------------
 	public partial class MapEditor : SmartEditor
 	{
-		public enum BoundsType { RendererBounds, ColliderBounds }
+		BoundsType tileBoundsType = BoundsType.RendererBounds;
+
+		bool randomPaintDirectionOn;
+
+		bool randomVerticalStaggerOn;
 
 		float previewTileSize = 128;
 		Texture2D[] palettePreviews;
-		bool randomizePaintDirection;
-		BoundsType boundsType;
 		bool connectDiagonals;
-		private bool showConnections;
+		bool showConnections;
+
 
 		#region Core
 		public override string[] propertiesToExclude => new[] { "m_Script" };
@@ -27,38 +31,38 @@ namespace StormRend.Editors
 			using (new EditorGUILayout.HorizontalScope())
 			{
 				EditorGUILayout.PrefixLabel(new GUIContent("Bounds Type", "The type of method to detect collisions"));
-				boundsType = (BoundsType)EditorGUILayout.EnumPopup(boundsType);
+				tileBoundsType = (BoundsType)EditorGUILayout.EnumPopup(tileBoundsType);
 			}
 		}
 		public override void OnPostInspector()
 		{
-			// DrawPreviewSizeSlider();
-
-			//Randomize direction
-			using (new GUILayout.HorizontalScope())
-			{
-				EditorGUILayout.PrefixLabel("Randomize Direction");
-				randomizePaintDirection = EditorGUILayout.Toggle(randomizePaintDirection);
-			}
-
+			DrawRandomizeOptions();
 			DrawPalette();
-
-			//Clear All tiles
-			GUILayout.Space(5);
-			if (GUILayout.Button("Clear All Tiles"))
-			{
-				m.DeleteAllTiles();
-			}
-
 			DrawConnectionOptions();
+			// DrawPreviewSizeSlider();
 		}
 		#endregion    //Core
 
 		#region Draws
 		void DrawHelp()
 		{
-			EditorGUILayout.HelpBox("Paint: Left Click\nErase: Ctrl + Left Click", MessageType.Info, true);
+			EditorGUILayout.HelpBox("Paint: Left Click\nErase: Ctrl + Left Click\nVertical Shift: Shift + Scroll Wheel", MessageType.Info, true);
 		}
+
+		void DrawRandomizeOptions()
+		{
+			//Randomize direction
+			using (new GUILayout.HorizontalScope())
+			{
+				randomPaintDirectionOn = EditorGUILayout.Toggle("Randomize Direction", randomPaintDirectionOn);
+			}
+			using (new GUILayout.HorizontalScope())
+			{
+				randomVerticalStaggerOn = EditorGUILayout.Toggle("Vertical Staggering", randomVerticalStaggerOn);
+				m.yOffsetRandRange = EditorGUILayout.FloatField("Random Range", m.yOffsetRandRange);
+			}
+		}
+
 		void DrawPalette()
 		{
 			//Palette
@@ -93,19 +97,20 @@ namespace StormRend.Editors
 			GUILayout.Label("Connections", EditorStyles.boldLabel);
 			using (new GUILayout.HorizontalScope())
 			{
-				EditorGUILayout.PrefixLabel("Show Connections"); showConnections = EditorGUILayout.Toggle(showConnections);
-				EditorGUILayout.PrefixLabel("Connect Diagonals"); connectDiagonals = EditorGUILayout.Toggle(connectDiagonals);
+				m.maxConnectHeightDifference = EditorGUILayout.Slider("Max Height Difference", m.maxConnectHeightDifference, 0, 3f);
+			}
+			using (new GUILayout.HorizontalScope())
+			{
+				showConnections = EditorGUILayout.Toggle("Show Connections", showConnections);
+				connectDiagonals = EditorGUILayout.Toggle("Connect Diagonals", connectDiagonals);
 			}
 			using (new GUILayout.HorizontalScope())
 			{
 				if (GUILayout.Button("Connect Neighbours"))
-                {
                     ConnectAllTiles();
-                }
+
                 if (GUILayout.Button("Clear Connections"))
-				{
 					m.ClearAllTileConnections();
-				}
 			}
 		}
 

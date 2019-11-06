@@ -1,13 +1,18 @@
+using StormRend.Enums;
 using StormRend.States.UI;
 using StormRend.Systems.StateMachines;
 using StormRend.Utility.Attributes;
+using StormRend.Utility.Events;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace StormRend.States
 {
-    public class TurnState : UIState
+    public class TurnState : OnState
     {
+		[Header("Unit Filtering"), Tooltip("The unit type that can be controlled when game is in this state")]
+		public TargetType controllableUnitType;
+
         [Header("Stats")]
         [ReadOnlyField] public float turnCount = 0;
         [ReadOnlyField] public float currentStateTime;
@@ -15,8 +20,8 @@ namespace StormRend.States
         [ReadOnlyField] public float totalStateTime = 0;
 
         [Header("Events")]
-		[SerializeField] protected UnityEvent OnTurnEnter;
-        [SerializeField] protected UnityEvent OnTurnExit;
+		[SerializeField] protected StateEvent onTurnEnter;
+        [SerializeField] protected StateEvent onTurnExit;
 
         /// NOTE! All these methods must be called by overridden methods to preserve correct functionality
 
@@ -24,7 +29,7 @@ namespace StormRend.States
         {
             base.OnEnter(sm);
 
-            OnTurnEnter.Invoke();
+            onTurnEnter.Invoke(this);
 
             //Stats
             turnCount++;
@@ -39,8 +44,8 @@ namespace StormRend.States
         public override void OnExit(UltraStateMachine sm)
         {
             base.OnExit(sm);
-            // Debug.Log("OnTurnExit()");
-            OnTurnExit.Invoke();
+			
+            onTurnExit.Invoke(this);
 
             //Update longest turn
             if (currentStateTime > longestStateTime)

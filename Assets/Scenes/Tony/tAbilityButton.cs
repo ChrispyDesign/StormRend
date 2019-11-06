@@ -5,11 +5,12 @@ using StormRend.Utility.Events;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 namespace StormRend.Test
 {
     [RequireComponent(typeof(Button))]
-    public class tAbilityButton : MonoBehaviour
+    public class tAbilityButton : MonoBehaviour, IPointerEnterHandler
     {
         [SerializeField] Ability ability = null;
         [SerializeField] AbilityEvent onHover = null;
@@ -22,23 +23,12 @@ namespace StormRend.Test
 			button.GetComponentInChildren<TextMeshProUGUI>().text = ability?.name;	//Lazy
 			button.GetComponentInChildren<Image>().sprite = ability?.icon;			//Lazy
         }	
-        void OnEnable()
-        {
-            button.onClick.AddListener(OnClick);
-        }
-		void OnDisable()
-		{
-			button.onClick.RemoveAllListeners();
-		}
 
-        void OnClick()
-        {
-            onClick.Invoke(ability);
-        }
+		//Register
+        void OnEnable() => button.onClick.AddListener(OnClick);
+		void OnDisable() => button.onClick.RemoveAllListeners();
 
-        public void OnHover()
-        {
-            onHover.Invoke(ability);
-        }
-    }
+        void OnClick() => onClick.Invoke(ability);
+		public void OnPointerEnter(PointerEventData eventData) => onHover.Invoke(ability);
+	}
 }

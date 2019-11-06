@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using pokoro.Patterns.Generic;
+using StormRend.Enums;
 using StormRend.MapSystems.Tiles;
 using StormRend.States;
 using StormRend.Systems.StateMachines;
 using StormRend.Utility.Attributes;
+using StormRend.Utility.Events;
 using UnityEngine;
 
 namespace StormRend.Units
@@ -13,6 +15,8 @@ namespace StormRend.Units
 	public class UnitRegistry : Singleton<UnitRegistry>
 	{
 		//Inspector
+		[TextArea(0, 2), SerializeField] string description = "OnRegisterUnit(Unit):\n-PreCalculateMoveTiles.Run X 2";
+
 		[Header("Units loaded in automatically. DO NOT load in manually")]
 		[ReadOnlyField, SerializeField] List<Unit> _aliveUnits = new List<Unit>();
 		[ReadOnlyField, SerializeField] List<Unit> _deadUnits = new List<Unit>();
@@ -20,6 +24,11 @@ namespace StormRend.Units
 		//Properties
 		public Unit[] aliveUnits => _aliveUnits.ToArray();
 		public Unit[] deadUnits => _deadUnits.ToArray();
+
+		//Events
+		[Header("Events")]
+		public UnitEvent onRegisterUnit;
+		public UnitEvent onRegisterDeath;
 
 		void Start()
 		{
@@ -39,52 +48,60 @@ namespace StormRend.Units
 
 	#region Core
 		//Adds a new unit to the alive registry
-		public void RegisterUnit(Unit u) => _aliveUnits.Add(u);
-		public T[] GetUnitsByType<T>() where T : Unit => (from u in aliveUnits where u is T select u as T).ToArray();
+		public void RegisterUnit(Unit u)
+		{
+			_aliveUnits.Add(u);
+
+			onRegisterUnit.Invoke(u);
+		}
 
 		//Register's the death of a unit and moves it from the alive to dead list
 		public void RegisterDeath(Unit deadUnit)
 		{
 			if (_aliveUnits.Remove(deadUnit))
+			{
 				_deadUnits.Add(deadUnit);
+				onRegisterDeath.Invoke(deadUnit);
+			}
 			else
 				Debug.LogWarningFormat("{0} was not in list of alive units!", deadUnit);
 		}
+
+		public T[] GetUnitsByType<T>() where T : Unit => (from u in aliveUnits where u is T select u as T).ToArray();
 	#endregion
 
 	#region Turn Enter/Exit logic
 		public void RunUnitsBeginTurn(State state)
 		{
-			switch (state)
+			var turnState = state as TurnState;
+			AnimateUnit[] animateUnits = new AnimateUnit[0];
+			switch (turnState.controllableUnitType)
 			{
-				case AllyTurnState allyTurnState:
-					var allies = GetUnitsByType<AllyUnit>();
-					//Status effects
-					foreach (var a in allies)
-						a.BeginTurn();
+				case TargetType.Allies:
+					animateUnits = GetUnitsByType<AllyUnit>();
 					break;
-				case EnemyTurnState enemyTurnState:
-					var enemies = GetUnitsByType<EnemyUnit>();
-					foreach (var e in enemies)
-						e.BeginTurn();
+				case TargetType.Enemies:
+					animateUnits = GetUnitsByType<EnemyUnit>();
 					break;
 			}
+			foreach (var u in animateUnits)
+				u.BeginTurn();
 		}
 		public void RunUnitsEndTurn(State state)
 		{
-			switch (state)
+			var turnState = state as TurnState;
+			AnimateUnit[] animateUnits = new AnimateUnit[0];
+			switch (turnState.controllableUnitType)
 			{
-				case AllyTurnState allyTurnState:
-					var allies = GetUnitsByType<AllyUnit>();
-					foreach (var a in allies)
-						a.EndTurn();
+				case TargetType.Allies:
+					animateUnits = GetUnitsByType<AllyUnit>();
 					break;
-				case EnemyTurnState enemyTurnState:
-					var enemies = GetUnitsByType<EnemyUnit>();
-					foreach (var e in enemies)
-						e.EndTurn();
+				case TargetType.Enemies:
+					animateUnits = GetUnitsByType<EnemyUnit>();
 					break;
 			}
+			foreach (var u in animateUnits)
+				u.EndTurn();
 		}
 	#endregion
 

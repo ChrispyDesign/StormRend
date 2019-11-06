@@ -1,5 +1,6 @@
 using StormRend.MapSystems.Tiles;
 using StormRend.Units;
+using StormRend.Utility.Attributes;
 using UnityEngine;
 
 namespace StormRend.Abilities
@@ -7,13 +8,10 @@ namespace StormRend.Abilities
 	public abstract class Effect : ScriptableObject
 	{
 		public bool isFoldOut { get; set; } = true;
-		protected Ability container;
-		protected Unit owner;
 
 	#region Core
-		public virtual void Prepare(Unit owner) { if (!this.owner) this.owner = owner; }		
-		public abstract void Perform(Unit owner, Tile[] targetTiles);
-		public void SetContainer(Ability container) => this.container = container;
+		public virtual void Prepare(Ability ability, Unit owner) { }
+		public abstract void Perform(Ability ability, Unit owner, Tile[] targetTiles);
 	#endregion
 	}
 }

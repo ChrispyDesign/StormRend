@@ -31,52 +31,33 @@ namespace StormRend.Editors
 		public override void OnPreInspector()
 		{
 			//Helpbox
-			if (l.rootTransform == null)
+			if (pp.rootTransform == null)
 			{
 				EditorGUILayout.HelpBox("You must assign the root transform for new painted instances.", MessageType.Error);
-				l.rootTransform = (Transform)EditorGUILayout.ObjectField("Root Transform", l.rootTransform, typeof(Transform), true);
+				pp.rootTransform = (Transform)EditorGUILayout.ObjectField("Root Transform", pp.rootTransform, typeof(Transform), true);
 				return;
 			}
 			EditorGUILayout.HelpBox("Stamp: Left Click\nErase: Ctrl + Left Click\nRotate: Shift + Scroll\nBrush Size: Alt + Scroll or [ and ]\nDensity: - =\nScale: . /\nSpace: Randomize", MessageType.Info);
 		}
 		public override void OnPostInspector()
 		{
-			if (l.prefabPalette == null || l.prefabPalette.Length == 0)
+			if (pp.prefabPalette == null || pp.prefabPalette.Length == 0)
 			{
 				EditorGUILayout.HelpBox("You must assign prefabs to the Prefab Pallette array.", MessageType.Error);
 				return;
 			}
 
-			//Options
-			GUILayout.Space(16);
-			using (new EditorGUILayout.HorizontalScope())
-			{
-				EditorGUILayout.PrefixLabel("Align to Normal");
-				l.alignToNormal = GUILayout.Toggle(l.alignToNormal, GUIContent.none);
-			}
-			using (new EditorGUILayout.HorizontalScope())
-			{
-				EditorGUILayout.PrefixLabel("Follow Surface");
-				l.followOnSurface = GUILayout.Toggle(l.followOnSurface, GUIContent.none);
-			}
-			using (new EditorGUILayout.HorizontalScope())
-			{
-				EditorGUILayout.PrefixLabel("Randomize each Stamp");
-				l.randomizeAfterStamp = GUILayout.Toggle(l.randomizeAfterStamp, GUIContent.none);
-			}
-			GUILayout.Space(16);
-
 			//Brush palette
-			if (l.prefabPalette != null && l.prefabPalette.Length > 0)
+			if (pp.prefabPalette != null && pp.prefabPalette.Length > 0)
 			{
-				RefreshPaletteImages(l);
+				RefreshPaletteImages(pp);
 				var tileSize = 96;
 				var xCount = Mathf.FloorToInt(Screen.width / tileSize + 1);
 				var gridHeight = GUILayout.Height(paletteImages.Length / (xCount) * tileSize);
-				var newIndex = GUILayout.SelectionGrid(l.selectedPrefabIndex, paletteImages, xCount, EditorStyles.miniButton, gridHeight);
-				if (newIndex != l.selectedPrefabIndex)
+				var newIndex = GUILayout.SelectionGrid(pp.selectedPrefabIndex, paletteImages, xCount, EditorStyles.miniButton, gridHeight);
+				if (newIndex != pp.selectedPrefabIndex)
 				{
-					l.selectedPrefabIndex = newIndex;
+					pp.selectedPrefabIndex = newIndex;
 					CreateNewStamp();
 				}
 			}

@@ -13,30 +13,27 @@ namespace StormRend.Abilities.Effects
     /// </summary>
     public class PushEffect : Effect
     {
-        [EnumFlags, SerializeField, Tooltip("ONLY THESE TYPES CAN BE PUSHED: Allies, Enemies")] TargetMask unitTypesToPush;
+        [EnumFlags, SerializeField, Tooltip("ONLY THESE TYPES CAN BE PUSHED: Allies, Enemies")] TargetType unitTypesToPush = TargetType.Enemies | TargetType.Allies;
         [SerializeField] int pushAmount = 1;
         [SerializeField] int damage = 0;
         [SerializeField] bool canPushOffEdge = true;
         List<Type> typesToCheck = new List<Type>();
 
-        void OnValidate()
-        {
-            Prepare();
-        }
+        void OnValidate() => Prepare();
 
-        public override void Prepare(Unit owner = null)
+        public override void Prepare(Ability ability = null, Unit owner = null)
         {
             //Populate unit type array
             typesToCheck.Clear();
             //Allies
-            if ((unitTypesToPush & TargetMask.Allies) == TargetMask.Allies)
+            if ((unitTypesToPush & TargetType.Allies) == TargetType.Allies)
                 typesToCheck.Add(typeof(AllyUnit));
             //Enemies
-            if ((unitTypesToPush & TargetMask.Enemies) == TargetMask.Enemies)
+            if ((unitTypesToPush & TargetType.Enemies) == TargetType.Enemies)
                 typesToCheck.Add(typeof(EnemyUnit));
         }
 
-        public override void Perform(Unit owner, Tile[] targetTiles)
+        public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
         {
             //Foreach target tile
             foreach (var tt in targetTiles)
@@ -44,8 +41,9 @@ namespace StormRend.Abilities.Effects
                 //Try getting tiles around it
                 for (int i = 0; i < 360; i += 90)
                 {
+                    //Set directions
+                    // var direction = new Vector2Int(Mathf.RoundToInt(Mathf.Cos(i)), -Mathf.RoundToInt(Mathf.Sin(i)));
                     // var deg = i * Mathf.Deg2Rad;
-                    // var direction = new Vector2Int(Mathf.RoundToInt(Mathf.Cos(i)), -Mathf.RoundToInt(Mathf.Sin(i)));	//4 directions
                     Vector2Int direction = new Vector2Int();
                     switch (i)
                     {
@@ -62,12 +60,19 @@ namespace StormRend.Abilities.Effects
                         if (UnitRegistry.TryGetUnitTypeOnTile(t, out Unit unit, typesToCheck.ToArray()))
                         {
                             var au = unit as AnimateUnit;
-
-                            //Push the unit in the vector direction from target tile to adjacent tile
-                            au.Push(direction * pushAmount, canPushOffEdge);
-                            
+                            //Do incremental pushes to avoid moving through obstacles
+                            for (int j = 0; j < pushAmount; ++j)
+                            {
+                                //Push the unit in the vector direction from target tile to adjacent tile
+                                var pushResult = au.Push(direction, canPushOffEdge);
+                                if (pushResult == PushResult.HitUnit ||
+                                    pushResult == PushResult.HitBlockedTile)
+                                    break;  //Break out of loop; Cannot move anymore
+                                else if (pushResult == PushResult.OverEdge)
+                                    return; //Unit is dead; Break out of function
+                            }
                             //Do damage (where needed)
-                            unit.TakeDamage(new DamageData(owner, damage));
+                            if (damage > 0) unit.TakeDamage(new DamageData(owner, damage));
                         }
                     }
                 }
@@ -75,11 +80,3 @@ namespace StormRend.Abilities.Effects
         }
     }
 }
-
-// for (int j = 0; j < pushAmount; ++j)
-// {
-//     if (!au.Push(direction * j, canPushOffEdge))
-//     {
-//         //Pushed off edge OR pushed to the edge of an obstacle
-//     }
-// }

@@ -8,27 +8,23 @@ namespace StormRend.Variables
     [Serializable, CreateAssetMenu(menuName = "StormRend/Variables/Unit", fileName = "UnitVar")]
 	public sealed class UnitVar : BhaveVar<Unit>
 	{
+		public override event Action onChanged;
 		public override Unit value
 		{
 			get => _value;
-			set => _value = value;		//NOTE currently this means onchange events don't work
-			// {
-			// 	if (_value != value)
-			// 	{
-			// 		_value = value;
-			// 		onChanged();
-			// 	}
-			// }
-		}
-
-		public static implicit operator UnitVar(Unit rhs)
-		{
-			return new UnitVar { value = rhs };
-		}
-
-		public static implicit operator Unit(UnitVar self)
-		{
-			return self.value;
+			set
+			{
+				//NOTE: this apparently prevents null ref exception on startup. Not 100% trustworthy though
+				if (value && _value != value)
+				{
+					_value = value;
+					OnChanged?.Raise();
+					onChanged?.Invoke();
+				}
+				//If the value is null just set the value to
+				else
+					_value = value;
+			}
 		}
    	}
 }

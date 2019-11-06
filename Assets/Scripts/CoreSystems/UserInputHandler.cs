@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using pokoro.Patterns.Generic;
 using StormRend.Abilities;
 using StormRend.CameraSystem;
+using StormRend.Enums;
 using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
+using StormRend.States;
 using StormRend.Systems.StateMachines;
 using StormRend.Units;
 using StormRend.Utility;
@@ -21,37 +24,35 @@ namespace StormRend.Systems
 	{
 		public const int lmb = 0, rmb = 1;
 		public bool leftClicked;
-		public bool leftClickUp;
+		public bool leftReleased;
 		public bool rightClicked;
-		public bool rightClickUp;
+		public bool rightReleased;
 
 		public void Refresh()
 		{
 			leftClicked = Input.GetMouseButtonDown(lmb);
-			leftClickUp = Input.GetMouseButtonUp(lmb);
+			leftReleased = Input.GetMouseButtonUp(lmb);
 			rightClicked = Input.GetMouseButtonDown(rmb);
-			rightClickUp = Input.GetMouseButtonUp(rmb);
+			rightReleased = Input.GetMouseButtonUp(rmb);
 		}
 	}
 
 	public class UserInputHandler : Singleton<UserInputHandler>
 	{
 		//Enums
-		public enum ActivityMode
+		public enum Mode
 		{
+			Select,
 			Move,
 			Action,      //Cast spells, attack, summon, etc
-			Idle
 		}
 
 		//Inspector
-		[SerializeField] LayerMask raycastLayerMask;
-
-		[Tooltip("A reference to the State object that is considered to be the player's state ie. AllyState")]
-		[Space(10), SerializeField] State playersState = null;
-
-		[Space(10), SerializeField] UnitVar _selectedUnit = null;
-		[ReadOnlyField, SerializeField] Ability _selectedAbility = null;
+		// [Tooltip("A reference to the State object that is considered to be the player's state ie. AllyState")]
+		[Header("State")]
+		[ReadOnlyField, SerializeField] TurnState currentTurnState = null;
+		[Space(10), SerializeField] UnitVar _selectedUnitVar = null;
+		[SerializeField] AbilityVar _selectedAbilityVar = null;
 
 		[Header("Tile Colors")]
 		[SerializeField] TileHighlightColor moveHighlight = null;
@@ -59,50 +60,50 @@ namespace StormRend.Systems
 
 		[Header("Camera")]
 		[SerializeField] float cameraSmoothTime = 1.75f;
+		[SerializeField] LayerMask raycastLayerMask;
 
 		//Properties
-		ActivityMode mode
+		Mode mode
 		{
 			get
 			{
 				//If an ability is current selected then unit can perform ACTION
 				if (isAbilitySelected && selectedAnimateUnit.canAct)
-					return ActivityMode.Action;
+					return Mode.Action;
 				//If only unit selected and can move the unit can perform MOVE
 				else if (isUnitSelected && selectedAnimateUnit.canMove)
-					return ActivityMode.Move;
+					return Mode.Move;
 				//Unit not selected
 				else
-					return ActivityMode.Idle;
+					return Mode.Select;
 			}
 		}
 		public Unit selectedUnit
 		{
-			get => _selectedUnit.value;
-			internal set => _selectedUnit.value = value;
+			get => _selectedUnitVar.value;
+			internal set => _selectedUnitVar.value = value;
 		}
 		public AnimateUnit selectedAnimateUnit => (selectedUnit != null) ? selectedUnit as AnimateUnit : null;
 		public bool isUnitSelected => selectedUnit != null;
 		//Ability selection
 		public Ability selectedAbility
 		{
-			get => _selectedAbility;
-			internal set => _selectedAbility = value;
+			get => _selectedAbilityVar.value;
+			internal set => _selectedAbilityVar.value = value;
 		}
 		public bool isAbilitySelected => selectedAbility != null;
-		public bool isPlayersTurn { get; set; } = true;		//If the current game state matches the player's state?
 		bool notEnoughTargetTilesSelected => targetTileStack.Count < selectedAbility.requiredTiles;
 
 		//Events
 		[Space(5)]
-		public UnitEvent OnUnitChanged;
-		public UnityEvent OnUnitCleared;
-		public AbilityEvent OnAbilityChanged;
-		public AbilityEvent OnAbilityPerformed;
-		public UnityEvent OnAbilityCleared;
+		public UnitEvent onUnitChanged;
+		public UnityEvent onUnitCleared;
+		public AbilityEvent onAbilityChanged;
+		public AbilityEvent onAbilityPerformed;
+		public UnityEvent onAbilityCleared;
 
 		//Members
-		FrameEventData e;   //The events that happenned this frame
+		FrameEventData e;   //The events that happened this frame
 		CameraMover camMover;
 		Camera cam;
 		Stack<Tile> targetTileStack = new Stack<Tile>();
@@ -114,6 +115,35 @@ namespace StormRend.Systems
 		bool isTileHitEmpty;
 		GraphicRaycaster gr;
 		List<RaycastResult> GUIhits = new List<RaycastResult>();
+		List<Type> currentControllableUnitTypes = new List<Type>();		//Holds the list of types that can be controlled for this game turn
+
+	// #region Callback Registration
+	// 	void OnEnable()
+	// 	{
+	// 		_selectedUnitVar.onChanged += OnSelectedUnitChanged;
+	// 		_selectedAbilityVar.onChanged += OnSelectedAbilityChanged;
+	// 	}
+	// 	void OnDisable()
+	// 	{
+	// 		_selectedUnitVar.onChanged -= OnSelectedUnitChanged;
+	// 		_selectedAbilityVar.onChanged -= OnSelectedAbilityChanged;
+	// 	}
+	// 	void OnSelectedUnitChanged()
+	// 	{
+	// 		//
+	// 		if (selectedUnit)
+	// 			SelectUnit(selectedUnit as AnimateUnit);
+	// 		else
+	// 			ClearSelectedUnit();
+	// 	}
+	// 	void OnSelectedAbilityChanged()
+	// 	{
+	// 		if (selectedAbility)
+	// 			SelectAbility(selectedAbility);
+	// 		else
+	// 			ClearSelectedAbility();
+	// 	}
+	// #endregion
 
 	#region Core
 		void Start()
@@ -122,13 +152,14 @@ namespace StormRend.Systems
 			cam = MasterCamera.current.camera;
 			camMover = cam.GetComponent<CameraMover>();
 			gr = FindObjectOfType<GraphicRaycaster>();	//On the one and only canvas
-			_selectedUnit.value = null;
-			_selectedAbility = null;
+			selectedUnit = null;
+			selectedAbility = null;
 
 			//Asserts
 			Debug.Assert(cam, "Camera could not be located!");
 			Debug.Assert(camMover, "CameraMover could not be located!");
-			Debug.Assert(_selectedUnit, "No Selected Unit SOV!");
+			Debug.Assert(_selectedUnitVar, "No Selected Unit SOV!");
+			Debug.Assert(_selectedAbilityVar, "No Selected Ability SOV!");
 			Debug.Assert(gr, "No graphics raycaster found!");
 		}
 
@@ -144,9 +175,7 @@ namespace StormRend.Systems
 		// 	if (isUnitSelected)
 		// 		selectedAnimateUnit.Move(moveDir, true);
 		// }
-
-	#endregion
-		//--------------------- PROCESS EVENTS -----------------------------
+	
 		void ProcessEvents()
 		{
 			e.Refresh();	//Refresh all input events
@@ -163,59 +192,54 @@ namespace StormRend.Systems
 				{
 					//!!! This logic needs to run first otherwise the camera will move on final add target tile
 					//Clicking on any unit will focus camera on it unless in action mode?
-					if (mode != ActivityMode.Action)
+					if (mode != Mode.Action)
 						camMover.MoveTo(interimUnit, cameraSmoothTime);
 				}
 
-				//PLAYER'S TURN
-				if (isPlayersTurn)
+				switch (mode)
 				{
-					switch (mode)
-					{
-						case ActivityMode.Action:   //ACTION MODE
-							if (isUnitHit)
-								AddTargetTile(interimUnit);
-							if (isTileHit)
-								AddTargetTile(interimTile);
-							break;
-						case ActivityMode.Move:     //MOVE MODE
-							if (isTileHit && isTileHitEmpty)	//Restrict to empty tiles only
-							{
-								if (selectedAnimateUnit.Move(interimTile))	//Move unit
-									camMover.MoveTo(interimTile, cameraSmoothTime);	//If move successful then focus camera
-							}
-							goto case ActivityMode.Idle;	//Fall through
-						case ActivityMode.Idle:     //IDLE MODE
-							if (isUnitHit && interimUnit is AnimateUnit)
-								SelectUnit(interimUnit as AnimateUnit);
-							break;
-					}
+					case Mode.Action:   //ACTION MODE
+						if (isUnitHit)
+							AddTargetTile(interimUnit);
+						if (isTileHit)
+							AddTargetTile(interimTile);
+						break;
+
+					case Mode.Move:     //MOVE MODE
+						if (isTileHit && isTileHitEmpty)	//Restrict to empty tiles only
+						{
+							if (selectedAnimateUnit.Move(interimTile))	//Try Move unit
+								camMover.MoveTo(interimTile, cameraSmoothTime);	//If move successful then focus camera
+						}
+						goto case Mode.Select;	//Fall through
+
+					case Mode.Select:     //SELECT MODE
+						if (isUnitHit && currentControllableUnitTypes.Contains(interimUnit.GetType()))	//Filter controllable units
+							SelectUnit(interimUnit as AnimateUnit);
+						break;
 				}
 
 			}
-			else if (e.rightClickUp)	//RIGHT CLICK RELEASED
+			else if (e.rightReleased)	//RIGHT CLICK RELEASED
 			{
-				if (isPlayersTurn)
+				switch (mode)
 				{
-					switch (mode)
-					{
-						case ActivityMode.Action:	//ACTION MODE
-							if (notEnoughTargetTilesSelected && targetTileStack.Count > 0)
-								targetTileStack.Pop();	//UNDO 1 TARGET TILE SELECT
-							else
-								ClearSelectedAbility();	//CLEAR ABILITY
-							break;
-						case ActivityMode.Move:		//MOVE MODE
-							ClearSelectedUnit();		//CLEAR UNIT
-							break;
-					}
+					case Mode.Action:	//ACTION MODE
+						if (notEnoughTargetTilesSelected && targetTileStack.Count > 0)
+							targetTileStack.Pop();	//UNDO 1 TARGET TILE SELECT
+						else
+							ClearSelectedAbility();	//CLEAR ABILITY
+						break;
+					case Mode.Move:		//MOVE MODE
+						ClearSelectedUnit();		//CLEAR UNIT
+						break;
 				}
 			}
 			else 	//HOVER
 			{
 				switch (mode)
 				{
-					case ActivityMode.Move:		//MOVE
+					case Mode.Move:		//MOVE
 						//Poll events
 						isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
 						if (isTileHit) isTileHitEmpty = !UnitRegistry.IsAnyUnitOnTile(interimTile);	//Check tile is empty
@@ -227,35 +251,32 @@ namespace StormRend.Systems
 							selectedAnimateUnit.Move(interimTile, true);
 						}
 						break;
-					// case ActivityMode.Idle:
-					// 	isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
-					// 	if (isTileHit)
-					// 	break;
 				}
 			}
 		}
-		//----------------------------------------------------------------
-		void OnGUI()
+		#endregion
+
+	#region Callbacks
+		public void OnStateChanged(State newState)
 		{
-			if (!debug) return;
-			GUILayout.Label("ActivityMode: " + mode);
+			var newTurnState = newState as TurnState;
 
-			GUILayout.Label("is a unit hit?: " + isUnitHit);
-			GUILayout.Label("is a tile hit?: " + isTileHit);
+			//Clear highlights etc if current state changed
+			if (currentTurnState != newTurnState)
+			{
+				ClearSelectedUnit();
+				ClearSelectedAbility();
+				ClearAllTileHighlights();
+				
+				//Set new turn state
+				currentTurnState = newTurnState;
 
-			GUILayout.Label("is a unit selected?: " + isUnitSelected);
-			GUILayout.Label("Selected Unit: " + _selectedUnit?.value?.name);
-
-			GUILayout.Label("is an ability selected?: " + isAbilitySelected);
-			GUILayout.Label("Selected Ability: " + _selectedAbility?.name);
-
-			GUILayout.Label("GUI hits count: " + GUIhits.Count);
-
-			GUILayout.Label(string.Format("targetTileStack ({0}):", targetTileStack.Count));
-			foreach (var t in targetTileStack)
-				GUILayout.Label(t.name);
+				//Setup new controllable units
+				PopulateControllableUnitTypes();
+			}
 		}
-
+	#endregion
+	
 	#region Sets
 		//Public; can be called via unity events
 		public void SelectUnit(AnimateUnit au)
@@ -272,9 +293,9 @@ namespace StormRend.Systems
 			selectedUnit = au;
 
 			//Show move tile if unit is able to move
-			if (au.canMove)	ShowMoveTiles();
+			ShowMoveTiles();
 
-			OnUnitChanged.Invoke(au);	//ie. Update UI, Play sounds,
+			onUnitChanged.Invoke(au);	//ie. Update UI, Play sounds,
 		}
 
 		public void SelectAbility(Ability a)	//aka. OnAbilityChanged()
@@ -287,7 +308,7 @@ namespace StormRend.Systems
 			}
 			if (!selectedAnimateUnit.canAct)
 			{
-				Debug.LogWarning("Unit has moved and acted. Cannot select any more abilities this turn");
+				Debug.LogWarning("Unit cannot perform any more abilities this turn");
 				return;
 			}
 
@@ -302,8 +323,12 @@ namespace StormRend.Systems
 			ClearAllTileHighlights();
 			ShowTargetTiles();
 
+			//Auto perform ability on self if required tiles set to 0
+			if (selectedAbility.requiredTiles == 0)
+				AddTargetTile(selectedAnimateUnit.currentTile);
+
 			//Raise
-			OnAbilityChanged.Invoke(a);
+			onAbilityChanged.Invoke(a);
 		}
 
 		/// <summary>
@@ -340,26 +365,28 @@ namespace StormRend.Systems
 			ClearSelectedAbility(selectedAnimateUnit.canMove);
 
 			//Events
-			OnAbilityPerformed.Invoke(selectedAbility);
+			onAbilityPerformed.Invoke(selectedAbility);
 		}
 	#endregion
 
 	#region Tile Highlighting
 		//Show a preview of target tiles 
-		public void OnPointerEnterPreview(Ability a)
+		public void OnHoverPreview(Ability a)
 		{
 			//Has to be in Move mode
-			if (mode != ActivityMode.Move) return;
+			if (mode != Mode.Move) return;
+
+			//Has to be able to act
+			if (!selectedAnimateUnit.canAct) return;
 
 			selectedAnimateUnit.CalculateTargetTiles(a);
 			selectedAnimateUnit.ClearGhost();
 			ShowTargetTiles();
-			// Debug.LogFormat("OnPreviewTargetHighlight({0})", a.name);
 		}
-		public void OnPointerExitPreview()
+		public void OnUnhoverPreview()
 		{
 			//Must be in move mode
-			if (mode != ActivityMode.Move) return;
+			if (mode != Mode.Move) return;
 
 			//Redraw
 			ClearAllTileHighlights();
@@ -371,6 +398,8 @@ namespace StormRend.Systems
 			//NOTE: Active unit's MOVE highlights should be refreshed:
 			// - At the start of each turn
 			// - After another unit has summoned something
+			if (!selectedAnimateUnit.canMove) return;
+
 			if (selectedAnimateUnit.possibleMoveTiles.Length <= 0)
 				selectedAnimateUnit.CalculateMoveTiles();
 
@@ -397,7 +426,7 @@ namespace StormRend.Systems
 		{
 			if (!isUnitSelected) return;	//A unit should be selected
 
-			OnUnitCleared.Invoke();
+			onUnitCleared.Invoke();
 
 			//Clear tile highlights and ghost
 			ClearSelectedUnitTileHighlights();
@@ -411,7 +440,7 @@ namespace StormRend.Systems
 		{
 			if (!isUnitSelected) return;	//A unit should be selected
 
-			OnAbilityCleared.Invoke();
+			onAbilityCleared.Invoke();
 
 			//Clear
 			selectedAbility = null;
@@ -490,6 +519,40 @@ namespace StormRend.Systems
 			if (GUIhits.Count > 0)
 				return true;
 			return false;
+		}
+
+		void PopulateControllableUnitTypes()
+		{
+			currentControllableUnitTypes.Clear();
+			//Allies
+			if ((currentTurnState.controllableUnitType & TargetType.Allies) == TargetType.Allies)
+				currentControllableUnitTypes.Add(typeof(AllyUnit));
+			//Enemies
+			if ((currentTurnState.controllableUnitType & TargetType.Enemies) == TargetType.Enemies)
+				currentControllableUnitTypes.Add(typeof(EnemyUnit));
+		}
+	#endregion
+
+	#region Debug
+		void OnGUI()
+		{
+			if (!debug) return;
+			GUILayout.Label("ActivityMode: " + mode);
+
+			GUILayout.Label("is a unit hit?: " + isUnitHit);
+			GUILayout.Label("is a tile hit?: " + isTileHit);
+
+			GUILayout.Label("is a unit selected?: " + isUnitSelected);
+			if (_selectedAbilityVar.value) GUILayout.Label("Selected Unit: " + _selectedUnitVar?.value?.name);
+
+			GUILayout.Label("is an ability selected?: " + isAbilitySelected);
+			if (_selectedAbilityVar.value) GUILayout.Label("Selected Ability: " + _selectedAbilityVar?.value?.name);
+
+			GUILayout.Label("GUI hits count: " + GUIhits.Count);
+
+			GUILayout.Label(string.Format("targetTileStack ({0}):", targetTileStack.Count));
+			foreach (var t in targetTileStack)
+				GUILayout.Label(t.name);
 		}
 	#endregion
 	}

@@ -1,3 +1,4 @@
+using StormRend.Enums;
 using UnityEngine;
 
 namespace StormRend.MapSystems
@@ -5,43 +6,43 @@ namespace StormRend.MapSystems
 	[ExecuteInEditMode]
 	public class PropPainter : MonoBehaviour	//Rename to Decorator, DecorationPainter, OrnamentPainter
 	{
-		public enum CollisionTest
-		{
-			RendererBounds,
-			ColliderBounds
-		}
-
-		//Public so that the editor class can access it
+		//Inspector
 		public LayerMask layerMask;
 		public Transform rootTransform;
-		public float brushRadius = 5;
-		public float brushHeight = 10;
-		public float brushDensity = 0.25f;
-		[Range(0, 360)]
-		public float maxRandomRotation = 360f;
-		[Range(0, 360)]
-		public float rotationStep = 90f;
-		public CollisionTest collisionTest;
-		[Range(0, 1)]
-		public float maxIntersectionVolume = 0;
-		[Range(0, 360)]
-		public float maxSlope = 45;
+		public BoundsType propBoundsType = BoundsType.RendererBounds;
 
-		//Public so that the editor class can access it
-		[HideInInspector] public bool randomizeAfterStamp = true;
-		[HideInInspector] public bool alignToNormal = true;
-		[HideInInspector] public bool followOnSurface = true;
+		[Range(0.1f, 5f)] public float _brushRadius = 5;
+		[Range(0, 10f)] public float _brushDensity = 0.25f;
+		[Range(0, 1)] public float _maxDensity = 0;
+		[Range(0, 360)] public float _maxRandomRotation = 360f;
+
 		[HideInInspector] public int selectedPrefabIndex = 0;
 
+		public bool randomizeEachStamp = true;
 		public GameObject[] prefabPalette;
 
-		public GameObject SelectedPrefab
+		//Properties
+		public float brushRadius
 		{
-			get
-			{
-				return prefabPalette == null || prefabPalette.Length == 0 ? null : prefabPalette[selectedPrefabIndex];
-			}
+			get => _brushRadius;
+			set => _brushRadius = Mathf.Clamp(value, 0.1f, 5f);
 		}
+		public float brushDensity
+		{
+			get => _brushDensity;
+			set => _brushDensity = Mathf.Clamp(value, 0, 10f);
+		}
+		public float maxDensity
+		{
+			get => _maxDensity;
+			set => _maxDensity = Mathf.Clamp01(value);
+		}
+		public float maxRandomRotation
+		{
+			get => _maxRandomRotation;
+			set => _maxRandomRotation = Mathf.Clamp(value, 0, 360f);
+		}
+		public GameObject SelectedPrefab => prefabPalette == null || prefabPalette.Length == 0 ? null : prefabPalette[selectedPrefabIndex];
 
 		[ContextMenu("Delete Children")]
 		void DeleteChildren()

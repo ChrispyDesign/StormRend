@@ -1,11 +1,12 @@
-﻿using StormRend.Abilities;
+﻿using System.Collections.Generic;
+using StormRend.Abilities;
 using StormRend.Abilities.Effects;
 using UnityEditor;
 using UnityEngine;
 
 namespace StormRend.Editors
 {
-    [CustomEditor(typeof(Ability))]
+    [CustomEditor(typeof(Ability)), CanEditMultipleObjects]
     public class AbilityInspector : SmartEditor
     {
         /* Brainstorm
@@ -24,7 +25,7 @@ namespace StormRend.Editors
 		- Required Tiles : int
 		- Target Tiles : Bitmask
 		- AreaOfEffect : bool[7,7]
-		
+
 		- EffectInspectors
 		 */
 
