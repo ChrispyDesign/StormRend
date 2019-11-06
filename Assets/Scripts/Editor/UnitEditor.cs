@@ -14,7 +14,7 @@ namespace StormRend.Editors
 	{
 		Unit u;     //Target
 		Map map;
-		Color buttonColour = new Color(1, 0.5f, 0);
+		Color buttonColour = new Color(1, 0.75f, 0);
 		public override string[] propertiesToExclude => new[] { "m_Script" };
 
 		void OnEnable()
@@ -26,9 +26,16 @@ namespace StormRend.Editors
 		void OnSceneGUI()
 		{
 			var e = Event.current;
-			DrawRotateButtons(buttonColour);
-			SnapToNearestTile(e);
-			MoveByWASD(e);
+			DrawRotateAndSnapButtons(buttonColour);
+			switch (e.type)
+			{
+				case EventType.KeyDown:
+					MoveByWASD(e);
+					break;
+				case EventType.MouseUp:
+					SnapToNearestTile();
+					break;
+			}
 		}
 
         void MoveByWASD(Event e)
@@ -52,32 +59,33 @@ namespace StormRend.Editors
 				}
         }
 
-        void DrawRotateButtons(Color color)
+        void DrawRotateAndSnapButtons(Color color)
 		{
-			Vector2 offset = new Vector2(10, 0);
-			const float bSize = 30f;
+			Vector2 offset = new Vector2(18, 0);
+			const float bSize = 25;
 			var oldColor = GUI.color;
 			GUI.color = color;
 			var cam = SceneView.lastActiveSceneView.camera;
 			var scene = cam.pixelRect;
 			var w2s = cam.WorldToScreenPoint(u.transform.position);
-			var leftButton = new Rect(w2s.x - offset.x - bSize, scene.height - w2s.y - offset.y, bSize, bSize * 0.8f);
-			var rightbutton = new Rect(w2s.x + offset.x, scene.height - w2s.y - offset.y, bSize, bSize * 0.8f);
+			var leftButton = new Rect(w2s.x - offset.x - bSize, scene.height - w2s.y - offset.y, bSize, bSize);
+			var snapButton = new Rect(w2s.x - bSize * 0.5f, scene.height - w2s.y, bSize, bSize);
+			var rightbutton = new Rect(w2s.x + offset.x, scene.height - w2s.y - offset.y, bSize, bSize);
 			Handles.BeginGUI();
-			if (GUI.Button(leftButton, "<")) u.transform.Rotate(Vector3.up, -90);
-			if (GUI.Button(rightbutton, ">")) u.transform.Rotate(Vector3.up, 90);
+			if (GUI.Button(leftButton, "←")) u.transform.Rotate(Vector3.up, -90);
+			if (GUI.Button(snapButton, "▼")) SnapToNearestTile();
+			if (GUI.Button(rightbutton, "→")) u.transform.Rotate(Vector3.up, 90);
 			Handles.EndGUI();
 			GUI.color = oldColor;
 		}
 
-		void SnapToNearestTile(Event e)
+		void SnapToNearestTile()
 		{
-			if (e.type == EventType.MouseUp)
-				if (map.TryGetNearestTile(u.transform.position, out Tile nearest))
-				{
-					u.transform.position = nearest.transform.position;
-					u.currentTile = nearest;
-				}
+			if (map.TryGetNearestTile(u.transform.position, out Tile nearest))
+			{
+				u.transform.position = nearest.transform.position;
+				u.currentTile = nearest;
+			}
 		}
 	}
 }
