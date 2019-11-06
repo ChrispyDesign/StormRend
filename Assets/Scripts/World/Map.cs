@@ -24,14 +24,30 @@ namespace StormRend.MapSystems
 
 		[Tooltip("Pallette of tile prefabs")]
 		public Tile[] palette;
-		[HideInInspector] public int selectedPrefabIDX = 0;
 
 		//Properties
 		public Tile selectedTilePrefab => palette?.Length == 0 ? null : palette?[selectedPrefabIDX];
 		public bool isPaletteActive => palette != null && palette.Length > 0;
 
 		//Members
+		[HideInInspector] public int selectedPrefabIDX = 0;
 		[HideInInspector] public List<Tile> tiles = new List<Tile>();
+
+		float _yOffsetRandRange = 0.5f;
+		public float yOffsetRandRange
+		{
+			get => _yOffsetRandRange;
+			set => _yOffsetRandRange = Mathf.Clamp(value, 0, 3f);
+		}
+
+
+		float _maxConnectHeightDifference = 0.5f;
+		public float maxConnectHeightDifference
+		{
+			get => _maxConnectHeightDifference;
+			set => _maxConnectHeightDifference = Mathf.Clamp(value, 0, 3f);
+		}
+
 		static UnitRegistry ur;
 
 	#region Core

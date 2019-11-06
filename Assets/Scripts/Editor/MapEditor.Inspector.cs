@@ -13,12 +13,6 @@ namespace StormRend.Editors
 		bool isRandomizePaintDirection;
 
 		bool isRandomizeYOffset;
-		float _yOffsetRandRange = 0.3f;
-		float yOffsetRandRange 
-		{
-			get => _yOffsetRandRange;
-			set => _yOffsetRandRange = Mathf.Clamp(value, 0, 2f);
-		}
 
 		float previewTileSize = 128;
 		Texture2D[] palettePreviews;
@@ -52,7 +46,7 @@ namespace StormRend.Editors
 		#region Draws
 		void DrawHelp()
 		{
-			EditorGUILayout.HelpBox("Paint: Left Click\nErase: Ctrl + Left Click", MessageType.Info, true);
+			EditorGUILayout.HelpBox("Paint: Left Click\nErase: Ctrl + Left Click\nVertical Shift: Shift + Scroll Wheel", MessageType.Info, true);
 		}
 
 		void DrawRandomizeOptions()
@@ -66,7 +60,7 @@ namespace StormRend.Editors
 			{
 				isRandomizeYOffset = EditorGUILayout.Toggle("Randomize Y Offset", isRandomizeYOffset);
 
-				yOffsetRandRange = EditorGUILayout.FloatField("Random Range", yOffsetRandRange);
+				m.yOffsetRandRange = EditorGUILayout.FloatField("Random Range", m.yOffsetRandRange);
 			}
 		}
 
@@ -104,8 +98,12 @@ namespace StormRend.Editors
 			GUILayout.Label("Connections", EditorStyles.boldLabel);
 			using (new GUILayout.HorizontalScope())
 			{
-				EditorGUILayout.PrefixLabel("Show Connections"); showConnections = EditorGUILayout.Toggle(showConnections);
-				EditorGUILayout.PrefixLabel("Connect Diagonals"); connectDiagonals = EditorGUILayout.Toggle(connectDiagonals);
+				m.maxConnectHeightDifference = EditorGUILayout.Slider("Max Height Difference", m.maxConnectHeightDifference, 0, 3f);
+			}
+			using (new GUILayout.HorizontalScope())
+			{
+				showConnections = EditorGUILayout.Toggle("Show Connections", showConnections);
+				connectDiagonals = EditorGUILayout.Toggle("Connect Diagonals", connectDiagonals);
 			}
 			using (new GUILayout.HorizontalScope())
 			{
