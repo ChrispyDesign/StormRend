@@ -1,3 +1,4 @@
+using StormRend.Enums;
 using UnityEngine;
 
 namespace StormRend.MapSystems
@@ -5,17 +6,10 @@ namespace StormRend.MapSystems
 	[ExecuteInEditMode]
 	public class PropPainter : MonoBehaviour	//Rename to Decorator, DecorationPainter, OrnamentPainter
 	{
-		//Enums
-		public enum CollisionTest
-		{
-			RendererBounds,
-			ColliderBounds
-		}
-
 		//Inspector
 		public LayerMask layerMask;
 		public Transform rootTransform;
-		public CollisionTest collisionTest;
+		public BoundsType propBoundsType = BoundsType.RendererBounds;
 
 		[Range(0.1f, 5f)] public float _brushRadius = 5;
 		[Range(0, 10f)] public float _brushDensity = 0.25f;

@@ -272,7 +272,7 @@ namespace StormRend.Editors
         bool IsOverTile(Vector3 checkPos, float checkBoundsSize, out GameObject intersectedTile)
         {
             //BRUTE FORCE; Probably not very efficient
-            if (boundsType == BoundsType.RendererBounds)
+            if (tileBoundsType == BoundsType.RendererBounds)
             {
                 var cursorBoundsSize = new Vector3(checkBoundsSize, float.MaxValue, checkBoundsSize);
                 var cursorBounds = new Bounds(gridCursor, cursorBoundsSize);
@@ -292,7 +292,7 @@ namespace StormRend.Editors
                     }
                 }
             }
-            else if (boundsType == BoundsType.ColliderBounds)
+            else if (tileBoundsType == BoundsType.ColliderBounds)
             {
 
             }

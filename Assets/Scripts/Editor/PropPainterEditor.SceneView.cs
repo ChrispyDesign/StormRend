@@ -1,3 +1,4 @@
+using StormRend.Enums;
 using StormRend.MapSystems;
 using UnityEditor;
 using UnityEngine;
@@ -80,9 +81,9 @@ namespace StormRend.Editors
 			overlaps.Clear();
 			overlappedGameObjects.Clear();
 
-			switch (pp.collisionTest)
+			switch (pp.propBoundsType)
 			{
-				case PropPainter.CollisionTest.ColliderBounds:
+				case BoundsType.ColliderBounds:
 				{
 					foreach (var c in Physics.OverlapCapsule(top, bottom, brushRadius))
 					{
@@ -96,7 +97,7 @@ namespace StormRend.Editors
 				}
 				break;
 
-				case PropPainter.CollisionTest.RendererBounds:
+				case BoundsType.RendererBounds:
 				{
 					//TODO: This might need an oct-tree later. Brute force for now.
 					var overlapBounds = new Bounds(Vector3.Lerp(top, bottom, 0.5f), new Vector3(brushRadius * 2, (brushRadius * 2) + (top - bottom).magnitude, brushRadius * 2));

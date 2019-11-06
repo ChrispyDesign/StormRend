@@ -1,3 +1,4 @@
+using StormRend.Enums;
 using StormRend.MapSystems;
 using UnityEditor;
 using UnityEngine;
@@ -7,8 +8,7 @@ namespace StormRend.Editors
 	//------------ Inspector ---------------
 	public partial class MapEditor : SmartEditor
 	{
-		public enum BoundsType { RendererBounds, ColliderBounds }
-		BoundsType boundsType;
+		BoundsType tileBoundsType = BoundsType.RendererBounds;
 
 		bool isRandomizePaintDirection;
 
@@ -37,7 +37,7 @@ namespace StormRend.Editors
 			using (new EditorGUILayout.HorizontalScope())
 			{
 				EditorGUILayout.PrefixLabel(new GUIContent("Bounds Type", "The type of method to detect collisions"));
-				boundsType = (BoundsType)EditorGUILayout.EnumPopup(boundsType);
+				tileBoundsType = (BoundsType)EditorGUILayout.EnumPopup(tileBoundsType);
 			}
 		}
 		public override void OnPostInspector()
