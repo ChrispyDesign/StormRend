@@ -135,6 +135,8 @@ namespace StormRend.Units
 		//State machine / game director / Unit registry to run through all these on ally turn enter?
 		public void BeginTurn()		//Reset necessary stats and get unit ready for the next turn
 		{
+			Debug.Log("Begin turn: " + this.name);
+
 			//Can take action again
 			SetCanAct(true);
 			SetCanMove(true);

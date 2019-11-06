@@ -10,9 +10,9 @@ namespace StormRend.Editors
 	{
 		BoundsType tileBoundsType = BoundsType.RendererBounds;
 
-		bool isRandomizePaintDirection;
+		bool randomPaintDirectionOn;
 
-		bool isRandomizeYOffset;
+		bool randomVerticalStaggerOn;
 
 		float previewTileSize = 128;
 		Texture2D[] palettePreviews;
@@ -54,12 +54,11 @@ namespace StormRend.Editors
 			//Randomize direction
 			using (new GUILayout.HorizontalScope())
 			{
-				isRandomizePaintDirection = EditorGUILayout.Toggle("Randomize Direction", isRandomizePaintDirection);
+				randomPaintDirectionOn = EditorGUILayout.Toggle("Randomize Direction", randomPaintDirectionOn);
 			}
 			using (new GUILayout.HorizontalScope())
 			{
-				isRandomizeYOffset = EditorGUILayout.Toggle("Randomize Y Offset", isRandomizeYOffset);
-
+				randomVerticalStaggerOn = EditorGUILayout.Toggle("Vertical Staggering", randomVerticalStaggerOn);
 				m.yOffsetRandRange = EditorGUILayout.FloatField("Random Range", m.yOffsetRandRange);
 			}
 		}

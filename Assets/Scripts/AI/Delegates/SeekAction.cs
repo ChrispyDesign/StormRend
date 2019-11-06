@@ -30,7 +30,7 @@ namespace StormRend.Bhaviours
 		// Tile[] validMoves;
 
 	#region Core
-		public override void Awaken(BhaveAgent agent)
+		public override void Initiate(BhaveAgent agent)
 		{
 			ur = UnitRegistry.current;
         	//Get this agent's unit
@@ -45,11 +45,11 @@ namespace StormRend.Bhaviours
         public override NodeState Execute(BhaveAgent agent)
         {
         	//If there aren't any targets then fail
-        	if (targets.value.Count <= 0) return NodeState.Failure;
+        	// if (targets.value.Count <= 0) return NodeState.Failure;
 
 			//Populate targets. Check to see if opponent is within range (for enemies their CalculateMoves should've been run at the start of the player's turn)
 			var opponentUnits = ur.GetUnitsByType<AllyUnit>();
-			opponentUnits.Print();	//debug
+			// opponentUnits.Print();	//debug
 			//Within range means it is standing in this agent's move tile
 			foreach (var o in opponentUnits)
 				if (au.possibleMoveTiles.Contains(o.currentTile))
