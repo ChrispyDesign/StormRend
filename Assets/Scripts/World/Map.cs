@@ -157,13 +157,41 @@ namespace StormRend.MapSystems
 
 #if UNITY_EDITOR
 		//Hook up OnSelected.
-		void OnEnable() => Selection.selectionChanged += OnSelected;
-		void OnDisable() => Selection.selectionChanged -= OnSelected;
-		void OnSelected()
+		void OnEnable()
 		{
-			//Refresh editor raycast plane
-			if (editorRaycastPlane) DestroyImmediate(editorRaycastPlane);
-			CreateEditorRaycastPlane(maxMapSize);
+			Selection.selectionChanged += OnSelectionChanged;
+			EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+		}
+		void OnDisable()
+		{
+			Selection.selectionChanged -= OnSelectionChanged;
+			EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+		}
+
+		void OnPlayModeStateChanged(PlayModeStateChange playModeStateChange)
+		{
+			switch (playModeStateChange)
+			{
+				case PlayModeStateChange.ExitingEditMode:
+					if (editorRaycastPlane)
+						DestroyImmediate(editorRaycastPlane);
+					break;
+			}
+		}
+
+		void OnSelectionChanged()
+		{
+			if (Selection.activeGameObject == gameObject)
+			{
+				//Refresh editor raycast plane
+				if (!editorRaycastPlane) CreateEditorRaycastPlane(maxMapSize);
+				editorRaycastPlane.enabled = true;
+			}
+			else
+			{
+				//Delete the raycast plane
+				if (editorRaycastPlane) editorRaycastPlane.enabled = false;
+			}
 		}
 
 		//Editor raycast plane; This is simply an invisible collider that is attached to the map for editor raycasts to hit
@@ -176,6 +204,13 @@ namespace StormRend.MapSystems
 			editorRaycastPlane.size = new Vector3(mapSize, 0, mapSize);     //Size
 			editorRaycastPlane.isTrigger = true;
 			editorRaycastPlane.hideFlags = HideFlags.HideAndDontSave | HideFlags.HideInInspector;   //Hide
+		}
+
+		[ContextMenu("Delete Editor Raycast Plane")]
+		public void DeleteEditorRaycastPlane()
+		{
+			if (editorRaycastPlane)
+				DestroyImmediate(editorRaycastPlane);
 		}
 
 		[ContextMenu("Delete All Tiles")]

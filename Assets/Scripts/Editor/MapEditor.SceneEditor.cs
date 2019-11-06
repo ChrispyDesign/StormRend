@@ -223,7 +223,7 @@ namespace StormRend.Editors
 
 			//Instantiate a new tile prefab according to current cursor positions and rotation settings
 			var t = PrefabUtility.InstantiatePrefab(m.selectedTilePrefab, m.transform) as Tile;
-			var position = isRandomizeYOffset ? gridCursor + Vector3.up * Random.Range(-yOffsetRandRange, yOffsetRandRange) : gridCursor;
+			var position = isRandomizeYOffset ? gridCursor + Vector3.up * Random.Range(-yOffsetRandRange * 0.5f, yOffsetRandRange * 0.5f) : gridCursor;
 			var rotation = isRandomizePaintDirection ? Quaternion.AngleAxis(90 * UnityEngine.Random.Range(0, 4), Vector3.up) : Quaternion.identity;
 			t.transform.SetPositionAndRotation(position, rotation);
 			t.gameObject.layer = m.gameObject.layer;

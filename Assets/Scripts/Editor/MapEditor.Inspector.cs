@@ -13,7 +13,7 @@ namespace StormRend.Editors
 		bool isRandomizePaintDirection;
 
 		bool isRandomizeYOffset;
-		float _yOffsetRandRange = 0.1f;
+		float _yOffsetRandRange = 0.3f;
 		float yOffsetRandRange 
 		{
 			get => _yOffsetRandRange;
@@ -42,16 +42,10 @@ namespace StormRend.Editors
 		}
 		public override void OnPostInspector()
 		{
-			// DrawPreviewSizeSlider();
 			DrawRandomizeOptions();
 			DrawPalette();
-			//Clear All tiles
-			GUILayout.Space(5);
-			if (GUILayout.Button("Clear All Tiles"))
-			{
-				m.DeleteAllTiles();
-			}
 			DrawConnectionOptions();
+			// DrawPreviewSizeSlider();
 		}
 		#endregion    //Core
 
