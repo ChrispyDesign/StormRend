@@ -10,19 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
-  m_Name: teleport
+  m_Name: tProtect
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 40cecd076bd72064cad31715927a35d5, type: 3}
-  _animNumber: 0
-  _level: 1
+  _icon: {fileID: 21300000, guid: 97eea474677158c49907ddf21fc801fa, type: 3}
+  _animationTrigger: ClubSwing
   _type: 0
-  _description: 
+  _level: 0
+  _description: TEST
   _gloryCost: 0
   _requiredTiles: 1
-  _targetTileTypes: 1
+  _targetTileTypes: 64
   effects:
-  - {fileID: 114878242404192740}
---- !u!114 &114878242404192740
+  - {fileID: 114154964556456692}
+  castArea: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+--- !u!114 &114154964556456692
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31,7 +32,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a689f1c72aecd749bd69b2cc1345b40, type: 3}
-  m_Name: TeleportEffect
+  m_Script: {fileID: 11500000, guid: ae0340ba18f4cdb44a632086657e9e90, type: 3}
+  m_Name: ProtectEffect
   m_EditorClassIdentifier: 
-  restrictToMoveTiles: 0
+  turnCount: 0
+  affectedTurns: 1
