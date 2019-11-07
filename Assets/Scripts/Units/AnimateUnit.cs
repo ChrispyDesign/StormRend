@@ -135,7 +135,7 @@ namespace StormRend.Units
 		//State machine / game director / Unit registry to run through all these on ally turn enter?
 		public void BeginTurn()		//Reset necessary stats and get unit ready for the next turn
 		{
-			Debug.Log("Begin turn: " + this.name);
+			Debug.Log(this.name + ".AnimateUnit.BeginTurn()");
 
 			//Can take action again
 			SetCanAct(true);
@@ -354,7 +354,7 @@ namespace StormRend.Units
 				pathblockers.Add(typeof(AnimateUnit));
 
 			possibleMoveTiles = Map.GetPossibleTiles(beginTurnTile.owner, beginTurnTile, moveRange, pathblockers.ToArray());
-			Debug.LogFormat("Calculated move tiles for: {0}, Count: {1}", this.name, possibleMoveTiles.Length);
+			Debug.LogFormat("{0}.CalculateMoveTiles(), Count: {1}", this.name, possibleMoveTiles.Length);
 			return possibleMoveTiles;
 		}
 
