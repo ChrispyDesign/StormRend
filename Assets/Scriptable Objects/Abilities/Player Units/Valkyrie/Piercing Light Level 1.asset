@@ -15,13 +15,30 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: 89cb959fbb7d97c4fa1e09e941299714, type: 3}
   _animationTrigger: 
   _type: 0
+  _level: 0
   _description: 
   _gloryCost: 1
   _requiredTiles: 1
   _targetTileTypes: 65
   effects:
   - {fileID: 114640535295811740}
+  - {fileID: 114245898522068660}
   castArea: 00000001000000000000010000000000000100000001010100010101000000010000000000000100000000000001000000
+--- !u!114 &114245898522068660
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
+  m_Name: RefreshEffect
+  m_EditorClassIdentifier: 
+  refreshType: 0
+  allowedRefreshes: 1
+  refreshCount: 0
 --- !u!114 &114415901351157682
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -34,8 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
-  owner: {fileID: 0}
   damage: 1
 --- !u!114 &114640535295811740
 MonoBehaviour:
@@ -49,6 +64,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
-  container: {fileID: 11400000}
-  owner: {fileID: 0}
   damage: 1
