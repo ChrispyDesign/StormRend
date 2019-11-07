@@ -115,7 +115,7 @@ MonoBehaviour:
   _canAct: 1
   lookSnap: 0
   moveRange: 4
-  pathblockingUnitTypes: 8
+  pathBlockers: 40
   abilities: []
   statusEffects: []
   ghostColor: {r: 0, g: 0, b: 1, a: 1}
@@ -151,6 +151,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  possibleMoveTiles: []
+  possibleTargetTiles: []
 --- !u!114 &1631886476245035148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,21 +166,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
---- !u!114 &5206367902980421788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6712265897453895913}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ef627e48be9298428137853c2f38356, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minIdleTime: 5
-  maxIdleTime: 10
-  paramName: Done_Waiting
 --- !u!82 &8431704914978499676
 AudioSource:
   m_ObjectHideFlags: 0
@@ -291,6 +278,21 @@ MonoBehaviour:
   description: 
   chance: 50
   sounds: []
+--- !u!114 &5206367902980421788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6712265897453895913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef627e48be9298428137853c2f38356, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minIdleTime: 5
+  maxIdleTime: 10
+  paramName: Done_Waiting
 --- !u!1001 &1429271423543055345
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -298,11 +300,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3093552309022210659}
     m_Modifications:
-    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
-      objectReference: {fileID: 0}
     - target: {fileID: 8649027571778799567, guid: e1fbb2b94b8040740927f9ac8f85e701,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -357,6 +354,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1fbb2b94b8040740927f9ac8f85e701, type: 3}

@@ -19,7 +19,7 @@ AnimatorController:
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 1
+    m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: HitReact
     m_Type: 9
@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b077ea5a8f9527d45bd6923659ceb69d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathParam: isDead
 --- !u!114 &114499819032947592
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -552,7 +553,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Hit_React
-  m_Speed: 0.58
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101818525777848912}
@@ -730,7 +731,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
+  m_Motion: {fileID: 7400010, guid: 1661637947bb6154cb509cfab27dfe4c, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
