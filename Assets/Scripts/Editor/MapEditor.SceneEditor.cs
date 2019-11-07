@@ -246,8 +246,8 @@ namespace StormRend.Editors
 			t.transform.SetPositionAndRotation(position, rotation);
 			t.gameObject.layer = m.gameObject.layer;
 
-			//Undo
-            Undo.RegisterCreatedObjectUndo(t.gameObject, "Paint Tile " + m.selectedTilePrefab.name);
+            //Undo
+            //Undo.RegisterCreatedObjectUndo(t.gameObject, "Paint Tile " + m.selectedTilePrefab.name);
 
             //Add to map's list of tiles
             m.tiles.Add(t);
@@ -263,8 +263,9 @@ namespace StormRend.Editors
                 //Erase the found tile
                 m.tiles.Remove(tileToErase.GetComponent<Tile>());
 
-				//Undo
-                Undo.DestroyObjectImmediate(tileToErase);
+                DestroyImmediate(tileToErase);
+                //Undo
+                //Undo.DestroyObjectImmediate(tileToErase);
             }
         }
 		void PerformVerticalShift()
@@ -272,7 +273,7 @@ namespace StormRend.Editors
 			if (IsOverTile(gridCursor, m.tileSize * kCheckBoundSizePercentage, out GameObject tileToShift))
 			{
 				//Undo
-				Undo.RecordObject(tileToShift, "Vertical Shift");
+				//Undo.RecordObject(tileToShift, "Vertical Shift");     //THIS MIGHT BE PROBLEMATIC AND CAUSING ALL THE ERRORS!
 
 				var tilePos = tileToShift.transform.position;
 				tilePos.y += -e.delta.y * kVerticalShiftSpeed;
