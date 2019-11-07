@@ -1557,8 +1557,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4783116619369224812}
   - component: {fileID: 4783116619361809436}
-  - component: {fileID: 5918177866881148004}
   - component: {fileID: 3876682348568778481}
+  - component: {fileID: 5918177866881148004}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -1601,6 +1601,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3876682348568778481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4783116619369055820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  help: "Animation Event Callbacks: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)"
+  description: 
+  chance: 50
+  sounds: []
 --- !u!82 &5918177866881148004
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1697,22 +1713,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3876682348568778481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4783116619369055820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  help: "Animation Event Callbacks: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)"
-  description: 
-  chance: 50
-  sounds: []
 --- !u!1 &4783116619369055822
 GameObject:
   m_ObjectHideFlags: 0
@@ -4311,6 +4311,7 @@ GameObject:
   - component: {fileID: 9108019807441497514}
   - component: {fileID: 9108019807441497519}
   - component: {fileID: 3841930061851047593}
+  - component: {fileID: 4472237609802827025}
   m_Layer: 0
   m_Name: Berserker
   m_TagString: Untagged
@@ -4359,7 +4360,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e74e1bda9c3f0d45ae50a717d100e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTile: {fileID: 0}
   description: 
   _hp: 0
   _maxHP: 5
@@ -4400,14 +4400,17 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  lookSnap: 0
-  moveRange: 5
-  pathblockingUnitTypes: 8
-  abilities: []
-  ghostColor: {r: 1, g: 0.5513562, b: 0, a: 1}
-  statusEffects: []
+  currentTile: {fileID: 0}
+  beginTurnTile: {fileID: 0}
   _canMove: 1
   _canAct: 1
+  lookSnap: 0
+  moveRange: 5
+  pathBlockers: 40
+  abilities: []
+  statusEffects: []
+  ghostColor: {r: 1, g: 0.5513562, b: 0, a: 1}
+  tbcGhostMaterial: {fileID: 0}
   onAddStatusEffect:
     m_PersistentCalls:
       m_Calls: []
@@ -4420,7 +4423,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   onActed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4472237609802827025}
+        m_MethodName: Animate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: StormRend.Utility.Events.AbilityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onEndTurn:
@@ -4428,6 +4442,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &4472237609802827025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108019807441497518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b02c3019b546ba4682fa690945abc9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
 --- !u!1001 &4873959505318915483
 PrefabInstance:
   m_ObjectHideFlags: 0

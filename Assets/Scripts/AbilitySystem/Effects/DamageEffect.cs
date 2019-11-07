@@ -10,7 +10,7 @@ namespace StormRend.Abilities.Effects
     {
         [SerializeField] int damage = 1;
 
-		public override void Perform(Unit owner, Tile[] targetTiles)
+		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
         {
  			//Get and convert to lists where required
 			Unit[] units = UnitRegistry.current.aliveUnits;
@@ -22,14 +22,8 @@ namespace StormRend.Abilities.Effects
 				{
 					var au = owner as AnimateUnit;
 
-					//Face victim
-					au.SnappedLookAt(u.transform.position);
-
                     //Damage units that are standing on target tiles
                     u.TakeDamage(new DamageData(owner, damage));
-
-					//Play animation
-					owner.animator.SetTrigger(container.animationTrigger);
 				}
 			}
         }

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3093552309022210659}
   - component: {fileID: 3093552309022210656}
   - component: {fileID: 3093552309022210590}
-  - component: {fileID: 3544623347665122230}
   - component: {fileID: 5168873017443203932}
+  - component: {fileID: 1631886476245035148}
   m_Layer: 0
   m_Name: FrostTroll
   m_TagString: Untagged
@@ -57,29 +57,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
   m_Center: {x: 0, y: 0.19554019, z: 0}
---- !u!114 &3544623347665122230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3093552309022210591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1517799387, guid: 0c25f2ed055db00489974bd6dd51f2cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _internalTree: {fileID: 0}
-  agentName: BhaveAgent
-  description: 
-  _active: 0
-  _paused: 0
-  playOnStart: 0
-  restartWhenDone: 0
-  pauseIfDeactivated: 0
-  variables: []
-  _bhaveTreeModule: {fileID: 0}
-  useCopy: 1
 --- !u!114 &5168873017443203932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,7 +71,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   _hp: 0
-  _maxHP: 3
+  _maxHP: 5
   onDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -155,7 +132,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   onActed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1631886476245035148}
+        m_MethodName: Animate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: StormRend.Utility.Events.AbilityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onEndTurn:
@@ -163,6 +151,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1631886476245035148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3093552309022210591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b02c3019b546ba4682fa690945abc9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
 --- !u!114 &5206367902980421788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,7 +171,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6712265897453895913}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ef627e48be9298428137853c2f38356, type: 3}
   m_Name: 

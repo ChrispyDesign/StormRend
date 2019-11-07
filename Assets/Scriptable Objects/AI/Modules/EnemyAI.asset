@@ -31,10 +31,8 @@ MonoBehaviour:
   - {fileID: 114409420985139542}
   - {fileID: 114864527018219270}
   - {fileID: 114001613169364612}
-  - {fileID: 114166318178614652}
   - {fileID: 114883664047879428}
   - {fileID: 114747288300816962}
-  - {fileID: 114855049180117026}
   - {fileID: 114223994784296196}
   - {fileID: 114258608254384058}
   - {fileID: 114663625168489100}
@@ -54,16 +52,16 @@ MonoBehaviour:
     owner: {fileID: 11400000}
     rect:
       serializedVersion: 2
-      x: 275.5
-      y: 416
+      x: 357.5
+      y: 420
       width: 95
       height: 65
     breakpoint: 0
   ID: 3
   description: 
-  _state: -1
+  _state: 0
   _parent: {fileID: 114409420985139542}
-  _deleg: {fileID: 114426332051439364}
+  _deleg: {fileID: 114951608877187744}
   overrideOn: 0
   stateOverride: 1
 --- !u!114 &114059163311498118
@@ -94,18 +92,19 @@ MonoBehaviour:
     owner: {fileID: 11400000}
     rect:
       serializedVersion: 2
-      x: 476.5
-      y: 146
+      x: 492.5
+      y: 155
       width: 95
       height: 65
     breakpoint: 0
   ID: 0
   description: 
-  _state: -1
+  _state: -3
   _parent: {fileID: 0}
   children:
   - {fileID: 114409420985139542}
   - {fileID: 114747288300816962}
+  - {fileID: 114663625168489100}
 --- !u!114 &114134749382122290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -118,34 +117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b1f1a99687b412c802b457903ceede, type: 3}
   m_Name: FindUnitsInRange[COPY]
   m_EditorClassIdentifier: 
---- !u!114 &114166318178614652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -710837390, guid: 0c25f2ed055db00489974bd6dd51f2cd, type: 3}
-  m_Name: Action:4
-  m_EditorClassIdentifier: 
-  _eData:
-    owner: {fileID: 11400000}
-    rect:
-      serializedVersion: 2
-      x: 378.5
-      y: 415
-      width: 95
-      height: 65
-    breakpoint: 1
-  ID: 4
-  description: 
-  _state: -1
-  _parent: {fileID: 114409420985139542}
-  _deleg: {fileID: 114059163311498118}
-  overrideOn: 0
-  stateOverride: 1
 --- !u!114 &114223994784296196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,22 +127,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -710837390, guid: 0c25f2ed055db00489974bd6dd51f2cd, type: 3}
-  m_Name: Action:8
+  m_Name: Action:6
   m_EditorClassIdentifier: 
   _eData:
     owner: {fileID: 11400000}
     rect:
       serializedVersion: 2
-      x: 677.5
-      y: 416
+      x: 610.5
+      y: 420
       width: 95
       height: 65
     breakpoint: 0
-  ID: 8
+  ID: 6
   description: 
-  _state: -1
+  _state: 0
   _parent: {fileID: 114747288300816962}
-  _deleg: {fileID: 114249480634261640}
+  _deleg: {fileID: 114699316818975872}
   overrideOn: 0
   stateOverride: 1
 --- !u!114 &114249480634261640
@@ -198,21 +169,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 179275088, guid: 0c25f2ed055db00489974bd6dd51f2cd, type: 3}
-  m_Name: Deactivator:9
+  m_Name: Deactivator:7
   m_EditorClassIdentifier: 
   _eData:
     owner: {fileID: 11400000}
     rect:
       serializedVersion: 2
-      x: 781.5
-      y: 417
+      x: 729.5
+      y: 419
       width: 95
       height: 65
     breakpoint: 0
-  ID: 9
+  ID: 7
   description: 
-  _state: -1
-  _parent: {fileID: 0}
+  _state: 0
+  _parent: {fileID: 114747288300816962}
 --- !u!114 &114409420985139542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,19 +200,19 @@ MonoBehaviour:
     owner: {fileID: 11400000}
     rect:
       serializedVersion: 2
-      x: 326.5
-      y: 289
+      x: 342.5
+      y: 298
       width: 95
       height: 65
-    breakpoint: 0
+    breakpoint: 1
   ID: 1
   description: 
-  _state: -1
+  _state: 0
   _parent: {fileID: 114081762246916880}
   children:
   - {fileID: 114864527018219270}
   - {fileID: 114001613169364612}
-  - {fileID: 114166318178614652}
+  - {fileID: 114883664047879428}
 --- !u!114 &114426332051439364
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -278,21 +249,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 179275088, guid: 0c25f2ed055db00489974bd6dd51f2cd, type: 3}
-  m_Name: Deactivator:10
+  m_Name: Deactivator:8
   m_EditorClassIdentifier: 
   _eData:
     owner: {fileID: 11400000}
     rect:
       serializedVersion: 2
-      x: 775.5
-      y: 295
+      x: 783.5
+      y: 301
       width: 95
       height: 65
-    breakpoint: 1
-  ID: 10
+    breakpoint: 0
+  ID: 8
   description: 
-  _state: -1
-  _parent: {fileID: 0}
+  _state: -3
+  _parent: {fileID: 114081762246916880}
+--- !u!114 &114699316818975872
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 746c39d17173a3d49923897d08dbb4f5, type: 3}
+  m_Name: SeekAction[COPY]
+  m_EditorClassIdentifier: 
+  targets: {fileID: 11400000, guid: c8add33a65b30a347bd1530394bd15fd, type: 2}
+  rangeInTurns: 1
 --- !u!114 &114747288300816962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,52 +288,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 562843330, guid: 0c25f2ed055db00489974bd6dd51f2cd, type: 3}
-  m_Name: Sequence:6
+  m_Name: Sequence:5
   m_EditorClassIdentifier: 
   _eData:
     owner: {fileID: 11400000}
     rect:
       serializedVersion: 2
       x: 649.5
-      y: 292
+      y: 300
       width: 95
       height: 65
     breakpoint: 0
-  ID: 6
+  ID: 5
   description: 
-  _state: -1
+  _state: 0
   _parent: {fileID: 114081762246916880}
   children:
-  - {fileID: 114855049180117026}
   - {fileID: 114223994784296196}
---- !u!114 &114855049180117026
+  - {fileID: 114258608254384058}
+--- !u!114 &114854322610577382
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -710837390, guid: 0c25f2ed055db00489974bd6dd51f2cd, type: 3}
-  m_Name: Action:7
+  m_Script: {fileID: 11500000, guid: 746c39d17173a3d49923897d08dbb4f5, type: 3}
+  m_Name: SeekAction[COPY]
   m_EditorClassIdentifier: 
-  _eData:
-    owner: {fileID: 11400000}
-    rect:
-      serializedVersion: 2
-      x: 576.5
-      y: 419
-      width: 95
-      height: 65
-    breakpoint: 0
-  ID: 7
-  description: 
-  _state: -1
-  _parent: {fileID: 114747288300816962}
-  _deleg: {fileID: 114134749382122290}
-  overrideOn: 0
-  stateOverride: 1
+  targets: {fileID: 11400000, guid: c8add33a65b30a347bd1530394bd15fd, type: 2}
+  rangeInTurns: 1
 --- !u!114 &114864527018219270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,16 +336,16 @@ MonoBehaviour:
     owner: {fileID: 11400000}
     rect:
       serializedVersion: 2
-      x: 176.5
-      y: 418
+      x: 244.5
+      y: 420
       width: 95
       height: 65
     breakpoint: 0
   ID: 2
   description: 
-  _state: -1
+  _state: 1
   _parent: {fileID: 114409420985139542}
-  _deleg: {fileID: 114621423028470352}
+  _deleg: {fileID: 114854322610577382}
   overrideOn: 0
   stateOverride: 1
 --- !u!114 &114883664047879428
@@ -387,18 +358,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 179275088, guid: 0c25f2ed055db00489974bd6dd51f2cd, type: 3}
-  m_Name: Deactivator:5
+  m_Name: Deactivator:4
   m_EditorClassIdentifier: 
   _eData:
     owner: {fileID: 11400000}
     rect:
       serializedVersion: 2
-      x: 476.5
-      y: 417
+      x: 462.5
+      y: 420
       width: 95
       height: 65
     breakpoint: 0
-  ID: 5
+  ID: 4
   description: 
-  _state: -1
-  _parent: {fileID: 0}
+  _state: 0
+  _parent: {fileID: 114409420985139542}
+--- !u!114 &114951608877187744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c379113043e62244969bbf99a172202, type: 3}
+  m_Name: AttackAction[COPY]
+  m_EditorClassIdentifier: 
+  targets: {fileID: 11400000, guid: c8add33a65b30a347bd1530394bd15fd, type: 2}
+  attackAbility: {fileID: 0}

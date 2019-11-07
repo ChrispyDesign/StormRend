@@ -13,7 +13,6 @@ namespace StormRend.Editors
 		GameObject stamp;
 		Map m;
 		Event e;
-		GUIStyle style;
 
 		#region Cores
 		[MenuItem("GameObject/StormRend/Map", false, 10)]
@@ -30,10 +29,7 @@ namespace StormRend.Editors
 			stamp = new GameObject("TileStamp");
 			stamp.hideFlags = HideFlags.HideAndDontSave;
 
-			//Create a internal style for this inspector to use
-			CreateStyles();
-
-			//Prevent a blank stamp from show on startup
+			//Prevent a blank stamp on startup
 			CreateStamp();
 
 			//Register events
@@ -48,13 +44,6 @@ namespace StormRend.Editors
 			EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
 		}
 		#endregion
-
-		void CreateStyles()
-		{
-			style = new GUIStyle();
-			style.fontSize = 15;
-			style.fontStyle = FontStyle.Bold;
-		}
 
 		void OnPlayModeStateChanged(PlayModeStateChange stateChange)
 		{
@@ -75,20 +64,38 @@ namespace StormRend.Editors
 		void ConnectAllTiles()
         {
             foreach (var t in m.tiles)
-                AutoConnectNeighbourTiles(t, connectDiagonals, 0.2f);
+                AutoConnectNeighbourTiles(t, connectDiagonals, m.maxConnectHeightDifference);
         }
-		void AutoConnectNeighbourTiles(Tile subject, bool connectDiagonals = false, float tolerance = 0.1f)
+		
+		/// <summary>
+		/// Automatically connect tile to neighbouring tiles
+		/// </summary>
+		/// <param name="tolerance">Y zeroed connection tolerance</param>
+		void AutoConnectNeighbourTiles(Tile subject, bool connectDiagonals = false, float maxHeightDifference = 0.5f, float tolerance = 0.1f)
 		{
 			//Find tiles within range (ie. within the distance of the map's tilesize)
 			const float adjDist = 1f , diagDist = 1.414213f;
 
+			//Get y zeroed position
+			var sFlatPos = subject.transform.position; sFlatPos.y = 0;
+
 			foreach (var t in m.tiles)
 			{
-				//Adjacent
-				float dist = Vector3.Distance(subject.transform.position, t.transform.position);
+				//Calculate vertical difference
+				var heightDiff = Mathf.Abs(subject.transform.position.y - t.transform.position.y);
 
+				//Get y zeroed position
+				var tFlatPos = t.transform.position; tFlatPos.y = 0;
+
+				//Calculate y zeroed distance
+				float dist = Vector3.Distance(sFlatPos, tFlatPos);
+
+				//Adjacent
 				if ((dist - (adjDist * m.tileSize - tolerance)) * ((adjDist * m.tileSize + tolerance) - dist) >= 0)
 				{
+					//Only connect if below allowable height difference
+					if (heightDiff > maxHeightDifference) return;
+
 					//Prevents duplicates because we can't use hashsets
 					if (subject.Contains(t))
 					{
@@ -102,7 +109,8 @@ namespace StormRend.Editors
 				{
 					if ((dist - (diagDist * m.tileSize - tolerance)) * ((diagDist * m.tileSize + tolerance) - dist) >= 0)
 					{
-						//Prevents duplicates because we can't use hashsets
+						if (heightDiff > maxHeightDifference) return;
+
 						if (subject.Contains(t))
 						{
 							Debug.LogFormat("{0} is already connected to {1}", t, subject);

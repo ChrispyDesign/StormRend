@@ -18,10 +18,10 @@ namespace StormRend.Defunct
 		// - Decouple Camera in OnSelect()
 		// - Decouple/reduce coupling of game manager
 
-        [SerializeField][ReadOnlyField] int m_HP;
-        static bool m_isDead;
+        [SerializeField][ReadOnlyField] int m_HP = 0;
+        static bool m_isDead = false;
 
-        [SerializeField] Vector2Int m_coordinates;
+        [SerializeField] Vector2Int m_coordinates = Vector2Int.zero;
 		public Vector2Int coords {
 			get => m_coordinates;
 			set => m_coordinates = value; }

@@ -13,7 +13,7 @@ namespace StormRend.Abilities.Effects
     /// </summary>
     public class PushEffect : Effect
     {
-        [EnumFlags, SerializeField, Tooltip("ONLY THESE TYPES CAN BE PUSHED: Allies, Enemies")] TargetMask unitTypesToPush;
+        [EnumFlags, SerializeField, Tooltip("ONLY THESE TYPES CAN BE PUSHED: Allies, Enemies")] TargetType unitTypesToPush = TargetType.Enemies | TargetType.Allies;
         [SerializeField] int pushAmount = 1;
         [SerializeField] int damage = 0;
         [SerializeField] bool canPushOffEdge = true;
@@ -21,19 +21,19 @@ namespace StormRend.Abilities.Effects
 
         void OnValidate() => Prepare();
 
-        public override void Prepare(Unit owner = null)
+        public override void Prepare(Ability ability = null, Unit owner = null)
         {
             //Populate unit type array
             typesToCheck.Clear();
             //Allies
-            if ((unitTypesToPush & TargetMask.Allies) == TargetMask.Allies)
+            if ((unitTypesToPush & TargetType.Allies) == TargetType.Allies)
                 typesToCheck.Add(typeof(AllyUnit));
             //Enemies
-            if ((unitTypesToPush & TargetMask.Enemies) == TargetMask.Enemies)
+            if ((unitTypesToPush & TargetType.Enemies) == TargetType.Enemies)
                 typesToCheck.Add(typeof(EnemyUnit));
         }
 
-        public override void Perform(Unit owner, Tile[] targetTiles)
+        public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
         {
             //Foreach target tile
             foreach (var tt in targetTiles)

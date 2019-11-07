@@ -11,7 +11,7 @@ namespace StormRend.Audio
         [HelpBox, SerializeField] string help = "Animation Event Callbacks: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)";
 
         //Inspector
-        [TextArea(0, 2), SerializeField] string description = "";
+        [TextArea(0, 2), SerializeField] string description = " ";
 
         [Tooltip("Chance of playing a sound when triggered as a percentage")]
         [Range(0, 100), SerializeField] int chance = 50;

@@ -28,7 +28,6 @@ namespace StormRend.Abilities
 		[SerializeField] Sprite _icon = null;
 		[Tooltip("Animation trigger for this ability that will be sent to animator")]
 		[SerializeField] string _animationTrigger = "";
-		[SerializeField] int _level = 1;
 		[SerializeField] AbilityType _type = AbilityType.Primary;
 		[TextArea(0, 2), SerializeField] string _description = "";
 
@@ -40,7 +39,7 @@ namespace StormRend.Abilities
 
 		[Tooltip("The type of tiles this ability can target")]
 		//This will be used to determine which tiles the UserInputHandler can pick
-		[EnumFlags, SerializeField] TargetMask _targetTileTypes = (TargetMask)~0;
+		[EnumFlags, SerializeField] TargetType _targetTileTypes = (TargetType)~0;
 
 		//Members
 		[HideInInspector]
@@ -54,7 +53,7 @@ namespace StormRend.Abilities
 		public string description => _description;
 		public int gloryCost => _gloryCost;
 		public int requiredTiles => _requiredTiles;
-		public TargetMask targetTileTypes => _targetTileTypes;
+		public TargetType targetTileTypes => _targetTileTypes;
 
 		//Core
 		public void Perform(Unit owner, params Tile[] targets)
@@ -63,7 +62,7 @@ namespace StormRend.Abilities
 			foreach (var e in effects)
 			{
 				Debug.Log("Performing Effect: " + e.name);
-				e.Perform(owner, targets);
+				e.Perform(this, owner, targets);
 			}
 		}
 
@@ -71,11 +70,11 @@ namespace StormRend.Abilities
 		{
 			//NOTE: Only one of the masks have to pass for the whole thing to pass
 			//Empty: Return true if no units standing on the tile
-			if ((targetTileTypes & TargetMask.Empty) == TargetMask.Empty)
+			if ((targetTileTypes & TargetType.Empty) == TargetType.Empty)
 				if (!UnitRegistry.IsAnyUnitOnTile(tile)) return true;
 
 			//Self: Return true if the user is standing on this tile
-			if ((targetTileTypes & TargetMask.Self) == TargetMask.Self)
+			if ((targetTileTypes & TargetType.Self) == TargetType.Self)
 				if (owner.currentTile == tile) return true;
 
 			var aliveUnits = UnitRegistry.current.aliveUnits;
@@ -88,28 +87,28 @@ namespace StormRend.Abilities
 					case AllyUnit ally:
 						isAnimate = true;
 						//Allies: Return true if any allies are standing on this tile but not self
-						if ((targetTileTypes & TargetMask.Allies) == TargetMask.Allies)
+						if ((targetTileTypes & TargetType.Allies) == TargetType.Allies)
 							if (ally.currentTile == tile && owner.currentTile != tile) return true;
 						break;
 					case EnemyUnit enemy:
 						isAnimate = true;
 						//Enemies
-						if ((targetTileTypes & TargetMask.Enemies) == TargetMask.Enemies)
+						if ((targetTileTypes & TargetType.Enemies) == TargetType.Enemies)
 							if (enemy.currentTile == tile && owner.currentTile != tile) return true;
 						break;
 					case CrystalUnit crystal:
 						isInAnimate = true;
 						//Enemies
-						if ((targetTileTypes & TargetMask.Crystals) == TargetMask.Crystals)
+						if ((targetTileTypes & TargetType.Crystals) == TargetType.Crystals)
 							if (crystal.currentTile == tile && owner.currentTile != tile) return true;
 						break;
 				}
 				//Catch the abstracts
 				//Animates
-				if (isAnimate && (targetTileTypes & TargetMask.Animates) == TargetMask.Animates)
+				if (isAnimate && (targetTileTypes & TargetType.Animates) == TargetType.Animates)
 					if (unit.currentTile == tile && owner.currentTile != tile) return true;
 				//InAnimates
-				if (isInAnimate && (targetTileTypes & TargetMask.InAnimates) == TargetMask.InAnimates)
+				if (isInAnimate && (targetTileTypes & TargetType.InAnimates) == TargetType.InAnimates)
 					if (unit.currentTile == tile && owner.currentTile != tile) return true;
 			}
 			return false;
@@ -120,7 +119,6 @@ namespace StormRend.Abilities
 		{
 			//Add and set owner
 			var newEffect = Effect.CreateInstance<T>();
-			newEffect.SetContainer(this);
 			newEffect.name = newEffect.GetType().Name;
 			this.effects.Add(newEffect);
 

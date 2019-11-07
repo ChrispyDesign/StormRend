@@ -4766,6 +4766,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4159071878291178778}
   - component: {fileID: 8394477178119149605}
+  - component: {fileID: 6943650365855858195}
   m_Layer: 0
   m_Name: SpiritCrystal
   m_TagString: Untagged
@@ -4802,7 +4803,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e60c5bc07bf344aeb3990fb799f87c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTile: {fileID: 0}
   description: 
   _hp: 0
   _maxHP: 1
@@ -4821,16 +4821,24 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  debugKey: 111
-  DebugEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  currentTile: {fileID: 0}
   turns: 1
   damage: 1
   range: 1
   ignoreUnitMask: 0
+--- !u!114 &6943650365855858195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3266679734864301431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b02c3019b546ba4682fa690945abc9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
 --- !u!1 &4313770437090816383
 GameObject:
   m_ObjectHideFlags: 0
