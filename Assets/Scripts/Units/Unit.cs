@@ -69,7 +69,7 @@ namespace StormRend.Units
 		}
 		#endregion
 
-		#region Health
+	#region Health
 		public virtual void TakeDamage(DamageData damageData)
 		{
 			if (isDead) return;     //Can't beat a dead horse :P
