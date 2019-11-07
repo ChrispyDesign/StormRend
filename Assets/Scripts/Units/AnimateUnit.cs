@@ -37,7 +37,7 @@ namespace StormRend.Units
 		[Tooltip("The unit types of that this unit cannot walk through ie. opponents")]
 		[EnumFlags, SerializeField] TargetType pathBlockers = TargetType.Enemies | TargetType.InAnimates;
 		[SerializeField] internal Ability[] abilities = new Ability[0];
-		[ReadOnlyField,SerializeField] internal List<StatusEffect> statusEffects = new List<StatusEffect>();
+		[ReadOnlyField, SerializeField] internal List<StatusEffect> statusEffects = new List<StatusEffect>();
 
 		[Header("Ghost")]
 		[SerializeField] protected Color ghostColor = Color.blue;
@@ -353,7 +353,9 @@ namespace StormRend.Units
 			if ((pathBlockers & TargetType.Animates) == TargetType.Animates)
 				pathblockers.Add(typeof(AnimateUnit));
 
-			return possibleMoveTiles = Map.GetPossibleTiles(beginTurnTile.owner, beginTurnTile, moveRange, pathblockers.ToArray());
+			possibleMoveTiles = Map.GetPossibleTiles(beginTurnTile.owner, beginTurnTile, moveRange, pathblockers.ToArray());
+			Debug.LogFormat("Calculated move tiles for: {0}, Count: {1}", this.name, possibleMoveTiles.Length);
+			return possibleMoveTiles;
 		}
 
 		/// <summary>

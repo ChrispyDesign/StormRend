@@ -14,6 +14,8 @@ namespace StormRend.Abilities.Effects
 		/// "Inflict" status effect on victim at the beginning of the turn
 		public virtual void OnBeginTurn(AnimateUnit affectedUnit) 
 		{
+			Debug.Log("StatusEffect.BeginTurn: " + this.name);
+
 			//On start check if this status effect has expired
 			if (turnCount >= affectedTurns)
 			{

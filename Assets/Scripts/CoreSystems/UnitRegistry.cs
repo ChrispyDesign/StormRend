@@ -74,24 +74,24 @@ namespace StormRend.Units
 		public void RunUnitsBeginTurn(State state)
 		{
 			var turnState = state as TurnState;
-			AnimateUnit[] animateUnits = new AnimateUnit[0];
-			switch (turnState.controllableUnitType)
+			AnimateUnit[] currentStateUnits = new AnimateUnit[0];
+			switch (turnState.unitType)
 			{
 				case TargetType.Allies:
-					animateUnits = GetUnitsByType<AllyUnit>();
+					currentStateUnits = GetUnitsByType<AllyUnit>();
 					break;
 				case TargetType.Enemies:
-					animateUnits = GetUnitsByType<EnemyUnit>();
+					currentStateUnits = GetUnitsByType<EnemyUnit>();
 					break;
 			}
-			foreach (var u in animateUnits)
+			foreach (var u in currentStateUnits)
 				u.BeginTurn();
 		}
 		public void RunUnitsEndTurn(State state)
 		{
 			var turnState = state as TurnState;
 			AnimateUnit[] animateUnits = new AnimateUnit[0];
-			switch (turnState.controllableUnitType)
+			switch (turnState.unitType)
 			{
 				case TargetType.Allies:
 					animateUnits = GetUnitsByType<AllyUnit>();
