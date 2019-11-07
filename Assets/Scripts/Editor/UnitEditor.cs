@@ -44,17 +44,21 @@ namespace StormRend.Editors
 			if (e.type == EventType.KeyDown)
 				switch (e.keyCode)
 				{
-					case KeyCode.H:
+					case KeyCode.UpArrow:
 						au.Push(new Vector2Int((int)au.transform.forward.x, (int)au.transform.forward.z), false);
+						e.Use();
 						break;
-					case KeyCode.B:
+					case KeyCode.LeftArrow:
 						u.transform.Rotate(Vector3.up, -90);
+						e.Use();
 						break;
-					case KeyCode.N:
+					case KeyCode.DownArrow:
 						au.Push(new Vector2Int((int)-au.transform.forward.x, (int)-au.transform.forward.z), false);
+						e.Use();
 						break;
-					case KeyCode.M:
+					case KeyCode.RightArrow:
 						u.transform.Rotate(Vector3.up, 90);
+						e.Use();
 						break;
 				}
         }
