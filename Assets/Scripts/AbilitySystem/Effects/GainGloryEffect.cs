@@ -8,7 +8,7 @@ namespace StormRend.Abilities.Effects
 	/// <summary>
 	/// Gains the specified glory amount
 	/// </summary>
-    public class GainGloryEffect : Effect
+    public sealed class GainGloryEffect : Effect
     {
         [SerializeField] int amount = 1;
 		[SerializeField] BhaveInt glory;

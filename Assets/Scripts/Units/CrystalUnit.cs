@@ -14,16 +14,16 @@ namespace StormRend.Units
 	{
 		//Inspector
 		[Header("Crystal")]
-		[Tooltip("Number of turns before this crystal explodes")]
+		[Tooltip("HARDCODE: Number of turns before this crystal explodes")]
 		public int turns = 1;
 		
-		[Tooltip("The damage this crystal does to ")]
+		[Tooltip("HARDCODE: The damage this crystal does to ")]
 		public int damage = 1;
 
-		[Tooltip("The range of the damage")]
+		[Tooltip("HARDCODE: The range of the damage")]
 		public int range = 1;
 
-		[Tooltip("The type of units that won't get damaged")]
+		[Tooltip("HARDCODE: The type of units that won't get damaged")]
 		[EnumFlags, SerializeField] TargetType invulnerableTypes = TargetType.Animates;
 
 		//Members
