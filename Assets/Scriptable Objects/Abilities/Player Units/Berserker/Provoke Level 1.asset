@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: Provoke Level 1
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 52d0d3b7177f0e143b5f51262a81c4ae, type: 3}
+  _icon: {fileID: 21300000, guid: 58780fea336323546b9460b7de944c8b, type: 3}
   _animationTrigger: Provoke
   _type: 1
-  _description: 
-  _gloryCost: 1
-  _requiredTiles: 0
+  _description: Until your next turn, force enemies to attack you. When they do, deal
+    1 damage to them.
+  _gloryCost: 0
+  _requiredTiles: 1
   _targetTileTypes: 2
   effects:
   - {fileID: 114679432023497332}
@@ -34,8 +35,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
-  owner: {fileID: 0}
+  turnCount: 0
   affectedTurns: 1
   reflexDamage: 1
 --- !u!114 &114679432023497332
@@ -50,7 +50,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
-  container: {fileID: 11400000}
-  owner: {fileID: 0}
+  turnCount: 0
   affectedTurns: 1
   reflexDamage: 1

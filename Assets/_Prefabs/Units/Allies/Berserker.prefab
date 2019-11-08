@@ -4407,7 +4407,13 @@ MonoBehaviour:
   lookSnap: 0
   moveRange: 5
   pathBlockers: 40
-  abilities: []
+  abilities:
+  - {fileID: 11400000, guid: db2e7710c0ceb8d458628784cf9bb2c4, type: 2}
+  - {fileID: 11400000, guid: b12ed58c96232e648a941560e38d73a8, type: 2}
+  - {fileID: 11400000, guid: df32760a449129c48a5f63024f2464df, type: 2}
+  - {fileID: 11400000, guid: 4975ea856020d5348bed3e0527a94334, type: 2}
+  - {fileID: 11400000, guid: ed211851a6dd295469d834476cbe8611, type: 2}
+  - {fileID: 11400000, guid: 8afc1e9cc640dae43b7fcd7cd17b2b51, type: 2}
   statusEffects: []
   ghostColor: {r: 1, g: 0.5513562, b: 0, a: 1}
   tbcGhostMaterial: {fileID: 0}
@@ -4442,6 +4448,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  possibleMoveTiles: []
+  possibleTargetTiles: []
 --- !u!114 &4472237609802827025
 MonoBehaviour:
   m_ObjectHideFlags: 0
