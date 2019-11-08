@@ -46,7 +46,7 @@ namespace StormRend.Abilities.Effects
 		//Assist
 		protected void AddStatusEffectToAnimateUnits(Tile[] targetTiles)
 		{
-			//Apply this status effect to any animate units on the targeted tiles
+			//Apply this status effect to ONLY animate units on the targeted tiles
 			foreach (var t in targetTiles)
 			{
 				if (UnitRegistry.TryGetUnitTypeOnTile<AnimateUnit>(t, out AnimateUnit au))

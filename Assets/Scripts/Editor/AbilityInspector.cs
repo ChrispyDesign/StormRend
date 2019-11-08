@@ -173,19 +173,29 @@ namespace StormRend.Editors
         {
             GenericMenu m = new GenericMenu();
 
+            //Offense
             m.AddItem(new GUIContent("Damage"), false, () => a.AddEffect<DamageEffect>());
             m.AddItem(new GUIContent("Push"), false, () => a.AddEffect<PushEffect>());
             m.AddItem(new GUIContent("Summon"), false, () => a.AddEffect<SummonEffect>());
             m.AddItem(new GUIContent("Gain Glory"), false, () => a.AddEffect<GainGloryEffect>());
+
+            //Defense
             m.AddSeparator("");
             m.AddItem(new GUIContent("Teleport"), false, () => a.AddEffect<TeleportEffect>());
             m.AddItem(new GUIContent("Swap Units"), false, () => a.AddEffect<SwapUnitEffect>());
+
+            //Recovery
             m.AddSeparator("");
             m.AddItem(new GUIContent("Heal"), false, () => a.AddEffect<HealEffect>());
             m.AddItem(new GUIContent("Refresh"), false, () => a.AddEffect<RefreshEffect>());
+
+            //Runes
             m.AddSeparator("");
             m.AddItem(new GUIContent("Protect"), false, () => a.AddEffect<ProtectEffect>());
             m.AddItem(new GUIContent("Taunt"), false, () => a.AddEffect<TauntEffect>());
+            m.AddItem(new GUIContent("Gain Glory When Attacked"), false, () => a.AddEffect<GainGloryWhenAttackedEffect>());
+
+            //Curses
             m.AddSeparator("");
             m.AddItem(new GUIContent("Blind"), false, () => a.AddEffect<BlindEffect>());
             m.AddItem(new GUIContent("Immobilise"), false, () => a.AddEffect<ImmobiliseEffect>());
