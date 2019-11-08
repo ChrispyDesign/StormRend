@@ -10,19 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
-  m_Name: heal
+  m_Name: tSummon
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: dbb952378c6cc7c4181aa00168b1d74e, type: 3}
-  _animNumber: 0
-  _level: 1
+  _icon: {fileID: 21300000, guid: 467affa39f46f3843b7377c18e8adb86, type: 3}
+  _animationTrigger: 
   _type: 0
+  _level: 1
   _description: 
   _gloryCost: 1
-  _requiredTiles: 1
-  _targetTileTypes: 64
+  _requiredTiles: 8
+  _targetTileTypes: 1
   effects:
-  - {fileID: 114893052708095880}
---- !u!114 &114893052708095880
+  - {fileID: 114396037204405498}
+  castArea: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+--- !u!114 &114396037204405498
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -31,7 +32,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47ab1ac30f066d0459f662074c85a663, type: 3}
-  m_Name: HealEffect
+  m_Script: {fileID: 11500000, guid: 15f2715bfc5600e4b9a9a9bea62fb22c, type: 3}
+  m_Name: SummonEffect
   m_EditorClassIdentifier: 
-  healAmount: 3
+  summon: {fileID: 3266679734864301431, guid: daec9893be12174409e5d742b0c859b7, type: 3}

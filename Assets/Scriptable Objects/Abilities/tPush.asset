@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
-  m_Name: damage
+  m_Name: tPush
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 6f20816157e9a4c4282ef20c6c9f807e, type: 3}
+  _icon: {fileID: 21300000, guid: 91e1f11880f394645921aec1f2a8c2c8, type: 3}
   _animationTrigger: 
-  _level: 1
   _type: 0
+  _level: 1
   _description: 
-  _gloryCost: 1
+  _gloryCost: 0
   _requiredTiles: 1
-  _targetTileTypes: 124
+  _targetTileTypes: 1
   effects:
-  - {fileID: 114598459759856654}
-  - {fileID: 114391231513976296}
-  castArea: 01010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
---- !u!114 &114391231513976296
+  - {fileID: 114362106651891028}
+  - {fileID: 114071460352737416}
+  castArea: 01010101010101010101010101010101010101010101010100010101010101010101010101010101010101010101010101
+--- !u!114 &114071460352737416
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -33,15 +33,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
-  m_Name: RefreshEffect
+  m_Script: {fileID: 11500000, guid: cca9119896ddbe049ae3df8859d7fd0d, type: 3}
+  m_Name: PushEffect
   m_EditorClassIdentifier: 
-  container: {fileID: 11400000}
-  owner: {fileID: 0}
-  refreshType: 0
-  allowedRefreshes: 1
-  refreshCount: 0
---- !u!114 &114598459759856654
+  unitTypesToPush: 12
+  pushAmount: 3
+  damage: 2
+  canPushOffEdge: 1
+--- !u!114 &114362106651891028
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -50,9 +49,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
-  m_Name: DamageEffect
+  m_Script: {fileID: 11500000, guid: 3a689f1c72aecd749bd69b2cc1345b40, type: 3}
+  m_Name: TeleportEffect
   m_EditorClassIdentifier: 
-  container: {fileID: 11400000}
-  owner: {fileID: 0}
-  damage: 6
+  restrictToMoveTiles: 0

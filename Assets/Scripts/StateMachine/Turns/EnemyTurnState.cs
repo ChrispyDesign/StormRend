@@ -34,6 +34,9 @@ namespace StormRend.States
 		{
 			base.OnEnter(sm);
 
+			//Calculate possible moves
+			ur.RunUnitsBeginTurn(this);
+
 			//Get the current enemies & Run AI
 			enemies = ur.GetUnitsByType<EnemyUnit>();	//Hardcore
 			if (enemies?.Length > 0)
