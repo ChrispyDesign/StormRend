@@ -11,7 +11,8 @@ namespace StormRend.States
     public class TurnState : OnState
     {
 		[Header("Unit Filtering"), Tooltip("The unit type that can be controlled when game is in this state")]
-		public TargetType controllableUnitType;
+		public TargetType unitType;
+        public bool hasUserControllableUnits = false;
 
         [Header("Stats")]
         [ReadOnlyField] public float turnCount = 0;

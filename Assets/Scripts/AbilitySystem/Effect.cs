@@ -10,7 +10,7 @@ namespace StormRend.Abilities
 		public bool isFoldOut { get; set; } = true;
 
 	#region Core
-		public virtual void Prepare(Ability ability, Unit owner) { }
+		public virtual void Prepare(Ability ability, Unit owner) { Debug.LogFormat("{0}.Effect.Prepare()", this.name); }
 		public abstract void Perform(Ability ability, Unit owner, Tile[] targetTiles);
 	#endregion
 	}

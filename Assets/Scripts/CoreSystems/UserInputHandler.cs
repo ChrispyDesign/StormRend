@@ -524,12 +524,17 @@ namespace StormRend.Systems
 		void PopulateControllableUnitTypes()
 		{
 			currentControllableUnitTypes.Clear();
-			//Allies
-			if ((currentTurnState.controllableUnitType & TargetType.Allies) == TargetType.Allies)
-				currentControllableUnitTypes.Add(typeof(AllyUnit));
-			//Enemies
-			if ((currentTurnState.controllableUnitType & TargetType.Enemies) == TargetType.Enemies)
-				currentControllableUnitTypes.Add(typeof(EnemyUnit));
+
+			//Only populate if the current turn state allows it
+			if (currentTurnState.hasUserControllableUnits)
+			{
+				//Allies
+				if ((currentTurnState.unitType & TargetType.Allies) == TargetType.Allies)
+					currentControllableUnitTypes.Add(typeof(AllyUnit));
+				//Enemies
+				if ((currentTurnState.unitType & TargetType.Enemies) == TargetType.Enemies)
+					currentControllableUnitTypes.Add(typeof(EnemyUnit));
+			}
 		}
 	#endregion
 

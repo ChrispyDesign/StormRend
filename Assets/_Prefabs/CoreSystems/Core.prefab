@@ -3459,7 +3459,7 @@ MonoBehaviour:
   description: 'OnRegisterUnit(Unit):
 
     -PreCalculateMoveTiles.Run X 2 (Required so that units adjust the move tiles around
-    crystals)'
+    crystals or new spawn units)'
   _aliveUnits: []
   _deadUnits: []
   onRegisterUnit:
@@ -7634,7 +7634,8 @@ MonoBehaviour:
   objectsToActivate:
   - {fileID: 3218253697954399563}
   - {fileID: 5219244397326111529}
-  controllableUnitType: 1
+  unitType: 8
+  hasUserControllableUnits: 0
   turnCount: 0
   currentStateTime: 0
   longestStateTime: 0
@@ -7927,7 +7928,8 @@ MonoBehaviour:
   objectsToActivate:
   - {fileID: 3218253697954399563}
   - {fileID: 5219244397326111529}
-  controllableUnitType: 4
+  unitType: 4
+  hasUserControllableUnits: 1
   turnCount: 0
   currentStateTime: 0
   longestStateTime: 0
