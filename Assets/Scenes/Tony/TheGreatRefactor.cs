@@ -25,6 +25,36 @@ namespace The.Great.Refactor.Brainstorm
 	foreach e in enemies
 		e.ai.Tick()
 	TickCrystals()
+
+	----------------- Animation Event Callbacks
+	Naming convention: [UnitType]AnimEventHandlers
+
+	BaseAnimationDelegate(s)
+	+ SetAbility(Ability) -> Hook up to AnimateUnit.OnActed(Ability)
+	+ Impact() -> AnimationEvent
+	+ DeathDissolve() -> AnimationEvent
+
+	BerserkerAnimationDelegates
+	> FuriousSwing:
+	> Provoke:
+
+	ValkyrieAnimationDelegates
+	+ PlayJumpParticles
+	+ PlayLandParticles
+
+	> LightFall:
+	0. Valkyrie.animator.SetTrigger("LightFallJump")
+	1. Play "LightFallJump" anim + Jumping Particles
+	2. Teleport(NewTile) @ "LightFallJump" End
+	3. Play "LightFallLand" anim
+	4. Contact() @ Appropriate point in time + Landing Particles
+
+	> PiercingLight:
+
+	SageAnimationDelegates
+	> SoulCommune:
+	> SpiritCrystal:
+	> SafePassage:
 	*/
 
 	#region Conventions
