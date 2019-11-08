@@ -4360,7 +4360,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e74e1bda9c3f0d45ae50a717d100e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: Click to select player unit
+  description: 'Berserker: gain Glory by dealing damage with Furious Swing Lv1 or
+    Provoke Lv1'
   _hp: 0
   _maxHP: 5
   onDeath:
@@ -4407,7 +4408,13 @@ MonoBehaviour:
   lookSnap: 0
   moveRange: 5
   pathBlockers: 40
-  abilities: []
+  abilities:
+  - {fileID: 11400000, guid: db2e7710c0ceb8d458628784cf9bb2c4, type: 2}
+  - {fileID: 11400000, guid: b12ed58c96232e648a941560e38d73a8, type: 2}
+  - {fileID: 11400000, guid: df32760a449129c48a5f63024f2464df, type: 2}
+  - {fileID: 11400000, guid: 4975ea856020d5348bed3e0527a94334, type: 2}
+  - {fileID: 11400000, guid: ed211851a6dd295469d834476cbe8611, type: 2}
+  - {fileID: 11400000, guid: 8afc1e9cc640dae43b7fcd7cd17b2b51, type: 2}
   statusEffects: []
   ghostColor: {r: 1, g: 0.5513562, b: 0, a: 1}
   tbcGhostMaterial: {fileID: 0}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2469292731765617890}
   - component: {fileID: 8312121182900135730}
   m_Layer: 0
-  m_Name: FrostHound
+  m_Name: FrostHound-test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -285,6 +285,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5697536595670988253}
     m_Modifications:
+    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     - target: {fileID: 8649027571778799567, guid: e1fbb2b94b8040740927f9ac8f85e701,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -339,11 +344,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1fbb2b94b8040740927f9ac8f85e701, type: 3}
@@ -432,6 +432,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 24.609661
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 10b625b2a195ef341b849283b4aa0948, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6e488d651d9d26c45a6c3ab3023731bd, type: 2}
     - target: {fileID: 13700000, guid: 10b625b2a195ef341b849283b4aa0948, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

@@ -9,6 +9,7 @@ namespace StormRend.UI
 	public class BlizzardMeter : Meter
 	{
 		[SerializeField] Image[] blizzardNodes;
+		[SerializeField] string details;
 		int currentIndex;
 
 		private void Awake()
@@ -22,15 +23,6 @@ namespace StormRend.UI
 
 			Debug.Assert(blizzardNodes[0], "There is no slider, please add a panel with filled image component on it. " + typeof(BlizzardMeter));
 			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(BlizzardMeter));
-		}
-
-		private void Update()
-		{
-			if (Input.GetKeyDown(KeyCode.B))
-				OnIncrease();
-
-			if (Input.GetKeyDown(KeyCode.N))
-				OnDecrease();
 		}
 
 		public override void OnIncrease()

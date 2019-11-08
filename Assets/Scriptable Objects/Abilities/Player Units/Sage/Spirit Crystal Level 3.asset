@@ -12,27 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: Spirit Crystal Level 3
   m_EditorClassIdentifier: 
-  m_name: Spirit Crystal (Level 1)
-  animNumber: 0
-  m_icon: {fileID: 0}
-  m_description: Create an additional Spirit Crystal.
-  m_gloryRequirement: 3
-  m_tilesToSelect: 2
-  m_castArea:
-  - elements: 00000001000000
-  - elements: 00000101010000
-  - elements: 00010101010100
-  - elements: 01010100010101
-  - elements: 00010101010100
-  - elements: 00000101010000
-  - elements: 00000001000000
-  m_targetableTiles:
-    m_empty: 1
-    m_enemies: 0
-    m_players: 0
-    m_self: 0
-  m_effects:
-  - {fileID: 114776763529855574}
+  _icon: {fileID: 21300000, guid: 4856f728e9e644f4da29a56fea45fcf2, type: 3}
+  _animationTrigger: 
+  _type: 1
+  _description: Summon an additional Spirit Crystal
+  _gloryCost: 1
+  _requiredTiles: 2
+  _targetTileTypes: 1
+  effects:
+  - {fileID: 114100663407419078}
+  castArea: 00000001000000000001010100000001010101010001010100010101000101010101000000010101000000000001000000
+--- !u!114 &114100663407419078
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15f2715bfc5600e4b9a9a9bea62fb22c, type: 3}
+  m_Name: SummonEffect
+  m_EditorClassIdentifier: 
+  summon: {fileID: 3266679734864301431, guid: 3fba75eb2b86c974197a410b811511d6, type: 3}
 --- !u!114 &114776763529855574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -45,6 +47,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f2715bfc5600e4b9a9a9bea62fb22c, type: 3}
   m_Name: SummonEffect
   m_EditorClassIdentifier: 
-  m_target: 0
-  m_summon: {fileID: 0}
-  m_HowManyTurns: 0
+  summon: {fileID: 0}

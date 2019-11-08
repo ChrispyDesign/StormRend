@@ -2,12 +2,17 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
+using System.Collections.Generic;
+using StormRend.Units;
 
 namespace StormRend.UI
 {
 	public class GloryMeter : Meter
 	{
+		[SerializeField] List<AnimateUnit> units;
 		[SerializeField] Image[] gloryNodes;
+			
+		string[] details = new string[3];
 		int currentIndex;
 
 		private void Awake()
@@ -19,17 +24,13 @@ namespace StormRend.UI
 			}
 			currentIndex--;
 
+			for (int i = 0; i < details.Length; i++)
+			{
+				details[i] = units[i].description;
+			}
+
 			Debug.Assert(gloryNodes[0], "There is no slider, please add a panel with filled image component on it. " + typeof(GloryMeter));
 			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(GloryMeter));
-		}
-
-		private void Update()
-		{
-			if (Input.GetKeyDown(KeyCode.B))
-				OnIncrease();
-
-			if (Input.GetKeyDown(KeyCode.N))
-				OnDecrease();
 		}
 
 		public override void OnIncrease()
@@ -52,7 +53,7 @@ namespace StormRend.UI
 
 		public override void OnPointerEnter(PointerEventData eventData)
 		{
-			infoPanel.ShowPanel(title, details, 1);
+			infoPanel.ShowPanel(title, details, 3);
 		}
 
 		public override void OnPointerExit(PointerEventData eventData)

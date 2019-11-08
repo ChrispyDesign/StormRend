@@ -12,15 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: Lightfall Level 2
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
-  _animationTrigger: 
+  _icon: {fileID: 21300000, guid: b120ee2d0154d3d479dc2c88ca2de4d6, type: 3}
+  _animationTrigger: LightFall
   _type: 0
-  _description: 
+  _description: Gain Protection
   _gloryCost: 1
   _requiredTiles: 1
-  _targetTileTypes: -1
-  effects: []
-  castArea: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  _targetTileTypes: 1
+  effects:
+  - {fileID: 114136705621689190}
+  castArea: 00000000000000000000010000000000010101000000010100010100000001010100000000000100000000000000000000
+--- !u!114 &114136705621689190
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0340ba18f4cdb44a632086657e9e90, type: 3}
+  m_Name: ProtectEffect
+  m_EditorClassIdentifier: 
+  turnCount: 0
+  affectedTurns: 1
 --- !u!114 &114494440402168048
 MonoBehaviour:
   m_ObjectHideFlags: 1
