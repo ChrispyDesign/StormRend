@@ -37,7 +37,7 @@ namespace StormRend.UI
 			onHover.Invoke(ability);
 			
 			if(ability != null)
-				infoPanel.ShowPanel(ability.name, ability.description, 1 /*ability.level*/);
+				infoPanel.ShowPanel(ability.name, ability.description, 3 /*ability.level*/);
 		}
 
 		public void OnPointerExit(PointerEventData eventData)

@@ -24,6 +24,15 @@ namespace StormRend.UI
 			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(BlizzardMeter));
 		}
 
+		private void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.B))
+				OnIncrease();
+
+			if (Input.GetKeyDown(KeyCode.N))
+				OnDecrease();
+		}
+
 		public override void OnIncrease()
 		{
 			if (currentIndex + 1 == blizzardNodes.Length)
@@ -54,20 +63,20 @@ namespace StormRend.UI
 
 		private IEnumerator IncreaseBlizzard(int _index)
 		{
-			for(float i = 0f; i <= 1; i += 0.1f)
+			for(float i = 0f; i <= 1; i += 0.03f)
 			{
-				blizzardNodes[_index].fillAmount += 0.1f;
-				yield return new WaitForSeconds(0.1f);
+				blizzardNodes[_index].fillAmount += 0.03f;
+				yield return new WaitForSeconds(0.03f);
 			}
 			yield return null;
 		}
 
 		private IEnumerator DecreaseBlizzard(int _index)
 		{
-			for (float i = 0f; i <= 1; i += 0.1f)
+			for (float i = 0f; i <= 1; i += 0.03f)
 			{
-				blizzardNodes[_index].fillAmount -= 0.1f;
-				yield return new WaitForSeconds(0.1f);
+				blizzardNodes[_index].fillAmount -= 0.03f;
+				yield return new WaitForSeconds(0.03f);
 			}
 			yield return null;
 		}

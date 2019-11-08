@@ -62,20 +62,20 @@ namespace StormRend.UI
 
 		private IEnumerator IncreaseBlizzard(int _index)
 		{
-			for (float i = 0f; i <= 1; i += 0.01f)
+			for (float i = 0f; i <= 1; i += 0.03f)
 			{
-				gloryNodes[_index].fillAmount += 0.01f;
-				yield return new WaitForSeconds(0.01f);
+				gloryNodes[_index].fillAmount += 0.03f;
+				yield return new WaitForSeconds(0.03f);
 			}
 			yield return null;
 		}
 
 		private IEnumerator DecreaseBlizzard(int _index)
 		{
-			for (float i = 0f; i <= 1; i += 0.01f)
+			for (float i = 0f; i <= 1; i += 0.03f)
 			{
-				gloryNodes[_index].fillAmount -= 0.01f;
-				yield return new WaitForSeconds(0.01f);
+				gloryNodes[_index].fillAmount -= 0.03f;
+				yield return new WaitForSeconds(0.03f);
 			}
 			yield return null;
 		}

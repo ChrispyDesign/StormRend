@@ -13,9 +13,10 @@ namespace StormRend.UI
 	public class AvatarSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		[SerializeField] AnimateUnit unit;
-		[SerializeField] string title;
-		[SerializeField] string details;
+		[SerializeField] List<Image> healthNodes;
 
+		string title;
+		string details;
 		public UnitEvent onHover;
 		public UnityEvent onUnHover;
 		UserInputHandler inputHandler;
@@ -34,13 +35,23 @@ namespace StormRend.UI
 		public void ShowAbilities()
 		{
 			inputHandler.SelectUnit(unit);
+		}
 
+		public void UpdateGUIHealthBar()
+		{
+			for(int i = 0; i < healthNodes.Count; i++)
+			{
+				if (i < unit.HP)
+					healthNodes[i].fillAmount = 1;
+				else
+					healthNodes[i].fillAmount = 0;
+			}
 		}
 
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			onHover.Invoke(unit);
-			infoPanel.ShowPanel(title, details, 1);
+			infoPanel.ShowPanel(unit.name, unit.description, 1);
 		}
 
 
