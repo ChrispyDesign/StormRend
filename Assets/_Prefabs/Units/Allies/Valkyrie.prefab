@@ -5431,7 +5431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e74e1bda9c3f0d45ae50a717d100e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: 
+  description: Click to select player unit
   _hp: 0
   _maxHP: 4
   onDeath:
@@ -24965,6 +24965,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 653011552559127036}
     m_Modifications:
+    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     - target: {fileID: 8649027571778799567, guid: e1fbb2b94b8040740927f9ac8f85e701,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25019,11 +25024,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1fbb2b94b8040740927f9ac8f85e701, type: 3}

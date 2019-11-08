@@ -12,27 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: Piercing Light Level 3
   m_EditorClassIdentifier: 
-  m_name: Piercing Light (Level 3)
-  m_icon: {fileID: 0}
-  m_description: Inflict Curse of Blindness on all enemies hit.
-  m_gloryRequirement: 2
-  m_tilesToSelect: 1
-  m_castArea:
-  - elements: 00000001000000
-  - elements: 00000001000000
-  - elements: 00000001000000
-  - elements: 01010100010101
-  - elements: 00000001000000
-  - elements: 00000001000000
-  - elements: 00000001000000
-  m_targetableTiles:
-    m_empty: 1
-    m_enemies: 1
-    m_players: 1
-    m_self: 0
-  m_effects:
-  - {fileID: 114415901351157682}
-  - {fileID: 114399296433236112}
+  _icon: {fileID: 0}
+  _animationTrigger: 
+  _type: 0
+  _description: 
+  _gloryCost: 1
+  _requiredTiles: 1
+  _targetTileTypes: 65
+  effects: []
+  castArea: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!114 &114399296433236112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -45,8 +33,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1d815fbb770ac4a992c62b21f4826f, type: 3}
   m_Name: BlindEffect
   m_EditorClassIdentifier: 
-  m_target: 1
-  m_durationInTurns: 1
+  turnCount: 0
+  affectedTurns: 1
 --- !u!114 &114415901351157682
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -59,5 +47,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
-  m_target: 1
-  m_damageAmount: 2
+  damage: 1

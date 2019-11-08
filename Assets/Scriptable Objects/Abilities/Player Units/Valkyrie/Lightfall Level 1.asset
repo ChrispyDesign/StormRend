@@ -18,7 +18,7 @@ MonoBehaviour:
   _description: 
   _gloryCost: 0
   _requiredTiles: 1
-  _targetTileTypes: 1
+  _targetTileTypes: -1
   effects:
   - {fileID: 114843862156185398}
   - {fileID: 114801494253684362}
@@ -35,8 +35,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a689f1c72aecd749bd69b2cc1345b40, type: 3}
   m_Name: TeleportEffect
   m_EditorClassIdentifier: 
-  container: {fileID: 11400000}
-  owner: {fileID: 0}
   restrictToMoveTiles: 0
 --- !u!114 &114843862156185398
 MonoBehaviour:
@@ -50,8 +48,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9119896ddbe049ae3df8859d7fd0d, type: 3}
   m_Name: PushEffect
   m_EditorClassIdentifier: 
-  container: {fileID: 11400000}
-  owner: {fileID: 0}
   unitTypesToPush: 12
   pushAmount: 1
   damage: 0
@@ -68,8 +64,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9119896ddbe049ae3df8859d7fd0d, type: 3}
   m_Name: PushEffect
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
-  owner: {fileID: 0}
   unitTypesToPush: 12
   pushAmount: 1
   damage: 0

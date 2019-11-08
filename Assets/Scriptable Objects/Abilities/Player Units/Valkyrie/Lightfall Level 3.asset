@@ -12,28 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: Lightfall Level 3
   m_EditorClassIdentifier: 
-  m_name: Lightfall (Level 3)
-  m_icon: {fileID: 0}
-  m_description: Deal 2 damage to adjacent enemies on landing.
-  m_gloryRequirement: 3
-  m_tilesToSelect: 1
-  m_castArea:
-  - elements: 00000000000000
-  - elements: 00000001000000
-  - elements: 00000101010000
-  - elements: 00010100010100
-  - elements: 00000101010000
-  - elements: 00000001000000
-  - elements: 00000000000000
-  m_targetableTiles:
-    m_empty: 1
-    m_enemies: 0
-    m_players: 0
-    m_self: 0
-  m_effects:
-  - {fileID: 114923053855270444}
-  - {fileID: 114494440402168048}
-  - {fileID: 114107843705963338}
+  _icon: {fileID: 0}
+  _animationTrigger: 
+  _type: 0
+  _description: 
+  _gloryCost: 1
+  _requiredTiles: 1
+  _targetTileTypes: -1
+  effects: []
+  castArea: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!114 &114107843705963338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -46,8 +33,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
-  m_target: 0
-  m_damageAmount: 0
+  damage: 1
 --- !u!114 &114494440402168048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -60,8 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
-  m_target: 3
-  m_refreshType: 1
+  refreshType: 0
+  allowedRefreshes: 1
+  refreshCount: 0
 --- !u!114 &114923053855270444
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -74,5 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9119896ddbe049ae3df8859d7fd0d, type: 3}
   m_Name: PushEffect
   m_EditorClassIdentifier: 
-  m_target: 2
-  m_pushAmount: 1
+  unitTypesToPush: 12
+  pushAmount: 1
+  damage: 0
+  canPushOffEdge: 1
