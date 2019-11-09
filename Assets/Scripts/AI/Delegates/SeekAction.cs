@@ -47,6 +47,9 @@ namespace StormRend.Bhaviours
         	//If there aren't any targets then fail
         	// if (targets.value.Count <= 0) return NodeState.Failure;
 
+			//Populate move tiles
+			au.CalculateMoveTiles();
+
 			//Populate targets. Check to see if opponent is within range (for enemies their CalculateMoves should've been run at the start of the player's turn)
 			var opponentUnits = ur.GetUnitsByType<AllyUnit>();
 			// opponentUnits.Print();	//debug

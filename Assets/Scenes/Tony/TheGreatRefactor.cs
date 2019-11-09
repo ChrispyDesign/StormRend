@@ -26,21 +26,37 @@ namespace The.Great.Refactor.Brainstorm
 		e.ai.Tick()
 	TickCrystals()
 
-	----------------- Animation Event Callbacks
+	------------------ Execution Order of Critical Game Methods
+	AnimateUnit.CalculateMoveTiles()
+	Needs to be executed:
+	- At the start of a turn for that turn's unit type ie. allyTurnState will calculate all AllyUnit's possible moves
+						OR
+	- When the unit is first selected on that turn
+	- When an new unit is spawned in or summoned
+		- This prevents units from being able to walk onto these new units
+	
+	AnimateUnit.CalculateTargetTiles()
+	Needs to be executed:
+	- when ability selected > AbilityButton.OnClick()
+	- when ability hovered > AbilityButton.OnHover
+
+
+	----------------- Animation Event Handlers
 	Naming convention: [UnitType]AnimEventHandlers
 
 	BaseAnimationDelegate(s)
-	+ SetAbility(Ability) -> Hook up to AnimateUnit.OnActed(Ability)
-	+ Impact() -> AnimationEvent
-	+ DeathDissolve() -> AnimationEvent
+	+ SetAbility(Ability) : Hook up to AnimateUnit.OnActed(Ability)
+	+ Execute() : AnimationEvent
+	+ DeathDissolve() : AnimationEvent
+	+ Kill() : AnimationEvent	//Actually finally 'kills' the unit and sets the unit inactive
 
 	BerserkerAnimationDelegates
 	> FuriousSwing:
 	> Provoke:
 
-	ValkyrieAnimationDelegates
-	+ PlayJumpParticles
-	+ PlayLandParticles
+	ValkyrieAnimEventHandlers
+	+ PlayJumpPFX()
+	+ PlayLandPFX()
 
 	> LightFall:
 	0. Valkyrie.animator.SetTrigger("LightFallJump")

@@ -80,7 +80,9 @@ namespace StormRend.Units
 		{
 			if (isDead) return;     //Can't beat a dead horse :P
 			HP -= damageData.amount;
-			if (HP <= 0) Die();
+
+			//Die() shouldn't be called immediately because the death sequence is complex and has timing
+			// if (HP <= 0) Die();		
 
 			onDamage.Invoke(damageData);	//ie. Update health bar etc
 		}

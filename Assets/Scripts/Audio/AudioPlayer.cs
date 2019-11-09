@@ -6,10 +6,12 @@ namespace StormRend.Audio
     public abstract class AudioPlayer : MonoBehaviour
     {
 		protected AudioSystem audioSystem;
+		protected AudioSource audioSource;
 
 		void Awake()
 		{
 			audioSystem = GetComponent<AudioSystem>();
+			audioSource = GetComponent<AudioSource>();
 		}
     }
 }
