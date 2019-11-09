@@ -1,5 +1,6 @@
 using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
+using StormRend.Tags;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using UnityEngine;
@@ -9,6 +10,7 @@ using UnityEngine.EventSystems;
 namespace StormRend.Units
 {
 	[SelectionBase]
+	[RequireComponent(typeof(UnitTag))]
 	public abstract class Unit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		[TextArea(0,2)] public string description = "";
@@ -36,6 +38,7 @@ namespace StormRend.Units
 		public int maxHP => _maxHP;
 		public bool isDead => HP <= 0;
 		public Animator animator { get; private set; }
+		public new Tag tag { get; private set; }
 
 	#region Startup
 		protected virtual void Awake()
@@ -45,6 +48,9 @@ namespace StormRend.Units
 
 			//Always scan the tile below to prevent previous tile value from locking unit on a tile
 			ScanTileBelow();
+
+			//Tag
+			tag = GetComponent<UnitTag>();
 		}
 		void Start()
 		{
