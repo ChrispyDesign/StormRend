@@ -14,6 +14,7 @@ namespace StormRend.Abilities
 {
 	public enum AbilityType
 	{
+		Passive,
 		Primary,
 		Secondary
 	}
@@ -29,7 +30,7 @@ namespace StormRend.Abilities
 		[Tooltip("Animation trigger for this ability that will be sent to animator")]
 		[SerializeField] string _animationTrigger = "";
 		[SerializeField] AbilityType _type = AbilityType.Primary;
-		[SerializeField] int _level = 0;
+		[Range(1, 3), SerializeField] int _level = 0;
 		[TextArea(0, 2), SerializeField] string _description = "";
 
 		[Header("Casting"), Space(1), Tooltip("Glory cost required to perform this ability")]
@@ -57,7 +58,10 @@ namespace StormRend.Abilities
 		public int requiredTiles => _requiredTiles;
 		public TargetType targetTileTypes => _targetTileTypes;
 
-		//Core
+	#region Core
+		/// <summary>
+		/// Perform the entire ability
+		/// </summary>
 		public void Perform(Unit owner, params Tile[] targets)
 		{
 			Debug.Log("Performing Ability: " + this.name);
@@ -67,6 +71,24 @@ namespace StormRend.Abilities
 				e.Perform(this, owner, targets);
 			}
 		}
+
+		/// <summary>
+		/// Perform a certain effect contained in this ability
+		/// </summary>
+		/// <typeparam name="T">Effect type to specifically perform</typeparam>
+		public void Perform<T>(Unit owner, params Tile[] targets) where T : Effect
+		{
+			foreach (var e in effects)
+			{
+				Debug.Log("Performing Ability: " + this.name);
+				if (e is T)
+				{
+					Debug.Log("Performing Effect: " + e.name);
+					e.Perform(this, owner, targets);
+				}
+			}
+		}
+	#endregion
 
 		public bool IsAcceptableTileType(AnimateUnit owner, Tile tile)
 		{

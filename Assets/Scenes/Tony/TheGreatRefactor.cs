@@ -25,6 +25,52 @@ namespace The.Great.Refactor.Brainstorm
 	foreach e in enemies
 		e.ai.Tick()
 	TickCrystals()
+
+	------------------ Execution Order of Critical Game Methods
+	AnimateUnit.CalculateMoveTiles()
+	Needs to be executed:
+	- At the start of a turn for that turn's unit type ie. allyTurnState will calculate all AllyUnit's possible moves
+						OR
+	- When the unit is first selected on that turn
+	- When an new unit is spawned in or summoned
+		- This prevents units from being able to walk onto these new units
+	
+	AnimateUnit.CalculateTargetTiles()
+	Needs to be executed:
+	- when ability selected > AbilityButton.OnClick()
+	- when ability hovered > AbilityButton.OnHover
+
+
+	----------------- Animation Event Handlers
+	Naming convention: [UnitType]AnimEventHandlers
+
+	BaseAnimationDelegate(s)
+	+ SetAbility(Ability) : Hook up to AnimateUnit.OnActed(Ability)
+	+ Execute() : AnimationEvent
+	+ DeathDissolve() : AnimationEvent
+	+ Kill() : AnimationEvent
+
+	BerserkerAnimationDelegates
+	> FuriousSwing:
+	> Provoke:
+
+	ValkyrieAnimEventHandlers
+	+ PlayJumpPFX()
+	+ PlayLandPFX()
+
+	> LightFall:
+	0. Valkyrie.animator.SetTrigger("LightFallJump")
+	1. Play "LightFallJump" anim + Jumping Particles
+	2. Teleport(NewTile) @ "LightFallJump" End
+	3. Play "LightFallLand" anim
+	4. Contact() @ Appropriate point in time + Landing Particles
+
+	> PiercingLight:
+
+	SageAnimationDelegates
+	> SoulCommune:
+	> SpiritCrystal:
+	> SafePassage:
 	*/
 
 	#region Conventions

@@ -172,14 +172,14 @@ namespace StormRend.Units
 		}
 		public override void Die()
 		{
-			base.Die();     //onDeath will invoke
+			base.Die();     //onDeath will invoke; Should register death on this unityevent
 
 			//Status effect
 			foreach (var se in statusEffects)
 				se.OnDeath(this);
 
-			//TEMP
-			// gameObject.SetActive(false);
+			//Finally hide the body
+			gameObject.SetActive(false);
 		}
 
 		//------------------ MOVE
