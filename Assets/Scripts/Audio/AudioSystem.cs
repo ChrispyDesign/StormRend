@@ -8,7 +8,7 @@ namespace StormRend.Audio
     public class AudioSystem : MonoBehaviour
     {
         //Helpbox
-        [HelpBox, SerializeField] string help = "Animation Event Callbacks: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)";
+        [HelpBox, SerializeField] string help = "Animation Event Handlers: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)";
 
         //Inspector
         [TextArea(0, 2), SerializeField] string description = " ";
@@ -46,7 +46,7 @@ namespace StormRend.Audio
         }
     #endregion
 
-    #region Animation Event Callbacks
+    #region Animation Event Handlers
         /// <summary> Play one audio clip out of a magazine according to chance </summary>
         /// <param name="audioMagazine">AudioMagazine scriptable object</param>
         public void ChancePlayMagazine(Object audioMagazine)

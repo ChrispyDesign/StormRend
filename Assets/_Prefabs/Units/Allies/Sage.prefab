@@ -1171,8 +1171,10 @@ GameObject:
   m_Component:
   - component: {fileID: 428664700141955752}
   - component: {fileID: 428664700132328738}
+  - component: {fileID: 2503500566700065152}
+  - component: {fileID: 3718237155853780572}
   m_Layer: 0
-  m_Name: Mesh_Sage
+  m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1191,7 +1193,7 @@ Transform:
   m_Children:
   - {fileID: 428664700141955866}
   - {fileID: 428664700141955864}
-  m_Father: {fileID: 991737375671119081}
+  m_Father: {fileID: 9108019807441497514}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &428664700132328738
@@ -1204,7 +1206,7 @@ Animator:
   m_GameObject: {fileID: 428664700141729608}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 2545293216ec96c4b8f63cb72e6a1030, type: 3}
-  m_Controller: {fileID: 9100000, guid: 5bf5a16396a033f4685984cf10f94338, type: 2}
+  m_Controller: {fileID: 9100000, guid: ab698754455d8e045a2bb8eafe21ad9c, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1213,6 +1215,118 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!82 &2503500566700065152
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428664700141729608}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &3718237155853780572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428664700141729608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  help: "Animation Event Callbacks: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)"
+  description: ' '
+  chance: 50
+  sounds: []
 --- !u!1 &428664700141729616
 GameObject:
   m_ObjectHideFlags: 0
@@ -1997,37 +2111,6 @@ CapsuleCollider:
   m_Height: 0.05
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &3876976827768554359
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 991737375671119081}
-  m_Layer: 0
-  m_Name: Mesh
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &991737375671119081
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3876976827768554359}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 428664700141955752}
-  m_Father: {fileID: 9108019807441497514}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4065765304702928081
 GameObject:
   m_ObjectHideFlags: 0
@@ -2174,7 +2257,7 @@ GameObject:
   - component: {fileID: 2624375650626466017}
   - component: {fileID: 7012286042510135373}
   m_Layer: 0
-  m_Name: Mesh
+  m_Name: oldMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2188,7 +2271,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4065765304702928083}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 4.33, y: 0, z: -2.76}
   m_LocalScale: {x: 20.35, y: 20.35, z: 20.35}
   m_Children:
   - {fileID: 4065765304702769457}
@@ -4708,8 +4791,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0.000000002114868, y: -0.0000011175871, z: -0.02688308}
-    m_Extent: {x: 0.034095414, y: 0.007933529, z: 0.03284432}
+    m_Center: {x: 0, y: -0.0000011175871, z: -0.02688308}
+    m_Extent: {x: 0.03409541, y: 0.007933529, z: 0.032844316}
   m_DirtyAABB: 0
 --- !u!183 &7344916309360044327
 Cloth:
@@ -5111,6 +5194,7 @@ GameObject:
   - component: {fileID: 9108019807441497519}
   - component: {fileID: 5620367471101316635}
   - component: {fileID: 6164831849654072749}
+  - component: {fileID: 4751560053520480620}
   m_Layer: 0
   m_Name: Sage
   m_TagString: Untagged
@@ -5129,7 +5213,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 991737375671119081}
+  - {fileID: 428664700141955752}
   - {fileID: 4065765304702769459}
   - {fileID: 6396203914922838199}
   - {fileID: 2016376687772599369}
@@ -5161,7 +5245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e74e1bda9c3f0d45ae50a717d100e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: Click to select player unit
+  description: 'Sage: gain Glory when enemies die near her'
   _hp: 0
   _maxHP: 3
   onDeath:
@@ -5264,6 +5348,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+--- !u!114 &4751560053520480620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108019807441497518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1e7ace05faaadd44a9be551bf1fd44b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2361123511665102712
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5362,6 +5458,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SGE_SoulCommuneAura
+      objectReference: {fileID: 0}
+    - target: {fileID: 6311765355932350965, guid: 12c8f65b3b1a71745b3d485321c472cd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2740575804456894983, guid: 12c8f65b3b1a71745b3d485321c472cd,
         type: 3}

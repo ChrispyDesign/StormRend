@@ -1592,7 +1592,7 @@ Animator:
   m_GameObject: {fileID: 4783116619369055820}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 1fb900c0be38b4e4f87306b8120ea96f, type: 3}
-  m_Controller: {fileID: 9100000, guid: 4591982431239434f8910bf8c460d467, type: 2}
+  m_Controller: {fileID: 9100000, guid: 516facb8b8bd33940b5c0f5209c6d6a8, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4312,6 +4312,7 @@ GameObject:
   - component: {fileID: 9108019807441497519}
   - component: {fileID: 3841930061851047593}
   - component: {fileID: 4472237609802827025}
+  - component: {fileID: 688204287768951882}
   m_Layer: 0
   m_Name: Berserker
   m_TagString: Untagged
@@ -4360,7 +4361,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e74e1bda9c3f0d45ae50a717d100e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: Click to select player unit
+  description: 'Berserker: gain Glory by dealing damage with Furious Swing Lv1 or
+    Provoke Lv1'
   _hp: 0
   _maxHP: 5
   onDeath:
@@ -4463,6 +4465,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+--- !u!114 &688204287768951882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108019807441497518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8ba544a84bdc8545b5b4f7a73bdb207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4873959505318915483
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace StormRend.MapSystems.Tiles
 {
-	public class UnWalkableTile : Tile
+	public class UnWalkableTile : Tile, IPointerEnterHandler, IPointerExitHandler
 	{
 		const float lily = 0.01f;	//A little y
 		void OnDrawGizmos()
@@ -23,6 +23,18 @@ namespace StormRend.MapSystems.Tiles
 			Gizmos.DrawLine(bottomLeft, topRight);
 			Gizmos.DrawLine(topLeft, bottomRight);
 			Gizmos.color = oldColor;
+		}
+
+		public new void OnPointerEnter(PointerEventData eventData)
+		{
+			//Cannot highlight unwalkable tiles
+			//Confusing to the user
+		}
+
+		public new void OnPointerExit(PointerEventData eventData)
+		{
+			//Cannot highlight unwalkable tiles
+			//Confusing to the user
 		}
 	}
 }

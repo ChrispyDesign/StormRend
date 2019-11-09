@@ -6,7 +6,6 @@ namespace StormRend.UI
 	public class Meter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		[SerializeField] protected string title;
-		[SerializeField] protected string details;
 
 		protected InfoPanel infoPanel;
 
