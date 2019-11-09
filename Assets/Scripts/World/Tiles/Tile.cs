@@ -114,22 +114,24 @@ namespace StormRend.MapSystems.Tiles
 	#region Utility
 		/// <summary>
 		/// Returns an adjacent tile in a certain direction.
+		/// Will only return immediately adjacent diagonal tiles.
 		/// If no tile found then return null.
-		/// This should work with diagonals too ie. direction = {-1, 1} = forward, left
 		/// </summary>
-		public bool TryGetTile(Vector2Int direction, out Tile tile, float tolerance = 0.1f)
+		public bool TryGetTile(Vector2Int direction, out Tile tile, bool diagonal = false, float tolerance = 0.1f)
 		{
-			const float adjacentDist = 1f;
+			const float adjacentDist = 1f; const float diagDist = 1.414213f;
 
+			//ADJACENT
 			//Determine where to scan for a tile
 			var targetTilePos = transform.position +
-				new Vector3(direction.x * owner.tileSize * adjacentDist, 0,
-							direction.y * owner.tileSize * adjacentDist);
+				new Vector3(direction.x * owner.tileSize * adjacentDist, 0, direction.y * owner.tileSize * adjacentDist);
 
 			//Loop through all connected tiles and see if there are any within tolerance
 			foreach (var t in owner.tiles)
 			{
-				var dist = Vector3.Distance(t.transform.position, targetTilePos);
+				//Ignore variations in height
+				var flattenedTilePosition = new Vector3(t.transform.position.x, this.transform.position.y, t.transform.position.z);
+				var dist = Vector3.Distance(flattenedTilePosition, targetTilePos);
 				if (dist < tolerance)
 				{
 					//Tile found
@@ -137,6 +139,30 @@ namespace StormRend.MapSystems.Tiles
 					return true;
 				}
 			}
+
+			//DIAGONALS
+			if (diagonal)
+			{
+				//Determine where to scan for the diagonal tile
+				//NOTE: This only works with immediately adjacent tiles
+				targetTilePos = transform.position + 
+					new Vector3(direction.x * owner.tileSize * diagDist, 0, direction.y * owner.tileSize * diagDist);
+
+				//Loop through all connected tiles and see if there are any within tolerance
+				foreach (var t in owner.tiles)
+				{
+					//Ignore variations in height
+					var flattenedTilePosition = new Vector3(t.transform.position.x, this.transform.position.y, t.transform.position.z);
+					var dist = Vector3.Distance(flattenedTilePosition, targetTilePos);
+					if (dist < tolerance)
+					{
+						//Tile found
+						tile = t;
+						return true;
+					}
+				}
+			}
+
 			//Nothing found
 			tile = null;
 			return false;
