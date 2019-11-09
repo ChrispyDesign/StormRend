@@ -45,10 +45,10 @@ namespace StormRend.Units
 
 		//Events
 		[Header("Animate Unit Events")]
-		[SerializeField] EffectEvent onAddStatusEffect = null;
-		[SerializeField] UnityEvent onBeginTurn = null;
-		[SerializeField] AbilityEvent onActed = null;
-		[SerializeField] UnityEvent onEndTurn = null;
+		public EffectEvent onAddStatusEffect = null;
+		public UnityEvent onBeginTurn = null;
+		public AbilityEvent onActed = null;
+		public UnityEvent onEndTurn = null;
 
 		//Properties
 		public Tile ghostTile { get; set; } = null;		//The tile the ghost is on
@@ -73,10 +73,12 @@ namespace StormRend.Units
 		}
 
 		//Members
-		protected GameObject ghostMesh;
+		protected GameObject ghostMesh = null;
+		protected Tile[] currentTargetTiles = null;
+		private Ability currentAbility;
 
 
-	#region Filtered Gets
+		#region Filtered Gets
 		public List<Ability> GetAbilitiesByType(AbilityType type) => abilities.Where(x => x.type == type).ToList();
 	#endregion
 
@@ -298,12 +300,16 @@ namespace StormRend.Units
 		}
 
 		/// <summary>
-		/// Perform the ability and lock unit for this turn
+		/// Starts the ability
 		/// </summary>
 		public void Act(Ability ability, params Tile[] targetTiles)
 		{
 			//Only take action if able to ie. not affected by status effects
 			if (!canAct) return;
+
+			//Cache
+			currentAbility = ability;
+			currentTargetTiles = targetTiles;
 
 			//Lock in movement and action
 			SetCanAct(false);
@@ -313,14 +319,32 @@ namespace StormRend.Units
 			if (targetTiles.Length > 0)
 				SnappedLookAt(targetTiles[targetTiles.Length-1].transform.position);
 
-			//Perform Ability
-			ability.Perform(this, targetTiles);
+			//Kick off the Ability's animation
+			// animator.SetTrigger(ability.animationTrigger);
+			onActed.Invoke(ability);
+			// ability.Perform(this, targetTiles);
 
 			//Status effects
 			foreach (var se in statusEffects)
 				se.OnActed(this);
+		}
+		/// <summary>
+		/// Perform the actual raw ability
+		/// </summary>
+		internal void Act()
+		{
+			//Null check
+			if (currentTargetTiles.Length == 0 || currentAbility == null) return;
 
-			onActed.Invoke(ability);
+			currentAbility.Perform(this, currentTargetTiles);
+		}
+		/// <summary>
+		/// Performs a specific effect in the current ability; Use to time effects with animation
+		/// </summary>
+		internal void Act<T>() where T : Effect
+		{
+			if (currentTargetTiles.Length == 0 || currentAbility == null) return;
+			currentAbility.Perform<T>(this, currentTargetTiles);
 		}
 
 		//------------------- CALCULATE TILES

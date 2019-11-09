@@ -48,7 +48,7 @@ namespace The.Great.Refactor.Brainstorm
 	+ SetAbility(Ability) : Hook up to AnimateUnit.OnActed(Ability)
 	+ Execute() : AnimationEvent
 	+ DeathDissolve() : AnimationEvent
-	+ Kill() : AnimationEvent
+	+ Kill() : AnimationEvent	//Actually finally 'kills' the unit and sets the unit inactive
 
 	BerserkerAnimationDelegates
 	> FuriousSwing:

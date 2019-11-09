@@ -23391,8 +23391,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7840730420149280474}
   - component: {fileID: 7840730420140191916}
-  - component: {fileID: 1041661156002233512}
+  - component: {fileID: 2371634614360472856}
   - component: {fileID: 45244116352507459}
+  - component: {fileID: 1041661156002233512}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -23435,6 +23436,49 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2371634614360472856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7840730420149699322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ed0ea0e34057c47a7028ab9d8e574d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onExecuteAbility:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onDeathDissolve:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onFinaliseDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &45244116352507459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7840730420149699322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  help: "Animation Event Callbacks: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)"
+  description: ' '
+  chance: 50
+  sounds: []
 --- !u!82 &1041661156002233512
 AudioSource:
   m_ObjectHideFlags: 0
@@ -23531,22 +23575,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &45244116352507459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7840730420149699322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  help: "Animation Event Callbacks: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)"
-  description: ' '
-  chance: 50
-  sounds: []
 --- !u!1 &7840730420149699324
 GameObject:
   m_ObjectHideFlags: 0

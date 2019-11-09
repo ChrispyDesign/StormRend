@@ -27,9 +27,9 @@ namespace StormRend.Audio
 			Debug.Assert(valkyrieVocals, "No Audio Magazine Loaded!");
 			Debug.Assert(sageVocals, "No Audio Magazine Loaded!");
 
-			Debug.Assert(berserkerSelect, "No Audio Clip Loaded!");
-			Debug.Assert(valkyrieSelect, "No Audio Clip Loaded!");
-			Debug.Assert(sageSelect, "No Audio Clip Loaded!");
+			// Debug.Assert(berserkerSelect, "No Audio Clip Loaded!");
+			// Debug.Assert(valkyrieSelect, "No Audio Clip Loaded!");
+			// Debug.Assert(sageSelect, "No Audio Clip Loaded!");
 		}
 
 		/// <summary>
