@@ -419,6 +419,7 @@ ModelImporter:
     13700102: ValkBody
     13700104: WristGuardLeft
     13700106: WristGuardRight
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -434,12 +435,17 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
+      improve retargeting quality.\n\t'VAL_JNT_Mid' has translation animation that
+      will be discarded.\n\t'VAL_JNT_Heel_Left' is inbetween humanoid transforms and
+      has rotation animation that will be discarded.\n\t'VAL_JNT_Heel_Right' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -746,7 +752,507 @@ ModelImporter:
   humanDescription:
     serializedVersion: 2
     human: []
-    skeleton: []
+    skeleton:
+    - name: Valkyrie_Mesh(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: locator1
+      parentName: Valkyrie_Mesh(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Base
+      parentName: locator1
+      position: {x: -0, y: 1.1484872, z: 0.038690567}
+      rotation: {x: 0.043382734, y: 0.06404188, z: -0.70420074, w: 0.7057747}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Leg_Right
+      parentName: VAL_JNT_Base
+      position: {x: -0.0060784393, y: 0.123950005, z: -0.0037257469}
+      rotation: {x: 0.99977475, y: -0.019505361, z: 0.0011414231, w: 0.008288847}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Knee_Right
+      parentName: VAL_JNT_Leg_Right
+      position: {x: 0.48314008, y: -0.00000054809857, z: -0.00000030944796}
+      rotation: {x: 0.0000000045377755, y: -0.0063927625, z: -0.00000036619554, w: 0.99997956}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Heel_Right
+      parentName: VAL_JNT_Knee_Right
+      position: {x: 0.6235285, y: -0.00000025068576, z: -0.007972932}
+      rotation: {x: -0.15786634, y: 0.0027677617, z: -0.022873607, w: 0.9871917}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_FootMid_Right
+      parentName: VAL_JNT_Heel_Right
+      position: {x: 0.000000040390795, y: 0.00000052699136, z: -0.16548783}
+      rotation: {x: 0.0017096283, y: 0.082440525, z: -0.020662654, w: 0.9963803}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_FootTip_left 1
+      parentName: VAL_JNT_FootMid_Right
+      position: {x: 2.8044234e-15, y: 1.4210854e-15, z: -0.079122}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Leg_Left
+      parentName: VAL_JNT_Base
+      position: {x: -0.0060746893, y: -0.12395039, z: -0.0037251895}
+      rotation: {x: -0.04144161, y: -0.015021274, z: 0.9990183, w: 0.004406506}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Knee_Left
+      parentName: VAL_JNT_Leg_Left
+      position: {x: -0.4831362, y: 2.4868996e-16, z: 8.881784e-18}
+      rotation: {x: -1.5628554e-17, y: -0.027639551, z: -2.8306258e-16, w: 0.999618}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Heel_Left
+      parentName: VAL_JNT_Knee_Left
+      position: {x: -0.6235286, y: 4.6185276e-16, z: 0.00797297}
+      rotation: {x: -0.13151008, y: -0.020204062, z: -0.0021240052, w: 0.9911067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_FootMid_Left
+      parentName: VAL_JNT_Heel_Left
+      position: {x: -1.1253221e-14, y: -3.375078e-16, z: 0.1654878}
+      rotation: {x: 0.0017096283, y: 0.082440525, z: -0.020662654, w: 0.9963803}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_FootTip_left
+      parentName: VAL_JNT_FootMid_Left
+      position: {x: -2.773337e-15, y: 1.2434498e-16, z: 0.079122424}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_ClothController
+      parentName: VAL_JNT_Base
+      position: {x: -0.021286478, y: 0, z: 0.16200756}
+      rotation: {x: -0.05371807, y: -0.05371807, z: 0.7050634, w: 0.7050634}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_ClothControllerBack
+      parentName: VAL_JNT_Base
+      position: {x: 0.029329777, y: 0, z: -0.16823988}
+      rotation: {x: -0.05371807, y: -0.05371807, z: 0.7050634, w: 0.7050634}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Mid
+      parentName: VAL_JNT_Base
+      position: {x: -0.21367924, y: 4.7739588e-17, z: -5.3290704e-17}
+      rotation: {x: 0, y: -0.14149575, z: -0, w: 0.9899389}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Rib
+      parentName: VAL_JNT_Mid
+      position: {x: -0.1882346, y: 0, z: -3.5527136e-17}
+      rotation: {x: 0, y: -0.10118845, z: -0, w: 0.99486727}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Shoulderblade_Right
+      parentName: VAL_JNT_Rib
+      position: {x: -0.110052824, y: 0.082704894, z: -0.098913066}
+      rotation: {x: 0.5480428, y: 0.7972852, z: 0.0000000065509456, w: -0.25295365}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Shoulder_Right
+      parentName: VAL_JNT_Shoulderblade_Right
+      position: {x: 0.109627604, y: -0.0000044898043, z: 0.00000047217742}
+      rotation: {x: -0.060906295, y: -0.1333928, z: 0.47470623, w: 0.8678426}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Elbow_Right
+      parentName: VAL_JNT_Shoulder_Right
+      position: {x: 0.26451907, y: -0.0000013279337, z: -0.000000025895137}
+      rotation: {x: 0.00038623335, y: 0.04065601, z: 0.012871781, w: 0.99909025}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Wrist_Right
+      parentName: VAL_JNT_Elbow_Right
+      position: {x: 0.25920498, y: 0.0000055308424, z: 0.00000042182467}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_HandController_Right
+      parentName: VAL_JNT_Wrist_Right
+      position: {x: 0.08870598, y: 0.0482882, z: -0.00000020859397}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Thumb_Right1
+      parentName: VAL_JNT_Wrist_Right
+      position: {x: 0.018489566, y: 0.016647832, z: -0.017213345}
+      rotation: {x: 0.111178994, y: 0.33486834, z: 0.14886414, w: 0.9237651}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Thumb_Right2
+      parentName: VAL_JNT_Thumb_Right1
+      position: {x: 0.040176123, y: 0.0000014258411, z: 0.00000087906284}
+      rotation: {x: 4.8514616e-11, y: -0.17765595, z: 0.008206213, w: 0.98405844}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Thumb_Right3
+      parentName: VAL_JNT_Thumb_Right2
+      position: {x: 0.038054787, y: 0.000003070495, z: 0.00000030296604}
+      rotation: {x: -0.000000012904785, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Thumb_Right4
+      parentName: VAL_JNT_Thumb_Right3
+      position: {x: 0.034005735, y: 0.000000629945, z: -0.00000024757063}
+      rotation: {x: 0.000000012904785, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Index_Right1
+      parentName: VAL_JNT_Wrist_Right
+      position: {x: 0.117362104, y: 0.00997076, z: -0.03305008}
+      rotation: {x: 0.0105366595, y: 0.009718443, z: 0.11793839, w: 0.9929175}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Index_Right2
+      parentName: VAL_JNT_Index_Right1
+      position: {x: 0.02678039, y: -0.000002367373, z: -0.0000001838549}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Index_Right3
+      parentName: VAL_JNT_Index_Right2
+      position: {x: 0.03155078, y: 0.00000029684847, z: 0.000000091568445}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Index_Right4
+      parentName: VAL_JNT_Index_Right3
+      position: {x: 0.02278153, y: -0.00000067730207, z: -0.000000075658946}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Middle_Right1
+      parentName: VAL_JNT_Wrist_Right
+      position: {x: 0.11877203, y: 0.006555476, z: -0.009362177}
+      rotation: {x: 0.0078794025, y: 0.008439524, z: 0.16768326, w: 0.9857733}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Middle_Right2
+      parentName: VAL_JNT_Middle_Right1
+      position: {x: 0.03583655, y: -0.0000026196844, z: -0.00000012597711}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Middle_Right3
+      parentName: VAL_JNT_Middle_Right2
+      position: {x: 0.026954345, y: -0.00000172689, z: -0.00000019432136}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Middle_Right4
+      parentName: VAL_JNT_Middle_Right3
+      position: {x: 0.023348972, y: 0.0000029653359, z: 0.00000024222388}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Ring_Right1
+      parentName: VAL_JNT_Wrist_Right
+      position: {x: 0.1168575, y: 0.009967827, z: 0.010145732}
+      rotation: {x: -0.0021808455, y: -0.023827847, z: 0.16438143, w: 0.98610663}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Ring_Right2
+      parentName: VAL_JNT_Ring_Right1
+      position: {x: 0.033596285, y: 0.0000018207663, z: 0.00000015408186}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Ring_Right3
+      parentName: VAL_JNT_Ring_Right2
+      position: {x: 0.02768955, y: -0.00000078454104, z: -0.000000034271345}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Ring_Right4
+      parentName: VAL_JNT_Ring_Right3
+      position: {x: 0.022782568, y: -0.0000013292915, z: -0.000000006310692}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Pinky_Right1
+      parentName: VAL_JNT_Wrist_Right
+      position: {x: 0.10729175, y: 0.01819215, z: 0.031073889}
+      rotation: {x: -0.00770168, y: -0.043967456, z: 0.14547026, w: 0.9883552}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Pinky_Right2
+      parentName: VAL_JNT_Pinky_Right1
+      position: {x: 0.02973901, y: 0.0000018579242, z: -0.00000003321668}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Pinky_Right3
+      parentName: VAL_JNT_Pinky_Right2
+      position: {x: 0.023381826, y: 0.0000014317874, z: 0.000000017134662}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Pinky_Right4
+      parentName: VAL_JNT_Pinky_Right3
+      position: {x: 0.017117988, y: -0.0000045219313, z: 0.0000000038669694}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Neck
+      parentName: VAL_JNT_Rib
+      position: {x: -0.21697596, y: 0, z: 7.105427e-17}
+      rotation: {x: -0.0049963123, y: 0.17240588, z: -0.02853365, w: 0.98459995}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Head
+      parentName: VAL_JNT_Neck
+      position: {x: -0.1676563, y: 0, z: -4.4408918e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Hair_Controller_01
+      parentName: VAL_JNT_Head
+      position: {x: 0.004871304, y: -2.1447156e-32, z: -0.0952124}
+      rotation: {x: 0.08681084, y: 5.1589154e-18, z: 0.9962248, w: -6.098752e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Hair_Controller_02
+      parentName: VAL_JNT_Hair_Controller_01
+      position: {x: -0.2174061, y: -4.000163e-19, z: -1.5073538e-18}
+      rotation: {x: -0.019030219, y: 0.019030219, z: -0.70685065, w: 0.70685065}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Hair_Controller_03
+      parentName: VAL_JNT_Hair_Controller_02
+      position: {x: -7.971345e-17, y: -0.22998503, z: -6.309887e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Shoulderblade_Left
+      parentName: VAL_JNT_Rib
+      position: {x: -0.11005627, y: -0.082704924, z: -0.09891186}
+      rotation: {x: -0.0000000032492802, y: 0.25295368, z: 0.5480428, w: 0.7972852}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Shoulder_Left
+      parentName: VAL_JNT_Shoulderblade_Left
+      position: {x: -0.109625764, y: -5.684342e-16, z: 3.5527136e-17}
+      rotation: {x: -0.060906295, y: -0.1333928, z: 0.47470623, w: 0.8678426}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Elbow_Left
+      parentName: VAL_JNT_Shoulder_Left
+      position: {x: -0.26452044, y: 8.5265126e-16, z: -1.7763568e-17}
+      rotation: {x: 0.00038623335, y: 0.04065601, z: 0.012871781, w: 0.99909025}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Wrist_Left
+      parentName: VAL_JNT_Elbow_Left
+      position: {x: -0.25920007, y: 0, z: -6.5503156e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_HandController_Left
+      parentName: VAL_JNT_Wrist_Left
+      position: {x: -0.08870841, y: -0.048291042, z: 3.9968027e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Thumb_Left1
+      parentName: VAL_JNT_Wrist_Left
+      position: {x: -0.018494314, y: -0.016653793, z: 0.017212927}
+      rotation: {x: 0.111178994, y: 0.33486834, z: 0.14886414, w: 0.9237651}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Thumb_Left2
+      parentName: VAL_JNT_Thumb_Left1
+      position: {x: -0.040174447, y: 8.5265126e-16, z: 3.5527136e-17}
+      rotation: {x: 4.8514616e-11, y: -0.17765595, z: 0.008206213, w: 0.98405844}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Thumb_Left3
+      parentName: VAL_JNT_Thumb_Left2
+      position: {x: -0.03805124, y: -5.684342e-16, z: -4.973799e-16}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Thumb_Left4
+      parentName: VAL_JNT_Thumb_Left3
+      position: {x: -0.034005754, y: 2.842171e-16, z: 4.2632563e-16}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Index_Left1
+      parentName: VAL_JNT_Wrist_Left
+      position: {x: -0.11736218, y: -0.009970546, z: 0.03305001}
+      rotation: {x: 0.0105366595, y: 0.009718443, z: 0.11793839, w: 0.9929175}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Index_Left2
+      parentName: VAL_JNT_Index_Left1
+      position: {x: -0.02678385, y: -8.5265126e-16, z: 7.160938e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Index_Left3
+      parentName: VAL_JNT_Index_Left2
+      position: {x: -0.031549297, y: 0, z: -2.3869794e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Index_Left4
+      parentName: VAL_JNT_Index_Left3
+      position: {x: -0.022782922, y: 8.5265126e-16, z: 7.382983e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Middle_Left1
+      parentName: VAL_JNT_Wrist_Left
+      position: {x: -0.11877317, y: -0.006556118, z: 0.009362057}
+      rotation: {x: 0.0078794025, y: 0.008439524, z: 0.16768326, w: 0.9857733}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Middle_Left2
+      parentName: VAL_JNT_Middle_Left1
+      position: {x: -0.03583922, y: -8.5265126e-16, z: 3.7747583e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Middle_Left3
+      parentName: VAL_JNT_Middle_Left2
+      position: {x: -0.026957294, y: -2.842171e-16, z: 4.6629366e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Middle_Left4
+      parentName: VAL_JNT_Middle_Left3
+      position: {x: -0.023344934, y: 5.684342e-16, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Ring_Left1
+      parentName: VAL_JNT_Wrist_Left
+      position: {x: -0.1168621, y: -0.009973015, z: -0.010146183}
+      rotation: {x: -0.0021808455, y: -0.023827847, z: 0.16438143, w: 0.98610663}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Ring_Left2
+      parentName: VAL_JNT_Ring_Left1
+      position: {x: -0.03359331, y: 0, z: 3.5527136e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Ring_Left3
+      parentName: VAL_JNT_Ring_Left2
+      position: {x: -0.02769118, y: -2.842171e-16, z: -3.5527136e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Ring_Left4
+      parentName: VAL_JNT_Ring_Left3
+      position: {x: -0.022782922, y: 8.5265126e-16, z: -6.661338e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Pinky_Left1
+      parentName: VAL_JNT_Wrist_Left
+      position: {x: -0.107296996, y: -0.018198382, z: -0.031074356}
+      rotation: {x: -0.00770168, y: -0.043967456, z: 0.14547026, w: 0.9883552}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Pinky_Left2
+      parentName: VAL_JNT_Pinky_Left1
+      position: {x: -0.029736796, y: 0, z: -1.7763568e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Pinky_Left3
+      parentName: VAL_JNT_Pinky_Left2
+      position: {x: -0.023379816, y: -8.5265126e-16, z: -3.5527136e-17}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: VAL_JNT_Pinky_Left4
+      parentName: VAL_JNT_Pinky_Left3
+      position: {x: -0.017122617, y: 1.1368684e-15, z: -1.0658141e-16}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Valkyrie
+      parentName: Valkyrie_Mesh(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BootLeft
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BootRight
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: KneeGuardLeft
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: KneeStrapRight
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: KneeStrapLeft
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: KneeGuardRight
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: ThighGuardLeft
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: ThighGuardRight
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: KiltFrount
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: KiltBack
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BellyGuard
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Belt
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: ChestGuard
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: ShoulderGuardLeft
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: ShoulderGuardStrapLeft
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: ValkBody
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: WristGuardRight
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: TopWristStrapRight
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BottomWristStrapRight
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BottomWristStrapLeft
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: TopWristStrapLeft
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: WristGuardLeft
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Helmet
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: HairBangRight
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: HairBangLeft
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: NeckGuard
+      parentName: Valkyrie
+      position: {x: 0.00019279489, y: -0.06646205, z: -0.006087737}
+      rotation: {x: 0, y: -0.0056099575, z: -0, w: 0.99998426}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Hair
+      parentName: Valkyrie
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -756,7 +1262,7 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
