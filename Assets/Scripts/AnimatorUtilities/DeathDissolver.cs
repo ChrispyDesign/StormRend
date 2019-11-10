@@ -14,7 +14,8 @@ namespace StormRend.Assists
 		[SerializeField] string paramName = "_DissolveValue";
 
 		//Members
-		[ReadOnlyField, SerializeField] List<Material> materials;
+		// [ReadOnlyField, SerializeField] 
+		List<Material> materials = new List<Material>();
 		Unit u;
 		AnimateUnit au;
 
@@ -40,7 +41,6 @@ namespace StormRend.Assists
 
 		IEnumerator RunDeathDissolve()
 		{
-			Debug.Log("running Death dissolve");
 			//Initial delay
 			yield return new WaitForSeconds(initialDelay);
 
