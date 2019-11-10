@@ -319,15 +319,18 @@ namespace StormRend.Units
 			if (targetTiles.Length > 0)
 				SnappedLookAt(targetTiles[targetTiles.Length-1].transform.position);
 
-			//Kick off the Ability's animation
-			// animator.SetTrigger(ability.animationTrigger);
+			//Launch the Ability's animation triggering a series of 
+			//animations events to be executed with precision timing
+			animator.SetTrigger(ability.animationTrigger);
+
+			//Event
 			onActed.Invoke(ability);
-			// ability.Perform(this, targetTiles);
 
 			//Status effects
 			foreach (var se in statusEffects)
 				se.OnActed(this);
 		}
+
 		/// <summary>
 		/// Perform the actual raw ability
 		/// </summary>
@@ -338,6 +341,7 @@ namespace StormRend.Units
 
 			currentAbility.Perform(this, currentTargetTiles);
 		}
+
 		/// <summary>
 		/// Performs a specific effect in the current ability; Use to time effects with animation
 		/// </summary>

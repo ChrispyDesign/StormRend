@@ -40,6 +40,9 @@ namespace StormRend.Units
 		public Animator animator { get; private set; }
 		public new Tag tag { get; private set; }
 
+		//Members
+		protected UnitRegistry ur;
+
 	#region Startup
 		protected virtual void Awake()
 		{
@@ -51,7 +54,11 @@ namespace StormRend.Units
 
 			//Tag
 			tag = GetComponent<UnitTag>();
+
+			//Unit registry
+			ur = UnitRegistry.current;
 		}
+
 		void Start()
 		{
 			//Get animator
@@ -95,6 +102,9 @@ namespace StormRend.Units
 
 		public virtual void Die()
 		{
+			//Register unit death
+			ur.RegisterDeath(this);
+
 			onDeath.Invoke(this);
 		}
 

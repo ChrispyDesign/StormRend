@@ -17,6 +17,9 @@ namespace StormRend.Abilities.Effects
         [SerializeField] int pushAmount = 1;
         [SerializeField] int damage = 0;
         [SerializeField] bool canPushOffEdge = true;
+		[SerializeField] bool causeCrater = true;
+		[SerializeField] float craterAmount = 0.2f;
+
         List<Type> typesToCheck = new List<Type>();
 
         void OnValidate() => Prepare();
@@ -76,6 +79,14 @@ namespace StormRend.Abilities.Effects
                         }
                     }
                 }
+
+				//Cause crater
+				if (causeCrater)
+				{
+					var pos = tt.transform.position;
+					pos.y -= craterAmount;
+					tt.transform.position = pos;
+				}
             }
         }
     }

@@ -1,17 +1,14 @@
-﻿using System.Linq;
-using pokoro.BhaVE.Core;
+﻿using pokoro.BhaVE.Core;
 using pokoro.BhaVE.Core.Delegates;
 using pokoro.BhaVE.Core.Enums;
-using StormRend.Defunct;
-using StormRend.Variables;
 using UnityEngine;
 
 namespace StormRend.Bhaviours
 {
-    /// <summary>
-    /// Filters out lists based on the filter method
-    /// </summary>
-    [CreateAssetMenu(menuName = "StormRend/Delegates/Actions/FilterUnitList", fileName = "FilterUnitList")]
+	/// <summary>
+	/// Filters out lists based on the filter method
+	/// </summary>
+	[CreateAssetMenu(menuName = "StormRend/Delegates/Actions/FilterUnitList", fileName = "FilterUnitList")]
     public class FilterUnitListAction : BhaveAction
     {
         // public enum FilterMode { LowestHP, Closest }

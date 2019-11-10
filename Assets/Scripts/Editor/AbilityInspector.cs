@@ -200,6 +200,10 @@ namespace StormRend.Editors
             m.AddItem(new GUIContent("Blind"), false, () => a.AddEffect<BlindEffect>());
             m.AddItem(new GUIContent("Immobilise"), false, () => a.AddEffect<ImmobiliseEffect>());
 
+			//VFX
+			m.AddSeparator("");
+			m.AddItem(new GUIContent("Crater"), false, () => a.AddEffect<CraterEffect>());
+
             m.DropDown(rect);
         }
         #endregion

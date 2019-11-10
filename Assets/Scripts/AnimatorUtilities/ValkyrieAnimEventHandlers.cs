@@ -4,7 +4,7 @@ using UnityEngine;
 namespace StormRend.Anim.EventHandlers 
 { 
 	/// <summary>
-	/// Hardcoded 
+	/// Hardcoded Valkyrie callbacks
 	/// </summary>
 	public class ValkyrieAnimEventHandlers : UnitAnimEventHandlers
 	{
@@ -16,9 +16,8 @@ namespace StormRend.Anim.EventHandlers
 		public void PerformPush()
 		{
 			au.Act<PushEffect>();
-
-			//TEMP
-			au.Act<RefreshEffect>();
+			
+			au.Act<RefreshEffect>();    //TODO Temporary. Delete later
 		}
    	}
 }
