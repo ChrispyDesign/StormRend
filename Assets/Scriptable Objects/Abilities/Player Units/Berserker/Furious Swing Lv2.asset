@@ -10,22 +10,79 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
-  m_Name: Lightfall Level 1
+  m_Name: Furious Swing Lv2
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 48e162d3df7ae4c498b0dabc36a76971, type: 3}
-  _animationTrigger: LightFall
+  _icon: {fileID: 21300000, guid: 4e9a5d1b7a4960d4687558a2d3b95a57, type: 3}
+  _animationTrigger: FuriousSwing
   _type: 0
   _level: 1
-  _description: Jump to a location and push adjacent enemies back
-  _gloryCost: 0
+  _description: If you kill an enemy, you may move and attack again
+  _gloryCost: 2
   _requiredTiles: 1
-  _targetTileTypes: 1
+  _targetTileTypes: 64
   effects:
-  - {fileID: 114843862156185398}
-  - {fileID: 114801494253684362}
-  - {fileID: 114366731302568036}
-  castArea: 00000000000000000000010000000000010101000000010100010100000001010100000000000100000000000000000000
---- !u!114 &114366731302568036
+  - {fileID: 114178195148735544}
+  - {fileID: 114473816250434770}
+  castArea: 00000000000000000000000000000000000100000000000100010000000000010000000000000000000000000000000000
+--- !u!114 &114008354503859234
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
+  m_Name: RefreshEffect
+  m_EditorClassIdentifier: 
+  refreshType: 0
+  allowedRefreshes: 1
+  refreshCount: 0
+--- !u!114 &114178195148735544
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
+  m_Name: DamageEffect
+  m_EditorClassIdentifier: 
+  damage: 2
+  piercing: 0
+--- !u!114 &114186159587013604
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
+  m_Name: DamageEffect
+  m_EditorClassIdentifier: 
+  damage: 1
+  piercing: 0
+--- !u!114 &114303405589470718
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
+  m_Name: RefreshEffect
+  m_EditorClassIdentifier: 
+  refreshType: 0
+  allowedRefreshes: 1
+  refreshCount: 0
+--- !u!114 &114473816250434770
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -38,54 +95,5 @@ MonoBehaviour:
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
   refreshType: -1
-  allowedRefreshes: 1000
-  refreshCount: 25
---- !u!114 &114801494253684362
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a689f1c72aecd749bd69b2cc1345b40, type: 3}
-  m_Name: TeleportEffect
-  m_EditorClassIdentifier: 
-  restrictToMoveTiles: 0
---- !u!114 &114843862156185398
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca9119896ddbe049ae3df8859d7fd0d, type: 3}
-  m_Name: PushEffect
-  m_EditorClassIdentifier: 
-  unitTypesToPush: 12
-  pushAmount: 1
-  damage: 0
-  canPushOffEdge: 1
-  causeCrater: 1
-  craterAmount: 0.1
---- !u!114 &114923053855270444
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca9119896ddbe049ae3df8859d7fd0d, type: 3}
-  m_Name: PushEffect
-  m_EditorClassIdentifier: 
-  unitTypesToPush: 12
-  pushAmount: 1
-  damage: 0
-  canPushOffEdge: 1
-  causeCrater: 1
-  craterAmount: 0.2
+  allowedRefreshes: 50
+  refreshCount: 0

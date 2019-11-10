@@ -10,35 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
-  m_Name: Safe Passage Level 1
+  m_Name: Safe Passage Lv2
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 88d7610e3b63fd548bd75860f0e18633, type: 3}
+  _icon: {fileID: 21300000, guid: 2a0769b09c609cc44b7bc4bc3554b728, type: 3}
   _animationTrigger: SafePassage
   _type: 0
-  _level: 1
-  _description: 'Choose two tiles: Teleport any units on those tiles'
-  _gloryCost: 0
+  _level: 2
+  _description: Remove any status effects on targetted units
+  _gloryCost: 1
   _requiredTiles: 2
   _targetTileTypes: 65
   effects:
   - {fileID: 114504868100922726}
-  - {fileID: 114129946493200502}
-  castArea: 00000101010000000101010101000101010101010101010100010101010101010101010001010101010000000101010000
---- !u!114 &114129946493200502
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
-  m_Name: RefreshEffect
-  m_EditorClassIdentifier: 
-  refreshType: -1
-  allowedRefreshes: 1000
-  refreshCount: 0
+  - {fileID: 114568690715121412}
+  castArea: 00000001000000000001010100000001010101010001010100010101000101010101000000010101000000000001000000
 --- !u!114 &114504868100922726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -51,3 +36,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8276f40f4bf260f4e92f11193e47668e, type: 3}
   m_Name: SwapUnitEffect
   m_EditorClassIdentifier: 
+--- !u!114 &114568690715121412
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0340ba18f4cdb44a632086657e9e90, type: 3}
+  m_Name: ProtectEffect
+  m_EditorClassIdentifier: 
+  turnCount: 0
+  affectedTurns: 1

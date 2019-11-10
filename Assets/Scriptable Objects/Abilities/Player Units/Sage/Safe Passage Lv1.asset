@@ -10,20 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
-  m_Name: Safe Passage Level 3
+  m_Name: Safe Passage Lv1
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 4b0fda121dd254744985c8a452b6939c, type: 3}
+  _icon: {fileID: 21300000, guid: 88d7610e3b63fd548bd75860f0e18633, type: 3}
   _animationTrigger: SafePassage
   _type: 0
-  _level: 3
-  _description: Restore 2 Health to targeted units
-  _gloryCost: 2
+  _level: 1
+  _description: 'Choose two tiles: Teleport any units on those tiles'
+  _gloryCost: 0
   _requiredTiles: 2
   _targetTileTypes: 65
   effects:
   - {fileID: 114504868100922726}
-  - {fileID: 114951681692836852}
+  - {fileID: 114129946493200502}
   castArea: 00000101010000000101010101000101010101010101010100010101010101010101010001010101010000000101010000
+--- !u!114 &114129946493200502
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
+  m_Name: RefreshEffect
+  m_EditorClassIdentifier: 
+  refreshType: -1
+  allowedRefreshes: 1000
+  refreshCount: 0
 --- !u!114 &114504868100922726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36,16 +51,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8276f40f4bf260f4e92f11193e47668e, type: 3}
   m_Name: SwapUnitEffect
   m_EditorClassIdentifier: 
---- !u!114 &114951681692836852
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47ab1ac30f066d0459f662074c85a663, type: 3}
-  m_Name: HealEffect
-  m_EditorClassIdentifier: 
-  healAmount: 1
