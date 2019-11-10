@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System.Collections;
-using StormRend.Defunct;
 
-[CustomPropertyDrawer(typeof(TileData))]
+// [CustomPropertyDrawer(typeof(TileData))]
 public class GridEditor : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
