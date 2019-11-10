@@ -5380,9 +5380,8 @@ GameObject:
   m_Component:
   - component: {fileID: 653011552559127036}
   - component: {fileID: 3671556472718825716}
-  - component: {fileID: 6523016055183356590}
-  - component: {fileID: 2420172182643608703}
   - component: {fileID: 4596331959945479920}
+  - component: {fileID: 6523016055183356590}
   m_Layer: 0
   m_Name: Valkyrie
   m_TagString: Untagged
@@ -5420,6 +5419,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
   m_Center: {x: 0, y: 0.19554019, z: 0}
+--- !u!114 &4596331959945479920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743394238124216912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40f6bc659baad942bceeb05b250abd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6523016055183356590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5479,7 +5490,13 @@ MonoBehaviour:
   lookSnap: 0
   moveRange: 4
   pathBlockers: 40
-  abilities: []
+  abilities:
+  - {fileID: 11400000, guid: 25e639c4f4cae444ea8a550cd69696d9, type: 2}
+  - {fileID: 11400000, guid: 3fb5203629a20a240aa8def6bdbdde32, type: 2}
+  - {fileID: 11400000, guid: 3d678432b3290d74db837cfc4be4f319, type: 2}
+  - {fileID: 11400000, guid: 099648482d9dabf4dbfbe0bbb3ca2083, type: 2}
+  - {fileID: 11400000, guid: 1b20c7895940bd54aa0bb1e2cd5e88db, type: 2}
+  - {fileID: 11400000, guid: d58a3e6ef76ae704b9a5f873deb33dda, type: 2}
   statusEffects: []
   ghostColor: {r: 1, g: 0.808957, b: 0, a: 1}
   tbcGhostMaterial: {fileID: 0}
@@ -5495,18 +5512,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   onActed:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2420172182643608703}
-        m_MethodName: Animate
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: StormRend.Utility.Events.AbilityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onEndTurn:
@@ -5516,31 +5522,6 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   possibleMoveTiles: []
   possibleTargetTiles: []
---- !u!114 &2420172182643608703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3743394238124216912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b02c3019b546ba4682fa690945abc9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 0}
---- !u!114 &4596331959945479920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3743394238124216912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b40f6bc659baad942bceeb05b250abd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5396795060222417993
 GameObject:
   m_ObjectHideFlags: 0
@@ -23392,6 +23373,7 @@ GameObject:
   - component: {fileID: 7840730420149280474}
   - component: {fileID: 7840730420140191916}
   - component: {fileID: 2371634614360472856}
+  - component: {fileID: 2356287458874941432}
   - component: {fileID: 45244116352507459}
   - component: {fileID: 1041661156002233512}
   m_Layer: 0
@@ -23448,21 +23430,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ed0ea0e34057c47a7028ab9d8e574d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onExecuteAbility:
+  particles: []
+  onDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2356287458874941432}
+        m_MethodName: Run
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  onDeathDissolve:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  onFinaliseDeath:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+--- !u!114 &2356287458874941432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7840730420149699322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ebcd1b983e6ead408869a314176f796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 2
+  dissolveDuration: 5
+  paramName: _DissolveValue
+  materials: []
 --- !u!114 &45244116352507459
 MonoBehaviour:
   m_ObjectHideFlags: 0

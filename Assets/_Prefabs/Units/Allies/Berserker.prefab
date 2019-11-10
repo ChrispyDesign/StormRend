@@ -1557,6 +1557,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4783116619369224812}
   - component: {fileID: 4783116619361809436}
+  - component: {fileID: 1856395943585311906}
+  - component: {fileID: 8161624325957890806}
   - component: {fileID: 3876682348568778481}
   - component: {fileID: 5918177866881148004}
   m_Layer: 0
@@ -1601,6 +1603,50 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1856395943585311906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4783116619369055820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bde02cd90673844e81421a606c320eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particles: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8161624325957890806}
+        m_MethodName: Run
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &8161624325957890806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4783116619369055820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ebcd1b983e6ead408869a314176f796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 1
+  dissolveDuration: 2
+  paramName: _DissolveValue
 --- !u!114 &3876682348568778481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4310,9 +4356,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9108019807441497514}
   - component: {fileID: 9108019807441497519}
-  - component: {fileID: 3841930061851047593}
-  - component: {fileID: 4472237609802827025}
   - component: {fileID: 688204287768951882}
+  - component: {fileID: 3841930061851047593}
   m_Layer: 0
   m_Name: Berserker
   m_TagString: Untagged
@@ -4349,6 +4394,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
   m_Center: {x: 0, y: 0.19554019, z: 0}
+--- !u!114 &688204287768951882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108019807441497518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8ba544a84bdc8545b5b4f7a73bdb207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3841930061851047593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4431,18 +4488,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   onActed:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4472237609802827025}
-        m_MethodName: Animate
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: StormRend.Utility.Events.AbilityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onEndTurn:
@@ -4452,31 +4498,6 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   possibleMoveTiles: []
   possibleTargetTiles: []
---- !u!114 &4472237609802827025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9108019807441497518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b02c3019b546ba4682fa690945abc9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 0}
---- !u!114 &688204287768951882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9108019807441497518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8ba544a84bdc8545b5b4f7a73bdb207, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &4873959505318915483
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -28,9 +28,6 @@ namespace StormRend.Units
 
 		//Members
 
-		//Singleton refs
-		UnitRegistry ur;
-		UserInputHandler ui;
 
 		//Core
 		protected override void Awake()
@@ -47,6 +44,12 @@ namespace StormRend.Units
 			DealDamageToSurroundingUnits();
 
 			if (turns <= 0) Die();
+		}
+
+		public override void Die()
+		{
+			base.Die();
+
 		}
 
 		//Helpers

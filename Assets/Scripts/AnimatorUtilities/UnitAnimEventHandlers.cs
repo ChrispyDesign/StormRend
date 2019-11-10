@@ -9,10 +9,7 @@ namespace StormRend.Anim.EventHandlers
 	{
 		//Inspector
 		[SerializeField] ParticleSystem[] particles;
-
-		public UnityEvent onExecuteAbility;
-		public UnityEvent onDeathDissolve;
-		public UnityEvent onFinaliseDeath;
+		public UnityEvent onDeath;
 
 		//Members
 		protected Unit u;
@@ -24,30 +21,23 @@ namespace StormRend.Anim.EventHandlers
 			au = u as AnimateUnit;
 		}
 
-		public void PerformAbility()
+		public virtual void PerformAbility()
 		{
 			au.Act();
-			onExecuteAbility.Invoke();
 		}
 
-		public void DeathDissolve()
+		public virtual void Die()
 		{
-			Debug.Log("Death Dissolve");
-			onDeathDissolve.Invoke();
+			onDeath.Invoke();	//Run death dissolve and die etc
 		}
 
-		public void FinaliseDeath()
-		{
-			au.Die();
-			onFinaliseDeath.Invoke();
-		}
-		public void PlayPFX(string particleName)
+		public virtual void PlayPFX(string particleName)
 		{
 			foreach (var p in particles)
 			{
 				if (p.name == particleName)
 				{
-					p.Play();	//Preliminary
+					p.Play();	//Preliminary; Might not work
 				}
 			}
 		}

@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: Frost Bite
   m_EditorClassIdentifier: 
   _icon: {fileID: 0}
-  _animNumber: 0
-  _abilityLevel: 1
-  _abilityType: 1
+  _animationTrigger: 
+  _type: 1
+  _level: 0
   _description: 
   _gloryCost: 1
-  requiredTiles: 1
-  _targetableTileMask: 0
+  _requiredTiles: 1
+  _targetTileTypes: -1
   effects: []
+  castArea: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!114 &114319388176081130
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47,5 +48,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
-  m_target: 0
-  m_damageAmount: 1
+  damage: 1
+  piercing: 0
