@@ -3465,17 +3465,6 @@ MonoBehaviour:
   onUnitCreated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6469810143464303935}
-        m_MethodName: OnUnitCreate
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 3853550850681500604}
         m_MethodName: Run
         m_Mode: 1
@@ -3492,17 +3481,6 @@ MonoBehaviour:
   onUnitKilled:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6469810143464303935}
-        m_MethodName: OnUnitKilled
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 3853550850681500604}
         m_MethodName: Run
         m_Mode: 1
@@ -3525,7 +3503,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3078568901041975783}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26c44f4d099eb53428e46924d4156c5e, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a2f7d9521968554d9167e1002a40609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &3853550850681500604
@@ -3890,7 +3868,19 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   onAbilityPerformed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8304828006175286027}
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 35bc94c790f867d47b4a3f7fc98d89a6,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: StormRend.Utility.Events.AbilityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onAbilityCleared:
@@ -3942,7 +3932,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  help: "Animation Event Callbacks: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)"
   description: ' '
   chance: 50
   sounds: []

@@ -43,8 +43,7 @@ namespace StormRend.Abilities
 		[Tooltip("The required number of selected tiles this ability needs in order for it to be performed. NOTE: Setting this to zero will instantly perform ability on self upon clicking on ability")]
 		[Space, SerializeField] int _requiredTiles = 1;
 
-		[Tooltip("The type of tiles this ability can target")]
-		//This will be used to determine which tiles the UserInputHandler can pick
+		[Tooltip("The tiles this ability can target")]
 		[EnumFlags, SerializeField] TargetType _targetTileTypes = (TargetType)~0;
 
 		//Members

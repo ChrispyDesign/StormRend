@@ -8,21 +8,12 @@ namespace StormRend.Editors
 	public class EffectInspector : Editor
 	{
 		//Members
-		Ability owner;
+		public Ability owner;
 		GUIStyle boldFoldoutStyle;
 
-		public EffectInspector(Ability ability)
-		{
-			owner = ability;
-		}
-
-		// void OnEnable()
+		// public EffectInspector(Ability ability)
 		// {
-		// 	//Create a bold foldout GUI style
-		// 	boldFoldoutStyle = new GUIStyle(EditorStyles.foldout)
-		// 	{
-		// 		fontStyle = FontStyle.Bold,
-		// 	};
+		// 	owner = ability;
 		// }
 
 		public void DrawGUI()

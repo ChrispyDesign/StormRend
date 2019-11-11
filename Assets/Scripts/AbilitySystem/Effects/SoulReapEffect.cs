@@ -15,7 +15,6 @@ namespace StormRend.Abilities.Effects
 		[SerializeField] BhaveInt glory = null;
 		public override void OnUnitKilled(Ability ability, Unit owner, Unit killedUnit)
 		{
-			Debug.Log("OnUnitKilled");
 			//HARDCODE
 			var au = owner as AnimateUnit;
 			if (killedUnit is EnemyUnit)	//Make sure unit killed is an enemy

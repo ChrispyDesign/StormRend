@@ -4765,8 +4765,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4159071878291178778}
-  - component: {fileID: 8394477178119149605}
-  - component: {fileID: 6943650365855858195}
+  - component: {fileID: 1134809179225258851}
+  - component: {fileID: 6026924164550050840}
   m_Layer: 0
   m_Name: SpiritCrystal-LV1
   m_TagString: Untagged
@@ -4791,7 +4791,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8394477178119149605
+--- !u!114 &1134809179225258851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3266679734864301431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf5ba95177f2cd42818227d2cefdf88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6026924164550050840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4805,7 +4817,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   _hp: 0
-  _maxHP: 1
+  _maxHP: 3
   onDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -4826,19 +4838,6 @@ MonoBehaviour:
   damage: 1
   range: 1
   invulnerableTypes: 64
---- !u!114 &6943650365855858195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3266679734864301431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b02c3019b546ba4682fa690945abc9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 0}
 --- !u!1 &4313770437090816383
 GameObject:
   m_ObjectHideFlags: 0
