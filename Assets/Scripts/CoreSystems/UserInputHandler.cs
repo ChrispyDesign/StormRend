@@ -548,10 +548,14 @@ namespace StormRend.Systems
 			GUILayout.Label("is a tile hit?: " + isTileHit);
 
 			GUILayout.Label("is a unit selected?: " + isUnitSelected);
-			if (_selectedAbilityVar.value) GUILayout.Label("Selected Unit: " + _selectedUnitVar?.value?.name);
+			// if (_selectedAbility != null) 
+			GUILayout.Label("Selected Unit: " + selectedUnit?.name);
+			// if (_selectedAbilityVar.value != null) GUILayout.Label("Selected Unit: " + _selectedUnitVar.value.name);
 
 			GUILayout.Label("is an ability selected?: " + isAbilitySelected);
-			if (_selectedAbilityVar.value) GUILayout.Label("Selected Ability: " + _selectedAbilityVar?.value?.name);
+			// if (_selectedAbility != null) 
+			GUILayout.Label("Selected Ability: " + selectedAbility?.name);
+			// if (_selectedAbilityVar.value != null) GUILayout.Label("Selected Ability: " + _selectedAbilityVar.value.name);
 
 			GUILayout.Label("GUI hits count: " + GUIhits.Count);
 

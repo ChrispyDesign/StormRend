@@ -30,7 +30,7 @@ namespace StormRend.Abilities
 		[Tooltip("Animation trigger for this ability that will be sent to animator")]
 		[SerializeField] string _animationTrigger = "";
 		[SerializeField] AbilityType _type = AbilityType.Primary;
-		[Range(1, 3), SerializeField] int _level = 0;
+		[Range(1, 3), SerializeField] int _level = 1;
 		[TextArea(0, 2), SerializeField] string _description = "";
 
 		[Header("Casting"), Space(1), Tooltip("Glory cost required to perform this ability")]
@@ -64,10 +64,10 @@ namespace StormRend.Abilities
 		/// </summary>
 		public void Perform(Unit owner, params Tile[] targets)
 		{
-			Debug.Log("Performing Ability: " + this.name);
+			// Debug.Log("Performing Ability: " + this.name);
 			foreach (var e in effects)
 			{
-				Debug.Log("Performing Effect: " + e.name);
+				// Debug.Log("Performing Effect: " + e.name);
 				e.Perform(this, owner, targets);
 			}
 		}
@@ -80,10 +80,10 @@ namespace StormRend.Abilities
 		{
 			foreach (var e in effects)
 			{
-				Debug.Log("Performing Ability: " + this.name);
+				// Debug.Log("Performing Ability: " + this.name);
 				if (e is T)
 				{
-					Debug.Log("Performing Effect: " + e.name);
+					// Debug.Log("Performing Effect: " + e.name);
 					e.Perform(this, owner, targets);
 				}
 			}

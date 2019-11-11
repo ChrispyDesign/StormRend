@@ -1,5 +1,6 @@
 using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
+using StormRend.Systems;
 using StormRend.Tags;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
@@ -42,6 +43,7 @@ namespace StormRend.Units
 
 		//Members
 		protected UnitRegistry ur;
+		protected UserInputHandler uih;
 
 	#region Startup
 		protected virtual void Awake()
@@ -55,8 +57,9 @@ namespace StormRend.Units
 			//Tag
 			tag = GetComponent<UnitTag>();
 
-			//Unit registry
+			//Singletons
 			ur = UnitRegistry.current;
+			uih = UserInputHandler.current;
 		}
 
 		void Start()
@@ -88,7 +91,7 @@ namespace StormRend.Units
 			if (isDead) return;     //Can't beat a dead horse :P
 			HP -= damageData.amount;
 
-			//Die() shouldn't be called immediately because the death sequence is complex and has timing
+			//Die() shouldn't be called immediately because the death sequence has timing complexities
 			// if (HP <= 0) Die();		
 
 			onDamage.Invoke(damageData);	//ie. Update health bar etc
@@ -102,7 +105,6 @@ namespace StormRend.Units
 
 		public virtual void Die()
 		{
-			//Register unit death
 			ur.RegisterDeath(this);
 
 			onDeath.Invoke(this);
