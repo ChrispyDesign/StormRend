@@ -5,6 +5,8 @@ using StormRend.Units;
 using StormRend.Utility.Attributes;
 using UnityEngine;
 using StormRend.Enums;
+using pokoro.BhaVE.Core.Variables;
+using StormRend.Abilities.Effects;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -35,9 +37,11 @@ namespace StormRend.Abilities
 
 		[Header("Casting"), Space(1), Tooltip("Glory cost required to perform this ability")]
 		[SerializeField] int _gloryCost = 1;
+		[SerializeField] BhaveInt glory = null;
+
 
 		[Tooltip("The required number of selected tiles this ability needs in order for it to be performed. NOTE: Setting this to zero will instantly perform ability on self upon clicking on ability")]
-		[SerializeField] int _requiredTiles = 1;
+		[Space, SerializeField] int _requiredTiles = 1;
 
 		[Tooltip("The type of tiles this ability can target")]
 		//This will be used to determine which tiles the UserInputHandler can pick
@@ -65,6 +69,7 @@ namespace StormRend.Abilities
 		public void Perform(Unit owner, params Tile[] targets)
 		{
 			// Debug.Log("Performing Ability: " + this.name);
+			SpendGlory();
 			foreach (var e in effects)
 			{
 				// Debug.Log("Performing Effect: " + e.name);
@@ -78,13 +83,36 @@ namespace StormRend.Abilities
 		/// <typeparam name="T">Effect type to specifically perform</typeparam>
 		public void Perform<T>(Unit owner, params Tile[] targets) where T : Effect
 		{
+			SpendGlory();
 			foreach (var e in effects)
 			{
-				// Debug.Log("Performing Ability: " + this.name);
 				if (e is T)
 				{
-					// Debug.Log("Performing Effect: " + e.name);
 					e.Perform(this, owner, targets);
+				}
+			}
+		}
+
+		public void PerformOnUnitKilled(Unit owner, Unit killed)
+		{
+			foreach (var e in effects)
+			{
+				var pe = e as PassiveEffect;
+				if (pe)
+				{
+					pe.OnUnitKilled(this, owner, killed);
+				}
+			}
+		}
+
+		public void PerformOnUnitCreated(Unit owner, Unit created)
+		{
+			foreach (var e in effects)
+			{
+				var pe = e as PassiveEffect;
+				if (pe)
+				{
+					pe.OnUnitCreated(this, owner, created);
 				}
 			}
 		}
@@ -164,6 +192,14 @@ namespace StormRend.Abilities
 			DestroyImmediate(e, true);
 			AssetDatabase.SaveAssets();
 #endif
+		}
+
+		public void SpendGlory()
+		{
+			if (glory)
+				glory.value -= gloryCost;
+			else
+				Debug.LogWarning("No glory SOV allocated!");
 		}
 	}
 }

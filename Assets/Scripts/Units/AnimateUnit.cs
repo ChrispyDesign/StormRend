@@ -38,7 +38,8 @@ namespace StormRend.Units
 		[Tooltip("The unit types of that this unit cannot walk through ie. opponents")]
 		[EnumFlags, SerializeField] TargetType pathBlockers = TargetType.Enemies | TargetType.InAnimates;
 		[SerializeField] internal Ability[] abilities = new Ability[0];
-		[ReadOnlyField, SerializeField] internal HashSet<StatusEffect> statusEffects = new HashSet<StatusEffect>();
+		[ReadOnlyField, SerializeField] internal List<StatusEffect> statusEffects = new List<StatusEffect>();
+		// [ReadOnlyField, SerializeField] internal HashSet<StatusEffect> statusEffects = new HashSet<StatusEffect>();
 
 		[Header("Ghost")]
 		[SerializeField] protected Color ghostColor = Color.blue;
@@ -410,7 +411,7 @@ namespace StormRend.Units
 		/// <summary>
 		/// Get the tiles that can be currently acted upon by this ability
 		/// </summary>
-		public Tile[] CalculateTargetTiles(Ability a)
+		public Tile[] CalculateTargetTiles(Ability a, bool onlyGetResults = false)
 		{
 			var result = new List<Tile>();
 			var sqrLen = Ability.caSize;
@@ -435,9 +436,11 @@ namespace StormRend.Units
 					}
 				}
 			}
-			// SRDebug.PrintCollection(possibleTargetTiles);
-			possibleTargetTiles = result.ToArray();
-			return possibleTargetTiles;
+
+			//Cache
+			var resultToArray = result.ToArray();
+			if (!onlyGetResults) possibleTargetTiles = resultToArray;
+			return resultToArray;
 		}
 
 		//------------------ OTHER

@@ -14,7 +14,7 @@ namespace StormRend.Abilities.Effects
 			foreach (var t in targetTiles)
 			{
 				var inanimate = Instantiate(summon, t.gameObject.transform.position, Quaternion.identity, null).GetComponent<InAnimateUnit>();
-				UnitRegistry.current.RegisterUnit(inanimate);
+				UnitRegistry.current.RegisterUnitCreation(inanimate);
 			}
         }
     }

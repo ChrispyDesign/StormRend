@@ -18,6 +18,7 @@ MonoBehaviour:
   _level: 1
   _description: Deal 2 damage
   _gloryCost: 0
+  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
   _targetTileTypes: 64
   effects:
@@ -57,7 +58,7 @@ MonoBehaviour:
   notes: 
   damage: 2
   piercing: 0
-  gainGlory: 8
+  gainGlory: 1
   gloryAmount: 1
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
 --- !u!114 &114615408424896200
@@ -87,7 +88,7 @@ MonoBehaviour:
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
   notes: FOR TESTING PURPOSES!
-  refreshCount: 7
+  refreshCount: 3
   refreshType: -1
   delay: 1
   allowedRefreshes: 1000

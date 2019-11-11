@@ -71,11 +71,11 @@ namespace StormRend.Units
 		void ScanTileBelow()
 		{
 			//TEMP Scan below
-			float scanRange = 0.2f;
+			float scanTolerance = 0.2f;
 			foreach (var t in Map.current.tiles)
 			{
 				//If a tile is within a certain range then set it as the current tile
-				if (Vector3.Distance(t.transform.position, transform.position) < scanRange)
+				if (Vector3.Distance(t.transform.position, transform.position) < scanTolerance)
 				{
 					currentTile = t;
 					return;
@@ -105,7 +105,7 @@ namespace StormRend.Units
 
 		public virtual void Die()
 		{
-			ur.RegisterDeath(this);
+			ur.RegisterUnitDeath(this);
 
 			onDeath.Invoke(this);
 		}

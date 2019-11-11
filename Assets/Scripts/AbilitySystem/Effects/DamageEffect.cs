@@ -32,10 +32,10 @@ namespace StormRend.Abilities.Effects
 		[SerializeField] int gloryAmount = 1;
 		[SerializeField] BhaveInt glory = null;
 
-		public override void Prepare(Ability ability, Unit owner)
-		{
-			Debug.Assert(glory, "No glory SOV allocated!");
-		}
+		// public override void Prepare(Ability ability, Unit owner)
+		// {
+		// 	Debug.Assert(glory, "No glory SOV allocated!");
+		// }
 
 		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
@@ -101,14 +101,14 @@ namespace StormRend.Abilities.Effects
 			if ((gainGlory & GainGloryType.Hit) == GainGloryType.Hit || 
 				(gainGlory & GainGloryType.HitAndKill) == GainGloryType.HitAndKill)
 			{
-				glory.value += gloryAmount;
+				if (glory) glory.value += gloryAmount;
 			}
 			//KILL
 			if ((gainGlory & GainGloryType.Kill) == GainGloryType.Kill ||
 				(gainGlory & GainGloryType.HitAndKill) == GainGloryType.HitAndKill
 				&& u.isDead)
 			{
-				glory.value += gloryAmount;
+				if (glory) glory.value += gloryAmount;
 			}
 		}
 	}

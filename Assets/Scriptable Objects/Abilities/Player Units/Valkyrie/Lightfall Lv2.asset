@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: b120ee2d0154d3d479dc2c88ca2de4d6, type: 3}
   _animationTrigger: LightFall
-  _type: 0
-  _level: 1
+  _type: 1
+  _level: 2
   _description: Gain Protection
   _gloryCost: 1
+  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
   _targetTileTypes: 1
   effects:
@@ -35,6 +36,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0340ba18f4cdb44a632086657e9e90, type: 3}
   m_Name: ProtectEffect
   m_EditorClassIdentifier: 
+  notes: 
   turnCount: 0
   affectedTurns: 1
 --- !u!114 &114494440402168048
@@ -49,9 +51,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
-  refreshType: 0
-  allowedRefreshes: 1
+  notes: 
   refreshCount: 0
+  refreshType: 0
+  delay: 1
+  allowedRefreshes: 1
 --- !u!114 &114923053855270444
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -64,6 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9119896ddbe049ae3df8859d7fd0d, type: 3}
   m_Name: PushEffect
   m_EditorClassIdentifier: 
+  notes: 
   unitTypesToPush: 12
   pushAmount: 1
   damage: 0
