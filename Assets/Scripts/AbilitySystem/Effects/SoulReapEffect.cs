@@ -1,5 +1,6 @@
 using System.Linq;
 using pokoro.BhaVE.Core.Variables;
+using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
 using StormRend.Units;
 using UnityEngine;
@@ -19,8 +20,13 @@ namespace StormRend.Abilities.Effects
 			var au = owner as AnimateUnit;
 			if (killedUnit is EnemyUnit)	//Make sure unit killed is an enemy
 			{
-				//Make sure unit is in range
-				var tilesInRange = au.CalculateTargetTiles(ability, false);
+				//NOTE: This detect killed units within range of current unit position
+				//Could potentially cheat with this
+				// var tilesInRange = au.CalculateTargetTiles(ability, false);
+
+				//NOTE: this detects killed units within range of owners start of turn position
+				//The soul commune display has to stay in place?
+				var tilesInRange = au.CalculateTargetTiles(ability, au.beginTurnTile, true);
 				if (tilesInRange.Contains(killedUnit.currentTile))
 				{
 					if (glory) glory.value += gloryGainAmount;		//Gain glory
