@@ -20,7 +20,7 @@ MonoBehaviour:
     1 damage to them.
   _gloryCost: 0
   _requiredTiles: 1
-  _targetTileTypes: 64
+  _targetTileTypes: 2
   effects:
   - {fileID: 114679432023497332}
   - {fileID: 114070250159324854}
@@ -69,9 +69,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
+  refreshCount: 6
   refreshType: -1
+  delay: 1
   allowedRefreshes: 1000
-  refreshCount: 0
 --- !u!114 &114679432023497332
 MonoBehaviour:
   m_ObjectHideFlags: 1
