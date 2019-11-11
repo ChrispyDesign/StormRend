@@ -41,7 +41,9 @@ namespace StormRend.Editors
         {
             //Inits
             a = target as Ability;
-            ei = new EffectInspector(a);
+			ei = CreateInstance<EffectInspector>();
+			ei.owner = a;
+            // ei = new EffectInspector(a);
 
             titleStyle = new GUIStyle()
             {

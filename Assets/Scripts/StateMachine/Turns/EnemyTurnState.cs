@@ -53,7 +53,7 @@ namespace StormRend.States
 				yield return new WaitForSeconds(aiTurnTime);
 			}
 
-			//Tick crystals (kinda bad)
+			//Tick crystals HARDCODE
 			TickCrystals();
 
 			//Finish enemy turn

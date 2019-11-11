@@ -10,6 +10,9 @@ namespace StormRend.Editors.MenuItems
     [CustomEditor(typeof(AudioSystem))]
     public class AudioSystemMenuItem : SmartEditor
     {
+		string help = "Animation Event Handlers: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)";
+        public override string[] propertiesToExclude => new[]{ "m_Script" };
+
         [MenuItem("GameObject/StormRend/AudioSystem", false, 10)]
         static void CreateGameObject(MenuCommand menuCommand)
         {
@@ -19,6 +22,9 @@ namespace StormRend.Editors.MenuItems
             Selection.activeObject = newo;
         }
 
-        public override string[] propertiesToExclude => new[]{ "m_Script" };
+		public override void OnPreInspector()
+		{
+			EditorGUILayout.HelpBox(help, MessageType.Info);
+		}
     }
 }

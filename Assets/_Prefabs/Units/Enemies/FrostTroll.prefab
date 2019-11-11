@@ -9,12 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3093552309022210659}
-  - component: {fileID: 3093552309022210656}
-  - component: {fileID: 3093552309022210590}
+  - component: {fileID: 2615198146657782402}
   - component: {fileID: 334213095109828410}
   - component: {fileID: 5168873017443203932}
-  - component: {fileID: 1631886476245035148}
-  - component: {fileID: 2615198146657782402}
+  - component: {fileID: 3093552309022210590}
+  - component: {fileID: 3093552309022210656}
   m_Layer: 0
   m_Name: FrostTroll
   m_TagString: Untagged
@@ -38,27 +37,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3093552309022210656
-MeshFilter:
+--- !u!114 &2615198146657782402
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3093552309022210591}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &3093552309022210590
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3093552309022210591}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
-  m_Center: {x: 0, y: 0.19554019, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d43d78ba269ed42acdadf65a21e86e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &334213095109828410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +132,7 @@ MonoBehaviour:
   moveRange: 4
   pathBlockers: 40
   abilities: []
+  statusEffects: []
   ghostColor: {r: 0, g: 0, b: 1, a: 1}
   tbcGhostMaterial: {fileID: 0}
   onAddStatusEffect:
@@ -157,7 +148,7 @@ MonoBehaviour:
   onActed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1631886476245035148}
+      - m_Target: {fileID: 0}
         m_MethodName: Animate
         m_Mode: 0
         m_Arguments:
@@ -177,31 +168,27 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   possibleMoveTiles: []
   possibleTargetTiles: []
---- !u!114 &1631886476245035148
-MonoBehaviour:
+--- !u!65 &3093552309022210590
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3093552309022210591}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b02c3019b546ba4682fa690945abc9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 0}
---- !u!114 &2615198146657782402
-MonoBehaviour:
+  serializedVersion: 2
+  m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
+  m_Center: {x: 0, y: 0.19554019, z: 0}
+--- !u!33 &3093552309022210656
+MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3093552309022210591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d43d78ba269ed42acdadf65a21e86e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!82 &8431704914978499676
 AudioSource:
   m_ObjectHideFlags: 0
@@ -310,7 +297,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  help: "Animation Event Callbacks: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)"
   description: 
   chance: 50
   sounds: []

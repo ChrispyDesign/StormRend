@@ -7,9 +7,6 @@ namespace StormRend.Audio
     [RequireComponent(typeof(AudioSource))]
     public class AudioSystem : MonoBehaviour
     {
-        //Helpbox
-        [HelpBox, SerializeField] string help = "Animation Event Handlers: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)";
-
         //Inspector
         [TextArea(0, 2), SerializeField] string description = " ";
 
@@ -53,7 +50,7 @@ namespace StormRend.Audio
         {
             AudioMagazine am = audioMagazine as AudioMagazine;
             if (Random.Range(0, 100) < am.chance)
-                audioSource.PlayOneShot(am.clips[Random.Range(0, am.clips.Count)]);
+                audioSource.PlayOneShot(am.clips[Random.Range(0, am.clips.Count)], am.volume);
         }
 
         /// <summary> Play one audio clip once </summary>

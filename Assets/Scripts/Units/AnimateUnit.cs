@@ -94,6 +94,15 @@ namespace StormRend.Units
 				}
 			}
 		}
+		public bool isProvoking
+		{
+			get
+			{
+				foreach (var se in statusEffects)
+					if (se is TauntEffect) return true;
+				return false;
+			}
+		}
 
 		//Members
 		protected GameObject ghostMesh = null;
@@ -161,7 +170,6 @@ namespace StormRend.Units
 		public void BeginTurn()		//Reset necessary stats and get unit ready for the next turn
 		{
 			// Debug.Log(this.name + ".AnimateUnit.BeginTurn()");
-
 			//Can take action again (This doesn't reselect the units)
 			_canMove = true;
 			_canAct = true;
@@ -411,8 +419,11 @@ namespace StormRend.Units
 		/// <summary>
 		/// Get the tiles that can be currently acted upon by this ability
 		/// </summary>
-		public Tile[] CalculateTargetTiles(Ability a, bool onlyGetResults = false)
+		public Tile[] CalculateTargetTiles(Ability a, Tile startTile = null, bool onlyGetResults = false)
 		{
+			//Defaults
+			if (startTile == null) startTile = currentTile;
+
 			var result = new List<Tile>();
 			var sqrLen = Ability.caSize;
 
@@ -428,7 +439,7 @@ namespace StormRend.Units
 					{
 						Vector2Int offset = new Vector2Int(row, col) - center;
 
-						if (currentTile.TryGetTile(offset, out Tile t))
+						if (startTile.TryGetTile(offset, out Tile t))
 						{
 							if (!(t is UnWalkableTile))
 								result.Add(t);
