@@ -117,34 +117,6 @@ namespace StormRend.Systems
 		List<RaycastResult> GUIhits = new List<RaycastResult>();
 		List<Type> currentControllableUnitTypes = new List<Type>();		//Holds the list of types that can be controlled for this game turn
 
-	// #region Callback Registration
-	// 	void OnEnable()
-	// 	{
-	// 		_selectedUnitVar.onChanged += OnSelectedUnitChanged;
-	// 		_selectedAbilityVar.onChanged += OnSelectedAbilityChanged;
-	// 	}
-	// 	void OnDisable()
-	// 	{
-	// 		_selectedUnitVar.onChanged -= OnSelectedUnitChanged;
-	// 		_selectedAbilityVar.onChanged -= OnSelectedAbilityChanged;
-	// 	}
-	// 	void OnSelectedUnitChanged()
-	// 	{
-	// 		//
-	// 		if (selectedUnit)
-	// 			SelectUnit(selectedUnit as AnimateUnit);
-	// 		else
-	// 			ClearSelectedUnit();
-	// 	}
-	// 	void OnSelectedAbilityChanged()
-	// 	{
-	// 		if (selectedAbility)
-	// 			SelectAbility(selectedAbility);
-	// 		else
-	// 			ClearSelectedAbility();
-	// 	}
-	// #endregion
-
 	#region Core
 		void Start()
 		{
@@ -548,10 +520,14 @@ namespace StormRend.Systems
 			GUILayout.Label("is a tile hit?: " + isTileHit);
 
 			GUILayout.Label("is a unit selected?: " + isUnitSelected);
-			if (_selectedAbilityVar.value) GUILayout.Label("Selected Unit: " + _selectedUnitVar?.value?.name);
+			// if (_selectedAbility != null) 
+			GUILayout.Label("Selected Unit: " + selectedUnit?.name);
+			// if (_selectedAbilityVar.value != null) GUILayout.Label("Selected Unit: " + _selectedUnitVar.value.name);
 
 			GUILayout.Label("is an ability selected?: " + isAbilitySelected);
-			if (_selectedAbilityVar.value) GUILayout.Label("Selected Ability: " + _selectedAbilityVar?.value?.name);
+			// if (_selectedAbility != null) 
+			GUILayout.Label("Selected Ability: " + selectedAbility?.name);
+			// if (_selectedAbilityVar.value != null) GUILayout.Label("Selected Ability: " + _selectedAbilityVar.value.name);
 
 			GUILayout.Label("GUI hits count: " + GUIhits.Count);
 

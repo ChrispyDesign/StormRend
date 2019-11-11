@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Spirit Crystal Lv2
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: fe29987e1aeef9646bfc7be88b8b11ab, type: 3}
-  _animationTrigger: 
+  _animationTrigger: SpiritCrystal
   _type: 1
-  _level: 1
+  _level: 2
   _description: When the Crystal explodes, Immobilise adjacent units
   _gloryCost: 1
+  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
-  _targetTileTypes: 65
+  _targetTileTypes: 8
   effects:
   - {fileID: 114499308220249746}
   castArea: 00000001000000000001010100000001010101010001010100010101000101010101000000010101000000000001000000
@@ -35,6 +36,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f2715bfc5600e4b9a9a9bea62fb22c, type: 3}
   m_Name: SummonEffect
   m_EditorClassIdentifier: 
+  notes: 
   summon: {fileID: 3266679734864301431, guid: 3fba75eb2b86c974197a410b811511d6, type: 3}
 --- !u!114 &114776763529855574
 MonoBehaviour:
@@ -48,4 +50,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f2715bfc5600e4b9a9a9bea62fb22c, type: 3}
   m_Name: SummonEffect
   m_EditorClassIdentifier: 
+  notes: 
   summon: {fileID: 0}

@@ -3421,8 +3421,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7565347559415896426}
   - component: {fileID: 4714817229119878404}
+  - component: {fileID: 6469810143464303935}
   - component: {fileID: 3853550850681500604}
-  - component: {fileID: 6551759223372582135}
   m_Layer: 0
   m_Name: UnitRegistry
   m_TagString: Untagged
@@ -3462,12 +3462,12 @@ MonoBehaviour:
     crystals or new spawn units)'
   _aliveUnits: []
   _deadUnits: []
-  onRegisterUnit:
+  onUnitCreated:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3853550850681500604}
-        m_MethodName: Run
-        m_Mode: 1
+      - m_Target: {fileID: 6469810143464303935}
+        m_MethodName: OnUnitCreate
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3489,11 +3489,45 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  onRegisterDeath:
+  onUnitKilled:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6469810143464303935}
+        m_MethodName: OnUnitKilled
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3853550850681500604}
+        m_MethodName: Run
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &6469810143464303935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3078568901041975783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26c44f4d099eb53428e46924d4156c5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3853550850681500604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3506,20 +3540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f6b001eaba1d648a311ba05267f4a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 4
---- !u!114 &6551759223372582135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3078568901041975783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05f6b001eaba1d648a311ba05267f4a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitType: 8
+  unitTypes: 12
 --- !u!1 &3100346579098970599
 GameObject:
   m_ObjectHideFlags: 0
@@ -7943,7 +7964,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6841392901105898437}
   - component: {fileID: 6841392901105898438}
-  - component: {fileID: 7434633744730287440}
   m_Layer: 0
   m_Name: AllyTurn
   m_TagString: Untagged
@@ -8015,17 +8035,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 7434633744730287440}
-        m_MethodName: Run
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
     m_TypeName: StormRend.Utility.Events.StateEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onTurnExit:
@@ -8044,19 +8053,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: StormRend.Utility.Events.StateEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &7434633744730287440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6841392901105898436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05f6b001eaba1d648a311ba05267f4a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitType: 8
 --- !u!1 &6962013832118132037
 GameObject:
   m_ObjectHideFlags: 0

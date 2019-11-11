@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using StormRend.Abilities;
@@ -28,8 +29,8 @@ namespace StormRend.Units
 
 		//Inspector
 		[ReadOnlyField] public Tile beginTurnTile = null;   //The tile this unit starts from at the beginning of each turn
-		[ReadOnlyField] public bool _canMove = true;
-		[ReadOnlyField] public bool _canAct = true;
+		[ReadOnlyField, SerializeField] bool _canMove = true;
+		[ReadOnlyField, SerializeField] bool _canAct = true;
 		[SerializeField] LookSnap lookSnap = LookSnap.RightAngle;
 
 		[Header("Abilities & Effects")]
@@ -38,6 +39,7 @@ namespace StormRend.Units
 		[EnumFlags, SerializeField] TargetType pathBlockers = TargetType.Enemies | TargetType.InAnimates;
 		[SerializeField] internal Ability[] abilities = new Ability[0];
 		[ReadOnlyField, SerializeField] internal List<StatusEffect> statusEffects = new List<StatusEffect>();
+		// [ReadOnlyField, SerializeField] internal HashSet<StatusEffect> statusEffects = new HashSet<StatusEffect>();
 
 		[Header("Ghost")]
 		[SerializeField] protected Color ghostColor = Color.blue;
@@ -55,9 +57,30 @@ namespace StormRend.Units
 		public Tile[] possibleMoveTiles;// { get; set; } = new Tile[0];
 		public Tile[] possibleTargetTiles;// { get; set; } = new Tile[0];
 		public bool canMove => _canMove;
-		public void SetCanMove(bool value) => _canMove = value;
+		public void SetCanMove(bool value, float delay = 0) => StartCoroutine(DelaySetMove(value, delay));
+		IEnumerator DelaySetMove(bool value, float delay)		//Used for correct timing of refresh effect
+		{
+			yield return new WaitForSeconds(delay);
+			_canMove = value;
+
+			//If move value true then reselect unit so that the move tiles will appear
+			if (_canMove) uih.SelectUnit(this);
+		}
 		public bool canAct => _canAct;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
-		public void SetCanAct(bool value) => _canAct = value;
+		public void SetCanAct(bool value, float delay = 0) => StartCoroutine(DelaySetAct(value, delay));
+		IEnumerator DelaySetAct(bool value, float delay)		//Used for correct timing of refresh effect
+		{
+			yield return new WaitForSeconds(delay);
+			_canAct = value;
+
+			//If can act again then show new possible act tiles
+			if (_canAct)
+			{
+				uih.SelectUnit(this);
+				uih.SelectAbility(currentAbility);
+			}
+		}
+		
 		float snapAngle
 		{
 			get
@@ -137,11 +160,11 @@ namespace StormRend.Units
 		//State machine / game director / Unit registry to run through all these on ally turn enter?
 		public void BeginTurn()		//Reset necessary stats and get unit ready for the next turn
 		{
-			Debug.Log(this.name + ".AnimateUnit.BeginTurn()");
+			// Debug.Log(this.name + ".AnimateUnit.BeginTurn()");
 
-			//Can take action again
-			SetCanAct(true);
-			SetCanMove(true);
+			//Can take action again (This doesn't reselect the units)
+			_canMove = true;
+			_canAct = true;
 
 			//Calculate new move tiles
 			beginTurnTile = currentTile;
@@ -312,8 +335,8 @@ namespace StormRend.Units
 			currentTargetTiles = targetTiles;
 
 			//Lock in movement and action
-			SetCanAct(false);
-			SetCanMove(false);
+			_canAct = false;
+			_canMove = false;
 
 			//Face the the last tile that was passed in
 			if (targetTiles.Length > 0)
@@ -338,7 +361,6 @@ namespace StormRend.Units
 		{
 			//Null check
 			if (currentTargetTiles.Length == 0 || currentAbility == null) return;
-
 			currentAbility.Perform(this, currentTargetTiles);
 		}
 
@@ -382,14 +404,14 @@ namespace StormRend.Units
 				pathblockers.Add(typeof(AnimateUnit));
 
 			possibleMoveTiles = Map.GetPossibleTiles(beginTurnTile.owner, beginTurnTile, moveRange, pathblockers.ToArray());
-			Debug.LogFormat("{0}.CalculateMoveTiles(), Count: {1}", this.name, possibleMoveTiles.Length);
+			// Debug.LogFormat("{0}.CalculateMoveTiles(), Count: {1}", this.name, possibleMoveTiles.Length);
 			return possibleMoveTiles;
 		}
 
 		/// <summary>
 		/// Get the tiles that can be currently acted upon by this ability
 		/// </summary>
-		public Tile[] CalculateTargetTiles(Ability a)
+		public Tile[] CalculateTargetTiles(Ability a, bool onlyGetResults = false)
 		{
 			var result = new List<Tile>();
 			var sqrLen = Ability.caSize;
@@ -414,9 +436,11 @@ namespace StormRend.Units
 					}
 				}
 			}
-			// SRDebug.PrintCollection(possibleTargetTiles);
-			possibleTargetTiles = result.ToArray();
-			return possibleTargetTiles;
+
+			//Cache
+			var resultToArray = result.ToArray();
+			if (!onlyGetResults) possibleTargetTiles = resultToArray;
+			return resultToArray;
 		}
 
 		//------------------ OTHER

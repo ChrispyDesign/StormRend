@@ -16,7 +16,7 @@ namespace StormRend.Abilities.Effects
 		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
 			Debug.Assert(glory, "No glory SOV found!");
-			if (glory) glory += amount;
+			if (glory) glory.value += amount;
         }
     }
 }

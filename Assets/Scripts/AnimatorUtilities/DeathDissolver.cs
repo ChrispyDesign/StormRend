@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace StormRend.Assists
 {
+	/// <summary>
+	/// Handles death sequence of the unit
+	/// </summary>
 	public class DeathDissolver : MonoBehaviour
 	{
 		//Inspector

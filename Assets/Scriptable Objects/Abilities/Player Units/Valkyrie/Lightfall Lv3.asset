@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: 7b7e7b4532c13c9488179d8029c66409, type: 3}
   _animationTrigger: LightFall
-  _type: 0
-  _level: 1
+  _type: 1
+  _level: 3
   _description: Deal 2 damage to adjacent enemies on landing
   _gloryCost: 3
+  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
   _targetTileTypes: 1
   effects:
@@ -37,8 +38,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
+  notes: 
   damage: 1
   piercing: 0
+  gainGlory: 1
+  gloryAmount: 1
+  glory: {fileID: 0}
 --- !u!114 &114168727231713050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -51,6 +56,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a689f1c72aecd749bd69b2cc1345b40, type: 3}
   m_Name: TeleportEffect
   m_EditorClassIdentifier: 
+  notes: 
   restrictToMoveTiles: 0
 --- !u!114 &114232661428505014
 MonoBehaviour:
@@ -64,6 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9119896ddbe049ae3df8859d7fd0d, type: 3}
   m_Name: PushEffect
   m_EditorClassIdentifier: 
+  notes: 
   unitTypesToPush: 12
   pushAmount: 1
   damage: 2
@@ -82,9 +89,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
-  refreshType: 0
-  allowedRefreshes: 1
+  notes: 
   refreshCount: 0
+  refreshType: 0
+  delay: 1
+  allowedRefreshes: 1
 --- !u!114 &114865798732700746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -97,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0340ba18f4cdb44a632086657e9e90, type: 3}
   m_Name: ProtectEffect
   m_EditorClassIdentifier: 
+  notes: 
   turnCount: 0
   affectedTurns: 1
 --- !u!114 &114923053855270444
@@ -111,6 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9119896ddbe049ae3df8859d7fd0d, type: 3}
   m_Name: PushEffect
   m_EditorClassIdentifier: 
+  notes: 
   unitTypesToPush: 12
   pushAmount: 1
   damage: 0

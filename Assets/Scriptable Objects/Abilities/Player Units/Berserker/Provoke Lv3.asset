@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
+  m_Name: Provoke Lv3
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 21300000, guid: e34b8fdafce09d745b83c1e4e769bc8f, type: 3}
+  _animationTrigger: Provoke
+  _type: 2
+  _level: 3
+  _description: Deal +1 damage
+  _gloryCost: 2
+  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
+  _requiredTiles: 1
+  _targetTileTypes: 64
+  effects:
+  - {fileID: 114432857213518202}
+  - {fileID: 114978099270114264}
+  castArea: 00000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000
+--- !u!114 &114114709379188316
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0340ba18f4cdb44a632086657e9e90, type: 3}
+  m_Name: ProtectEffect
+  m_EditorClassIdentifier: 
+  notes: 
+  turnCount: 0
+  affectedTurns: 1
+--- !u!114 &114202355932698588
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
+  m_Name: TauntEffect
+  m_EditorClassIdentifier: 
+  notes: 
+  turnCount: 0
+  affectedTurns: 1
+  reflexDamage: 1
+--- !u!114 &114286334617455646
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
+  m_Name: TauntEffect
+  m_EditorClassIdentifier: 
+  notes: 
+  turnCount: 0
+  affectedTurns: 1
+  reflexDamage: 1
+--- !u!114 &114432857213518202
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
+  m_Name: TauntEffect
+  m_EditorClassIdentifier: 
+  notes: 
+  turnCount: 0
+  affectedTurns: 1
+  reflexDamage: 2
+--- !u!114 &114656497702361800
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
+  m_Name: TauntEffect
+  m_EditorClassIdentifier: 
+  notes: 
+  turnCount: 0
+  affectedTurns: 1
+  reflexDamage: 1
+--- !u!114 &114978099270114264
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0340ba18f4cdb44a632086657e9e90, type: 3}
+  m_Name: ProtectEffect
+  m_EditorClassIdentifier: 
+  notes: 
+  turnCount: 0
+  affectedTurns: 1

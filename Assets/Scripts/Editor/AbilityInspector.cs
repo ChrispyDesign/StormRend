@@ -194,11 +194,15 @@ namespace StormRend.Editors
             m.AddItem(new GUIContent("Protect"), false, () => a.AddEffect<ProtectEffect>());
             m.AddItem(new GUIContent("Taunt"), false, () => a.AddEffect<TauntEffect>());
             m.AddItem(new GUIContent("Gain Glory When Attacked"), false, () => a.AddEffect<GainGloryWhenAttackedEffect>());
-
+			
             //Curses
             m.AddSeparator("");
             m.AddItem(new GUIContent("Blind"), false, () => a.AddEffect<BlindEffect>());
             m.AddItem(new GUIContent("Immobilise"), false, () => a.AddEffect<ImmobiliseEffect>());
+
+			//Passive
+			m.AddSeparator("");
+			m.AddItem(new GUIContent("SoulReap"), false, () => a.AddEffect<SoulReapEffect>());
 
 			//VFX
 			m.AddSeparator("");

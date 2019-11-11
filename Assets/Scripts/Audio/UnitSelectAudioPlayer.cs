@@ -38,6 +38,11 @@ namespace StormRend.Audio
 		/// <param name="u"></param>
 		public void OnUnitChanged(Unit u)
 		{
+			var au = u as AnimateUnit;
+
+			//Only play if the unit can either move or act
+			if (!au.canAct || !au.canMove) return;
+
 			switch (u.tag)
 			{
 				case BerserkerTag b:

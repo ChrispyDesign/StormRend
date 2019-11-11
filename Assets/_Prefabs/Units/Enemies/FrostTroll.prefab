@@ -142,7 +142,6 @@ MonoBehaviour:
   moveRange: 4
   pathBlockers: 40
   abilities: []
-  statusEffects: []
   ghostColor: {r: 0, g: 0, b: 1, a: 1}
   tbcGhostMaterial: {fileID: 0}
   onAddStatusEffect:
@@ -324,12 +323,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 6712265897453895913}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ef627e48be9298428137853c2f38356, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f96c2ee4d2dcd442abc12db51d53696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minIdleTime: 5
-  maxIdleTime: 10
-  paramName: Done_Waiting
+  particles: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5209730148836847902}
+        m_MethodName: Run
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &5209730148836847902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6712265897453895913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ebcd1b983e6ead408869a314176f796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 1
+  dissolveDuration: 2
+  paramName: _DissolveValue
 --- !u!1001 &1429271423543055345
 PrefabInstance:
   m_ObjectHideFlags: 0

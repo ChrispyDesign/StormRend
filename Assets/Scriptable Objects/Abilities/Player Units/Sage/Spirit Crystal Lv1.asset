@@ -19,8 +19,9 @@ MonoBehaviour:
   _description: Summon a Spirit Crystal. At the start of your turn, it deals 1 damage
     to adjacent units.
   _gloryCost: 0
+  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
-  _targetTileTypes: 65
+  _targetTileTypes: 8
   effects:
   - {fileID: 114731120626100668}
   - {fileID: 114927288690220444}
@@ -37,6 +38,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f2715bfc5600e4b9a9a9bea62fb22c, type: 3}
   m_Name: SummonEffect
   m_EditorClassIdentifier: 
+  notes: 
   summon: {fileID: 3266679734864301431, guid: daec9893be12174409e5d742b0c859b7, type: 3}
 --- !u!114 &114776763529855574
 MonoBehaviour:
@@ -50,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f2715bfc5600e4b9a9a9bea62fb22c, type: 3}
   m_Name: SummonEffect
   m_EditorClassIdentifier: 
+  notes: 
   summon: {fileID: 0}
 --- !u!114 &114927288690220444
 MonoBehaviour:
@@ -63,6 +66,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
-  refreshType: -1
-  allowedRefreshes: 1000
+  notes: 
   refreshCount: 0
+  refreshType: -1
+  delay: 1
+  allowedRefreshes: 1000

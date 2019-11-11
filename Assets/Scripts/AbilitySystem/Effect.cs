@@ -7,10 +7,12 @@ namespace StormRend.Abilities
 {
 	public abstract class Effect : ScriptableObject
 	{
-		public bool isFoldOut { get; set; } = true;
+		[SerializeField] string notes = "";
 
+		public bool isFoldOut { get; set; } = true;
+		
 	#region Core
-		public virtual void Prepare(Ability ability, Unit owner) { Debug.LogFormat("{0}.Effect.Prepare()", this.name); }
+		public virtual void Prepare(Ability ability, Unit owner) { /*Debug.LogFormat("{0}.Effect.Prepare()", this.name);*/ }
 		public abstract void Perform(Ability ability, Unit owner, Tile[] targetTiles);
 	#endregion
 	}

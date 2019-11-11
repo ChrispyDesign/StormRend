@@ -27,8 +27,8 @@ namespace StormRend.Units
 
 		//Events
 		[Header("Events")]
-		public UnitEvent onRegisterUnit;
-		public UnitEvent onRegisterDeath;
+		public UnitEvent onUnitCreated;
+		public UnitEvent onUnitKilled;
 
 		void Start()
 		{
@@ -43,25 +43,25 @@ namespace StormRend.Units
 			if (_aliveUnits.Count > 0)
 				foreach (var a in _aliveUnits)
 					if (a.isDead)
-						RegisterDeath(a);
+						RegisterUnitDeath(a);
 		}
 
 	#region Core
 		//Adds a new unit to the alive registry
-		public void RegisterUnit(Unit u)
+		public void RegisterUnitCreation(Unit u)
 		{
 			_aliveUnits.Add(u);
 
-			onRegisterUnit.Invoke(u);
+			onUnitCreated.Invoke(u);
 		}
 
 		//Register's the death of a unit and moves it from the alive to dead list
-		public void RegisterDeath(Unit deadUnit)
+		public void RegisterUnitDeath(Unit deadUnit)
 		{
 			if (_aliveUnits.Remove(deadUnit))
 			{
 				_deadUnits.Add(deadUnit);
-				onRegisterDeath.Invoke(deadUnit);
+				onUnitKilled.Invoke(deadUnit);
 			}
 			else
 				Debug.LogWarningFormat("{0} was not in list of alive units!", deadUnit);

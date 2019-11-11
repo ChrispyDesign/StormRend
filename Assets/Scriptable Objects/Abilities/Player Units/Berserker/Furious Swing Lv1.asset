@@ -18,11 +18,11 @@ MonoBehaviour:
   _level: 1
   _description: Deal 2 damage
   _gloryCost: 0
+  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
   _targetTileTypes: 64
   effects:
   - {fileID: 114500643382445322}
-  - {fileID: 114414776529378384}
   - {fileID: 114625879252061306}
   castArea: 00000000000000000000000000000000000100000000000100010000000000010000000000000000000000000000000000
 --- !u!114 &114186159587013604
@@ -37,22 +37,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
+  notes: 
   damage: 1
   piercing: 0
---- !u!114 &114414776529378384
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e956ca9442a6a7a40b443742d0315b26, type: 3}
-  m_Name: GainGloryEffect
-  m_EditorClassIdentifier: 
-  amount: 1
-  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
+  gainGlory: 0
+  gloryAmount: 1
+  glory: {fileID: 0}
 --- !u!114 &114500643382445322
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -65,8 +55,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
+  notes: 
   damage: 2
   piercing: 0
+  gainGlory: 1
+  gloryAmount: 1
+  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
 --- !u!114 &114615408424896200
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -93,6 +87,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
+  notes: FOR TESTING PURPOSES!
+  refreshCount: 3
   refreshType: -1
+  delay: 1
   allowedRefreshes: 1000
-  refreshCount: 6
