@@ -5379,9 +5379,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 653011552559127036}
-  - component: {fileID: 3671556472718825716}
   - component: {fileID: 4596331959945479920}
   - component: {fileID: 6523016055183356590}
+  - component: {fileID: 3671556472718825716}
   m_Layer: 0
   m_Name: Valkyrie
   m_TagString: Untagged
@@ -5406,19 +5406,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3671556472718825716
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3743394238124216912}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
-  m_Center: {x: 0, y: 0.19554019, z: 0}
 --- !u!114 &4596331959945479920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5522,6 +5509,19 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   possibleMoveTiles: []
   possibleTargetTiles: []
+--- !u!65 &3671556472718825716
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743394238124216912}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
+  m_Center: {x: 0, y: 0.19554019, z: 0}
 --- !u!1 &5396795060222417993
 GameObject:
   m_ObjectHideFlags: 0
@@ -10442,7 +10442,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  help: "Animation Event Callbacks: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)"
   description: 
   chance: 50
   sounds: []
@@ -23474,7 +23473,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  help: "Animation Event Callbacks: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)"
   description: ' '
   chance: 50
   sounds: []

@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5697536595670988253}
-  - component: {fileID: 5697536595670988254}
-  - component: {fileID: 5697536595670988192}
   - component: {fileID: 5920296522964574612}
   - component: {fileID: 2469292731765617890}
+  - component: {fileID: 5697536595670988192}
+  - component: {fileID: 5697536595670988254}
   m_Layer: 0
   m_Name: FrostHound
   m_TagString: Untagged
@@ -36,27 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &5697536595670988254
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5697536595670988193}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &5697536595670988192
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5697536595670988193}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
-  m_Center: {x: 0, y: 0.19554019, z: 0}
 --- !u!114 &5920296522964574612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,6 +108,7 @@ MonoBehaviour:
   moveRange: 4
   pathBlockers: 40
   abilities: []
+  statusEffects: []
   ghostColor: {r: 0, g: 0, b: 1, a: 1}
   tbcGhostMaterial: {fileID: 0}
   onAddStatusEffect:
@@ -153,50 +133,27 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   possibleMoveTiles: []
   possibleTargetTiles: []
---- !u!114 &8878922603542492194
-MonoBehaviour:
+--- !u!65 &5697536595670988192
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8586060833677220445}
+  m_GameObject: {fileID: 5697536595670988193}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f96c2ee4d2dcd442abc12db51d53696, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particles: []
-  onDeath:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 12036506044098488}
-        m_MethodName: Run
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &12036506044098488
-MonoBehaviour:
+  serializedVersion: 2
+  m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
+  m_Center: {x: 0, y: 0.19554019, z: 0}
+--- !u!33 &5697536595670988254
+MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8586060833677220445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ebcd1b983e6ead408869a314176f796, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialDelay: 1
-  dissolveDuration: 2
-  paramName: _DissolveValue
+  m_GameObject: {fileID: 5697536595670988193}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!82 &8952801063027666150
 AudioSource:
   m_ObjectHideFlags: 0
@@ -293,6 +250,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &12036506044098488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8586060833677220445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ebcd1b983e6ead408869a314176f796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 1
+  dissolveDuration: 2
+  paramName: _DissolveValue
 --- !u!114 &5937260803836251254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,10 +277,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  help: "Animation Event Handlers: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)"
   description: ' '
   chance: 50
   sounds: []
+--- !u!114 &8878922603542492194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8586060833677220445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f96c2ee4d2dcd442abc12db51d53696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particles: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 12036506044098488}
+        m_MethodName: Run
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1001 &8514896217534946383
 PrefabInstance:
   m_ObjectHideFlags: 0

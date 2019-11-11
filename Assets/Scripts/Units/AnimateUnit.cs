@@ -94,6 +94,15 @@ namespace StormRend.Units
 				}
 			}
 		}
+		public bool isProvoking
+		{
+			get
+			{
+				foreach (var se in statusEffects)
+					if (se is TauntEffect) return true;
+				return false;
+			}
+		}
 
 		//Members
 		protected GameObject ghostMesh = null;
