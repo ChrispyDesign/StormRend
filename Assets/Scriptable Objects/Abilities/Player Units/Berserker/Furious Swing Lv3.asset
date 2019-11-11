@@ -36,9 +36,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
-  refreshType: 0
-  allowedRefreshes: 1
+  notes: 
   refreshCount: 0
+  refreshType: 0
+  delay: 1
+  allowedRefreshes: 1
 --- !u!114 &114186159587013604
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -51,8 +53,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
+  notes: 
   damage: 1
   piercing: 0
+  gainGlory: 1
+  gloryAmount: 1
+  glory: {fileID: 0}
 --- !u!114 &114216635607373462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -65,8 +71,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
+  notes: 
   damage: 4
   piercing: 0
+  gainGlory: 8
+  gloryAmount: 1
+  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
 --- !u!114 &114303405589470718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -79,9 +89,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
-  refreshType: 0
-  allowedRefreshes: 1
+  notes: 
   refreshCount: 0
+  refreshType: 0
+  delay: 1
+  allowedRefreshes: 1
 --- !u!114 &114645139991781540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -94,6 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
-  refreshType: -1
-  allowedRefreshes: 50
+  notes: 
   refreshCount: 0
+  refreshType: -1
+  delay: 1
+  allowedRefreshes: 50
