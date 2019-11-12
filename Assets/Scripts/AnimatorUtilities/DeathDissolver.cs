@@ -30,7 +30,7 @@ namespace StormRend.Assists
 			//Get materials from each child renderers
 			var renderers = GetComponentsInChildren<Renderer>();
 			foreach (var r in renderers)
-				materials.Add(r.material);
+				materials.AddRange(r.materials);
 		}
 
 		public void Run()
