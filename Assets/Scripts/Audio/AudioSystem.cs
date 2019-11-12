@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using StormRend.Utility.Attributes;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace StormRend.Audio
 {
@@ -10,10 +8,9 @@ namespace StormRend.Audio
         //Inspector
         [TextArea(0, 2), SerializeField] string description = null;
 
-        [Tooltip("Chance of playing a sound when triggered as a percentage")]
+        [Tooltip("Chance of playing a sound. OVERRIDES the magazine's chance")]
         [Range(0, 100), SerializeField] int chance = 50;
-
-        [SerializeField] List<AudioClip> sounds = new List<AudioClip>();
+        [SerializeField] AudioMagazine sounds = null;
 
         //Members
         AudioSource audioSource;
@@ -34,7 +31,7 @@ namespace StormRend.Audio
         public void ChancePlay()
         {
             if (Random.Range(0, 100) < chance)
-                audioSource.PlayOneShot(sounds[Random.Range(0, sounds.Count)]);
+                audioSource.PlayOneShot(sounds.clips[Random.Range(0, sounds.clips.Count)]);
         }
         public void ChancePlay(AudioClip clip)
         {

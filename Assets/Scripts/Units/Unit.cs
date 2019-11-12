@@ -14,7 +14,7 @@ namespace StormRend.Units
 	[RequireComponent(typeof(UnitTag))]
 	public abstract class Unit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
-		[TextArea(0,2)] public string description = "";
+		[TextArea(0,2)] public string description = null;
 
 		//Inspector
 		[Header("Stats")]
@@ -23,9 +23,10 @@ namespace StormRend.Units
 
 		//Events
 		[Header("Unit Events")]
-		public UnitEvent onDeath;
-		public DamageEvent onDamage;
-		public UnityEvent onHeal;
+		public UnitEvent onDeath = null;
+		public DamageEvent onTakeDamage = null;
+        public UnitEvent onEnemyKilled = null;
+		public UnityEvent onHeal = null;
 
 		[Header("Movement")]
 		[ReadOnlyField] public Tile currentTile;//{ get; set; }	//The tile this unit is currently/originally on
@@ -94,7 +95,7 @@ namespace StormRend.Units
 			//Die() shouldn't be called immediately because the death sequence has timing complexities
 			// if (HP <= 0) Die();		
 
-			onDamage.Invoke(damageData);	//ie. Update health bar etc
+			onTakeDamage.Invoke(damageData);	//ie. Update health bar etc
 		}
 		public void Heal(int amount)
 		{

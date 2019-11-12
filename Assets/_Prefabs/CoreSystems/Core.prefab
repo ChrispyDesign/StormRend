@@ -3806,6 +3806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dd5973eca1604d438ca776501c72aad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   currentTurnState: {fileID: 0}
   _selectedUnitVar: {fileID: 11400000, guid: dbeaf32532764ba4c92635cbce5c280f, type: 2}
   _selectedAbilityVar: {fileID: 11400000, guid: 50e085f58feea004399aaacd973e67ee,
@@ -3934,6 +3935,23 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  onNotEnoughGlory:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8304828006175286027}
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 756094f79fdc38e49bf81814a11ee458,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   onAbilityPerformed:
     m_PersistentCalls:
       m_Calls:
@@ -3961,16 +3979,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3260328891646769650}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a751d95338193fd4f90316fe92a547c6, type: 3}
+  m_Script: {fileID: 11500000, guid: c72d4a39a587a0845b9b4b34e1d5f385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectVolume: 0.5
+  selectSFXVolume: 0.5
   berserkerVocals: {fileID: 11400000, guid: de5c6ecc322544f04995e6d40b5a4942, type: 2}
-  berserkerSelect: {fileID: 0}
+  berserkerSelectSFX: {fileID: 0}
   valkyrieVocals: {fileID: 11400000, guid: 5a0b0b5456e48c04a9409e7535dcfecc, type: 2}
-  valkyrieSelect: {fileID: 0}
+  valkyrieSelectSFX: {fileID: 0}
   sageVocals: {fileID: 11400000, guid: 60889ac0ba33a1145b8075674ac68974, type: 2}
-  sageSelect: {fileID: 0}
+  sageSelectSFX: {fileID: 0}
 --- !u!114 &8336003941326089349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8501,6 +8519,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  testKey: 9
 --- !u!114 &4423677667674608621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8920,11 +8939,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 562070246305184845}
     m_Modifications:
-    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
-        type: 3}
-      propertyPath: m_Name
-      value: AbilityButton (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034492, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9030,6 +9044,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5000001
       objectReference: {fileID: 0}
+    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
+        type: 3}
+      propertyPath: m_Name
+      value: AbilityButton (3)
+      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034243, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -9105,11 +9124,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 562070246305184845}
     m_Modifications:
-    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
-        type: 3}
-      propertyPath: m_Name
-      value: AbilityButton
-      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034492, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9214,6 +9228,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
+        type: 3}
+      propertyPath: m_Name
+      value: AbilityButton
       objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034243, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
@@ -9270,11 +9289,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 562070246305184845}
     m_Modifications:
-    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
-        type: 3}
-      propertyPath: m_Name
-      value: AbilityButton (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034492, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9379,6 +9393,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
+        type: 3}
+      propertyPath: m_Name
+      value: AbilityButton (1)
       objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034243, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
@@ -9455,11 +9474,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 562070246305184845}
     m_Modifications:
-    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
-        type: 3}
-      propertyPath: m_Name
-      value: AbilityButton (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034492, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9565,6 +9579,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5000001
       objectReference: {fileID: 0}
+    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
+        type: 3}
+      propertyPath: m_Name
+      value: AbilityButton (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034243, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -9640,11 +9659,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 562070246305184845}
     m_Modifications:
-    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
-        type: 3}
-      propertyPath: m_Name
-      value: AbilityButton (4)
-      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034492, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9750,6 +9764,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5000001
       objectReference: {fileID: 0}
+    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
+        type: 3}
+      propertyPath: m_Name
+      value: AbilityButton (4)
+      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034243, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: onHover.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -9825,11 +9844,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 562070246305184845}
     m_Modifications:
-    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
-        type: 3}
-      propertyPath: m_Name
-      value: AbilityButton (5)
-      objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034492, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9934,6 +9948,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1385068155133034495, guid: 3504b2d995f95dd4cb96dcf67271b223,
+        type: 3}
+      propertyPath: m_Name
+      value: AbilityButton (5)
       objectReference: {fileID: 0}
     - target: {fileID: 1385068155133034243, guid: 3504b2d995f95dd4cb96dcf67271b223,
         type: 3}

@@ -15,17 +15,28 @@ namespace StormRend.Units
 			cam = MasterCamera.current.camera;
 			unit = GetComponentInParent<Unit>();
 		}
-		void Start()
+
+		//Register callbacks
+		void OnEnable()
 		{
-			bar.fillAmount = (float)unit.HP / unit.maxHP;
+			unit.onHeal.AddListener(OnHealthChange);
+			unit.onTakeDamage.AddListener(OnHealthChange);
 		}
-		public void OnHealthChange()
+		void OnDisable()
 		{
-			bar.fillAmount = (float)unit.HP / unit.maxHP;
+			unit.onHeal.RemoveListener(OnHealthChange);
+			unit.onTakeDamage.RemoveListener(OnHealthChange);
 		}
-		void Update()
-		{
-			transform.rotation = Quaternion.AngleAxis(MasterCamera.current.transform.rotation.eulerAngles.y - 180f, Vector3.up);
-		}
+
+		//Init bar at start
+		void Start() => bar.fillAmount = (float)unit.HP / unit.maxHP;
+
+		//Always face toward the camera
+		void Update() => transform.rotation = Quaternion.AngleAxis(MasterCamera.current.transform.rotation.eulerAngles.y - 180f, Vector3.up);
+
+		//Callbacks
+		public void OnHealthChange(DamageData damageData) => OnHealthChange();
+		public void OnHealthChange() => bar.fillAmount = (float)unit.HP / unit.maxHP;
+
 	}
 }
