@@ -9,10 +9,10 @@ using System.Collections;
 
 namespace StormRend.Systems
 {
-	/// <summary>
-	/// Applies blizzard to selected unit types
-	/// </summary>
-	public class BlizzardController : MonoBehaviour
+    /// <summary>
+    /// Applies blizzard to selected unit types
+    /// </summary>
+    public class BlizzardController : MonoBehaviour
     {
         //Inspector
         [SerializeField] BhaveInt blizzardVar = null;
@@ -27,17 +27,26 @@ namespace StormRend.Systems
         public UnityEvent onExecute = null;
         public UnityEvent onReset = null;
 
+        [Space]
+        [Header("Test")]
+        [SerializeField] KeyCode testKey = KeyCode.Tab;
+
         UnitRegistry ur = null;
 
-    #region Core
+        #region Core
         void Start()
         {
             ur = UnitRegistry.current;
         }
+        void Update()
+        {
+            if (Input.GetKeyDown(testKey))
+                Execute();
+        }
         public void Tick()
         {
-            blizzardVar++;
-            if (blizzardVar > maxBlizzardValue)
+            blizzardVar.value++;
+            if (blizzardVar.value > maxBlizzardValue)
             {
                 Execute();
                 Reset();
@@ -55,7 +64,7 @@ namespace StormRend.Systems
             //ENEMIES
             if ((typesToDamage & TargetType.Enemies) == TargetType.Enemies)
                 unitsToDamage.AddRange(ur.GetUnitsByType<EnemyUnit>());
-			//CRYSTALS
+            //CRYSTALS
             if ((typesToDamage & TargetType.Crystals) == TargetType.Crystals)
                 unitsToDamage.AddRange(ur.GetUnitsByType<CrystalUnit>());
             //INANIMATES
@@ -64,17 +73,17 @@ namespace StormRend.Systems
             //ANIMATES
             if ((typesToDamage & TargetType.Animates) == TargetType.Animates)
                 unitsToDamage.AddRange(ur.GetUnitsByType<AnimateUnit>());
-			
-			//Deal damage to selected units
-			foreach (var u in unitsToDamage)
-				u.TakeDamage(new DamageData(null, damage));
+
+            //Deal damage to selected units
+            foreach (var u in unitsToDamage)
+                u.TakeDamage(new HealthData(null, damage));
         }
 
         internal void Reset()
         {
             onReset.Invoke();
-            blizzardVar = 0;
+            blizzardVar.value = 0;
         }
-    #endregion
+        #endregion
     }
 }

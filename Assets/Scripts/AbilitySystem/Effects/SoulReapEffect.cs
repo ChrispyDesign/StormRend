@@ -14,9 +14,9 @@ namespace StormRend.Abilities.Effects
 	{
 		[SerializeField] int gloryGainAmount = 1;
 		[SerializeField] BhaveInt glory = null;
-		public override void OnUnitKilled(Ability ability, Unit owner, Unit killedUnit)
+		public override bool OnUnitKilled(Ability ability, Unit owner, Unit killedUnit)
 		{
-			//HARDCODE
+			//SEMI-HARDCODE
 			var au = owner as AnimateUnit;
 			if (killedUnit is EnemyUnit)	//Make sure unit killed is an enemy
 			{
@@ -29,9 +29,13 @@ namespace StormRend.Abilities.Effects
 				var tilesInRange = au.CalculateTargetTiles(ability, au.beginTurnTile, true);
 				if (tilesInRange.Contains(killedUnit.currentTile))
 				{
+					//Successful soul reap
 					if (glory) glory.value += gloryGainAmount;		//Gain glory
+					return true;
 				}
 			}
+			//Killed unit not in range
+			return false;
 		}
 	}
 }

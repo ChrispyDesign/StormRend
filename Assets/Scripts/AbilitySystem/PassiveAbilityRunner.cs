@@ -1,15 +1,11 @@
 using System.Collections.Generic;
-using pokoro.BhaVE.Core.Variables;
-using StormRend.Abilities.Effects;
 using StormRend.Units;
-using StormRend.Utility;
-using StormRend.Utility.Attributes;
 using UnityEngine;
 
 namespace StormRend.Abilities.Utilities
 {
 	/// <summary>
-	/// This runs 
+	/// This runs passive abilities on all unit creation and death
 	/// </summary>
 	[RequireComponent(typeof(UnitRegistry))]
 	public class PassiveAbilityRunner : MonoBehaviour
@@ -31,53 +27,52 @@ namespace StormRend.Abilities.Utilities
 
 		void Start()
 		{
+			passiveAbilities.Clear();
 			//Cache all passive abilities
 			foreach (var u in ur.aliveUnits)
 			{
+				//Only proceed if AnimateUnit
 				var au = u as AnimateUnit;
-				foreach (var a in au.GetAbilitiesByType(AbilityType.Passive))
-					passiveAbilities.Add(a, u);
+				if (au) foreach (var a in au.GetAbilitiesByType(AbilityType.Passive))
+						passiveAbilities.Add(a, u);
 			}
 		}
 
 		public void OnUnitCreate(Unit created)
 		{
+			if (passiveAbilities.Count <= 0) return;
 			//Go through each passive ability
 			foreach (var pa in passiveAbilities)
 			{
-				//Auto cleanup if unit is dead
+				//Auto cleanup if a unit is dead
 				if (pa.Value.isDead)
 				{
-					passiveAbilities.Remove(pa.Key);
+					// passiveAbilities.Remove(pa.Key);
 					continue;
 				}
 
-				//Run animation
-				pa.Value.animator.SetTrigger(pa.Key.animationTrigger);
-
 				//Perform
+				//NOTE: If successful will trigger animation where appropriate
 				pa.Key.PerformOnUnitCreated(pa.Value, created);
 			}
+			//INEFFICIENT Repopulate passive ability collection
+			Start();
 		}
 
 		public void OnUnitKilled(Unit killed)
 		{
-			//Go through each passive ability
+			if (passiveAbilities.Count <= 0) return;
+
 			foreach (var pa in passiveAbilities)
 			{
-				//Auto cleanup if unit is dead
 				if (pa.Value.isDead)
 				{
-					passiveAbilities.Remove(pa.Key);
+					// passiveAbilities.Remove(pa.Key);
 					continue;
 				}
-
-				//Run animation
-				pa.Value.animator.SetTrigger(pa.Key.animationTrigger);
-
-				//Perform
 				pa.Key.PerformOnUnitKilled(pa.Value, killed);
 			}
+			Start();
 		}
 	}
 }

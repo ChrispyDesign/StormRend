@@ -11,9 +11,9 @@ namespace StormRend.Variables.Utils
 	{
 		public enum LimitType { None, Clamp, WrapAround }
 
-		[SerializeField] BhaveInt intVariable;
+		[SerializeField] BhaveInt intVariable = null;
 
-		[TextArea(0, 2), SerializeField, Space(5)] string description = " ";
+		[TextArea(0, 2), SerializeField, Space(5)] string description = null;
 
 		[Header("Limits")]
 		[SerializeField] LimitType limitType = LimitType.None;
@@ -42,32 +42,32 @@ namespace StormRend.Variables.Utils
 				return;
 
 			//Over limit
-			if (intVariable > maxLimit)
+			if (intVariable.value > maxLimit)
 			{
 				switch (limitType)
 				{
 					case LimitType.Clamp:
-						intVariable = maxLimit;
+						intVariable.value = maxLimit;
 						break;
 					case LimitType.WrapAround:
 						//Wraps around until variable is between min and max limits
-						while (intVariable < minLimit || intVariable > maxLimit)
-							intVariable -= (maxLimit - minLimit);
+						while (intVariable.value < minLimit || intVariable.value > maxLimit)
+							intVariable.value -= (maxLimit - minLimit);
 						break;
 				}
 			}
 			//Under limit
-			else if (intVariable < minLimit)
+			else if (intVariable.value < minLimit)
 			{
 				switch (limitType)
 				{
 					case LimitType.Clamp:
-						intVariable = minLimit;
+						intVariable.value = minLimit;
 						break;
 					case LimitType.WrapAround:
 						//Wraps around until variable is between min and max limits
-						while (intVariable < minLimit || intVariable > maxLimit)
-							intVariable += (maxLimit - minLimit);
+						while (intVariable.value < minLimit || intVariable.value > maxLimit)
+							intVariable.value += (maxLimit - minLimit);
 						break;
 				}
 			}

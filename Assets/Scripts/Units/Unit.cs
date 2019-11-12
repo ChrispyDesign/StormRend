@@ -14,7 +14,7 @@ namespace StormRend.Units
 	[RequireComponent(typeof(UnitTag))]
 	public abstract class Unit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
-		[TextArea(0,2)] public string description = "";
+		[TextArea(0,2)] public string description = null;
 
 		//Inspector
 		[Header("Stats")]
@@ -23,9 +23,10 @@ namespace StormRend.Units
 
 		//Events
 		[Header("Unit Events")]
-		public UnitEvent onDeath;
-		public DamageEvent onDamage;
-		public UnityEvent onHeal;
+		public UnitEvent onDeath = null;
+		public HealthEvent onTakeDamage = null;
+        public UnitEvent onEnemyKilled = null;
+		public HealthEvent onHeal = null;
 
 		[Header("Movement")]
 		[ReadOnlyField] public Tile currentTile;//{ get; set; }	//The tile this unit is currently/originally on
@@ -86,21 +87,22 @@ namespace StormRend.Units
 		#endregion
 
 	#region Health
-		public virtual void TakeDamage(DamageData damageData)
+		public virtual void TakeDamage(HealthData healthData)
 		{
 			if (isDead) return;     //Can't beat a dead horse :P
-			HP -= damageData.amount;
+			HP -= healthData.amount;
 
 			//Die() shouldn't be called immediately because the death sequence has timing complexities
-			// if (HP <= 0) Die();		
+			//Die() needs to be called at the end of the death animation using an animation event
+			// if (HP <= 0) Die();
 
-			onDamage.Invoke(damageData);	//ie. Update health bar etc
+			onTakeDamage.Invoke(healthData);	//ie. Update health bar etc
 		}
-		public void Heal(int amount)
+		public void Heal(HealthData healthData)
 		{
-			HP += amount;
+			HP += healthData.amount;
 
-			onHeal.Invoke();
+			onHeal.Invoke(healthData);
 		}
 
 		public virtual void Die()

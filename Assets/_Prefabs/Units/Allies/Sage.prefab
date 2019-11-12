@@ -1184,21 +1184,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaa0c62307252ce40be0c70ca81ee4f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particles: []
+  onboardParticles: []
   onDeath:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7989871580173653557}
-        m_MethodName: Run
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &7989871580173653557
@@ -1215,7 +1204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialDelay: 1.5
   dissolveDuration: 2.5
-  paramName: _DissolveValue
+  shaderParam: _DissolveValue
 --- !u!82 &2503500566700065152
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1326,7 +1315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: ' '
   chance: 50
-  sounds: []
+  magazine: {fileID: 0}
 --- !u!1 &428664700141729616
 GameObject:
   m_ObjectHideFlags: 0
@@ -2643,37 +2632,20 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  onDamage:
+  onTakeDamage:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4951238597628664451}
-        m_MethodName: OnHealthChange
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: StormRend.Utility.Events.DamageEvent, Assembly-CSharp, Version=0.0.0.0,
+      m_Calls: []
+    m_TypeName: StormRend.Utility.Events.HealthEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onEnemyKilled:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onHeal:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4951238597628664451}
-        m_MethodName: OnHealthChange
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      m_Calls: []
+    m_TypeName: StormRend.Utility.Events.HealthEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   currentTile: {fileID: 0}
   beginTurnTile: {fileID: 0}
@@ -2692,16 +2664,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 04909938330ba724fb6b267e765cfda7, type: 2}
   statusEffects: []
   ghostColor: {r: 1, g: 0, b: 0.6938925, a: 1}
-  tbcGhostMaterial: {fileID: 0}
-  onAddStatusEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: StormRend.Utility.Events.EffectEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  ghostMaterial: {fileID: 0}
   onBeginTurn:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onAddStatusEffect:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StormRend.Utility.Events.EffectEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onActed:
     m_PersistentCalls:
@@ -2735,11 +2707,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9108019807441497514}
     m_Modifications:
-    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
-      objectReference: {fileID: 0}
     - target: {fileID: 8649027571778799567, guid: e1fbb2b94b8040740927f9ac8f85e701,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2795,6 +2762,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1fbb2b94b8040740927f9ac8f85e701, type: 3}
 --- !u!4 &6396203914922838199 stripped
@@ -2803,18 +2775,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2361123511665102712}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4951238597628664451 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7237900428195862011, guid: e1fbb2b94b8040740927f9ac8f85e701,
-    type: 3}
-  m_PrefabInstance: {fileID: 2361123511665102712}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b7bb8b91af7b6843b2c5832194e42fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &4464158799225128526
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2822,16 +2782,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9108019807441497514}
     m_Modifications:
-    - target: {fileID: 6311765355932350965, guid: 12c8f65b3b1a71745b3d485321c472cd,
-        type: 3}
-      propertyPath: m_Name
-      value: SGE_SoulCommuneAura
-      objectReference: {fileID: 0}
-    - target: {fileID: 6311765355932350965, guid: 12c8f65b3b1a71745b3d485321c472cd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2740575804456894983, guid: 12c8f65b3b1a71745b3d485321c472cd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2886,6 +2836,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6311765355932350965, guid: 12c8f65b3b1a71745b3d485321c472cd,
+        type: 3}
+      propertyPath: m_Name
+      value: SGE_SoulCommuneAura
+      objectReference: {fileID: 0}
+    - target: {fileID: 6311765355932350965, guid: 12c8f65b3b1a71745b3d485321c472cd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12c8f65b3b1a71745b3d485321c472cd, type: 3}

@@ -9,8 +9,8 @@ namespace StormRend.UI
 {
 	public class GloryMeter : Meter
 	{
-		[SerializeField] List<AnimateUnit> units;
-		[SerializeField] Image[] gloryNodes;
+		[SerializeField] List<AnimateUnit> units = new List<AnimateUnit>();
+		[SerializeField] Image[] gloryNodes = null;
 			
 		string[] details = new string[3];
 		int currentIndex;

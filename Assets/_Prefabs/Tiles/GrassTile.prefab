@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2c808e7b48842459e23f411a4442bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onHoverSFX: {fileID: 8300000, guid: 4ddcf717be9f426469575b5675a455a6, type: 3}
+  hoverHighlight: {fileID: 0}
   cost: 1
   connections: []
+  rend: {fileID: 8155993068998701385}
 --- !u!1001 &6186964472595462574
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -102,6 +105,12 @@ GameObject:
 --- !u!4 &1719108131606890112 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4758049521519935278, guid: 825759d6350b5c34e8ddee39bd360144,
+    type: 3}
+  m_PrefabInstance: {fileID: 6186964472595462574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8155993068998701385 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2662589536457230567, guid: 825759d6350b5c34e8ddee39bd360144,
     type: 3}
   m_PrefabInstance: {fileID: 6186964472595462574}
   m_PrefabAsset: {fileID: 0}

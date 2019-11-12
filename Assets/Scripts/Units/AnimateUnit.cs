@@ -43,12 +43,12 @@ namespace StormRend.Units
 
 		[Header("Ghost")]
 		[SerializeField] protected Color ghostColor = Color.blue;
-		[SerializeField] protected Material tbcGhostMaterial = null;
+		[SerializeField] protected Material ghostMaterial = null;
 
 		//Events
 		[Header("Animate Unit Events")]
-		public EffectEvent onAddStatusEffect = null;
 		public UnityEvent onBeginTurn = null;
+		public EffectEvent onAddStatusEffect = null;
 		public AbilityEvent onActed = null;
 		public UnityEvent onEndTurn = null;
 
@@ -56,32 +56,7 @@ namespace StormRend.Units
 		public Tile ghostTile { get; set; } = null;		//The tile the ghost is on
 		public Tile[] possibleMoveTiles;// { get; set; } = new Tile[0];
 		public Tile[] possibleTargetTiles;// { get; set; } = new Tile[0];
-		public bool canMove => _canMove;
-		public void SetCanMove(bool value, float delay = 0) => StartCoroutine(DelaySetMove(value, delay));
-		IEnumerator DelaySetMove(bool value, float delay)		//Used for correct timing of refresh effect
-		{
-			yield return new WaitForSeconds(delay);
-			_canMove = value;
-
-			//If move value true then reselect unit so that the move tiles will appear
-			if (_canMove) uih.SelectUnit(this);
-		}
-		public bool canAct => _canAct;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
-		public void SetCanAct(bool value, float delay = 0) => StartCoroutine(DelaySetAct(value, delay));
-		IEnumerator DelaySetAct(bool value, float delay)		//Used for correct timing of refresh effect
-		{
-			yield return new WaitForSeconds(delay);
-			_canAct = value;
-
-			//If can act again then show new possible act tiles
-			if (_canAct)
-			{
-				uih.SelectUnit(this);
-				uih.SelectAbility(currentAbility);
-			}
-		}
-		
-		float snapAngle
+		private float snapAngle
 		{
 			get
 			{
@@ -94,6 +69,8 @@ namespace StormRend.Units
 				}
 			}
 		}
+
+		//Status Effect Properties
 		public bool isProvoking
 		{
 			get
@@ -109,6 +86,32 @@ namespace StormRend.Units
 		protected Tile[] currentTargetTiles = null;
 		private Ability currentAbility;
 
+		#region Can Move & Act
+		public bool canMove => _canMove;
+		public void SetCanMove(bool value, float delay = 0) => StartCoroutine(DelaySetMove(value, delay));
+		IEnumerator DelaySetMove(bool value, float delay)       //Used for correct timing of refresh effect
+		{
+			yield return new WaitForSeconds(delay);
+			_canMove = value;
+
+			//If move value true then reselect unit so that the move tiles will appear
+			if (_canMove) uih.SelectUnit(this);
+		}
+		public bool canAct => _canAct;  //has performed an ability and hence this unit has completed it's turn and is locked until next turn
+		public void SetCanAct(bool value, float delay = 0) => StartCoroutine(DelaySetAct(value, delay));
+		IEnumerator DelaySetAct(bool value, float delay)        //Used for correct timing of refresh effect
+		{
+			yield return new WaitForSeconds(delay);
+			_canAct = value;
+
+			//If can act again then show new possible act tiles
+			if (_canAct)
+			{
+				uih.SelectUnit(this);
+				uih.SelectAbility(currentAbility);
+			}
+		}
+		#endregion
 
 		#region Filtered Gets
 		public List<Ability> GetAbilitiesByType(AbilityType type) => abilities.Where(x => x.type == type).ToList();
@@ -150,12 +153,12 @@ namespace StormRend.Units
 
 		#region Core
 		//------------------ CALLBACKS
-		public override void TakeDamage(DamageData damageData)
+		public override void TakeDamage(HealthData damageData)
 		{
 			base.TakeDamage(damageData);
 
 			//Face attack
-			transform.rotation = GetSnappedRotation(damageData.attacker.transform.position, snapAngle);
+			transform.rotation = GetSnappedRotation(damageData.vendor.transform.position, snapAngle);
 
 			//Animate
 			animator.SetTrigger("HitReact");
@@ -294,9 +297,9 @@ namespace StormRend.Units
 			var angle = -Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg + snapAng;
 			angle = Mathf.Round(angle / snapAng) * snapAng;
 			return Quaternion.AngleAxis(angle, Vector3.up);
-			
+
 			// var angle = Vector3.Angle(dir, Vector3.up);
-			// if (angle < snapAngle / 2f) 
+			// if (angle < snapAngle / 2f)
 			// 	return Quaternion.LookRotation(Vector3.up * dir.magnitude);
 			// if (angle > 180f - snapAngle / 2f)
 			// 	return Quaternion.LookRotation(Vector3.down * dir.magnitude);
@@ -315,7 +318,7 @@ namespace StormRend.Units
 			=> Act(ability, targetUnits.Select(x => x.currentTile).ToArray());
 		public void FilteredAct(Ability ability, params Unit[] targetUnits)
 			=> FilteredAct(ability, targetUnits.Select(x => x.currentTile).ToArray());
-		
+
 		/// <summary>
 		/// Filter target tiles based on ability's tile type settings before performing ability
 		/// </summary>
@@ -350,7 +353,7 @@ namespace StormRend.Units
 			if (targetTiles.Length > 0)
 				SnappedLookAt(targetTiles[targetTiles.Length-1].transform.position);
 
-			//Launch the Ability's animation triggering a series of 
+			//Launch the Ability's animation triggering a series of
 			//animations events to be executed with precision timing
 			animator.SetTrigger(ability.animationTrigger);
 

@@ -14,11 +14,11 @@ namespace StormRend.Bhaviours
 	[CreateAssetMenu(menuName = "StormRend/AI/AttackAction", fileName = "AttackAction")]
     public sealed class AttackAction : BhaveAction
     {
-        [SerializeField] UnitListVar targets;
-		[SerializeField] Ability attackAbility;
+        [SerializeField] UnitListVar targets = null;
+		[SerializeField] Ability attackAbility = null;
 
-        AnimateUnit au;
-        Animator anim;
+        AnimateUnit au = null;
+        Animator anim = null;
 
 		public override void Awaken(BhaveAgent agent)
 		{

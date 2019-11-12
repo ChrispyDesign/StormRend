@@ -9,12 +9,12 @@ namespace StormRend.UI
 	public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 	{
 		//Inspector
-		[SerializeField] AudioClip onClick;
-		[SerializeField] AudioClip onHover;
-		[SerializeField] AudioClip onUnhover;		
+		[SerializeField] AudioClip onClick = null;
+		[SerializeField] AudioClip onHover = null;
+		[SerializeField] AudioClip onUnhover = null;		
 
 		//Members
-		AudioSource audioSource;
+		AudioSource audioSource = null;
 
 		void Awake()
 		{

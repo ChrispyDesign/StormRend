@@ -10,14 +10,8 @@ namespace StormRend.Assists
 	public class SnowMaker : MonoBehaviour
 	{
 		[SerializeField] List<Material> materials = new List<Material>();
-		[SerializeField] float duration;
-		[SerializeField] AnimationCurve transition;
-
-		void Update()
-		{
-			if (Input.GetKeyDown(KeyCode.Tab))
-				Run();
-		}
+		[SerializeField] float duration = 5;
+		[SerializeField] AnimationCurve transition = AnimationCurve.Linear(0, 0, 1, 1);
 
 		public void Run()
 		{

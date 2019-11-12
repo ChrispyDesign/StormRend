@@ -10,5 +10,5 @@ namespace StormRend.Utility.Events
 	[Serializable] public class UnitEvent : UnityEvent<Unit> {}
 	[Serializable] public class AbilityEvent : UnityEvent<Ability> {}
 	[Serializable] public class EffectEvent : UnityEvent<Effect> {}
-	[Serializable] public class DamageEvent : UnityEvent<DamageData> {}
+	[Serializable] public class HealthEvent : UnityEvent<HealthData> {}
 }

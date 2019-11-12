@@ -15,7 +15,7 @@ namespace StormRend.Abilities.Effects
 			base.OnBeginTurn(affectedUnit);		//Housekeeping
 		}
 
-		public override void OnTakeDamage(Unit affectedUnit, DamageData damageData)
+		public override void OnTakeDamage(Unit affectedUnit, HealthData damageData)
 		{
 			//Reverse the damage done
 			affectedUnit.HP += damageData.amount;

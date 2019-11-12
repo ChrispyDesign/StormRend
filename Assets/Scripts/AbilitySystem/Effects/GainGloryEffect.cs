@@ -11,7 +11,7 @@ namespace StormRend.Abilities.Effects
     public sealed class GainGloryEffect : Effect
     {
         [SerializeField] int amount = 1;
-		[SerializeField] BhaveInt glory;
+		[SerializeField] BhaveInt glory = null;
 
 		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
