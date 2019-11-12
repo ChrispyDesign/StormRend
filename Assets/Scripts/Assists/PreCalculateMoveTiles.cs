@@ -12,7 +12,7 @@ namespace StormRend.Assists
 	/// </summary>
 	public class PreCalculateMoveTiles : MonoBehaviour
 	{
-		[EnumFlags, SerializeField] TargetType unitTypes;
+		[EnumFlags, SerializeField] TargetType unitTypes = TargetType.Allies;
 
 		UnitRegistry ur;
 
@@ -30,7 +30,7 @@ namespace StormRend.Assists
 				unitsToCalculateMoveTiles.AddRange(ur.GetUnitsByType<AllyUnit>());
 			//ENEMIES
 			if ((unitTypes & TargetType.Enemies) == TargetType.Enemies)
-				unitsToCalculateMoveTiles.AddRange(ur.GetUnitsByType<AllyUnit>());
+				unitsToCalculateMoveTiles.AddRange(ur.GetUnitsByType<EnemyUnit>());
 
 			//Repopulate 
 			foreach (var au in unitsToCalculateMoveTiles)

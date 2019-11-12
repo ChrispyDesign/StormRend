@@ -7,7 +7,7 @@ namespace StormRend.UI
 {
 	public class AbilitySelectPanel : MonoBehaviour
 	{
-		[SerializeField] List<AbilityDetails> abilityDetails;
+		[SerializeField] List<AbilityDetails> abilityDetails = new List<AbilityDetails>();
 
 		private void Start()
 		{

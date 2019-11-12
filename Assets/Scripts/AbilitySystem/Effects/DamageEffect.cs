@@ -5,12 +5,11 @@ using pokoro.BhaVE.Core.Variables;
 using StormRend.MapSystems.Tiles;
 using StormRend.Units;
 using StormRend.Utility;
-using StormRend.Utility.Attributes;
 using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
-	public class DamageEffect : Effect
+    public class DamageEffect : Effect
 	{
 		//Enums
 		[Flags]
@@ -32,11 +31,6 @@ namespace StormRend.Abilities.Effects
 		[SerializeField] int gloryAmount = 1;
 		[SerializeField] BhaveInt glory = null;
 
-		// public override void Prepare(Ability ability, Unit owner)
-		// {
-		// 	Debug.Assert(glory, "No glory SOV allocated!");
-		// }
-
 		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
 			var au = owner as AnimateUnit;
@@ -50,6 +44,8 @@ namespace StormRend.Abilities.Effects
 			//Get and convert to lists where required
 			Unit[] units = UnitRegistry.current.aliveUnits;
 
+			//TODO This can occasionally get stuck in a infinite loop
+			//PIERCING ATTACK
 			if (piercing)
 			{
 				//Only get the first target
@@ -67,38 +63,47 @@ namespace StormRend.Abilities.Effects
 					if (au.possibleTargetTiles.Contains(t))
 					{
 						//If a unit is on top then attack
-						foreach (var u in units)
+						foreach (var victim in units)
 						{
-							if (t == u.currentTile)
+							if (t == victim.currentTile)
 							{
-								u.TakeDamage(new DamageData(owner, damage));
+								victim.TakeDamage(new HealthData(owner, damage));
 
-								HandleGainGlory(u);
+								HandleGainGlory(victim);
+
+                                //If victim was killed then invoke owner's on kill event
+								//HARDCODE: ENEMY FILTER
+                                if (victim.isDead && victim is EnemyUnit) InvokeEnemyKillEvent(owner, victim);
 							}
 						}
 					}
 					workingTile = t;    //Try getting from the new tile
 				}
 			}
+			//NORMAL ATTACK
 			else
 			{
 				List<Tile> tt = targetTiles.ToList();
-				foreach (var u in units)
+				foreach (var victim in units)
 				{
-					if (tt.Contains(u.currentTile))
+					if (tt.Contains(victim.currentTile))
 					{
 						//Damage units that are standing on target tiles
-						u.TakeDamage(new DamageData(owner, damage));
+						victim.TakeDamage(new HealthData(owner, damage));
 
-						HandleGainGlory(u);
+						HandleGainGlory(victim);
+
+						//If victim was killed then invoke owner's on kill event
+                        if (victim.isDead & victim is EnemyUnit) InvokeEnemyKillEvent(owner, victim);
 					}
 				}
 			}
 		}
+
 		void HandleGainGlory(Unit u)
 		{
 			//HIT
-			if ((gainGlory & GainGloryType.Hit) == GainGloryType.Hit || 
+			if ((gainGlory & GainGloryType.Hit) == GainGloryType.Hit ||
 				(gainGlory & GainGloryType.HitAndKill) == GainGloryType.HitAndKill)
 			{
 				if (glory) glory.value += gloryAmount;
@@ -111,6 +116,10 @@ namespace StormRend.Abilities.Effects
 				if (glory) glory.value += gloryAmount;
 			}
 		}
+
+		void InvokeEnemyKillEvent(Unit owner, Unit victim)
+		{
+			owner.onEnemyKilled.Invoke(victim);
+		}
 	}
 }
-

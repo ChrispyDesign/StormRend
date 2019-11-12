@@ -1,33 +1,36 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using StormRend.Abilities.Effects;
 using StormRend.Enums;
 using StormRend.MapSystems;
-using StormRend.Systems;
+using StormRend.MapSystems.Tiles;
 using StormRend.Utility.Attributes;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace StormRend.Units
 {
-	public class CrystalUnit : InAnimateUnit, IPointerClickHandler	//Unit =~= InAnimateUnit?
+	public class CrystalUnit : InAnimateUnit
 	{
 		//Inspector
+		#region Hardcode
 		[Header("Crystal")]
-		[Tooltip("HARDCODE: Number of turns before this crystal explodes")]
-		public int turns = 1;
-		
-		[Tooltip("HARDCODE: The damage this crystal does to ")]
-		public int damage = 1;
+		[Tooltip("Number of turns till this crystal explodes")]
+		[SerializeField] int turns = 1;
 
-		[Tooltip("HARDCODE: The range of the damage")]
-		public int range = 1;
+		[Tooltip("The amount of damage this crystal will deal when it explodes")]
+		[SerializeField] int damage = 1;
 
-		[Tooltip("HARDCODE: The type of units that will get damaged")]
+		[Tooltip("Deal immobilise when it explodes")]
+		[SerializeField] bool immobilise = false;
+
+		[Tooltip("The range of this crystal's effect")]
+		[SerializeField] int range = 1;
+
+		[Tooltip("The type of units that will get damaged")]
 		[EnumFlags, SerializeField] TargetType vulnerableUnitTypes = TargetType.Animates;
-
-		//Members
-
+		private Tile[] tilesToAttack;
+		#endregion
 
 		//Core
 		public void Tick()
@@ -35,29 +38,46 @@ namespace StormRend.Units
 			//Be careful of this order
 			turns--;
 
-			DealDamageToSurroundingUnits();
+			//Determine tiles to deal effect to (regardless of unit type because it's already ignored and filtered)
+			tilesToAttack = Map.GetPossibleTiles(this.currentTile.owner, currentTile, range, GetListOfUnitTypesToIgnore());
+
+			DamageTargets();
+			ImmobiliseTargets();
+
+			//Trigger animations
+			animator.SetTrigger("Explode");
 
 			if (turns <= 0) base.Die();
 		}
 
 		//Helpers
-		void DealDamageToSurroundingUnits()
+		void ImmobiliseTargets()
 		{
-			//TODO This is slightly confusing
-			//Determine tiles to do damage to (regardless of unit type because it's already ignored and filtered)
-			var tilesToAttack = Map.GetPossibleTiles(this.currentTile.owner, currentTile, range, GetIgnoreTypes());
+			if (!immobilise) return;
 
-			//Deal damage
-			foreach (var a in ur.aliveUnits)
+			foreach (var u in ur.aliveUnits)
 			{
-				if (tilesToAttack.Contains(a.currentTile))
+				if (tilesToAttack.Contains(u.currentTile))
 				{
-					a.TakeDamage(new DamageData(this, damage));
+					var target = u as AnimateUnit;		//Cast
+					var newImmobiliseEffect = ScriptableObject.CreateInstance<ImmobiliseEffect>();	//Factory create
+					newImmobiliseEffect.ImmobiliseUnitImmediately(target);		//Apply effect immediately
+					target.AddStatusEffect(newImmobiliseEffect);				//Add to unit's status effect collection
 				}
 			}
 		}
+		void DamageTargets()
+		{
+			if (damage <= 0) return;    //Slight optimisation
 
-		Type[] GetIgnoreTypes()
+			foreach (var victim in ur.aliveUnits)
+			{
+				if (tilesToAttack.Contains(victim.currentTile))
+					victim.TakeDamage(new HealthData(this, damage));
+			}
+		}
+
+		Type[] GetListOfUnitTypesToIgnore()
 		{
 			//Populate with all possible unit types
 			HashSet<Type> ignoreTypes = new HashSet<Type>();
@@ -82,13 +102,8 @@ namespace StormRend.Units
 			//Animates
 			if ((vulnerableUnitTypes & TargetType.Animates) == TargetType.Animates)
 				ignoreTypes.Remove(typeof(AnimateUnit));
-				
+
 			return ignoreTypes.ToArray();
 		}
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-			Debug.Log(this.name);
-        }
-    }
+	}
 }
