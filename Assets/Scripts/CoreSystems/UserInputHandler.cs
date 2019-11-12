@@ -20,7 +20,7 @@ using UnityEngine.UI;
 
 namespace StormRend.Systems
 {
-    public struct FrameEventData
+	public struct FrameEventData
 	{
 		public const int lmb = 0, rmb = 1;
 		public bool leftClicked;
@@ -303,21 +303,24 @@ namespace StormRend.Systems
 		/// </summary>
 		void AddTargetTile(Tile t)
 		{
-			if (selectedAbility.IsAcceptableTileType(selectedAnimateUnit, t))       //Check ability can accept this tile type
-			{
-				if (selectedAnimateUnit.possibleTargetTiles.Contains(t))			//Check tile is within possible target tiles
-					if (!targetTileStack.Contains(t))								//Can't select the same tile twice
-					{
-						//Valid tile chosen
-						targetTileStack.Push(t);
-						onTargetTileAdd.Invoke();
-					}
+            if (selectedAbility.IsAcceptableTileType(selectedAnimateUnit, t))       //Check ability can accept this tile type
+            {
+                if (selectedAnimateUnit.possibleTargetTiles.Contains(t))			//Check tile is within possible target tiles
+                {
+                    if (!targetTileStack.Contains(t))								//Can't select the same tile twice
+                    {
+                        //VALID
+                        targetTileStack.Push(t);
+                        onTargetTileAdd.Invoke();
+                    }
+                    else   
+                        onTargetTileInvalid.Invoke();   //ALREADY BEEN SELECTED     //Too tired to write this properly
+                }
+                else
+                    onTargetTileInvalid.Invoke();	//OUT OF BOUNDS
 			}
-			else	
-			{
-				//Invalid tile chosen
-				onTargetTileInvalid.Invoke();
-			}
+			else
+				onTargetTileInvalid.Invoke();	//UNACCEPTABLE
 
 			//Perform ability once required number of tiles reached
 			if (targetTileStack.Count >= selectedAbility.requiredTiles)
@@ -419,7 +422,7 @@ namespace StormRend.Systems
 			selectedUnit = null;
 		}
 
-        void ClearSelectedAbility(bool redrawMoveTiles = true)
+		void ClearSelectedAbility(bool redrawMoveTiles = true)
 		{
 			if (!isUnitSelected) return;	//A unit should be selected
 
@@ -454,12 +457,12 @@ namespace StormRend.Systems
 
 		//Trying to avoid the accidental unhover glitch but still doesn't solve it
 		void ClearAllTileHighlights()
-        {
+		{
 			foreach (var t in Map.current.tiles)
 			{
 				t.ClearColor();
 			}
-        }
+		}
 		#endregion
 
 	#region Assists
