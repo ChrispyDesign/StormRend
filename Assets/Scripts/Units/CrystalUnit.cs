@@ -73,7 +73,7 @@ namespace StormRend.Units
 			foreach (var victim in ur.aliveUnits)
 			{
 				if (tilesToAttack.Contains(victim.currentTile))
-					victim.TakeDamage(new DamageData(this, damage));
+					victim.TakeDamage(new HealthData(this, damage));
 			}
 		}
 

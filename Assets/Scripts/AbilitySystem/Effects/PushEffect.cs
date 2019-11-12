@@ -75,7 +75,7 @@ namespace StormRend.Abilities.Effects
                                     return; //Unit is dead; Break out of function
                             }
                             //Do damage (where needed)
-                            if (damage > 0) unit.TakeDamage(new DamageData(owner, damage));
+                            if (damage > 0) unit.TakeDamage(new HealthData(owner, damage));
                         }
                     }
                 }

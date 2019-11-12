@@ -35,7 +35,7 @@ namespace StormRend.Units
 		void Update() => transform.rotation = Quaternion.AngleAxis(MasterCamera.current.transform.rotation.eulerAngles.y - 180f, Vector3.up);
 
 		//Callbacks
-		public void OnHealthChange(DamageData damageData) => OnHealthChange();
+		public void OnHealthChange(HealthData damageData) => OnHealthChange();
 		public void OnHealthChange() => bar.fillAmount = (float)unit.HP / unit.maxHP;
 
 	}

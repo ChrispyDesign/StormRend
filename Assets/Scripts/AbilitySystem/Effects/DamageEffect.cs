@@ -67,7 +67,7 @@ namespace StormRend.Abilities.Effects
 						{
 							if (t == victim.currentTile)
 							{
-								victim.TakeDamage(new DamageData(owner, damage));
+								victim.TakeDamage(new HealthData(owner, damage));
 
 								HandleGainGlory(victim);
 
@@ -89,7 +89,7 @@ namespace StormRend.Abilities.Effects
 					if (tt.Contains(victim.currentTile))
 					{
 						//Damage units that are standing on target tiles
-						victim.TakeDamage(new DamageData(owner, damage));
+						victim.TakeDamage(new HealthData(owner, damage));
 
 						HandleGainGlory(victim);
 
@@ -103,7 +103,7 @@ namespace StormRend.Abilities.Effects
 		void HandleGainGlory(Unit u)
 		{
 			//HIT
-			if ((gainGlory & GainGloryType.Hit) == GainGloryType.Hit || 
+			if ((gainGlory & GainGloryType.Hit) == GainGloryType.Hit ||
 				(gainGlory & GainGloryType.HitAndKill) == GainGloryType.HitAndKill)
 			{
 				if (glory) glory.value += gloryAmount;
@@ -123,4 +123,3 @@ namespace StormRend.Abilities.Effects
 		}
 	}
 }
-
