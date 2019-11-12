@@ -32,7 +32,7 @@ namespace StormRend.Audio
 		/// Play certain audio magazine of 
 		/// </summary>
 		/// <param name="u"></param>
-		public void OnUnitChanged(Unit u)
+		public void OnUnitSelected(Unit u)
 		{
 			var au = u as AnimateUnit;
 

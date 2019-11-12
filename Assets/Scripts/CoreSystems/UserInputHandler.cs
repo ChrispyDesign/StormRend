@@ -37,7 +37,7 @@ namespace StormRend.Systems
 		}
 	}
 
-	public class UserInputHandler : Singleton<UserInputHandler>
+	public partial class UserInputHandler : Singleton<UserInputHandler>
 	{
 		//Enums
 		public enum Mode
@@ -96,11 +96,14 @@ namespace StormRend.Systems
 
 		//Events
 		[Space(5)]
-		public UnitEvent onUnitChanged;
-		public UnityEvent onUnitCleared;
-		public AbilityEvent onAbilityChanged;
-		public AbilityEvent onAbilityPerformed;
-		public UnityEvent onAbilityCleared;
+		[Tooltip("When a unit is successfully selected")] public UnitEvent onUnitSelected;		
+		[Tooltip("When a unit is deselected")] public UnityEvent onUnitCleared;
+		[Tooltip("When an ability is chosen")] public AbilityEvent onAbilitySelected;
+		[Tooltip("When an ability is cleared")] public UnityEvent onAbilityCleared;
+		[Tooltip("When a valid target tile is selected, adding it to the target stack")] public UnityEvent onTargetTileAdd;
+		[Tooltip("When an invalid tile is selected")] public UnityEvent onTargetTileInvalid;
+		[Tooltip("When a tile is popped from the target stack ie. user right clicks")] public UnityEvent onTargetTileCancel;
+		[Tooltip("When an ability is performed")] public AbilityEvent onAbilityPerformed;
 
 		//Members
 		FrameEventData e;   //The events that happened this frame
@@ -190,7 +193,7 @@ namespace StormRend.Systems
 				{
 					case Mode.Action:	//ACTION MODE
 						if (notEnoughTargetTilesSelected && targetTileStack.Count > 0)
-							targetTileStack.Pop();	//UNDO 1 TARGET TILE SELECT
+							PopTargetTile();	//UNDO 1 TARGET TILE SELECT
 						else
 							ClearSelectedAbility();	//CLEAR ABILITY
 						break;
@@ -259,7 +262,7 @@ namespace StormRend.Systems
 			//Show move tile if unit is able to move
 			ShowMoveTiles();
 
-			onUnitChanged.Invoke(au);	//ie. Update UI, Play sounds,
+			onUnitSelected.Invoke(au);	//ie. Update UI, Play sounds,
 		}
 
 		public void SelectAbility(Ability a)	//aka. OnAbilityChanged()
@@ -292,7 +295,7 @@ namespace StormRend.Systems
 				AddTargetTile(selectedAnimateUnit.currentTile);
 
 			//Raise
-			onAbilityChanged.Invoke(a);
+			onAbilitySelected.Invoke(a);
 		}
 
 		/// <summary>
@@ -300,10 +303,21 @@ namespace StormRend.Systems
 		/// </summary>
 		void AddTargetTile(Tile t)
 		{
-			if (selectedAbility.IsAcceptableTileType(selectedAnimateUnit, t))		//Check ability can accept this tile type
-				if (selectedAnimateUnit.possibleTargetTiles.Contains(t))	//Check tile is within possible target tiles
-					if (!targetTileStack.Contains(t))						//Can't select the same tile twice
+			if (selectedAbility.IsAcceptableTileType(selectedAnimateUnit, t))       //Check ability can accept this tile type
+			{
+				if (selectedAnimateUnit.possibleTargetTiles.Contains(t))			//Check tile is within possible target tiles
+					if (!targetTileStack.Contains(t))								//Can't select the same tile twice
+					{
+						//Valid tile chosen
 						targetTileStack.Push(t);
+						onTargetTileAdd.Invoke();
+					}
+			}
+			else	
+			{
+				//Invalid tile chosen
+				onTargetTileInvalid.Invoke();
+			}
 
 			//Perform ability once required number of tiles reached
 			if (targetTileStack.Count >= selectedAbility.requiredTiles)
@@ -312,6 +326,11 @@ namespace StormRend.Systems
 			}
 		}
 		void AddTargetTile(Unit u) => AddTargetTile(u.currentTile);		//Redirect because sometimes the raycast can only hit a unit
+		void PopTargetTile()
+		{
+			targetTileStack.Pop();
+			onTargetTileCancel.Invoke();
+		}
 
 		//Enough tile targets chosen by user. Execute the selected ability
 		void SelectedUnitPerformAbility()
