@@ -28,10 +28,19 @@ namespace StormRend.CameraSystem
         //Members
         float _xAxis, _yAxis, _zoomAxis;
 
+        int m_target = 60;
+
+        private void Awake()
+        {
+            QualitySettings.vSyncCount = 0;
+            Application.targetFrameRate = 60;
+        }
+
         void Update()
         {
             PollMoveInput(); // can perform translation
             PollZoomInput(); // can perform zooming
+            
         }
 
         void PollMoveInput()
