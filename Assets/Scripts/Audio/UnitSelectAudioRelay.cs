@@ -5,21 +5,21 @@ using UnityEngine;
 
 namespace StormRend.Audio
 {
-	public class UnitSelectAudioPlayer : AudioPlayer
+	public class UnitSelectAudioRelay : AudioPlayer
 	{
-		[Range(0f, 1f), SerializeField] float selectVolume = 0.5f;
+		[Range(0f, 1f), SerializeField] float selectSFXVolume = 0.5f;
 
 		[Header("Berserker")]
 		[SerializeField] AudioMagazine berserkerVocals;
-		[SerializeField] AudioClip berserkerSelect;
+		[SerializeField] AudioClip berserkerSelectSFX;
 
 		[Header("Valkyrie")]
 		[SerializeField] AudioMagazine valkyrieVocals;
-		[SerializeField] AudioClip valkyrieSelect;
+		[SerializeField] AudioClip valkyrieSelectSFX;
 
 		[Header("Sage")]
 		[SerializeField] AudioMagazine sageVocals;
-		[SerializeField] AudioClip sageSelect;
+		[SerializeField] AudioClip sageSelectSFX;
 
 		void Start()
 		{
@@ -42,15 +42,15 @@ namespace StormRend.Audio
 			switch (u.tag)
 			{
 				case BerserkerTag b:
-					audioSource.PlayOneShot(berserkerSelect, selectVolume);
+					audioSource.PlayOneShot(berserkerSelectSFX, selectSFXVolume);
 					audioSystem.ChancePlayMagazine(berserkerVocals);
 					break;
 				case ValkyrieTag v:
-					audioSource.PlayOneShot(valkyrieSelect, selectVolume);
+					audioSource.PlayOneShot(valkyrieSelectSFX, selectSFXVolume);
 					audioSystem.ChancePlayMagazine(valkyrieVocals);
 					break;
 				case SageTag s:
-					audioSource.PlayOneShot(sageSelect, selectVolume);
+					audioSource.PlayOneShot(sageSelectSFX, selectSFXVolume);
 					audioSystem.ChancePlayMagazine(sageVocals);
 					break;
 			}

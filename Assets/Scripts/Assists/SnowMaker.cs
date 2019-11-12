@@ -13,12 +13,6 @@ namespace StormRend.Assists
 		[SerializeField] float duration;
 		[SerializeField] AnimationCurve transition;
 
-		void Update()
-		{
-			if (Input.GetKeyDown(KeyCode.Tab))
-				Run();
-		}
-
 		public void Run()
 		{
 			StartCoroutine(RunBlizzardSequence());
