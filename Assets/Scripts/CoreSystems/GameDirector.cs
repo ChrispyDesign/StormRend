@@ -1,4 +1,5 @@
 ﻿using pokoro.Patterns.Generic;
+using StormRend.Audio;
 using StormRend.States.UI;
 using StormRend.Systems.StateMachines;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace StormRend.Systems
 	/// Class that helps controls the game state machine as well as other side functionality such as:
 	/// Handling pause, has functions to change scenes, go back to main menu, handling end game, etc
 	/// </summary>
-	[RequireComponent(typeof(UltraStateMachine))]
+	[RequireComponent(typeof(UltraStateMachine), typeof(AudioSystem))]
 	public class GameDirector : Singleton<GameDirector>
 	{
 		//Inspector
@@ -18,22 +19,27 @@ namespace StormRend.Systems
 		[SerializeField] KeyCode pauseKey = KeyCode.Escape;
 		[SerializeField] OnState pauseMenuState = null;
 
-		[Header("End Game")]
-		[SerializeField] State loseState;
-		[SerializeField] State victoryState;
-
 		[Header("Scene Management")]
-		public int mainMenuSceneIdx = 0;
+		public string mainMenuSceneName = "MainMenu";
 
 		//Properties
 		public State currentGameState => usm?.currentState;
+		public AudioSource generalAudioSource => audioSource;
+		public AudioSystem generalAudioSystem => audioSystem;
 
 		//Members
-		UltraStateMachine usm;
-		bool isPaused;
+		UltraStateMachine usm = null;
+		AudioSystem audioSystem = null;
+		AudioSource audioSource = null;
 
 		//Debugs
 		[SerializeField, Space(10)] bool debug = false;
+
+		void Awake()
+		{
+			audioSystem = GetComponent<AudioSystem>();
+			audioSource = GetComponent<AudioSource>();
+		}
 
 		void Start()
 		{
@@ -82,7 +88,7 @@ namespace StormRend.Systems
 
 		public void LoadMainMenuScene()
 		{
-			SceneManager.LoadScene(mainMenuSceneIdx);
+			SceneManager.LoadScene(mainMenuSceneName);
 		}
 
 		//----------------------- DEBUG -----------------------

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using StormRend.Systems;
 using StormRend.Units;
 using StormRend.Utility.Attributes;
 using UnityEngine;
@@ -23,6 +24,9 @@ namespace StormRend.MapSystems.Tiles
 		public static Dictionary<string, TileHighlightColor> highlightColors { get; private set; } = new Dictionary<string, TileHighlightColor>();
 
 		//Inspector
+		[SerializeField] AudioClip onHoverSFX = null;
+		[Tooltip("If not set will default to 'Hover' highlight or clear")]
+		[SerializeField] TileHighlightColor hoverHighlight = null;
 		public float cost = 1;
 		internal float G = float.MaxValue;
 		internal float H = float.MaxValue;
@@ -33,10 +37,11 @@ namespace StormRend.MapSystems.Tiles
 
 		//Members
 		[ReadOnlyField] public List<Tile> connections = new List<Tile>();	//List because HashSets don't serialize
-		[HideInInspector, SerializeField] protected Renderer rend;
-		TileHighlightColor internalColor;		//This kinda acts like a more reliable oldColor value
-		TileHighlightColor clearColor;
-		TileHighlight highlight;
+		[HideInInspector, SerializeField] protected Renderer rend = null;
+		//This avoids tile highlight issues when cursor unhovers
+		TileHighlightColor normalColor = null;
+		TileHighlight highlight = null;
+		AudioSource audioSource = null;
 
 	#region Core
 		void OnValidate()	//Need to get the renderer in editor for gizmos to work
@@ -48,6 +53,16 @@ namespace StormRend.MapSystems.Tiles
 			LoadStaticHighlightColors();    //NOTE! Awake is too early sometimes? Which means it doesn't always grab all the Tile Highlight Colors
 			SetupTileHighlightObject();
 			SetupInternalColours();
+
+			//Get the general purpose
+			audioSource = GameDirector.current.generalAudioSource;
+
+			// //Set hover highlight default
+			// if (!hoverHighlight)
+			// {
+			// 	if (highlightColors.TryGetValue("Hover", out TileHighlightColor hover))
+			// 		hoverHighlight = hover;
+			// }
 		}
 
 		public void Connect(Tile to) => connections.Add(to);
@@ -56,18 +71,18 @@ namespace StormRend.MapSystems.Tiles
 		public void DisconnectAll() => connections.Clear();
 		public void SetColor(TileHighlightColor tileHighlightColor)
 		{
-			internalColor = tileHighlightColor;
-			highlight.color = internalColor.color;
+			normalColor = tileHighlightColor;
+			highlight.color = normalColor.color;
 		}
 		public void SetColor(Color color)
 		{
-			internalColor.color = color;
-			highlight.color = internalColor.color;
+			normalColor.color = color;
+			highlight.color = normalColor.color;
 		}
 		public void ClearColor()
 		{
-			internalColor = clearColor;
-			highlight.color = internalColor.color;
+			normalColor = ScriptableObject.CreateInstance<TileHighlightColor>();
+			highlight.color = normalColor.color;
 		}
 	#endregion
 
@@ -104,10 +119,7 @@ namespace StormRend.MapSystems.Tiles
 		void SetupInternalColours()
 		{
 			//Setup internal tile highlight color
-			internalColor = ScriptableObject.CreateInstance<TileHighlightColor>();
-			clearColor = ScriptableObject.CreateInstance<TileHighlightColor>();
-			clearColor.color = Color.clear;		//Clear
-			internalColor = clearColor;			//Set default to clear
+			normalColor = ScriptableObject.CreateInstance<TileHighlightColor>();
 		}
 	#endregion
 
@@ -145,7 +157,7 @@ namespace StormRend.MapSystems.Tiles
 			{
 				//Determine where to scan for the diagonal tile
 				//NOTE: This only works with immediately adjacent tiles
-				targetTilePos = transform.position + 
+				targetTilePos = transform.position +
 					new Vector3(direction.x * owner.tileSize * diagDist, 0, direction.y * owner.tileSize * diagDist);
 
 				//Loop through all connected tiles and see if there are any within tolerance
@@ -172,15 +184,20 @@ namespace StormRend.MapSystems.Tiles
 	#region Event System Interface Implementations
 		public void OnPointerEnter(PointerEventData eventData)
 		{
-			// if (hoverHighlight) highlight.SetColor(hoverHighlight);
+			//Set default if no color specifically set at startup
+			if (!hoverHighlight && highlightColors.TryGetValue("Hover", out TileHighlightColor hover))
+				hoverHighlight = hover;
 
-			if (highlightColors.TryGetValue("Hover", out TileHighlightColor color))
-				highlight.color = color.color;
+			//Set hover
+			highlight.color = hoverHighlight.color;
+
+			//Hover sound
+			audioSource.PlayOneShot(onHoverSFX);
 		}
 		public void OnPointerExit(PointerEventData eventData)
 		{
 			//Reset back
-			highlight.color = internalColor.color;
+			highlight.color = normalColor.color;
 		}
 	#endregion
 	}

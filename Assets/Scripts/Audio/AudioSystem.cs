@@ -28,11 +28,18 @@ namespace StormRend.Audio
 		}
 
 		#region Play by Chance
+		/// <summary>
+		/// Plays the current loaded magazine according to the chance setting on this audio system
+		/// </summary>
 		public void ChancePlay()
 		{
 			if (magazine && Random.Range(0, 100) < chance)      //null checked
 				audioSource.PlayOneShot(magazine.clips[Random.Range(0, magazine.clips.Count)]);
 		}
+		/// <summary>
+		/// Plays the selected clip according to the chance setting of this audio system
+		/// </summary>
+		/// <param name="clip">The audio clip to play based on chance</param>
 		public void ChancePlay(AudioClip clip)
 		{
 			if (Random.Range(0, 100) < chance)
