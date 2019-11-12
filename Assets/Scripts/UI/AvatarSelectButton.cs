@@ -12,8 +12,8 @@ namespace StormRend.UI
 {
 	public class AvatarSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
-		[SerializeField] AnimateUnit unit;
-		[SerializeField] List<Image> healthNodes;
+		[SerializeField] AnimateUnit unit = null;
+		[SerializeField] List<Image> healthNodes = new List<Image>();
 
 		string title;
 		string details;

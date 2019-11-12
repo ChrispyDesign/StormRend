@@ -10,9 +10,9 @@ namespace StormRend.Variables.Utils
 	{
 		public enum LimitType { None, Clamp, WrapAround }
 
-		[SerializeField] BhaveInt intVariable;
+		[SerializeField] BhaveInt intVariable = null;
 
-		[SerializeField, TextArea, Space(5)] string description = " ";
+		[SerializeField, TextArea, Space(5)] string description = null;
 
 		[Header("Limits")]
 		[SerializeField] LimitType limitType = LimitType.None;

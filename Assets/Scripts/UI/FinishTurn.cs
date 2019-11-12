@@ -8,8 +8,8 @@ namespace StormRend.UI
 {
 	public class FinishTurn : MonoBehaviour
 	{
-		[SerializeField] string title;
-		[SerializeField] string details;
+		[SerializeField] string title = null;
+		[SerializeField] string details = null;
 
 		InfoPanel infoPanel;
 		Animator animator;

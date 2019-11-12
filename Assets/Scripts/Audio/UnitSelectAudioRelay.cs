@@ -10,16 +10,16 @@ namespace StormRend.Audio
 		[Range(0f, 1f), SerializeField] float selectSFXVolume = 0.5f;
 
 		[Header("Berserker")]
-		[SerializeField] AudioMagazine berserkerVocals;
-		[SerializeField] AudioClip berserkerSelectSFX;
+		[SerializeField] AudioMagazine berserkerVocals = null;
+		[SerializeField] AudioClip berserkerSelectSFX = null;
 
 		[Header("Valkyrie")]
-		[SerializeField] AudioMagazine valkyrieVocals;
-		[SerializeField] AudioClip valkyrieSelectSFX;
+		[SerializeField] AudioMagazine valkyrieVocals = null;
+		[SerializeField] AudioClip valkyrieSelectSFX = null;
 
 		[Header("Sage")]
-		[SerializeField] AudioMagazine sageVocals;
-		[SerializeField] AudioClip sageSelectSFX;
+		[SerializeField] AudioMagazine sageVocals = null;
+		[SerializeField] AudioClip sageSelectSFX = null;
 
 		void Start()
 		{

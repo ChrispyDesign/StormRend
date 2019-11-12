@@ -8,12 +8,12 @@ namespace StormRend.Anim.EventHandlers
 	public class UnitAnimEventHandlers : MonoBehaviour
 	{
 		//Inspector
-		[SerializeField] ParticleSystem[] particles;
-		public UnityEvent onDeath;
+		[SerializeField] ParticleSystem[] particles = null;
+		public UnityEvent onDeath = null;
 
 		//Members
-		protected Unit u;
-		protected AnimateUnit au;
+		protected Unit u = null;
+		protected AnimateUnit au = null;
 
 		void Awake()
 		{

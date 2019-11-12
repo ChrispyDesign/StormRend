@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using pokoro.BhaVE.Core.Variables;
 using pokoro.Patterns.Generic;
 using StormRend.Abilities;
 using StormRend.CameraSystem;
@@ -48,7 +49,7 @@ namespace StormRend.Systems
 		}
 
 		//Inspector
-		// [Tooltip("A reference to the State object that is considered to be the player's state ie. AllyState")]
+        [SerializeField] BhaveInt glory = null;
 		[Header("State")]
 		[ReadOnlyField, SerializeField] TurnState currentTurnState = null;
 		[Space(10), SerializeField] UnitVar _selectedUnitVar = null;
@@ -60,7 +61,7 @@ namespace StormRend.Systems
 
 		[Header("Camera")]
 		[SerializeField] float cameraSmoothTime = 1.75f;
-		[SerializeField] LayerMask raycastLayerMask;
+		[SerializeField] LayerMask raycastLayerMask = ~0;
 
 		//Properties
 		Mode mode
@@ -96,27 +97,28 @@ namespace StormRend.Systems
 
 		//Events
 		[Space(5)]
-		[Tooltip("When a unit is successfully selected")] public UnitEvent onUnitSelected;		
-		[Tooltip("When a unit is deselected")] public UnityEvent onUnitCleared;
-		[Tooltip("When an ability is chosen")] public AbilityEvent onAbilitySelected;
-		[Tooltip("When an ability is cleared")] public UnityEvent onAbilityCleared;
-		[Tooltip("When a valid target tile is selected, adding it to the target stack")] public UnityEvent onTargetTileAdd;
-		[Tooltip("When an invalid tile is selected")] public UnityEvent onTargetTileInvalid;
-		[Tooltip("When a tile is popped from the target stack ie. user right clicks")] public UnityEvent onTargetTileCancel;
-		[Tooltip("When an ability is performed")] public AbilityEvent onAbilityPerformed;
+		[Tooltip("When a unit is successfully selected")] public UnitEvent onUnitSelected = null;		
+		[Tooltip("When a unit is deselected")] public UnityEvent onUnitCleared = null;
+		[Tooltip("When an ability is chosen")] public AbilityEvent onAbilitySelected = null;
+		[Tooltip("When an ability is cleared")] public UnityEvent onAbilityCleared = null;
+		[Tooltip("When a valid target tile is selected, adding it to the target stack")] public UnityEvent onTargetTileAdd = null;
+		[Tooltip("When an invalid tile is selected")] public UnityEvent onTargetTileInvalid = null;
+		[Tooltip("When a tile is popped from the target stack ie. user right clicks")] public UnityEvent onTargetTileCancel = null;
+        [Tooltip("When an there's not enough glory to perform ability")] public UnityEvent onNotEnoughGlory = null;
+		[Tooltip("When an ability is performed")] public AbilityEvent onAbilityPerformed = null;
 
 		//Members
 		FrameEventData e;   //The events that happened this frame
-		CameraMover camMover;
-		Camera cam;
+		CameraMover camMover = null;
+		Camera cam = null;
 		Stack<Tile> targetTileStack = new Stack<Tile>();
-		public bool debug;
-		bool isUnitHit;
-		bool isTileHit;
-		Unit interimUnit;
-		Tile interimTile;
-		bool isTileHitEmpty;
-		GraphicRaycaster gr;
+		public bool debug = false;
+		bool isUnitHit = false;
+		bool isTileHit = false;
+		Unit interimUnit = null;
+		Tile interimTile = null;
+		bool isTileHitEmpty = false;
+		GraphicRaycaster gr = null;
 		List<RaycastResult> GUIhits = new List<RaycastResult>();
 		List<Type> currentControllableUnitTypes = new List<Type>();		//Holds the list of types that can be controlled for this game turn
 
@@ -338,6 +340,13 @@ namespace StormRend.Systems
 		//Enough tile targets chosen by user. Execute the selected ability
 		void SelectedUnitPerformAbility()
 		{
+            //Check there's en
+            if (!EnoughGlory())
+            {
+                onNotEnoughGlory.Invoke();
+                return;
+            }
+
 			//Perform
 			selectedAnimateUnit.Act(selectedAbility, targetTileStack.ToArray());
 
@@ -522,12 +531,35 @@ namespace StormRend.Systems
 					currentControllableUnitTypes.Add(typeof(EnemyUnit));
 			}
 		}
+
+        public bool EnoughGlory()
+		{
+			if (glory)
+			{
+				if (glory.value < selectedAbility.gloryCost)
+				{
+					//Not enough glory; Fail
+					return false;
+				}
+				else
+				{
+					//Successful spend
+					glory.value -= selectedAbility.gloryCost;
+					return true;
+				}
+			}
+			Debug.LogWarning("No glory SOV allocated!");
+			return false;
+		}
 	#endregion
 
 	#region Debug
 		void OnGUI()
 		{
 			if (!debug) return;
+			
+			GUILayout.Label("Glory: " + glory.value);
+
 			GUILayout.Label("ActivityMode: " + mode);
 
 			GUILayout.Label("is a unit hit?: " + isUnitHit);

@@ -77,29 +77,29 @@ namespace The.Great.Refactor.Brainstorm
 	internal class Conventions
 	{
 	    //Fields/Symbols
-	    [SerializeField] float privateShownOnInspector;
-	    [HideInInspector, SerializeField] float PrivateNotShownOnInspectorButSerialized;
-	    public float avoidMe = 0f;     //Free variable that can be modified by anything and anyone
+	    // [SerializeField] float privateShownOnInspector;
+	    // [HideInInspector, SerializeField] float PrivateNotShownOnInspectorButSerialized;
+	    // public float avoidMe = 0f;     //Free variable that can be modified by anything and anyone
 
 	    //Properties
 	    //Shown on inspector, but read only in the assembly/codebase
-	    [SerializeField] float _propertyBackingField = 0;
-	    public float propertyBackingField
-	    {
-	        get => _propertyBackingField;
+	    // [SerializeField] float _propertyBackingField = 0;
+	    // public float propertyBackingField
+	    // {
+	    //     get => _propertyBackingField;
 
-	    }
+	    // }
 
-	    void Something()
-	    {
-	        Debug.Log("somethign");
-	    }
+	    // void Something()
+	    // {
+	    //     Debug.Log("somethign");
+	    // }
 
-	    void UseExpressionBodyMethodsForCleanerCode() => Debug.Log("This is clean!");
+	    // void UseExpressionBodyMethodsForCleanerCode() => Debug.Log("This is clean!");
 
 
 	    //Privates
-	    bool isPrivate = true;      //Implicit private
+	    // bool isPrivate = true;      //Implicit private
 
 	    /*
 		Big classes

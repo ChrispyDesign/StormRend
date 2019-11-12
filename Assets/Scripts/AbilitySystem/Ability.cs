@@ -67,9 +67,6 @@ namespace StormRend.Abilities
 		/// </summary>
 		public bool Perform(Unit owner, params Tile[] targets)
 		{
-			//Return if not enough glory
-			if (!EnoughGlory()) return false;
-
 			foreach (var e in effects)
 			{
 				e.Perform(this, owner, targets);
@@ -83,7 +80,6 @@ namespace StormRend.Abilities
 		/// <typeparam name="T">Effect type to specifically perform</typeparam>
 		public bool Perform<T>(Unit owner, params Tile[] targets) where T : Effect
 		{
-			if (!EnoughGlory()) return false;
 			foreach (var e in effects)
 			{
 				if (e is T)
@@ -210,26 +206,6 @@ namespace StormRend.Abilities
 			DestroyImmediate(e, true);
 			AssetDatabase.SaveAssets();
 #endif
-		}
-
-		public bool EnoughGlory()
-		{
-			if (glory)
-			{
-				if (glory.value < gloryCost)
-				{
-					//Not enough glory; Fail
-					return false;
-				}
-				else
-				{
-					//Successful spend
-					glory.value -= gloryCost;
-					return true;
-				}
-			}
-			Debug.LogWarning("No glory SOV allocated!");
-			return false;
 		}
 	}
 }

@@ -8,7 +8,7 @@ namespace StormRend.Audio
     public class AudioSystem : MonoBehaviour
     {
         //Inspector
-        [TextArea(0, 2), SerializeField] string description = " ";
+        [TextArea(0, 2), SerializeField] string description = null;
 
         [Tooltip("Chance of playing a sound when triggered as a percentage")]
         [Range(0, 100), SerializeField] int chance = 50;
