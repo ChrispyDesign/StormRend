@@ -1,11 +1,10 @@
-﻿using StormRend.Audio;
-using StormRend.Tags;
+﻿using StormRend.Tags;
 using StormRend.Units;
 using UnityEngine;
 
 namespace StormRend.Audio
 {
-	public class UnitSelectAudioRelay : AudioPlayer
+	public class UnitSelectAudioRelay : AudioRelay
 	{
 		[Range(0f, 1f), SerializeField] float selectSFXVolume = 0.5f;
 
@@ -29,7 +28,7 @@ namespace StormRend.Audio
 		}
 
 		/// <summary>
-		/// Play certain audio magazine of 
+		/// Play certain audio magazine according to unit selected
 		/// </summary>
 		/// <param name="u"></param>
 		public void OnUnitSelected(Unit u)

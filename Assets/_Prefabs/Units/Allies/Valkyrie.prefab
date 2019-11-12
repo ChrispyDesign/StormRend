@@ -5443,7 +5443,7 @@ MonoBehaviour:
   onTakeDamage:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: StormRend.Utility.Events.DamageEvent, Assembly-CSharp, Version=0.0.0.0,
+    m_TypeName: StormRend.Utility.Events.HealthEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onEnemyKilled:
     m_PersistentCalls:
@@ -5464,7 +5464,7 @@ MonoBehaviour:
   onHeal:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+    m_TypeName: StormRend.Utility.Events.HealthEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   currentTile: {fileID: 0}
   beginTurnTile: {fileID: 0}
@@ -5517,9 +5517,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: 
+  description: Plays a remark when a enemy is killed by this unit
   chance: 50
-  sounds: {fileID: 11400000, guid: 5584e497f9cc04a49a64ac89a1adf620, type: 2}
+  magazine: {fileID: 11400000, guid: 5584e497f9cc04a49a64ac89a1adf620, type: 2}
 --- !u!65 &3671556472718825716
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10551,7 +10551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   chance: 50
-  sounds: {fileID: 0}
+  magazine: {fileID: 0}
 --- !u!1 &5555109766427908098
 GameObject:
   m_ObjectHideFlags: 0
@@ -23536,21 +23536,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ed0ea0e34057c47a7028ab9d8e574d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particles: []
+  onboardParticles: []
   onDeath:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2356287458874941432}
-        m_MethodName: Run
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2356287458874941432
@@ -23567,7 +23556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialDelay: 1.5
   dissolveDuration: 2.5
-  paramName: _DissolveValue
+  shaderParam: _DissolveValue
 --- !u!114 &45244116352507459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23582,7 +23571,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: ' '
   chance: 50
-  sounds: {fileID: 0}
+  magazine: {fileID: 0}
 --- !u!82 &1041661156002233512
 AudioSource:
   m_ObjectHideFlags: 0
@@ -25110,11 +25099,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 653011552559127036}
     m_Modifications:
-    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
-      objectReference: {fileID: 0}
     - target: {fileID: 8649027571778799567, guid: e1fbb2b94b8040740927f9ac8f85e701,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25169,6 +25153,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1fbb2b94b8040740927f9ac8f85e701, type: 3}

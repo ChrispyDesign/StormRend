@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using StormRend.Units;
-using StormRend.Utility.Attributes;
 using UnityEngine;
 
 namespace StormRend.Assists
@@ -12,12 +11,12 @@ namespace StormRend.Assists
 	public class DeathDissolver : MonoBehaviour
 	{
 		//Inspector
+		[Header("Designer to tune these values")]
 		[SerializeField] float initialDelay = 1f;
 		[SerializeField] float dissolveDuration = 2f;
-		[SerializeField] string paramName = "_DissolveValue";
+		[SerializeField] string shaderParam = "_DissolveValue";
 
 		//Members
-		// [ReadOnlyField, SerializeField] 
 		List<Material> materials = new List<Material>();
 		Unit u;
 		AnimateUnit au;
@@ -33,7 +32,7 @@ namespace StormRend.Assists
 				materials.AddRange(r.materials);
 		}
 
-		public void Run()
+		public void Execute()
 		{
 			//Dissolve animate units. Instantly kill anything else
 			if (au)
@@ -67,7 +66,7 @@ namespace StormRend.Assists
 		void SetDissolve(float dissolve)
 		{
 			foreach (var m in materials)
-				m.SetFloat(paramName, dissolve);
+				m.SetFloat(shaderParam, dissolve);
 		}
 	}
 }
