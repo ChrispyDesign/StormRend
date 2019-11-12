@@ -153,12 +153,12 @@ namespace StormRend.Units
 
 		#region Core
 		//------------------ CALLBACKS
-		public override void TakeDamage(DamageData damageData)
+		public override void TakeDamage(HealthData damageData)
 		{
 			base.TakeDamage(damageData);
 
 			//Face attack
-			transform.rotation = GetSnappedRotation(damageData.attacker.transform.position, snapAngle);
+			transform.rotation = GetSnappedRotation(damageData.vendor.transform.position, snapAngle);
 
 			//Animate
 			animator.SetTrigger("HitReact");
@@ -297,9 +297,9 @@ namespace StormRend.Units
 			var angle = -Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg + snapAng;
 			angle = Mathf.Round(angle / snapAng) * snapAng;
 			return Quaternion.AngleAxis(angle, Vector3.up);
-			
+
 			// var angle = Vector3.Angle(dir, Vector3.up);
-			// if (angle < snapAngle / 2f) 
+			// if (angle < snapAngle / 2f)
 			// 	return Quaternion.LookRotation(Vector3.up * dir.magnitude);
 			// if (angle > 180f - snapAngle / 2f)
 			// 	return Quaternion.LookRotation(Vector3.down * dir.magnitude);
@@ -318,7 +318,7 @@ namespace StormRend.Units
 			=> Act(ability, targetUnits.Select(x => x.currentTile).ToArray());
 		public void FilteredAct(Ability ability, params Unit[] targetUnits)
 			=> FilteredAct(ability, targetUnits.Select(x => x.currentTile).ToArray());
-		
+
 		/// <summary>
 		/// Filter target tiles based on ability's tile type settings before performing ability
 		/// </summary>
@@ -353,7 +353,7 @@ namespace StormRend.Units
 			if (targetTiles.Length > 0)
 				SnappedLookAt(targetTiles[targetTiles.Length-1].transform.position);
 
-			//Launch the Ability's animation triggering a series of 
+			//Launch the Ability's animation triggering a series of
 			//animations events to be executed with precision timing
 			animator.SetTrigger(ability.animationTrigger);
 

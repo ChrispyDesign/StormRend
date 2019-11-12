@@ -5,7 +5,7 @@ using UnityEngine;
 namespace StormRend.Abilities.Utilities
 {
 	/// <summary>
-	/// This runs 
+	/// This runs passive abilities on all unit creation and death
 	/// </summary>
 	[RequireComponent(typeof(UnitRegistry))]
 	public class PassiveAbilityRunner : MonoBehaviour
@@ -31,9 +31,10 @@ namespace StormRend.Abilities.Utilities
 			//Cache all passive abilities
 			foreach (var u in ur.aliveUnits)
 			{
+				//Only proceed if AnimateUnit
 				var au = u as AnimateUnit;
-				foreach (var a in au.GetAbilitiesByType(AbilityType.Passive))
-					passiveAbilities.Add(a, u);
+				if (au) foreach (var a in au.GetAbilitiesByType(AbilityType.Passive))
+						passiveAbilities.Add(a, u);
 			}
 		}
 
@@ -54,7 +55,7 @@ namespace StormRend.Abilities.Utilities
 				//NOTE: If successful will trigger animation where appropriate
 				pa.Key.PerformOnUnitCreated(pa.Value, created);
 			}
-			//INEFFICIENT Reset passive ability collection
+			//INEFFICIENT Repopulate passive ability collection
 			Start();
 		}
 

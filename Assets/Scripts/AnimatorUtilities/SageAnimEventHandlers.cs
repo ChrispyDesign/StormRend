@@ -1,8 +1,8 @@
 ﻿using StormRend.Abilities.Effects;
 using UnityEngine;
 
-namespace StormRend.Anim.EventHandlers 
-{ 
+namespace StormRend.Anim.EventHandlers
+{
 	/// <summary>
 	/// Hardcoded Sage callbacks
 	/// </summary>
