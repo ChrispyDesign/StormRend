@@ -8,7 +8,7 @@ namespace StormRend.Anim.EventHandlers
 	/// </summary>
 	public class SageAnimEventHandlers : UnitAnimEventHandlers
 	{
-		public void PlayPFXSafePassage()
+		public void PlayVFXSafePassage()
 		{
 			//Insert special logic here for the sage's safe passage
 		}

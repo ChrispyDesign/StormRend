@@ -47,18 +47,22 @@ namespace StormRend.Anim.EventHandlers
 			Instantiate(go, this.transform.position, this.transform.rotation);
 		}
 
-		public void PlayOnboardPFX(string name)
+		/// <summary>
+		/// Plays a particle effect that is loaded on this event handler
+		/// </summary>
+		/// <param name="name">The particle name to play</param>
+		public void PlayOnboardVFX(string name)
 		{
 			foreach (var p in onboardParticles)
 			{
 				if (p.name == name)
 				{
-					StartCoroutine(PlayPFXOnce(p));
+					StartCoroutine(PlayVFXOnce(p));
 				}
 			}
 		}
 
-		IEnumerator PlayPFXOnce(ParticleSystem p)
+		IEnumerator PlayVFXOnce(ParticleSystem p)
 		{
 			//Activate particle
 			p.gameObject.SetActive(true);
