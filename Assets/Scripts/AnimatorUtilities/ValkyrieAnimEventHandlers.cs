@@ -10,14 +10,14 @@ namespace StormRend.Anim.EventHandlers
 	{
 		public void PerformTeleport()
 		{
-			au.Act<TeleportEffect>();
+			animateUnit.Act<TeleportEffect>();
 		}
 
 		public void PerformPush()
 		{
-			au.Act<PushEffect>();
+			animateUnit.Act<PushEffect>();
 
-			au.Act<RefreshEffect>();    //TODO Temporary. Delete later
+			animateUnit.Act<RefreshEffect>();    //TODO Temporary. Delete later
 		}
    	}
 }

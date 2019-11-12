@@ -10,29 +10,26 @@ namespace StormRend.Anim.EventHandlers
 	public class UnitAnimEventHandlers : MonoBehaviour
 	{
 		//Inspector
-		[SerializeField] ParticleSystem[] onboardParticles = null;
+		[SerializeField] GameObject[] onboardParticles = null;
 		public UnityEvent onDeath = null;
 
 		//Members
-		protected Unit u = null;
-		protected AnimateUnit au = null;
-		protected DeathDissolver dd = null;
+		protected Unit unit = null;
+		protected AnimateUnit animateUnit = null;
+		protected DeathDissolver deathDissolver = null;
 
 		void Awake()
 		{
-			u = GetComponentInParent<Unit>() as Unit;
-			au = u as AnimateUnit;
-			dd = GetComponent<DeathDissolver>();
+			unit = GetComponentInParent<Unit>() as Unit;
+			animateUnit = unit as AnimateUnit;
+			deathDissolver = GetComponent<DeathDissolver>();
 		}
 
-		public virtual void PerformAbility()
-		{
-			au.Act();
-		}
+		public virtual void PerformAbility() => animateUnit.Act();
 
 		public virtual void Die()
 		{
-			dd.Execute();
+			deathDissolver.Execute();
 			onDeath.Invoke();   //Run death dissolve and die etc
 		}
 
@@ -40,11 +37,19 @@ namespace StormRend.Anim.EventHandlers
 		/// Takes in a PFX and plays it at the object's transform
 		/// </summary>
 		/// <param name="particle"></param>
-		public virtual void PlayPFX(object particle)
+		public void PlayVFX(Object particle)
 		{
 			//Instantiates the particle
 			GameObject go = particle as GameObject;
 			Instantiate(go, this.transform.position, this.transform.rotation);
+		}
+
+		public void MountVFX(Object particle)
+		{
+			//Instantiates the particle
+			GameObject particleGO = particle as GameObject;
+			var pfx = Instantiate(particleGO, this.transform.position, this.transform.rotation);
+			pfx.transform.SetParent(unit.transform);
 		}
 
 		/// <summary>
@@ -53,24 +58,43 @@ namespace StormRend.Anim.EventHandlers
 		/// <param name="name">The particle name to play</param>
 		public void PlayOnboardVFX(string name)
 		{
-			foreach (var p in onboardParticles)
+			// foreach (var p in onboardParticles)
+			// {
+			// 	if (p.name == name)
+			// 	{
+			// 		StartCoroutine(PlayVFXOnce(p));
+			// 		return;
+			// 	}
+			// }
+			// Debug.LogWarningFormat("Particle {0} not found!", name);
+		}
+
+		public void MountOnboardVFX(string name)
+		{
+			foreach (var po in onboardParticles)
 			{
-				if (p.name == name)
+				if (po.name == name)
 				{
-					StartCoroutine(PlayVFXOnce(p));
+					//Instantiates and mounts the particle
+					var pfx = Instantiate(po.gameObject, this.transform.position, this.transform.rotation);
+					pfx.transform.SetParent(unit.transform);
+					return;
 				}
 			}
+			Debug.LogWarningFormat("Particle {0} not found!", name);
 		}
 
-		IEnumerator PlayVFXOnce(ParticleSystem p)
-		{
-			//Activate particle
-			p.gameObject.SetActive(true);
+		//Not sure if this would work
+		// IEnumerator PlayVFXOnce(ParticleSystem p)
+		// {
+		// 	//Activate particle
+		// 	p.gameObject.SetActive(true);
 
-			//Deactivate once it finishes playing
-			//TODO will have to consult with Dale here
-			if (p.isPlaying) yield return null;
-			p.gameObject.SetActive(false);
-		}
+		// 	//Deactivate once it finishes playing.
+		// 	//TODO will have to consult with Dale here
+		// 	if (p.isPlaying) yield return null;
+
+		// 	p.gameObject.SetActive(false);
+		// }
 	}
 }

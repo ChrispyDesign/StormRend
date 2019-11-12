@@ -25,7 +25,7 @@ namespace StormRend.MapSystems.Tiles
 		//Inspector
 		[SerializeField] AudioClip onHoverSFX = null;
 		[Tooltip("If not set will default to 'Hover' highlight or clear")]
-		[SerializeField] TileHighlightColor hoverHighlight = null;
+		[SerializeField] TileHighlightColor hoverHL = null;
 		public float cost = 1;
 		internal float G = float.MaxValue;
 		internal float H = float.MaxValue;
@@ -184,11 +184,11 @@ namespace StormRend.MapSystems.Tiles
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			//Set default if no color specifically set at startup
-			if (!hoverHighlight && highlightColors.TryGetValue("Hover", out TileHighlightColor hover))
-				hoverHighlight = hover;
+			if (!hoverHL && highlightColors.TryGetValue("Hover", out TileHighlightColor color))
+				hoverHL = color;
 
 			//Set hover
-			highlight.color = hoverHighlight.color;
+			highlight.color = hoverHL.color;
 
 			//Hover sound
 			audioSource.PlayOneShot(onHoverSFX);
