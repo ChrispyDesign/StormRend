@@ -36,8 +36,8 @@ namespace StormRend.Systems
         }
         public void Tick()
         {
-            blizzardVar++;
-            if (blizzardVar > maxBlizzardValue)
+            blizzardVar.value++;
+            if (blizzardVar.value > maxBlizzardValue)
             {
                 Execute();
                 Reset();
@@ -73,7 +73,7 @@ namespace StormRend.Systems
         internal void Reset()
         {
             onReset.Invoke();
-            blizzardVar = 0;
+            blizzardVar.value = 0;
         }
     #endregion
     }

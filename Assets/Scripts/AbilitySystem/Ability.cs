@@ -35,13 +35,13 @@ namespace StormRend.Abilities
 		[Range(1, 3), SerializeField] int _level = 1;
 		[TextArea(0, 2), SerializeField] string _description = "";
 
-		[Header("Casting"), Space(1), Tooltip("Glory cost required to perform this ability")]
+		[Header("Casting"), Tooltip("Glory cost required to perform this ability")]
 		[SerializeField] int _gloryCost = 1;
+		[Tooltip("Insert main Glory SO variable")]
 		[SerializeField] BhaveInt glory = null;
 
-
-		[Tooltip("The required number of selected tiles this ability needs in order for it to be performed. NOTE: Setting this to zero will instantly perform ability on self upon clicking on ability")]
-		[Space, SerializeField] int _requiredTiles = 1;
+		[Header("Targeting"), Tooltip("The required number of selected tiles this ability needs in order for it to be performed. NOTE: Setting this to zero will instantly perform ability on self upon clicking on ability")]
+		[SerializeField] int _requiredTiles = 1;
 
 		[Tooltip("The tiles this ability can target")]
 		[EnumFlags, SerializeField] TargetType _targetTileTypes = (TargetType)~0;
@@ -65,24 +65,25 @@ namespace StormRend.Abilities
 		/// <summary>
 		/// Perform the entire ability
 		/// </summary>
-		public void Perform(Unit owner, params Tile[] targets)
+		public bool Perform(Unit owner, params Tile[] targets)
 		{
-			// Debug.Log("Performing Ability: " + this.name);
-			SpendGlory();
+			//Return if not enough glory
+			if (!EnoughGlory()) return false;
+
 			foreach (var e in effects)
 			{
-				// Debug.Log("Performing Effect: " + e.name);
 				e.Perform(this, owner, targets);
 			}
+			return true;	//Successful ability execution
 		}
 
 		/// <summary>
 		/// Perform a certain effect contained in this ability
 		/// </summary>
 		/// <typeparam name="T">Effect type to specifically perform</typeparam>
-		public void Perform<T>(Unit owner, params Tile[] targets) where T : Effect
+		public bool Perform<T>(Unit owner, params Tile[] targets) where T : Effect
 		{
-			SpendGlory();
+			if (!EnoughGlory()) return false;
 			foreach (var e in effects)
 			{
 				if (e is T)
@@ -90,8 +91,12 @@ namespace StormRend.Abilities
 					e.Perform(this, owner, targets);
 				}
 			}
+			return true;
 		}
 
+		/// <summary>
+		/// Perform passive effects contained in this ability when a unit is killed
+		/// </summary>
 		public void PerformOnUnitKilled(Unit owner, Unit killed)
 		{
 			foreach (var e in effects)
@@ -99,11 +104,18 @@ namespace StormRend.Abilities
 				var pe = e as PassiveEffect;
 				if (pe)
 				{
-					pe.OnUnitKilled(this, owner, killed);
+					if (pe.OnUnitKilled(this, owner, killed))
+					{
+						//Passive effect successful; perform animation
+						owner.animator.SetTrigger(animationTrigger);
+					}
 				}
 			}
 		}
 
+		/// <summary>
+		/// Perform passive effects contained in this ability when a unit is created or spawned in
+		/// </summary>
 		public void PerformOnUnitCreated(Unit owner, Unit created)
 		{
 			foreach (var e in effects)
@@ -111,12 +123,19 @@ namespace StormRend.Abilities
 				var pe = e as PassiveEffect;
 				if (pe)
 				{
-					pe.OnUnitCreated(this, owner, created);
+					if (pe.OnUnitCreated(this, owner, created))
+					{
+						//Passive effect successful; perform animation
+						owner.animator.SetTrigger(animationTrigger);
+					}
 				}
 			}
 		}
 	#endregion
 
+		/// <summary>
+		/// Return true if the tile is valid according to this ability's targeting settings
+		/// </summary>
 		public bool IsAcceptableTileType(AnimateUnit owner, Tile tile)
 		{
 			//NOTE: Only one of the masks have to pass for the whole thing to pass
@@ -193,12 +212,24 @@ namespace StormRend.Abilities
 #endif
 		}
 
-		public void SpendGlory()
+		public bool EnoughGlory()
 		{
 			if (glory)
-				glory.value -= gloryCost;
-			else
-				Debug.LogWarning("No glory SOV allocated!");
+			{
+				if (glory.value < gloryCost)
+				{
+					//Not enough glory; Fail
+					return false;
+				}
+				else
+				{
+					//Successful spend
+					glory.value -= gloryCost;
+					return true;
+				}
+			}
+			Debug.LogWarning("No glory SOV allocated!");
+			return false;
 		}
 	}
 }
