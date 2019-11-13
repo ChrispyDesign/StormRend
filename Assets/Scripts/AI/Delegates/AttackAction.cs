@@ -18,7 +18,6 @@ namespace StormRend.Bhaviours
 		[SerializeField] Ability attackAbility = null;
 
         AnimateUnit au = null;
-        Animator anim = null;
 
 		public override void Awaken(BhaveAgent agent)
 		{
@@ -31,8 +30,16 @@ namespace StormRend.Bhaviours
         	if (targets.value.Count <= 0) return NodeState.Failure;
 
 			//Attack target
-			au.FilteredAct(attackAbility, targets.value.ToArray());
-        	return NodeState.Success;
+			if (au.abilities[0] != null)
+			{
+				au.FilteredAct(au.abilities[0], targets.value.ToArray());
+        		return NodeState.Success;
+			}
+			else
+			{
+				Debug.LogWarning("No ability found!");
+				return NodeState.Failure;
+			}
 		}
     }
 }

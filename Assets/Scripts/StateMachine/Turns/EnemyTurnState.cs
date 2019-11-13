@@ -13,7 +13,7 @@ namespace StormRend.States
 		// - Handle any UI : Use UnityEvents
 
 		[Header("AI"), Tooltip("Time between each enemy unit's turn in seconds")]
-		[SerializeField] float aiTurnTime = 2f;
+		[SerializeField] float AITurnTime = 2f;
 
 		EnemyUnit[] enemies = new EnemyUnit[0];
 		BhaveDirector ai;
@@ -50,7 +50,7 @@ namespace StormRend.States
 			{
 				var agent = u.GetComponent<BhaveAgent>();
 				ai.Tick(agent);
-				yield return new WaitForSeconds(aiTurnTime);
+				yield return new WaitForSeconds(AITurnTime);
 			}
 
 			//Tick crystals HARDCODE

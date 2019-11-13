@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5697536595670988253}
   - component: {fileID: 5920296522964574612}
+  - component: {fileID: 5821566026990388951}
   - component: {fileID: 2469292731765617890}
   - component: {fileID: 5697536595670988192}
   - component: {fileID: 5697536595670988254}
@@ -48,6 +49,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e64da4d23c1b6848a4cd4e4d9a10df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5821566026990388951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5697536595670988193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1517799387, guid: 0c25f2ed055db00489974bd6dd51f2cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _internalTree: {fileID: 0}
+  agentName: BhaveAgent
+  description: 
+  _active: 0
+  _paused: 0
+  playOnStart: 0
+  restartWhenDone: 0
+  pauseIfDeactivated: 0
+  variables: []
+  _bhaveTreeModule: {fileID: 11400000, guid: 68bab5547e8eb2145956fe15fd9fd9f9, type: 2}
+  useCopy: 1
 --- !u!114 &2469292731765617890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1542,7 +1566,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f96c2ee4d2dcd442abc12db51d53696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onboardParticles: []
+  inbuiltVFX: []
+  inbuiltVFXLifetime: 5
   onDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -1577,7 +1602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   chance: 50
-  sounds: {fileID: 0}
+  magazine: {fileID: 0}
 --- !u!82 &602387612093484524
 AudioSource:
   m_ObjectHideFlags: 0

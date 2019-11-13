@@ -28,7 +28,7 @@ namespace StormRend.UI
 			{
 				img.fillAmount = 0f;
 			}
-			glory--;
+			// glory.value--;
 
 			for (int i = 0; i < details.Length; i++)
 			{
@@ -44,36 +44,18 @@ namespace StormRend.UI
 		}
 
 		//Register events
-		void OnEnable() => glory.onChanged += OnChange;
-		void OnDisable() => glory.onChanged -= OnChange;
+		// void OnEnable() => glory.onChanged += OnChange;
+		// void OnDisable() => glory.onChanged -= OnChange;
 
 		public void OnChange()
 		{
 			Debug.Log("OnChange");
 			//Increase
-			// if (oldGloryValue < glory)
-				StartCoroutine(IncreaseGlory(glory - 1));
+			if (internalGlory < glory.value)
+				StartCoroutine(IncreaseGlory(glory.value - 1));
 			//Decrease
-			// else if (oldGloryValue > glory)
-			// 	StartCoroutine(DecreaseGlory(glory));
-		}
-
-		public override void OnIncrease()
-		{
-			// if (glory + 1 == gloryNodes.Length)
-			// 	return;
-
-			// StartCoroutine(IncreaseGlory(glory + 1));
-			glory++;
-		}
-
-		public override void OnDecrease()
-		{
-			if (glory - 1 == -2)
-				return;
-
-			StartCoroutine(DecreaseGlory(glory));
-			glory--;
+			else if (internalGlory > glory.value)
+				StartCoroutine(DecreaseGlory(glory.value + 1));
 		}
 
 		public override void OnPointerEnter(PointerEventData eventData)

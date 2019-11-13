@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using StormRend.Variables;
 using StormRend.Units;
 
 namespace StormRend.UI
 {
-	public class AbilitySelectPanel : MonoBehaviour
+    public class AbilitySelectPanel : MonoBehaviour
 	{
 		[SerializeField] List<AbilityDetails> abilityDetails = new List<AbilityDetails>();
 
@@ -17,13 +16,13 @@ namespace StormRend.UI
 			}
 		}
 
-		public void SelectedUnitOnChange(Unit unit)
+		public void SelectedUnitOnChange(Unit u)
 		{
-			AnimateUnit animateUnit = unit as AnimateUnit;
+			var au = u as AnimateUnit;
 
-			for (int i = 0; i < animateUnit.abilities.Length; i++)
+			for (int i = 0; i < 6; i++)		//This doesn't account for the Sage's passive ability. Anything above a 7
 			{
-				abilityDetails[i].SetAbility(animateUnit.abilities[i]);
+				abilityDetails[i].SetAbility(au.abilities[i]);
 				abilityDetails[i].gameObject.SetActive(true);
 			}
 		}
