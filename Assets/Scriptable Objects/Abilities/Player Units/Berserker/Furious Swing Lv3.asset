@@ -16,7 +16,10 @@ MonoBehaviour:
   _animationTrigger: FuriousSwing
   _type: 1
   _level: 3
-  _description: Deals +2 damage
+  _descriptions:
+  - Deal 2 damage
+  - If you kill an enemy, you may move and attack again
+  - Deal +2 damage
   _gloryCost: 4
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
@@ -76,7 +79,7 @@ MonoBehaviour:
   damage: 4
   piercing: 0
   gainGlory: 1
-  gloryAmount: 1
+  gloryAmount: 0
   glory: {fileID: 0}
 --- !u!114 &114303405589470718
 MonoBehaviour:

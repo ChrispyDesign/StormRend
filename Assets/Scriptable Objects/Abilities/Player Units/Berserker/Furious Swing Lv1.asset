@@ -16,14 +16,14 @@ MonoBehaviour:
   _animationTrigger: FuriousSwing
   _type: 1
   _level: 1
-  _description: Deal 2 damage
+  _descriptions:
+  - Deal 2 damage. Gain 1 Glory
   _gloryCost: 0
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
   _targetTileTypes: 64
   effects:
   - {fileID: 114500643382445322}
-  - {fileID: 114625879252061306}
   castArea: 00000000000000000000000000000000000100000000000100010000000000010000000000000000000000000000000000
 --- !u!114 &114186159587013604
 MonoBehaviour:
@@ -58,7 +58,7 @@ MonoBehaviour:
   notes: 
   damage: 2
   piercing: 0
-  gainGlory: 1
+  gainGlory: 2
   gloryAmount: 1
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
 --- !u!114 &114615408424896200
@@ -75,20 +75,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_target: 1
   m_gloryAmount: 1
---- !u!114 &114625879252061306
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
-  m_Name: RefreshEffect
-  m_EditorClassIdentifier: 
-  notes: 
-  refreshCount: 0
-  refreshType: -1
-  delay: 1
-  allowedRefreshes: 1000
