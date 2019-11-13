@@ -34,6 +34,7 @@ namespace StormRend.Abilities
 		[SerializeField] string _animationTrigger = "";
 		[SerializeField] AbilityType _type = AbilityType.Primary;
 		[Range(1, 3), SerializeField] int _level = 1;
+		[SerializeField] string _title = null;
 		[TextArea(0, 2), SerializeField] string[] _descriptions = new string[descriptionCount];
 
 		[Header("Casting"), Tooltip("Glory cost required to perform this ability")]
@@ -57,6 +58,7 @@ namespace StormRend.Abilities
 		public string animationTrigger => _animationTrigger;
 		public AbilityType type => _type;
 		public int level => _level;
+		public string title => _title;
 		public string[] descriptions => _descriptions;
 		public int gloryCost => _gloryCost;
 		public int requiredTiles => _requiredTiles;
