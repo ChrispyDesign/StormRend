@@ -23,7 +23,14 @@ namespace StormRend.Abilities.Effects
 			if (!UnitRegistry.TryGetAnyUnitOnTile(t, out Unit ignoreMe))
 			{
 				var au = owner as AnimateUnit;		//Cast
-				au.Move(t, false, restrictToMoveTiles, true);			//Teleport
+				au.Move(t, false, restrictToMoveTiles, true);	//Teleport
+
+				//If not restricted to move tiles then reset begin/current tiles and recalculate moves
+				if (!restrictToMoveTiles)
+				{
+					au.beginTurnTile = au.currentTile;
+					au.CalculateMoveTiles();
+				}
 			}
         }
     }
