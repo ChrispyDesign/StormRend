@@ -24,6 +24,8 @@ namespace StormRend.Units
 		//Properties
 		public Unit[] aliveUnits => _aliveUnits.ToArray();
 		public Unit[] deadUnits => _deadUnits.ToArray();
+		public bool allAlliesDead => GetUnitsByType<AllyUnit>().Length <= 0;
+		public bool allEnemiesDead => GetUnitsByType<EnemyUnit>().Length <= 0;
 
 		//Events
 		[Header("Events")]
