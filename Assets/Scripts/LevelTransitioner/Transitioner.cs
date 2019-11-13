@@ -13,4 +13,25 @@ public class Transitioner : MonoBehaviour
         allyUnits.AddRange(FindObjectsOfType<AllyUnit>());
         enemyUnits.AddRange(FindObjectsOfType<EnemyUnit>());
     }
+
+	private void Update()
+	{
+		
+	}
+
+	public void CheckEnemyDead()
+	{
+		int enemyDied = 0;
+
+		foreach (EnemyUnit enemy in enemyUnits)
+		{
+			if (enemy.isDead)
+				enemyDied++;
+		}
+
+		if (enemyUnits.Count == enemyDied)
+		{
+			
+		}
+	}
 }
