@@ -18,6 +18,7 @@ namespace StormRend.UI
 		private void Awake()
 		{
 			infoPanel = FindObjectOfType<InfoPanel>();
+			units.AddRange(FindObjectsOfType<AllyUnit>());
 			foreach (Image img in gloryNodes)
 			{
 				img.fillAmount = 0f;
