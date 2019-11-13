@@ -6,7 +6,7 @@ Shader "Character/Character"
 	{
 		_Cutoff( "Mask Clip Value", Float ) = 1
 		_TextureSample0("Texture Sample 0", 2D) = "white" {}
-		_DissolveValue("DissolveValue", Range( 0 , 1)) = 0
+		_DissolveValue("DisolveValue", Range( 0 , 1)) = 0
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 		[HideInInspector] __dirty( "", Int ) = 1
 	}
@@ -67,7 +67,7 @@ Shader "Character/Character"
 			o.Albedo = tex2D( _TextureSample0, uv_TextureSample0 ).rgb;
 			o.Alpha = 1;
 			float2 uv_TexCoord5 = i.uv_texcoord * float2( 50,50 );
-			float simplePerlin2D3 = snoise( uv_TexCoord5 );
+			float simplePerlin2D3 = snoise( uv_TexCoord5*10.0 );
 			simplePerlin2D3 = simplePerlin2D3*0.5 + 0.5;
 			float Noise10 = simplePerlin2D3;
 			clip( ( Noise10 + _DissolveValue ) - _Cutoff );
@@ -80,10 +80,10 @@ Shader "Character/Character"
 }
 /*ASEBEGIN
 Version=17101
-9;207;1906;1044;2650.721;716.2352;2.088076;True;True
+1927;1;1906;1050;2331.971;330.9117;1.337033;True;True
 Node;AmplifyShaderEditor.Vector2Node;4;-1988.609,-17.66493;Inherit;False;Constant;_Vector0;Vector 0;1;0;Create;True;0;0;False;0;50,50;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
 Node;AmplifyShaderEditor.TextureCoordinatesNode;5;-1709.411,-35.90862;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.NoiseGeneratorNode;3;-1472.033,-41.18892;Inherit;True;Simplex2D;True;False;2;0;FLOAT2;0,0;False;1;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.NoiseGeneratorNode;3;-1397.033,-42.18892;Inherit;True;Simplex2D;True;False;2;0;FLOAT2;0,0;False;1;FLOAT;10;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;10;-1004.492,-40.11687;Inherit;False;Noise;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;16;-1185.351,152.7838;Inherit;True;10;Noise;1;0;OBJECT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;14;-1232.407,345.3453;Inherit;False;Property;_DissolveValue;DisolveValue;2;0;Create;True;0;0;False;0;0;1;0;1;0;1;FLOAT;0
@@ -98,4 +98,4 @@ WireConnection;21;1;14;0
 WireConnection;0;0;2;0
 WireConnection;0;10;21;0
 ASEEND*/
-//CHKSM=FD2E45A8E839814573C726CEDEBA0C1F985E507F
+//CHKSM=E9CF62A5FD80743D903F6C6F4116D4F453D8C7E2
