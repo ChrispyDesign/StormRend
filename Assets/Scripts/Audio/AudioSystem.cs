@@ -48,6 +48,13 @@ namespace StormRend.Audio
 		#endregion
 
 		#region Animation Event Handlers
+		public void ChancePlayClip(Object audioClip)
+		{
+			AudioClip ac = audioClip as AudioClip;
+			if (Random.Range(0, 100) < chance)
+				audioSource.PlayOneShot(ac);
+		}
+
 		/// <summary> Play one audio clip out of a magazine according to chance </summary>
 		/// <param name="audioMagazine">AudioMagazine scriptable object</param>
 		public void ChancePlayMagazine(Object audioMagazine)
@@ -61,8 +68,8 @@ namespace StormRend.Audio
 		/// <param name="audioClip">Single AudioClip</param>
 		public void PlayOnce(Object audioClip)
 		{
-			AudioClip c = audioClip as AudioClip;
-			audioSource.PlayOneShot(c);
+			AudioClip ac = audioClip as AudioClip;
+			audioSource.PlayOneShot(ac);
 		}
 		#endregion
 	}
