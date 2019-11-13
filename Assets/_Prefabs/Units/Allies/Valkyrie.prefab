@@ -5481,8 +5481,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1b20c7895940bd54aa0bb1e2cd5e88db, type: 2}
   - {fileID: 11400000, guid: d58a3e6ef76ae704b9a5f873deb33dda, type: 2}
   statusEffects: []
-  ghostColor: {r: 1, g: 0.808957, b: 0, a: 1}
-  ghostMaterial: {fileID: 0}
+  ghost: {fileID: 1892909228587308109, guid: 82d630c4a3a69514daa66db555c70160, type: 3}
   onBeginTurn:
     m_PersistentCalls:
       m_Calls: []
@@ -10397,6 +10396,8 @@ GameObject:
   - component: {fileID: 5555109766435203670}
   - component: {fileID: 557610813}
   - component: {fileID: 557610812}
+  - component: {fileID: 2089764974564843648}
+  - component: {fileID: 5235786986510254051}
   m_Layer: 0
   m_Name: VFX Mesh
   m_TagString: Untagged
@@ -10538,6 +10539,117 @@ AudioSource:
     m_PostInfinity: 2
     m_RotationOrder: 4
 --- !u!114 &557610812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5555109766427908096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: 
+  chance: 50
+  magazine: {fileID: 0}
+--- !u!82 &2089764974564843648
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5555109766427908096}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &5235786986510254051
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -23536,7 +23648,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ed0ea0e34057c47a7028ab9d8e574d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onboardParticles: []
+  inbuiltVFX: []
+  inbuiltVFXLifetime: 5
   onDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -25099,6 +25212,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 653011552559127036}
     m_Modifications:
+    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     - target: {fileID: 8649027571778799567, guid: e1fbb2b94b8040740927f9ac8f85e701,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25153,11 +25271,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1fbb2b94b8040740927f9ac8f85e701, type: 3}

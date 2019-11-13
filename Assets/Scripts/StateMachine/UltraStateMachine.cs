@@ -71,7 +71,7 @@ namespace StormRend.Systems.StateMachines
 		{
 			if (!entryState)
 			{
-				Debug.LogWarning("No entry state found!");
+				Debug.LogWarning("No Entry State Found! Disabling UltraStateMachine...");
 				enabled = false;
 			}
 			else

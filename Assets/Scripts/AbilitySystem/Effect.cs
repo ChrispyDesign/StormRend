@@ -7,8 +7,6 @@ namespace StormRend.Abilities
 {
 	public abstract class Effect : ScriptableObject
 	{
-		[SerializeField] string notes = null;
-
 		public bool isFoldOut { get; set; } = true;
 		
 	#region Core
