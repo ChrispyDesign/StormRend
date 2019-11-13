@@ -3,35 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Transitioner : MonoBehaviour
+namespace StormRend
 {
-    [SerializeField] List<AllyUnit> allyUnits = new List<AllyUnit>();
-    [SerializeField] List<EnemyUnit> enemyUnits = new List<EnemyUnit>();
-
-    private void Awake()
-    {
-        allyUnits.AddRange(FindObjectsOfType<AllyUnit>());
-        enemyUnits.AddRange(FindObjectsOfType<EnemyUnit>());
-    }
-
-	private void Update()
+	public class Transitioner : MonoBehaviour
 	{
-		
-	}
-
-	public void CheckEnemyDead()
-	{
-		int enemyDied = 0;
-
-		foreach (EnemyUnit enemy in enemyUnits)
+		private void Awake()
 		{
-			if (enemy.isDead)
-				enemyDied++;
+
 		}
 
-		if (enemyUnits.Count == enemyDied)
+		private void Update()
 		{
-			
+
 		}
 	}
 }

@@ -18,8 +18,11 @@ namespace StormRend.UI
 		InfoPanel infoPanel;
 		Button button;
 
-		public void SetAbility(Ability _ability) { ability = _ability; }
-		public void SetIcon(Sprite _icon) { icon.sprite = _icon; }
+		public void SetAbility(Ability _ability)
+		{
+			ability = _ability;
+			icon.sprite = _ability.icon;
+		}
 
 		void Awake()
 		{
