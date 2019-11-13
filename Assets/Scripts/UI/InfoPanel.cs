@@ -10,7 +10,7 @@ namespace StormRend.UI
 	{
 		[Range(0, 1)]
 		[SerializeField] float fadeDuration;
-		[SerializeField] GameObject[] panels;
+		[SerializeField] GameObject[] panels = null;
 
 		Animator anim;
 		List<TextMeshProUGUI> text = new List<TextMeshProUGUI>();

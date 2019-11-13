@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using StormRend.Abilities;
@@ -28,8 +29,8 @@ namespace StormRend.Units
 
 		//Inspector
 		[ReadOnlyField] public Tile beginTurnTile = null;   //The tile this unit starts from at the beginning of each turn
-		[ReadOnlyField] public bool _canMove = true;
-		[ReadOnlyField] public bool _canAct = true;
+		[ReadOnlyField, SerializeField] bool _canMove = true;
+		[ReadOnlyField, SerializeField] bool _canAct = true;
 		[SerializeField] LookSnap lookSnap = LookSnap.RightAngle;
 
 		[Header("Abilities & Effects")]
@@ -38,27 +39,24 @@ namespace StormRend.Units
 		[EnumFlags, SerializeField] TargetType pathBlockers = TargetType.Enemies | TargetType.InAnimates;
 		[SerializeField] internal Ability[] abilities = new Ability[0];
 		[ReadOnlyField, SerializeField] internal List<StatusEffect> statusEffects = new List<StatusEffect>();
+		// [ReadOnlyField, SerializeField] internal HashSet<StatusEffect> statusEffects = new HashSet<StatusEffect>();
 
 		[Header("Ghost")]
 		[SerializeField] protected Color ghostColor = Color.blue;
-		[SerializeField] protected Material tbcGhostMaterial = null;
+		[SerializeField] protected Material ghostMaterial = null;
 
 		//Events
 		[Header("Animate Unit Events")]
-		[SerializeField] EffectEvent onAddStatusEffect = null;
-		[SerializeField] UnityEvent onBeginTurn = null;
-		[SerializeField] AbilityEvent onActed = null;
-		[SerializeField] UnityEvent onEndTurn = null;
+		public UnityEvent onBeginTurn = null;
+		public EffectEvent onAddStatusEffect = null;
+		public AbilityEvent onActed = null;
+		public UnityEvent onEndTurn = null;
 
 		//Properties
 		public Tile ghostTile { get; set; } = null;		//The tile the ghost is on
 		public Tile[] possibleMoveTiles;// { get; set; } = new Tile[0];
 		public Tile[] possibleTargetTiles;// { get; set; } = new Tile[0];
-		public bool canMove => _canMove;
-		public void SetCanMove(bool value) => _canMove = value;
-		public bool canAct => _canAct;	//has performed an ability and hence this unit has completed it's turn and is locked until next turn
-		public void SetCanAct(bool value) => _canAct = value;
-		float snapAngle
+		private float snapAngle
 		{
 			get
 			{
@@ -72,11 +70,50 @@ namespace StormRend.Units
 			}
 		}
 
+		//Status Effect Properties
+		public bool isProvoking
+		{
+			get
+			{
+				foreach (var se in statusEffects)
+					if (se is TauntEffect) return true;
+				return false;
+			}
+		}
+
 		//Members
-		protected GameObject ghostMesh;
+		protected GameObject ghostMesh = null;
+		protected Tile[] currentTargetTiles = null;
+		private Ability currentAbility;
 
+		#region Can Move & Act
+		public bool canMove => _canMove;
+		public void SetCanMove(bool value, float delay = 0) => StartCoroutine(DelaySetMove(value, delay));
+		IEnumerator DelaySetMove(bool value, float delay)       //Used for correct timing of refresh effect
+		{
+			yield return new WaitForSeconds(delay);
+			_canMove = value;
 
-	#region Filtered Gets
+			//If move value true then reselect unit so that the move tiles will appear
+			if (_canMove) uih.SelectUnit(this);
+		}
+		public bool canAct => _canAct;  //has performed an ability and hence this unit has completed it's turn and is locked until next turn
+		public void SetCanAct(bool value, float delay = 0) => StartCoroutine(DelaySetAct(value, delay));
+		IEnumerator DelaySetAct(bool value, float delay)        //Used for correct timing of refresh effect
+		{
+			yield return new WaitForSeconds(delay);
+			_canAct = value;
+
+			//If can act again then show new possible act tiles
+			if (_canAct)
+			{
+				uih.SelectUnit(this);
+				uih.SelectAbility(currentAbility);
+			}
+		}
+		#endregion
+
+		#region Filtered Gets
 		public List<Ability> GetAbilitiesByType(AbilityType type) => abilities.Where(x => x.type == type).ToList();
 	#endregion
 
@@ -116,12 +153,12 @@ namespace StormRend.Units
 
 		#region Core
 		//------------------ CALLBACKS
-		public override void TakeDamage(DamageData damageData)
+		public override void TakeDamage(HealthData damageData)
 		{
 			base.TakeDamage(damageData);
 
 			//Face attack
-			transform.rotation = GetSnappedRotation(damageData.attacker.transform.position, snapAngle);
+			transform.rotation = GetSnappedRotation(damageData.vendor.transform.position, snapAngle);
 
 			//Animate
 			animator.SetTrigger("HitReact");
@@ -135,11 +172,10 @@ namespace StormRend.Units
 		//State machine / game director / Unit registry to run through all these on ally turn enter?
 		public void BeginTurn()		//Reset necessary stats and get unit ready for the next turn
 		{
-			Debug.Log(this.name + ".AnimateUnit.BeginTurn()");
-
-			//Can take action again
-			SetCanAct(true);
-			SetCanMove(true);
+			// Debug.Log(this.name + ".AnimateUnit.BeginTurn()");
+			//Can take action again (This doesn't reselect the units)
+			_canMove = true;
+			_canAct = true;
 
 			//Calculate new move tiles
 			beginTurnTile = currentTile;
@@ -172,14 +208,14 @@ namespace StormRend.Units
 		}
 		public override void Die()
 		{
-			base.Die();     //onDeath will invoke
+			base.Die();     //onDeath will invoke; Should register death on this unityevent
 
 			//Status effect
 			foreach (var se in statusEffects)
 				se.OnDeath(this);
 
-			//TEMP
-			// gameObject.SetActive(false);
+			//Finally hide the body
+			gameObject.SetActive(false);
 		}
 
 		//------------------ MOVE
@@ -261,9 +297,9 @@ namespace StormRend.Units
 			var angle = -Mathf.Atan2(dir.z, dir.x) * Mathf.Rad2Deg + snapAng;
 			angle = Mathf.Round(angle / snapAng) * snapAng;
 			return Quaternion.AngleAxis(angle, Vector3.up);
-			
+
 			// var angle = Vector3.Angle(dir, Vector3.up);
-			// if (angle < snapAngle / 2f) 
+			// if (angle < snapAngle / 2f)
 			// 	return Quaternion.LookRotation(Vector3.up * dir.magnitude);
 			// if (angle > 180f - snapAngle / 2f)
 			// 	return Quaternion.LookRotation(Vector3.down * dir.magnitude);
@@ -282,7 +318,7 @@ namespace StormRend.Units
 			=> Act(ability, targetUnits.Select(x => x.currentTile).ToArray());
 		public void FilteredAct(Ability ability, params Unit[] targetUnits)
 			=> FilteredAct(ability, targetUnits.Select(x => x.currentTile).ToArray());
-		
+
 		/// <summary>
 		/// Filter target tiles based on ability's tile type settings before performing ability
 		/// </summary>
@@ -298,29 +334,54 @@ namespace StormRend.Units
 		}
 
 		/// <summary>
-		/// Perform the ability and lock unit for this turn
+		/// Starts the ability
 		/// </summary>
 		public void Act(Ability ability, params Tile[] targetTiles)
 		{
 			//Only take action if able to ie. not affected by status effects
 			if (!canAct) return;
 
+			//Cache
+			currentAbility = ability;
+			currentTargetTiles = targetTiles;
+
 			//Lock in movement and action
-			SetCanAct(false);
-			SetCanMove(false);
+			_canAct = false;
+			_canMove = false;
 
 			//Face the the last tile that was passed in
 			if (targetTiles.Length > 0)
 				SnappedLookAt(targetTiles[targetTiles.Length-1].transform.position);
 
-			//Perform Ability
-			ability.Perform(this, targetTiles);
+			//Launch the Ability's animation triggering a series of
+			//animations events to be executed with precision timing
+			animator.SetTrigger(ability.animationTrigger);
+
+			//Event
+			onActed.Invoke(ability);
 
 			//Status effects
 			foreach (var se in statusEffects)
 				se.OnActed(this);
+		}
 
-			onActed.Invoke(ability);
+		/// <summary>
+		/// Perform the actual raw ability
+		/// </summary>
+		internal void Act()
+		{
+			//Null check
+			if (currentTargetTiles.Length == 0 || currentAbility == null) return;
+			currentAbility.Perform(this, currentTargetTiles);
+		}
+
+		/// <summary>
+		/// Performs a specific effect in the current ability; Use to time effects with animation
+		/// </summary>
+		internal void Act<T>() where T : Effect
+		{
+			if (currentTargetTiles.Length == 0 || currentAbility == null) return;
+			currentAbility.Perform<T>(this, currentTargetTiles);
 		}
 
 		//------------------- CALCULATE TILES
@@ -354,15 +415,18 @@ namespace StormRend.Units
 				pathblockers.Add(typeof(AnimateUnit));
 
 			possibleMoveTiles = Map.GetPossibleTiles(beginTurnTile.owner, beginTurnTile, moveRange, pathblockers.ToArray());
-			Debug.LogFormat("{0}.CalculateMoveTiles(), Count: {1}", this.name, possibleMoveTiles.Length);
+			// Debug.LogFormat("{0}.CalculateMoveTiles(), Count: {1}", this.name, possibleMoveTiles.Length);
 			return possibleMoveTiles;
 		}
 
 		/// <summary>
 		/// Get the tiles that can be currently acted upon by this ability
 		/// </summary>
-		public Tile[] CalculateTargetTiles(Ability a)
+		public Tile[] CalculateTargetTiles(Ability a, Tile startTile = null, bool onlyGetResults = false)
 		{
+			//Defaults
+			if (startTile == null) startTile = currentTile;
+
 			var result = new List<Tile>();
 			var sqrLen = Ability.caSize;
 
@@ -378,7 +442,7 @@ namespace StormRend.Units
 					{
 						Vector2Int offset = new Vector2Int(row, col) - center;
 
-						if (currentTile.TryGetTile(offset, out Tile t))
+						if (startTile.TryGetTile(offset, out Tile t))
 						{
 							if (!(t is UnWalkableTile))
 								result.Add(t);
@@ -386,9 +450,11 @@ namespace StormRend.Units
 					}
 				}
 			}
-			// SRDebug.PrintCollection(possibleTargetTiles);
-			possibleTargetTiles = result.ToArray();
-			return possibleTargetTiles;
+
+			//Cache
+			var resultToArray = result.ToArray();
+			if (!onlyGetResults) possibleTargetTiles = resultToArray;
+			return resultToArray;
 		}
 
 		//------------------ OTHER

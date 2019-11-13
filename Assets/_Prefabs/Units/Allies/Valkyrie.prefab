@@ -447,7 +447,7 @@ Animator:
   m_GameObject: {fileID: 1496867505816220593}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: faf65bed8292fbd4ba901754c643fe8b, type: 3}
-  m_Controller: {fileID: 9100000, guid: 7925b69a9abeac34c82b065334371a95, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5379,9 +5379,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 653011552559127036}
-  - component: {fileID: 3671556472718825716}
+  - component: {fileID: 4596331959945479920}
   - component: {fileID: 6523016055183356590}
-  - component: {fileID: 2420172182643608703}
+  - component: {fileID: 96756247434198363}
+  - component: {fileID: 3671556472718825716}
+  - component: {fileID: 5374563595797963673}
   m_Layer: 0
   m_Name: Valkyrie
   m_TagString: Untagged
@@ -5406,19 +5408,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3671556472718825716
-BoxCollider:
+--- !u!114 &4596331959945479920
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3743394238124216912}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
-  m_Center: {x: 0, y: 0.19554019, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40f6bc659baad942bceeb05b250abd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6523016055183356590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5439,11 +5440,16 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  onDamage:
+  onTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StormRend.Utility.Events.HealthEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onEnemyKilled:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8487471244638460827}
-        m_MethodName: OnHealthChange
+      - m_Target: {fileID: 96756247434198363}
+        m_MethodName: ChancePlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5453,23 +5459,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: StormRend.Utility.Events.DamageEvent, Assembly-CSharp, Version=0.0.0.0,
+    m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onHeal:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8487471244638460827}
-        m_MethodName: OnHealthChange
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      m_Calls: []
+    m_TypeName: StormRend.Utility.Events.HealthEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   currentTile: {fileID: 0}
   beginTurnTile: {fileID: 0}
@@ -5478,34 +5473,29 @@ MonoBehaviour:
   lookSnap: 0
   moveRange: 4
   pathBlockers: 40
-  abilities: []
+  abilities:
+  - {fileID: 11400000, guid: 25e639c4f4cae444ea8a550cd69696d9, type: 2}
+  - {fileID: 11400000, guid: 3fb5203629a20a240aa8def6bdbdde32, type: 2}
+  - {fileID: 11400000, guid: 3d678432b3290d74db837cfc4be4f319, type: 2}
+  - {fileID: 11400000, guid: 099648482d9dabf4dbfbe0bbb3ca2083, type: 2}
+  - {fileID: 11400000, guid: 1b20c7895940bd54aa0bb1e2cd5e88db, type: 2}
+  - {fileID: 11400000, guid: d58a3e6ef76ae704b9a5f873deb33dda, type: 2}
   statusEffects: []
   ghostColor: {r: 1, g: 0.808957, b: 0, a: 1}
-  tbcGhostMaterial: {fileID: 0}
-  onAddStatusEffect:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: StormRend.Utility.Events.EffectEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  ghostMaterial: {fileID: 0}
   onBeginTurn:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  onAddStatusEffect:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StormRend.Utility.Events.EffectEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   onActed:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2420172182643608703}
-        m_MethodName: Animate
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: StormRend.Utility.Events.AbilityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onEndTurn:
@@ -5515,7 +5505,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   possibleMoveTiles: []
   possibleTargetTiles: []
---- !u!114 &2420172182643608703
+--- !u!114 &96756247434198363
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5524,10 +5514,121 @@ MonoBehaviour:
   m_GameObject: {fileID: 3743394238124216912}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b02c3019b546ba4682fa690945abc9a, type: 3}
+  m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
+  description: Plays a remark when a enemy is killed by this unit
+  chance: 50
+  magazine: {fileID: 11400000, guid: 5584e497f9cc04a49a64ac89a1adf620, type: 2}
+--- !u!65 &3671556472718825716
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743394238124216912}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
+  m_Center: {x: 0, y: 0.19554019, z: 0}
+--- !u!82 &5374563595797963673
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743394238124216912}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5396795060222417993
 GameObject:
   m_ObjectHideFlags: 0
@@ -10331,7 +10432,7 @@ Animator:
   m_GameObject: {fileID: 5555109766427908096}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 1661637947bb6154cb509cfab27dfe4c, type: 3}
-  m_Controller: {fileID: 9100000, guid: 7925b69a9abeac34c82b065334371a95, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -10448,10 +10549,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  help: "Animation Event Callbacks: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)"
   description: 
   chance: 50
-  sounds: []
+  magazine: {fileID: 0}
 --- !u!1 &5555109766427908098
 GameObject:
   m_ObjectHideFlags: 0
@@ -23378,8 +23478,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7840730420149280474}
   - component: {fileID: 7840730420140191916}
-  - component: {fileID: 1041661156002233512}
+  - component: {fileID: 2371634614360472856}
+  - component: {fileID: 2356287458874941432}
   - component: {fileID: 45244116352507459}
+  - component: {fileID: 1041661156002233512}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -23422,6 +23524,54 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2371634614360472856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7840730420149699322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ed0ea0e34057c47a7028ab9d8e574d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onboardParticles: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &2356287458874941432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7840730420149699322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ebcd1b983e6ead408869a314176f796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialDelay: 1.5
+  dissolveDuration: 2.5
+  shaderParam: _DissolveValue
+--- !u!114 &45244116352507459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7840730420149699322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: ' '
+  chance: 50
+  magazine: {fileID: 0}
 --- !u!82 &1041661156002233512
 AudioSource:
   m_ObjectHideFlags: 0
@@ -23518,22 +23668,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &45244116352507459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7840730420149699322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  help: "Animation Event Callbacks: \nPlayOnce(AudioClip)\nChancePlayMagazine(AudioMagazine)"
-  description: ' '
-  chance: 50
-  sounds: []
 --- !u!1 &7840730420149699324
 GameObject:
   m_ObjectHideFlags: 0
@@ -24965,11 +25099,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 653011552559127036}
     m_Modifications:
-    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
-      objectReference: {fileID: 0}
     - target: {fileID: 8649027571778799567, guid: e1fbb2b94b8040740927f9ac8f85e701,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25025,6 +25154,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1fbb2b94b8040740927f9ac8f85e701, type: 3}
 --- !u!4 &7619029502138042799 stripped
@@ -25033,15 +25167,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1277824064941428320}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8487471244638460827 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7237900428195862011, guid: e1fbb2b94b8040740927f9ac8f85e701,
-    type: 3}
-  m_PrefabInstance: {fileID: 1277824064941428320}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b7bb8b91af7b6843b2c5832194e42fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

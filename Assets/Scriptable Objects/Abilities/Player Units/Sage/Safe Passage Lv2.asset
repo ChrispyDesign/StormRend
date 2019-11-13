@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
+  m_Name: Safe Passage Lv2
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 21300000, guid: 2a0769b09c609cc44b7bc4bc3554b728, type: 3}
+  _animationTrigger: SafePassage
+  _type: 2
+  _level: 2
+  _description: Remove any status effects on targetted units
+  _gloryCost: 1
+  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
+  _requiredTiles: 2
+  _targetTileTypes: 8
+  effects:
+  - {fileID: 114504868100922726}
+  - {fileID: 114568690715121412}
+  castArea: 00000001000000000001010100000001010101010001010100010101000101010101000000010101000000000001000000
+--- !u!114 &114504868100922726
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8276f40f4bf260f4e92f11193e47668e, type: 3}
+  m_Name: SwapUnitEffect
+  m_EditorClassIdentifier: 
+  notes: 
+--- !u!114 &114568690715121412
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0340ba18f4cdb44a632086657e9e90, type: 3}
+  m_Name: ProtectEffect
+  m_EditorClassIdentifier: 
+  notes: 
+  turnCount: 0
+  affectedTurns: 1

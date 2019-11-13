@@ -8,10 +8,11 @@ namespace StormRend.Assists
 { 
 	/// <summary>
 	/// Required at the start of the player's turn so that the player can hover over an enemy unit at see it's range
+	/// Also required to run when a unit is created or killed
 	/// </summary>
 	public class PreCalculateMoveTiles : MonoBehaviour
 	{
-		[SerializeField] TargetType unitType;
+		[EnumFlags, SerializeField] TargetType unitTypes = TargetType.Allies;
 
 		UnitRegistry ur;
 
@@ -22,15 +23,17 @@ namespace StormRend.Assists
 
 		public void Run()
 		{
-			AnimateUnit[] animateUnits = null;
-			switch (unitType)
-			{
-				case TargetType.Allies:
-					animateUnits = ur.GetUnitsByType<AllyUnit>(); break;
-				case TargetType.Enemies:
-					animateUnits = ur.GetUnitsByType<EnemyUnit>(); break;
-			}
-			foreach (var au in animateUnits)
+			var unitsToCalculateMoveTiles = new List<AnimateUnit>();
+
+			//ALLIES
+			if ((unitTypes & TargetType.Allies) == TargetType.Allies)
+				unitsToCalculateMoveTiles.AddRange(ur.GetUnitsByType<AllyUnit>());
+			//ENEMIES
+			if ((unitTypes & TargetType.Enemies) == TargetType.Enemies)
+				unitsToCalculateMoveTiles.AddRange(ur.GetUnitsByType<EnemyUnit>());
+
+			//Repopulate 
+			foreach (var au in unitsToCalculateMoveTiles)
 				au.CalculateMoveTiles();
 		}
    	}

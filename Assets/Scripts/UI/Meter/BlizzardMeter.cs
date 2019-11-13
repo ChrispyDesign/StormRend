@@ -2,14 +2,13 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
-using TMPro;
 
 namespace StormRend.UI
 {
-	public class BlizzardMeter : Meter
+    public class BlizzardMeter : Meter
 	{
-		[SerializeField] Image[] blizzardNodes;
-		[SerializeField] string details;
+		[SerializeField] Image[] blizzardNodes = null;
+		[SerializeField] string details = null;
 		int currentIndex;
 
 		private void Awake()

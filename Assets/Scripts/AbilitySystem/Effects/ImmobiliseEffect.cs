@@ -28,5 +28,10 @@ namespace StormRend.Abilities.Effects
 				if (UnitRegistry.TryGetUnitTypeOnTile<AnimateUnit>(tt, out AnimateUnit au))
 					au.SetCanMove(false);
 		}
+
+		public void ImmobiliseUnitImmediately(AnimateUnit au)
+		{
+			au.SetCanMove(false);
+		}
 	}
 }

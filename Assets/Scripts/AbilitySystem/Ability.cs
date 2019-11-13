@@ -5,6 +5,8 @@ using StormRend.Units;
 using StormRend.Utility.Attributes;
 using UnityEngine;
 using StormRend.Enums;
+using pokoro.BhaVE.Core.Variables;
+using StormRend.Abilities.Effects;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -14,6 +16,7 @@ namespace StormRend.Abilities
 {
 	public enum AbilityType
 	{
+		Passive,
 		Primary,
 		Secondary
 	}
@@ -29,17 +32,18 @@ namespace StormRend.Abilities
 		[Tooltip("Animation trigger for this ability that will be sent to animator")]
 		[SerializeField] string _animationTrigger = "";
 		[SerializeField] AbilityType _type = AbilityType.Primary;
-		[SerializeField] int _level = 0;
+		[Range(1, 3), SerializeField] int _level = 1;
 		[TextArea(0, 2), SerializeField] string _description = "";
 
-		[Header("Casting"), Space(1), Tooltip("Glory cost required to perform this ability")]
+		[Header("Casting"), Tooltip("Glory cost required to perform this ability")]
 		[SerializeField] int _gloryCost = 1;
+		[Tooltip("Insert main Glory SO variable")]
+		[SerializeField] BhaveInt glory = null;
 
-		[Tooltip("The required number of selected tiles this ability needs in order for it to be performed. NOTE: Setting this to zero will instantly perform ability on self upon clicking on ability")]
+		[Header("Targeting"), Tooltip("The required number of selected tiles this ability needs in order for it to be performed. NOTE: Setting this to zero will instantly perform ability on self upon clicking on ability")]
 		[SerializeField] int _requiredTiles = 1;
 
-		[Tooltip("The type of tiles this ability can target")]
-		//This will be used to determine which tiles the UserInputHandler can pick
+		[Tooltip("The tiles this ability can target")]
 		[EnumFlags, SerializeField] TargetType _targetTileTypes = (TargetType)~0;
 
 		//Members
@@ -57,17 +61,77 @@ namespace StormRend.Abilities
 		public int requiredTiles => _requiredTiles;
 		public TargetType targetTileTypes => _targetTileTypes;
 
-		//Core
-		public void Perform(Unit owner, params Tile[] targets)
+	#region Core
+		/// <summary>
+		/// Perform the entire ability
+		/// </summary>
+		public bool Perform(Unit owner, params Tile[] targets)
 		{
-			Debug.Log("Performing Ability: " + this.name);
 			foreach (var e in effects)
 			{
-				Debug.Log("Performing Effect: " + e.name);
 				e.Perform(this, owner, targets);
+			}
+			return true;	//Successful ability execution
+		}
+
+		/// <summary>
+		/// Perform a certain effect contained in this ability
+		/// </summary>
+		/// <typeparam name="T">Effect type to specifically perform</typeparam>
+		public bool Perform<T>(Unit owner, params Tile[] targets) where T : Effect
+		{
+			foreach (var e in effects)
+			{
+				if (e is T)
+				{
+					e.Perform(this, owner, targets);
+				}
+			}
+			return true;
+		}
+
+		/// <summary>
+		/// Perform passive effects contained in this ability when a unit is killed
+		/// </summary>
+		public void PerformOnUnitKilled(Unit owner, Unit killed)
+		{
+			foreach (var e in effects)
+			{
+				var pe = e as PassiveEffect;
+				if (pe)
+				{
+					if (pe.OnUnitKilled(this, owner, killed))
+					{
+						//Passive effect successful; perform animation
+						owner.animator.SetTrigger(animationTrigger);
+					}
+				}
 			}
 		}
 
+		/// <summary>
+		/// Perform passive effects contained in this ability when a unit is created or spawned in
+		/// </summary>
+		public void PerformOnUnitCreated(Unit owner, Unit created)
+		{
+			foreach (var e in effects)
+			{
+				var pe = e as PassiveEffect;
+				if (pe)
+				{
+					if (pe.OnUnitCreated(this, owner, created))
+					{
+						//Passive effect successful; perform animation
+						owner.animator.SetTrigger(animationTrigger);
+					}
+				}
+			}
+		}
+	#endregion
+
+		/// <summary>
+		/// Return true if the tile is valid according to this ability's targeting settings
+		/// </summary>
 		public bool IsAcceptableTileType(AnimateUnit owner, Tile tile)
 		{
 			//NOTE: Only one of the masks have to pass for the whole thing to pass

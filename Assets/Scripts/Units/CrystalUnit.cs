@@ -1,97 +1,109 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using StormRend.Abilities.Effects;
 using StormRend.Enums;
 using StormRend.MapSystems;
-using StormRend.Systems;
+using StormRend.MapSystems.Tiles;
 using StormRend.Utility.Attributes;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace StormRend.Units
 {
-	public class CrystalUnit : InAnimateUnit, IPointerClickHandler	//Unit =~= InAnimateUnit?
+	public class CrystalUnit : InAnimateUnit
 	{
 		//Inspector
+		#region Hardcode
 		[Header("Crystal")]
-		[Tooltip("HARDCODE: Number of turns before this crystal explodes")]
-		public int turns = 1;
-		
-		[Tooltip("HARDCODE: The damage this crystal does to ")]
-		public int damage = 1;
+		[Tooltip("Number of turns till this crystal explodes")]
+		[SerializeField] int turns = 1;
 
-		[Tooltip("HARDCODE: The range of the damage")]
-		public int range = 1;
+		[Tooltip("The amount of damage this crystal will deal when it explodes")]
+		[SerializeField] int damage = 1;
 
-		[Tooltip("HARDCODE: The type of units that won't get damaged")]
-		[EnumFlags, SerializeField] TargetType invulnerableTypes = TargetType.Animates;
+		[Tooltip("Deal immobilise when it explodes")]
+		[SerializeField] bool immobilise = false;
 
-		//Members
+		[Tooltip("The range of this crystal's effect")]
+		[SerializeField] int range = 1;
 
-		//Singleton refs
-		UnitRegistry ur;
-		UserInputHandler ui;
+		[Tooltip("The type of units that will get damaged")]
+		[EnumFlags, SerializeField] TargetType vulnerableUnitTypes = TargetType.Animates;
+		private Tile[] tilesToAttack;
+		#endregion
 
 		//Core
-		protected override void Awake()
-		{
-			base.Awake();
-			ur = UnitRegistry.current;
-		}
-
 		public void Tick()
 		{
 			//Be careful of this order
 			turns--;
 
-			DealDamageToSurroundingUnits();
+			//Determine tiles to deal effect to (regardless of unit type because it's already ignored and filtered)
+			tilesToAttack = Map.GetPossibleTiles(this.currentTile.owner, currentTile, range, GetListOfUnitTypesToIgnore());
 
-			if (turns <= 0) Die();
+			DamageTargets();
+			ImmobiliseTargets();
+
+			//Trigger animations
+			animator.SetTrigger("Explode");
+
+			if (turns <= 0) base.Die();
 		}
 
 		//Helpers
-		void DealDamageToSurroundingUnits()
+		void ImmobiliseTargets()
 		{
-			//TODO This is slightly confusing
-			//Determine tiles to do damage to (regardless of unit type because it's already ignored and filtered)
-			var tilesToAttack = Map.GetPossibleTiles(this.currentTile.owner, currentTile, range, GetIgnoreUnitTypes()).ToList();
+			if (!immobilise) return;
 
-			//Deal damage
-			foreach (var a in ur.aliveUnits)
+			foreach (var u in ur.aliveUnits)
 			{
-				if (tilesToAttack.Contains(a.currentTile))
+				if (tilesToAttack.Contains(u.currentTile))
 				{
-					a.TakeDamage(new DamageData(this, damage));
+					var target = u as AnimateUnit;		//Cast
+					var newImmobiliseEffect = ScriptableObject.CreateInstance<ImmobiliseEffect>();	//Factory create
+					newImmobiliseEffect.ImmobiliseUnitImmediately(target);		//Apply effect immediately
+					target.AddStatusEffect(newImmobiliseEffect);				//Add to unit's status effect collection
 				}
 			}
 		}
-
-		Type[] GetIgnoreUnitTypes()
+		void DamageTargets()
 		{
-			List<Type> targetUnits = new List<Type>();
+			if (damage <= 0) return;    //Slight optimisation
 
-			//Allies
-			if ((invulnerableTypes & TargetType.Allies) == TargetType.Allies)
-				targetUnits.Add(typeof(AllyUnit));
-			//Enemies
-			if ((invulnerableTypes & TargetType.Enemies) == TargetType.Enemies)
-				targetUnits.Add(typeof(EnemyUnit));
-			//Crystals
-			if ((invulnerableTypes & TargetType.Crystals) == TargetType.Crystals)
-				targetUnits.Add(typeof(CrystalUnit));
-			//InAnimates
-			if ((invulnerableTypes & TargetType.InAnimates) == TargetType.InAnimates)
-				targetUnits.Add(typeof(InAnimateUnit));
-			//Animates
-			if ((invulnerableTypes & TargetType.Animates) == TargetType.Animates)
-				targetUnits.Add(typeof(AnimateUnit));
-				
-			return targetUnits.ToArray();
+			foreach (var victim in ur.aliveUnits)
+			{
+				if (tilesToAttack.Contains(victim.currentTile))
+					victim.TakeDamage(new HealthData(this, damage));
+			}
 		}
 
-        public void OnPointerClick(PointerEventData eventData)
-        {
-			Debug.Log(this.name);
-        }
-    }
+		Type[] GetListOfUnitTypesToIgnore()
+		{
+			//Populate with all possible unit types
+			HashSet<Type> ignoreTypes = new HashSet<Type>();
+			ignoreTypes.Add(typeof(AllyUnit));
+			ignoreTypes.Add(typeof(EnemyUnit));
+			ignoreTypes.Add(typeof(CrystalUnit));
+			ignoreTypes.Add(typeof(InAnimateUnit));
+			ignoreTypes.Add(typeof(AnimateUnit));
+
+			//Allies
+			if ((vulnerableUnitTypes & TargetType.Allies) == TargetType.Allies)
+				ignoreTypes.Remove(typeof(AllyUnit));
+			//Enemies
+			if ((vulnerableUnitTypes & TargetType.Enemies) == TargetType.Enemies)
+				ignoreTypes.Remove(typeof(EnemyUnit));
+			//Crystals
+			if ((vulnerableUnitTypes & TargetType.Crystals) == TargetType.Crystals)
+				ignoreTypes.Remove(typeof(CrystalUnit));
+			//InAnimates
+			if ((vulnerableUnitTypes & TargetType.InAnimates) == TargetType.InAnimates)
+				ignoreTypes.Remove(typeof(InAnimateUnit));
+			//Animates
+			if ((vulnerableUnitTypes & TargetType.Animates) == TargetType.Animates)
+				ignoreTypes.Remove(typeof(AnimateUnit));
+
+			return ignoreTypes.ToArray();
+		}
+	}
 }

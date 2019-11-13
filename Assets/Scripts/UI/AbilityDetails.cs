@@ -11,7 +11,7 @@ namespace StormRend.UI
 	public class AbilityDetails : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		[SerializeField] Ability ability = null;
-		[SerializeField] Image icon;
+		[SerializeField] Image icon = null;
 		[SerializeField] AbilityEvent onHover = null;
 		[SerializeField] AbilityEvent onClick = null;
 		[SerializeField] UnityEvent onUnHover = null;

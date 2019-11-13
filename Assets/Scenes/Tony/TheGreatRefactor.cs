@@ -25,35 +25,81 @@ namespace The.Great.Refactor.Brainstorm
 	foreach e in enemies
 		e.ai.Tick()
 	TickCrystals()
+
+	------------------ Execution Order of Critical Game Methods
+	AnimateUnit.CalculateMoveTiles()
+	Needs to be executed:
+	- At the start of a turn for that turn's unit type ie. allyTurnState will calculate all AllyUnit's possible moves
+						OR
+	- When the unit is first selected on that turn
+	- When an new unit is spawned in or summoned
+		- This prevents units from being able to walk onto these new units
+	
+	AnimateUnit.CalculateTargetTiles()
+	Needs to be executed:
+	- when ability selected > AbilityButton.OnClick()
+	- when ability hovered > AbilityButton.OnHover
+
+
+	----------------- Animation Event Handlers
+	Naming convention: [UnitType]AnimEventHandlers
+
+	BaseAnimationDelegate(s)
+	+ SetAbility(Ability) : Hook up to AnimateUnit.OnActed(Ability)
+	+ Execute() : AnimationEvent
+	+ DeathDissolve() : AnimationEvent
+	+ Kill() : AnimationEvent	//Actually finally 'kills' the unit and sets the unit inactive
+
+	BerserkerAnimationDelegates
+	> FuriousSwing:
+	> Provoke:
+
+	ValkyrieAnimEventHandlers
+	+ PlayJumpPFX()
+	+ PlayLandPFX()
+
+	> LightFall:
+	0. Valkyrie.animator.SetTrigger("LightFallJump")
+	1. Play "LightFallJump" anim + Jumping Particles
+	2. Teleport(NewTile) @ "LightFallJump" End
+	3. Play "LightFallLand" anim
+	4. Contact() @ Appropriate point in time + Landing Particles
+
+	> PiercingLight:
+
+	SageAnimationDelegates
+	> SoulCommune:
+	> SpiritCrystal:
+	> SafePassage:
 	*/
 
 	#region Conventions
 	internal class Conventions
 	{
 	    //Fields/Symbols
-	    [SerializeField] float privateShownOnInspector;
-	    [HideInInspector, SerializeField] float PrivateNotShownOnInspectorButSerialized;
-	    public float avoidMe = 0f;     //Free variable that can be modified by anything and anyone
+	    // [SerializeField] float privateShownOnInspector;
+	    // [HideInInspector, SerializeField] float PrivateNotShownOnInspectorButSerialized;
+	    // public float avoidMe = 0f;     //Free variable that can be modified by anything and anyone
 
 	    //Properties
 	    //Shown on inspector, but read only in the assembly/codebase
-	    [SerializeField] float _propertyBackingField = 0;
-	    public float propertyBackingField
-	    {
-	        get => _propertyBackingField;
+	    // [SerializeField] float _propertyBackingField = 0;
+	    // public float propertyBackingField
+	    // {
+	    //     get => _propertyBackingField;
 
-	    }
+	    // }
 
-	    void Something()
-	    {
-	        Debug.Log("somethign");
-	    }
+	    // void Something()
+	    // {
+	    //     Debug.Log("somethign");
+	    // }
 
-	    void UseExpressionBodyMethodsForCleanerCode() => Debug.Log("This is clean!");
+	    // void UseExpressionBodyMethodsForCleanerCode() => Debug.Log("This is clean!");
 
 
 	    //Privates
-	    bool isPrivate = true;      //Implicit private
+	    // bool isPrivate = true;      //Implicit private
 
 	    /*
 		Big classes
