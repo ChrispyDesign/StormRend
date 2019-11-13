@@ -1,100 +1,103 @@
 ﻿using System.Collections;
 using StormRend.Assists;
 using StormRend.Units;
+using StormRend.VisualFX;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace StormRend.Anim.EventHandlers
 {
-	[RequireComponent(typeof(DeathDissolver))]      //All units pretty much require this
-	public class UnitAnimEventHandlers : MonoBehaviour
-	{
-		//Inspector
-		[SerializeField] GameObject[] onboardParticles = null;
-		public UnityEvent onDeath = null;
+    [RequireComponent(typeof(DeathDissolver))]      //All units pretty much require this
+    public class UnitAnimEventHandlers : MonoBehaviour
+    {
+        //Inspector
+        [SerializeField] GameObject[] onboardParticles = null;
 
-		//Members
-		protected Unit unit = null;
-		protected AnimateUnit animateUnit = null;
-		protected DeathDissolver deathDissolver = null;
+        [Tooltip("Put references to VFXs onboard this unit")]
+        [SerializeField] GameObject[] inbuiltVFXs = null;
+        public UnityEvent onDeath = null;
 
-		void Awake()
-		{
-			unit = GetComponentInParent<Unit>() as Unit;
-			animateUnit = unit as AnimateUnit;
-			deathDissolver = GetComponent<DeathDissolver>();
-		}
+        //Members
+        protected Unit unit = null;
+        protected AnimateUnit animateUnit = null;
+        protected DeathDissolver deathDissolver = null;
 
-		public virtual void PerformAbility() => animateUnit.Act();
+        void Awake()
+        {
+            unit = GetComponentInParent<Unit>() as Unit;
+            animateUnit = unit as AnimateUnit;
+            deathDissolver = GetComponent<DeathDissolver>();
+        }
 
-		public virtual void Die()
-		{
-			deathDissolver.Execute();
-			onDeath.Invoke();   //Run death dissolve and die etc
-		}
+        public virtual void PerformAbility() => animateUnit.Act();
 
-		/// <summary>
-		/// Takes in a PFX and plays it at the object's transform
-		/// </summary>
-		/// <param name="particle"></param>
-		public void PlayVFX(Object particle)
-		{
-			//Instantiates the particle
-			GameObject go = particle as GameObject;
-			Instantiate(go, this.transform.position, this.transform.rotation);
-		}
+        public virtual void Die()
+        {
+            deathDissolver.Execute();
+            onDeath.Invoke();   //Run death dissolve and die etc
+        }
 
-		public void MountVFX(Object particle)
-		{
-			//Instantiates the particle
-			GameObject particleGO = particle as GameObject;
-			var pfx = Instantiate(particleGO, this.transform.position, this.transform.rotation);
-			pfx.transform.SetParent(unit.transform);
-		}
+        /// <summary>
+        /// Takes in a PFX and plays it at the object's transform
+        /// </summary>
+        public void PlayVFX(Object o)
+        {
+            //Instantiates the particle
+            GameObject go = o as GameObject;
+            VFX vfx = go.GetComponent<VFX>();
+            var instance = Instantiate(vfx.prefab, unit.transform.position, unit.transform.rotation);
 
-		/// <summary>
-		/// Plays a particle effect that is loaded on this event handler
-		/// </summary>
-		/// <param name="name">The particle name to play</param>
-		public void PlayOnboardVFX(string name)
-		{
-			// foreach (var p in onboardParticles)
-			// {
-			// 	if (p.name == name)
-			// 	{
-			// 		StartCoroutine(PlayVFXOnce(p));
-			// 		return;
-			// 	}
-			// }
-			// Debug.LogWarningFormat("Particle {0} not found!", name);
-		}
+            //If the lifetime is set to 0 then let live infinitely
+            if (!Mathf.Approximately(vfx.lifetime, 0f))
+                Destroy(instance, vfx.lifetime);
+        }
 
-		public void MountOnboardVFX(string name)
-		{
-			foreach (var po in onboardParticles)
-			{
-				if (po.name == name)
-				{
-					//Instantiates and mounts the particle
-					var pfx = Instantiate(po.gameObject, this.transform.position, this.transform.rotation);
-					pfx.transform.SetParent(unit.transform);
-					return;
-				}
-			}
-			Debug.LogWarningFormat("Particle {0} not found!", name);
-		}
+        /// <summary>
+        /// Instantiates and mounts the VFX to the unit
+        /// </summary>
+        public void MountVFX(Object o)
+        {
+            //Instantiates the particle
+            GameObject go = o as GameObject;
+            VFX vfx = go.GetComponent<VFX>();
+            var instance = Instantiate(vfx.prefab, unit.transform.position, unit.transform.rotation, unit.transform);
 
-		//Not sure if this would work
-		// IEnumerator PlayVFXOnce(ParticleSystem p)
-		// {
-		// 	//Activate particle
-		// 	p.gameObject.SetActive(true);
+            //If the lifetime is set to 0 then let live infinitely
+            if (!Mathf.Approximately(vfx.lifetime, 0f))
+                Destroy(instance, vfx.lifetime);
+        }
 
-		// 	//Deactivate once it finishes playing.
-		// 	//TODO will have to consult with Dale here
-		// 	if (p.isPlaying) yield return null;
+        public void RunVFX()
+        {
+            foreach (var vfx in inbuiltVFXs)
+                PlayVFXOnce(vfx.GetComponent<VFX>());
+        }
 
-		// 	p.gameObject.SetActive(false);
-		// }
-	}
+        /// <summary>
+        /// Immediately turn of the main VFX
+        /// </summary>
+        public void StopVFX()
+        {
+            foreach (var v in inbuiltVFXs)
+                v.SetActive(false);
+        }
+
+        /// <summary>
+        /// Play inbuild VFX according to it's settings
+        /// </summary>
+        IEnumerator PlayVFXOnce(VFX vfx)
+        {
+            //Activate particle
+            vfx.prefab.SetActive(true);
+
+            //Deactivate once it finishes playing.
+            if (!Mathf.Approximately(vfx.lifetime, 0f))
+            	yield return new WaitForSeconds(vfx.lifetime);
+			else
+				yield return null;
+
+			//Deactivate once it's lifetime is over
+            vfx.prefab.SetActive(false);
+        }
+    }
 }
