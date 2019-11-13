@@ -14,17 +14,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: 4b0fda121dd254744985c8a452b6939c, type: 3}
   _animationTrigger: SafePassage
-  _type: 2
+  _type: 1
   _level: 3
-  _description: Restore 2 Health to targeted units
+  _descriptions:
+  - Choose 2 tiles. Swap units on those tiles
+  - Restore 2 Health to those units
+  - Give Protection to those units
   _gloryCost: 2
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 2
-  _targetTileTypes: 8
+  _targetTileTypes: 65
   effects:
   - {fileID: 114504868100922726}
   - {fileID: 114951681692836852}
-  castArea: 00000101010000000101010101000101010101010101010100010101010101010101010001010101010000000101010000
+  - {fileID: 114043766274219490}
+  castArea: 00000001000000000001010100000001010101010001010100010101000101010101000000010101000000000001000000
+--- !u!114 &114043766274219490
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0340ba18f4cdb44a632086657e9e90, type: 3}
+  m_Name: ProtectEffect
+  m_EditorClassIdentifier: 
+  notes: 
+  turnCount: 0
+  affectedTurns: 1
 --- !u!114 &114504868100922726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -51,4 +70,4 @@ MonoBehaviour:
   m_Name: HealEffect
   m_EditorClassIdentifier: 
   notes: 
-  healAmount: 1
+  healAmount: 2

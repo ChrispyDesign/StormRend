@@ -14,17 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: bfe920b189cabfe4f8608b90bde1ecaa, type: 3}
   _animationTrigger: SpiritCrystal
-  _type: 1
+  _type: 2
   _level: 1
-  _description: Summon a Spirit Crystal. At the start of your turn, it deals 1 damage
-    to adjacent units.
+  _descriptions:
+  - Summon a Spirit Crystal. At the start of your turn, it explodes
   _gloryCost: 0
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
-  _requiredTiles: 3
+  _requiredTiles: 1
   _targetTileTypes: 1
   effects:
   - {fileID: 114731120626100668}
-  - {fileID: 114927288690220444}
   castArea: 00000001000000000001010100000001010101010001010100010101000101010101000000010101000000000001000000
 --- !u!114 &114731120626100668
 MonoBehaviour:
@@ -54,20 +53,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notes: 
   summon: {fileID: 0}
---- !u!114 &114927288690220444
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
-  m_Name: RefreshEffect
-  m_EditorClassIdentifier: 
-  notes: 
-  refreshCount: 0
-  refreshType: -1
-  delay: 1
-  allowedRefreshes: 1000

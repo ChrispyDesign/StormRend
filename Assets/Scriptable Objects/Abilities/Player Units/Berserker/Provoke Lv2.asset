@@ -16,14 +16,16 @@ MonoBehaviour:
   _animationTrigger: Provoke
   _type: 2
   _level: 2
-  _description: Gain Protection
+  _descriptions:
+  - Enemies must attack you next turn. When an enemy attacks you, deal 1 damage to
+    them
+  - Deal +1 damage
   _gloryCost: 1
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
   _targetTileTypes: 2
   effects:
   - {fileID: 114439220462714906}
-  - {fileID: 114779174133924776}
   castArea: 00000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000
 --- !u!114 &114286334617455646
 MonoBehaviour:
@@ -56,7 +58,7 @@ MonoBehaviour:
   notes: 
   turnCount: 0
   affectedTurns: 1
-  reflexDamage: 1
+  reflexDamage: 2
 --- !u!114 &114656497702361800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,18 +75,3 @@ MonoBehaviour:
   turnCount: 0
   affectedTurns: 1
   reflexDamage: 1
---- !u!114 &114779174133924776
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae0340ba18f4cdb44a632086657e9e90, type: 3}
-  m_Name: ProtectEffect
-  m_EditorClassIdentifier: 
-  notes: 
-  turnCount: 0
-  affectedTurns: 1
