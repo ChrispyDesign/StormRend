@@ -51,7 +51,7 @@ namespace StormRend.UI
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			onHover.Invoke(unit);
-			infoPanel.ShowPanel(unit.name, unit.description, 1);
+			infoPanel.ShowPanel(unit.name, 1, unit.description);
 		}
 
 

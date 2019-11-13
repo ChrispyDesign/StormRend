@@ -35,6 +35,7 @@ namespace StormRend.UI
 		void OnEnable() => button.onClick.AddListener(OnClick);
 		void OnDisable() => button.onClick.RemoveAllListeners();
 
+		//Onhover
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			onHover.Invoke(ability);
@@ -48,7 +49,7 @@ namespace StormRend.UI
 					details[i] = ability.descriptions[i];
 				}
 
-				infoPanel.ShowPanel(ability.name, details, ability.level);
+				infoPanel.ShowPanel(ability.title, ability.level, details);
 			}
 		}
 

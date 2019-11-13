@@ -28,14 +28,14 @@ namespace StormRend.UI
 			panels[0].SetActive(true);
 		}
 
-		public void ShowPanel(string title, string details, int levels)
-		{
-			text[0].text = title;
-			text[1].text = details;
-			anim.SetInteger("textBoxAnimation", levels);
-		}
+		// public void ShowPanel(string title, string details, int levels)
+		// {
+		// 	text[0].text = title;
+		// 	text[1].text = details;
+		// 	anim.SetInteger("textBoxAnimation", levels);
+		// }
 
-		public void ShowPanel(string title, string[] details, int levels)
+		public void ShowPanel(string title, int levels, params string[] details)
 		{
 			text[0].text = title;
 			for(int i = 0; i < details.Length; i++)
