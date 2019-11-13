@@ -16,7 +16,11 @@ MonoBehaviour:
   _animationTrigger: PiercingLight
   _type: 2
   _level: 2
-  _description: Deal +1 damage
+  _title: 
+  _descriptions:
+  - 
+  - 
+  - 
   _gloryCost: 2
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
@@ -36,7 +40,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
-  notes: 
   damage: 1
   piercing: 0
   gainGlory: 1
@@ -54,9 +57,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
-  notes: 
   damage: 2
   piercing: 0
   gainGlory: 1
   gloryAmount: 1
-  glory: {fileID: 0}
+  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}

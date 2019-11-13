@@ -17,7 +17,7 @@ namespace StormRend.Systems
 		//Inspector
 		[Header("Game Pause")]
 		[SerializeField] KeyCode pauseKey = KeyCode.Escape;
-		[SerializeField] OnState pauseMenuState = null;
+		[SerializeField] PauseMenuState pauseMenuState = null;
 
 		[Header("Scene Management")]
 		public string mainMenuSceneName = "MainMenu";
@@ -47,16 +47,12 @@ namespace StormRend.Systems
 
 			if (!pauseMenuState)
 			{
-				Debug.LogWarning("No pause menu state found!");
+				Debug.LogWarning("No Pause Menu State Found! Disabling Game Director...");
 				enabled = false;
 			}
 		}
 
-		void Update()
-		{
-			HandlePause();
-		}
-
+		void Update() => HandlePause();
 		void HandlePause()
 		{
 			if (Input.GetKeyDown(pauseKey))
@@ -73,12 +69,6 @@ namespace StormRend.Systems
 			}
 		}
 
-		public void ReturnToGame()
-		{
-			//Just need to clear the stack in order to return to the turns
-			usm.ClearStack();
-		}
-
 		public void ReloadCurrentScene()
 		{
 			var currentScene = SceneManager.GetActiveScene();
@@ -88,7 +78,18 @@ namespace StormRend.Systems
 
 		public void LoadMainMenuScene()
 		{
+			//Reset time scale from any pausing
+			Time.timeScale = 1f;
+
+			//Load
 			SceneManager.LoadScene(mainMenuSceneName);
+		}
+
+		public void LoadScene(string scene)
+		{
+			//Reset timescale
+			Time.timeScale = 1f;
+			SceneManager.LoadScene(scene);
 		}
 
 		//----------------------- DEBUG -----------------------
