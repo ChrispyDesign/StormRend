@@ -2,15 +2,15 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using StormRend.Abilities;
-using System.Collections.Generic;
 using StormRend.Utility.Events;
 using UnityEngine.Events;
+using StormRend.Utility.Attributes;
 
 namespace StormRend.UI
 {
-	public class AbilityDetails : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class AbilityDetails : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
-		[SerializeField] Ability ability = null;
+		[ReadOnlyField, SerializeField] Ability ability = null;
 		[SerializeField] Image icon = null;
 		[SerializeField] AbilityEvent onHover = null;
 		[SerializeField] AbilityEvent onClick = null;
