@@ -17,7 +17,7 @@ namespace StormRend.UI
 		[SerializeField] Image[] gloryNodes = null;
 
 		//Members
-		int oldGloryValue = 0;
+		int internalGlory = 0;
 		string[] details = new string[3];
 
 		private void Awake()
@@ -36,7 +36,7 @@ namespace StormRend.UI
 			}
 
 			//Init old value
-			oldGloryValue = glory.value;
+			internalGlory = glory.value;
 
 			Debug.Assert(gloryNodes[0], "There is no slider, please add a panel with filled image component on it. " + typeof(GloryMeter));
 			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(GloryMeter));
@@ -49,7 +49,7 @@ namespace StormRend.UI
 
 		public void OnChange()
 		{
-			Debug.Log("Onchangte");
+			Debug.Log("OnChange");
 			//Increase
 			// if (oldGloryValue < glory)
 				StartCoroutine(IncreaseGlory(glory - 1));
@@ -78,7 +78,7 @@ namespace StormRend.UI
 
 		public override void OnPointerEnter(PointerEventData eventData)
 		{
-			infoPanel.ShowPanel(title, details, 3);
+			infoPanel.ShowPanel(title, 3, details);
 		}
 
 		public override void OnPointerExit(PointerEventData eventData)
