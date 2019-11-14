@@ -42,19 +42,28 @@ namespace StormRend.Anim.EventHandlers
 		/// <summary>
 		/// Run the built in VFX according to this event handler's lifetime setting
 		/// </summary>
-		public void RunInbuiltVFX()
+		public void ActivateInbuiltVFX(string name)
         {
             foreach (var ivfx in inbuiltVFX)
-                PlayInbuiltVFX(ivfx);
+                if (ivfx.name == name) ivfx.SetActive(true);
+        }
+
+		/// <summary>
+		/// Run the built in VFX according to this event handler's lifetime setting
+		/// </summary>
+		public void PlayInbuiltVFX(string name)
+        {
+            foreach (var ivfx in inbuiltVFX)
+                if (ivfx.name == name) PlayInbuiltVFX(ivfx);
         }
 
         /// <summary>
         /// Immediately turn of the main VFX
         /// </summary>
-        public void StopInbuiltVFX()
+        public void DeactivateInbuiltVFX(string name)
         {
-            foreach (var v in inbuiltVFX)
-                v.SetActive(false);
+            foreach (var ivfx in inbuiltVFX)
+                if (ivfx.name == name) ivfx.SetActive(false);
         }
 
         /// <summary>
