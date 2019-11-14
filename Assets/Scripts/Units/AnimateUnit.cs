@@ -280,10 +280,12 @@ namespace StormRend.Units
 		/// Force Move Unit by direction ie. (0, 1) means the unit to moves forward 1 tile.
 		/// Can set to kill unit pushed over the edge.
 		/// </summary>
-		public PushResult Push(Vector2Int direction, bool kill = true)
+		public PushResult Push(Vector2Int direction, bool kill = true, bool faceBackward = true)
 		{
 			if (currentTile.TryGetTile(direction, out Tile t))
 			{
+				var originalTile = currentTile;
+
 				//Check for any units or obstacles
 				if (UnitRegistry.IsAnyUnitOnTile(t))
 					return PushResult.HitUnit;      //Don't push
@@ -292,8 +294,10 @@ namespace StormRend.Units
 				if (t is UnWalkableTile)
 					return PushResult.HitBlockedTile;   //Don't push
 
-				//Push unit
+				//Push unit back (facing toward the pusher)
 				Move(t, false, false, true);
+				if (faceBackward) 
+					transform.rotation = GetSnappedRotation(originalTile.transform.position, snapAngle);
 				return PushResult.Nothing;
 			}
 			else
