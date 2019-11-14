@@ -14,9 +14,14 @@ namespace StormRend.Units
 {
 	public class UnitRegistry : Singleton<UnitRegistry>
 	{
-		//Inspector
-		[TextArea(0, 2), SerializeField] string description = "OnRegisterUnit(Unit):\n-PreCalculateMoveTiles.Run X 2";
+		//Hookups
+		/*
+		//Not sure about these
+		onUnitCreated += PreCalculateMoveTiles.Run
+		onUnitKilled += PreCalculateMoveTiles.Run
+		*/
 
+		//Inspector
 		[Header("Units loaded in automatically. DO NOT load in manually")]
 		[ReadOnlyField, SerializeField] List<Unit> _aliveUnits = new List<Unit>();
 		[ReadOnlyField, SerializeField] List<Unit> _deadUnits = new List<Unit>();
