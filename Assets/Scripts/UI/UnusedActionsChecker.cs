@@ -1,8 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using System.Collections;
 using StormRend.States.UI;
 using StormRend.Units;
 using StormRend.Systems.StateMachines;
@@ -10,11 +6,11 @@ using StormRend.Systems;
 
 namespace StormRend.UI
 {
-	public class FinishTurn : MonoBehaviour
+	public class UnusedActionsChecker : MonoBehaviour
 	{
 		[SerializeField] string title = null;
 		[SerializeField] string details = null;
-		[SerializeField] OnState comfirmPanel;
+		[SerializeField] OnState confirmationPanel;
 
 		InfoPanel infoPanel;
 		Animator animator;
@@ -27,8 +23,8 @@ namespace StormRend.UI
 			infoPanel = FindObjectOfType<InfoPanel>();
 			animator = GetComponent<Animator>();
 
-			Debug.Assert(animator, "There are no Animator in the scene. " + typeof(FinishTurn));
-			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(FinishTurn));
+			Debug.Assert(animator, "There are no Animator in the scene. " + typeof(UnusedActionsChecker));
+			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(UnusedActionsChecker));
 		}
 		private void Start()
 		{
@@ -51,23 +47,23 @@ namespace StormRend.UI
 
 		public void CheckMovesAvailable()
 		{
-			bool haveAllUnitsAttacked = false;
+			bool allUnitsHaveAttacked = true;
 
 			foreach (AllyUnit unit in unitRegistry.GetUnitsByType<AllyUnit>())
 			{
-				if (unit.canAct)
-					haveAllUnitsAttacked = true;
+				if (unit.canAct) allUnitsHaveAttacked = false;
 			}
 
-			if (haveAllUnitsAttacked)
-				usm.Stack(comfirmPanel);
+			if (!allUnitsHaveAttacked)
+				usm.Stack(confirmationPanel);
 			else
 				usm.NextTurn();
 		}
 
-		public void ClosePanel()
-		{
-			usm.UnStack();
-		}
+		//dont need this just plug in the usm directly in the unity event
+		// public void ClosePanel()
+		// {
+		// 	usm.UnStack();
+		// }
 	}
 }

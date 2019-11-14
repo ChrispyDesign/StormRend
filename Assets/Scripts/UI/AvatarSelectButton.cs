@@ -28,8 +28,8 @@ namespace StormRend.UI
 			infoPanel = FindObjectOfType<InfoPanel>();
 			inputHandler = FindObjectOfType<UserInputHandler>();
 
-			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(FinishTurn));
-			Debug.Assert(infoPanel, "There are no Input Handler in the scene. " + typeof(FinishTurn));
+			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(UnusedActionsChecker));
+			Debug.Assert(infoPanel, "There are no Input Handler in the scene. " + typeof(UnusedActionsChecker));
 		}
 
 		public void ShowAbilities()
