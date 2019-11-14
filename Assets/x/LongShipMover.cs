@@ -10,6 +10,7 @@ public class LongShipMover : MonoBehaviour
 
     [SerializeField] Transform target;
     [SerializeField] Vector3 direction;
+	[SerializeField] float checkRange = 0.15f;
 
     [SerializeField] List<Transform> LSTargets;
     
@@ -22,9 +23,9 @@ public class LongShipMover : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()		//Max ~60fps
     {
-        if((transform.position - target.position).sqrMagnitude > (.3f))
+        if((transform.position - target.position).sqrMagnitude > (checkRange * checkRange))
         {
             direction = target.position - transform.position;
 

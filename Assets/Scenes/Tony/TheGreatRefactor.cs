@@ -84,9 +84,18 @@ namespace The.Great.Refactor.Brainstorm
 	- CheckIfImmobilised
 	- CheckIfBlinded
 	- CheckIfUnitsAdjacent
+	
+	AttackPriority
+	- Provoked
+	- Distance
+	- Low to highest health
+	- Ally Type
+	- 
+
 
 	Basic AI algorithm
-	1. Find opponent within move range + 1 (To account for the fact that they can still hit you if they're next to you)
+	1. Find opponent within move range + 1 
+	(To account for the fact that they can still hit you if they're next to you)
 		2. Check if any of the opponents are provoking
 				YES > Set as ONLY target and return success
 		3. Check if any of the opponents are immediately adjacent

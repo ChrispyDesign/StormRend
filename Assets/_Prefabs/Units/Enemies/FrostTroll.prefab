@@ -70,7 +70,7 @@ MonoBehaviour:
   restartWhenDone: 0
   pauseIfDeactivated: 0
   variables: []
-  _bhaveTreeModule: {fileID: 11400000, guid: 68bab5547e8eb2145956fe15fd9fd9f9, type: 2}
+  _bhaveTreeModule: {fileID: 11400000, guid: e7868f6daa6ea0049a5d9b272b5aa0e0, type: 2}
   useCopy: 1
 --- !u!114 &5168873017443203932
 MonoBehaviour:
@@ -123,12 +123,11 @@ MonoBehaviour:
   _canMove: 1
   _canAct: 1
   lookSnap: 0
-  moveRange: 4
-  pathBlockers: 40
+  _moveRange: 4
+  pathBlockers: 32
   abilities: []
   statusEffects: []
-  ghostColor: {r: 0, g: 0, b: 1, a: 1}
-  ghostMaterial: {fileID: 0}
+  ghost: {fileID: 0}
   onBeginTurn:
     m_PersistentCalls:
       m_Calls: []
@@ -141,18 +140,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   onActed:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Animate
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: StormRend.Utility.Events.AbilityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onEndTurn:
@@ -1362,7 +1350,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f96c2ee4d2dcd442abc12db51d53696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onboardParticles: []
+  inbuiltVFX: []
+  inbuiltVFXLifetime: 5
   onDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -1380,8 +1369,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ebcd1b983e6ead408869a314176f796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialDelay: 1
-  dissolveDuration: 2
+  startDelay: 1.5
+  duration: 2.5
   shaderParam: _DissolveValue
 --- !u!114 &1893445955385811285
 MonoBehaviour:
@@ -1397,7 +1386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   chance: 50
-  sounds: {fileID: 0}
+  magazine: {fileID: 0}
 --- !u!82 &8431704914978499676
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2038,6 +2027,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3093552309022210659}
     m_Modifications:
+    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     - target: {fileID: 8649027571778799567, guid: e1fbb2b94b8040740927f9ac8f85e701,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2092,11 +2086,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1fbb2b94b8040740927f9ac8f85e701, type: 3}

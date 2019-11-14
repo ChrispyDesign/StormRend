@@ -28,9 +28,13 @@ namespace StormRend.Utility
 		/// <summary>
 		/// Debug logs any IEnumerable collection 
 		/// </summary>
-		public static void Print(this IEnumerable collection)
+		public static void Print(this IEnumerable collection, string description = null)
 		{
-			Debug.Log("Printing: " + collection);
+			if (description != null)
+				Debug.Log(description);
+			else
+				Debug.LogFormat("[{0}]", collection);
+
 			int i = 0;
 			foreach (var item in collection)
 			{

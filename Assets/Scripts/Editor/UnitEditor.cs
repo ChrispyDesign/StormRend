@@ -66,7 +66,7 @@ namespace StormRend.Editors
         void DrawRotateAndSnapButtons(Color color)
 		{
 			Vector2 offset = new Vector2(18, 0);
-			const float bSize = 25;
+			const float bSize = 20;
 			var oldColor = GUI.color;
 			GUI.color = color;
 			var cam = SceneView.lastActiveSceneView.camera;
