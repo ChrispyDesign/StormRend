@@ -28,8 +28,6 @@ namespace StormRend.Bhaviours
 		//Members
 		UnitRegistry ur;
 		AnimateUnit au;
-		bool isProvoked = false;
-		List<Unit> pendingTargets = new List<Unit>();
 		bool targetIsAdjacent = false;
 		AnimateUnit target = null;
 
@@ -45,21 +43,22 @@ namespace StormRend.Bhaviours
 		public override void Begin()
 		{
 			targets.value.Clear();
+			target = null;
+			targetIsAdjacent = false;
 		}
 
 		public override NodeState Execute(BhaveAgent agent)
 		{
 			if (!Scan())
 			{
-				Debug.LogFormat("{0} couldn't find any opponents", au.name);
+				Debug.LogFormat("{0} found no opponents", au.name);
 				return NodeState.Failure;   //Couldn't find any opponents
 			}
 
 			if (!MoveToward())
-			{
-				Debug.LogFormat("{0} couldn't move", au.name);
-				return NodeState.Failure;    //Opponents found by couldn't move
-			}
+				Debug.LogFormat("{0} didn't move", au.name);
+			else
+				Debug.LogFormat("{0} moved", au.name);
 
 			if (Attack())
 			{
@@ -68,7 +67,7 @@ namespace StormRend.Bhaviours
 			}
 			else
 			{
-				Debug.LogFormat("{0} moved but didn't attack", au.name);
+				Debug.LogFormat("{0} didn't attack", au.name);
 				return NodeState.Pending;
 			}
 		}
@@ -80,7 +79,7 @@ namespace StormRend.Bhaviours
 			allOpponents.Print("------ All Opponents ------");
 
 			//Scan for opponents from 1x to 3x range
-			for (int scanMultiplier = 1; scanMultiplier < 3; ++scanMultiplier)
+			for (int scanMultiplier = 1; scanMultiplier < maxScanRangeMultiplier; ++scanMultiplier)
 			{
 				targets.value.Clear();
 
@@ -112,6 +111,7 @@ namespace StormRend.Bhaviours
 					if (targets.value.Count > 0)
 					{
 						//Set the closest unit as the target
+						//REMEMBER order by descening means low to high ie. first element is lowest, last element is highest
 						this.target = targets.value.
 								OrderByDescending(t => Vector3.SqrMagnitude(t.transform.position - au.transform.position)).
 								First() as AnimateUnit;     //First should be the closest
@@ -171,11 +171,14 @@ namespace StormRend.Bhaviours
 						target = t as AnimateUnit;
 						Debug.LogFormat("[Type] : {0}", target.name);
 						return true;    //TARGET ACQUIRED!
+
 					case ValkyrieTag v:
 						target = t as AnimateUnit;
 						Debug.LogFormat("[Type] : {0}", target.name);
 						return true;    //TARGET ACQUIRED!
+
 					case SageTag s:
+						target = t as AnimateUnit;
 						Debug.LogFormat("[Type] : {0}", target.name);
 						return true;      //TARGET ACQUIRED!
 				}
@@ -192,12 +195,28 @@ namespace StormRend.Bhaviours
 		/// </summary>
 		bool MoveToward()
 		{
-			
+			//Can't move if crippled
+			if (au.isImmobilised) return false;
 
-			if (!targetIsAdjacent)
+			//Skip straight to attack if already adjacent
+			if (targetIsAdjacent) return false;
+
+			//Move as close as possible to the closest empty adjacent tile of the target
+			au.CalculateMoveTiles();
+			var closestAdjacentTileOfTarget = GetAdjacentTiles(target.currentTile).
+				OrderBy(t => Vector3.SqrMagnitude(t.transform.position - au.transform.position)).
+				First();
+			var closestTileInRange = au.possibleMoveTiles.
+				OrderBy(mt => Vector3.SqrMagnitude(mt.transform.position - closestAdjacentTileOfTarget.transform.position)).
+				First();
+			if (closestTileInRange)
 			{
-				//Get the nearest adjacent tile
+				//Move
+				au.Move(closestTileInRange);
+				return true;
 			}
+
+			//Can't move ie. maybe blocked by crystals etc
 			return false;
 		}
 
@@ -206,17 +225,17 @@ namespace StormRend.Bhaviours
 			return false;
 		}
 
-		bool TryGetAdjacentTarget(Tile start, out AnimateUnit target)
+		bool TryGetAdjacentTarget(Tile start, out AnimateUnit adjacentTarget)
 		{
 			var adjacentTiles = GetAdjacentTiles(start);
 			foreach (var t in targets.value)
 				if (adjacentTiles.Contains(t.currentTile))
 				{
-					target = t as AnimateUnit;
+					adjacentTarget = t as AnimateUnit;
 					return true;       //A target is adjacent
 				}
 
-			target = null;
+			adjacentTarget = null;
 			return false;   //No adjacent targets
 		}
 
@@ -229,13 +248,3 @@ namespace StormRend.Bhaviours
 		#endregion
 	}
 }
-
-
-/*
-			for (int i = targets.value.Count - 1; i > 0; --i)
-			{
-				//If not in scan range then remove target
-				if (scanTiles.Contains(targets.value[i]))
-					allOpponents.Remove(targets.value[i]);
-			}
-*/

@@ -71,12 +71,24 @@ namespace StormRend.Units
 		}
 
 		//Status Effect Properties
-		public bool isProvoking
-		{
-			get
-			{
+		public bool isProvoking	{
+			get	{
 				foreach (var se in statusEffects)
 					if (se is TauntEffect) return true;
+				return false;
+			}
+		}
+		public bool isImmobilised {
+			get {
+				foreach (var se in statusEffects)
+					if (se is ImmobiliseEffect) return true;
+				return false;
+			}
+		}
+		public bool isBlind {
+			get {
+				foreach (var se in statusEffects)
+					if (se is BlindEffect) return true;
 				return false;
 			}
 		}
