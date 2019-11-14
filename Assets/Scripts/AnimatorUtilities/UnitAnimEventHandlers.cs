@@ -46,6 +46,7 @@ namespace StormRend.Anim.EventHandlers
 		/// </summary>
 		public void ActivateInbuiltVFX(string name)
 		{
+			DeactivateInbuiltVFX(name);
 			foreach (var ivfx in inbuiltVFX)
 				if (ivfx.name == name) ivfx.SetActive(true);
 		}
