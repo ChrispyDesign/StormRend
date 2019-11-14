@@ -32,7 +32,7 @@ namespace StormRend.UI
 				img.fillAmount = 0f;
 			}
 
-			for (int i = 0; i < details.Length; i++)
+			for (int i = 0; i < units.Count; i++)
 			{
 				details[i] = units[i].description;
 			}

@@ -2219,8 +2219,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 9.294413e-10, y: -0.0000011138618, z: -0.026883082}
-    m_Extent: {x: 0.034095414, y: 0.007933535, z: 0.032844327}
+    m_Center: {x: 0, y: -0.0000011324883, z: -0.026883118}
+    m_Extent: {x: 0.034095444, y: 0.00793354, z: 0.032844357}
   m_DirtyAABB: 0
 --- !u!183 &4109132575281108322
 Cloth:
@@ -2667,8 +2667,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 515a34a92f0dac849b4ac3430169f6f4, type: 2}
   - {fileID: 11400000, guid: 04909938330ba724fb6b267e765cfda7, type: 2}
   statusEffects: []
-  ghostColor: {r: 1, g: 0, b: 0.6938925, a: 1}
-  ghostMaterial: {fileID: 0}
+  ghost: {fileID: 1892909228587308109, guid: f7ceb319894b89c4d82d38334142c1c7, type: 3}
   onBeginTurn:
     m_PersistentCalls:
       m_Calls: []
@@ -2845,6 +2844,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SGE_SoulCommuneAura
+      objectReference: {fileID: 0}
+    - target: {fileID: 6311765355932350965, guid: 12c8f65b3b1a71745b3d485321c472cd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12c8f65b3b1a71745b3d485321c472cd, type: 3}
