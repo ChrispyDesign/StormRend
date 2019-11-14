@@ -71,6 +71,35 @@ namespace The.Great.Refactor.Brainstorm
 	> SoulCommune:
 	> SpiritCrystal:
 	> SafePassage:
+
+	------------- AI ---------------
+	Delegates:
+	- GetAllUnits
+	- FilterUnitsInRange
+	- CheckUnitsInRange
+	- FilterProvokingUnits
+	- SortByHealth
+	- SortByPriority
+	- MoveToUnit
+	- CheckIfImmobilised
+	- CheckIfBlinded
+	- CheckIfUnitsAdjacent
+
+	Basic AI algorithm
+	1. Find opponent within move range + 1 (To account for the fact that they can still hit you if they're next to you)
+		2. Check if any of the opponents are provoking
+				YES > Set as ONLY target and return success
+		3. Check if any of the opponents are immediately adjacent
+				YES > Set as only target and return success
+		4. Sort targets from lowest health to highest health
+		5. Remove all targets except the first
+		6. Move toward the closest adjacent tile of this target
+
+	2. If not in range check for double range
+			Move toward the closest
+
+	3. If not in double range check for triple range 
+			Move toward the closest
 	*/
 
 	#region Conventions

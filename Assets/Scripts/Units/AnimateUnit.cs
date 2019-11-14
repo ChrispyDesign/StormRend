@@ -34,7 +34,7 @@ namespace StormRend.Units
 		[SerializeField] LookSnap lookSnap = LookSnap.RightAngle;
 
 		[Header("Abilities & Effects")]
-		[SerializeField] protected int moveRange = 4;
+		[SerializeField] protected int _moveRange = 4;
 		[Tooltip("The unit types of that this unit cannot walk through ie. opponents")]
 		[EnumFlags, SerializeField] TargetType pathBlockers = TargetType.Enemies | TargetType.InAnimates;
 		[SerializeField] internal Ability[] abilities = new Ability[0];
@@ -55,6 +55,7 @@ namespace StormRend.Units
 		public Tile ghostTile { get; set; } = null;     //The tile the ghost is on
 		public Tile[] possibleMoveTiles;// { get; set; } = new Tile[0];
 		public Tile[] possibleTargetTiles;// { get; set; } = new Tile[0];
+		public int moveRange => _moveRange;
 		private float snapAngle
 		{
 			get
@@ -391,8 +392,11 @@ namespace StormRend.Units
 		/// Filters based on which unit type cannot be traversed through.
 		/// Returns the list of tiles if needed.
 		/// </summary>
-		public Tile[] CalculateMoveTiles()
+		public Tile[] CalculateMoveTiles(int range = 0)
 		{
+			//Default to this unit's move range if nothing passed in
+			if (range == 0) range = moveRange;
+
 			var pathblockers = new List<Type>();
 
 			//Allies
@@ -415,9 +419,7 @@ namespace StormRend.Units
 			if ((pathBlockers & TargetType.Animates) == TargetType.Animates)
 				pathblockers.Add(typeof(AnimateUnit));
 
-			possibleMoveTiles = Map.GetPossibleTiles(beginTurnTile.owner, beginTurnTile, moveRange, pathblockers.ToArray());
-			// Debug.LogFormat("{0}.CalculateMoveTiles(), Count: {1}", this.name, possibleMoveTiles.Length);
-			return possibleMoveTiles;
+			return possibleMoveTiles = Map.GetPossibleTiles(beginTurnTile.owner, beginTurnTile, range, pathblockers.ToArray());
 		}
 
 		/// <summary>

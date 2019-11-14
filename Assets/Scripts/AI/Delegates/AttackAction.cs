@@ -30,6 +30,7 @@ namespace StormRend.Bhaviours
         	if (targets.value.Count <= 0) return NodeState.Failure;
 
 			//Attack target
+			if (!au) return NodeState.Failure;
 			if (au.abilities[0] != null)
 			{
 				au.FilteredAct(au.abilities[0], targets.value.ToArray());

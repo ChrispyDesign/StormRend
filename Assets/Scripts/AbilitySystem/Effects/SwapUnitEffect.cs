@@ -6,6 +6,10 @@ namespace StormRend.Abilities.Effects
 {
 	public class SwapUnitEffect : Effect
 	{
+		[Tooltip("The particle to be instantiated")]
+		[SerializeField] GameObject VFX = null;
+		[SerializeField] float VFXDuration = 3f;
+
 		/// <summary>
 		/// Swap or teleport units
 		/// </summary>
@@ -31,6 +35,14 @@ namespace StormRend.Abilities.Effects
 			//Recalculate move tiles
 			au0?.CalculateMoveTiles();
 			au1?.CalculateMoveTiles();
+
+			//Instantiate VFXs
+			var vfx0 = Instantiate(VFX, au0.transform.position, au0.transform.rotation);
+			var vfx1 = Instantiate(VFX, au1.transform.position, au1.transform.rotation);
+
+			//Destroy VFXs based on time
+			Destroy(vfx0, VFXDuration);
+			Destroy(vfx1, VFXDuration);
 		}
 	}
 }
