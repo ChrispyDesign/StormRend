@@ -16,11 +16,12 @@ MonoBehaviour:
   _animationTrigger: SpiritCrystal
   _type: 2
   _level: 3
+  _title: Spirit Crystal
   _descriptions:
-  - 
-  - 
-  - 
-  _gloryCost: 1
+  - Summon a Spirit Crystal. At the start of your turn, it explodes
+  - Immobilise enemies when it explodes
+  - Summon 2 Crystals
+  _gloryCost: 3
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 2
   _targetTileTypes: 1
@@ -39,7 +40,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f2715bfc5600e4b9a9a9bea62fb22c, type: 3}
   m_Name: SummonEffect
   m_EditorClassIdentifier: 
-  notes: 
   summon: {fileID: 3266679734864301431, guid: 3fba75eb2b86c974197a410b811511d6, type: 3}
 --- !u!114 &114776763529855574
 MonoBehaviour:
@@ -53,5 +53,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15f2715bfc5600e4b9a9a9bea62fb22c, type: 3}
   m_Name: SummonEffect
   m_EditorClassIdentifier: 
-  notes: 
   summon: {fileID: 0}
