@@ -15,10 +15,9 @@ namespace StormRend.Abilities.Effects
 		/// "Inflict" status effect on victim at the beginning of the turn
 		public virtual void OnBeginTurn(AnimateUnit affectedUnit)
 		{
-			// Debug.Log("StatusEffect.BeginTurn: " + this.name);
-			//On start check if this status effect has expired
-			//NOTE: If affectedturns set to 0 then status effect will never expire
-			if (affectedTurns > 0 && turnCount >= affectedTurns)
+			//Check if this status effect has expired
+			if (affectedTurns > 0   //NOTE: If affectedturns set to 0 then status effect will never expire
+				&& turnCount >= affectedTurns)
 			{
 				//Expired. Remove from unit
 				affectedUnit.statusEffects.Remove(this);

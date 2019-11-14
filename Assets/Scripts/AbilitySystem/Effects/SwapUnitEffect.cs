@@ -8,7 +8,6 @@ namespace StormRend.Abilities.Effects
 	{
 		[Tooltip("The particle to be instantiated")]
 		[SerializeField] GameObject VFX = null;
-		float VFXDuration = 3f;
 
 		/// <summary>
 		/// Swap or teleport units
