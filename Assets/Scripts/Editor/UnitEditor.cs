@@ -66,14 +66,14 @@ namespace StormRend.Editors
         void DrawRotateAndSnapButtons(Color color)
 		{
 			Vector2 offset = new Vector2(18, 0);
-			const float bSize = 25;
+			const float bSize = 20;
 			var oldColor = GUI.color;
 			GUI.color = color;
 			var cam = SceneView.lastActiveSceneView.camera;
 			var scene = cam.pixelRect;
 			var w2s = cam.WorldToScreenPoint(u.transform.position);
 			var leftButton = new Rect(w2s.x - offset.x - bSize, scene.height - w2s.y - offset.y, bSize, bSize);
-			var snapButton = new Rect(w2s.x - bSize * 0.5f, scene.height - w2s.y, bSize, bSize);
+			var snapButton = new Rect(w2s.x - bSize * 0.5f, scene.height - w2s.y + bSize, bSize, bSize);
 			var rightbutton = new Rect(w2s.x + offset.x, scene.height - w2s.y - offset.y, bSize, bSize);
 			Handles.BeginGUI();
 			if (GUI.Button(leftButton, "←")) u.transform.Rotate(Vector3.up, -90);

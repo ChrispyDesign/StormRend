@@ -8,23 +8,29 @@ using StormRend.Units;
 using StormRend.MapSystems;
 using StormRend.Utility;
 using StormRend.MapSystems.Tiles;
+using System.Collections.Generic;
+using StormRend.Tags;
 
 namespace StormRend.Bhaviours
 {
-    /// <summary>
-    /// Moves toward the closest target unit
-    /// </summary>
-    [CreateAssetMenu(menuName = "StormRend/AI/FullBasicAI", fileName = "FullBasicAI")]
+	/// <summary>
+	/// Moves toward the closest target unit
+	/// </summary>
+	[CreateAssetMenu(menuName = "StormRend/AI/FullBasicAI", fileName = "FullBasicAI")]
 	public sealed class FullBasicAI : BhaveAction
 	{
 		[SerializeField] UnitListVar targets = null;
 
-		[Tooltip("The seeking range in terms of no. of turns")]
-		[SerializeField] int rangeInTurns = 1;
+		[Tooltip("0 = Absorb?, 1 = Melee, 1 > Ranged")]
+		[SerializeField] int attackRange = 1;
+		[SerializeField] int maxScanRangeMultiplier = 3;    //Means the unit can scan up to 3x moveRange
 
 		//Members
 		UnitRegistry ur;
 		AnimateUnit au;
+		bool targetIsAdjacent = false;
+		AnimateUnit target = null;
+
 
 		#region Core
 		public override void Initiate(BhaveAgent agent)
@@ -37,160 +43,238 @@ namespace StormRend.Bhaviours
 		public override void Begin()
 		{
 			targets.value.Clear();
+			target = null;
+			targetIsAdjacent = false;
 		}
 
 		public override NodeState Execute(BhaveAgent agent)
 		{
-			bool provokingFound = false;
-
-			//Calculate scan range
-			var scanTiles = au.CalculateMoveTiles(au.moveRange + 1);	//1+ because this unit can still
-
-			//Get all opponents
-			var pendingTargets = ur.GetUnitsByType<AllyUnit>().ToList();
-				pendingTargets.Print();
-
-			//Get opponents in range
-			for (int i = pendingTargets.Count-1; i > 0; --i)
+			if (!Scan())
 			{
-				//If not in scan range then remove target
-				if (!scanTiles.Contains(pendingTargets[i]))
-					pendingTargets.Remove(pendingTargets[i]);
+				Debug.LogFormat("{0} found no opponents", au.name);
+				return NodeState.Failure;   //Couldn't find any opponents
 			}
 
-			//Check for provoke
-			foreach (var o in pendingTargets)
-			{
-				if (o.isProvoking)
-				{
-					//Provoker found so set as the only target
-					var provoker = o;
-					pendingTargets.Clear();
-					pendingTargets.Add(o);
-					break;
-				}
-			}
-
-			//Check for 
-
-
-			//-------------------------------------------------------------------------------------
-			//[GetAllUnits] 
-			//Populate targets. Check to see if opponent is within range
-			Debug.Log("--------- Populating list of allies ---------");
-			var allOpponentUnits = ur.GetUnitsByType<AllyUnit>();
-			// targets.value.AddRange(opponentUnits);
-			allOpponentUnits.Print();
-
-			//[CheckInRange] Within range means it is standing within this agent's possible move tiles
-			Debug.Log("--------- Get targets in range ------------");
-			foreach (var o in allOpponentUnits)
-			{
-				//If within range then add to target list
-				if (au.possibleMoveTiles.Contains(o.currentTile))
-					targets.value.Add(o);
-			}
-			targets.value.Print();
-
-			//[CheckAdjacent] Is this unit already standing next to an adjacent unit?
-			Debug.Log("--------- Check adjacency -----------");
-			var adjacentTiles = GetAdjacentTiles(au.currentTile);
-			foreach (var tgt in adjacentTiles)
-			{
-				
-			}
-
-			
-
-			//[CheckProvoke] Check if any target is provoking and filter out
-			Debug.Log("--------- Checking for provoke target -----------");
-			foreach (var t in targets.value)
-			{
-				var at = t as AnimateUnit;
-				if (at.isProvoking)
-				{
-					//Set as the main target
-					Debug.Log("[Provoker Found]");
-					provokingFound = true;
-					targets.value.Clear();
-					targets.value.Add(t);
-					
-					targets.value.Print();
-					break;
-				}
-			}
-
-			//[SortByHealth]
-			if (!provokingFound)		//Temp
-			{
-				Debug.Log("--------- Sort By health -----------");
-				targets.value.OrderBy(t => t.HP);
-				
-				targets.value.Print();
-			}
-
-			//[TargetAcquired]
-			Debug.Log("--------- Targets acquired -----------");
-
-			//[Seek] Move toward best target's empty adjacent tile if possible, ready for attacking
-			Debug.Log("-------- Seeking --------");
-			//Keep trying to attack until successful?
-			foreach (var tgt in targets.value)
-			{
-				//Get adjacent empty tile
-				GetAdjacentTiles(null);
-				
-			}
-
-
-			Debug.Log("-------- ");
-			//Move toward
-			// var closestTile =	au.possibleMoveTiles
-
-			//Get the closest tile to the nearest enemy
-			var closestTile = au.possibleMoveTiles.OrderBy(x => Vector3.Distance(x.transform.position, targets.value[0].currentTile.transform.position)).ElementAt(0);
-			au.Move(closestTile);
-
-			//Move as close as possible to the nearest target
-			//Find the valid moves
-			// validMoves = Map.GetPossibleTiles(au.currentTile.owner, au.currentTile, rangeInTurns, au.GetType());	//Just ignore the same unit type as this unit
-			//Check to see if the target is already next to this agent before moving
-			// if (TargetIsAdjacent()) return NodeState.Success;
-			//Move as close as possible to the target (targets.value[0] should be the closest unit)
-			// validMoves = validMoves.OrderBy(x => (Vector3.Distance(targets.value[0].currentTile.transform.position, x.transform.position))).ToArray();
-			// validMoves = validMoves.OrderBy(x => (Vector2Int.Distance(targets.value[0].coords, x.GetCoordinates()))).ToList();
-
-			//Move the agent
-			// if (validMoves.Length > 0)
-			// au.Move(validMoves[1]);
-
-			//If target is next to opponent then successful chase
-			if (TargetIsAdjacent(null))
-				return NodeState.Success;
+			if (!MoveToward())
+				Debug.LogFormat("{0} didn't move", au.name);
 			else
+				Debug.LogFormat("{0} moved", au.name);
+
+			if (Attack())
+			{
+				Debug.LogFormat("{0} successfully attacked", au.name);
+				return NodeState.Success;
+			}
+			else
+			{
+				Debug.LogFormat("{0} didn't attack", au.name);
 				return NodeState.Pending;
+			}
 		}
 
-		bool TargetIsAdjacent(Tile start)
+		bool Scan()
+		{
+			//Get all opponents
+			var allOpponents = ur.GetUnitsByType<AllyUnit>();
+			allOpponents.Print("------ All Opponents ------");
+
+			//Scan for opponents from 1x to 3x range
+			for (int scan = 1; scan < maxScanRangeMultiplier; ++scan)
+			{
+				targets.value.Clear();
+
+				//Calculate scan range
+				//NOTE Can't use calculate move tiles because the settings are wrong
+				//Path Blockers: Ignore crystals etc and other teammates
+				var scanTiles = Map.GetPossibleTiles(au.currentTile,
+						au.moveRange * scan + attackRange,
+						typeof(EnemyUnit), typeof(InAnimateUnit));
+
+				//Get opponents in range
+				foreach (var o in allOpponents)
+				{
+					//Add if in range
+					if (scanTiles.Contains(o.currentTile))
+						targets.value.Add(o);
+				}
+
+				//Check if any opponent found
+				if (scan == 1)
+				{
+					//If units within immediate range, stop scanning and start filtering
+					if (targets.value.Count > 0)
+						break;
+				}
+				else if (scan >= 2)
+				{
+					//Units within distant range
+					if (targets.value.Count > 0)
+					{
+						//Set the closest unit as the target
+						//REMEMBER order by descening means low to high ie. first element is lowest, last element is highest
+						this.target = targets.value.
+								OrderByDescending(t => Vector3.SqrMagnitude(t.transform.position - au.transform.position)).
+								First() as AnimateUnit;     //First should be the closest
+						return true;        //TARGET ACQUIRED!
+					}
+				}
+
+			}
+			targets.value.Print("[In Range]");
+			//Exit if still nothing in range
+			if (targets.value.Count == 0) return false;
+
+			//----------- PRIORITY 1: Provoke
+			foreach (var o in targets.value)
+			{
+				var au = o as AnimateUnit;
+				if (au.isProvoking)
+				{
+					//Provoker found so set as the only target
+					target = o as AnimateUnit;
+					Debug.LogFormat("[Provoke] : {0}", target.name);
+					return true;        //TARGET ACQUIRED!
+				}
+			}
+
+			//------------ PRIORITY 2: Adjacency
+			if (TryGetAdjacentTarget(au.currentTile, out AnimateUnit outTarget))
+			{
+				target = outTarget;
+				Debug.LogFormat("[Adjacent] : {0}", target.name);
+				targetIsAdjacent = true;      //Attack in place
+				return true;        //TARGET ACQUIRED!
+			}
+
+			//----------- PRIORITY 3: Health
+			//Sort by health
+			targets.value = targets.value.OrderBy(t => t.HP).ToList();  //Lowest to highest
+
+			//Check there aren't multiple opponents with low health (hashsets don't allow multiples)
+			HashSet<Unit> lowestHealth = new HashSet<Unit>();
+			foreach (var t in targets.value)
+				lowestHealth.Add(t);
+			if (lowestHealth.Count != 1)    //If there's only one that means all the units have the same health
+			{
+				target = lowestHealth.ElementAt(0) as AnimateUnit;
+				Debug.LogFormat("[Health] : {0}", target.name);
+				return true;    //TARGET ACQUIRED!
+			}
+			//Multiple units of the same health detected, continue to filter by ally type
+
+			//----------- PRIORITY 4: Ally Type
+			foreach (var t in targets.value)
+			{
+				switch (t.tag)
+				{
+					case BerserkerTag b:
+						target = t as AnimateUnit;
+						Debug.LogFormat("[Type] : {0}", target.name);
+						return true;    //TARGET ACQUIRED!
+
+					case ValkyrieTag v:
+						target = t as AnimateUnit;
+						Debug.LogFormat("[Type] : {0}", target.name);
+						return true;    //TARGET ACQUIRED!
+
+					case SageTag s:
+						target = t as AnimateUnit;
+						Debug.LogFormat("[Type] : {0}", target.name);
+						return true;      //TARGET ACQUIRED!
+				}
+			}
+
+			//--------- PRIORITY 5: Default, choose any target
+			target = targets.value[Random.Range(0, targets.value.Count - 1)] as AnimateUnit;
+			Debug.LogFormat("[Default] : {0}", target.name);
+			return true;    //TARGET FINALLY ACQUIRED!
+		}
+
+		/// <summary>
+		/// Move towards the target. There should only be one target at this point
+		/// </summary>
+		bool MoveToward()
+		{
+			//Can't move if crippled
+			if (au.isImmobilised)
+			{
+				Debug.LogFormat("{0} is crippled!");
+				return false;
+			}
+
+			//Skip straight to attack if already adjacent
+			if (targetIsAdjacent) return false;
+
+			//Move as close as possible to the closest empty adjacent tile of the target
+			au.CalculateMoveTiles();
+			var closestAdjacentTileOfTarget = GetAdjacentTiles(target.currentTile).
+				OrderBy(t => Vector3.SqrMagnitude(t.transform.position - au.transform.position)).
+				First();
+			var closestTileInRange = au.possibleMoveTiles.
+				OrderBy(mt => Vector3.SqrMagnitude(mt.transform.position - closestAdjacentTileOfTarget.transform.position)).
+				First();
+			if (closestTileInRange)
+			{
+				//Move
+				au.Move(closestTileInRange);
+				return true;
+			}
+
+			//Can't move ie. maybe blocked by crystals etc
+			return false;
+		}
+
+		bool Attack()
+		{
+			//Can't attack if blind
+			if (au.isBlind)
+			{
+				Debug.LogFormat("{0} is blind!");
+				return false;
+			}
+
+			//Attack immediately
+			Debug.Assert(au.abilities[0], "Enemy not loaded with Ability!");
+
+			//Attack immediately if adjacent
+			if (targetIsAdjacent)
+			{
+				au.Act(au.abilities[0], target.currentTile);
+				return true;
+			}
+			else
+			{
+				//This unit would've already moved to the best position
+				//so if target is within ATTACK range then attack
+				au.CalculateTargetTiles(au.abilities[0]);				//Attackable tiles
+
+				if (au.possibleTargetTiles.Contains(target.currentTile))
+				{
+					au.FilteredAct(au.abilities[0], au.possibleTargetTiles);		//Attack!
+					return true;
+				}
+			}
+			return false;
+		}
+
+		bool TryGetAdjacentTarget(Tile start, out AnimateUnit adjacentTarget)
 		{
 			var adjacentTiles = GetAdjacentTiles(start);
-			foreach (var target in targets.value)
-				if (adjacentTiles.Contains(target.currentTile))
+			foreach (var t in targets.value)
+				if (adjacentTiles.Contains(t.currentTile))
+				{
+					adjacentTarget = t as AnimateUnit;
 					return true;       //A target is adjacent
-			return false;	//No adjacent targets
+				}
+
+			adjacentTarget = null;
+			return false;   //No adjacent targets
 		}
 
 		Tile[] GetAdjacentTiles(Tile start)
 		{
 			//Get adjacent empty tiles
-			var result = Map.GetPossibleTiles(start.owner, start, 1, typeof(Unit)).ToList();
-			//Filter out any units standing on top of it
-			foreach (var t in result)
-			{
-				// if (t.)
-			}
-
-			return result.ToArray();
+			return Map.GetPossibleTiles(start, 1);
 		}
 
 		#endregion

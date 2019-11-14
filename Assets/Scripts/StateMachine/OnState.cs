@@ -6,7 +6,7 @@ namespace StormRend.States.UI
 	/// <summary>
 	/// Automatically activates objects on state enter and uncover, deactivate on state exit and cover
 	/// </summary>
-	public class OnState : State
+	public class OnState : State	//Rename to CoverState
 	{
 		[Tooltip("The UI/GameObjects to activate and deactivate on entering and exiting state, respectively")]
 		[SerializeField] GameObject[] objectsToActivate = null;

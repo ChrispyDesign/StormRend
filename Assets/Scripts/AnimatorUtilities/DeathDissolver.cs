@@ -12,8 +12,8 @@ namespace StormRend.Assists
 	{
 		//Inspector
 		[Header("Designer to tune these values")]
-		[SerializeField] float initialDelay = 1f;
-		[SerializeField] float dissolveDuration = 2f;
+		[SerializeField] float startDelay = 1.5f;
+		[SerializeField] float duration = 2.5f;
 		[SerializeField] string shaderParam = "_DissolveValue";
 
 		//Members
@@ -44,11 +44,11 @@ namespace StormRend.Assists
 		IEnumerator RunDeathDissolve()
 		{
 			//Initial delay
-			yield return new WaitForSeconds(initialDelay);
+			yield return new WaitForSeconds(startDelay);
 
 			//Dissolve
 			float value = 1f;
-			float rate = 1f / dissolveDuration;
+			float rate = 1f / duration;
 			while (value > 0f)
 			{
 				value -= rate * Time.deltaTime;

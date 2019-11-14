@@ -1,3 +1,4 @@
+using StormRend.Anim.EventHandlers;
 using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
 using StormRend.Systems;
@@ -40,6 +41,7 @@ namespace StormRend.Units
 		public int maxHP => _maxHP;
 		public bool isDead => HP <= 0;
 		public Animator animator { get; private set; }
+		public UnitAnimEventHandlers animEventHandlers { get; private set; }
 		public new Tag tag { get; private set; }
 
 		//Members
@@ -67,6 +69,7 @@ namespace StormRend.Units
 		{
 			//Get animator
 			animator = GetComponentInChildren<Animator>();
+			animEventHandlers = GetComponentInChildren<UnitAnimEventHandlers>();
 		}
 
 		void ScanTileBelow()

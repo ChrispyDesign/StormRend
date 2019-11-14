@@ -80,6 +80,9 @@ namespace StormRend.MapSystems
 			}
 		}
 
+		//Relay that uses singleton map
+		public static Tile[] GetPossibleTiles(Tile start, int range, params Type[] pathblockingUnitTypes)
+			=> GetPossibleTiles(Map.current, start, range, pathblockingUnitTypes);
 		/// <summary>
 		/// Calculates and returns a possible pathfinding solution
 		/// </summary>

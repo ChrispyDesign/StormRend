@@ -28,7 +28,7 @@ namespace StormRend.UI
 		{
 			button = GetComponent<Button>();
 			infoPanel = FindObjectOfType<InfoPanel>();
-			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(FinishTurn));
+			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(UnusedActionsChecker));
 		}
 		
 		//Register

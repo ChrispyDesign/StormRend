@@ -70,8 +70,8 @@ MonoBehaviour:
   restartWhenDone: 0
   pauseIfDeactivated: 0
   variables: []
-  _bhaveTreeModule: {fileID: 11400000, guid: 68bab5547e8eb2145956fe15fd9fd9f9, type: 2}
-  useCopy: 1
+  _bhaveTreeModule: {fileID: 11400000, guid: cbff247d8a3ce7344bc0888814117126, type: 2}
+  useCopy: 0
 --- !u!114 &2469292731765617890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,12 +123,12 @@ MonoBehaviour:
   _canMove: 1
   _canAct: 1
   lookSnap: 0
-  moveRange: 4
-  pathBlockers: 40
-  abilities: []
+  _moveRange: 4
+  pathBlockers: 36
+  abilities:
+  - {fileID: 11400000, guid: 0a11469f6672b134897d7dced586a239, type: 2}
   statusEffects: []
-  ghostColor: {r: 0, g: 0, b: 1, a: 1}
-  ghostMaterial: {fileID: 0}
+  ghost: {fileID: 0}
   onBeginTurn:
     m_PersistentCalls:
       m_Calls: []
@@ -1585,8 +1585,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ebcd1b983e6ead408869a314176f796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialDelay: 1
-  dissolveDuration: 2
+  startDelay: 1.5
+  duration: 2.5
   shaderParam: _DissolveValue
 --- !u!114 &4197128761623638219
 MonoBehaviour:
@@ -1737,6 +1737,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5697536595670988253}
     m_Modifications:
+    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     - target: {fileID: 8649027571778799567, guid: e1fbb2b94b8040740927f9ac8f85e701,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1791,11 +1796,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1fbb2b94b8040740927f9ac8f85e701, type: 3}
