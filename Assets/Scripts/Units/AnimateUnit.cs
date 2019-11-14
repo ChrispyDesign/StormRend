@@ -55,7 +55,7 @@ namespace StormRend.Units
 		public Tile ghostTile { get; set; } = null;     //The tile the ghost is on
 		public Tile[] possibleMoveTiles;// { get; set; } = new Tile[0];
 		public Tile[] possibleTargetTiles;// { get; set; } = new Tile[0];
-		public int moveRange => moveRange;
+		public int moveRange => _moveRange;
 		private float snapAngle
 		{
 			get
@@ -392,10 +392,10 @@ namespace StormRend.Units
 		/// Filters based on which unit type cannot be traversed through.
 		/// Returns the list of tiles if needed.
 		/// </summary>
-		public Tile[] CalculateMoveTiles(int? range = null)
+		public Tile[] CalculateMoveTiles(int range = 0)
 		{
 			//Default to this unit's move range if nothing passed in
-			if (range != null) range = moveRange;
+			if (range == 0) range = moveRange;
 
 			var pathblockers = new List<Type>();
 
@@ -419,7 +419,7 @@ namespace StormRend.Units
 			if ((pathBlockers & TargetType.Animates) == TargetType.Animates)
 				pathblockers.Add(typeof(AnimateUnit));
 
-			return possibleMoveTiles = Map.GetPossibleTiles(beginTurnTile.owner, beginTurnTile, range.Value, pathblockers.ToArray());
+			return possibleMoveTiles = Map.GetPossibleTiles(beginTurnTile.owner, beginTurnTile, range, pathblockers.ToArray());
 		}
 
 		/// <summary>
