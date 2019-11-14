@@ -186,7 +186,6 @@ namespace StormRend.Units
 		//State machine / game director / Unit registry to run through all these on ally turn enter?
 		public void BeginTurn()     //Reset necessary stats and get unit ready for the next turn
 		{
-			// Debug.Log(this.name + ".AnimateUnit.BeginTurn()");
 			//Can take action again (This doesn't reselect the units)
 			_canMove = true;
 			_canAct = true;
@@ -352,7 +351,7 @@ namespace StormRend.Units
 		}
 
 		/// <summary>
-		/// Starts the ability
+		/// BEGINS execution of the ability
 		/// </summary>
 		public void Act(Ability ability, params Tile[] targetTiles)
 		{
@@ -384,11 +383,11 @@ namespace StormRend.Units
 		}
 
 		/// <summary>
-		/// Perform the actual raw ability
+		/// Perform the actual logic of the current ability
 		/// </summary>
-		internal void Act()
+		public void Act()
 		{
-			//Null check
+			//Targets calculated
 			if (currentTargetTiles.Length == 0 || currentAbility == null) return;
 			currentAbility.Perform(this, currentTargetTiles);
 		}
@@ -396,7 +395,7 @@ namespace StormRend.Units
 		/// <summary>
 		/// Performs a specific effect in the current ability; Use to time effects with animation
 		/// </summary>
-		internal void Act<T>() where T : Effect
+		public void Act<T>() where T : Effect
 		{
 			if (currentTargetTiles.Length == 0 || currentAbility == null) return;
 			currentAbility.Perform<T>(this, currentTargetTiles);

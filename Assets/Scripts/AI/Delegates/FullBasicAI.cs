@@ -79,7 +79,7 @@ namespace StormRend.Bhaviours
 			allOpponents.Print("------ All Opponents ------");
 
 			//Scan for opponents from 1x to 3x range
-			for (int scanMultiplier = 1; scanMultiplier < maxScanRangeMultiplier; ++scanMultiplier)
+			for (int scan = 1; scan < maxScanRangeMultiplier; ++scan)
 			{
 				targets.value.Clear();
 
@@ -87,7 +87,7 @@ namespace StormRend.Bhaviours
 				//NOTE Can't use calculate move tiles because the settings are wrong
 				//Path Blockers: Ignore crystals etc and other teammates
 				var scanTiles = Map.GetPossibleTiles(au.currentTile,
-						au.moveRange * scanMultiplier + attackRange,
+						au.moveRange * scan + attackRange,
 						typeof(EnemyUnit), typeof(InAnimateUnit));
 
 				//Get opponents in range
@@ -99,13 +99,13 @@ namespace StormRend.Bhaviours
 				}
 
 				//Check if any opponent found
-				if (scanMultiplier == 1)
+				if (scan == 1)
 				{
 					//If units within immediate range, stop scanning and start filtering
 					if (targets.value.Count > 0)
 						break;
 				}
-				else if (scanMultiplier >= 2)
+				else if (scan >= 2)
 				{
 					//Units within distant range
 					if (targets.value.Count > 0)
@@ -187,7 +187,7 @@ namespace StormRend.Bhaviours
 			//--------- PRIORITY 5: Default, choose any target
 			target = targets.value[Random.Range(0, targets.value.Count - 1)] as AnimateUnit;
 			Debug.LogFormat("[Default] : {0}", target.name);
-			return true;	//TARGET FINALLY ACQUIRED!
+			return true;    //TARGET FINALLY ACQUIRED!
 		}
 
 		/// <summary>
@@ -196,7 +196,11 @@ namespace StormRend.Bhaviours
 		bool MoveToward()
 		{
 			//Can't move if crippled
-			if (au.isImmobilised) return false;
+			if (au.isImmobilised)
+			{
+				Debug.LogFormat("{0} is crippled!");
+				return false;
+			}
 
 			//Skip straight to attack if already adjacent
 			if (targetIsAdjacent) return false;
@@ -222,6 +226,34 @@ namespace StormRend.Bhaviours
 
 		bool Attack()
 		{
+			//Can't attack if blind
+			if (au.isBlind)
+			{
+				Debug.LogFormat("{0} is blind!");
+				return false;
+			}
+
+			//Attack immediately
+			Debug.Assert(au.abilities[0], "Enemy not loaded with Ability!");
+
+			//Attack immediately if adjacent
+			if (targetIsAdjacent)
+			{
+				au.Act(au.abilities[0], target.currentTile);
+				return true;
+			}
+			else
+			{
+				//This unit would've already moved to the best position
+				//so if target is within ATTACK range then attack
+				au.CalculateTargetTiles(au.abilities[0]);				//Attackable tiles
+
+				if (au.possibleTargetTiles.Contains(target.currentTile))
+				{
+					au.FilteredAct(au.abilities[0], au.possibleTargetTiles);		//Attack!
+					return true;
+				}
+			}
 			return false;
 		}
 
