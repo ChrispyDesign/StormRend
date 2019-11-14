@@ -16,9 +16,9 @@ MonoBehaviour:
   _animationTrigger: Provoke
   _type: 2
   _level: 1
+  _title: Provoke
   _descriptions:
-  - Enemies must attack you next turn. When an enemy attacks you, deal 1 damage to
-    them and gain 1 Glory.
+  - Enemies must attack you next turn. When attacked reflect 1 damage and gain 1 Glory.
   _gloryCost: 0
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
@@ -39,7 +39,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb98316954a83240a4ea5d6fca238d2, type: 3}
   m_Name: GainGloryWhenAttackedEffect
   m_EditorClassIdentifier: 
-  notes: 
   turnCount: 0
   affectedTurns: 1
   amount: 1
@@ -56,7 +55,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
-  notes: 
   turnCount: 0
   affectedTurns: 1
   reflexDamage: 1
@@ -72,7 +70,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
-  notes: 
   turnCount: 0
   affectedTurns: 1
   reflexDamage: 1

@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!136 &8506912096747748687
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6930359111284363594}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.2303929
+  m_Height: 11.844132
+  m_Direction: 2
+  m_Center: {x: -0.23278332, y: 1.6688571, z: 0.006366253}
 --- !u!95 &3070126894671171676
 Animator:
   serializedVersion: 3
@@ -31,7 +45,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95563325209698d4cb5c775d49dd5424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
+  LSTargets: []
+  speed: 0
+  speedMin: 0.1
+  speedMax: 2
+--- !u!54 &4364991659641767284
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6930359111284363594}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &6102709865415568548
 PrefabInstance:
   m_ObjectHideFlags: 0
