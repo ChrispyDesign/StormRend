@@ -70,8 +70,8 @@ MonoBehaviour:
   restartWhenDone: 0
   pauseIfDeactivated: 0
   variables: []
-  _bhaveTreeModule: {fileID: 11400000, guid: e7868f6daa6ea0049a5d9b272b5aa0e0, type: 2}
-  useCopy: 1
+  _bhaveTreeModule: {fileID: 11400000, guid: cbff247d8a3ce7344bc0888814117126, type: 2}
+  useCopy: 0
 --- !u!114 &2469292731765617890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +125,8 @@ MonoBehaviour:
   lookSnap: 0
   _moveRange: 4
   pathBlockers: 36
-  abilities: []
+  abilities:
+  - {fileID: 11400000, guid: 0a11469f6672b134897d7dced586a239, type: 2}
   statusEffects: []
   ghost: {fileID: 0}
   onBeginTurn:
