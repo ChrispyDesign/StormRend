@@ -42,8 +42,7 @@ namespace StormRend.Units
 		// [ReadOnlyField, SerializeField] internal HashSet<StatusEffect> statusEffects = new HashSet<StatusEffect>();
 
 		[Header("Ghost")]
-		[SerializeField] protected Color ghostColor = Color.blue;
-		[SerializeField] protected Material ghostMaterial = null;
+		[SerializeField] protected GameObject ghost = null;
 
 		//Events
 		[Header("Animate Unit Events")]
@@ -53,7 +52,7 @@ namespace StormRend.Units
 		public UnityEvent onEndTurn = null;
 
 		//Properties
-		public Tile ghostTile { get; set; } = null;		//The tile the ghost is on
+		public Tile ghostTile { get; set; } = null;     //The tile the ghost is on
 		public Tile[] possibleMoveTiles;// { get; set; } = new Tile[0];
 		public Tile[] possibleTargetTiles;// { get; set; } = new Tile[0];
 		private float snapAngle
@@ -82,7 +81,7 @@ namespace StormRend.Units
 		}
 
 		//Members
-		protected GameObject ghostMesh = null;
+		// protected GameObject ghost = null;
 		protected Tile[] currentTargetTiles = null;
 		private Ability currentAbility;
 
@@ -115,39 +114,41 @@ namespace StormRend.Units
 
 		#region Filtered Gets
 		public List<Ability> GetAbilitiesByType(AbilityType type) => abilities.Where(x => x.type == type).ToList();
-	#endregion
+		#endregion
 
-	#region Startup
-		protected override void Awake()	//This will not block base.Start()
+		#region Startup
+		protected override void Awake() //This will not block base.Start()
 		{
 			base.Awake();   //This sets the current tile
 
 			//Record origin tile
 			beginTurnTile = currentTile;
 
-			CreateGhostMesh();
+			PrepGhost();
 		}
 
-		/// <summary>
-		///  Semi-auto create a tinted ghost mesh for moving etc
-		/// </summary>
-		void CreateGhostMesh()
+		void PrepGhost()
 		{
-			//Find
-			var mesh = transform.Find("Mesh");
-			//Assert
-			Debug.Assert(mesh, "'Mesh' child object not found! Cannot create ghost mesh for this unit!");
-			//Create
-			ghostMesh = Instantiate(mesh.gameObject, transform.position, transform.rotation);
-			ghostMesh.transform.SetParent(transform);
-			//Tint all renderer materials
-			var ghostRenderers = ghostMesh.GetComponentsInChildren<Renderer>();
-			List<Material> ghostMaterials = new List<Material>();
-			foreach (var r in ghostRenderers)
-				foreach (var m in r.materials)
-					m.SetColor("_Color", ghostColor);
-			//Hide
-			ghostMesh.SetActive(false);
+			//No ghost, create a default placeholder ghost
+			if (!ghost)
+			{
+				ghost = new GameObject("[GHOST]");
+				ghost.transform.position = transform.position;
+				ghost.transform.SetParent(transform);
+				var mesh = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+				mesh.GetComponent<Renderer>().material.color = Color.magenta;
+				mesh.transform.position = ghost.transform.position;
+				mesh.transform.Translate(0, 1, 0, Space.World);
+				mesh.transform.SetParent(ghost.transform);
+			}
+			//Prefab passed in, instantiate and setup
+			else
+			{
+				ghost = Instantiate(ghost, transform.position, transform.rotation, transform);
+			}
+
+			//Hide ghost
+			ghost.SetActive(false);
 		}
 		#endregion
 
@@ -170,7 +171,7 @@ namespace StormRend.Units
 
 		//------------------- STATS
 		//State machine / game director / Unit registry to run through all these on ally turn enter?
-		public void BeginTurn()		//Reset necessary stats and get unit ready for the next turn
+		public void BeginTurn()     //Reset necessary stats and get unit ready for the next turn
 		{
 			// Debug.Log(this.name + ".AnimateUnit.BeginTurn()");
 			//Can take action again (This doesn't reselect the units)
@@ -192,7 +193,7 @@ namespace StormRend.Units
 
 			onBeginTurn.Invoke();
 		}
-		public void EndTurn()			//Run before next turn
+		public void EndTurn()           //Run before next turn
 		{
 			//Status effects (Nothing so far)
 			foreach (var se in statusEffects)
@@ -240,15 +241,15 @@ namespace StormRend.Units
 				//Set
 				ghostTile = destination;
 				//Move and look
-				ghostMesh?.SetActive(true);
-				ghostMesh.transform.rotation = GetSnappedRotation(ghostTile.transform.position, snapAngle);
-				ghostMesh.transform.position = ghostTile.transform.position;
+				ghost?.SetActive(true);
+				ghost.transform.rotation = GetSnappedRotation(ghostTile.transform.position, snapAngle);
+				ghost.transform.position = ghostTile.transform.position;
 			}
 			//Move the actual unit
 			else
 			{
 				//Ghost was probably just active so deactivate ghost ??? Should this be here?
-				if (ghostMesh != null) ghostMesh.SetActive(false);
+				if (ghost != null) ghost.SetActive(false);
 				//Filter
 				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
 				//Set
@@ -258,7 +259,7 @@ namespace StormRend.Units
 				transform.position = currentTile.transform.position;
 			}
 			//NOTE: Unit can still move
-			return true;	//Successful move
+			return true;    //Successful move
 
 		}
 
@@ -272,11 +273,11 @@ namespace StormRend.Units
 			{
 				//Check for any units or obstacles
 				if (UnitRegistry.IsAnyUnitOnTile(t))
-					return PushResult.HitUnit;		//Don't push
+					return PushResult.HitUnit;      //Don't push
 
 				//Check if pushed onto an unwalkable tile
 				if (t is UnWalkableTile)
-					return PushResult.HitBlockedTile;	//Don't push
+					return PushResult.HitBlockedTile;   //Don't push
 
 				//Push unit
 				Move(t, false, false, true);
@@ -351,7 +352,7 @@ namespace StormRend.Units
 
 			//Face the the last tile that was passed in
 			if (targetTiles.Length > 0)
-				SnappedLookAt(targetTiles[targetTiles.Length-1].transform.position);
+				SnappedLookAt(targetTiles[targetTiles.Length - 1].transform.position);
 
 			//Launch the Ability's animation triggering a series of
 			//animations events to be executed with precision timing
@@ -460,12 +461,12 @@ namespace StormRend.Units
 		//------------------ OTHER
 		public void ClearGhost()
 		{
-			ghostMesh.SetActive(false);
-			ghostMesh.transform.position = transform.position;
+			ghost.SetActive(false);
+			ghost.transform.position = transform.position;
 		}
-	#endregion
+		#endregion
 
-	#region Event System Interface Implementations
+		#region Event System Interface Implementations
 		public override void OnPointerEnter(PointerEventData eventData)
 		{
 			base.OnPointerEnter(eventData);
@@ -476,6 +477,6 @@ namespace StormRend.Units
 		{
 			base.OnPointerExit(eventData);
 		}
-	#endregion
+		#endregion
 	}
 }

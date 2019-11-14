@@ -7,26 +7,30 @@ namespace StormRend.Abilities.Effects
 	public class SwapUnitEffect : Effect
 	{
 		/// <summary>
-		/// Swap units. Target Tile types should be set to Animate Objects or maybe even Inanimate
+		/// Swap or teleport units
 		/// </summary>
 		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
 			//Make sure there is atleast 2 tiles passed in
 			if (!(targetTiles.Length >= 2)) { Debug.LogWarning("Not enough target tiles! Exiting..."); return; }
 
-			//Make sure the tiles have units on them
-			foreach (var t in targetTiles)
-				if (!UnitRegistry.IsAnyUnitOnTile(t)) return;
-
-			//Perform swap
-			UnitRegistry.TryGetAnyUnitOnTile(targetTiles[0], out Unit u1);
-			UnitRegistry.TryGetAnyUnitOnTile(targetTiles[1], out Unit u2);
+			//Try getting animate units if they exist
+			UnitRegistry.TryGetAnyUnitOnTile(targetTiles[0], out Unit u0);
+			UnitRegistry.TryGetAnyUnitOnTile(targetTiles[1], out Unit u1);
+			var au0 = u0 as AnimateUnit;
 			var au1 = u1 as AnimateUnit;
-			var au2 = u2 as AnimateUnit;
-			Tile u1tile;
-			u1tile = u1.currentTile;
-			au1.Move(au2.currentTile, false, false, true);
-			au2.Move(u1tile, false, false, true);
+
+			//Swap/teleport units if they exist
+			au0?.Move(targetTiles[1], false, false, true);
+			au1?.Move(targetTiles[0], false, false, true);
+
+			//Reset begin tile
+			if (au0) au0.beginTurnTile = au0.currentTile;
+			if (au1) au1.beginTurnTile = au1.currentTile;
+
+			//Recalculate move tiles
+			au0?.CalculateMoveTiles();
+			au1?.CalculateMoveTiles();
 		}
 	}
 }

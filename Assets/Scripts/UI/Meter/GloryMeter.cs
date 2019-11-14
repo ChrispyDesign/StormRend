@@ -19,6 +19,9 @@ namespace StormRend.UI
 		//Members
 		int internalGlory = 0;
 		string[] details = new string[3];
+		bool increase;
+		bool decrease;
+		bool startCheck;
 
 		private void Awake()
 		{
@@ -28,7 +31,6 @@ namespace StormRend.UI
 			{
 				img.fillAmount = 0f;
 			}
-			glory--;
 
 			for (int i = 0; i < details.Length; i++)
 			{
@@ -41,39 +43,44 @@ namespace StormRend.UI
 			Debug.Assert(gloryNodes[0], "There is no slider, please add a panel with filled image component on it. " + typeof(GloryMeter));
 			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(GloryMeter));
 			Debug.Assert(glory, "No Glory SOV found!");
+
+			startCheck = true;
+			UpdatePanel();
 		}
 
 		//Register events
 		void OnEnable() => glory.onChanged += OnChange;
 		void OnDisable() => glory.onChanged -= OnChange;
 
+		private void Update()
+		{
+			UpdatePanel();
+		}
+
 		public void OnChange()
 		{
 			Debug.Log("OnChange");
 			//Increase
-			// if (oldGloryValue < glory)
-				StartCoroutine(IncreaseGlory(glory - 1));
+			if (internalGlory < glory.value)
+				increase = true;
 			//Decrease
-			// else if (oldGloryValue > glory)
-			// 	StartCoroutine(DecreaseGlory(glory));
+			else if (internalGlory > glory.value)
+				decrease = true;
 		}
 
-		public override void OnIncrease()
+		public void UpdatePanel()
 		{
-			// if (glory + 1 == gloryNodes.Length)
-			// 	return;
+			if (increase || startCheck)
+			{
+				for (int i = 0; i < glory.value; i++)
+					StartCoroutine(IncreaseGlory(i));
+			}
 
-			// StartCoroutine(IncreaseGlory(glory + 1));
-			glory++;
-		}
-
-		public override void OnDecrease()
-		{
-			if (glory - 1 == -2)
-				return;
-
-			StartCoroutine(DecreaseGlory(glory));
-			glory--;
+			if (decrease)
+			{
+				for (int i = gloryNodes.Length - 1; i >= glory.value; i--)
+					StartCoroutine(DecreaseGlory(i));
+			}
 		}
 
 		public override void OnPointerEnter(PointerEventData eventData)
@@ -88,23 +95,32 @@ namespace StormRend.UI
 
 		IEnumerator IncreaseGlory(int _index)
 		{
-			// index--;
+			if(gloryNodes[_index].fillAmount == 1)
+			{
+				startCheck = false;
+				increase = false;
+				yield return null;
+			}
             for (float i = 0f; i <= 1; i += fillSpeed)
 			{
                 gloryNodes[_index].fillAmount += fillSpeed;
 				yield return new WaitForSeconds(fillSpeed);
 			}
-			yield return null;
 		}
 
 		IEnumerator DecreaseGlory(int _index)
 		{
-            for (float i = 0f; i <= 1; i += fillSpeed)
+			if (gloryNodes[_index].fillAmount == 1)
 			{
-                gloryNodes[_index].fillAmount -= fillSpeed;
+				startCheck = false;
+				decrease = false;
+				yield return null;
+			}
+			for (float i = 0f; i <= 1; i += fillSpeed)
+			{
+				gloryNodes[_index].fillAmount -= fillSpeed;
 				yield return new WaitForSeconds(fillSpeed);
 			}
-			yield return null;
 		}
 	}
 }

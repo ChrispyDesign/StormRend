@@ -1594,7 +1594,7 @@ Animator:
   m_GameObject: {fileID: 4783116619369055820}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 1fb900c0be38b4e4f87306b8120ea96f, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 516facb8b8bd33940b5c0f5209c6d6a8, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1615,11 +1615,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bde02cd90673844e81421a606c320eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onboardParticles:
-  - {fileID: 3008180453190746623, guid: 72657cac9bb022f40bda5044e74f0700, type: 3}
-  inbuiltVFXs:
-  - {fileID: 982381601581763318}
-  - {fileID: 3459618349638180813}
+  inbuiltVFX: []
+  inbuiltVFXLifetime: 5
   onDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -4431,29 +4428,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   onHeal:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 0
-      - m_Target: {fileID: 0}
-        m_MethodName: UpdateGUIHealthBar
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: StormRend.Utility.Events.HealthEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   currentTile: {fileID: 0}
@@ -4471,8 +4446,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ed211851a6dd295469d834476cbe8611, type: 2}
   - {fileID: 11400000, guid: 8afc1e9cc640dae43b7fcd7cd17b2b51, type: 2}
   statusEffects: []
-  ghostColor: {r: 1, g: 0.5513562, b: 0, a: 1}
-  ghostMaterial: {fileID: 0}
+  ghost: {fileID: 0}
   onBeginTurn:
     m_PersistentCalls:
       m_Calls: []
@@ -4763,12 +4737,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e02e19f26804ce469af88d28738253b, type: 3}
---- !u!1 &982381601581763318 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6828317970168239779, guid: 0e02e19f26804ce469af88d28738253b,
-    type: 3}
-  m_PrefabInstance: {fileID: 6008102999671594069}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &395666184373561062 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6205012047602268851, guid: 0e02e19f26804ce469af88d28738253b,
@@ -4847,12 +4815,6 @@ PrefabInstance:
 --- !u!4 &4097332416724218845 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6205012047602268851, guid: 0e02e19f26804ce469af88d28738253b,
-    type: 3}
-  m_PrefabInstance: {fileID: 7980386834185193838}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3459618349638180813 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6828317970168239779, guid: 0e02e19f26804ce469af88d28738253b,
     type: 3}
   m_PrefabInstance: {fileID: 7980386834185193838}
   m_PrefabAsset: {fileID: 0}

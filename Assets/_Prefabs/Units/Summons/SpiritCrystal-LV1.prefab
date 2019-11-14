@@ -4817,25 +4817,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   description: 
   _hp: 0
-  _maxHP: 3
+  _maxHP: 1
   onDeath:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  onDamage:
+  onTakeDamage:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: StormRend.Utility.Events.DamageEvent, Assembly-CSharp, Version=0.0.0.0,
+    m_TypeName: StormRend.Utility.Events.HealthEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onEnemyKilled:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onHeal:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+    m_TypeName: StormRend.Utility.Events.HealthEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   currentTile: {fileID: 0}
   turns: 1
   damage: 1
+  immobilise: 0
   range: 1
   vulnerableUnitTypes: 64
 --- !u!1 &4313770437090816383

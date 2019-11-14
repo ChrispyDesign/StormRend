@@ -16,16 +16,16 @@ MonoBehaviour:
   _animationTrigger: Provoke
   _type: 2
   _level: 1
-  _description: Until your next turn, force enemies to attack you. When they do, deal
-    1 damage to them.
-  _gloryCost: 2
+  _title: Provoke
+  _descriptions:
+  - Enemies must attack you next turn. When attacked reflect 1 damage and gain 1 Glory.
+  _gloryCost: 0
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
   _targetTileTypes: 2
   effects:
   - {fileID: 114679432023497332}
   - {fileID: 114070250159324854}
-  - {fileID: 114581791803046282}
   castArea: 00000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000
 --- !u!114 &114070250159324854
 MonoBehaviour:
@@ -39,7 +39,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb98316954a83240a4ea5d6fca238d2, type: 3}
   m_Name: GainGloryWhenAttackedEffect
   m_EditorClassIdentifier: 
-  notes: 
   turnCount: 0
   affectedTurns: 1
   amount: 1
@@ -56,27 +55,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
-  notes: 
   turnCount: 0
   affectedTurns: 1
   reflexDamage: 1
---- !u!114 &114581791803046282
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
-  m_Name: RefreshEffect
-  m_EditorClassIdentifier: 
-  notes: 
-  refreshCount: 2
-  refreshType: -1
-  delay: 1
-  allowedRefreshes: 1000
 --- !u!114 &114679432023497332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -89,7 +70,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
-  notes: 
   turnCount: 0
   affectedTurns: 1
   reflexDamage: 1

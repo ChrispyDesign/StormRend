@@ -14,34 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: 88d7610e3b63fd548bd75860f0e18633, type: 3}
   _animationTrigger: SafePassage
-  _type: 2
+  _type: 1
   _level: 1
-  _description: 'Choose two tiles: Teleport any units on those tiles'
+  _title: Safe Passage
+  _descriptions:
+  - Choose 2 tiles. Swap units on those tiles
   _gloryCost: 0
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 2
-  _targetTileTypes: 64
+  _targetTileTypes: 65
   effects:
   - {fileID: 114504868100922726}
-  - {fileID: 114129946493200502}
-  castArea: 00000101010000000101010101000101010101010101010100010101010101010101010001010101010000000101010000
---- !u!114 &114129946493200502
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
-  m_Name: RefreshEffect
-  m_EditorClassIdentifier: 
-  notes: 
-  refreshCount: 2
-  refreshType: -1
-  delay: 1
-  allowedRefreshes: 1000
+  castArea: 00000001000000000001010100000001010101010001010100010101000101010101000000010101000000000001000000
 --- !u!114 &114504868100922726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -54,4 +38,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8276f40f4bf260f4e92f11193e47668e, type: 3}
   m_Name: SwapUnitEffect
   m_EditorClassIdentifier: 
-  notes: 

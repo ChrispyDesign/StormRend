@@ -1,22 +1,19 @@
 ﻿using System.Linq;
-using System.Collections.Generic;
 using UnityEngine;
 using pokoro.BhaVE.Core.Delegates;
 using pokoro.BhaVE.Core.Enums;
 using pokoro.BhaVE.Core;
 using StormRend.Variables;
-using StormRend.MapSystems.Tiles;
 using StormRend.Units;
 using StormRend.MapSystems;
 using StormRend.Utility;
-using StormRend.Abilities.Effects;
 
 namespace StormRend.Bhaviours
 {
-	/// <summary>
-	/// Moves toward the closest target unit
-	/// </summary>
-	[CreateAssetMenu(menuName = "StormRend/AI/SeekAction", fileName = "SeekAction")]
+    /// <summary>
+    /// Moves toward the closest target unit
+    /// </summary>
+    [CreateAssetMenu(menuName = "StormRend/AI/SeekAction", fileName = "SeekAction")]
 	public sealed class SeekAction : BhaveAction
 	{
 		[SerializeField] UnitListVar targets = null;
@@ -44,31 +41,24 @@ namespace StormRend.Bhaviours
 
 		public override NodeState Execute(BhaveAgent agent)
 		{
-			//If there aren't any targets then don't do anything
-			// if (targets.value.Count <= 0) return NodeState.Failure;
-			// Debug.Log
-
 			//Populate move tiles
 			au.CalculateMoveTiles();
 
 			//Populate targets. Check to see if opponent is within range (for enemies their CalculateMoves should've been run at the start of the player's turn)
 			var opponentUnits = ur.GetUnitsByType<AllyUnit>();
-			Debug.Log("Populate list of allies");
+			Debug.Log("--------- Populating list of allies ---------");
 			opponentUnits.Print();
-			Debug.Break();
 
 			//Within range means it is standing in this agent's move tile
 			foreach (var o in opponentUnits)
 				if (au.possibleMoveTiles.Contains(o.currentTile))
 					targets.value.Add(o);
-			Debug.Log("Get targets in range");
+			Debug.Log("--------- Get targets in range ------------");
 			targets.value.Print();
-			Debug.Break();
 
 			//Check if unit is already adjacent
 			if (TargetIsAdjacent()) return NodeState.Success;
-			Debug.Log("No targets adjacent");
-			Debug.Break();
+			Debug.Log("--------- No targets adjacent -----------");
 
 			//Check if any target is provoking
 			foreach (var t in targets.value)
@@ -78,11 +68,10 @@ namespace StormRend.Bhaviours
 				{
 					targets.value.Clear();      //Set as the main target
 					targets.value.Add(t);
-					Debug.Log("Found a provoke target");
+					Debug.Log("--------- Found a provoke target -----------");
 					break;
 				}
 			}
-
 
 			//Move toward
 			//Get the closest tile to the nearest enemy

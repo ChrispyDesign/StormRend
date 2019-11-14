@@ -16,8 +16,12 @@ MonoBehaviour:
   _animationTrigger: PiercingLight
   _type: 2
   _level: 3
-  _description: Blind enemies hit
-  _gloryCost: 1
+  _title: Piercing Light
+  _descriptions:
+  - Deal 1 damage to up to 3 units in a line
+  - Deal +1 damage
+  - Blind enemies hit
+  _gloryCost: 4
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
   _targetTileTypes: 125
@@ -37,12 +41,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
-  notes: 
   damage: 2
-  piercing: 0
+  piercing: 1
   gainGlory: 1
-  gloryAmount: 1
-  glory: {fileID: 0}
+  gloryAmount: 0
+  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
 --- !u!114 &114399296433236112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -55,7 +58,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1d815fbb770ac4a992c62b21f4826f, type: 3}
   m_Name: BlindEffect
   m_EditorClassIdentifier: 
-  notes: 
   turnCount: 0
   affectedTurns: 1
 --- !u!114 &114415901351157682
@@ -70,7 +72,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
-  notes: 
   damage: 1
   piercing: 0
   gainGlory: 1
@@ -88,6 +89,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1d815fbb770ac4a992c62b21f4826f, type: 3}
   m_Name: BlindEffect
   m_EditorClassIdentifier: 
-  notes: 
   turnCount: 0
   affectedTurns: 1

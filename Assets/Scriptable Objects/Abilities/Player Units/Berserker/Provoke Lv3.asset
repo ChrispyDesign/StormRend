@@ -16,7 +16,11 @@ MonoBehaviour:
   _animationTrigger: Provoke
   _type: 2
   _level: 3
-  _description: Deal +1 damage
+  _title: Provoke
+  _descriptions:
+  - Enemies must attack you next turn. When attacked reflect 1 damage
+  - Reflect +1 damage
+  - Gain Protection
   _gloryCost: 2
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
@@ -37,7 +41,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0340ba18f4cdb44a632086657e9e90, type: 3}
   m_Name: ProtectEffect
   m_EditorClassIdentifier: 
-  notes: 
   turnCount: 0
   affectedTurns: 1
 --- !u!114 &114202355932698588
@@ -52,7 +55,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
-  notes: 
   turnCount: 0
   affectedTurns: 1
   reflexDamage: 1
@@ -68,7 +70,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
-  notes: 
   turnCount: 0
   affectedTurns: 1
   reflexDamage: 1
@@ -84,7 +85,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
-  notes: 
   turnCount: 0
   affectedTurns: 1
   reflexDamage: 2
@@ -100,7 +100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
-  notes: 
   turnCount: 0
   affectedTurns: 1
   reflexDamage: 1
@@ -116,6 +115,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae0340ba18f4cdb44a632086657e9e90, type: 3}
   m_Name: ProtectEffect
   m_EditorClassIdentifier: 
-  notes: 
   turnCount: 0
   affectedTurns: 1
