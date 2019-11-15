@@ -7,6 +7,7 @@ using UnityEngine;
 using StormRend.Enums;
 using pokoro.BhaVE.Core.Variables;
 using StormRend.Abilities.Effects;
+using System.Linq;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -65,6 +66,10 @@ namespace StormRend.Abilities
 		public TargetType targetTileTypes => _targetTileTypes;
 
 	#region Core
+		//CRUNCH!
+		public bool Perform(Unit owner, params Unit[] units)
+			=> Perform(owner, units.Select(x => x.currentTile).ToArray());
+
 		/// <summary>
 		/// Perform the entire ability
 		/// </summary>
