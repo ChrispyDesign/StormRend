@@ -73,11 +73,13 @@ namespace StormRend.MapSystems
 		/// </summary>
 		public void ClearAllTileConnections()
 		{
+#if UNITY_EDITOR
 			foreach (var t in tiles)
 			{
 				t.DisconnectAll();
 				EditorUtility.SetDirty(t);      //Actually saves the data
 			}
+#endif
 		}
 
 		//Relay that uses singleton map
