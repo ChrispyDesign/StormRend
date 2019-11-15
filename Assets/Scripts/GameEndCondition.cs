@@ -12,28 +12,42 @@ namespace StormRend
 	{
 		[SerializeField] AudioClip gameLostClip;
 		[SerializeField] AudioClip gameWinClip;
+		[SerializeField] VictoryState victoryPanel;
+		[SerializeField] GameOverState gameOverPanel;
 
 		UltraStateMachine usm;
 		UnitRegistry unitRegistry;
 		GameDirector gameDirector;
-		GameOverState gameOverPanel;
-		VictoryState victoryPanel;
 		AudioSource src;
 
 		private void Awake()
 		{
 			unitRegistry = UnitRegistry.current;
 			gameDirector = GameDirector.current;
+			usm = FindObjectOfType<UltraStateMachine>();
 
-			gameOverPanel = FindObjectOfType<GameOverState>();
-			victoryPanel = FindObjectOfType<VictoryState>();
 			src = gameDirector.generalAudioSource;
+		}
+
+		private void Update()
+		{
+			if(Input.GetKeyDown(KeyCode.U))
+			{
+				AllyUnit[] allyunits = unitRegistry.GetUnitsByType<AllyUnit>();
+
+				foreach(AllyUnit ally in allyunits)
+				{
+					ally.TakeDamage(new HealthData(ally, 5));
+				}
+			}
+			HaveLost();
 		}
 
 		public void HaveLost()
 		{
 			if (unitRegistry.allAlliesDead)
 			{
+				usm.Stack(gameOverPanel);
 				src.loop = false;
 
 				if (gameLostClip)
@@ -41,8 +55,6 @@ namespace StormRend
 					src.clip = gameLostClip;
 					src.Play();
 				}
-
-				usm.Stack(gameOverPanel);
 			}
 		}
 
