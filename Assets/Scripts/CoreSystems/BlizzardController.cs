@@ -6,6 +6,7 @@ using pokoro.BhaVE.Core.Variables;
 using StormRend.Enums;
 using System.Collections.Generic;
 using System.Collections;
+using StormRend.Abilities;
 
 namespace StormRend.Systems
 {
@@ -16,6 +17,7 @@ namespace StormRend.Systems
     {
         //Inspector
         [SerializeField] BhaveInt blizzardVar = null;
+        [SerializeField] Ability immobilise = null;
         [SerializeField] int maxBlizzardValue = 5;
 
         [Header("Damage")]
@@ -29,13 +31,15 @@ namespace StormRend.Systems
 
         [Space]
         [Header("Test")]
-        [SerializeField] KeyCode testKey = KeyCode.Tab;
+        [SerializeField] KeyCode testKey = KeyCode.Asterisk;
 
         UnitRegistry ur = null;
 
         #region Core
-        void Start()
+        //CRUNCH!
+        void Awake()
         {
+            blizzardVar.value = 0;
             ur = UnitRegistry.current;
         }
         void Update()
@@ -52,7 +56,7 @@ namespace StormRend.Systems
                 Reset();
             }
         }
-        internal void Execute()
+        public void Execute()
         {
             onExecute.Invoke();
 
@@ -76,10 +80,20 @@ namespace StormRend.Systems
 
             //Deal damage to selected units
             foreach (var u in unitsToDamage)
+            {
+                var au = u as AnimateUnit;
+
+                //Damage
                 u.TakeDamage(new HealthData(null, damage));
+
+                //Immobilse
+                immobilise.Perform(null, u);
+            }
+
+            Reset();
         }
 
-        internal void Reset()
+        public void Reset()
         {
             onReset.Invoke();
             blizzardVar.value = 0;

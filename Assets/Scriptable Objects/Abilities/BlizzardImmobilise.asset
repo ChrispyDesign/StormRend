@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
+  m_Name: BlizzardImmobilise
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 0}
+  _animationTrigger: 
+  _type: 1
+  _level: 1
+  _title: ONLY FOR THE BLIZZARD
+  _descriptions:
+  - 
+  - 
+  - 
+  _gloryCost: 0
+  glory: {fileID: 0}
+  _requiredTiles: 0
+  _targetTileTypes: -1
+  effects:
+  - {fileID: 114459850028319756}
+  castArea: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+--- !u!114 &114459850028319756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d0e35127beabad499f92ee79a81238b, type: 3}
+  m_Name: ImmobiliseEffect
+  m_EditorClassIdentifier: 
+  turnCount: 0
+  affectedTurns: 1
