@@ -20,7 +20,6 @@ namespace StormRend.Units
 		onUnitCreated += PreCalculateMoveTiles.Run
 		onUnitKilled += PreCalculateMoveTiles.Run
 		*/
-
 		//Inspector
 		[Header("Units loaded in automatically. DO NOT load in manually")]
 		[ReadOnlyField, SerializeField] List<Unit> _aliveUnits = new List<Unit>();
@@ -34,8 +33,8 @@ namespace StormRend.Units
 
 		//Events
 		[Header("Events")]
-		public UnitEvent onUnitCreated;
-		public UnitEvent onUnitKilled;
+		public UnitEvent onUnitCreated = null;
+		public UnitEvent onUnitKilled = null;
 
 		void Start()
 		{

@@ -109,6 +109,9 @@ namespace The.Great.Refactor.Brainstorm
 
 	3. If not in double range check for triple range 
 			Move toward the closest
+
+	End Player Turn when all unit's have moved
+	- If all units of assigned type 
 	*/
 
 	#region Conventions
