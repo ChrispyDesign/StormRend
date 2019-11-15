@@ -39,12 +39,14 @@ namespace StormRend.UI
 
 		public void UpdateGUIHealthBar()
 		{
-			for(int i = 0; i < healthNodes.Count; i++)
+			foreach(Image img in healthNodes)
 			{
-				if (i < unit.HP)
-					healthNodes[i].fillAmount = 1;
-				else
-					healthNodes[i].fillAmount = 0;
+				img.fillAmount = 0;
+			}
+
+			for(int i = 0; i < unit.HP; i++)
+			{
+				healthNodes[i].fillAmount = 1;
 			}
 		}
 

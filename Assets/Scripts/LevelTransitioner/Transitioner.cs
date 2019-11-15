@@ -1,4 +1,5 @@
-﻿using StormRend.Units;
+﻿using StormRend.Systems;
+using StormRend.Units;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,14 +8,18 @@ namespace StormRend
 {
 	public class Transitioner : MonoBehaviour
 	{
-		private void Awake()
+		[SerializeField] AudioClip startClip;
+
+		GameDirector gameDirector;
+
+		private void Start()
 		{
+			gameDirector = GameDirector.current;
+			AudioSource src = gameDirector.generalAudioSource;
+			src.loop = false;
 
-		}
-
-		private void Update()
-		{
-
+			src.clip = startClip;
+			src.Play();			
 		}
 	}
 }
