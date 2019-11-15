@@ -739,8 +739,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6e3fa0d7fb4bea4c88d5dec0845aedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: Fill me!
-  details: fill me!
+  title: End Turn
+  details: Click to end your turn
   confirmationPanel: {fileID: 714438977446681479}
 --- !u!1 &3382576198614438582
 GameObject:
@@ -10953,7 +10953,7 @@ GameObject:
   - component: {fileID: 3323103128570775305}
   - component: {fileID: 4709576539160645935}
   - component: {fileID: 3290684863910354369}
-  - component: {fileID: 8273792065104489239}
+  - component: {fileID: 6013626923318496643}
   m_Layer: 5
   m_Name: VictoryPanel
   m_TagString: Untagged
@@ -11019,7 +11019,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &8273792065104489239
+--- !u!114 &6013626923318496643
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11028,13 +11028,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4862490217053532661}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2e6e9fe2d9a07642b71ca7524886b4a, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b20664e108f75b4e8cdeb264442f08a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Description: ' '
+  Description: 
   objectsToActivate:
   - {fileID: 4862490217053532661}
-  pauseTimeScale: 0.3
 --- !u!1 &4880042684378884603
 GameObject:
   m_ObjectHideFlags: 0
@@ -11319,7 +11318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.73333335}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.29411766}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -11350,7 +11349,7 @@ MonoBehaviour:
   Description: ' '
   objectsToActivate:
   - {fileID: 6299532467791223883}
-  pauseTimeScale: 0.3
+  pauseTimeScale: 1
 --- !u!1 &6403089396892597336
 GameObject:
   m_ObjectHideFlags: 0
@@ -11362,7 +11361,7 @@ GameObject:
   - component: {fileID: 547300893087897063}
   - component: {fileID: 1088516382554241766}
   - component: {fileID: 4481214189565132700}
-  - component: {fileID: 5569403754849271280}
+  - component: {fileID: 363024678270611259}
   m_Layer: 5
   m_Name: GameOverPanel
   m_TagString: Untagged
@@ -11428,7 +11427,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &5569403754849271280
+--- !u!114 &363024678270611259
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11437,13 +11436,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6403089396892597336}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2e6e9fe2d9a07642b71ca7524886b4a, type: 3}
+  m_Script: {fileID: 11500000, guid: c21935c180bc75b429ccfd013c44a6bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Description: ' '
+  Description: 
   objectsToActivate:
   - {fileID: 6403089396892597336}
-  pauseTimeScale: 0.3
 --- !u!1 &6658782336058111668
 GameObject:
   m_ObjectHideFlags: 0
@@ -11880,11 +11878,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 180222456397816586}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: Level 2 Button
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11990,6 +11983,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: Level 2 Button
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -12035,11 +12033,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6640259411948129432}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: MMenu Button
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12145,6 +12138,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: MMenu Button
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -12190,11 +12188,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8880629121256049736}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: RetryButton
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12300,6 +12293,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: RetryButton
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987373109754, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_Text
@@ -12320,11 +12318,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6640259411948129432}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: ResumeButton
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12429,6 +12422,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: ResumeButton
       objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
@@ -12475,16 +12473,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 180222456397816586}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: ResumeButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12590,6 +12578,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: ResumeButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -12635,11 +12633,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 180222456397816586}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: RetryButton
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12745,6 +12738,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: RetryButton
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987373109754, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_Text
@@ -12765,11 +12763,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8880629121256049736}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: Level 2 Button
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12875,6 +12868,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: Level 2 Button
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -12920,11 +12918,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1763080974878963405}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: NextTurnButton
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13045,6 +13038,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.2003498
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: NextTurnButton
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -13095,11 +13093,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6640259411948129432}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: Level 2 Button
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13205,6 +13198,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: Level 2 Button
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -13250,11 +13248,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8880629121256049736}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: MMenu Button
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13360,6 +13353,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: MMenu Button
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -13405,16 +13403,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8880629121256049736}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: ResumeButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13520,6 +13508,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: ResumeButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -13565,11 +13563,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 180222456397816586}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: Level 3 Button
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13675,6 +13668,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: Level 3 Button
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -13720,11 +13718,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6640259411948129432}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: Level 1 Button
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13830,6 +13823,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: Level 1 Button
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -13875,11 +13873,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6640259411948129432}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: Level 4 Button
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13985,6 +13978,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: Level 4 Button
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -14030,11 +14028,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 180222456397816586}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: MMenu Button
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14140,6 +14133,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: MMenu Button
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -14185,11 +14183,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6640259411948129432}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: Level 3 Button
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14295,6 +14288,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: Level 3 Button
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -14340,11 +14338,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8880629121256049736}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: Level 4 Button
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14450,6 +14443,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: Level 4 Button
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -14495,11 +14493,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 180222456397816586}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: Level 1 Button
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14605,6 +14598,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: Level 1 Button
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -14650,11 +14648,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6640259411948129432}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: RetryButton
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14760,6 +14753,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: RetryButton
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987373109754, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_Text
@@ -14780,11 +14778,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8880629121256049736}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: Level 3 Button
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14890,6 +14883,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: Level 3 Button
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -14935,11 +14933,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8880629121256049736}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: Level 1 Button
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15045,6 +15038,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: Level 1 Button
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -15090,11 +15088,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1763080974878963405}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: GoBackButton
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15215,6 +15208,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.2003498
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: GoBackButton
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -15240,11 +15238,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 180222456397816586}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: Level 4 Button
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15349,6 +15342,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: Level 4 Button
       objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
