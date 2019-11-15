@@ -5471,7 +5471,7 @@ MonoBehaviour:
   _canMove: 1
   _canAct: 1
   lookSnap: 0
-  moveRange: 4
+  _moveRange: 4
   pathBlockers: 40
   abilities:
   - {fileID: 11400000, guid: 25e639c4f4cae444ea8a550cd69696d9, type: 2}
@@ -23780,8 +23780,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ebcd1b983e6ead408869a314176f796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialDelay: 1.5
-  dissolveDuration: 2.5
+  startDelay: 1.5
+  duration: 2.5
   shaderParam: _DissolveValue
 --- !u!114 &45244116352507459
 MonoBehaviour:
@@ -25385,6 +25385,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthBar
       objectReference: {fileID: 0}
+    - target: {fileID: 6669548105669042686, guid: e1fbb2b94b8040740927f9ac8f85e701,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4195022738373352106, guid: e1fbb2b94b8040740927f9ac8f85e701,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5854979693735757426, guid: e1fbb2b94b8040740927f9ac8f85e701,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300002, guid: 262b1662453fa3d4392b515fec8dcbf3,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1fbb2b94b8040740927f9ac8f85e701, type: 3}
 --- !u!4 &7619029502138042799 stripped
