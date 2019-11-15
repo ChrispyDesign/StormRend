@@ -14,12 +14,15 @@ namespace StormRend
 
 		private void Start()
 		{
-			gameDirector = GameDirector.current;
-			AudioSource src = gameDirector.generalAudioSource;
-			src.loop = false;
+			if (startClip)
+			{
+				gameDirector = GameDirector.current;
+				AudioSource src = gameDirector.generalAudioSource;
+				src.loop = false;
 
-			src.clip = startClip;
-			src.Play();			
+				src.clip = startClip;
+				src.Play();
+			}	
 		}
 	}
 }
