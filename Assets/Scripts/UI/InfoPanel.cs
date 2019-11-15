@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,13 +28,6 @@ namespace StormRend.UI
 			panels[0].SetActive(true);
 		}
 
-		// public void ShowPanel(string title, string details, int levels)
-		// {
-		// 	text[0].text = title;
-		// 	text[1].text = details;
-		// 	anim.SetInteger("textBoxAnimation", levels);
-		// }
-
 		public void ShowPanel(string title, int levels, params string[] details)
 		{
 			text[0].text = title;
@@ -45,9 +38,17 @@ namespace StormRend.UI
 			anim.SetInteger("textBoxAnimation", levels);
 		}
 
-		public void UnShowPanel()
+		public void UnShowPanel(bool instant = false)
 		{
-			anim.SetInteger("textBoxAnimation", 0);
+			if(!instant)
+				anim.SetInteger("textBoxAnimation", 0);
+			else if(instant == true)
+			{
+				for(int i = 1; i < panels.Length; i++)
+				{
+					panels[i].SetActive(false);
+				}
+			}
 		}
 	}
 }

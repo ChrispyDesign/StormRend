@@ -47,6 +47,8 @@ namespace StormRend.UI
 
 		public void CheckMovesAvailable()
 		{
+			infoPanel.UnShowPanel(true);
+
 			bool allUnitsHaveAttacked = true;
 
 			foreach (AllyUnit unit in unitRegistry.GetUnitsByType<AllyUnit>())
@@ -59,11 +61,5 @@ namespace StormRend.UI
 			else
 				usm.NextTurn();
 		}
-
-		//dont need this just plug in the usm directly in the unity event
-		// public void ClosePanel()
-		// {
-		// 	usm.UnStack();
-		// }
 	}
 }
