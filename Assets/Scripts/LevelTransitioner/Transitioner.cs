@@ -14,6 +14,7 @@ namespace StormRend
 
 		private void Start()
 		{
+			gameDirector = GameDirector.current;
 			AudioSource src = gameDirector.generalAudioSource;
 			src.loop = false;
 
