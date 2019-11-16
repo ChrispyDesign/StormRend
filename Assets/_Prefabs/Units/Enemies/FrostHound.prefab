@@ -70,7 +70,7 @@ MonoBehaviour:
   restartWhenDone: 0
   pauseIfDeactivated: 0
   variables: []
-  _bhaveTreeModule: {fileID: 11400000, guid: cbff247d8a3ce7344bc0888814117126, type: 2}
+  _bhaveTreeModule: {fileID: 11400000, guid: 378ca1cb482277245852344ee1b64414, type: 2}
   useCopy: 0
 --- !u!114 &2469292731765617890
 MonoBehaviour:
@@ -1568,11 +1568,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inbuiltVFX: []
   inbuiltVFXLifetime: 5
-  onDeath:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &4875803895646934011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1737,11 +1732,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5697536595670988253}
     m_Modifications:
-    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
-      objectReference: {fileID: 0}
     - target: {fileID: 8649027571778799567, guid: e1fbb2b94b8040740927f9ac8f85e701,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1796,6 +1786,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1fbb2b94b8040740927f9ac8f85e701, type: 3}

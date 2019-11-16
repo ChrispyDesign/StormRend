@@ -4843,7 +4843,7 @@ MonoBehaviour:
   damage: 1
   immobilise: 0
   range: 1
-  vulnerableUnitTypes: 124
+  targetTypes: 64
 --- !u!1 &4313770437090816383
 GameObject:
   m_ObjectHideFlags: 0
@@ -9610,6 +9610,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6763600129911775313}
   - component: {fileID: 5166114920447425695}
+  - component: {fileID: 6212803552394044749}
+  - component: {fileID: 3684228412586736595}
   m_Layer: 0
   m_Name: CHAR_Crystal_001
   m_TagString: Untagged
@@ -9657,6 +9659,35 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6212803552394044749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6763600129911618673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf5dd75ea8ec3a747be2574c711c8a85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inbuiltVFX: []
+  inbuiltVFXLifetime: 5
+--- !u!114 &3684228412586736595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6763600129911618673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ebcd1b983e6ead408869a314176f796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startDelay: 1.5
+  duration: 2.5
+  shaderParam: _DissolveValue
 --- !u!1 &6763600129911618675
 GameObject:
   m_ObjectHideFlags: 0
