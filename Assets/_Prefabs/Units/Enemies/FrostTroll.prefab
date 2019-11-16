@@ -1353,11 +1353,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inbuiltVFX: []
   inbuiltVFXLifetime: 5
-  onDeath:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &5209730148836847902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1370,6 +1365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ebcd1b983e6ead408869a314176f796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathVFX: {fileID: 11400000, guid: 8a7d399b8029c7d40b091d3d4f1444b8, type: 2}
   startDelay: 1.5
   duration: 2.5
   shaderParam: _DisolveValue

@@ -19,5 +19,10 @@ namespace StormRend.VisualFX
 				return ps.main.duration + ps.main.startLifetime.constant;
 			}
 		}
+
+		public void Create(Vector3 position, Quaternion rotation)
+		{
+			Destroy(Instantiate(prefab, position, rotation), totalDuration);
+		}
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using StormRend.Units;
+using StormRend.VisualFX;
 using UnityEngine;
 
 namespace StormRend.Assists
@@ -11,6 +12,8 @@ namespace StormRend.Assists
 	public class DeathDissolver : MonoBehaviour
 	{
 		//Inspector
+		[SerializeField] VFX deathVFX = null;
+
 		[Header("Designer to tune these values")]
 		[SerializeField] float startDelay = 1.5f;
 		[SerializeField] float duration = 2.5f;
@@ -28,6 +31,9 @@ namespace StormRend.Assists
 			var renderers = GetComponentsInChildren<Renderer>();
 			foreach (var r in renderers)
 				materials.AddRange(r.materials);
+
+			//VFX
+			Debug.Assert(deathVFX, "No death VFX found!");
 		}
 
 		public void Execute()
@@ -49,6 +55,9 @@ namespace StormRend.Assists
 
 		IEnumerator RunDeathDissolve(AnimateUnit au)
 		{
+			//Create VFX
+			deathVFX.Create(au.transform.position, au.transform.rotation);
+
 			//Initial delay
 			yield return new WaitForSeconds(startDelay);
 
