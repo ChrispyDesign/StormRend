@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using pokoro.Patterns.Generic;
+using StormRend.Assists;
 using StormRend.Enums;
 using StormRend.MapSystems.Tiles;
 using StormRend.States;
@@ -12,6 +13,7 @@ using UnityEngine;
 
 namespace StormRend.Units
 {
+	[RequireComponent(typeof(MoveTileRecalculator))]
 	public class UnitRegistry : Singleton<UnitRegistry>
 	{
 		//Hookups
@@ -30,16 +32,22 @@ namespace StormRend.Units
 		public Unit[] deadUnits => _deadUnits.ToArray();
 		public bool allAlliesDead => GetUnitsByType<AllyUnit>().Length <= 0;
 		public bool allEnemiesDead => GetUnitsByType<EnemyUnit>().Length <= 0;
+		public MoveTileRecalculator moveTileRecalculator => _moveTileRecalculator;
 
 		//Events
 		[Header("Events")]
 		public UnitEvent onUnitCreated = null;
 		public UnitEvent onUnitKilled = null;
 
+		//Members
+		MoveTileRecalculator _moveTileRecalculator;
+
 		void Start()
 		{
 			_deadUnits.Clear();
 			FindAllUnits();
+
+			_moveTileRecalculator = GetComponent<MoveTileRecalculator>();
 		}
 		
 		//Finds all units and sorts them based on whether they're dead or not

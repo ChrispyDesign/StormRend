@@ -192,7 +192,7 @@ namespace StormRend.Units
 
 			//Calculate new move tiles
 			beginTurnTile = currentTile;
-			CalculateMoveTiles();
+			// CalculateMoveTiles();		//Doesn't work anyways
 
 			//Prep effects (reset counts etc)
 			foreach (var a in abilities)
