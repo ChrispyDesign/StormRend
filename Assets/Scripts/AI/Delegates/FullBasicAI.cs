@@ -36,8 +36,6 @@ namespace StormRend.Bhaviours
 		public override void Initiate(BhaveAgent agent)
 		{
 			ur = UnitRegistry.current;
-			//Get this agent's unit
-			au = agent.GetComponent<AnimateUnit>();
 		}
 
 		public override void Begin()
@@ -49,6 +47,9 @@ namespace StormRend.Bhaviours
 
 		public override NodeState Execute(BhaveAgent agent)
 		{
+			//Get this agent's unit
+			au = agent.GetComponent<AnimateUnit>();		//Hacky fix to allow any enemy to use the same AI module
+
 			if (!Scan())
 			{
 				Debug.LogFormat("{0} found no opponents", au.name);
