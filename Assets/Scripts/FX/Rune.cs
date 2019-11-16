@@ -1,41 +1,43 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Rune : MonoBehaviour
+namespace StormRend.VisualFX
 {
-    [SerializeField] private List<Transform> nodes;
-    [SerializeField] private Transform target;
-    [SerializeField] private Transform start;
-
-    [SerializeField] private float speed;
-    [SerializeField] private float percent;
-
-
-    private void Start()
+    public class Rune : MonoBehaviour
     {
-        NewNode();
-    }
+        [SerializeField] List<Transform> nodes = new List<Transform>();
+        [SerializeField] Transform target;
+        [SerializeField] Transform start;
 
-    private void Update()
-    {
-        if(Vector3.Distance(transform.position, target.position) <= 0.01f)        
+        [SerializeField] float speed = 1;
+        [SerializeField] float percent = 1;
+
+
+        void Start()
+        {
             NewNode();
+        }
 
-        percent += Time.deltaTime * speed;
-        transform.position = Vector3.Lerp(start.position, target.position, percent);
-    }
+        void Update()
+        {
+            if (Vector3.Distance(transform.position, target.position) <= 0.01f)
+                NewNode();
 
-    void NewNode()
-    {
-        start = transform;
+            percent += Time.deltaTime * speed;
+            transform.position = Vector3.Lerp(start.position, target.position, percent);
+        }
 
-        int rand = Random.Range(0, nodes.Count);
+        void NewNode()
+        {
+            start = transform;
 
-        if (nodes[rand] == target)
-            NewNode();
-        else        
-            target = nodes[rand];
+            int rand = Random.Range(0, nodes.Count);
 
+            if (nodes[rand] == target)
+                NewNode();
+            else
+                target = nodes[rand];
+
+        }
     }
 }

@@ -41,10 +41,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 3632200838822693089}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa32159d7955f0041acabef488a06044, type: 3}
+  m_Script: {fileID: 11500000, guid: 014076b964586b44597b35b1891049dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tuft: {fileID: 9199895398479485656}
+  maxRandomRotation: 360
+  minRandomScale: 60
+  maxRandomScale: 140
+  grassMaterials:
+  - {fileID: 2100000, guid: c3f0eb25ee42a85499637321978f0f09, type: 2}
+  - {fileID: 2100000, guid: fdce2c5bb17e4224daaedfe61accf4b6, type: 2}
+  - {fileID: 2100000, guid: cff0b26480669494e91fe9a0e8d4352e, type: 2}
+  - {fileID: 2100000, guid: 87898f596c7f93844b12f45afa31ab11, type: 2}
+  - {fileID: 2100000, guid: 6fb0990e92b3aa84dbb630f7c31b6fa4, type: 2}
+  - {fileID: 2100000, guid: 1ddf31fd8325b3343a413811ca065cb5, type: 2}
+  - {fileID: 2100000, guid: ac4f63c08f2016548a4f63ebf4c5ec26, type: 2}
+  - {fileID: 2100000, guid: 6aacf57e94876764ea235bb746f82444, type: 2}
 --- !u!1 &9199895398479485656
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +113,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a32e9e0a2cfd9b3498e5c1a9d5167ac6, type: 2}
+  - {fileID: 2100000, guid: c3f0eb25ee42a85499637321978f0f09, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

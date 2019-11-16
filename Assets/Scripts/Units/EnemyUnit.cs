@@ -1,18 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using StormRend;
-using UnityEngine;
-
-namespace StormRend
+namespace StormRend.Units
 {
-	public class EnemyUnit : Unit
+	public class EnemyUnit : AnimateUnit
 	{
-		public override void OnSelect()
-		{
-			Dijkstra.Instance.GetValidMoves(GetTile(), GetMoveRange(), typeof(PlayerUnit));
-
-			base.OnSelect();
-			GameManager.singleton.GetPlayerController().SetCurrentPlayer(null);
-		}
 	}
 }

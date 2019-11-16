@@ -1,0 +1,93 @@
+﻿using System;
+using System.Collections.Generic;
+using StormRend.Enums;
+using StormRend.MapSystems.Tiles;
+using StormRend.Units;
+using StormRend.Utility.Attributes;
+using UnityEngine;
+
+namespace StormRend.Abilities.Effects
+{
+    /// <summary>
+    /// Pushes adjacent units of the selected tiles away by push amount while dealing damage (or not)
+    /// </summary>
+    public class PushEffect : Effect
+    {
+        [EnumFlags, SerializeField, Tooltip("ONLY THESE TYPES CAN BE PUSHED: Allies, Enemies")] TargetType unitTypesToPush = TargetType.Enemies | TargetType.Allies;
+        [SerializeField] int pushAmount = 1;
+        [SerializeField] int damage = 0;
+        [SerializeField] bool canPushOffEdge = true;
+		[SerializeField] bool causeCrater = true;
+		[SerializeField] float craterAmount = 0.2f;
+
+        List<Type> typesToCheck = new List<Type>();
+
+        void OnValidate() => Prepare();
+
+        public override void Prepare(Ability ability = null, Unit owner = null)
+        {
+            //Populate unit type array
+            typesToCheck.Clear();
+            //Allies
+            if ((unitTypesToPush & TargetType.Allies) == TargetType.Allies)
+                typesToCheck.Add(typeof(AllyUnit));
+            //Enemies
+            if ((unitTypesToPush & TargetType.Enemies) == TargetType.Enemies)
+                typesToCheck.Add(typeof(EnemyUnit));
+        }
+
+        public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
+        {
+            //Foreach target tile
+            foreach (var tt in targetTiles)
+            {
+                //Try getting tiles around it
+                for (int i = 0; i < 360; i += 90)
+                {
+                    //Set directions
+                    // var direction = new Vector2Int(Mathf.RoundToInt(Mathf.Cos(i)), -Mathf.RoundToInt(Mathf.Sin(i)));
+                    // var deg = i * Mathf.Deg2Rad;
+                    Vector2Int direction = new Vector2Int();
+                    switch (i)
+                    {
+                        case 0: direction = Vector2Int.up; break;
+                        case 90: direction = Vector2Int.right; break;
+                        case 180: direction = Vector2Int.down; break;
+                        case 270: direction = Vector2Int.left; break;
+                    }
+
+                    if (tt.TryGetTile(direction, out Tile t))
+                    {
+                        //NOTE: Only animate units can be pushed/moved
+                        //Try getting animate units on the tile
+                        if (UnitRegistry.TryGetUnitTypeOnTile(t, out Unit unit, typesToCheck.ToArray()))
+                        {
+                            var au = unit as AnimateUnit;
+                            //Do incremental pushes to avoid moving through obstacles
+                            for (int j = 0; j < pushAmount; ++j)
+                            {
+                                //Push the unit in the vector direction from target tile to adjacent tile
+                                var pushResult = au.Push(direction, canPushOffEdge);
+                                if (pushResult == PushResult.HitUnit ||
+                                    pushResult == PushResult.HitBlockedTile)
+                                    break;  //Break out of loop; Cannot move anymore
+                                else if (pushResult == PushResult.OverEdge)
+                                    return; //Unit is dead; Break out of function
+                            }
+                            //Do damage (where needed)
+                            if (damage > 0) unit.TakeDamage(new HealthData(owner, damage));
+                        }
+                    }
+                }
+
+				//Cause crater
+				if (causeCrater)
+				{
+					var pos = tt.transform.position;
+					pos.y -= craterAmount;
+					tt.transform.position = pos;
+				}
+            }
+        }
+    }
+}

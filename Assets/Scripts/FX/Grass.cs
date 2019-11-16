@@ -1,26 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Grass : MonoBehaviour
+namespace StormRend.VisualFX
 {
-    [SerializeField] private GameObject grassTuft;
-    [SerializeField] private List<Material> grass_mat;
-
-
-
-    private void Awake()
+    public class Grass : MonoBehaviour
     {
-        int rand = Random.Range(0, 360);                                                                    //Sets a random Number
-        transform.rotation = Quaternion.Euler(0, rand, 0);                                                  //Rotates The Tuft Randomly
+        [SerializeField] int maxRandomRotation = 360;
+        [SerializeField] int minRandomScale = 60;
+        [SerializeField] int maxRandomScale = 140;
+        [SerializeField] List<Material> grassMaterials = new List<Material>();
 
+        void Start()
+        {
+            //Transforms
+            transform.rotation = Quaternion.Euler(0, Random.Range(0, maxRandomRotation), 0);                                           //Rotates The Tuft Randomly
+            float randomScale = Random.Range(minRandomScale, maxRandomScale);                                                                       //Sets a random Number
+            transform.localScale = new Vector3((randomScale / 100), (randomScale / 100), (randomScale / 100));               //Scales The Tuft Randomly
 
-        
-        float rand2 = Random.Range(60, 140);                                                                       //Sets a random Number
-        grassTuft.transform.localScale = new Vector3((rand2/100), (rand2 / 100), (rand2 / 100));               //Scales The Tuft Randomly
-
-        rand = Random.Range(0, grass_mat.Count);
-
-        grassTuft.GetComponent<Renderer>().material = grass_mat[rand];
+            //Materials
+            if (grassMaterials.Count > 0)
+            {
+                var randomMaterialIDX = Random.Range(0, grassMaterials.Count - 1);
+                GetComponentInChildren<Renderer>().material = grassMaterials[randomMaterialIDX];
+            }
+        }
     }
 }

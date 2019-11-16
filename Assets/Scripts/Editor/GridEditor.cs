@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using System.Collections;
 
-[CustomPropertyDrawer(typeof(TileData))]
+// [CustomPropertyDrawer(typeof(TileData))]
 public class GridEditor : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)

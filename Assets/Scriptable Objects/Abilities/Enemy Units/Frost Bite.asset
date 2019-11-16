@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
+  m_Name: Frost Bite
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 0}
+  _animationTrigger: FrostBite
+  _type: 1
+  _level: 1
+  _title: 
+  _descriptions:
+  - 
+  - 
+  - 
+  _gloryCost: 0
+  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
+  _requiredTiles: 1
+  _targetTileTypes: 4
+  effects:
+  - {fileID: 114275141635199416}
+  - {fileID: 114019563485748436}
+  castArea: 00000000000000000000000000000000000100000000000100010000000000010000000000000000000000000000000000
+--- !u!114 &114019563485748436
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d0e35127beabad499f92ee79a81238b, type: 3}
+  m_Name: ImmobiliseEffect
+  m_EditorClassIdentifier: 
+  turnCount: 0
+  affectedTurns: 1
+--- !u!114 &114275141635199416
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
+  m_Name: DamageEffect
+  m_EditorClassIdentifier: 
+  damage: 1
+  piercing: 0
+  gainGlory: 1
+  gloryAmount: 1
+  glory: {fileID: 0}
+--- !u!114 &114319388176081130
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 296bd059b23aa734e91ccc9d3a9d1872, type: 3}
+  m_Name: CrippleEffect
+  m_EditorClassIdentifier: 
+  m_target: 0
+  m_durationInTurns: 1
+--- !u!114 &114506426092055894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
+  m_Name: DamageEffect
+  m_EditorClassIdentifier: 
+  damage: 1
+  piercing: 0
+  gainGlory: 1
+  gloryAmount: 1
+  glory: {fileID: 0}

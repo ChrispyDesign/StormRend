@@ -1,270 +1,129 @@
-﻿using System;
-using System.Collections.Generic;
+using StormRend.Anim.EventHandlers;
+using StormRend.MapSystems;
+using StormRend.MapSystems.Tiles;
+using StormRend.Systems;
+using StormRend.Tags;
 using StormRend.Utility.Attributes;
+using StormRend.Utility.Events;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
-namespace StormRend
+namespace StormRend.Units
 {
-	//Review and Refactor
 	[SelectionBase]
-	public abstract class Unit : MonoBehaviour, ISelectable, IHoverable
+	[RequireComponent(typeof(UnitTag))]
+	public abstract class Unit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
-		//This class is doing WAY TOO MUCH!
-		// - Refactor get/setters to properties where appropriate
-		// - Shwo/Unshow attack tiles should be handled by a different utility class
-		// - Decouple Camera in OnSelect()
-		// - Decouple/reduce coupling of game manager
+		[TextArea(0,2)] public string description = null;
 
-	#region Inspector
-		[SerializeField] [ReadOnlyField] int m_HP;
-		static bool m_isDead;
+		//Inspector
+		[Header("Stats")]
+		[ReadOnlyField, SerializeField] protected int _hp;        //Current HP
+		[SerializeField] protected int _maxHP = 3;
 
-		[SerializeField] Vector2Int m_coordinates;
-		public Vector2Int coords
-		{
-			get => m_coordinates;
-			set => m_coordinates = value;
-		}
+		//Events
+		[Header("Unit Events")]
+		public UnitEvent onDeath = null;
+		public HealthEvent onTakeDamage = null;
+        public UnitEvent onEnemyKilled = null;
+		public HealthEvent onHeal = null;
 
-		[Header("Unit Properties")]
-        [Tooltip("A unit is closed when it has moved but not attacked and another unit has moved and ")]
-		public bool isLocked;
-		public bool isProtected;
-		public bool isBlind;
-		public bool isProvoking;
-		public bool isCrippled;
+		[Header("Movement")]
+		[ReadOnlyField] public Tile currentTile;//{ get; set; }	//The tile this unit is currently/originally on
 
-		[Header("Mesh")]
-		[SerializeField] GameObject m_duplicateMesh = null;
-
-		[Header("Abilities")]
-		[SerializeField] protected Ability m_passiveAbility;
-		[SerializeField] protected Ability[] m_firstAbilities;
-		[SerializeField] protected Ability[] m_secondAbilities;
-
-		[Header("Unit Stats")]
-		[SerializeField] int m_maxHP = 4;
-		[SerializeField] int m_maxMoveRange = 4;
-		// [Space]
-		// [Header("Unit Interaction")]
-		// [SerializeField] UnityEvent m_onSelect;
-		// [SerializeField] UnityEvent m_onDeselect;
-		// [SerializeField] UnityEvent m_onHover;
-		// [SerializeField] UnityEvent m_onUnhover;
-	#endregion Inspector
-	#region Properties
-		public List<Tile> GetAvailableTiles() { return availableTiles; }
-		public Ability GetSelectedAbility() { return selectedAbility; }
-		public List<Tile> GetAttackTiles() { return attackTiles; }
-		public Tile GetTile() { return Grid.CoordToTile(m_coordinates); }
-		public int GetMoveRange() { return m_maxMoveRange; }
-		public bool GetIsSelected() { return isSelected; }
-		public bool GetHasMoved() { return hasMoved; }
-		public bool GetHasAttacked() { return hasAttacked; }
-		public void GetAbilities(ref Ability passive, ref Ability[] first, ref Ability[] second)
-		{
-			passive = m_passiveAbility;
-			first = m_firstAbilities;
-			second = m_secondAbilities;
-		}
-		public void SetHasMoved(bool moveFlag) { hasMoved = moveFlag; }
-		public void SetHasAttacked(bool attackFlag) { hasAttacked = attackFlag; }
-		public void SetAttackNodes(List<Tile> tiles) { attackTiles = tiles; }
-		public void SetSelectedAbility(Ability ability) { selectedAbility = ability; }
-		public void SetIsSelected(bool isSelected) { this.isSelected = isSelected; }
-		public void SetDuplicateMeshVisibilty(bool _isOff) { m_duplicateMesh.SetActive(_isOff); }
-
-		public bool isDead => m_HP <= 0;
+		//Properties
 		public int HP
 		{
-			get => m_HP;
-			set => m_HP = Mathf.Clamp(value, 0, m_maxHP);
+			get => _hp;
+			set => _hp = Mathf.Clamp(value, 0, maxHP);
 		}
-		public int maxHP => m_maxHP;
-	#endregion Properties
+		public int maxHP => _maxHP;
+		public bool isDead => HP <= 0;
+		public Animator animator { get; private set; }
+		public UnitAnimEventHandlers animEventHandlers { get; private set; }
+		public new Tag tag { get; private set; }
 
-		//----------- Protected ---------------
-		protected bool hasMoved;
-		protected bool hasAttacked;
-		protected bool isSelected;
-		protected Ability selectedAbility;
+		//Members
+		protected UnitRegistry ur;
+		protected UserInputHandler uih;
 
-		//----------- Privates ---------------
-		List<Tile> availableTiles;
-		List<Tile> attackTiles;
-		new Camera camera;
-		CameraMove cameraMover;
-
-		//---------- Others ----------------
-		public Action OnDie = delegate  { m_isDead = false; };
-		[HideInInspector] public int provokeDamage;
-
-
-	#region Core
-		void Awake()
+	#region Startup
+		protected virtual void Awake()
 		{
-			camera = FindObjectOfType<Camera>();
-			cameraMover = camera.GetComponent<CameraMove>();
+			//Reset health
+			HP = maxHP;
+
+			//Always scan the tile below to prevent previous tile value from locking unit on a tile
+			ScanTileBelow();
+
+			//Tag
+			tag = GetComponent<UnitTag>();
+
+			//Singletons
+			ur = UnitRegistry.current;
+			uih = UserInputHandler.current;
 		}
 
 		void Start()
 		{
-			m_HP = m_maxHP;
-			attackTiles = new List<Tile>();
+			//Get animator
+			animator = GetComponentInChildren<Animator>();
+			animEventHandlers = GetComponentInChildren<UnitAnimEventHandlers>();
 		}
 
-		void Update()
+		void ScanTileBelow()
 		{
-
-		}
-	#endregion Core
-
-	#region Select and Hover
-		public virtual void OnSelect()
-		{
-			// m_onSelect.Invoke();
-
-            if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.MOVE && !isLocked)
-            {
-				availableTiles = Dijkstra.Instance.validMoves;
-
-				foreach (Tile t in availableTiles)
+			//TEMP Scan below
+			float scanTolerance = 0.2f;
+			foreach (var t in Map.current.tiles)
+			{
+				//If a tile is within a certain range then set it as the current tile
+				if (Vector3.Distance(t.transform.position, transform.position) < scanTolerance)
 				{
-					if (t.GetUnitOnTop())
-						continue;
-
-					t.attackHighlight.SetActive(false);
-					t.moveHighlight.SetActive(true);
-					t.m_selected = true;
+					currentTile = t;
+					return;
 				}
 			}
-
-			//Do on select for tile that this unti is on
-			if (GameManager.singleton.GetPlayerController().GetCurrentMode() == PlayerMode.ATTACK)
-			{
-				GetTile().OnSelect();
-			}
-
-			//Move camera to just selected unit
-			cameraMover.MoveTo(transform.position, 1.0f);
+			Debug.Assert(currentTile, name + " does not have a current tile!");
 		}
+		#endregion
 
-		public virtual void OnDeselect()
-		{
-			// m_onDeselect.Invoke();
-			Grid.CoordToTile(m_coordinates).OnDeselect();
-		}
-
-		public virtual void OnHover()
-		{
-			// m_onHover.Invoke();
-
-			Tile tile = Grid.CoordToTile(m_coordinates);
-			if (tile.m_nodeType == NodeType.WALKABLE && tile.GetUnitOnTop())
-			{
-				tile.hoverHighlight.SetActive(true);
-			}
-		}
-
-		public virtual void OnUnhover()
-		{
-			// m_onUnhover.Invoke();
-
-			Tile tile = Grid.CoordToTile(m_coordinates);
-			tile.hoverHighlight.SetActive(false);
-		}
-	#endregion Select and Hover
-
-	#region Helpers
-        public void MoveTo(Tile destTile)
-        {
-			if (isCrippled)     //TODO temp don't move if crippled
-				return;
-
-			//PROBABLY BAD
-			var oldPos = transform.position;    //Record old position to change
-
-			GetTile().SetUnitOnTop(null);
-			destTile.SetUnitOnTop(this);
-
-			m_coordinates = destTile.GetCoordinates();
-			transform.position = destTile.GetNodePosition();
-
-			//Rotate unit accordingly
-			var moveDir = Vector3.Normalize(transform.position - oldPos);
-			if (moveDir != Vector3.zero)
-				transform.rotation = Quaternion.LookRotation(moveDir, Vector3.up);
-
-			//Move camera to move destination
-			cameraMover.MoveTo(destTile.transform.position, 1f);
-		}
-
-		public void ShowAttackTiles()
-		{
-			foreach (Tile t in attackTiles)
-			{
-				if (t.m_nodeType == NodeType.EMPTY || t.m_nodeType == NodeType.BLOCKED)
-					continue;
-
-				Unit unit = t.GetUnitOnTop();
-				if (unit) unit.GetComponent<BoxCollider>().enabled = false;
-
-				t.attackHighlight.SetActive(true);
-				t.moveHighlight.SetActive(false);
-				t.m_selected = true;
-			}
-		}
-		public void UnShowAttackTiles()
-		{
-			foreach (Tile t in attackTiles)
-			{
-				if (t.m_nodeType == NodeType.EMPTY)
-					continue;
-
-				Unit unit = t.GetUnitOnTop();
-				if (unit != null)
-				{
-					unit.GetComponent<BoxCollider>().enabled = true;
-				}
-
-
-				t.attackHighlight.SetActive(false);
-				t.moveHighlight.SetActive(false);
-				t.m_selected = false;
-			}
-		}
-
-		public void MoveDuplicateTo(Tile _moveToNode)
-		{
-			m_duplicateMesh.transform.position = _moveToNode.GetNodePosition();
-		}
-
-		public void TakeDamage(int damage)
+	#region Health
+		public virtual void TakeDamage(HealthData healthData)
 		{
 			if (isDead) return;     //Can't beat a dead horse :P
+			HP -= healthData.amount;
 
-			if (!isProtected)
-				m_HP -= damage;
+			//Die() shouldn't be called immediately because the death sequence has timing complexities
+			//Die() needs to be called at the end of the death animation using an animation event
+			// if (HP <= 0) Die();
 
-			if (m_HP <= 0)
-			{
-				Die();
-			}
+			onTakeDamage.Invoke(healthData);	//ie. Update health bar etc
+		}
+		public void Heal(HealthData healthData)
+		{
+			HP += healthData.amount;
+
+			onHeal.Invoke(healthData);
 		}
 
 		public virtual void Die()
 		{
-			OnDie.Invoke();
+			ur.RegisterUnitDeath(this);
 
-			GameManager.singleton.sage.CheckSoulCommune(this);
+			onDeath.Invoke(this);
+		}
 
-			//Temp
-			gameObject.SetActive(false);
-			Grid.CoordToTile(this.m_coordinates).SetUnitOnTop(null);
+	#endregion
 
-			//This should work for any unit regardless of type
-			GameManager.singleton.RegisterUnitDeath(this);
+	#region Event System
+		public virtual void OnPointerEnter(PointerEventData eventData)
+		{
+		}
+
+		public virtual void OnPointerExit(PointerEventData eventData)
+		{
 		}
 	#endregion
 	}

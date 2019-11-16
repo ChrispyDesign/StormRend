@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
+  m_Name: Club Swing
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 0}
+  _animationTrigger: ClubSwing
+  _type: 0
+  _level: 0
+  _title: 
+  _descriptions:
+  - 
+  - 
+  - 
+  _gloryCost: 0
+  glory: {fileID: 0}
+  _requiredTiles: 1
+  _targetTileTypes: 4
+  effects:
+  - {fileID: 114008655095880326}
+  castArea: 00000000000000000000000000000000000100000000000100010000000000010000000000000000000000000000000000
+--- !u!114 &114008655095880326
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
+  m_Name: DamageEffect
+  m_EditorClassIdentifier: 
+  damage: 2
+  piercing: 0
+  gainGlory: 1
+  gloryAmount: 1
+  glory: {fileID: 0}
+--- !u!114 &114948348214354872
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e22fa40e29ff6499573b6d4c606356, type: 3}
+  m_Name: DamageEffect
+  m_EditorClassIdentifier: 
+  damage: 1
+  piercing: 0
+  gainGlory: 1
+  gloryAmount: 1
+  glory: {fileID: 0}
