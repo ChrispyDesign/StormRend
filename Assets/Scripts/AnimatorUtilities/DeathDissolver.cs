@@ -19,12 +19,10 @@ namespace StormRend.Assists
 		//Members
 		List<Material> materials = new List<Material>();
 		Unit u;
-		AnimateUnit au;
 
 		void Awake()
 		{
 			u = GetComponentInParent<Unit>();
-			au = u as AnimateUnit;
 
 			//Get materials from each child renderers
 			var renderers = GetComponentsInChildren<Renderer>();
@@ -35,13 +33,21 @@ namespace StormRend.Assists
 		public void Execute()
 		{
 			//Dissolve animate units. Instantly kill anything else
-			if (au)
-				StartCoroutine(RunDeathDissolve());
-			else
-				u.Die();    //ie. Crystals
+			switch (u)
+			{
+				case AnimateUnit au:
+					StartCoroutine(RunDeathDissolve(au));
+					break;
+				case InAnimateUnit iu:
+					iu.Die();
+					break;
+				default:
+					u.Die();
+					break;
+			}
 		}
 
-		IEnumerator RunDeathDissolve()
+		IEnumerator RunDeathDissolve(AnimateUnit au)
 		{
 			//Initial delay
 			yield return new WaitForSeconds(startDelay);

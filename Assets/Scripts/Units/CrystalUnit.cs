@@ -28,7 +28,7 @@ namespace StormRend.Units
 		[SerializeField] int range = 1;
 
 		[Tooltip("The type of units that will get damaged")]
-		[EnumFlags, SerializeField] TargetType vulnerableUnitTypes = TargetType.Animates;
+		[EnumFlags, SerializeField] TargetType targetTypes = TargetType.Animates;
 		private Tile[] tilesToAttack;
 		#endregion
 
@@ -38,16 +38,33 @@ namespace StormRend.Units
 			//Be careful of this order
 			turns--;
 
+			//Trigger animations and events
+			if (turns <= 0)
+				animator.SetTrigger("Explode");		//This will blow up and destroy the crystal
+			else
+				animator.SetTrigger("Tick");		//This will attack but remain alive (probably wont' get implemented by the functionality is here anyways)
+		}
+
+		public override void TakeDamage(HealthData healthData)
+		{
+			base.TakeDamage(healthData);
+
+			if (HP <= 0)
+				animator.SetTrigger("Explode");
+			else
+				animator.SetTrigger("Tick");
+		}
+
+		/// <summary>
+		/// This should be triggered by an animation event
+		/// </summary>
+		public void Explode()
+		{
 			//Determine tiles to deal effect to (regardless of unit type because it's already ignored and filtered)
-			tilesToAttack = Map.GetPossibleTiles(this.currentTile.owner, currentTile, range, GetListOfUnitTypesToIgnore());
+			tilesToAttack = Map.GetPossibleTiles(currentTile, range, GetListOfUnitTypesToIgnore());
 
 			DamageTargets();
 			ImmobiliseTargets();
-
-			//Trigger animations
-			animator.SetTrigger("Explode");
-
-			if (turns <= 0) base.Die();
 		}
 
 		//Helpers
@@ -79,29 +96,29 @@ namespace StormRend.Units
 
 		Type[] GetListOfUnitTypesToIgnore()
 		{
+			bool targetAnimates = false; bool targetInAnimates = false;
+
 			//Populate with all possible unit types
 			HashSet<Type> ignoreTypes = new HashSet<Type>();
 			ignoreTypes.Add(typeof(AllyUnit));
 			ignoreTypes.Add(typeof(EnemyUnit));
 			ignoreTypes.Add(typeof(CrystalUnit));
-			ignoreTypes.Add(typeof(InAnimateUnit));
-			ignoreTypes.Add(typeof(AnimateUnit));
 
+			//Animates
+			if ((targetTypes & TargetType.Animates) == TargetType.Animates)
+				targetAnimates = true;
+			//InAnimates
+			if ((targetTypes & TargetType.InAnimates) == TargetType.InAnimates)
+				targetInAnimates = true;
 			//Allies
-			if ((vulnerableUnitTypes & TargetType.Allies) == TargetType.Allies)
+			if (targetAnimates || (targetTypes & TargetType.Allies) == TargetType.Allies)
 				ignoreTypes.Remove(typeof(AllyUnit));
 			//Enemies
-			if ((vulnerableUnitTypes & TargetType.Enemies) == TargetType.Enemies)
+			if (targetAnimates || (targetTypes & TargetType.Enemies) == TargetType.Enemies)
 				ignoreTypes.Remove(typeof(EnemyUnit));
 			//Crystals
-			if ((vulnerableUnitTypes & TargetType.Crystals) == TargetType.Crystals)
+			if (targetInAnimates || (targetTypes & TargetType.Crystals) == TargetType.Crystals)
 				ignoreTypes.Remove(typeof(CrystalUnit));
-			//InAnimates
-			if ((vulnerableUnitTypes & TargetType.InAnimates) == TargetType.InAnimates)
-				ignoreTypes.Remove(typeof(InAnimateUnit));
-			//Animates
-			if ((vulnerableUnitTypes & TargetType.Animates) == TargetType.Animates)
-				ignoreTypes.Remove(typeof(AnimateUnit));
 
 			return ignoreTypes.ToArray();
 		}
