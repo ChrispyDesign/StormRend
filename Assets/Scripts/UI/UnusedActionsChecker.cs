@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using StormRend.UI;
 using StormRend.States.UI;
 using StormRend.Units;
 using StormRend.Systems.StateMachines;
 using StormRend.Systems;
 
-namespace StormRend.UI
+namespace StormRend.Assists
 {
 	public class UnusedActionsChecker : MonoBehaviour
 	{
