@@ -8,7 +8,7 @@ namespace StormRend.Abilities.Utilities
 	/// This runs passive abilities on all unit creation and death
 	/// </summary>
 	[RequireComponent(typeof(UnitRegistry))]
-	public class PassiveAbilityRunnerOnUnitTrade : MonoBehaviour
+	public class PassiveAbilityRunner : MonoBehaviour
 	{
 		Dictionary<Ability, Unit> passiveAbilities = new Dictionary<Ability, Unit>();
 		UnitRegistry ur;
