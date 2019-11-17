@@ -21,15 +21,18 @@ namespace StormRend.VisualFX
 			}
 		}
 
-		public void Create(Vector3 position, Quaternion rotation)
+		public GameObject Play(Vector3 position, Quaternion rotation)
 		{
-			// Debug.Log("Total duration: " + totalDuration);
-			Destroy(Instantiate(prefab, position, rotation), totalDuration);
+			var go = Instantiate(prefab, position, rotation);
+			Destroy(go, totalDuration);
+			return go;
 		}
 
-		public void Create(Vector3 position, Quaternion rotation, float duration)
+		public GameObject Play(Vector3 position, Quaternion rotation, float duration)
 		{
-			Destroy(Instantiate(prefab, position, rotation), duration);
+			var go = Instantiate(prefab, position, rotation);
+			Destroy(go, duration);
+			return go;
 		}
     }
 }

@@ -1,5 +1,7 @@
-﻿using StormRend.MapSystems.Tiles;
+﻿using System.Collections;
+using StormRend.MapSystems.Tiles;
 using StormRend.Units;
+using StormRend.VisualFX;
 using UnityEngine;
 
 namespace StormRend.Abilities.Effects
@@ -7,7 +9,10 @@ namespace StormRend.Abilities.Effects
 	public class SwapUnitEffect : Effect
 	{
 		[Tooltip("The particle to be instantiated")]
-		[SerializeField] GameObject VFX = null;
+		[SerializeField] VFX vfx = null;
+
+		[Tooltip("The delay to actually swap the units so that it works visually")]
+		[SerializeField] float swapTiming = 3f;
 
 		/// <summary>
 		/// Swap or teleport units
@@ -16,38 +21,39 @@ namespace StormRend.Abilities.Effects
 		{
 			//Make sure there is atleast 2 tiles passed in
 			if (!(targetTiles.Length >= 2)) { Debug.LogWarning("Not enough target tiles! Exiting..."); return; }
-
+			
 			//Try getting animate units if they exist
 			UnitRegistry.TryGetAnyUnitOnTile(targetTiles[0], out Unit u0);
 			UnitRegistry.TryGetAnyUnitOnTile(targetTiles[1], out Unit u1);
 			var au0 = u0 as AnimateUnit;
 			var au1 = u1 as AnimateUnit;
 
+			//Play VFXs
+			vfx.Play(au0.transform.position, au0.transform.rotation);
+			vfx.Play(au1.transform.position, au1.transform.rotation);
+
+			//Perform swap at correct time
+			owner.StartCoroutine(Swap(au0, au1, targetTiles, swapTiming));
+		}
+
+		/// <summary>
+		/// Coroutine to correctly time the unit swap 
+		/// </summary>
+		IEnumerator Swap(AnimateUnit first, AnimateUnit second, Tile[] targetTiles, float delay)
+		{
+			yield return new WaitForSeconds(delay);
+
 			//Swap/teleport units if they exist
-			au0?.Move(targetTiles[1], false, false, true);
-			au1?.Move(targetTiles[0], false, false, true);
+			first?.Move(targetTiles[1], false, false, true);
+			second?.Move(targetTiles[0], false, false, true);
 
 			//Reset begin tile
-			if (au0) au0.beginTurnTile = au0.currentTile;
-			if (au1) au1.beginTurnTile = au1.currentTile;
+			if (first) first.startTile = first.currentTile;
+			if (second) second.startTile = second.currentTile;
 
 			//Recalculate move tiles
-			au0?.CalculateMoveTiles();
-			au1?.CalculateMoveTiles();
-
-			//Instantiate VFXs
-			var vfx0 = Instantiate(VFX, au0.transform.position, au0.transform.rotation);
-			var vfx1 = Instantiate(VFX, au1.transform.position, au1.transform.rotation);
-
-			//Get duration of particle effect
-			var ps0 = vfx0.GetComponentInChildren<ParticleSystem>();
-			var ps1 = vfx1.GetComponentInChildren<ParticleSystem>();
-			var vfxDuration0 = ps0.main.duration + ps0.main.startLifetime.constant;
-			var vfxDuration1 = ps1.main.duration + ps1.main.startLifetime.constant;
-
-			//Destroy VFXs based on time
-			Destroy(vfx0, vfxDuration0);
-			Destroy(vfx1, vfxDuration1);
+			first?.CalculateMoveTiles();
+			second?.CalculateMoveTiles();
 		}
 	}
 }
