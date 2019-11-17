@@ -39,12 +39,12 @@ namespace StormRend.UI
 
 		public void UpdateGUIHealthBar()
 		{
-			foreach(Image img in healthNodes)
+			foreach (Image img in healthNodes)
 			{
 				img.fillAmount = 0;
 			}
 
-			for(int i = 0; i < unit.HP; i++)
+			for (int i = 0; i < unit.HP; i++)
 			{
 				healthNodes[i].fillAmount = 1;
 			}
@@ -52,8 +52,11 @@ namespace StormRend.UI
 
 		public void OnPointerEnter(PointerEventData eventData)
 		{
-			onHover.Invoke(unit);
-			infoPanel.ShowPanel(unit.name, 1, unit.description);
+			if (unit)	//Null checks
+			{
+				onHover.Invoke(unit);
+				infoPanel.ShowPanel(unit.name, 1, unit.description);
+			}
 		}
 
 
