@@ -56,8 +56,9 @@ namespace StormRend.Systems
 		[SerializeField] AbilityVar _selectedAbilityVar = null;
 
 		[Header("Tile Colors")]
-		[SerializeField] TileHighlightColor moveHighlight = null;
-		[SerializeField] TileHighlightColor actionHighlight = null;
+		[SerializeField] TileHighlightSetting hoverHighlight = null;
+		[SerializeField] TileHighlightSetting moveHighlight = null;
+		[SerializeField] TileHighlightSetting actionHighlight = null;
 
 		[Header("Camera")]
 		[SerializeField] float cameraSmoothTime = 1.75f;
@@ -400,7 +401,7 @@ namespace StormRend.Systems
 
 			//Highlight
 			foreach (var t in selectedAnimateUnit?.possibleMoveTiles)
-				t.SetColor(moveHighlight);
+				t.SetHighlight(moveHighlight);
 		}
 
 		void ShowTargetTiles()
@@ -411,7 +412,7 @@ namespace StormRend.Systems
 
 			//Highlight
 			foreach (var t in selectedAnimateUnit?.possibleTargetTiles)
-				t.SetColor(actionHighlight);
+				t.SetHighlight(actionHighlight);
 		}
 	#endregion
 

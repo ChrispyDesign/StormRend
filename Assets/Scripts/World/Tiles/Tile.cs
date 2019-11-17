@@ -20,12 +20,12 @@ namespace StormRend.MapSystems.Tiles
 	{
 		//Highlights
 		static bool highlightsScanned = false;
-		public static Dictionary<string, TileHighlightColor> highlightColors { get; private set; } = new Dictionary<string, TileHighlightColor>();
+		public static Dictionary<string, TileHighlightSetting> highlightColors { get; private set; } = new Dictionary<string, TileHighlightSetting>();
 
 		//Inspector
 		[SerializeField] AudioClip onHoverSFX = null;
 		[Tooltip("If not set will default to 'Hover' highlight or clear")]
-		[SerializeField] TileHighlightColor hoverHL = null;
+		[SerializeField] TileHighlightSetting hoverHighlight = null;
 		public float cost = 1;
 		internal float G = float.MaxValue;
 		internal float H = float.MaxValue;
@@ -38,7 +38,7 @@ namespace StormRend.MapSystems.Tiles
 		[ReadOnlyField] public List<Tile> connections = new List<Tile>();	//List because HashSets don't serialize
 		[HideInInspector, SerializeField] protected Renderer rend = null;
 		//This avoids tile highlight issues when cursor unhovers
-		TileHighlightColor normalColor = null;
+		TileHighlightSetting normalColor = null;
 		TileHighlight highlight = null;
 		AudioSource audioSource = null;
 
@@ -68,7 +68,7 @@ namespace StormRend.MapSystems.Tiles
 		public bool Disconnect(Tile from) => connections.Remove(from);
 		public bool Contains(Tile t) => connections.Contains(t);
 		public void DisconnectAll() => connections.Clear();
-		public void SetColor(TileHighlightColor tileHighlightColor)
+		public void SetHighlight(TileHighlightSetting tileHighlightColor)
 		{
 			normalColor = tileHighlightColor;
 			highlight.color = normalColor.color;
@@ -80,7 +80,7 @@ namespace StormRend.MapSystems.Tiles
 		}
 		public void ClearColor()
 		{
-			normalColor = ScriptableObject.CreateInstance<TileHighlightColor>();
+			normalColor = ScriptableObject.CreateInstance<TileHighlightSetting>();
 			highlight.color = normalColor.color;
 		}
 	#endregion
@@ -94,7 +94,7 @@ namespace StormRend.MapSystems.Tiles
 		{
 			if (!highlightsScanned)
 			{
-				var foundHighlights = Resources.FindObjectsOfTypeAll<TileHighlightColor>();
+				var foundHighlights = Resources.FindObjectsOfTypeAll<TileHighlightSetting>();
 				// var foundHighlights = Resources.LoadAll("", typeof(TileHighlightColor)) as TileHighlightColor[];
 				foreach (var fh in foundHighlights)
 				{
@@ -118,7 +118,7 @@ namespace StormRend.MapSystems.Tiles
 		void SetupInternalColours()
 		{
 			//Setup internal tile highlight color
-			normalColor = ScriptableObject.CreateInstance<TileHighlightColor>();
+			normalColor = ScriptableObject.CreateInstance<TileHighlightSetting>();
 		}
 	#endregion
 
@@ -184,11 +184,11 @@ namespace StormRend.MapSystems.Tiles
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			//Set default if no color specifically set at startup
-			if (!hoverHL && highlightColors.TryGetValue("Hover", out TileHighlightColor color))
-				hoverHL = color;
+			if (!hoverHighlight && highlightColors.TryGetValue("Hover", out TileHighlightSetting color))
+				hoverHighlight = color;
 
 			//Set hover
-			highlight.color = hoverHL.color;
+			highlight.color = hoverHighlight.color;
 
 			//Hover sound
 			audioSource.PlayOneShot(onHoverSFX);
