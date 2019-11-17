@@ -14,12 +14,15 @@ namespace StormRend.Abilities.Effects
 			ImmobiliseTargetUnitsImmediately(targetTiles);
 		}
 
-		public override void OnBeginTurn(AnimateUnit affectedUnit)
+		public override bool OnBeginTurn(AnimateUnit affectedUnit)
 		{
-			base.OnBeginTurn(affectedUnit);	//Housekeeping
-
-			//Cripple the bearer for this turn
-			affectedUnit.SetCanMove(false);
+			var valid = base.OnBeginTurn(affectedUnit);
+			if (valid)
+			{
+				//Cripple the bearer for this turn
+				affectedUnit.SetCanMove(false);
+			}
+			return valid;
 		}
 
 		void ImmobiliseTargetUnitsImmediately(Tile[] targetTiles)

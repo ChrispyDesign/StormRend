@@ -17,16 +17,16 @@ namespace StormRend.Abilities.Effects
 			AddStatusEffectToAnimateUnits(targetTiles);
 		}
 
-		public override void OnBeginTurn(AnimateUnit affectedUnit)
+		public override bool OnBeginTurn(AnimateUnit affectedUnit)
 		{
-			base.OnBeginTurn(affectedUnit);     //Housekeeping
+			var valid = base.OnBeginTurn(affectedUnit);
 
-			if (affectedTurns > 0 
-				&& turnCount >= affectedTurns)
+			if (!valid)     //If this status effect has expired
 			{
 				//HARDCODE If this effect has expired then also deactivate relevant VFX
 				affectedUnit.animEventHandlers.DeactivateInbuiltVFX(inbuiltVFXName);
 			}
+			return valid;
 		}
 
 		public override void OnTakeDamage(Unit affectedUnit, HealthData damageData)

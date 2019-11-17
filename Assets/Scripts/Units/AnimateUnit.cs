@@ -23,12 +23,12 @@ namespace StormRend.Units
 		public enum LookSnap
 		{
 			RightAngle,
-			Diagonals_BUGGY,
-			Free_BUGGY,
+			// Diagonals_BUGGY,
+			// Free_BUGGY,
 		}
 
 		//Inspector
-		[ReadOnlyField] public Tile beginTurnTile = null;   //The tile this unit starts from at the beginning of each turn
+		[ReadOnlyField] public Tile startTile = null;   //The tile this unit starts from at the beginning of each turn
 		[ReadOnlyField, SerializeField] bool _canMove = true;
 		[ReadOnlyField, SerializeField] bool _canAct = true;
 		[SerializeField] LookSnap lookSnap = LookSnap.RightAngle;
@@ -63,8 +63,8 @@ namespace StormRend.Units
 				switch (lookSnap)
 				{
 					case LookSnap.RightAngle: return 90f;
-					case LookSnap.Diagonals_BUGGY: return 45f;
-					case LookSnap.Free_BUGGY: return 1f;
+					// case LookSnap.Diagonals_BUGGY: return 45f;
+					// case LookSnap.Free_BUGGY: return 1f;
 					default: return 90f;
 				}
 			}
@@ -135,7 +135,7 @@ namespace StormRend.Units
 			base.Awake();   //This sets the current tile
 
 			//Record origin tile
-			beginTurnTile = currentTile;
+			startTile = currentTile;
 
 			PrepGhost();
 		}
@@ -191,7 +191,7 @@ namespace StormRend.Units
 			_canAct = true;
 
 			//Calculate new move tiles
-			beginTurnTile = currentTile;
+			startTile = currentTile;
 			// CalculateMoveTiles();		//Doesn't work anyways
 
 			//Prep effects (reset counts etc)
@@ -199,9 +199,13 @@ namespace StormRend.Units
 				foreach (var e in a.effects)
 					e.Prepare(a, this);
 
-			//Begin Status effects (ie. blind, cripple, etc)
-			foreach (var se in statusEffects)
-				se.OnBeginTurn(this);
+			//Run Begin Status effects (ie. blind, cripple, etc)
+			//And also auto remove expired status effects
+			for (int i = statusEffects.Count-1; i >= 0; --i)
+			{
+				if (!statusEffects[i].OnBeginTurn(this))
+					statusEffects.RemoveAt(i);
+			}
 
 			onBeginTurn.Invoke();
 		}
@@ -434,7 +438,7 @@ namespace StormRend.Units
 			if ((pathBlockers & TargetType.Animates) == TargetType.Animates)
 				pathblockers.Add(typeof(AnimateUnit));
 
-			return possibleMoveTiles = Map.GetPossibleTiles(beginTurnTile.owner, beginTurnTile, range, pathblockers.ToArray());
+			return possibleMoveTiles = Map.GetPossibleTiles(startTile.owner, startTile, range, pathblockers.ToArray());
 		}
 
 		/// <summary>

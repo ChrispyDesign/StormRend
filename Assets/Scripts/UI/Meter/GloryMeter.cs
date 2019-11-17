@@ -59,7 +59,6 @@ namespace StormRend.UI
 
 		public void OnChange()
 		{
-			Debug.Log("OnChange");
 			//Increase
 			if (internalGlory < glory.value)
 				increase = true;
