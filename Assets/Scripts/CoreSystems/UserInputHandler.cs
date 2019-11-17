@@ -342,12 +342,17 @@ namespace StormRend.Systems
 		//Enough tile targets chosen by user. Execute the selected ability
 		void SelectedUnitPerformAbility()
 		{
-            //Check there's en
+            //Check there's enough glory
             if (!EnoughGlory())
             {
                 onNotEnoughGlory.Invoke();
                 return;
             }
+			//Spend glory
+			else 	
+			{
+				glory.value -= selectedAbility.gloryCost;
+			}
 
 			//Perform
 			selectedAnimateUnit.Act(selectedAbility, targetTileStack.ToArray());
@@ -536,19 +541,10 @@ namespace StormRend.Systems
 
         public bool EnoughGlory()
 		{
-			if (glory)
+			if (glory)	//Null check
 			{
-				if (glory.value < selectedAbility.gloryCost)
-				{
-					//Not enough glory; Fail
-					return false;
-				}
-				else
-				{
-					//Successful spend
-					glory.value -= selectedAbility.gloryCost;
-					return true;
-				}
+				//Return whether or not there's enough glory available for current ability
+				return (glory.value >= selectedAbility.gloryCost)
 			}
 			Debug.LogWarning("No glory SOV allocated!");
 			return false;
