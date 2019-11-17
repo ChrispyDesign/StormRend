@@ -24,7 +24,7 @@ namespace StormRend.MapSystems.Tiles
 
 		//Inspector
 		[SerializeField] AudioClip onHoverSFX = null;
-		[Range(0f, 1f), SerializeField] float volume = 0.25f;
+		[Range(0f, 1f), SerializeField] float SFXVolume = 0.25f;
 
 		[Tooltip("If not set will default to 'Hover' highlight or clear")]
 		[SerializeField] TileHighlightSetting hoverHighlight = null;
@@ -188,7 +188,7 @@ namespace StormRend.MapSystems.Tiles
 			highlight.color = hoverHighlight.color;
 
 			//Hover sound
-			audioSource.PlayOneShot(onHoverSFX, volume);
+			audioSource.PlayOneShot(onHoverSFX, SFXVolume);
 		}
 		public void OnPointerExit(PointerEventData eventData)
 		{
