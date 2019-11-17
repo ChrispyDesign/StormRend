@@ -119,7 +119,11 @@ namespace StormRend.Systems
 			selectedAnimateUnit.Act(selectedAbility, targetTileStack.ToArray());
 
 			//Focus camera (on the target tile or last target tile input)
-			camMover.MoveTo(targetTileStack.Last(), cameraSmoothTime);
+			Vector3 averageTarget = Vector3.zero;
+			foreach (var t in targetTileStack)
+				averageTarget += t.transform.position;
+			averageTarget /= (float)targetTileStack.Count;
+			camMover.MoveTo(averageTarget, cameraSmoothTime);
 
 			//Clear target stack
 			targetTileStack.Clear();
