@@ -7,11 +7,11 @@ namespace StormRend.Variables.Utils
 	/// <summary>
 	/// Custom variable listener and limiter
 	/// </summary>
-	public class IntVariableHandler : MonoBehaviour
+	public class GloryController : MonoBehaviour
 	{
 		public enum LimitType { None, Clamp, WrapAround }
 
-		[SerializeField] BhaveInt intVariable = null;
+		[SerializeField] BhaveInt glory = null;
 
 		[TextArea(0, 2), SerializeField, Space(5)] string description = null;
 
@@ -29,8 +29,10 @@ namespace StormRend.Variables.Utils
 			if (minLimit > maxLimit) minLimit = maxLimit;
 			if (maxLimit < minLimit) maxLimit = minLimit;
 		}
-		void OnEnable() => intVariable.onChanged += OnVarChanged;
-		void OnDisable() => intVariable.onChanged -= OnVarChanged;
+		void OnEnable() => glory.onChanged += OnVarChanged;
+		void OnDisable() => glory.onChanged -= OnVarChanged;
+
+		void Start() =>	glory.value = 0;	//Reset at startup
 
 		void OnVarChanged()
 		{
@@ -42,32 +44,32 @@ namespace StormRend.Variables.Utils
 				return;
 
 			//Over limit
-			if (intVariable.value > maxLimit)
+			if (glory.value > maxLimit)
 			{
 				switch (limitType)
 				{
 					case LimitType.Clamp:
-						intVariable.value = maxLimit;
+						glory.value = maxLimit;
 						break;
 					case LimitType.WrapAround:
 						//Wraps around until variable is between min and max limits
-						while (intVariable.value < minLimit || intVariable.value > maxLimit)
-							intVariable.value -= (maxLimit - minLimit);
+						while (glory.value < minLimit || glory.value > maxLimit)
+							glory.value -= (maxLimit - minLimit);
 						break;
 				}
 			}
 			//Under limit
-			else if (intVariable.value < minLimit)
+			else if (glory.value < minLimit)
 			{
 				switch (limitType)
 				{
 					case LimitType.Clamp:
-						intVariable.value = minLimit;
+						glory.value = minLimit;
 						break;
 					case LimitType.WrapAround:
 						//Wraps around until variable is between min and max limits
-						while (intVariable.value < minLimit || intVariable.value > maxLimit)
-							intVariable.value += (maxLimit - minLimit);
+						while (glory.value < minLimit || glory.value > maxLimit)
+							glory.value += (maxLimit - minLimit);
 						break;
 				}
 			}
