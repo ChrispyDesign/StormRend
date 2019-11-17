@@ -10,15 +10,15 @@ namespace StormRend.Audio
 
 		[Header("Berserker")]
 		[SerializeField] AudioMagazine berserkerVocals = null;
-		[SerializeField] AudioClip berserkerSelectSFX = null;
+		// [SerializeField] AudioClip berserkerSelectSFX = null;
 
 		[Header("Valkyrie")]
 		[SerializeField] AudioMagazine valkyrieVocals = null;
-		[SerializeField] AudioClip valkyrieSelectSFX = null;
+		// [SerializeField] AudioClip valkyrieSelectSFX = null;
 
 		[Header("Sage")]
 		[SerializeField] AudioMagazine sageVocals = null;
-		[SerializeField] AudioClip sageSelectSFX = null;
+		// [SerializeField] AudioClip sageSelectSFX = null;
 
 		void Start()
 		{
@@ -41,15 +41,15 @@ namespace StormRend.Audio
 			switch (u.tag)
 			{
 				case BerserkerTag b:
-					audioSource.PlayOneShot(berserkerSelectSFX, selectSFXVolume);
+					// audioSource.PlayOneShot(berserkerSelectSFX, selectSFXVolume);
 					audioSystem.ChancePlayMagazine(berserkerVocals);
 					break;
 				case ValkyrieTag v:
-					audioSource.PlayOneShot(valkyrieSelectSFX, selectSFXVolume);
+					// audioSource.PlayOneShot(valkyrieSelectSFX, selectSFXVolume);
 					audioSystem.ChancePlayMagazine(valkyrieVocals);
 					break;
 				case SageTag s:
-					audioSource.PlayOneShot(sageSelectSFX, selectSFXVolume);
+					// audioSource.PlayOneShot(sageSelectSFX, selectSFXVolume);
 					audioSystem.ChancePlayMagazine(sageVocals);
 					break;
 			}
