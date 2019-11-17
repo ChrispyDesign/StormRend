@@ -71,10 +71,10 @@ namespace StormRend.Systems
 			get
 			{
 				//If an ability is current selected then unit can perform ACTION
-				if (isAbilitySelected && selectedAnimateUnit.canAct)
+				if (isAbilitySelected && selectedAnimateUnit && selectedAnimateUnit.canAct)
 					return Mode.Action;
 				//If only unit selected and can move the unit can perform MOVE
-				else if (isUnitSelected && selectedAnimateUnit.canMove)
+				else if (isUnitSelected && selectedAnimateUnit && selectedAnimateUnit.canMove)
 					return Mode.Move;
 				//Unit not selected
 				else
@@ -544,7 +544,7 @@ namespace StormRend.Systems
 			if (glory)	//Null check
 			{
 				//Return whether or not there's enough glory available for current ability
-				return (glory.value >= selectedAbility.gloryCost)
+				return glory.value >= selectedAbility.gloryCost;
 			}
 			Debug.LogWarning("No glory SOV allocated!");
 			return false;
