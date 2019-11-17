@@ -24,12 +24,11 @@ namespace StormRend.MapSystems.Tiles
 
 		//Inspector
 		[SerializeField] AudioClip onHoverSFX = null;
+		[Range(0f, 1f), SerializeField] float volume = 0.25f;
+
 		[Tooltip("If not set will default to 'Hover' highlight or clear")]
 		[SerializeField] TileHighlightSetting hoverHighlight = null;
 		public float cost = 1;
-		internal float G = float.MaxValue;
-		internal float H = float.MaxValue;
-		internal float F = 0;
 
 		//Properties
 		public Map owner => Map.current;
@@ -42,7 +41,12 @@ namespace StormRend.MapSystems.Tiles
 		TileHighlight highlight = null;
 		AudioSource audioSource = null;
 
-	#region Core
+		//Other
+		internal float G = float.MaxValue;
+		internal float H = float.MaxValue;
+		internal float F = 0;
+
+		#region Core
 		void OnValidate()	//Need to get the renderer in editor for gizmos to work
 		{
 			rend = GetComponent<Renderer>();
@@ -55,13 +59,6 @@ namespace StormRend.MapSystems.Tiles
 
 			//Get the general purpose
 			audioSource = GameDirector.current.generalAudioSource;
-
-			// //Set hover highlight default
-			// if (!hoverHighlight)
-			// {
-			// 	if (highlightColors.TryGetValue("Hover", out TileHighlightColor hover))
-			// 		hoverHighlight = hover;
-			// }
 		}
 
 		public void Connect(Tile to) => connections.Add(to);
@@ -191,7 +188,7 @@ namespace StormRend.MapSystems.Tiles
 			highlight.color = hoverHighlight.color;
 
 			//Hover sound
-			audioSource.PlayOneShot(onHoverSFX);
+			audioSource.PlayOneShot(onHoverSFX, volume);
 		}
 		public void OnPointerExit(PointerEventData eventData)
 		{
