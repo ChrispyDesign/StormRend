@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using pokoro.BhaVE.Core.Variables;
 using pokoro.Patterns.Generic;
 using StormRend.Abilities;
@@ -351,8 +352,8 @@ namespace StormRend.Systems
 			//Perform
 			selectedAnimateUnit.Act(selectedAbility, targetTileStack.ToArray());
 
-			//Focus camera
-			camMover.MoveTo(selectedAnimateUnit, cameraSmoothTime);
+			//Focus camera (on the target tile or last target tile input)
+			camMover.MoveTo(targetTileStack.Last(), cameraSmoothTime);
 
 			//Clear target stack
 			targetTileStack.Clear();
