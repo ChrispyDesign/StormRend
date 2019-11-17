@@ -42,10 +42,10 @@ namespace StormRend.Assists
 
 			//ALLIES
 			if ((unitTypes & TargetType.Allies) == TargetType.Allies)
-				unitsToCalculateMoveTiles.AddRange(ur.GetUnitsByType<AllyUnit>());
+				unitsToCalculateMoveTiles.AddRange(ur.GetAliveUnitsByType<AllyUnit>());
 			//ENEMIES
 			if ((unitTypes & TargetType.Enemies) == TargetType.Enemies)
-				unitsToCalculateMoveTiles.AddRange(ur.GetUnitsByType<EnemyUnit>());
+				unitsToCalculateMoveTiles.AddRange(ur.GetAliveUnitsByType<EnemyUnit>());
 
 			//Repopulate 
 			foreach (var au in unitsToCalculateMoveTiles)
@@ -54,7 +54,7 @@ namespace StormRend.Assists
 
 		public void Recalculate<T>() where T : AnimateUnit
 		{
-			foreach (var au in ur.GetUnitsByType<T>())
+			foreach (var au in ur.GetAliveUnitsByType<T>())
 				au.CalculateMoveTiles();
 		}
    	}

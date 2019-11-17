@@ -31,9 +31,10 @@ namespace StormRend.Abilities.Utilities
 			//Cache all passive abilities
 			foreach (var u in ur.aliveUnits)
 			{
-				//Only proceed if AnimateUnit
+				//Only proceed if it is an AnimateUnit
 				var au = u as AnimateUnit;
-				if (au) foreach (var a in au.GetAbilitiesByType(AbilityType.Passive))
+				if (au) 
+					foreach (var a in au.GetAbilitiesByType(AbilityType.Passive))
 						passiveAbilities.Add(a, u);
 			}
 		}

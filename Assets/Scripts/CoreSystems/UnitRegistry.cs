@@ -30,8 +30,8 @@ namespace StormRend.Units
 		//Properties
 		public Unit[] aliveUnits => _aliveUnits.ToArray();
 		public Unit[] deadUnits => _deadUnits.ToArray();
-		public bool allAlliesDead => GetUnitsByType<AllyUnit>().Length <= 0;
-		public bool allEnemiesDead => GetUnitsByType<EnemyUnit>().Length <= 0;
+		public bool allAlliesDead => GetAliveUnitsByType<AllyUnit>().Length <= 0;
+		public bool allEnemiesDead => GetAliveUnitsByType<EnemyUnit>().Length <= 0;
 		public MoveTileRecalculator moveTileRecalculator => _moveTileRecalculator;
 
 		//Events
@@ -81,7 +81,8 @@ namespace StormRend.Units
 				Debug.LogWarningFormat("{0} was not in list of alive units!", deadUnit);
 		}
 
-		public T[] GetUnitsByType<T>() where T : Unit => (from u in aliveUnits where u is T select u as T).ToArray();
+		public T[] GetAliveUnitsByType<T>() where T : Unit => (from u in aliveUnits where u is T select u as T).ToArray();
+		public T[] GetDeadUnitsByType<T>() where T : Unit => (from u in deadUnits where u is T select u as T).ToArray();
 	#endregion
 
 	#region Turn Enter/Exit logic
@@ -92,10 +93,10 @@ namespace StormRend.Units
 			switch (turnState.unitType)
 			{
 				case TargetType.Allies:
-					currentStateUnits = GetUnitsByType<AllyUnit>();
+					currentStateUnits = GetAliveUnitsByType<AllyUnit>();
 					break;
 				case TargetType.Enemies:
-					currentStateUnits = GetUnitsByType<EnemyUnit>();
+					currentStateUnits = GetAliveUnitsByType<EnemyUnit>();
 					break;
 			}
 			foreach (var u in currentStateUnits)
@@ -108,10 +109,10 @@ namespace StormRend.Units
 			switch (turnState.unitType)
 			{
 				case TargetType.Allies:
-					animateUnits = GetUnitsByType<AllyUnit>();
+					animateUnits = GetAliveUnitsByType<AllyUnit>();
 					break;
 				case TargetType.Enemies:
-					animateUnits = GetUnitsByType<EnemyUnit>();
+					animateUnits = GetAliveUnitsByType<EnemyUnit>();
 					break;
 			}
 			foreach (var u in animateUnits)

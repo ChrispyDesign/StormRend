@@ -38,7 +38,7 @@ namespace StormRend.States
 			ur.RunUnitsBeginTurn(this);
 
 			//Get the current enemies & Run AI
-			enemies = ur.GetUnitsByType<EnemyUnit>();	//Hardcore
+			enemies = ur.GetAliveUnitsByType<EnemyUnit>();	//Hardcore
 			if (enemies?.Length > 0)
 				StartCoroutine(RunAI(sm));
 		}
@@ -63,7 +63,7 @@ namespace StormRend.States
 		void TickCrystals()
 		{
 			//Get current crystals
-			var crystals = ur.GetUnitsByType<CrystalUnit>();
+			var crystals = ur.GetAliveUnitsByType<CrystalUnit>();
 
 			//Tick crystals
 			foreach (var c in crystals)

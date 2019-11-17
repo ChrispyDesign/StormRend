@@ -31,9 +31,6 @@ namespace StormRend.Assists
 			var renderers = GetComponentsInChildren<Renderer>();
 			foreach (var r in renderers)
 				materials.AddRange(r.materials);
-
-			//VFX
-			Debug.Assert(deathVFX, "No death VFX found!");
 		}
 
 		public void Execute()
@@ -56,7 +53,7 @@ namespace StormRend.Assists
 		IEnumerator RunDeathDissolve(AnimateUnit au)
 		{
 			//Create VFX
-			deathVFX.Create(au.transform.position, au.transform.rotation);
+			deathVFX?.Play(au.transform.position, au.transform.rotation);
 
 			//Initial delay
 			yield return new WaitForSeconds(startDelay);

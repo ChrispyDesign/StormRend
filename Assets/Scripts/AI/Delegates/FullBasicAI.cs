@@ -76,7 +76,7 @@ namespace StormRend.Bhaviours
 		bool Scan()
 		{
 			//Get all opponents
-			var allOpponents = ur.GetUnitsByType<AllyUnit>();
+			var allOpponents = ur.GetAliveUnitsByType<AllyUnit>();
 			allOpponents.Print("------ All Opponents ------");
 
 			//Scan for opponents from 1x to 3x range

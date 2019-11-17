@@ -64,19 +64,19 @@ namespace StormRend.Systems
 
             //ALLIES
             if ((typesToDamage & TargetType.Allies) == TargetType.Allies)
-                unitsToDamage.AddRange(ur.GetUnitsByType<AllyUnit>());
+                unitsToDamage.AddRange(ur.GetAliveUnitsByType<AllyUnit>());
             //ENEMIES
             if ((typesToDamage & TargetType.Enemies) == TargetType.Enemies)
-                unitsToDamage.AddRange(ur.GetUnitsByType<EnemyUnit>());
+                unitsToDamage.AddRange(ur.GetAliveUnitsByType<EnemyUnit>());
             //CRYSTALS
             if ((typesToDamage & TargetType.Crystals) == TargetType.Crystals)
-                unitsToDamage.AddRange(ur.GetUnitsByType<CrystalUnit>());
+                unitsToDamage.AddRange(ur.GetAliveUnitsByType<CrystalUnit>());
             //INANIMATES
             if ((typesToDamage & TargetType.InAnimates) == TargetType.InAnimates)
-                unitsToDamage.AddRange(ur.GetUnitsByType<InAnimateUnit>());
+                unitsToDamage.AddRange(ur.GetAliveUnitsByType<InAnimateUnit>());
             //ANIMATES
             if ((typesToDamage & TargetType.Animates) == TargetType.Animates)
-                unitsToDamage.AddRange(ur.GetUnitsByType<AnimateUnit>());
+                unitsToDamage.AddRange(ur.GetAliveUnitsByType<AnimateUnit>());
 
             //Deal damage to selected units
             foreach (var u in unitsToDamage)

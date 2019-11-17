@@ -33,7 +33,7 @@ namespace StormRend
 		{
 			if(Input.GetKeyDown(KeyCode.U))
 			{
-				AllyUnit[] allyunits = unitRegistry.GetUnitsByType<AllyUnit>();
+				AllyUnit[] allyunits = unitRegistry.GetAliveUnitsByType<AllyUnit>();
 
 				foreach(AllyUnit ally in allyunits)
 				{

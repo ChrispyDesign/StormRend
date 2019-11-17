@@ -28,7 +28,7 @@ namespace StormRend.Abilities.Effects
 				//If not restricted to move tiles then reset begin/current tiles and recalculate moves
 				if (!restrictToMoveTiles)
 				{
-					au.beginTurnTile = au.currentTile;
+					au.startTile = au.currentTile;
 					au.CalculateMoveTiles();
 				}
 			}

@@ -52,7 +52,7 @@ namespace StormRend.Assists
 
 			bool allUnitsHaveAttacked = true;
 
-			foreach (AllyUnit unit in unitRegistry.GetUnitsByType<AllyUnit>())
+			foreach (AllyUnit unit in unitRegistry.GetAliveUnitsByType<AllyUnit>())
 			{
 				if (unit.canAct) allUnitsHaveAttacked = false;
 			}
