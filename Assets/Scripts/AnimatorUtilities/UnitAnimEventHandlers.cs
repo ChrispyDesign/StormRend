@@ -63,7 +63,7 @@ namespace StormRend.Anim.EventHandlers
 		/// <summary>
 		/// Activates and then deactivates the inbuilt vfx based on it's total duration
 		/// </summary>
-		public void CycleInbuiltVFX(string name)
+		public void PlayInbuiltVFX(string name)
 		{
 			foreach (var ivfx in inbuiltVFX)
 				if (ivfx.name == name)
