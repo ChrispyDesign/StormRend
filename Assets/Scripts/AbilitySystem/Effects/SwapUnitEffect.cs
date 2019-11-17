@@ -19,6 +19,8 @@ namespace StormRend.Abilities.Effects
 		/// </summary>
 		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
+			
+
 			//Make sure there is atleast 2 tiles passed in
 			if (!(targetTiles.Length >= 2)) { Debug.LogWarning("Not enough target tiles! Exiting..."); return; }
 			
@@ -29,8 +31,8 @@ namespace StormRend.Abilities.Effects
 			var au1 = u1 as AnimateUnit;
 
 			//Play VFXs
-			vfx.Play(au0.transform.position, au0.transform.rotation);
-			vfx.Play(au1.transform.position, au1.transform.rotation);
+			vfx.Play(targetTiles[0].transform.position, targetTiles[0].transform.rotation);
+			vfx.Play(targetTiles[1].transform.position, targetTiles[1].transform.rotation);
 
 			//Perform swap at correct time
 			owner.StartCoroutine(Swap(au0, au1, targetTiles, swapTiming));
