@@ -172,7 +172,8 @@ namespace StormRend.Units
 			base.TakeDamage(damageData);
 
 			//Face attack
-			transform.rotation = GetSnappedRotation(damageData.vendor.transform.position, snapAngle);
+			if (damageData.vendor)
+				transform.rotation = GetSnappedRotation(damageData.vendor.transform.position, snapAngle);
 
 			//Animate
 			animator.SetTrigger("HitReact");

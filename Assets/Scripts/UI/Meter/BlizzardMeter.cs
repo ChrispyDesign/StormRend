@@ -14,10 +14,10 @@ namespace StormRend.UI
 		[SerializeField] Image[] blizzardNodes = null;
 		[SerializeField] string details = null;
 		
-		int internalBlizzard;
-		bool increase;
-		bool decrease;
-		bool startCheck;
+		int internalBlizzard = 0;
+		bool increase = false;
+		bool decrease = false;
+		bool startCheck = false;
 
 		private void Awake()
 		{
@@ -47,7 +47,6 @@ namespace StormRend.UI
 		//Register events
 		private void OnChange()
 		{
-			Debug.Log("OnChange");
 			//Increase
 			if (internalBlizzard < blizzard.value)
 				increase = true;
@@ -61,27 +60,26 @@ namespace StormRend.UI
 			if (increase || startCheck)
 			{
 				for (int i = 0; i < blizzard.value; i++)
-					StartCoroutine(IncreaseBlizzard(i));
+					StartCoroutine(FillNode(i));
 			}
 
 			if (decrease)
 			{
 				for (int i = blizzardNodes.Length - 1; i >= blizzard.value; i--)
-					StartCoroutine(DecreaseBlizzard(i));
+					StartCoroutine(UnfillNode(i));
 			}
 		}
 
-		public override void OnPointerEnter(PointerEventData eventData)
+		public void Reset()
 		{
-			infoPanel.ShowPanel(title, 1, details);
+			foreach (var n in blizzardNodes)
+			{
+				n.fillAmount = 0;
+			}
 		}
 
-		public override void OnPointerExit(PointerEventData eventData)
-		{
-			infoPanel.UnShowPanel();
-		}
-
-		private IEnumerator IncreaseBlizzard(int _index)
+		//Coroutines
+		private IEnumerator FillNode(int _index)
 		{
 			if (blizzardNodes[_index].fillAmount == 1)
 			{
@@ -96,7 +94,7 @@ namespace StormRend.UI
 			}
 		}
 
-		private IEnumerator DecreaseBlizzard(int _index)
+		private IEnumerator UnfillNode(int _index)
 		{
 			if (blizzardNodes[_index].fillAmount == 1)
 			{
@@ -109,6 +107,17 @@ namespace StormRend.UI
 				blizzardNodes[_index].fillAmount -= fillSpeed;
 				yield return new WaitForSeconds(fillSpeed);
 			}
+		}
+
+		//Event System
+		public override void OnPointerEnter(PointerEventData eventData)
+		{
+			infoPanel.ShowPanel(title, 1, details);
+		}
+
+		public override void OnPointerExit(PointerEventData eventData)
+		{
+			infoPanel.UnShowPanel();
 		}
 	}
 }

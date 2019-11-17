@@ -28,6 +28,9 @@ namespace StormRend.Assists
 				SetSnowOpacity(transition.Evaluate(time));
 				yield return null;
 			}
+			
+			//Reset snow opacity on finish to avoid annoying unstaged files in git 
+			SetSnowOpacity(0);
 		}
 
 		void SetSnowOpacity(float value)
