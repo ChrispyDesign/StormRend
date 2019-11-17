@@ -31,16 +31,17 @@ namespace StormRend
 
 		private void Update()
 		{
-			if(Input.GetKeyDown(KeyCode.U))
+			//TEST ONLY
+			if (Input.GetKeyDown(KeyCode.U))
 			{
 				AllyUnit[] allyunits = unitRegistry.GetAliveUnitsByType<AllyUnit>();
 
-				foreach(AllyUnit ally in allyunits)
+				foreach (AllyUnit ally in allyunits)
 				{
 					ally.TakeDamage(new HealthData(ally, 5));
 				}
+				HaveLost();
 			}
-			HaveLost();
 		}
 
 		public void HaveLost()
@@ -60,7 +61,7 @@ namespace StormRend
 
 		public void HaveWon()
 		{
-			if(unitRegistry.allEnemiesDead)
+			if (unitRegistry.allEnemiesDead)
 			{
 				src.loop = false;
 

@@ -8,6 +8,7 @@ namespace StormRend
 {
 	public class Transitioner : MonoBehaviour
 	{
+		//Maybe just create an audiosource, set it to play on awake and preload the start clip
 		[SerializeField] AudioClip startClip;
 
 		GameDirector gameDirector;

@@ -53,22 +53,24 @@ namespace StormRend.Abilities.Effects
 			float rate = 1f / VFX.totalDuration;
 
 			//Create prefab
-			var instance = VFX.Play(killedUnit.transform.position, killedUnit.transform.rotation);
+			Transform instance = VFX.Play(killedUnit.transform.position, killedUnit.transform.rotation).transform;
 
+			//Move VFX
 			while (time < 1f)
 			{
 				time += rate * Time.deltaTime;
 
 				//Towards position
 				var tp = arriveSpeed.Evaluate(time);
-				Debug.Log("Towards Path: " + tp);
-				pos = Vector3.Lerp(killedUnit.transform.position, owner.transform.position, tp);
+				pos = Vector3.LerpUnclamped(killedUnit.transform.position, owner.transform.position, tp);
 
 				//Y position
 				pos.y = yPos.Evaluate(time);
 
 				//Set position of fx
-				instance.transform.position = pos;
+				if (instance) 	//Keep getting some missing reference exception
+					instance.position = pos;
+
 				yield return null;
 			}
 
