@@ -7,8 +7,8 @@ namespace StormRend.VisualFX
     {
 		//Inspector
 		[Tooltip("The life time of the VFX in seconds. Set to 0 for infinite")]
-		public bool autoDuration = false;
        	public float lifetime = 5f;
+		public bool autoDuration = false;
         public GameObject prefab;
 
 		public float totalDuration		//Of the attached particle
