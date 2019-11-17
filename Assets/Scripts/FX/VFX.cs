@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace StormRend.VisualFX
 {
+	/// <summary>
+	/// Stores particle prefabs as well as have useful functions that auto instantiates and destroys the particle
+	/// </summary>
     [CreateAssetMenu(menuName = "StormRend/VFX", fileName = "VFX")]
     public class VFX : ScriptableObject
     {
