@@ -203,9 +203,9 @@ namespace StormRend.Units
 				foreach (var e in a.effects)
 					e.Prepare(a, this);
 
-			//Run Begin Status effects (ie. blind, cripple, etc) and also auto remove expired status effects
+			//Run Begin Status effects (ie. blind, cripple, etc) 
 			for (int i = statusEffects.Count-1; i >= 0; --i)
-				if (!statusEffects[i].OnBeginTurn(this))
+				if (!statusEffects[i].OnBeginTurn(this))    //Also auto remove expired status effects
 					statusEffects.RemoveAt(i);
 
 			onBeginTurn.Invoke();
