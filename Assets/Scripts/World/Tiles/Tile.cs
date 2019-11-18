@@ -36,8 +36,9 @@ namespace StormRend.MapSystems.Tiles
 		//Members
 		[ReadOnlyField] public List<Tile> connections = new List<Tile>();	//List because HashSets don't serialize
 		[HideInInspector, SerializeField] protected Renderer rend = null;
+
 		//This avoids tile highlight issues when cursor unhovers
-		TileHighlightSetting normalColor = null;
+		TileHighlightSetting defaultColor = null;		//The current default normal color of this tile
 		TileHighlight highlight = null;
 		AudioSource audioSource = null;
 
@@ -65,20 +66,23 @@ namespace StormRend.MapSystems.Tiles
 		public bool Disconnect(Tile from) => connections.Remove(from);
 		public bool Contains(Tile t) => connections.Contains(t);
 		public void DisconnectAll() => connections.Clear();
+
+		/// <summary>
+		/// Sets this tile's temporary highlight while remembering the default color
+		/// </summary>
 		public void SetHighlight(TileHighlightSetting tileHighlightColor)
 		{
-			normalColor = tileHighlightColor;
-			highlight.color = normalColor.color;
+			defaultColor = tileHighlightColor;
+			highlight.Set(defaultColor);
 		}
-		public void SetColor(Color color)
-		{
-			normalColor.color = color;
-			highlight.color = normalColor.color;
-		}
+
+		/// <summary>
+		/// Returns the tile back to it's default color
+		/// </summary>
 		public void ClearColor()
 		{
-			normalColor = ScriptableObject.CreateInstance<TileHighlightSetting>();
-			highlight.color = normalColor.color;
+			defaultColor = ScriptableObject.CreateInstance<TileHighlightSetting>();
+			highlight.Set(defaultColor);
 		}
 	#endregion
 
@@ -115,7 +119,7 @@ namespace StormRend.MapSystems.Tiles
 		void SetupInternalColours()
 		{
 			//Setup internal tile highlight color
-			normalColor = ScriptableObject.CreateInstance<TileHighlightSetting>();
+			defaultColor = ScriptableObject.CreateInstance<TileHighlightSetting>();
 		}
 	#endregion
 
@@ -185,7 +189,7 @@ namespace StormRend.MapSystems.Tiles
 				hoverHighlight = color;
 
 			//Set hover
-			highlight.color = hoverHighlight.color;
+			highlight.Set(hoverHighlight);
 
 			//Hover sound
 			audioSource.PlayOneShot(onHoverSFX, SFXVolume);
@@ -193,7 +197,7 @@ namespace StormRend.MapSystems.Tiles
 		public void OnPointerExit(PointerEventData eventData)
 		{
 			//Reset back
-			highlight.color = normalColor.color;
+			highlight.Set(defaultColor);
 		}
 	#endregion
 	}

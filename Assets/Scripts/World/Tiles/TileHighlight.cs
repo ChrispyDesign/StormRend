@@ -27,5 +27,11 @@ namespace StormRend.MapSystems.Tiles
 			sr = GetComponent<SpriteRenderer>();
 			Debug.Assert(sr, "Sprite renderer not found!");
 		}
+
+		public void Set(TileHighlightSetting setting)
+		{
+			sr.color = setting.color;
+			sr.sprite = setting.sprite;
+		}
 	}
 }

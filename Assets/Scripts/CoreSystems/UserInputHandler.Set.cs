@@ -53,7 +53,7 @@ namespace StormRend.Systems
 			//Clear move tiles + Show target tiles + clear ghosts
 			selectedAnimateUnit.ClearGhost();
 			ClearAllTileHighlights();
-			ShowTargetTiles();
+			ShowActionTiles();
 
 			//Auto perform ability on self if required tiles set to 0
 			if (selectedAbility.requiredTiles == 0)
@@ -76,29 +76,25 @@ namespace StormRend.Systems
 					{
 						//VALID
 						targetTileStack.Push(t);
-						onTargetTileAdd.Invoke();
+						ShowTargetTile(t);
+
+						onTargetTileAdd.Invoke(t);
 					}
-					else
-						onTargetTileInvalid.Invoke();   //ALREADY BEEN SELECTED     //Too tired to write this properly
+					else onTargetTileInvalid.Invoke();   //ALREADY BEEN SELECTED     //Too tired to write this properly
 				}
-				else
-					onTargetTileInvalid.Invoke();   //OUT OF BOUNDS
+				else onTargetTileInvalid.Invoke();   //OUT OF BOUNDS
 			}
-			else
-				onTargetTileInvalid.Invoke();   //UNACCEPTABLE
+			else onTargetTileInvalid.Invoke();   //UNACCEPTABLE
 
 			//Perform ability once required number of tiles reached
-			if (targetTileStack.Count >= selectedAbility.requiredTiles)
-			{
-				SelectedUnitPerformAbility();
-			}
+			if (targetTileStack.Count >= selectedAbility.requiredTiles) SelectedUnitPerformAbility();
 		}
-		void AddTargetTile(Unit u) => AddTargetTile(u.currentTile);     //Redirect because sometimes the raycast can only hit a unit
-		void PopTargetTile()
-		{
-			targetTileStack.Pop();
-			onTargetTileCancel.Invoke();
-		}
+
+		//Redirect because sometimes the raycast can only hit a unit
+		void AddTargetTile(Unit u) => AddTargetTile(u.currentTile);
+
+		//Pop and send through the event
+		void PopTargetTile() => onTargetTileCancel.Invoke(ClearTargetTile(targetTileStack.Pop()));
 
 		//Enough tile targets chosen by user. Execute the selected ability
 		void SelectedUnitPerformAbility()

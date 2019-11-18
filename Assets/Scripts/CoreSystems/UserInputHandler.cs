@@ -57,9 +57,11 @@ namespace StormRend.Systems
 		[SerializeField] AbilityVar _selectedAbilityVar = null;
 
 		[Header("Tile Colors")]
+		[SerializeField] TileHighlightSetting startHighlight = null;
 		[SerializeField] TileHighlightSetting hoverHighlight = null;
 		[SerializeField] TileHighlightSetting moveHighlight = null;
 		[SerializeField] TileHighlightSetting actionHighlight = null;
+		[SerializeField] TileHighlightSetting targetHighlight = null;
 
 		[Header("Camera")]
 		[SerializeField] float cameraSmoothTime = 1.75f;
@@ -103,9 +105,9 @@ namespace StormRend.Systems
 		[Tooltip("When a unit is deselected")] public UnityEvent onUnitCleared = null;
 		[Tooltip("When an ability is chosen")] public AbilityEvent onAbilitySelected = null;
 		[Tooltip("When an ability is cleared")] public UnityEvent onAbilityCleared = null;
-		[Tooltip("When a valid target tile is selected, adding it to the target stack")] public UnityEvent onTargetTileAdd = null;
+		[Tooltip("When a valid target tile is selected, adding it to the target stack")] public TileEvent onTargetTileAdd = null;
 		[Tooltip("When an invalid tile is selected")] public UnityEvent onTargetTileInvalid = null;
-		[Tooltip("When a tile is popped from the target stack ie. user right clicks")] public UnityEvent onTargetTileCancel = null;
+		[Tooltip("When a tile is popped from the target stack ie. user right clicks")] public TileEvent onTargetTileCancel = null;
         [Tooltip("When an there's not enough glory to perform ability")] public UnityEvent onNotEnoughGlory = null;
 		[Tooltip("When an ability is performed")] public AbilityEvent onAbilityPerformed = null;
 

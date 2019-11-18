@@ -1,5 +1,6 @@
 using pokoro.Patterns.Generic;
 using StormRend.Abilities;
+using StormRend.MapSystems.Tiles;
 
 namespace StormRend.Systems
 {
@@ -17,7 +18,7 @@ namespace StormRend.Systems
 
 			selectedAnimateUnit.CalculateTargetTiles(a);
 			selectedAnimateUnit.ClearGhost();
-			ShowTargetTiles();
+			ShowActionTiles();
 		}
 		public void OnUnhoverPreview()
 		{
@@ -44,7 +45,7 @@ namespace StormRend.Systems
 				t.SetHighlight(moveHighlight);
 		}
 
-		void ShowTargetTiles()
+		void ShowActionTiles()
 		{
 			//NOTE: Active unit's ACTION highlights should be refreshed
 			// - each time the selected ability is changed
@@ -53,6 +54,19 @@ namespace StormRend.Systems
 			//Highlight
 			foreach (var t in selectedAnimateUnit?.possibleTargetTiles)
 				t.SetHighlight(actionHighlight);
+		}
+
+		void ShowTargetTile(Tile target)
+		{
+			if (targetTileStack.Count <= 0) return;
+			target.SetHighlight(targetHighlight);
+		}
+
+		Tile ClearTargetTile(Tile target)
+		{
+			//it should be action highlight
+			target.SetHighlight(actionHighlight);
+			return target;
 		}
 		#endregion
 	}
