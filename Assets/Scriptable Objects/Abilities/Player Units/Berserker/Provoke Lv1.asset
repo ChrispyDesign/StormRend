@@ -16,9 +16,9 @@ MonoBehaviour:
   _animationTrigger: Provoke
   _type: 2
   _level: 1
-  _title: Provoke
+  _title: Provoke Lv1
   _descriptions:
-  - Enemies must attack you next turn. When attacked reflect 1 damage and gain 1 Glory.
+  - Forces enemies to attack you next turn, reflecting 1 Damage and Gaining 1 Glory
   _gloryCost: 0
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
@@ -58,6 +58,7 @@ MonoBehaviour:
   turnCount: 0
   affectedTurns: 1
   reflexDamage: 1
+  inbuiltVFXName: FX_Provoke
 --- !u!114 &114679432023497332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,3 +74,4 @@ MonoBehaviour:
   turnCount: 0
   affectedTurns: 1
   reflexDamage: 1
+  inbuiltVFXName: FX_Provoke

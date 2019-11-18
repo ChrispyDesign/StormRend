@@ -82,16 +82,6 @@ namespace StormRend.UI
 			}
 		}
 
-		public override void OnPointerEnter(PointerEventData eventData)
-		{
-			infoPanel.ShowPanel(title, 3, details);
-		}
-
-		public override void OnPointerExit(PointerEventData eventData)
-		{
-			infoPanel.UnShowPanel();
-		}
-
 		IEnumerator IncreaseGlory(int _index)
 		{
 			if(gloryNodes[_index].fillAmount == 1)
@@ -106,7 +96,6 @@ namespace StormRend.UI
 				yield return new WaitForSeconds(fillSpeed);
 			}
 		}
-
 		IEnumerator DecreaseGlory(int _index)
 		{
 			if (gloryNodes[_index].fillAmount == 1)
@@ -120,6 +109,17 @@ namespace StormRend.UI
 				gloryNodes[_index].fillAmount -= fillSpeed;
 				yield return new WaitForSeconds(fillSpeed);
 			}
+		}
+
+		//Event System Callbacks
+		public override void OnPointerEnter(PointerEventData eventData)
+		{
+			infoPanel.ShowPanel(title, 3, details);
+		}
+
+		public override void OnPointerExit(PointerEventData eventData)
+		{
+			infoPanel.UnShowPanel();
 		}
 	}
 }

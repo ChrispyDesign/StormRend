@@ -16,7 +16,7 @@ MonoBehaviour:
   _animationTrigger: LightFall
   _type: 1
   _level: 3
-  _title: Lightfall
+  _title: Light Fall Lv3
   _descriptions:
   - Leap to a tile, then push units away
   - Gain Protection
@@ -90,9 +90,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
+  reselectTiming: 1
   refreshCount: 0
+  onlyIfHaveKilledThisTurn: 0
   refreshType: 0
-  delay: 1
   allowedRefreshes: 1
 --- !u!114 &114865798732700746
 MonoBehaviour:

@@ -8,8 +8,7 @@ namespace StormRend.UI
 {
 	public class InfoPanel : MonoBehaviour
 	{
-		[Range(0, 1)]
-		[SerializeField] float fadeDuration;
+		[Range(0f, 2f), SerializeField] float animSpeedMultiplier = 1.05f;
 		[SerializeField] GameObject[] panels = null;
 
 		Animator anim;
@@ -31,20 +30,26 @@ namespace StormRend.UI
 		public void ShowPanel(string title, int levels, params string[] details)
 		{
 			text[0].text = title;
-			for(int i = 0; i < details.Length; i++)
+			for (int i = 0; i < details.Length; i++)
 			{
 				text[i + 1].text = details[i];
 			}
+
+			//Animate
+			anim.SetFloat("SpeedMultiplier", animSpeedMultiplier);
 			anim.SetInteger("textBoxAnimation", levels);
 		}
 
 		public void UnShowPanel(bool instant = false)
 		{
-			if(!instant)
-				anim.SetInteger("textBoxAnimation", 0);
-			else if(instant == true)
+			if (!instant)
 			{
-				for(int i = 1; i < panels.Length; i++)
+				anim.SetFloat("SpeedMultiplier", animSpeedMultiplier);
+				anim.SetInteger("textBoxAnimation", 0);
+			}
+			else if (instant == true)
+			{
+				for (int i = 1; i < panels.Length; i++)
 				{
 					panels[i].SetActive(false);
 				}

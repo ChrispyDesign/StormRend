@@ -346,8 +346,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3080,8 +3080,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3485,7 +3485,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3382576199106964157
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3712,8 +3712,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5818,7 +5818,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb371683530931048bb1561c8df7e4e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 0}
+  allyType: 1
+  au: {fileID: 0}
   healthNodes:
   - {fileID: 3382576199989013953}
   - {fileID: 3382576199935276566}
@@ -6148,7 +6149,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3382576199702775886
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6256,7 +6257,7 @@ GameObject:
   - component: {fileID: 3382576199773750634}
   - component: {fileID: 3382576199773750633}
   m_Layer: 5
-  m_Name: TextPanel
+  m_Name: InfoPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6737,7 +6738,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb371683530931048bb1561c8df7e4e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 0}
+  allyType: 1
+  au: {fileID: 0}
   healthNodes:
   - {fileID: 3382576198808420044}
   - {fileID: 3382576199074202963}
@@ -6771,7 +6773,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3382576199869863707
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7132,8 +7134,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 32
-  m_fontSizeBase: 32
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -7761,7 +7763,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb371683530931048bb1561c8df7e4e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 0}
+  allyType: 1
+  au: {fileID: 0}
   healthNodes:
   - {fileID: 3382576200514623155}
   - {fileID: 3382576200488134460}
@@ -8324,7 +8327,7 @@ MonoBehaviour:
   - {fileID: 3382576198614438576}
   - {fileID: 3382576200348645916}
   - {fileID: 3382576200249233903}
-  details: Summons a blizzard that damages players when filled
+  details: A Blizzard will come every 5 turns dealing 1+ Damage and Immobilise
 --- !u!1 &3382576200122082580
 GameObject:
   m_ObjectHideFlags: 0

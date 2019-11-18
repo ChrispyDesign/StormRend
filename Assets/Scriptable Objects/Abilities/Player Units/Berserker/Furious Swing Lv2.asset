@@ -16,10 +16,10 @@ MonoBehaviour:
   _animationTrigger: FuriousSwing
   _type: 1
   _level: 2
-  _title: Furious Swing
+  _title: Furious Swing Lv2
   _descriptions:
-  - Deal 2 damage
-  - If you kill an enemy, you may move and attack again
+  - Deal 2 Damage
+  - Move and Attack again if enemy killed
   _gloryCost: 2
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
@@ -40,9 +40,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
+  reselectTiming: 1
   refreshCount: 0
+  onlyIfHaveKilledThisTurn: 0
   refreshType: 0
-  delay: 1
   allowedRefreshes: 1
 --- !u!114 &114178195148735544
 MonoBehaviour:
@@ -90,9 +91,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
+  reselectTiming: 1
   refreshCount: 0
+  onlyIfHaveKilledThisTurn: 0
   refreshType: 0
-  delay: 1
   allowedRefreshes: 1
 --- !u!114 &114473816250434770
 MonoBehaviour:
@@ -106,7 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
+  reselectTiming: 1
   refreshCount: 0
+  onlyIfHaveKilledThisTurn: 1
   refreshType: -1
-  delay: 1
   allowedRefreshes: 1
