@@ -103,9 +103,9 @@ namespace StormRend.Units
 		public void SetCanMove(bool value, float delay = 0) => StartCoroutine(DelaySetMove(value, delay));
 		IEnumerator DelaySetMove(bool value, float delay)       //Used for correct timing of refresh effect
 		{
+			//Set immediately so that the AllActionsUsedChecker logic runs correctly
+			_canMove = value;	
 			yield return new WaitForSeconds(delay);
-			_canMove = value;
-
 			//If move value true then reselect unit so that the move tiles will appear
 			if (_canMove) uih.SelectUnit(this);
 		}
@@ -113,9 +113,9 @@ namespace StormRend.Units
 		public void SetCanAct(bool value, float delay = 0) => StartCoroutine(DelaySetAct(value, delay));
 		IEnumerator DelaySetAct(bool value, float delay)        //Used for correct timing of refresh effect
 		{
-			yield return new WaitForSeconds(delay);
+			//Set immediately so that the AllActionsUsedChecker logic runs correctly
 			_canAct = value;
-
+			yield return new WaitForSeconds(delay);
 			//If can act again then show new possible act tiles
 			if (_canAct)
 			{
@@ -379,9 +379,6 @@ namespace StormRend.Units
 			//animations events to be executed with precision timing
 			animator.SetTrigger(ability.animationTrigger);
 
-			//Event
-			onActed.Invoke(ability);
-
 			//Status effects
 			foreach (var se in statusEffects)
 				se.OnActed(this);
@@ -395,6 +392,9 @@ namespace StormRend.Units
 			//Targets calculated
 			if (currentTargetTiles.Length == 0 || currentAbility == null) return;
 			currentAbility.Perform(this, currentTargetTiles);
+
+			//Event (This needs to go here in case refresh effect)
+			onActed.Invoke(currentAbility);
 		}
 
 		/// <summary>
@@ -404,6 +404,9 @@ namespace StormRend.Units
 		{
 			if (currentTargetTiles.Length == 0 || currentAbility == null) return;
 			currentAbility.Perform<T>(this, currentTargetTiles);
+
+			//Event (This needs to go here in case refresh effect)
+			onActed.Invoke(currentAbility);
 		}
 
 		//------------------- CALCULATE TILES
