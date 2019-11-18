@@ -17,7 +17,7 @@ using UnityEngine.EventSystems;
 namespace StormRend.Units
 {
 	[SelectionBase] //Avoid clicking on child objects
-	public abstract class AnimateUnit : Unit, IPointerEnterHandler, IPointerExitHandler
+	public abstract class AnimateUnit : Unit //, IPointerEnterHandler, IPointerExitHandler
 	{
 		//Enums
 		public enum LookSnap
@@ -190,23 +190,23 @@ namespace StormRend.Units
 			//Can take action again (This doesn't reselect the units)
 			_canMove = true;
 			_canAct = true;
+			
+			//Other resets
+			hasKilledThisTurn = false;
 
 			//Calculate new move tiles
 			startTile = currentTile;
-			// CalculateMoveTiles();		//Doesn't work anyways
+			CalculateMoveTiles();		//Doesn't work anyways
 
 			//Prep effects (reset counts etc)
 			foreach (var a in abilities)
 				foreach (var e in a.effects)
 					e.Prepare(a, this);
 
-			//Run Begin Status effects (ie. blind, cripple, etc)
-			//And also auto remove expired status effects
+			//Run Begin Status effects (ie. blind, cripple, etc) and also auto remove expired status effects
 			for (int i = statusEffects.Count-1; i >= 0; --i)
-			{
 				if (!statusEffects[i].OnBeginTurn(this))
 					statusEffects.RemoveAt(i);
-			}
 
 			onBeginTurn.Invoke();
 		}
@@ -492,16 +492,15 @@ namespace StormRend.Units
 		#endregion
 
 		#region Event System Interface Implementations
-		public override void OnPointerEnter(PointerEventData eventData)
-		{
-			base.OnPointerEnter(eventData);
-
-			//InfoPanel.current.SetText()
-		}
-		public override void OnPointerExit(PointerEventData eventData)
-		{
-			base.OnPointerExit(eventData);
-		}
+		// public override void OnPointerEnter(PointerEventData eventData)
+		// {
+		// 	base.OnPointerEnter(eventData);
+		// 	//InfoPanel.current.SetText()
+		// }
+		// public override void OnPointerExit(PointerEventData eventData)
+		// {
+		// 	base.OnPointerExit(eventData);
+		// }
 		#endregion
 	}
 }

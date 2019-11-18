@@ -6,18 +6,15 @@ namespace StormRend.Audio
 {
 	public class UnitSelectAudioRelay : AudioRelay
 	{
-		[Range(0f, 1f), SerializeField] float selectSFXVolume = 0.5f;
 
-		[Header("Berserker")]
+		[Header("On Select Vocals")]
 		[SerializeField] AudioMagazine berserkerVocals = null;
-		// [SerializeField] AudioClip berserkerSelectSFX = null;
-
-		[Header("Valkyrie")]
 		[SerializeField] AudioMagazine valkyrieVocals = null;
-		// [SerializeField] AudioClip valkyrieSelectSFX = null;
-
-		[Header("Sage")]
 		[SerializeField] AudioMagazine sageVocals = null;
+
+		// [Range(0f, 1f), SerializeField] float selectSFXVolume = 0.5f;
+		// [SerializeField] AudioClip berserkerSelectSFX = null;
+		// [SerializeField] AudioClip valkyrieSelectSFX = null;
 		// [SerializeField] AudioClip sageSelectSFX = null;
 
 		void Start()

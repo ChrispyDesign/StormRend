@@ -73,7 +73,7 @@ namespace StormRend.Abilities.Effects
 
                                 //If victim was killed then invoke owner's on kill event
 								//HARDCODE: ENEMY FILTER
-                                if (victim.isDead && victim is EnemyUnit) InvokeEnemyKillEvent(owner, victim);
+                                if (victim.isDead && victim is EnemyUnit) SetJustKilled(owner, victim);
 							}
 						}
 					}
@@ -94,7 +94,7 @@ namespace StormRend.Abilities.Effects
 						HandleGainGlory(victim);
 
 						//If victim was killed then invoke owner's on kill event
-                        if (victim.isDead & victim is EnemyUnit) InvokeEnemyKillEvent(owner, victim);
+                        if (victim.isDead & victim is EnemyUnit) SetJustKilled(owner, victim);
 					}
 				}
 			}
@@ -117,8 +117,9 @@ namespace StormRend.Abilities.Effects
 			}
 		}
 
-		void InvokeEnemyKillEvent(Unit owner, Unit victim)
+		void SetJustKilled(Unit owner, Unit victim)
 		{
+			owner.hasKilledThisTurn = true;
 			owner.onEnemyKilled.Invoke(victim);
 		}
 	}
