@@ -27,13 +27,8 @@ namespace StormRend.Abilities.Effects
 			var au = owner as AnimateUnit;
 			if (killedUnit is EnemyUnit)	//Make sure unit killed is an enemy
 			{
-				//NOTE: This detect killed units within range of current unit position
-				//Could potentially cheat with this
-				// var tilesInRange = au.CalculateTargetTiles(ability, false);
-
-				//NOTE: this detects killed units within range of owners start of turn position
-				//The soul commune display has to stay in place?
-				var tilesInRange = au.CalculateTargetTiles(ability, au.startTile, true);
+				//Calculate soul commune from owner's CURRENT TILE not STARTING TILE ie. once a unit has acted it will lock all team member's position
+				var tilesInRange = au.CalculateTargetTiles(ability, owner.currentTile, true);
 				if (tilesInRange.Contains(killedUnit.currentTile))
 				{
 					//Trigger VFX to lerp from killed unit to sage
