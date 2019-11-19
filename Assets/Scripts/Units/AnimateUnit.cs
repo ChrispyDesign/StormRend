@@ -331,7 +331,6 @@ namespace StormRend.Units
 			// return Quaternion.AngleAxis(deltaAngle, Vector3.Cross(Vector3.up, dir));
 		}
 
-
 		//------------------- PERFORM ABILITY
 		/// <summary>
 		/// Override for when raycasts hits units instead of tiles
