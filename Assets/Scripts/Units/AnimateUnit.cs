@@ -71,22 +71,28 @@ namespace StormRend.Units
 		}
 
 		//Status Effect Properties
-		public bool isProvoking	{
-			get	{
+		public bool isProvoking
+		{
+			get
+			{
 				foreach (var se in statusEffects)
 					if (se is TauntEffect) return true;
 				return false;
 			}
 		}
-		public bool isImmobilised {
-			get {
+		public bool isImmobilised
+		{
+			get
+			{
 				foreach (var se in statusEffects)
 					if (se is ImmobiliseEffect) return true;
 				return false;
 			}
 		}
-		public bool isBlind {
-			get {
+		public bool isBlind
+		{
+			get
+			{
 				foreach (var se in statusEffects)
 					if (se is BlindEffect) return true;
 				return false;
@@ -104,7 +110,7 @@ namespace StormRend.Units
 		IEnumerator DelaySetMove(bool value, float delay)       //Used for correct timing of refresh effect
 		{
 			//Set immediately so that the AllActionsUsedChecker logic runs correctly
-			_canMove = value;	
+			_canMove = value;
 			yield return new WaitForSeconds(delay);
 			//If move value true then reselect unit so that the move tiles will appear
 			if (_canMove) uih.SelectUnit(this);
@@ -167,11 +173,20 @@ namespace StormRend.Units
 
 		#region Core
 		//------------------ CALLBACKS
+		/// <summary>
+		/// Kills the unit. No need to send in a huge value etc.
+		/// </summary>
+		public void Kill(Unit vendor = null)
+		{
+			//Just set the damage amount to match unit's current health
+			TakeDamage(new HealthData(vendor, HP));
+		}
+
 		public override void TakeDamage(HealthData damageData)
 		{
 			base.TakeDamage(damageData);
 
-			//Face attack
+			//Face attacker if available
 			if (damageData.vendor)
 				transform.rotation = GetSnappedRotation(damageData.vendor.transform.position, snapAngle);
 
@@ -190,13 +205,13 @@ namespace StormRend.Units
 			//Can take action again (This doesn't reselect the units)
 			_canMove = true;
 			_canAct = true;
-			
+
 			//Other resets
 			hasKilledThisTurn = false;
 
 			//Calculate new move tiles
 			startTile = currentTile;
-			CalculateMoveTiles();		//Doesn't work anyways
+			CalculateMoveTiles();       //Doesn't work anyways
 
 			//Prep effects (reset counts etc)
 			foreach (var a in abilities)
@@ -204,7 +219,7 @@ namespace StormRend.Units
 					e.Prepare(a, this);
 
 			//Run Begin Status effects (ie. blind, cripple, etc) 
-			for (int i = statusEffects.Count-1; i >= 0; --i)
+			for (int i = statusEffects.Count - 1; i >= 0; --i)
 				if (!statusEffects[i].OnBeginTurn(this))    //Also auto remove expired status effects
 					statusEffects.RemoveAt(i);
 
@@ -260,6 +275,7 @@ namespace StormRend.Units
 				//Move and look
 				ghost?.SetActive(true);
 				ghost.transform.rotation = GetSnappedRotation(ghostTile.transform.position, snapAngle);
+				// StartCoroutine(LerpMove(ghost.transform, ghostTile.transform.position));
 				ghost.transform.position = ghostTile.transform.position;
 			}
 			//Move the actual unit
@@ -273,6 +289,7 @@ namespace StormRend.Units
 				currentTile = destination;
 				//Move and look
 				transform.rotation = GetSnappedRotation(currentTile.transform.position, snapAngle);
+				// StartCoroutine(LerpMove(transform, currentTile.transform.position));
 				transform.position = currentTile.transform.position;
 			}
 			//NOTE: Unit can still move
@@ -281,14 +298,32 @@ namespace StormRend.Units
 		}
 
 		/// <summary>
+		/// Hmmm... lerps don't particularly look that good
+		IEnumerator LerpMove(Transform root, Vector3 destination, float lerpTime = 0.3f)
+		{
+			float time = 0;
+			float rate = time / lerpTime;
+			while (time < lerpTime)
+			{
+				time += Time.deltaTime;
+				root.position = Vector3.Lerp(root.position, destination, time);
+				yield return null;
+			}
+			root.position = destination;
+		}
+
+		/// <summary>
 		/// Force Move Unit by direction ie. (0, 1) means the unit to moves forward 1 tile.
 		/// Can set to kill unit pushed over the edge.
 		/// </summary>
-		public PushResult Push(Vector2Int direction, bool kill = true, bool faceBackward = true)
+		public PushResult Push(Vector2Int direction, bool pushOverEdge = true, bool faceBackward = true)
 		{
 			if (currentTile.TryGetTile(direction, out Tile t))
 			{
 				var originalTile = currentTile;
+
+				//Face backward Part 1: faces the attacker even if pushed into an obstacle
+				if (faceBackward) SnappedLookAt(new Vector3(transform.position.x - direction.x, 0, transform.position.z - direction.y));
 
 				//Check for any units or obstacles
 				if (UnitRegistry.IsAnyUnitOnTile(t))
@@ -300,14 +335,18 @@ namespace StormRend.Units
 
 				//Push unit back (facing toward the pusher)
 				Move(t, false, false, true);
-				if (faceBackward) 
-					transform.rotation = GetSnappedRotation(originalTile.transform.position, snapAngle);
+				//Correct the facing
+				if (faceBackward) SnappedLookAt(new Vector3(transform.position.x - direction.x, 0, transform.position.z - direction.y));
 				return PushResult.Nothing;
 			}
+			//PUSHED OF THE EDGE
 			else
 			{
+				//Face backward
+				if (faceBackward) SnappedLookAt(new Vector3(-direction.x, 0, -direction.y));
+
 				//Pushed out of bounds
-				if (kill) Die();
+				if (pushOverEdge) transform.position = currentTile.GetProjectedTilePos(direction);
 				return PushResult.OverEdge;
 			}
 		}

@@ -11,7 +11,7 @@ namespace StormRend.Systems
 	{
 		#region Sets
 		//Public; can be called via unity events
-		public void SelectUnit(AnimateUnit au, bool moveCam = false)
+		public void SelectUnit(AnimateUnit au, bool moveCamera = false)
 		{
 			//Clear tile highlights if a unit was already selected
 			if (isUnitSelected)
@@ -28,7 +28,7 @@ namespace StormRend.Systems
 			ShowMoveTiles();
 
 			//Move camera
-			if (moveCam) camMover.MoveTo(au, cameraSmoothTime);
+			if (moveCamera) camMover.MoveTo(au, cameraSmoothTime);
 
 			onUnitSelected.Invoke(au);  //ie. Update UI, Play sounds,
 		}

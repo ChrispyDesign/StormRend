@@ -125,6 +125,20 @@ namespace StormRend.MapSystems.Tiles
 
 	#region Utility
 		/// <summary>
+		/// Get an imaginary projected tile position from this tile
+		/// </summary>
+		public Vector3 GetProjectedTilePos(Vector2Int direction, bool diagonal = false)
+		{
+			const float adjacentDist = 1f; const float diagDist = 1.414213f;
+
+			//Determine where to scan for a tile
+			if (diagonal)
+				return transform.position + new Vector3(direction.x * owner.tileSize * diagDist, 0, direction.y * owner.tileSize * diagDist);
+			else
+				return transform.position + new Vector3(direction.x * owner.tileSize * adjacentDist, 0, direction.y * owner.tileSize * adjacentDist);
+		}
+
+		/// <summary>
 		/// Returns an adjacent tile in a certain direction.
 		/// Will only return immediately adjacent diagonal tiles.
 		/// If no tile found then return null.

@@ -268,24 +268,20 @@ namespace StormRend.Systems
 			return false;
 		}
 
+		//Is there a better more reliable way of doing this?
 		bool IsPointerOverGUIObject()
 		{
 			//Set up the new Pointer Event
-			var ped = new PointerEventData(EventSystem.current);
+			var pointerEventData = new PointerEventData(EventSystem.current);
 
 			//Set the Pointer Event Position to that of the mouse position
-			ped.position = Input.mousePosition;
+			pointerEventData.position = Input.mousePosition;
 
 			//Raycast using the Graphics Raycaster and mouse click position
 			GUIhits.Clear();
-			gr.Raycast(ped, GUIhits);
+			gr.Raycast(pointerEventData, GUIhits);
 
-			//For every result returned, output the name of the GameObject on the Canvas hit by the Ray
-			// foreach (RaycastResult result in GUIhits)
-			// 	Debug.Log("Hit " + result.gameObject.name);
-			
-			if (GUIhits.Count > 0) return true;
-			return false;
+			return (GUIhits.Count > 0) ? true : false;
 		}
 
 		void PopulateControllableUnitTypes()
