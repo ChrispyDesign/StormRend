@@ -1,6 +1,6 @@
 ﻿using pokoro.Patterns.Generic;
 using StormRend.Audio;
-using StormRend.States.UI;
+using StormRend.States;
 using StormRend.Systems.StateMachines;
 using StormRend.Units;
 using UnityEngine;
@@ -44,7 +44,7 @@ namespace StormRend.Systems
 		//Debugs
 		[SerializeField, Space(10)] bool debug = false;
 
-	#region Init
+		#region Init
 		void Awake()
 		{
 			//Audio
@@ -68,22 +68,18 @@ namespace StormRend.Systems
 		//Register events
 		void OnEnable() => ur.onUnitKilled.AddListener(CheckEndGame);
 		void OnDisable() => ur.onUnitKilled.RemoveListener(CheckEndGame);
-	#endregion
+		#endregion
 
-	#region Core
+	#region State Management
 		void Update() => HandlePause();
 		void HandlePause()
 		{
 			if (Input.GetKeyDown(pauseKey))
 			{
 				if (usm.currentState != pauseMenuState)
-				{
-					usm.Stack(pauseMenuState);
-				}
+					PauseGame();
 				else
-				{
-					usm.ClearStack();
-				}
+					UnpauseGame();
 			}
 		}
 
@@ -100,15 +96,19 @@ namespace StormRend.Systems
 				audioSource.PlayOneShot(victoryNarration);
 			}
 		}
+
+		public void PauseGame() => usm.Stack(pauseMenuState);
+		public void UnpauseGame() => usm.UnStack();
 	#endregion
 
-	#region Scene Management
+		#region Scene Management
 		public void ReloadCurrentScene()
 		{
+			Time.timeScale = 1f;
 			var currentScene = SceneManager.GetActiveScene();
 			SceneManager.LoadScene(currentScene.buildIndex);
 		}
-		public void LoadMainMenuScene()
+		public void LoadMainMenu()
 		{
 			//Reset time scale from any pausing
 			Time.timeScale = 1f;
@@ -126,9 +126,14 @@ namespace StormRend.Systems
 			Time.timeScale = 1f;
 			SceneManager.LoadScene(scene);
 		}
-	#endregion
+		public void LoadSceneIDX(int buildIDX)
+		{
+			Time.timeScale = 1f;
+			SceneManager.LoadScene(buildIDX);
+		}
+		#endregion
 
-	#region Debug
+		#region Debug
 		void OnGUI()
 		{
 			if (!debug) return;
@@ -141,13 +146,13 @@ namespace StormRend.Systems
 				foreach (var u in ur.GetAliveUnitsByType<T>())
 				{
 					var au = u as AnimateUnit;
-					if (au) 
+					if (au)
 						au.TakeDamage(new HealthData(null, 1000));
-					else 
+					else
 						u.TakeDamage(new HealthData(null, 1000));
 				}
 			}
 		}
-	#endregion
+		#endregion
 	}
 }

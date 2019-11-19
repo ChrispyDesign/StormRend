@@ -7,8 +7,12 @@ namespace StormRend.UI
 	/// <summary>
 	/// Timer to briefly countdown the time before the turn automatically ends
 	/// </summary>
-	public class TurnEndingCountdown : MonoBehaviour
+	public class EndTurnCountdown : MonoBehaviour
 	{
+		//Inspector
+		[SerializeField] string format = @"ss\:ff";
+
+		//Members
 		TextMeshProUGUI text = null;
 
 		void Awake()
@@ -19,7 +23,7 @@ namespace StormRend.UI
 		public void SetTime(float seconds)
 		{
 			TimeSpan counter = TimeSpan.FromSeconds(seconds);
-			text.text = counter.ToString(@"ss\:ff");
+			text.text = counter.ToString(format);
 		}
 	}
 }

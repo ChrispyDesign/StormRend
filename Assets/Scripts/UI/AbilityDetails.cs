@@ -11,11 +11,14 @@ namespace StormRend.UI
 {
     public class AbilityDetails : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
+		//Inspector
 		[ReadOnlyField, SerializeField] Ability ability = null;
-		[SerializeField] Image icon = null;
+		[ReadOnlyField, SerializeField] Image icon = null;
 		[SerializeField] AbilityEvent onHover = null;
 		[SerializeField] AbilityEvent onClick = null;
 		[SerializeField] UnityEvent onUnHover = null;
+
+		//Members
 		InfoPanel infoPanel;
 		Button button;
 
@@ -29,7 +32,7 @@ namespace StormRend.UI
 		{
 			button = GetComponent<Button>();
 			infoPanel = FindObjectOfType<InfoPanel>();
-			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(UnusedActionsChecker));
+			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(EndTurnButton));
 		}
 		
 		//Register

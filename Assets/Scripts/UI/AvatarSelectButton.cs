@@ -48,8 +48,8 @@ namespace StormRend.UI
 			userInputHandler = FindObjectOfType<UserInputHandler>();
 			button = GetComponent<Button>();
 
-			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(UnusedActionsChecker));
-			Debug.Assert(infoPanel, "There are no Input Handler in the scene. " + typeof(UnusedActionsChecker));
+			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(EndTurnButton));
+			Debug.Assert(infoPanel, "There are no Input Handler in the scene. " + typeof(EndTurnButton));
 
 			AutoLocateUnit();
 		}

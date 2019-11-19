@@ -1,9 +1,7 @@
-﻿using StormRend.Systems;
+﻿using StormRend.States;
+using StormRend.Systems;
 using StormRend.Systems.StateMachines;
-using StormRend.UI;
 using StormRend.Units;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace StormRend
@@ -13,7 +11,7 @@ namespace StormRend
 		[SerializeField] AudioClip gameLostClip;
 		[SerializeField] AudioClip gameWinClip;
 		[SerializeField] VictoryState victoryPanel;
-		[SerializeField] GameOverState gameOverPanel;
+		[SerializeField] DefeatState gameOverPanel;
 
 		UltraStateMachine usm;
 		UnitRegistry unitRegistry;

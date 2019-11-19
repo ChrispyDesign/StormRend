@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using StormRend.UI;
-using StormRend.States.UI;
 using StormRend.Units;
 using StormRend.Systems.StateMachines;
 using StormRend.Systems;
@@ -8,11 +7,11 @@ using UnityEngine.EventSystems;
 
 namespace StormRend.Assists
 {
-	public class UnusedActionsChecker : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+	public class EndTurnButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 	{
-		[SerializeField] string title = null;
-		[SerializeField] string details = null;
-		[SerializeField] OnState confirmationPanel;
+		[SerializeField] string title = "End Turn";
+		[SerializeField] string details = "Ends your current turn";
+		[SerializeField] State confirmationPanel;
 
 		InfoPanel infoPanel = null;
 		Animator anim = null;
@@ -25,8 +24,8 @@ namespace StormRend.Assists
 			infoPanel = FindObjectOfType<InfoPanel>();
 			anim = GetComponent<Animator>();
 
-			Debug.Assert(anim, "There are no Animator in the scene. " + typeof(UnusedActionsChecker));
-			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(UnusedActionsChecker));
+			Debug.Assert(anim, "There are no Animator in the scene. " + typeof(EndTurnButton));
+			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(EndTurnButton));
 		}
 		private void Start()
 		{
@@ -35,22 +34,20 @@ namespace StormRend.Assists
 			usm = gd.GetComponent<UltraStateMachine>();
 		}
 
-		public void CheckMovesAvailable()
-		{
-			infoPanel.UnShowPanel(true);
-
-			bool allUnitsHaveAttacked = true;
-
-			foreach (AllyUnit unit in ur.GetAliveUnitsByType<AllyUnit>())
-			{
-				if (unit.canAct) allUnitsHaveAttacked = false;
-			}
-
-			if (!allUnitsHaveAttacked)
-				usm.Stack(confirmationPanel);
-			else
-				usm.NextTurn();
-		}
+		//Theres already a class that checks for any moves: allactionusedchecker
+		// public void CheckMovesAvailable()
+		// {
+		// 	infoPanel.UnShowPanel(true);
+		// 	bool allUnitsHaveAttacked = true;
+		// 	foreach (AllyUnit unit in ur.GetAliveUnitsByType<AllyUnit>())
+		// 	{
+		// 		if (unit.canAct) allUnitsHaveAttacked = false;
+		// 	}
+		// 	if (!allUnitsHaveAttacked)
+		// 		usm.Switch(confirmationPanel);
+		// 	else
+		// 		usm.NextTurn();
+		// }
 
 		//Event system callbacks
 		public void OnPointerEnter(PointerEventData eventData)

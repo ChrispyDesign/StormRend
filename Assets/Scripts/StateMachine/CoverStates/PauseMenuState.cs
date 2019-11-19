@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using StormRend.Systems.StateMachines;
 
-namespace StormRend.States.UI
+namespace StormRend.States
 {
     /// <summary>
     /// * Auto handles game timescale changes
     /// </summary>
-    public class PauseMenuState : OnState
+    public class PauseMenuState : CoverState
     {
-        [SerializeField] float pauseTimeScale = 0.3f;
+        [Space(10), SerializeField] float pauseTimeScale = 0.2f;
 
         public override void OnEnter(UltraStateMachine sm)
         {

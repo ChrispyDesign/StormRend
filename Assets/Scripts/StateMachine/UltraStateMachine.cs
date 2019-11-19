@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace StormRend.Systems.StateMachines
 {
@@ -19,16 +17,18 @@ namespace StormRend.Systems.StateMachines
 		//and the state machines starts using stack states
 		//Turn based states can only be returned to once all Stacked states have bee popped off
 
-	#region Inspector
-		[ReadOnlyField] [SerializeField] int _currentStateIDX = 0;
+		//Inspector
+		[ReadOnlyField, SerializeField] int _currentStateIDX = 0;
 		[SerializeField] State entryState = null;
 		[SerializeField] List<State> turnStates = new List<State>();  //They have to be StackStates because they can be covered/uncovered
-		Stack<State> stackStates = new Stack<State>();
 
+		//Events
 		[Space]
 		public StateEvent onExitCurrentTurn;
 		public StateEvent onEnterNextTurn;
-	#endregion
+
+		//Members
+		Stack<State> stackStates = new Stack<State>();
 
 	#region Properties
 		public int turnsCount => turnStates.Count;
