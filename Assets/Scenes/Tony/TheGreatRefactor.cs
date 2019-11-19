@@ -3,6 +3,38 @@
 namespace The.Great.Refactor.Brainstorm
 {
 	/*
+	--------------------- Structure and Architecture
+	Core
+		Masters
+		- GameDirector
+		- UltraStateMachine
+		- AudioSystem, AudioSource
+		- EventSystem, StandaloneInputModule
+		TurnStates
+			AllyState
+			- AllyTurnState
+			- AudioSource, AudioSystem
+			EnemyState
+			- EnemyTurnState
+			- AudioSource, AudioSystem
+		Controllers
+			UserInputHandler
+			- UserInputHandler
+			- UnitSelectAudioRelay
+			- AudioSystem, AudioSource
+			UnitRegistry
+
+			BhaVE
+		Data
+			Blizzard
+			Glory
+			TileHighlights
+		[UI]
+
+	GameDirector:
+	- Helps control the UltraStateMachine as well as other side functionality ie. handling pause, scene management
+	-  
+
 	------------------- Brainstorm
 	- Glory and Blizzard are essentially just integer numbers
 		Implementation Ideas:
