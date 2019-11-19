@@ -30,19 +30,30 @@ namespace StormRend.Systems
 			ShowMoveTiles();
 		}
 
+		/// <summary>
+		/// Show selected unit's current move tiles
+		/// NOTE Unit's move tiles should be refreshed:
+		/// - At the beginning of the unit's turn
+		/// - When a unit is summoned or spawned in
+		/// - When a unit is killed
+		/// </summary>
 		void ShowMoveTiles()
 		{
-			//NOTE: Active unit's MOVE highlights should be refreshed:
-			// - At the start of each turn
-			// - After another unit has summoned something
-			if (!selectedAnimateUnit.canMove) return;
+			if (selectedAnimateUnit.canMove)
+			{
+				if (selectedAnimateUnit.possibleMoveTiles.Length <= 0)
+					selectedAnimateUnit.CalculateMoveTiles();
 
-			if (selectedAnimateUnit.possibleMoveTiles.Length <= 0)
-				selectedAnimateUnit.CalculateMoveTiles();
+				foreach (var t in selectedAnimateUnit?.possibleMoveTiles)
+				{
+					//Ignore the starting tile tile
+					if (t != selectedAnimateUnit.startTile)
+						t.SetHighlight(moveHighlight);
+				}
+			}
 
-			//Highlight
-			foreach (var t in selectedAnimateUnit?.possibleMoveTiles)
-				t.SetHighlight(moveHighlight);
+			//Starting tile
+			selectedAnimateUnit.startTile.SetHighlight(startHighlight);
 		}
 
 		void ShowActionTiles()
