@@ -32,8 +32,8 @@ namespace StormRend.Audio
 		{
 			var au = u as AnimateUnit;
 
-			//Only play if the unit can either move or act
-			if (!au.canAct || !au.canMove) return;
+			//Only play vocals if the unit can atleast act
+			if (!au.canAct) return;
 
 			switch (u.tag)
 			{
