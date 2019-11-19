@@ -7,49 +7,103 @@ using StormRend.Utility.Events;
 using UnityEngine.Events;
 using StormRend.Systems;
 using StormRend.Assists;
+using StormRend.Tags;
+using System;
+using StormRend.Utility.Attributes;
 
 namespace StormRend.UI
 {
+	[RequireComponent(typeof(Button))]
 	public class AvatarSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
-		[SerializeField] AnimateUnit unit = null;
+		//Enums
+		public enum AllyType
+		{
+			Off,
+			Berserker,
+			Valkyrie,
+			Sage
+		}
+
+		//Inspector
+		[SerializeField] AllyType allyType = AllyType.Berserker;
+		[ReadOnlyField, SerializeField] AnimateUnit unit = null;
 		[SerializeField] List<Image> healthNodes = new List<Image>();
 
-		string title;
-		string details;
-		public UnitEvent onHover;
-		public UnityEvent onUnHover;
-		UserInputHandler inputHandler;
+		//Events
+		public UnitEvent onHover = null;
+		public UnityEvent onUnhover = null;
 
-		InfoPanel infoPanel;
+		//Members
+		string title = null;
+		string details = null;
+		UserInputHandler userInputHandler = null;
+		InfoPanel infoPanel = null;
+		Button button = null;
 
+		//Core
 		void Awake()
 		{
 			infoPanel = FindObjectOfType<InfoPanel>();
-			inputHandler = FindObjectOfType<UserInputHandler>();
+			userInputHandler = FindObjectOfType<UserInputHandler>();
+			button = GetComponent<Button>();
 
 			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(UnusedActionsChecker));
 			Debug.Assert(infoPanel, "There are no Input Handler in the scene. " + typeof(UnusedActionsChecker));
+
+			AutoLocateUnit();
+		}
+		void OnEnable()
+		{
+			//Hook up button
+			button.onClick.AddListener(SelectUnit);
+			unit.onHeal.AddListener(UpdateHealthGUI);
+			unit.onTakeDamage.AddListener(UpdateHealthGUI);
+			unit.onDeath.AddListener(RelayUpdateHealthGUI);
+		}
+		void OnDisable()
+		{
+			button.onClick.RemoveListener(SelectUnit);
+			unit.onHeal.RemoveListener(UpdateHealthGUI);
+			unit.onTakeDamage.RemoveListener(UpdateHealthGUI);
+			unit.onDeath.AddListener(RelayUpdateHealthGUI);
 		}
 
-		public void ShowAbilities()
+		void AutoLocateUnit()
 		{
-			inputHandler.SelectUnit(unit);
-		}
-
-		public void UpdateGUIHealthBar()
-		{
-			foreach (Image img in healthNodes)
+			Type typeToFind = null;
+			switch (allyType)
 			{
-				img.fillAmount = 0;
+				case AllyType.Berserker:
+					typeToFind = typeof(BerserkerTag);
+					break;
+				case AllyType.Valkyrie:
+					typeToFind = typeof(ValkyrieTag);
+					break;
+				case AllyType.Sage:
+					typeToFind = typeof(SageTag);
+					break;
 			}
+			unit = (FindObjectOfType(typeToFind) as Tag).GetComponent<AnimateUnit>();
+		}
 
+		/// <summary>
+		/// On click
+		/// </summary>
+		public void SelectUnit() => userInputHandler.SelectUnit(unit, true);
+
+		public void RelayUpdateHealthGUI(Unit unit) => UpdateHealthGUI(new HealthData());
+		public void UpdateHealthGUI(HealthData data)
+		{
+			//Clear
+			foreach (var n in healthNodes)
+				n.fillAmount = 0f;
+			//Fill
 			for (int i = 0; i < unit.HP; i++)
-			{
-				healthNodes[i].fillAmount = 1;
-			}
+				healthNodes[i].fillAmount = 1f;
 		}
 
+		//Event System Callbacks
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			if (unit)	//Null checks
@@ -58,11 +112,9 @@ namespace StormRend.UI
 				infoPanel.ShowPanel(unit.name, 1, unit.description);
 			}
 		}
-
-
 		public void OnPointerExit(PointerEventData eventData)
 		{
-			onUnHover.Invoke();
+			onUnhover.Invoke();
 			infoPanel.UnShowPanel();
 		}
 	}
