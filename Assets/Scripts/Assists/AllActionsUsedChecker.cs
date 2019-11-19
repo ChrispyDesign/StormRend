@@ -1,40 +1,44 @@
 ﻿using System.Collections;
 using StormRend.Abilities;
 using StormRend.Systems.StateMachines;
+using StormRend.UI;
 using StormRend.Units;
 using UnityEngine;
 
-namespace StormRend.Assists 
-{ 
+namespace StormRend.Assists
+{
 	[RequireComponent(typeof(UnitRegistry))]
 	public class AllActionsUsedChecker : MonoBehaviour
 	{
 		//Inspector
 		[SerializeField] float delay = 3f;
+		[SerializeField] TurnEndingCountdown endTurnCounter = null;
 
 		//Properties
 		UltraStateMachine ultraStateMachine = null;
-
 		UnitRegistry ur = null;
+
 		void Awake()
 		{
-			//Unit Registry
 			ur = GetComponent<UnitRegistry>();
-
-			//Ultra State Machine
 			ultraStateMachine = FindObjectOfType<UltraStateMachine>();
+			if (!endTurnCounter) endTurnCounter = FindObjectOfType<TurnEndingCountdown>();
+
 			Debug.Assert(ultraStateMachine, "No Ultra State Machine found!");
+			Debug.Assert(endTurnCounter, "No turn end countdown timer passed in!");
 		}
 
 		//Register for each unit's onActed events
-		void Start()	//OnEnable runs too early
+		void Start()    //OnEnable runs too early
 		{
+			endTurnCounter.gameObject.SetActive(false);
+
 			foreach (var u in ur.GetAliveUnitsByType<AllyUnit>())
 			{
 				var au = u as AnimateUnit;
 				au.onActed.AddListener(Check);
 			}
-		} 
+		}
 		void OnDisable()
 		{
 			foreach (var u in ur.GetAliveUnitsByType<AllyUnit>())
@@ -57,8 +61,21 @@ namespace StormRend.Assists
 
 		IEnumerator NextTurn(float delay)
 		{
-			yield return new WaitForSeconds(delay);
+			//Activate counter
+			endTurnCounter?.gameObject.SetActive(true);
+
+			float time = delay;
+			while (time > 0)
+			{
+				time -= Time.deltaTime;
+				endTurnCounter?.SetTime(time);
+				yield return null;
+			}
+
 			ultraStateMachine.NextTurn();
+
+			//Deactivate counter
+			endTurnCounter?.gameObject.SetActive(false);
 		}
-   	}
+	}
 }

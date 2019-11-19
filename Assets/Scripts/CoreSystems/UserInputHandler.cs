@@ -1,17 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using pokoro.BhaVE.Core.Variables;
 using pokoro.Patterns.Generic;
 using StormRend.Abilities;
 using StormRend.CameraSystem;
 using StormRend.Enums;
-using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
 using StormRend.States;
 using StormRend.Systems.StateMachines;
 using StormRend.Units;
-using StormRend.Utility;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using StormRend.Variables;
@@ -287,8 +284,7 @@ namespace StormRend.Systems
 			// foreach (RaycastResult result in GUIhits)
 			// 	Debug.Log("Hit " + result.gameObject.name);
 			
-			if (GUIhits.Count > 0)
-				return true;
+			if (GUIhits.Count > 0) return true;
 			return false;
 		}
 
