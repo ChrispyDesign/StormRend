@@ -171,7 +171,7 @@ namespace StormRend.Systems
 					case Mode.Action:   //ACTION MODE
 						if (isUnitHit)
 							AddTargetTile(interimUnit);
-						if (isTileHit)
+						else if (isTileHit)					//Maybe this needs to be an else if so that only one add target tile gets passed through
 							AddTargetTile(interimTile);
 						break;
 
