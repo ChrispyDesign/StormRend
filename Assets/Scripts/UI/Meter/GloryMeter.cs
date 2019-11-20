@@ -62,9 +62,12 @@ namespace StormRend.UI
 			//Increase
 			if (internalGlory < glory.value)
 				increase = true;
+			
 			//Decrease
 			else if (internalGlory > glory.value)
 				decrease = true;
+			
+			internalGlory = glory.value;
 		}
 
 		public void UpdatePanel()
@@ -84,6 +87,7 @@ namespace StormRend.UI
 
 		IEnumerator IncreaseGlory(int _index)
 		{
+
 			if(gloryNodes[_index].fillAmount == 1)
 			{
 				startCheck = false;
