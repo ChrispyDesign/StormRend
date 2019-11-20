@@ -17,18 +17,18 @@ using UnityEngine.EventSystems;
 namespace StormRend.Units
 {
 	[SelectionBase] //Avoid clicking on child objects
-	public abstract class AnimateUnit : Unit, IPointerEnterHandler, IPointerExitHandler
+	public abstract class AnimateUnit : Unit //, IPointerEnterHandler, IPointerExitHandler
 	{
 		//Enums
 		public enum LookSnap
 		{
 			RightAngle,
-			Diagonals_BUGGY,
-			Free_BUGGY,
+			// Diagonals_BUGGY,
+			// Free_BUGGY,
 		}
 
 		//Inspector
-		[ReadOnlyField] public Tile beginTurnTile = null;   //The tile this unit starts from at the beginning of each turn
+		[ReadOnlyField] public Tile startTile = null;   //The tile this unit starts from at the beginning of each turn
 		[ReadOnlyField, SerializeField] bool _canMove = true;
 		[ReadOnlyField, SerializeField] bool _canAct = true;
 		[SerializeField] LookSnap lookSnap = LookSnap.RightAngle;
@@ -48,6 +48,7 @@ namespace StormRend.Units
 		[Header("Animate Unit Events")]
 		public UnityEvent onBeginTurn = null;
 		public EffectEvent onAddStatusEffect = null;
+		public TileEvent onMoved = null;
 		public AbilityEvent onActed = null;
 		public UnityEvent onEndTurn = null;
 
@@ -63,30 +64,36 @@ namespace StormRend.Units
 				switch (lookSnap)
 				{
 					case LookSnap.RightAngle: return 90f;
-					case LookSnap.Diagonals_BUGGY: return 45f;
-					case LookSnap.Free_BUGGY: return 1f;
+					// case LookSnap.Diagonals_BUGGY: return 45f;
+					// case LookSnap.Free_BUGGY: return 1f;
 					default: return 90f;
 				}
 			}
 		}
 
 		//Status Effect Properties
-		public bool isProvoking	{
-			get	{
+		public bool isProvoking
+		{
+			get
+			{
 				foreach (var se in statusEffects)
 					if (se is TauntEffect) return true;
 				return false;
 			}
 		}
-		public bool isImmobilised {
-			get {
+		public bool isImmobilised
+		{
+			get
+			{
 				foreach (var se in statusEffects)
 					if (se is ImmobiliseEffect) return true;
 				return false;
 			}
 		}
-		public bool isBlind {
-			get {
+		public bool isBlind
+		{
+			get
+			{
 				foreach (var se in statusEffects)
 					if (se is BlindEffect) return true;
 				return false;
@@ -103,9 +110,9 @@ namespace StormRend.Units
 		public void SetCanMove(bool value, float delay = 0) => StartCoroutine(DelaySetMove(value, delay));
 		IEnumerator DelaySetMove(bool value, float delay)       //Used for correct timing of refresh effect
 		{
-			yield return new WaitForSeconds(delay);
+			//Set immediately so that the AllActionsUsedChecker logic runs correctly
 			_canMove = value;
-
+			yield return new WaitForSeconds(delay);
 			//If move value true then reselect unit so that the move tiles will appear
 			if (_canMove) uih.SelectUnit(this);
 		}
@@ -113,9 +120,9 @@ namespace StormRend.Units
 		public void SetCanAct(bool value, float delay = 0) => StartCoroutine(DelaySetAct(value, delay));
 		IEnumerator DelaySetAct(bool value, float delay)        //Used for correct timing of refresh effect
 		{
-			yield return new WaitForSeconds(delay);
+			//Set immediately so that the AllActionsUsedChecker logic runs correctly
 			_canAct = value;
-
+			yield return new WaitForSeconds(delay);
 			//If can act again then show new possible act tiles
 			if (_canAct)
 			{
@@ -135,7 +142,7 @@ namespace StormRend.Units
 			base.Awake();   //This sets the current tile
 
 			//Record origin tile
-			beginTurnTile = currentTile;
+			startTile = currentTile;
 
 			PrepGhost();
 		}
@@ -167,12 +174,22 @@ namespace StormRend.Units
 
 		#region Core
 		//------------------ CALLBACKS
+		/// <summary>
+		/// Kills the unit. No need to send in a huge value etc.
+		/// </summary>
+		public void Kill(Unit vendor = null)
+		{
+			//Just set the damage amount to match unit's current health
+			TakeDamage(new HealthData(vendor, HP));
+		}
+
 		public override void TakeDamage(HealthData damageData)
 		{
 			base.TakeDamage(damageData);
 
-			//Face attack
-			transform.rotation = GetSnappedRotation(damageData.vendor.transform.position, snapAngle);
+			//Face attacker if available
+			if (damageData.vendor)
+				transform.rotation = GetSnappedRotation(damageData.vendor.transform.position, snapAngle);
 
 			//Animate
 			animator.SetTrigger("HitReact");
@@ -190,18 +207,22 @@ namespace StormRend.Units
 			_canMove = true;
 			_canAct = true;
 
+			//Other resets
+			hasKilledThisTurn = false;
+
 			//Calculate new move tiles
-			beginTurnTile = currentTile;
-			CalculateMoveTiles();
+			startTile = currentTile;
+			CalculateMoveTiles();       //Doesn't work anyways
 
 			//Prep effects (reset counts etc)
 			foreach (var a in abilities)
 				foreach (var e in a.effects)
 					e.Prepare(a, this);
 
-			//Begin Status effects (ie. blind, cripple, etc)
-			foreach (var se in statusEffects)
-				se.OnBeginTurn(this);
+			//Run Begin Status effects (ie. blind, cripple, etc) 
+			for (int i = statusEffects.Count - 1; i >= 0; --i)
+				if (!statusEffects[i].OnBeginTurn(this))    //Also auto remove expired status effects
+					statusEffects.RemoveAt(i);
 
 			onBeginTurn.Invoke();
 		}
@@ -248,42 +269,58 @@ namespace StormRend.Units
 			//Only set the position of the ghost
 			if (useGhost)
 			{
-				//Filter out non-moving tiles
-				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
-				//Set
-				ghostTile = destination;
-				//Move and look
-				ghost?.SetActive(true);
-				ghost.transform.rotation = GetSnappedRotation(ghostTile.transform.position, snapAngle);
-				ghost.transform.position = ghostTile.transform.position;
+				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;		//Filter
+				ghostTile = destination;	//Set
+				ghost?.SetActive(true);		//Activate
+				ghost.transform.rotation = GetSnappedRotation(ghostTile.transform.position, snapAngle);		//Look
+				// StartCoroutine(LerpMove(ghost.transform, ghostTile.transform.position));		//Lerp
+				ghost.transform.position = ghostTile.transform.position;		//Move Ghost
 			}
 			//Move the actual unit
 			else
 			{
 				//Ghost was probably just active so deactivate ghost ??? Should this be here?
 				if (ghost != null) ghost.SetActive(false);
-				//Filter
-				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
-				//Set
-				currentTile = destination;
-				//Move and look
-				transform.rotation = GetSnappedRotation(currentTile.transform.position, snapAngle);
-				transform.position = currentTile.transform.position;
+				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;		//Filter
+				currentTile = destination;		//Set
+				transform.rotation = GetSnappedRotation(currentTile.transform.position, snapAngle);		//Look
+				// StartCoroutine(LerpMove(transform, currentTile.transform.position));		//Lerp
+				transform.position = currentTile.transform.position;		//Move
+				onMoved.Invoke(currentTile);	//Events
 			}
+
+
 			//NOTE: Unit can still move
 			return true;    //Successful move
+		}
 
+		/// <summary>
+		/// Hmmm... lerps don't particularly look that good
+		IEnumerator LerpMove(Transform root, Vector3 destination, float lerpTime = 0.3f)
+		{
+			float time = 0;
+			float rate = time / lerpTime;
+			while (time < lerpTime)
+			{
+				time += Time.deltaTime;
+				root.position = Vector3.Lerp(root.position, destination, time);
+				yield return null;
+			}
+			root.position = destination;
 		}
 
 		/// <summary>
 		/// Force Move Unit by direction ie. (0, 1) means the unit to moves forward 1 tile.
 		/// Can set to kill unit pushed over the edge.
 		/// </summary>
-		public PushResult Push(Vector2Int direction, bool kill = true, bool faceBackward = true)
+		public PushResult Push(Vector2Int direction, bool pushOverEdge = true, bool faceBackward = true)
 		{
 			if (currentTile.TryGetTile(direction, out Tile t))
 			{
 				var originalTile = currentTile;
+
+				//Face backward Part 1: faces the attacker even if pushed into an obstacle
+				if (faceBackward) SnappedLookAt(new Vector3(transform.position.x - direction.x, 0, transform.position.z - direction.y));
 
 				//Check for any units or obstacles
 				if (UnitRegistry.IsAnyUnitOnTile(t))
@@ -295,14 +332,18 @@ namespace StormRend.Units
 
 				//Push unit back (facing toward the pusher)
 				Move(t, false, false, true);
-				if (faceBackward) 
-					transform.rotation = GetSnappedRotation(originalTile.transform.position, snapAngle);
+				//Correct the facing
+				if (faceBackward) SnappedLookAt(new Vector3(transform.position.x - direction.x, 0, transform.position.z - direction.y));
 				return PushResult.Nothing;
 			}
+			//PUSHED OF THE EDGE
 			else
 			{
+				//Face backward
+				if (faceBackward) SnappedLookAt(new Vector3(-direction.x, 0, -direction.y));
+
 				//Pushed out of bounds
-				if (kill) Die();
+				if (pushOverEdge) transform.position = currentTile.GetProjectedTilePos(direction);
 				return PushResult.OverEdge;
 			}
 		}
@@ -325,7 +366,6 @@ namespace StormRend.Units
 			// float deltaAngle = (t * snapAngle) - angle;
 			// return Quaternion.AngleAxis(deltaAngle, Vector3.Cross(Vector3.up, dir));
 		}
-
 
 		//------------------- PERFORM ABILITY
 		/// <summary>
@@ -374,9 +414,6 @@ namespace StormRend.Units
 			//animations events to be executed with precision timing
 			animator.SetTrigger(ability.animationTrigger);
 
-			//Event
-			onActed.Invoke(ability);
-
 			//Status effects
 			foreach (var se in statusEffects)
 				se.OnActed(this);
@@ -390,6 +427,9 @@ namespace StormRend.Units
 			//Targets calculated
 			if (currentTargetTiles.Length == 0 || currentAbility == null) return;
 			currentAbility.Perform(this, currentTargetTiles);
+
+			//Event (This needs to go here in case refresh effect)
+			onActed.Invoke(currentAbility);
 		}
 
 		/// <summary>
@@ -399,6 +439,9 @@ namespace StormRend.Units
 		{
 			if (currentTargetTiles.Length == 0 || currentAbility == null) return;
 			currentAbility.Perform<T>(this, currentTargetTiles);
+
+			//Event (This needs to go here in case refresh effect)
+			onActed.Invoke(currentAbility);
 		}
 
 		//------------------- CALCULATE TILES
@@ -412,29 +455,37 @@ namespace StormRend.Units
 			//Default to this unit's move range if nothing passed in
 			if (range == 0) range = moveRange;
 
-			var pathblockers = new List<Type>();
+			return possibleMoveTiles = Map.GetPossibleTiles(startTile.owner, startTile, range, pathBlockingUnitTypes);
+		}
 
-			//Allies
-			if ((pathBlockers & TargetType.Allies) == TargetType.Allies)
-				pathblockers.Add(typeof(AllyUnit));
+		public Type[] pathBlockingUnitTypes
+		{
+			get
+			{
+				var results = new List<Type>();
 
-			//Enemies
-			if ((pathBlockers & TargetType.Enemies) == TargetType.Enemies)
-				pathblockers.Add(typeof(EnemyUnit));
+				//Allies
+				if ((pathBlockers & TargetType.Allies) == TargetType.Allies)
+					results.Add(typeof(AllyUnit));
 
-			//Crystals
-			if ((pathBlockers & TargetType.Crystals) == TargetType.Crystals)
-				pathblockers.Add(typeof(CrystalUnit));
+				//Enemies
+				if ((pathBlockers & TargetType.Enemies) == TargetType.Enemies)
+					results.Add(typeof(EnemyUnit));
 
-			//InAnimates
-			if ((pathBlockers & TargetType.InAnimates) == TargetType.InAnimates)
-				pathblockers.Add(typeof(InAnimateUnit));
+				//Crystals
+				if ((pathBlockers & TargetType.Crystals) == TargetType.Crystals)
+					results.Add(typeof(CrystalUnit));
 
-			//Animates
-			if ((pathBlockers & TargetType.Animates) == TargetType.Animates)
-				pathblockers.Add(typeof(AnimateUnit));
+				//InAnimates
+				if ((pathBlockers & TargetType.InAnimates) == TargetType.InAnimates)
+					results.Add(typeof(InAnimateUnit));
 
-			return possibleMoveTiles = Map.GetPossibleTiles(beginTurnTile.owner, beginTurnTile, range, pathblockers.ToArray());
+				//Animates
+				if ((pathBlockers & TargetType.Animates) == TargetType.Animates)
+					results.Add(typeof(AnimateUnit));
+
+				return results.ToArray();
+			}
 		}
 
 		/// <summary>
@@ -484,16 +535,15 @@ namespace StormRend.Units
 		#endregion
 
 		#region Event System Interface Implementations
-		public override void OnPointerEnter(PointerEventData eventData)
-		{
-			base.OnPointerEnter(eventData);
-
-			//InfoPanel.current.SetText()
-		}
-		public override void OnPointerExit(PointerEventData eventData)
-		{
-			base.OnPointerExit(eventData);
-		}
+		// public override void OnPointerEnter(PointerEventData eventData)
+		// {
+		// 	base.OnPointerEnter(eventData);
+		// 	//InfoPanel.current.SetText()
+		// }
+		// public override void OnPointerExit(PointerEventData eventData)
+		// {
+		// 	base.OnPointerExit(eventData);
+		// }
 		#endregion
 	}
 }

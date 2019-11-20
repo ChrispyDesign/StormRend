@@ -16,15 +16,15 @@ MonoBehaviour:
   _animationTrigger: FuriousSwing
   _type: 1
   _level: 3
-  _title: Furious Swing
+  _title: Furious Swing Lv3
   _descriptions:
-  - Deal 2 damage
-  - If you kill an enemy, you may move and attack again
-  - Deal +2 damage
+  - Deal 2 Damage
+  - Move and Attack again if enemy killed
+  - Deal +2 Damage
   _gloryCost: 4
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
-  _targetTileTypes: 64
+  _targetTileTypes: 2
   effects:
   - {fileID: 114216635607373462}
   - {fileID: 114645139991781540}
@@ -41,9 +41,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
-  refreshCount: 0
-  refreshType: 0
   delay: 1
+  refreshCount: 0
+  onlyIfHaveKilledThisTurn: 0
+  refreshType: 0
   allowedRefreshes: 1
 --- !u!114 &114186159587013604
 MonoBehaviour:
@@ -78,7 +79,7 @@ MonoBehaviour:
   piercing: 0
   gainGlory: 1
   gloryAmount: 0
-  glory: {fileID: 0}
+  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
 --- !u!114 &114303405589470718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -91,9 +92,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
-  refreshCount: 0
-  refreshType: 0
   delay: 1
+  refreshCount: 0
+  onlyIfHaveKilledThisTurn: 0
+  refreshType: 0
   allowedRefreshes: 1
 --- !u!114 &114645139991781540
 MonoBehaviour:
@@ -107,7 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
-  refreshCount: 0
-  refreshType: -1
   delay: 1
+  refreshCount: 0
+  onlyIfHaveKilledThisTurn: 0
+  refreshType: -1
   allowedRefreshes: 1

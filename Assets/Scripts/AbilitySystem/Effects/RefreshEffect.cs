@@ -15,20 +15,25 @@ namespace StormRend.Abilities.Effects
 			ActAgain = 1 << 1,
 		}
 
-		[ReadOnlyField, SerializeField] int refreshCount = 0;		//internal refresh count
-        [EnumFlags, SerializeField] RefreshType refreshType = 0;
-		[Tooltip("The duration before the refresh is performed")]
+		[Tooltip("The duration before the unit gets re-selected")]
 		[SerializeField] float delay = 1f;
+
+		[Header("NOTE: Refresh must be after Damage Effect")]
+		[ReadOnlyField, SerializeField] int refreshCount = 0;		//internal refresh count
+		[SerializeField] bool onlyIfHaveKilledThisTurn = false;
+        [EnumFlags, SerializeField] RefreshType refreshType = 0;
+
 		[SerializeField] int allowedRefreshes = 1;
 
-		public override void Prepare(Ability ability, Unit owner)
-		{
-			refreshCount = 0;	//Reset the refresh count
-		}
-
+		public override void Prepare(Ability ability, Unit owner) => refreshCount = 0;
 		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
         {
 			if (refreshCount >= allowedRefreshes) return;
+
+			//Must have killed a unit to allow this refresh to continue
+			if (onlyIfHaveKilledThisTurn && !owner.hasKilledThisTurn) return;
+
+			Debug.Log("Refreshing!");
 			
 			//MoveAgain
 			if ((refreshType & RefreshType.MoveAgain) == RefreshType.MoveAgain)

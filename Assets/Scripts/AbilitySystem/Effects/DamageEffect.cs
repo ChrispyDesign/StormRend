@@ -53,10 +53,20 @@ namespace StormRend.Abilities.Effects
 
 				//Round the coords it to the nearest 1 or zero
 				Vector3 dirVector = (target.transform.position - owner.currentTile.transform.position).normalized;  //Get normalized direction
-				Vector2Int attackDirection = new Vector2(dirVector.x, dirVector.z).ToVector2Int();  //Convert to v2int direction
+				Vector2Int attackDirection = new Vector2Int(Mathf.CeilToInt(dirVector.x), Mathf.CeilToInt(dirVector.z));
+
+				Debug.Log("Attack Direction: " + attackDirection);
+
+				//Detect 0,0 error
+				if (attackDirection.x == 0 && attackDirection.y == 0)
+				{
+					Debug.LogWarning("Invalid attack direction (0, 0)! Exiting...");
+					return;
+				}
 
 				//Attack all units in that direction
 				var workingTile = owner.currentTile;        //Start at owner's tile
+				int i = 0;
 				while (workingTile.TryGetTile(attackDirection, out Tile t, true))   //Keep getting tile in direction of the attack
 				{
 					//Check is in the list of possible targets
@@ -73,11 +83,23 @@ namespace StormRend.Abilities.Effects
 
                                 //If victim was killed then invoke owner's on kill event
 								//HARDCODE: ENEMY FILTER
-                                if (victim.isDead && victim is EnemyUnit) InvokeEnemyKillEvent(owner, victim);
+                                if (victim.isDead && victim is EnemyUnit) SetJustKilled(owner, victim);
 							}
 						}
 					}
 					workingTile = t;    //Try getting from the new tile
+
+					//Infinite loop debug
+					if (i < 3)
+						++i;
+					else
+					{
+						Debug.LogError("Infinite loop detected!");
+						Debug.LogErrorFormat("Target Tile: {0}", targetTiles[0]);
+						Debug.LogErrorFormat("Direction Vector: {0}", dirVector);
+						Debug.LogErrorFormat("Attack Direction: {0}", attackDirection);
+						break;
+					}
 				}
 			}
 			//NORMAL ATTACK
@@ -94,7 +116,7 @@ namespace StormRend.Abilities.Effects
 						HandleGainGlory(victim);
 
 						//If victim was killed then invoke owner's on kill event
-                        if (victim.isDead & victim is EnemyUnit) InvokeEnemyKillEvent(owner, victim);
+                        if (victim.isDead & victim is EnemyUnit) SetJustKilled(owner, victim);
 					}
 				}
 			}
@@ -117,8 +139,9 @@ namespace StormRend.Abilities.Effects
 			}
 		}
 
-		void InvokeEnemyKillEvent(Unit owner, Unit victim)
+		void SetJustKilled(Unit owner, Unit victim)
 		{
+			owner.hasKilledThisTurn = true;
 			owner.onEnemyKilled.Invoke(victim);
 		}
 	}

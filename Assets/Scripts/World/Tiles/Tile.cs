@@ -20,16 +20,15 @@ namespace StormRend.MapSystems.Tiles
 	{
 		//Highlights
 		static bool highlightsScanned = false;
-		public static Dictionary<string, TileHighlightColor> highlightColors { get; private set; } = new Dictionary<string, TileHighlightColor>();
+		public static Dictionary<string, TileHighlightSetting> highlightColors { get; private set; } = new Dictionary<string, TileHighlightSetting>();
 
 		//Inspector
 		[SerializeField] AudioClip onHoverSFX = null;
+		[Range(0f, 1f), SerializeField] float SFXVolume = 0.25f;
+
 		[Tooltip("If not set will default to 'Hover' highlight or clear")]
-		[SerializeField] TileHighlightColor hoverHL = null;
+		[SerializeField] TileHighlightSetting hoverHighlight = null;
 		public float cost = 1;
-		internal float G = float.MaxValue;
-		internal float H = float.MaxValue;
-		internal float F = 0;
 
 		//Properties
 		public Map owner => Map.current;
@@ -37,12 +36,18 @@ namespace StormRend.MapSystems.Tiles
 		//Members
 		[ReadOnlyField] public List<Tile> connections = new List<Tile>();	//List because HashSets don't serialize
 		[HideInInspector, SerializeField] protected Renderer rend = null;
+
 		//This avoids tile highlight issues when cursor unhovers
-		TileHighlightColor normalColor = null;
+		TileHighlightSetting defaultColor = null;		//The current default normal color of this tile
 		TileHighlight highlight = null;
 		AudioSource audioSource = null;
 
-	#region Core
+		//Other
+		internal float G = float.MaxValue;
+		internal float H = float.MaxValue;
+		internal float F = 0;
+
+		#region Core
 		void OnValidate()	//Need to get the renderer in editor for gizmos to work
 		{
 			rend = GetComponent<Renderer>();
@@ -55,33 +60,29 @@ namespace StormRend.MapSystems.Tiles
 
 			//Get the general purpose
 			audioSource = GameDirector.current.generalAudioSource;
-
-			// //Set hover highlight default
-			// if (!hoverHighlight)
-			// {
-			// 	if (highlightColors.TryGetValue("Hover", out TileHighlightColor hover))
-			// 		hoverHighlight = hover;
-			// }
 		}
 
 		public void Connect(Tile to) => connections.Add(to);
 		public bool Disconnect(Tile from) => connections.Remove(from);
 		public bool Contains(Tile t) => connections.Contains(t);
 		public void DisconnectAll() => connections.Clear();
-		public void SetColor(TileHighlightColor tileHighlightColor)
+
+		/// <summary>
+		/// Sets this tile's temporary highlight while remembering the default color
+		/// </summary>
+		public void SetHighlight(TileHighlightSetting tileHighlightColor)
 		{
-			normalColor = tileHighlightColor;
-			highlight.color = normalColor.color;
+			defaultColor = tileHighlightColor;
+			highlight.Set(defaultColor);
 		}
-		public void SetColor(Color color)
-		{
-			normalColor.color = color;
-			highlight.color = normalColor.color;
-		}
+
+		/// <summary>
+		/// Returns the tile back to it's default color
+		/// </summary>
 		public void ClearColor()
 		{
-			normalColor = ScriptableObject.CreateInstance<TileHighlightColor>();
-			highlight.color = normalColor.color;
+			defaultColor = ScriptableObject.CreateInstance<TileHighlightSetting>();
+			highlight.Set(defaultColor);
 		}
 	#endregion
 
@@ -94,7 +95,7 @@ namespace StormRend.MapSystems.Tiles
 		{
 			if (!highlightsScanned)
 			{
-				var foundHighlights = Resources.FindObjectsOfTypeAll<TileHighlightColor>();
+				var foundHighlights = Resources.FindObjectsOfTypeAll<TileHighlightSetting>();
 				// var foundHighlights = Resources.LoadAll("", typeof(TileHighlightColor)) as TileHighlightColor[];
 				foreach (var fh in foundHighlights)
 				{
@@ -118,11 +119,25 @@ namespace StormRend.MapSystems.Tiles
 		void SetupInternalColours()
 		{
 			//Setup internal tile highlight color
-			normalColor = ScriptableObject.CreateInstance<TileHighlightColor>();
+			defaultColor = ScriptableObject.CreateInstance<TileHighlightSetting>();
 		}
 	#endregion
 
 	#region Utility
+		/// <summary>
+		/// Get an imaginary projected tile position from this tile
+		/// </summary>
+		public Vector3 GetProjectedTilePos(Vector2Int direction, bool diagonal = false)
+		{
+			const float adjacentDist = 1f; const float diagDist = 1.414213f;
+
+			//Determine where to scan for a tile
+			if (diagonal)
+				return transform.position + new Vector3(direction.x * owner.tileSize * diagDist, 0, direction.y * owner.tileSize * diagDist);
+			else
+				return transform.position + new Vector3(direction.x * owner.tileSize * adjacentDist, 0, direction.y * owner.tileSize * adjacentDist);
+		}
+
 		/// <summary>
 		/// Returns an adjacent tile in a certain direction.
 		/// Will only return immediately adjacent diagonal tiles.
@@ -184,19 +199,19 @@ namespace StormRend.MapSystems.Tiles
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			//Set default if no color specifically set at startup
-			if (!hoverHL && highlightColors.TryGetValue("Hover", out TileHighlightColor color))
-				hoverHL = color;
+			if (!hoverHighlight && highlightColors.TryGetValue("Hover", out TileHighlightSetting color))
+				hoverHighlight = color;
 
 			//Set hover
-			highlight.color = hoverHL.color;
+			highlight.Set(hoverHighlight);
 
 			//Hover sound
-			audioSource.PlayOneShot(onHoverSFX);
+			audioSource.PlayOneShot(onHoverSFX, SFXVolume);
 		}
 		public void OnPointerExit(PointerEventData eventData)
 		{
 			//Reset back
-			highlight.color = normalColor.color;
+			highlight.Set(defaultColor);
 		}
 	#endregion
 	}

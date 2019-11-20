@@ -7,19 +7,22 @@ namespace StormRend.Abilities.Effects
 	/// Prevents affected unit from performing abilities
 	/// </summary>
 	public class BlindEffect : StatusEffect
-    {
+	{
 		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
 			AddStatusEffectToAnimateUnits(targetTiles);
 			BlindTargetUnitsImmediately(targetTiles);
 		}
 
-		public override void OnBeginTurn(AnimateUnit affectedUnit)
+		public override bool OnBeginTurn(AnimateUnit affectedUnit)
 		{
-			base.OnBeginTurn(affectedUnit);
-
-			//Prevent from performing abilities
-			affectedUnit.SetCanAct(false);
+			var valid = base.OnBeginTurn(affectedUnit);
+			if (valid)
+			{
+				//Prevent from performing abilities
+				affectedUnit.SetCanAct(false);
+			}
+			return valid;
 		}
 
 		void BlindTargetUnitsImmediately(Tile[] targetTiles)

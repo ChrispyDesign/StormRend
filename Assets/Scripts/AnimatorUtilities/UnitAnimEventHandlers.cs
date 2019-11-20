@@ -15,7 +15,6 @@ namespace StormRend.Anim.EventHandlers
 		[Tooltip("Put references to prefabbed particles here")]
 		[SerializeField] GameObject[] inbuiltVFX = null;
 		[SerializeField] float inbuiltVFXLifetime = 5f;
-		public UnityEvent onDeath = null;
 
 		//Members
 		protected Unit unit = null;
@@ -31,12 +30,22 @@ namespace StormRend.Anim.EventHandlers
 		}
 
 		#region General
-		public virtual void PerformAbility() => animateUnit.Act();
+		public virtual void PerformAbility() => animateUnit?.Act();
 
 		public virtual void Die()
 		{
-			deathDissolver.Execute();
-			onDeath.Invoke();   //Run death dissolve and die etc
+			switch (unit)
+			{
+				case AnimateUnit au:
+					deathDissolver.Execute();
+					break;
+				case InAnimateUnit iu:
+					iu.Die();
+					break;
+				default:
+					unit.Die();
+					break;
+			}
 		}
 		#endregion
 
@@ -54,7 +63,7 @@ namespace StormRend.Anim.EventHandlers
 		/// <summary>
 		/// Activates and then deactivates the inbuilt vfx based on it's total duration
 		/// </summary>
-		public void CycleInbuiltVFX(string name)
+		public void PlayInbuiltVFX(string name)
 		{
 			foreach (var ivfx in inbuiltVFX)
 				if (ivfx.name == name)

@@ -6,19 +6,16 @@ namespace StormRend.Audio
 {
 	public class UnitSelectAudioRelay : AudioRelay
 	{
-		[Range(0f, 1f), SerializeField] float selectSFXVolume = 0.5f;
 
-		[Header("Berserker")]
+		[Header("On Select Vocals")]
 		[SerializeField] AudioMagazine berserkerVocals = null;
-		[SerializeField] AudioClip berserkerSelectSFX = null;
-
-		[Header("Valkyrie")]
 		[SerializeField] AudioMagazine valkyrieVocals = null;
-		[SerializeField] AudioClip valkyrieSelectSFX = null;
-
-		[Header("Sage")]
 		[SerializeField] AudioMagazine sageVocals = null;
-		[SerializeField] AudioClip sageSelectSFX = null;
+
+		// [Range(0f, 1f), SerializeField] float selectSFXVolume = 0.5f;
+		// [SerializeField] AudioClip berserkerSelectSFX = null;
+		// [SerializeField] AudioClip valkyrieSelectSFX = null;
+		// [SerializeField] AudioClip sageSelectSFX = null;
 
 		void Start()
 		{
@@ -35,21 +32,21 @@ namespace StormRend.Audio
 		{
 			var au = u as AnimateUnit;
 
-			//Only play if the unit can either move or act
-			if (!au.canAct || !au.canMove) return;
+			//Only play vocals if the unit can atleast act
+			if (!au.canAct) return;
 
 			switch (u.tag)
 			{
 				case BerserkerTag b:
-					audioSource.PlayOneShot(berserkerSelectSFX, selectSFXVolume);
+					// audioSource.PlayOneShot(berserkerSelectSFX, selectSFXVolume);
 					audioSystem.ChancePlayMagazine(berserkerVocals);
 					break;
 				case ValkyrieTag v:
-					audioSource.PlayOneShot(valkyrieSelectSFX, selectSFXVolume);
+					// audioSource.PlayOneShot(valkyrieSelectSFX, selectSFXVolume);
 					audioSystem.ChancePlayMagazine(valkyrieVocals);
 					break;
 				case SageTag s:
-					audioSource.PlayOneShot(sageSelectSFX, selectSFXVolume);
+					// audioSource.PlayOneShot(sageSelectSFX, selectSFXVolume);
 					audioSystem.ChancePlayMagazine(sageVocals);
 					break;
 			}

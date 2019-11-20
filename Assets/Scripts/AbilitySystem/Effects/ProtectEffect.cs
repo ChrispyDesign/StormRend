@@ -10,9 +10,9 @@ namespace StormRend.Abilities.Effects
 			AddStatusEffectToAnimateUnits(targetTiles);
 		}
 
-		public override void OnBeginTurn(AnimateUnit affectedUnit)
+		public override bool OnBeginTurn(AnimateUnit affectedUnit)
 		{
-			base.OnBeginTurn(affectedUnit);		//Housekeeping
+			return base.OnBeginTurn(affectedUnit);		//Housekeeping
 		}
 
 		public override void OnTakeDamage(Unit affectedUnit, HealthData damageData)

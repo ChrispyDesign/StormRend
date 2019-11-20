@@ -1186,11 +1186,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inbuiltVFX: []
   inbuiltVFXLifetime: 5
-  onDeath:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &7989871580173653557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1203,6 +1198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ebcd1b983e6ead408869a314176f796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathVFX: {fileID: 11400000, guid: 8a7d399b8029c7d40b091d3d4f1444b8, type: 2}
   startDelay: 1.5
   duration: 2.5
   shaderParam: _DisolveValue
@@ -2219,8 +2215,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: -0.0000011324883, z: -0.026883118}
-    m_Extent: {x: 0.034095444, y: 0.00793354, z: 0.032844357}
+    m_Center: {x: 9.294413e-10, y: -0.0000011138618, z: -0.026883082}
+    m_Extent: {x: 0.034095414, y: 0.007933535, z: 0.032844327}
   m_DirtyAABB: 0
 --- !u!183 &4109132575281108322
 Cloth:
@@ -2576,8 +2572,9 @@ GameObject:
   - component: {fileID: 9108019807441497514}
   - component: {fileID: 4751560053520480620}
   - component: {fileID: 5620367471101316635}
+  - component: {fileID: 6691868280363907097}
   - component: {fileID: 9108019807441497519}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Sage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2598,6 +2595,7 @@ Transform:
   - {fileID: 3300960008065256382}
   - {fileID: 6396203914922838199}
   - {fileID: 2016376687772599369}
+  - {fileID: 4810586008327010053}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2625,10 +2623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e74e1bda9c3f0d45ae50a717d100e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: 'Sage: gain Glory when enemies die near her
-
-    Because of the way the Ability panel is setup, SoulCommune must be the 6th (last
-    element) for this to work'
+  description: 'Sage: Gain Glory when Enemies Die Near Her'
   _hp: 0
   _maxHP: 3
   onDeath:
@@ -2652,7 +2647,7 @@ MonoBehaviour:
     m_TypeName: StormRend.Utility.Events.HealthEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   currentTile: {fileID: 0}
-  beginTurnTile: {fileID: 0}
+  startTile: {fileID: 0}
   _canMove: 1
   _canAct: 1
   lookSnap: 0
@@ -2678,9 +2673,36 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: StormRend.Utility.Events.EffectEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  onMoved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6691868280363907097}
+        m_MethodName: Focus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StormRend.Utility.Events.TileEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   onActed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6691868280363907097}
+        m_MethodName: Focus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: StormRend.Utility.Events.AbilityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onEndTurn:
@@ -2690,6 +2712,19 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   possibleMoveTiles: []
   possibleTargetTiles: []
+--- !u!114 &6691868280363907097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108019807441497518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7b3fd9114dd20744a3ed587e445b9cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerpTime: 1
 --- !u!65 &9108019807441497519
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2713,7 +2748,7 @@ PrefabInstance:
     - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
         type: 3}
       propertyPath: m_Name
-      value: HealthBar
+      value: HealthBar3
       objectReference: {fileID: 0}
     - target: {fileID: 8649027571778799567, guid: e1fbb2b94b8040740927f9ac8f85e701,
         type: 3}
@@ -2790,11 +2825,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SGE_SoulCommuneAura
       objectReference: {fileID: 0}
-    - target: {fileID: 6311765355932350965, guid: 12c8f65b3b1a71745b3d485321c472cd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2740575804456894983, guid: 12c8f65b3b1a71745b3d485321c472cd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2803,7 +2833,7 @@ PrefabInstance:
     - target: {fileID: 2740575804456894983, guid: 12c8f65b3b1a71745b3d485321c472cd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2740575804456894983, guid: 12c8f65b3b1a71745b3d485321c472cd,
         type: 3}
@@ -2857,4 +2887,84 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2740575804456894983, guid: 12c8f65b3b1a71745b3d485321c472cd,
     type: 3}
   m_PrefabInstance: {fileID: 4464158799225128526}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6140014159675095966
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 9108019807441497514}
+    m_Modifications:
+    - target: {fileID: 5491244817447212224, guid: d960b5a90a0c9204c80cbb5cfa60cde4,
+        type: 3}
+      propertyPath: m_Name
+      value: SelectAuraCrap
+      objectReference: {fileID: 0}
+    - target: {fileID: 5491244817447212224, guid: d960b5a90a0c9204c80cbb5cfa60cde4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726871129060461723, guid: d960b5a90a0c9204c80cbb5cfa60cde4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726871129060461723, guid: d960b5a90a0c9204c80cbb5cfa60cde4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726871129060461723, guid: d960b5a90a0c9204c80cbb5cfa60cde4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726871129060461723, guid: d960b5a90a0c9204c80cbb5cfa60cde4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726871129060461723, guid: d960b5a90a0c9204c80cbb5cfa60cde4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726871129060461723, guid: d960b5a90a0c9204c80cbb5cfa60cde4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726871129060461723, guid: d960b5a90a0c9204c80cbb5cfa60cde4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726871129060461723, guid: d960b5a90a0c9204c80cbb5cfa60cde4,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726871129060461723, guid: d960b5a90a0c9204c80cbb5cfa60cde4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726871129060461723, guid: d960b5a90a0c9204c80cbb5cfa60cde4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1726871129060461723, guid: d960b5a90a0c9204c80cbb5cfa60cde4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d960b5a90a0c9204c80cbb5cfa60cde4, type: 3}
+--- !u!4 &4810586008327010053 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1726871129060461723, guid: d960b5a90a0c9204c80cbb5cfa60cde4,
+    type: 3}
+  m_PrefabInstance: {fileID: 6140014159675095966}
   m_PrefabAsset: {fileID: 0}

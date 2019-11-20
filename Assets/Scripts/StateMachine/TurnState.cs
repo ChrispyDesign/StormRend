@@ -1,14 +1,12 @@
 using StormRend.Enums;
-using StormRend.States.UI;
 using StormRend.Systems.StateMachines;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace StormRend.States
 {
-    public class TurnState : OnState
+	public class TurnState : CoverState
     {
 		[Header("Unit Filtering"), Tooltip("The unit type that can be controlled when game is in this state")]
 		public TargetType unitType;

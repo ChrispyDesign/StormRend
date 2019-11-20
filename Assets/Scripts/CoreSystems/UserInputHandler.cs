@@ -5,12 +5,10 @@ using pokoro.Patterns.Generic;
 using StormRend.Abilities;
 using StormRend.CameraSystem;
 using StormRend.Enums;
-using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
 using StormRend.States;
 using StormRend.Systems.StateMachines;
 using StormRend.Units;
-using StormRend.Utility;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using StormRend.Variables;
@@ -56,8 +54,11 @@ namespace StormRend.Systems
 		[SerializeField] AbilityVar _selectedAbilityVar = null;
 
 		[Header("Tile Colors")]
-		[SerializeField] TileHighlightColor moveHighlight = null;
-		[SerializeField] TileHighlightColor actionHighlight = null;
+		[SerializeField] TileHighlightSetting startHighlight = null;
+		[SerializeField] TileHighlightSetting hoverHighlight = null;
+		[SerializeField] TileHighlightSetting moveHighlight = null;
+		[SerializeField] TileHighlightSetting actionHighlight = null;
+		[SerializeField] TileHighlightSetting targetHighlight = null;
 
 		[Header("Camera")]
 		[SerializeField] float cameraSmoothTime = 1.75f;
@@ -69,10 +70,10 @@ namespace StormRend.Systems
 			get
 			{
 				//If an ability is current selected then unit can perform ACTION
-				if (isAbilitySelected && selectedAnimateUnit.canAct)
+				if (isAbilitySelected && selectedAnimateUnit && selectedAnimateUnit.canAct)
 					return Mode.Action;
 				//If only unit selected and can move the unit can perform MOVE
-				else if (isUnitSelected && selectedAnimateUnit.canMove)
+				else if (isUnitSelected && selectedAnimateUnit && selectedAnimateUnit.canMove)
 					return Mode.Move;
 				//Unit not selected
 				else
@@ -101,9 +102,9 @@ namespace StormRend.Systems
 		[Tooltip("When a unit is deselected")] public UnityEvent onUnitCleared = null;
 		[Tooltip("When an ability is chosen")] public AbilityEvent onAbilitySelected = null;
 		[Tooltip("When an ability is cleared")] public UnityEvent onAbilityCleared = null;
-		[Tooltip("When a valid target tile is selected, adding it to the target stack")] public UnityEvent onTargetTileAdd = null;
+		[Tooltip("When a valid target tile is selected, adding it to the target stack")] public TileEvent onTargetTileAdd = null;
 		[Tooltip("When an invalid tile is selected")] public UnityEvent onTargetTileInvalid = null;
-		[Tooltip("When a tile is popped from the target stack ie. user right clicks")] public UnityEvent onTargetTileCancel = null;
+		[Tooltip("When a tile is popped from the target stack ie. user right clicks")] public TileEvent onTargetTileCancel = null;
         [Tooltip("When an there's not enough glory to perform ability")] public UnityEvent onNotEnoughGlory = null;
 		[Tooltip("When an ability is performed")] public AbilityEvent onAbilityPerformed = null;
 
@@ -170,7 +171,7 @@ namespace StormRend.Systems
 					case Mode.Action:   //ACTION MODE
 						if (isUnitHit)
 							AddTargetTile(interimUnit);
-						if (isTileHit)
+						else if (isTileHit)					//Maybe this needs to be an else if so that only one add target tile gets passed through
 							AddTargetTile(interimTile);
 						break;
 
@@ -245,234 +246,6 @@ namespace StormRend.Systems
 			}
 		}
 	#endregion
-	
-	#region Sets
-		//Public; can be called via unity events
-		public void SelectUnit(AnimateUnit au)
-		{
-			//Clear tile highlights if a unit was already selected
-			if (isUnitSelected) 
-			{
-				selectedAnimateUnit.ClearGhost();
-				ClearSelectedUnitTileHighlights();
-				selectedAbility = null;
-			}
-
-			//Set the selected unit
-			selectedUnit = au;
-
-			//Show move tile if unit is able to move
-			ShowMoveTiles();
-
-			onUnitSelected.Invoke(au);	//ie. Update UI, Play sounds,
-		}
-
-		public void SelectAbility(Ability a)	//aka. OnAbilityChanged()
-		{
-			//Checks
-			if (!isUnitSelected)
-			{
-				Debug.LogWarning("No unit selected! Cannot select ability");
-				return;
-			}
-			if (!selectedAnimateUnit.canAct)
-			{
-				Debug.LogWarning("Unit cannot perform any more abilities this turn");
-				return;
-			}
-
-			//Set
-			selectedAbility = a;
-
-			//Recalculate target tiles
-			selectedAnimateUnit.CalculateTargetTiles(selectedAbility);
-
-			//Clear move tiles + Show target tiles + clear ghosts
-			selectedAnimateUnit.ClearGhost();
-			ClearAllTileHighlights();
-			ShowTargetTiles();
-
-			//Auto perform ability on self if required tiles set to 0
-			if (selectedAbility.requiredTiles == 0)
-				AddTargetTile(selectedAnimateUnit.currentTile);
-
-			//Raise
-			onAbilitySelected.Invoke(a);
-		}
-
-		/// <summary>
-		/// Add a target tile to the casting stack and if the selected ability required target input is reached then perform the ability
-		/// </summary>
-		void AddTargetTile(Tile t)
-		{
-            if (selectedAbility.IsAcceptableTileType(selectedAnimateUnit, t))       //Check ability can accept this tile type
-            {
-                if (selectedAnimateUnit.possibleTargetTiles.Contains(t))			//Check tile is within possible target tiles
-                {
-                    if (!targetTileStack.Contains(t))								//Can't select the same tile twice
-                    {
-                        //VALID
-                        targetTileStack.Push(t);
-                        onTargetTileAdd.Invoke();
-                    }
-                    else   
-                        onTargetTileInvalid.Invoke();   //ALREADY BEEN SELECTED     //Too tired to write this properly
-                }
-                else
-                    onTargetTileInvalid.Invoke();	//OUT OF BOUNDS
-			}
-			else
-				onTargetTileInvalid.Invoke();	//UNACCEPTABLE
-
-			//Perform ability once required number of tiles reached
-			if (targetTileStack.Count >= selectedAbility.requiredTiles)
-			{
-				SelectedUnitPerformAbility();
-			}
-		}
-		void AddTargetTile(Unit u) => AddTargetTile(u.currentTile);		//Redirect because sometimes the raycast can only hit a unit
-		void PopTargetTile()
-		{
-			targetTileStack.Pop();
-			onTargetTileCancel.Invoke();
-		}
-
-		//Enough tile targets chosen by user. Execute the selected ability
-		void SelectedUnitPerformAbility()
-		{
-            //Check there's en
-            if (!EnoughGlory())
-            {
-                onNotEnoughGlory.Invoke();
-                return;
-            }
-
-			//Perform
-			selectedAnimateUnit.Act(selectedAbility, targetTileStack.ToArray());
-
-			//Focus camera
-			camMover.MoveTo(selectedAnimateUnit, cameraSmoothTime);
-
-			//Clear target stack
-			targetTileStack.Clear();
-
-			//clear ability
-			ClearSelectedAbility(selectedAnimateUnit.canMove);
-
-			//Events
-			onAbilityPerformed.Invoke(selectedAbility);
-		}
-	#endregion
-
-	#region Tile Highlighting
-		//Show a preview of target tiles 
-		public void OnHoverPreview(Ability a)
-		{
-			//Has to be in Move mode
-			if (mode != Mode.Move) return;
-
-			//Has to be able to act
-			if (!selectedAnimateUnit.canAct) return;
-
-			selectedAnimateUnit.CalculateTargetTiles(a);
-			selectedAnimateUnit.ClearGhost();
-			ShowTargetTiles();
-		}
-		public void OnUnhoverPreview()
-		{
-			//Must be in move mode
-			if (mode != Mode.Move) return;
-
-			//Redraw
-			ClearAllTileHighlights();
-			ShowMoveTiles();
-		}
-
-		void ShowMoveTiles()
-		{
-			//NOTE: Active unit's MOVE highlights should be refreshed:
-			// - At the start of each turn
-			// - After another unit has summoned something
-			if (!selectedAnimateUnit.canMove) return;
-
-			if (selectedAnimateUnit.possibleMoveTiles.Length <= 0)
-				selectedAnimateUnit.CalculateMoveTiles();
-
-			//Highlight
-			foreach (var t in selectedAnimateUnit?.possibleMoveTiles)
-				t.SetColor(moveHighlight);
-		}
-
-		void ShowTargetTiles()
-		{
-			//NOTE: Active unit's ACTION highlights should be refreshed
-			// - each time the selected ability is changed
-			if (selectedAnimateUnit.possibleTargetTiles.Length <= 0) return;
-
-			//Highlight
-			foreach (var t in selectedAnimateUnit?.possibleTargetTiles)
-				t.SetColor(actionHighlight);
-		}
-	#endregion
-
-	#region Clears
-		//Deselects the unit
-		void ClearSelectedUnit()
-		{
-			if (!isUnitSelected) return;	//A unit should be selected
-
-			onUnitCleared.Invoke();
-
-			//Clear tile highlights and ghost
-			ClearSelectedUnitTileHighlights();
-			selectedAnimateUnit.ClearGhost();
-
-			//Clear
-			selectedUnit = null;
-		}
-
-		void ClearSelectedAbility(bool redrawMoveTiles = true)
-		{
-			if (!isUnitSelected) return;	//A unit should be selected
-
-			onAbilityCleared.Invoke();
-
-			//Clear
-			selectedAbility = null;
-
-			//Clear tile highlights
-			if (isUnitSelected) 
-				ClearSelectedUnitTileHighlights();
-
-			//Redraw move highlights
-			if (redrawMoveTiles) 
-				ShowMoveTiles();
-		}
-
-		void ClearSelectedUnitTileHighlights()
-		{
-			if (!isUnitSelected) return;	//A unit should be selected
-
-			//Clear move highlights
-			if (selectedAnimateUnit.possibleMoveTiles != null)
-				foreach (var t in selectedAnimateUnit.possibleMoveTiles)
-					t.ClearColor();
-
-			//Clear target highlights
-			if (selectedAnimateUnit.possibleTargetTiles != null)
-				foreach (var t in selectedAnimateUnit.possibleTargetTiles)
-					t.ClearColor();
-		}
-
-		//Trying to avoid the accidental unhover glitch but still doesn't solve it
-		void ClearAllTileHighlights()
-		{
-			foreach (var t in Map.current.tiles)
-			{
-				t.ClearColor();
-			}
-		}
-		#endregion
 
 	#region Assists
 		//If T object hit then return true and output it
@@ -495,25 +268,20 @@ namespace StormRend.Systems
 			return false;
 		}
 
+		//Is there a better more reliable way of doing this?
 		bool IsPointerOverGUIObject()
 		{
 			//Set up the new Pointer Event
-			var ped = new PointerEventData(EventSystem.current);
+			var pointerEventData = new PointerEventData(EventSystem.current);
 
 			//Set the Pointer Event Position to that of the mouse position
-			ped.position = Input.mousePosition;
+			pointerEventData.position = Input.mousePosition;
 
 			//Raycast using the Graphics Raycaster and mouse click position
 			GUIhits.Clear();
-			gr.Raycast(ped, GUIhits);
+			gr.Raycast(pointerEventData, GUIhits);
 
-			//For every result returned, output the name of the GameObject on the Canvas hit by the Ray
-			// foreach (RaycastResult result in GUIhits)
-			// 	Debug.Log("Hit " + result.gameObject.name);
-			
-			if (GUIhits.Count > 0)
-				return true;
-			return false;
+			return (GUIhits.Count > 0) ? true : false;
 		}
 
 		void PopulateControllableUnitTypes()
@@ -534,19 +302,10 @@ namespace StormRend.Systems
 
         public bool EnoughGlory()
 		{
-			if (glory)
+			if (glory)	//Null check
 			{
-				if (glory.value < selectedAbility.gloryCost)
-				{
-					//Not enough glory; Fail
-					return false;
-				}
-				else
-				{
-					//Successful spend
-					glory.value -= selectedAbility.gloryCost;
-					return true;
-				}
+				//Return whether or not there's enough glory available for current ability
+				return glory.value >= selectedAbility.gloryCost;
 			}
 			Debug.LogWarning("No glory SOV allocated!");
 			return false;
@@ -584,3 +343,12 @@ namespace StormRend.Systems
 	#endregion
 	}
 }
+
+/*
+Main: Start, Update, ProcessEvents, Onstatechanged
+Sets: SelectUnit, SelectAbility, AddTargetTile, PopTargetTile, selectedUnitPeformAbility
+TileHighlights: OnHovers, ShowMoveTiles, ShowTargetTiles
+Clears: ClearSelectedUnit, ClearSelectedAbility, ClearSelectedUnitTileHighlights, ClearAllTileHighlights
+Assists: TryGetRayRaycast, IsPointerOverGUIObject, EnoughGlory
+Debugs: OnGUI
+*/

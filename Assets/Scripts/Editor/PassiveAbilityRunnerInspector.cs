@@ -3,7 +3,7 @@ using UnityEditor;
 
 namespace StormRend.Editors
 {
-	[CustomEditor(typeof(PassiveAbilityRunnerOnUnitTrade))]
+	[CustomEditor(typeof(PassiveAbilityRunner))]
     public class PassiveAbilityRunnerInspector : SmartEditor
     {
 		string help = "Caches all passive abilities and runs them when unit is created or killed\n"; 

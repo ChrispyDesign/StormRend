@@ -22,8 +22,6 @@ namespace StormRend.Abilities.Effects
 
         List<Type> typesToCheck = new List<Type>();
 
-        void OnValidate() => Prepare();
-
         public override void Prepare(Ability ability = null, Unit owner = null)
         {
             //Populate unit type array
@@ -45,11 +43,10 @@ namespace StormRend.Abilities.Effects
                 for (int i = 0; i < 360; i += 90)
                 {
                     //Set directions
-                    // var direction = new Vector2Int(Mathf.RoundToInt(Mathf.Cos(i)), -Mathf.RoundToInt(Mathf.Sin(i)));
-                    // var deg = i * Mathf.Deg2Rad;
                     Vector2Int direction = new Vector2Int();
                     switch (i)
                     {
+						case 360:
                         case 0: direction = Vector2Int.up; break;
                         case 90: direction = Vector2Int.right; break;
                         case 180: direction = Vector2Int.down; break;
@@ -68,12 +65,27 @@ namespace StormRend.Abilities.Effects
                             {
                                 //Push the unit in the vector direction from target tile to adjacent tile
                                 var pushResult = au.Push(direction, canPushOffEdge);
-                                if (pushResult == PushResult.HitUnit ||
-                                    pushResult == PushResult.HitBlockedTile)
+
+								//UNABLE to push
+                                if (pushResult == PushResult.HitUnit || pushResult == PushResult.HitBlockedTile)
+								{
                                     break;  //Break out of loop; Cannot move anymore
-                                else if (pushResult == PushResult.OverEdge)
-                                    return; //Unit is dead; Break out of function
-                            }
+								}
+								//Pushed OVER THE EDGE!
+								//Unit should now be in mid air... definitely should kill now because its in an invalid position
+								else if (pushResult == PushResult.OverEdge)
+								{
+									//Add physics to let the unit fall
+									var rb = au.gameObject.AddComponent<Rigidbody>();
+
+									//Add knock back torque for nice effect
+									float rand = UnityEngine.Random.Range(0.25f, 1.3f);
+									rb.AddTorque(direction.y * rand, 0, -direction.x * rand, ForceMode.Impulse);
+
+									//Unit to finish it's death sequence and automatically deactivate after a few seconds
+									au.Kill(owner);
+								}
+                            }		
                             //Do damage (where needed)
                             if (damage > 0) unit.TakeDamage(new HealthData(owner, damage));
                         }

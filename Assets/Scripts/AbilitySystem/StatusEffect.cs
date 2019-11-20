@@ -11,21 +11,25 @@ namespace StormRend.Abilities.Effects
 		[Tooltip("Infinite if affected turn set to 0")]
 		[SerializeField] protected uint affectedTurns = 1;
 
-	#region Inflicts / Buffs / Debuffs
-		/// "Inflict" status effect on victim at the beginning of the turn
-		public virtual void OnBeginTurn(AnimateUnit affectedUnit)
+		#region Inflicts / Buffs / Debuffs
+		/// <summary>
+		/// "Inflict" status effect on victim at the beginning of the turn. 
+		/// </summary>
+		/// <param name="affectedUnit"></param>
+		/// <returns>[false] if this status effect has expired and needs to be removed. [true] if normal operation</returns>/ 	
+		public virtual bool OnBeginTurn(AnimateUnit affectedUnit)
 		{
 			//Check if this status effect has expired
 			if (affectedTurns > 0   //NOTE: If affectedturns set to 0 then status effect will never expire
 				&& turnCount >= affectedTurns)
 			{
-				//Expired. Remove from unit
-				affectedUnit.statusEffects.Remove(this);
-				return;
+				//Expired. Flag to be removed in AnimateUnit
+				return false;
 			}
 
 			//Increment number of turns this effect has operated
 			++turnCount;
+			return true;
 		}
 
 		/// "Inflict" status effect on victim right after it performed it's ability

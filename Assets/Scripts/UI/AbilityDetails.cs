@@ -5,16 +5,20 @@ using StormRend.Abilities;
 using StormRend.Utility.Events;
 using UnityEngine.Events;
 using StormRend.Utility.Attributes;
+using StormRend.Assists;
 
 namespace StormRend.UI
 {
     public class AbilityDetails : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
+		//Inspector
 		[ReadOnlyField, SerializeField] Ability ability = null;
-		[SerializeField] Image icon = null;
+		[ReadOnlyField, SerializeField] Image icon = null;
 		[SerializeField] AbilityEvent onHover = null;
 		[SerializeField] AbilityEvent onClick = null;
 		[SerializeField] UnityEvent onUnHover = null;
+
+		//Members
 		InfoPanel infoPanel;
 		Button button;
 
@@ -28,7 +32,8 @@ namespace StormRend.UI
 		{
 			button = GetComponent<Button>();
 			infoPanel = FindObjectOfType<InfoPanel>();
-			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(UnusedActionsChecker));
+
+			Debug.Assert(infoPanel, string.Format("[{0}] {1} not found!", this.name, typeof(InfoPanel).Name));
 		}
 		
 		//Register
@@ -49,14 +54,14 @@ namespace StormRend.UI
 					details[i] = ability.descriptions[i];
 				}
 
-				infoPanel.ShowPanel(ability.title, ability.level, details);
+				infoPanel?.ShowPanel(ability.title, ability.level, details);
 			}
 		}
 
 		public void OnPointerExit(PointerEventData eventData)
 		{
 			onUnHover.Invoke();
-			infoPanel.UnShowPanel();
+			infoPanel?.UnShowPanel();
 		}
 
 		void OnClick() => onClick.Invoke(ability);

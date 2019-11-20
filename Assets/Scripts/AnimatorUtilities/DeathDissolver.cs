@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using StormRend.Units;
+using StormRend.VisualFX;
 using UnityEngine;
 
 namespace StormRend.Assists
@@ -11,6 +12,8 @@ namespace StormRend.Assists
 	public class DeathDissolver : MonoBehaviour
 	{
 		//Inspector
+		[SerializeField] VFX deathVFX = null;
+
 		[Header("Designer to tune these values")]
 		[SerializeField] float startDelay = 1.5f;
 		[SerializeField] float duration = 2.5f;
@@ -19,12 +22,10 @@ namespace StormRend.Assists
 		//Members
 		List<Material> materials = new List<Material>();
 		Unit u;
-		AnimateUnit au;
 
 		void Awake()
 		{
 			u = GetComponentInParent<Unit>();
-			au = u as AnimateUnit;
 
 			//Get materials from each child renderers
 			var renderers = GetComponentsInChildren<Renderer>();
@@ -35,14 +36,25 @@ namespace StormRend.Assists
 		public void Execute()
 		{
 			//Dissolve animate units. Instantly kill anything else
-			if (au)
-				StartCoroutine(RunDeathDissolve());
-			else
-				u.Die();    //ie. Crystals
+			switch (u)
+			{
+				case AnimateUnit au:
+					StartCoroutine(RunDeathDissolve(au));
+					break;
+				case InAnimateUnit iu:
+					iu.Die();
+					break;
+				default:
+					u.Die();
+					break;
+			}
 		}
 
-		IEnumerator RunDeathDissolve()
+		IEnumerator RunDeathDissolve(AnimateUnit au)
 		{
+			//Create VFX
+			deathVFX?.Play(au.transform.position, au.transform.rotation);
+
 			//Initial delay
 			yield return new WaitForSeconds(startDelay);
 

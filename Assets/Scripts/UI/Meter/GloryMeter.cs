@@ -41,7 +41,7 @@ namespace StormRend.UI
 			internalGlory = glory.value;
 
 			Debug.Assert(gloryNodes[0], "There is no slider, please add a panel with filled image component on it. " + typeof(GloryMeter));
-			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(GloryMeter));
+			Debug.Assert(infoPanel, string.Format("[{0}] {1} not found!", this.name, typeof(InfoPanel).Name));
 			Debug.Assert(glory, "No Glory SOV found!");
 
 			startCheck = true;
@@ -59,7 +59,6 @@ namespace StormRend.UI
 
 		public void OnChange()
 		{
-			Debug.Log("OnChange");
 			//Increase
 			if (internalGlory < glory.value)
 				increase = true;
@@ -83,16 +82,6 @@ namespace StormRend.UI
 			}
 		}
 
-		public override void OnPointerEnter(PointerEventData eventData)
-		{
-			infoPanel.ShowPanel(title, 3, details);
-		}
-
-		public override void OnPointerExit(PointerEventData eventData)
-		{
-			infoPanel.UnShowPanel();
-		}
-
 		IEnumerator IncreaseGlory(int _index)
 		{
 			if(gloryNodes[_index].fillAmount == 1)
@@ -107,7 +96,6 @@ namespace StormRend.UI
 				yield return new WaitForSeconds(fillSpeed);
 			}
 		}
-
 		IEnumerator DecreaseGlory(int _index)
 		{
 			if (gloryNodes[_index].fillAmount == 1)
@@ -121,6 +109,17 @@ namespace StormRend.UI
 				gloryNodes[_index].fillAmount -= fillSpeed;
 				yield return new WaitForSeconds(fillSpeed);
 			}
+		}
+
+		//Event System Callbacks
+		public override void OnPointerEnter(PointerEventData eventData)
+		{
+			infoPanel?.ShowPanel(title, 3, details);
+		}
+
+		public override void OnPointerExit(PointerEventData eventData)
+		{
+			infoPanel?.UnShowPanel();
 		}
 	}
 }
