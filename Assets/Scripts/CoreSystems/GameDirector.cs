@@ -131,6 +131,11 @@ namespace StormRend.Systems
 			Time.timeScale = 1f;
 			SceneManager.LoadScene(buildIDX);
 		}
+		public void QuitGame()
+		{
+			Debug.Log("Quitting...");
+			Application.Quit();
+		}
 		#endregion
 
 		#region Debug
