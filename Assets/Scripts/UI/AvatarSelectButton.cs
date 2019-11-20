@@ -52,21 +52,26 @@ namespace StormRend.UI
 			Debug.Assert(infoPanel, "There are no Input Handler in the scene. " + typeof(EndTurnButton));
 
 			AutoLocateUnit();
+			if (!unit)
+			{
+				Debug.LogError("Unit not found! Shutting down...");
+				enabled = false;
+			}
 		}
 		void OnEnable()
 		{
 			//Hook up button
 			button.onClick.AddListener(SelectUnit);
-			unit.onHeal.AddListener(UpdateHealthGUI);
-			unit.onTakeDamage.AddListener(UpdateHealthGUI);
-			unit.onDeath.AddListener(RelayUpdateHealthGUI);
+			unit?.onHeal.AddListener(UpdateHealthGUI);
+			unit?.onTakeDamage.AddListener(UpdateHealthGUI);
+			unit?.onDeath.AddListener(RelayUpdateHealthGUI);
 		}
 		void OnDisable()
 		{
 			button.onClick.RemoveListener(SelectUnit);
-			unit.onHeal.RemoveListener(UpdateHealthGUI);
-			unit.onTakeDamage.RemoveListener(UpdateHealthGUI);
-			unit.onDeath.AddListener(RelayUpdateHealthGUI);
+			unit?.onHeal.RemoveListener(UpdateHealthGUI);
+			unit?.onTakeDamage.RemoveListener(UpdateHealthGUI);
+			unit?.onDeath.AddListener(RelayUpdateHealthGUI);
 		}
 
 		void AutoLocateUnit()
@@ -84,7 +89,8 @@ namespace StormRend.UI
 					typeToFind = typeof(SageTag);
 					break;
 			}
-			unit = (FindObjectOfType(typeToFind) as Tag).GetComponent<AnimateUnit>();
+			var tag = FindObjectOfType(typeToFind) as Tag;
+			unit = tag?.GetComponent<AnimateUnit>();
 		}
 
 		/// <summary>
