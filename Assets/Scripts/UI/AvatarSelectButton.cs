@@ -54,8 +54,8 @@ namespace StormRend.UI
 			AutoLocateUnit();
 			if (!unit)
 			{
-				Debug.LogError("Unit not found! Shutting down...");
-				enabled = false;
+				Debug.LogWarning("[AvatarSelectButton] Unit not found! Shutting down...");
+				gameObject.SetActive(false);
 			}
 		}
 		void OnEnable()
