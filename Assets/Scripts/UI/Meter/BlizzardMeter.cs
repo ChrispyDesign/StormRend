@@ -29,7 +29,7 @@ namespace StormRend.UI
 			internalBlizzard = blizzard.value;
 
 			Debug.Assert(blizzardNodes[0], "There is no slider, please add a panel with filled image component on it. " + typeof(BlizzardMeter));
-			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(BlizzardMeter));
+			Debug.Assert(infoPanel, string.Format("[{0}] {1} not found!", this.name, typeof(InfoPanel).Name));
 			Debug.Assert(blizzard, "No Blizzard SOV found!");
 
 			startCheck = true;
@@ -112,12 +112,12 @@ namespace StormRend.UI
 		//Event System
 		public override void OnPointerEnter(PointerEventData eventData)
 		{
-			infoPanel.ShowPanel(title, 1, details);
+			infoPanel?.ShowPanel(title, 1, details);
 		}
 
 		public override void OnPointerExit(PointerEventData eventData)
 		{
-			infoPanel.UnShowPanel();
+			infoPanel?.UnShowPanel();
 		}
 	}
 }

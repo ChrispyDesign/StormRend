@@ -24,8 +24,8 @@ namespace StormRend.Assists
 			infoPanel = FindObjectOfType<InfoPanel>();
 			anim = GetComponent<Animator>();
 
-			Debug.Assert(anim, "There are no Animator in the scene. " + typeof(EndTurnButton));
-			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(EndTurnButton));
+			Debug.Assert(anim, string.Format("[{0}] {1} not found!", this.name, typeof(Animator).Name));
+			Debug.Assert(infoPanel, string.Format("[{0}] {1} not found!", this.name, typeof(InfoPanel).Name));
 		}
 		private void Start()
 		{
@@ -34,32 +34,18 @@ namespace StormRend.Assists
 			usm = gd.GetComponent<UltraStateMachine>();
 		}
 
-		//Theres already a class that checks for any moves: allactionusedchecker
-		// public void CheckMovesAvailable()
-		// {
-		// 	infoPanel.UnShowPanel(true);
-		// 	bool allUnitsHaveAttacked = true;
-		// 	foreach (AllyUnit unit in ur.GetAliveUnitsByType<AllyUnit>())
-		// 	{
-		// 		if (unit.canAct) allUnitsHaveAttacked = false;
-		// 	}
-		// 	if (!allUnitsHaveAttacked)
-		// 		usm.Switch(confirmationPanel);
-		// 	else
-		// 		usm.NextTurn();
-		// }
 
 		//Event system callbacks
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			anim.SetBool("OnHover", true);
-			infoPanel.ShowPanel(title, 1, details);
+			infoPanel?.ShowPanel(title, 1, details);
 		}
 
 		public void OnPointerExit(PointerEventData eventData)
 		{
 			anim.SetBool("OnHover", false);
-			infoPanel.UnShowPanel();
+			infoPanel?.UnShowPanel();
 		}
 
 		public void OnPointerClick(PointerEventData eventData)

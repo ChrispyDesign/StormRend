@@ -32,7 +32,8 @@ namespace StormRend.UI
 		{
 			button = GetComponent<Button>();
 			infoPanel = FindObjectOfType<InfoPanel>();
-			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(EndTurnButton));
+
+			Debug.Assert(infoPanel, string.Format("[{0}] {1} not found!", this.name, typeof(InfoPanel).Name));
 		}
 		
 		//Register
@@ -53,14 +54,14 @@ namespace StormRend.UI
 					details[i] = ability.descriptions[i];
 				}
 
-				infoPanel.ShowPanel(ability.title, ability.level, details);
+				infoPanel?.ShowPanel(ability.title, ability.level, details);
 			}
 		}
 
 		public void OnPointerExit(PointerEventData eventData)
 		{
 			onUnHover.Invoke();
-			infoPanel.UnShowPanel();
+			infoPanel?.UnShowPanel();
 		}
 
 		void OnClick() => onClick.Invoke(ability);

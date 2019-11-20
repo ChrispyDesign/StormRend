@@ -48,13 +48,13 @@ namespace StormRend.UI
 			userInputHandler = FindObjectOfType<UserInputHandler>();
 			button = GetComponent<Button>();
 
-			Debug.Assert(infoPanel, "There are no Info Panel Script in the scene. " + typeof(EndTurnButton));
-			Debug.Assert(infoPanel, "There are no Input Handler in the scene. " + typeof(EndTurnButton));
+			Debug.Assert(infoPanel, string.Format("[{0}] {1} not found!", this.name, typeof(InfoPanel).Name));
+			Debug.Assert(userInputHandler, string.Format("[{0}] {1} not found!", this.name, typeof(UserInputHandler).Name));
 
 			AutoLocateUnit();
 			if (!unit)
 			{
-				Debug.LogWarning("[AvatarSelectButton] Unit not found! Shutting down...");
+				Debug.LogWarningFormat("[{0}] Unit not found! Shutting down...", this.name);
 				gameObject.SetActive(false);
 			}
 		}
@@ -115,13 +115,13 @@ namespace StormRend.UI
 			if (unit)	//Null checks
 			{
 				onHover.Invoke(unit);
-				infoPanel.ShowPanel(unit.name, 1, unit.description);
+				infoPanel?.ShowPanel(unit.name, 1, unit.description);
 			}
 		}
 		public void OnPointerExit(PointerEventData eventData)
 		{
 			onUnhover.Invoke();
-			infoPanel.UnShowPanel();
+			infoPanel?.UnShowPanel();
 		}
 	}
 }

@@ -50,7 +50,7 @@ namespace StormRend.Assists
 
 		public void Check(Ability a)
 		{
-			Debug.Log("Checking if All actions used");
+			Debug.Log("Check All Actions Used");
 			//If all ally units have used up there actions then automatically end turn
 			foreach (var ally in ur.GetAliveUnitsByType<AllyUnit>())
 				if (ally.canAct) return;
