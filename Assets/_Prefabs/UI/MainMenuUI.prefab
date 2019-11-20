@@ -575,8 +575,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6371859478461778961}
-  - component: {fileID: 6371859478461778963}
+  - component: {fileID: 2952818261506622746}
   - component: {fileID: 6371859478461778960}
+  - component: {fileID: 6082780339995712426}
   - component: {fileID: 8267590214883536895}
   - component: {fileID: 6371859478461778974}
   - component: {fileID: 6371859478461778975}
@@ -601,7 +602,7 @@ Transform:
   m_Father: {fileID: 6371859479910849488}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6371859478461778963
+--- !u!114 &2952818261506622746
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -610,9 +611,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 6371859478461778972}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88367e43c12ec3947a928ae1159672ab, type: 3}
+  m_Script: {fileID: 11500000, guid: eb72efd620d3908448e1e0f9295d0fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseKey: 27
+  pauseMenuState: {fileID: 0}
+  victoryNarration: {fileID: 0}
+  victoryState: {fileID: 0}
+  defeatNarration: {fileID: 0}
+  defeatState: {fileID: 0}
+  mainMenuSceneName: 00_MainMenu
+  nextSceneName: 
+  debug: 0
 --- !u!114 &6371859478461778960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,6 +648,21 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: StormRend.Utility.Events.StateEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &6082780339995712426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6371859478461778972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: 
+  chance: 50
+  magazine: {fileID: 0}
 --- !u!82 &8267590214883536895
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3233,15 +3258,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87de3e4c583bcb74a8465a08bfd9b05f, type: 3}
---- !u!4 &5317214734096063078 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5095490859611705091, guid: 87de3e4c583bcb74a8465a08bfd9b05f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1115867208701121893}
-  m_PrefabAsset: {fileID: 0}
 --- !u!82 &5317214734096063077 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 5095490859611705088, guid: 87de3e4c583bcb74a8465a08bfd9b05f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1115867208701121893}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5317214734096063078 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5095490859611705091, guid: 87de3e4c583bcb74a8465a08bfd9b05f,
     type: 3}
   m_PrefabInstance: {fileID: 1115867208701121893}
   m_PrefabAsset: {fileID: 0}
@@ -3661,11 +3686,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 6371859478461778963}
+      objectReference: {fileID: 2952818261506622746}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Quit
+      value: QuitGame
       objectReference: {fileID: 0}
     - target: {fileID: 3560625987373109754, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
