@@ -25,9 +25,14 @@ namespace StormRend.Assists
 		public void Lock(Ability a)
 		{
 			Debug.Log("Locking Units!");
-			foreach (var au in ur.GetAliveUnitsByType<AllyUnit>())
-				if (a.effects.Where(x => x is RefreshEffect).Count() == 0)	//Where there aren't any refresh effects
-					au.SetCanMove(false);	//Lock unit movement
+            //Loop through alive ally units
+            foreach (var au in ur.GetAliveUnitsByType<AllyUnit>())		
+				//if the unit has moved from it's starting position
+				if (au.startTile != au.currentTile)
+					//if the ability does NOT have any refresh effects
+					if (a.effects.Where(x => x is RefreshEffect).Count() == 0)	
+						//Lock the unit's movement
+						au.SetCanMove(false);
 		}
    	}
 }
