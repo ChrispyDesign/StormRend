@@ -21,9 +21,18 @@ namespace StormRend.Bhaviours
 	{
 		[SerializeField] UnitListVar targets = null;
 
+		[Header("Scanning")]
+		[Tooltip("The max scanning increments this unit will do to find targets")]
+		[SerializeField] int maxScanRange = 3;    //Means the unit can scan up to 3x moveRange
+
+		[Header("Move")]
+		[SerializeField] bool moveOn = true;
+
+		[Header("Attack")]
+		[SerializeField] bool attackOn = true;
 		[Tooltip("0 = Absorb?, 1 = Melee, 1 > Ranged")]
 		[SerializeField] int attackRange = 1;
-		[SerializeField] int maxScanRangeMultiplier = 3;    //Means the unit can scan up to 3x moveRange
+
 
 		//Members
 		UnitRegistry ur;
@@ -69,17 +78,16 @@ namespace StormRend.Bhaviours
 				Debug.LogFormat("{0} didn't attack", au.name);
 				return NodeState.Pending;
 			}
-			return NodeState.Pending;
 		}
 
 		bool Scan()
 		{
-			//Get all opponents
-			var allOpponents = ur.GetAliveUnitsByType<AllyUnit>();
+			//Get all opponents ignoring opponents that are in the process of dying
+			var allOpponents = ur.GetAliveUnitsByType<AllyUnit>().Where(x => x.HP != 0);
 			allOpponents.Print("[SCAN: All Opponents]");
 
 			//Scan for opponents from 1x to 3x range
-			for (int scan = 1; scan < maxScanRangeMultiplier; ++scan)
+			for (int scan = 1; scan < maxScanRange; ++scan)
 			{
 				targets.value.Clear();
 
@@ -195,6 +203,8 @@ namespace StormRend.Bhaviours
 		/// </summary>
 		bool Move()
 		{
+			if (!moveOn) return false;
+
 			//Can't move if crippled
 			if (au.isImmobilised)
 			{
@@ -229,6 +239,8 @@ namespace StormRend.Bhaviours
 
 		bool Attack()
 		{
+			if (!attackOn) return false;
+
 			//Can't attack if blind
 			if (au.isBlind)
 			{
