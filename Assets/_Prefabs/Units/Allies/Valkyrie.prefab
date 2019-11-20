@@ -685,8 +685,8 @@ GameObject:
   - component: {fileID: 4596331959945479920}
   - component: {fileID: 6523016055183356590}
   - component: {fileID: 96756247434198363}
-  - component: {fileID: 3671556472718825716}
   - component: {fileID: 5374563595797963673}
+  - component: {fileID: 3671556472718825716}
   m_Layer: 12
   m_Name: Valkyrie
   m_TagString: Untagged
@@ -822,19 +822,6 @@ MonoBehaviour:
   description: Plays a remark when a enemy is killed by this unit
   chance: 100
   magazine: {fileID: 11400000, guid: 5584e497f9cc04a49a64ac89a1adf620, type: 2}
---- !u!65 &3671556472718825716
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3743394238124216912}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
-  m_Center: {x: 0, y: 0.19554019, z: 0}
 --- !u!82 &5374563595797963673
 AudioSource:
   m_ObjectHideFlags: 0
@@ -931,6 +918,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &3671556472718825716
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743394238124216912}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.8, y: 0.39108038, z: 1.8}
+  m_Center: {x: 0, y: 0.19554019, z: 0}
 --- !u!1 &7840730420149699136
 GameObject:
   m_ObjectHideFlags: 0

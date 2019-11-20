@@ -10,6 +10,7 @@ using StormRend.Utility;
 using StormRend.MapSystems.Tiles;
 using System.Collections.Generic;
 using StormRend.Tags;
+using StormRend.CameraSystem;
 
 namespace StormRend.Bhaviours
 {
@@ -39,10 +40,15 @@ namespace StormRend.Bhaviours
 		AnimateUnit au;
 		bool targetIsAdjacent = false;
 		AnimateUnit target = null;
+		CameraMover cameraMover = null;
 
 
 		#region Core
-		public override void Initiate(BhaveAgent agent) => ur = UnitRegistry.current;
+		public override void Initiate(BhaveAgent agent)
+		{
+			ur = UnitRegistry.current;
+			cameraMover = MasterCamera.current.GetComponent<CameraMover>();
+		}
 
 		public override void Begin()
 		{
@@ -54,7 +60,7 @@ namespace StormRend.Bhaviours
 		public override NodeState Execute(BhaveAgent agent)
 		{
 			//Get this agent's unit
-			au = agent.GetComponent<AnimateUnit>();		//Hacky fix to allow any enemy to use the same AI module
+			au = agent.GetComponent<AnimateUnit>();     //Hacky fix to allow any enemy to use the same AI module
 			if (!au) return NodeState.Failure;
 
 			if (!Scan())
@@ -230,6 +236,7 @@ namespace StormRend.Bhaviours
 			if (closestTileInMoveRange)
 			{
 				au.Move(closestTileInMoveRange);
+				cameraMover.MoveTo(closestTileInMoveRange, 1);
 				return true;
 			}
 
@@ -248,13 +255,17 @@ namespace StormRend.Bhaviours
 				return false;
 			}
 
-			//Attack immediately
 			Debug.Assert(au.abilities[0], "Enemy not loaded with Ability!");
 
 			//Attack immediately if adjacent
 			if (targetIsAdjacent)
 			{
+				//ATTACK
 				au.Act(au.abilities[0], target.currentTile);
+
+				//CAMERA FOCUS
+				cameraMover.MoveTo(target, 1);
+
 				return true;
 			}
 			else
@@ -265,6 +276,10 @@ namespace StormRend.Bhaviours
 				if (au.possibleTargetTiles.Contains(target.currentTile))
 				{
 					au.FilteredAct(au.abilities[0], au.possibleTargetTiles);		//Attack!
+
+					//CAMERA FOCUS
+					cameraMover.MoveTo(target, 1);
+
 					return true;
 				}
 			}
