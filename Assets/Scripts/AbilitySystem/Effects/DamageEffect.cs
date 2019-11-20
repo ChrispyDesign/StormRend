@@ -57,6 +57,7 @@ namespace StormRend.Abilities.Effects
 
 				//Attack all units in that direction
 				var workingTile = owner.currentTile;        //Start at owner's tile
+				int i = 0;
 				while (workingTile.TryGetTile(attackDirection, out Tile t, true))   //Keep getting tile in direction of the attack
 				{
 					//Check is in the list of possible targets
@@ -78,6 +79,18 @@ namespace StormRend.Abilities.Effects
 						}
 					}
 					workingTile = t;    //Try getting from the new tile
+
+					//Infinite loop debug
+					if (i < 3)
+						++i;
+					else
+					{
+						Debug.LogError("Infinite loop detected!");
+						Debug.LogErrorFormat("Target Tile: {0}", targetTiles[0]);
+						Debug.LogErrorFormat("Direction Vector: {0}", dirVector);
+						Debug.LogErrorFormat("Attack Direction: {0}", attackDirection);
+						Debug.Break();
+					}
 				}
 			}
 			//NORMAL ATTACK
