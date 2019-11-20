@@ -1,57 +1,61 @@
 ﻿using UnityEngine;
 using StormRend.UI;
-using StormRend.Units;
-using StormRend.Systems.StateMachines;
-using StormRend.Systems;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 namespace StormRend.Assists
 {
+	/// <summary>
+	/// This is mainly required because it's animated
+	/// </summary>
+	[RequireComponent(typeof(Animator), typeof(AudioSource))]
 	public class EndTurnButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 	{
+		//Inspector
 		[SerializeField] string title = "End Turn";
-		[SerializeField] string details = "Ends your current turn";
-		[SerializeField] State confirmationPanel;
 
-		InfoPanel infoPanel = null;
+		[Header("SFX")]
+		[SerializeField] AudioClip onClick = null;
+		[SerializeField] AudioClip onHover = null;
+		[SerializeField] AudioClip onUnhover = null;
+
+		public UnityEvent OnClick = null;
+
+		//Members
 		Animator anim = null;
-		UnitRegistry ur = null;
-		GameDirector gd = null;
-		UltraStateMachine usm = null;
+		AudioSource audSrc = null;
+		InfoPanel infoPanel = null;
 
 		void Awake()
 		{
-			infoPanel = FindObjectOfType<InfoPanel>();
 			anim = GetComponent<Animator>();
+			audSrc = GetComponent<AudioSource>();
 
-			Debug.Assert(anim, string.Format("[{0}] {1} not found!", this.name, typeof(Animator).Name));
+			infoPanel = FindObjectOfType<InfoPanel>();
+
 			Debug.Assert(infoPanel, string.Format("[{0}] {1} not found!", this.name, typeof(InfoPanel).Name));
 		}
-		private void Start()
-		{
-			gd = GameDirector.current;
-			ur = UnitRegistry.current;
-			usm = gd.GetComponent<UltraStateMachine>();
-		}
-
 
 		//Event system callbacks
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			anim.SetBool("OnHover", true);
-			infoPanel?.ShowPanel(title, 1, details);
+			audSrc.PlayOneShot(onHover);
+			infoPanel?.ShowPanel(title, 0);
 		}
 
 		public void OnPointerExit(PointerEventData eventData)
 		{
 			anim.SetBool("OnHover", false);
+			audSrc.PlayOneShot(onUnhover);
 			infoPanel?.UnShowPanel();
 		}
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
 			anim.SetTrigger("OnClick");
-			usm.Stack(confirmationPanel);
+			audSrc.PlayOneShot(onClick);
+			OnClick.Invoke();
 		}
 	}
 }

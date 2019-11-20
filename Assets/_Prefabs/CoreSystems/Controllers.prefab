@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 623447232, guid: 0c25f2ed055db00489974bd6dd51f2cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tickMode: 1
+  _tickMode: 2
   tickRate: 0.15
 --- !u!1 &6922208189168297555
 GameObject:
@@ -129,7 +129,6 @@ MonoBehaviour:
   _selectedUnitVar: {fileID: 11400000, guid: dbeaf32532764ba4c92635cbce5c280f, type: 2}
   _selectedAbilityVar: {fileID: 11400000, guid: 50e085f58feea004399aaacd973e67ee,
     type: 2}
-  selectHighlight: {fileID: 11400000, guid: 655731c17951b5f42b81cd0b49b6ef06, type: 2}
   startHighlight: {fileID: 11400000, guid: 61428b9cf681eef4ab582b8edcef41aa, type: 2}
   hoverHighlight: {fileID: 11400000, guid: 8ff7ac589205a8b4eb85db0a2ff65150, type: 2}
   moveHighlight: {fileID: 11400000, guid: d4d7da28a08d1254d8d7abdd2e343be2, type: 2}
@@ -525,8 +524,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a0643d27f4903e4e8855385bec473d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 5
-  endTurnCountdown: {fileID: 0}
+  delay: 3
+  endTurnTimer: {fileID: 0}
 --- !u!114 &4006944584356141944
 MonoBehaviour:
   m_ObjectHideFlags: 0

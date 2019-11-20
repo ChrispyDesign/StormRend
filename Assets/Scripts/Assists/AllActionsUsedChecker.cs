@@ -7,31 +7,53 @@ using UnityEngine;
 
 namespace StormRend.Assists
 {
+	/// <summary>
+	/// Checks if all ally units have taken all their actions
+	/// If so, start the end turn process and timer
+	/// </summary>
 	[RequireComponent(typeof(UnitRegistry))]
 	public class AllActionsUsedChecker : MonoBehaviour
 	{
 		//Inspector
 		[SerializeField] float delay = 3f;
-		[SerializeField] EndTurnCountdown endTurnCountdown = null;
+		[SerializeField] EndTurnTimer endTurnTimer = null;
 
 		//Properties
-		UltraStateMachine ultraStateMachine = null;
+
+		/// <summary>
+		/// Returns true if none of the ally units can either move or act anymore
+		/// </summary>
+		public bool isAllActionsUsedUp
+		{
+			get 
+			{
+				foreach (var ally in ur.GetAliveUnitsByType<AllyUnit>())
+				{
+					//Invalidates if a single unit can still move or take action
+					if (ally.canMove || ally.canAct) return false;
+				}
+				return true;
+			}
+		}
+
+		//Members
+		UltraStateMachine usm = null;
 		UnitRegistry ur = null;
 
 		void Awake()
 		{
 			ur = GetComponent<UnitRegistry>();
-			ultraStateMachine = FindObjectOfType<UltraStateMachine>();
-			if (!endTurnCountdown) endTurnCountdown = FindObjectOfType<EndTurnCountdown>();
+			usm = FindObjectOfType<UltraStateMachine>();
+			if (!endTurnTimer) endTurnTimer = FindObjectOfType<EndTurnTimer>();
 
-			Debug.Assert(ultraStateMachine, "No Ultra State Machine found!");
-			Debug.Assert(endTurnCountdown, "No turn end countdown timer passed in!");
+			Debug.Assert(usm, "No Ultra State Machine found!");
+			Debug.Assert(endTurnTimer, "No turn end countdown timer passed in!");
 		}
 
 		//Register for each unit's onActed events
 		void Start()    //OnEnable runs too early
 		{
-			endTurnCountdown.gameObject.SetActive(false);
+			endTurnTimer.gameObject.SetActive(false);
 
 			foreach (var u in ur.GetAliveUnitsByType<AllyUnit>())
 			{
@@ -48,34 +70,45 @@ namespace StormRend.Assists
 			}
 		}
 
+		/// <summary>
+		/// Checks if all the actions have been used up
+		/// </summary>
 		public void Check(Ability a)
 		{
-			Debug.Log("Check All Actions Used");
-			//If all ally units have used up there actions then automatically end turn
-			foreach (var ally in ur.GetAliveUnitsByType<AllyUnit>())
-				if (ally.canAct) return;
-
-			//No units can no longer act > all actions used up > end turn
-			StartCoroutine(NextTurn(delay));
+			if (isAllActionsUsedUp) 
+				//No units can no longer act > all actions used up > end turn
+				StartCoroutine(NextTurn(delay));
 		}
 
+		/// <summary>
+		/// Stops the timer immediately
+		/// </summary>
+		public void StopTimer()
+		{
+			StopAllCoroutines();
+			endTurnTimer?.gameObject.SetActive(false);
+		}
+
+		/// <summary>
+		/// Starts the end turn timer and automatically switches to the next turn once done
+		/// </summary>
 		IEnumerator NextTurn(float delay)
 		{
 			//Activate counter
-			endTurnCountdown?.gameObject.SetActive(true);
+			endTurnTimer?.gameObject.SetActive(true);
 
 			float time = delay;
 			while (time > 0)
 			{
 				time -= Time.deltaTime;
-				endTurnCountdown?.SetTime(time);
+				endTurnTimer?.SetTime(time);
 				yield return null;
 			}
 
-			ultraStateMachine.NextTurn();
+			usm.NextTurn();
 
 			//Deactivate counter
-			endTurnCountdown?.gameObject.SetActive(false);
+			endTurnTimer?.gameObject.SetActive(false);
 		}
 	}
 }

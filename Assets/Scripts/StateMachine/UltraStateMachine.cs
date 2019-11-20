@@ -29,8 +29,9 @@ namespace StormRend.Systems.StateMachines
 
 		//Members
 		Stack<State> stackStates = new Stack<State>();
+		[SerializeField] bool debug = false;
 
-	#region Properties
+		#region Properties
 		public int turnsCount => turnStates.Count;
 		public int stackCount => stackStates.Count;
 		public State currentState
@@ -213,6 +214,14 @@ namespace StormRend.Systems.StateMachines
 			//Keep unstacking, while executing appropriate state methods, until the stack is clear
 			while (isInStackMode)
 				UnStack();
+		}
+	#endregion
+	#region Debug
+		void OnGUI()
+		{
+			if (!debug) return;
+
+			GUILayout.Label("Current State: " + currentState.GetType().Name);
 		}
 	#endregion
 	}
