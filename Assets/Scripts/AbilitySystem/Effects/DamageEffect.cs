@@ -53,7 +53,16 @@ namespace StormRend.Abilities.Effects
 
 				//Round the coords it to the nearest 1 or zero
 				Vector3 dirVector = (target.transform.position - owner.currentTile.transform.position).normalized;  //Get normalized direction
-				Vector2Int attackDirection = new Vector2(dirVector.x, dirVector.z).ToVector2Int();  //Convert to v2int direction
+				Vector2Int attackDirection = new Vector2Int(Mathf.CeilToInt(dirVector.x), Mathf.CeilToInt(dirVector.z));
+
+				Debug.Log("Attack Direction: " + attackDirection);
+
+				//Detect 0,0 error
+				if (attackDirection.x == 0 && attackDirection.y == 0)
+				{
+					Debug.LogWarning("Invalid attack direction (0, 0)! Exiting...");
+					return;
+				}
 
 				//Attack all units in that direction
 				var workingTile = owner.currentTile;        //Start at owner's tile
@@ -89,7 +98,7 @@ namespace StormRend.Abilities.Effects
 						Debug.LogErrorFormat("Target Tile: {0}", targetTiles[0]);
 						Debug.LogErrorFormat("Direction Vector: {0}", dirVector);
 						Debug.LogErrorFormat("Attack Direction: {0}", attackDirection);
-						Debug.Break();
+						break;
 					}
 				}
 			}
