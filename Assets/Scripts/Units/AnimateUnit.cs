@@ -48,6 +48,7 @@ namespace StormRend.Units
 		[Header("Animate Unit Events")]
 		public UnityEvent onBeginTurn = null;
 		public EffectEvent onAddStatusEffect = null;
+		public TileEvent onMoved = null;
 		public AbilityEvent onActed = null;
 		public UnityEvent onEndTurn = null;
 
@@ -268,33 +269,29 @@ namespace StormRend.Units
 			//Only set the position of the ghost
 			if (useGhost)
 			{
-				//Filter out non-moving tiles
-				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
-				//Set
-				ghostTile = destination;
-				//Move and look
-				ghost?.SetActive(true);
-				ghost.transform.rotation = GetSnappedRotation(ghostTile.transform.position, snapAngle);
-				// StartCoroutine(LerpMove(ghost.transform, ghostTile.transform.position));
-				ghost.transform.position = ghostTile.transform.position;
+				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;		//Filter
+				ghostTile = destination;	//Set
+				ghost?.SetActive(true);		//Activate
+				ghost.transform.rotation = GetSnappedRotation(ghostTile.transform.position, snapAngle);		//Look
+				// StartCoroutine(LerpMove(ghost.transform, ghostTile.transform.position));		//Lerp
+				ghost.transform.position = ghostTile.transform.position;		//Move Ghost
 			}
 			//Move the actual unit
 			else
 			{
 				//Ghost was probably just active so deactivate ghost ??? Should this be here?
 				if (ghost != null) ghost.SetActive(false);
-				//Filter
-				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;
-				//Set
-				currentTile = destination;
-				//Move and look
-				transform.rotation = GetSnappedRotation(currentTile.transform.position, snapAngle);
-				// StartCoroutine(LerpMove(transform, currentTile.transform.position));
-				transform.position = currentTile.transform.position;
+				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;		//Filter
+				currentTile = destination;		//Set
+				transform.rotation = GetSnappedRotation(currentTile.transform.position, snapAngle);		//Look
+				// StartCoroutine(LerpMove(transform, currentTile.transform.position));		//Lerp
+				transform.position = currentTile.transform.position;		//Move
+				onMoved.Invoke(currentTile);	//Events
 			}
+
+
 			//NOTE: Unit can still move
 			return true;    //Successful move
-
 		}
 
 		/// <summary>

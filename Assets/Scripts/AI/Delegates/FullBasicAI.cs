@@ -34,20 +34,17 @@ namespace StormRend.Bhaviours
 		[Tooltip("0 = Absorb?, 1 = Melee, 1 > Ranged")]
 		[SerializeField] int attackRange = 1;
 
-
 		//Members
 		UnitRegistry ur;
 		AnimateUnit au;
 		bool targetIsAdjacent = false;
 		AnimateUnit target = null;
-		CameraMover cameraMover = null;
 
 
-		#region Core
+	#region Core
 		public override void Initiate(BhaveAgent agent)
 		{
 			ur = UnitRegistry.current;
-			cameraMover = MasterCamera.current.GetComponent<CameraMover>();
 		}
 
 		public override void Begin()
@@ -85,7 +82,13 @@ namespace StormRend.Bhaviours
 				return NodeState.Pending;
 			}
 		}
+	#endregion
 
+	#region AI Logic
+		//---------------------------------------------------------------------------------
+		/// <summary>	
+		/// Scans for targets and runs through a process of elimination to leave with only one final target
+		/// </summary>
 		bool Scan()
 		{
 			//Get all opponents ignoring opponents that are in the process of dying
@@ -204,6 +207,7 @@ namespace StormRend.Bhaviours
 			return true;    //TARGET FINALLY ACQUIRED!
 		}
 
+		//----------------------------------------------------------------------------------------
 		/// <summary>
 		/// Move towards the target. There should only be one target at this point
 		/// </summary>
@@ -236,7 +240,6 @@ namespace StormRend.Bhaviours
 			if (closestTileInMoveRange)
 			{
 				au.Move(closestTileInMoveRange);
-				cameraMover.MoveTo(closestTileInMoveRange, 1);
 				return true;
 			}
 
@@ -244,6 +247,10 @@ namespace StormRend.Bhaviours
 			return false;
 		}
 
+		//---------------------------------------------------------------------------------------
+		/// <summary>
+		/// Attacks the target if possible
+		/// </summary>
 		bool Attack()
 		{
 			if (!attackOn) return false;
@@ -263,29 +270,26 @@ namespace StormRend.Bhaviours
 				//ATTACK
 				au.Act(au.abilities[0], target.currentTile);
 
-				//CAMERA FOCUS
-				cameraMover.MoveTo(target, 1);
-
 				return true;
 			}
 			else
 			{
 				//This unit would've already moved to the best position possible so if target is within this agent's ability's ATTACK range then attack
-				au.CalculateTargetTiles(au.abilities[0]);				//Attackable tiles
+				au.CalculateTargetTiles(au.abilities[0]);               //Attackable tiles
 
 				if (au.possibleTargetTiles.Contains(target.currentTile))
 				{
-					au.FilteredAct(au.abilities[0], au.possibleTargetTiles);		//Attack!
-
-					//CAMERA FOCUS
-					cameraMover.MoveTo(target, 1);
+					//ATTACK
+					au.FilteredAct(au.abilities[0], target.currentTile);        //Attack!
 
 					return true;
 				}
 			}
 			return false;
 		}
+	#endregion
 
+	#region Assists
 		bool TryGetAdjacentTarget(Tile start, out AnimateUnit adjacentTarget)
 		{
 			var adjacentTiles = GetAdjacentTiles(start);
@@ -305,7 +309,6 @@ namespace StormRend.Bhaviours
 			//Get adjacent empty tiles
 			return Map.GetPossibleTiles(start, 1, pathBlockingUnitTypes);
 		}
-
-		#endregion
+	#endregion
 	}
 }

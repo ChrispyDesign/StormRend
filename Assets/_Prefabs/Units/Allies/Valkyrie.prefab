@@ -684,6 +684,7 @@ GameObject:
   - component: {fileID: 653011552559127036}
   - component: {fileID: 4596331959945479920}
   - component: {fileID: 6523016055183356590}
+  - component: {fileID: 5885102488600316355}
   - component: {fileID: 96756247434198363}
   - component: {fileID: 5374563595797963673}
   - component: {fileID: 3671556472718825716}
@@ -795,9 +796,36 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: StormRend.Utility.Events.EffectEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  onMoved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5885102488600316355}
+        m_MethodName: Focus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StormRend.Utility.Events.TileEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   onActed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5885102488600316355}
+        m_MethodName: Focus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: StormRend.Utility.Events.AbilityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onEndTurn:
@@ -807,6 +835,19 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   possibleMoveTiles: []
   possibleTargetTiles: []
+--- !u!114 &5885102488600316355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743394238124216912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7b3fd9114dd20744a3ed587e445b9cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerpTime: 1
 --- !u!114 &96756247434198363
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -65,8 +65,10 @@ namespace StormRend.Abilities
 		public int requiredTiles => _requiredTiles;
 		public TargetType targetTileTypes => _targetTileTypes;
 
+		//Member
+		internal Vector3 lastTargetPos = new Vector3();
+
 	#region Core
-		//CRUNCH!
 		public bool Perform(Unit owner, params Unit[] units)
 			=> Perform(owner, units.Select(x => x.currentTile).ToArray());
 
@@ -78,6 +80,8 @@ namespace StormRend.Abilities
 			foreach (var e in effects)
 			{
 				e.Perform(this, owner, targets);
+
+				RecordLastTargetPosition(targets);
 			}
 			return true;	//Successful ability execution
 		}
@@ -214,6 +218,20 @@ namespace StormRend.Abilities
 			DestroyImmediate(e, true);
 			AssetDatabase.SaveAssets();
 #endif
+		}
+
+		/// <summary>
+		/// Assist method to calculate lastTargetPos for camera move etc
+		/// </summary>
+		void RecordLastTargetPosition(Tile[] targets)
+		{
+			//Record average target position
+			lastTargetPos = Vector3.zero;
+			foreach (var t in targets)
+			{
+				lastTargetPos += t.transform.position;
+			}
+			lastTargetPos /= (float)targets.Length;
 		}
 	}
 }

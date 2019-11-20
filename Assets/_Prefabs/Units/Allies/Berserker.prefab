@@ -4345,6 +4345,7 @@ GameObject:
   - component: {fileID: 9108019807441497514}
   - component: {fileID: 688204287768951882}
   - component: {fileID: 3841930061851047593}
+  - component: {fileID: 8547758622612656737}
   - component: {fileID: 3132190640876183000}
   - component: {fileID: 4588662592721858016}
   - component: {fileID: 9108019807441497519}
@@ -4457,9 +4458,36 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: StormRend.Utility.Events.EffectEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  onMoved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8547758622612656737}
+        m_MethodName: Focus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StormRend.Utility.Events.TileEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   onActed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8547758622612656737}
+        m_MethodName: Focus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: StormRend.Utility.Events.AbilityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onEndTurn:
@@ -4469,6 +4497,19 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   possibleMoveTiles: []
   possibleTargetTiles: []
+--- !u!114 &8547758622612656737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108019807441497518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7b3fd9114dd20744a3ed587e445b9cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerpTime: 1
 --- !u!114 &3132190640876183000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5019,15 +5060,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 280650df191977342833de9ada19cba3, type: 3}
---- !u!1 &1972798501507745086 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7855007882911664270, guid: 280650df191977342833de9ada19cba3,
-    type: 3}
-  m_PrefabInstance: {fileID: 8530470553681464752}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2341573088090994435 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6205012047602268851, guid: 280650df191977342833de9ada19cba3,
+    type: 3}
+  m_PrefabInstance: {fileID: 8530470553681464752}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1972798501507745086 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7855007882911664270, guid: 280650df191977342833de9ada19cba3,
     type: 3}
   m_PrefabInstance: {fileID: 8530470553681464752}
   m_PrefabAsset: {fileID: 0}

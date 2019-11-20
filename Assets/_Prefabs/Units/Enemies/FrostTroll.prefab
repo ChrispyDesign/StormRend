@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2615198146657782402}
   - component: {fileID: 334213095109828410}
   - component: {fileID: 5168873017443203932}
+  - component: {fileID: 1033865046785212367}
   - component: {fileID: 3093552309022210590}
   - component: {fileID: 3093552309022210656}
   m_Layer: 12
@@ -140,9 +141,36 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: StormRend.Utility.Events.EffectEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  onMoved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1033865046785212367}
+        m_MethodName: Focus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StormRend.Utility.Events.TileEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   onActed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1033865046785212367}
+        m_MethodName: Focus
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: StormRend.Utility.Events.AbilityEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onEndTurn:
@@ -152,6 +180,19 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   possibleMoveTiles: []
   possibleTargetTiles: []
+--- !u!114 &1033865046785212367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3093552309022210591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7b3fd9114dd20744a3ed587e445b9cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lerpTime: 1
 --- !u!65 &3093552309022210590
 BoxCollider:
   m_ObjectHideFlags: 0
