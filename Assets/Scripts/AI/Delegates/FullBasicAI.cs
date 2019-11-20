@@ -33,10 +33,7 @@ namespace StormRend.Bhaviours
 
 
 		#region Core
-		public override void Initiate(BhaveAgent agent)
-		{
-			ur = UnitRegistry.current;
-		}
+		public override void Initiate(BhaveAgent agent) => ur = UnitRegistry.current;
 
 		public override void Begin()
 		{
@@ -49,6 +46,7 @@ namespace StormRend.Bhaviours
 		{
 			//Get this agent's unit
 			au = agent.GetComponent<AnimateUnit>();		//Hacky fix to allow any enemy to use the same AI module
+			if (!au) return NodeState.Failure;
 
 			if (!Scan())
 			{
@@ -56,8 +54,8 @@ namespace StormRend.Bhaviours
 				return NodeState.Failure;   //Couldn't find any opponents
 			}
 
-			if (!MoveToward())
-				Debug.LogFormat("{0} didn't move", au.name);
+			if (!Move())
+				Debug.LogFormat("{0} didn't move. Obstacle in the way", au.name);
 			else
 				Debug.LogFormat("{0} moved", au.name);
 
@@ -71,13 +69,14 @@ namespace StormRend.Bhaviours
 				Debug.LogFormat("{0} didn't attack", au.name);
 				return NodeState.Pending;
 			}
+			return NodeState.Pending;
 		}
 
 		bool Scan()
 		{
 			//Get all opponents
 			var allOpponents = ur.GetAliveUnitsByType<AllyUnit>();
-			allOpponents.Print("------ All Opponents ------");
+			allOpponents.Print("[SCAN: All Opponents]");
 
 			//Scan for opponents from 1x to 3x range
 			for (int scan = 1; scan < maxScanRangeMultiplier; ++scan)
@@ -121,7 +120,7 @@ namespace StormRend.Bhaviours
 				}
 
 			}
-			targets.value.Print("[In Range]");
+			targets.value.Print("[SCAN: In Range]");
 			//Exit if still nothing in range
 			if (targets.value.Count == 0) return false;
 
@@ -133,7 +132,7 @@ namespace StormRend.Bhaviours
 				{
 					//Provoker found so set as the only target
 					target = o as AnimateUnit;
-					Debug.LogFormat("[Provoke] : {0}", target.name);
+					Debug.LogFormat("[SCAN: Provoke] : {0}", target.name);
 					return true;        //TARGET ACQUIRED!
 				}
 			}
@@ -142,7 +141,7 @@ namespace StormRend.Bhaviours
 			if (TryGetAdjacentTarget(au.currentTile, out AnimateUnit outTarget))
 			{
 				target = outTarget;
-				Debug.LogFormat("[Adjacent] : {0}", target.name);
+				Debug.LogFormat("[SCAN: Adjacent] : {0}", target.name);
 				targetIsAdjacent = true;      //Attack in place
 				return true;        //TARGET ACQUIRED!
 			}
@@ -158,7 +157,7 @@ namespace StormRend.Bhaviours
 			if (lowestHealth.Count != 1)    //If there's only one that means all the units have the same health
 			{
 				target = lowestHealth.ElementAt(0) as AnimateUnit;
-				Debug.LogFormat("[Health] : {0}", target.name);
+				Debug.LogFormat("[SCAN: Health] : {0}", target.name);
 				return true;    //TARGET ACQUIRED!
 			}
 			//Multiple units of the same health detected, continue to filter by ally type
@@ -170,31 +169,31 @@ namespace StormRend.Bhaviours
 				{
 					case BerserkerTag b:
 						target = t as AnimateUnit;
-						Debug.LogFormat("[Type] : {0}", target.name);
+						Debug.LogFormat("[SCAN: Type] : {0}", target.name);
 						return true;    //TARGET ACQUIRED!
 
 					case ValkyrieTag v:
 						target = t as AnimateUnit;
-						Debug.LogFormat("[Type] : {0}", target.name);
+						Debug.LogFormat("[SCAN: Type] : {0}", target.name);
 						return true;    //TARGET ACQUIRED!
 
 					case SageTag s:
 						target = t as AnimateUnit;
-						Debug.LogFormat("[Type] : {0}", target.name);
+						Debug.LogFormat("[SCAN: Type] : {0}", target.name);
 						return true;      //TARGET ACQUIRED!
 				}
 			}
 
 			//--------- PRIORITY 5: Default, choose any target
 			target = targets.value[Random.Range(0, targets.value.Count - 1)] as AnimateUnit;
-			Debug.LogFormat("[Default] : {0}", target.name);
+			Debug.LogFormat("[SCAN: Default] : {0}", target.name);
 			return true;    //TARGET FINALLY ACQUIRED!
 		}
 
 		/// <summary>
 		/// Move towards the target. There should only be one target at this point
 		/// </summary>
-		bool MoveToward()
+		bool Move()
 		{
 			//Can't move if crippled
 			if (au.isImmobilised)
@@ -208,20 +207,23 @@ namespace StormRend.Bhaviours
 
 			//Move as close as possible to the closest empty adjacent tile of the target
 			au.CalculateMoveTiles();
-			var closestAdjacentTileOfTarget = GetAdjacentTiles(target.currentTile).
-				OrderBy(t => Vector3.SqrMagnitude(t.transform.position - au.transform.position)).
+
+			//Get in the agent's move range, get the tile that is the closest to the closest adjacent tile of the target while taking into account the unit types that block the path
+			var closestAdjacentTileOfTarget = GetAdjacentTiles(target.currentTile, au.pathBlockingUnitTypes).
+				OrderBy(targetAdjacentTile => Vector3.SqrMagnitude(targetAdjacentTile.transform.position - au.transform.position)).
 				First();
-			var closestTileInRange = au.possibleMoveTiles.
+			var closestTileInMoveRange = au.possibleMoveTiles.
 				OrderBy(mt => Vector3.SqrMagnitude(mt.transform.position - closestAdjacentTileOfTarget.transform.position)).
 				First();
-			if (closestTileInRange)
+
+			//Move if tile successfully found
+			if (closestTileInMoveRange)
 			{
-				//Move
-				au.Move(closestTileInRange);
+				au.Move(closestTileInMoveRange);
 				return true;
 			}
 
-			//Can't move ie. maybe blocked by crystals etc
+			//Can't move ie. maybe blocked by crystals or other units etc.
 			return false;
 		}
 
@@ -245,8 +247,7 @@ namespace StormRend.Bhaviours
 			}
 			else
 			{
-				//This unit would've already moved to the best position
-				//so if target is within ATTACK range then attack
+				//This unit would've already moved to the best position possible so if target is within this agent's ability's ATTACK range then attack
 				au.CalculateTargetTiles(au.abilities[0]);				//Attackable tiles
 
 				if (au.possibleTargetTiles.Contains(target.currentTile))
@@ -272,10 +273,10 @@ namespace StormRend.Bhaviours
 			return false;   //No adjacent targets
 		}
 
-		Tile[] GetAdjacentTiles(Tile start)
+		Tile[] GetAdjacentTiles(Tile start, params System.Type[] pathBlockingUnitTypes)
 		{
 			//Get adjacent empty tiles
-			return Map.GetPossibleTiles(start, 1);
+			return Map.GetPossibleTiles(start, 1, pathBlockingUnitTypes);
 		}
 
 		#endregion

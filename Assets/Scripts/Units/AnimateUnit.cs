@@ -458,29 +458,37 @@ namespace StormRend.Units
 			//Default to this unit's move range if nothing passed in
 			if (range == 0) range = moveRange;
 
-			var pathblockers = new List<Type>();
+			return possibleMoveTiles = Map.GetPossibleTiles(startTile.owner, startTile, range, pathBlockingUnitTypes);
+		}
 
-			//Allies
-			if ((pathBlockers & TargetType.Allies) == TargetType.Allies)
-				pathblockers.Add(typeof(AllyUnit));
+		public Type[] pathBlockingUnitTypes
+		{
+			get
+			{
+				var results = new List<Type>();
 
-			//Enemies
-			if ((pathBlockers & TargetType.Enemies) == TargetType.Enemies)
-				pathblockers.Add(typeof(EnemyUnit));
+				//Allies
+				if ((pathBlockers & TargetType.Allies) == TargetType.Allies)
+					results.Add(typeof(AllyUnit));
 
-			//Crystals
-			if ((pathBlockers & TargetType.Crystals) == TargetType.Crystals)
-				pathblockers.Add(typeof(CrystalUnit));
+				//Enemies
+				if ((pathBlockers & TargetType.Enemies) == TargetType.Enemies)
+					results.Add(typeof(EnemyUnit));
 
-			//InAnimates
-			if ((pathBlockers & TargetType.InAnimates) == TargetType.InAnimates)
-				pathblockers.Add(typeof(InAnimateUnit));
+				//Crystals
+				if ((pathBlockers & TargetType.Crystals) == TargetType.Crystals)
+					results.Add(typeof(CrystalUnit));
 
-			//Animates
-			if ((pathBlockers & TargetType.Animates) == TargetType.Animates)
-				pathblockers.Add(typeof(AnimateUnit));
+				//InAnimates
+				if ((pathBlockers & TargetType.InAnimates) == TargetType.InAnimates)
+					results.Add(typeof(InAnimateUnit));
 
-			return possibleMoveTiles = Map.GetPossibleTiles(startTile.owner, startTile, range, pathblockers.ToArray());
+				//Animates
+				if ((pathBlockers & TargetType.Animates) == TargetType.Animates)
+					results.Add(typeof(AnimateUnit));
+
+				return results.ToArray();
+			}
 		}
 
 		/// <summary>

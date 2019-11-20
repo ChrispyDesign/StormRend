@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1309101092, guid: 0c25f2ed055db00489974bd6dd51f2cd, type: 3}
-  m_Name: CompleteAI 0
+  m_Name: EnemyAI
   m_EditorClassIdentifier: 
   _eData:
     owner: {fileID: 0}
@@ -25,9 +25,10 @@ MonoBehaviour:
   description: 
   _state: -1
   _parent: {fileID: 0}
-  root: {fileID: 114101301479098354}
+  root: {fileID: 114812353847911796}
   _eNodes:
   - {fileID: 114101301479098354}
+  - {fileID: 114812353847911796}
 --- !u!114 &114101301479098354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,15 +45,15 @@ MonoBehaviour:
     owner: {fileID: 11400000}
     rect:
       serializedVersion: 2
-      x: 543.5
-      y: 254
+      x: 548.5
+      y: 292
       width: 95
       height: 65
     breakpoint: 0
   ID: 0
   description: 
-  _state: -1
-  _parent: {fileID: 0}
+  _state: 1
+  _parent: {fileID: 114812353847911796}
   _deleg: {fileID: 114631956378052426}
   overrideOn: 0
   stateOverride: 1
@@ -70,4 +71,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targets: {fileID: 11400000, guid: c8add33a65b30a347bd1530394bd15fd, type: 2}
   attackRange: 1
-  maxScanRangeMultiplier: 3
+  maxScanRangeMultiplier: 6
+--- !u!114 &114812353847911796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -818739291, guid: 0c25f2ed055db00489974bd6dd51f2cd, type: 3}
+  m_Name: Selector:1
+  m_EditorClassIdentifier: 
+  _eData:
+    owner: {fileID: 11400000}
+    rect:
+      serializedVersion: 2
+      x: 548.5
+      y: 166
+      width: 95
+      height: 65
+    breakpoint: 0
+  ID: 1
+  description: 
+  _state: 1
+  _parent: {fileID: 0}
+  children:
+  - {fileID: 114101301479098354}
