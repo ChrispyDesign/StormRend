@@ -3,28 +3,22 @@ using UnityEngine;
 using pokoro.BhaVE.Core.Delegates;
 using pokoro.BhaVE.Core.Enums;
 using pokoro.BhaVE.Core;
-using StormRend.Variables;
 using StormRend.Units;
 using StormRend.MapSystems;
 using StormRend.Utility;
 using StormRend.MapSystems.Tiles;
 using System.Collections.Generic;
 using StormRend.Tags;
-using StormRend.CameraSystem;
 
 namespace StormRend.Bhaviours
 {
-	/// <summary>
-	/// Moves toward the closest target unit
-	/// </summary>
-	[CreateAssetMenu(menuName = "StormRend/AI/FullBasicAI", fileName = "FullBasicAI")]
+    /// <summary>
+    /// Moves toward the closest target unit
+    /// </summary>
+    [CreateAssetMenu(menuName = "StormRend/AI/FullBasicAI", fileName = "FullBasicAI")]
 	public sealed class FullBasicAI : BhaveAction
 	{
-		[SerializeField] UnitListVar targets = null;
-
-		[Header("Scanning")]
-		[Tooltip("The max scanning increments this unit will do to find targets")]
-		[SerializeField] int maxScanRange = 3;    //Means the unit can scan up to 3x moveRange
+		//AI now scans infinitely
 
 		[Header("Move")]
 		[SerializeField] bool moveOn = true;
@@ -35,10 +29,11 @@ namespace StormRend.Bhaviours
 		[SerializeField] int attackRange = 1;
 
 		//Members
+		AnimateUnit agent;
 		UnitRegistry ur;
-		AnimateUnit au;
 		bool targetIsAdjacent = false;
-		AnimateUnit target = null;
+		Unit target = null;
+		List<Unit> targets = new List<Unit>();
 
 
 	#region Core
@@ -49,7 +44,7 @@ namespace StormRend.Bhaviours
 
 		public override void Begin()
 		{
-			targets.value.Clear();
+			targets.Clear();
 			target = null;
 			targetIsAdjacent = false;
 		}
@@ -57,28 +52,28 @@ namespace StormRend.Bhaviours
 		public override NodeState Execute(BhaveAgent agent)
 		{
 			//Get this agent's unit
-			au = agent.GetComponent<AnimateUnit>();     //Hacky fix to allow any enemy to use the same AI module
-			if (!au) return NodeState.Failure;
+			this.agent = agent.GetComponent<AnimateUnit>();     //Hacky fix to allow any enemy to use the same AI module
+			if (!this.agent) return NodeState.Failure;
 
 			if (!Scan())
 			{
-				Debug.LogFormat("{0} found no opponents", au.name);
+                Debug.LogFormat("{0} found no opponents", this.agent.name);
 				return NodeState.Failure;   //Couldn't find any opponents
 			}
 
 			if (!Move())
-				Debug.LogFormat("{0} didn't move. Obstacle in the way", au.name);
+                Debug.LogFormat("{0} didn't move. Obstacle in the way", this.agent.name);
 			else
-				Debug.LogFormat("{0} moved", au.name);
+                Debug.LogFormat("{0} moved", this.agent.name);
 
 			if (Attack())
 			{
-				Debug.LogFormat("{0} successfully attacked", au.name);
+                Debug.LogFormat("{0} successfully attacked", this.agent.name);
 				return NodeState.Success;
 			}
 			else
 			{
-				Debug.LogFormat("{0} didn't attack", au.name);
+                Debug.LogFormat("{0} didn't attack", this.agent.name);
 				return NodeState.Pending;
 			}
 		}
@@ -91,71 +86,29 @@ namespace StormRend.Bhaviours
 		/// </summary>
 		bool Scan()
 		{
-			//Get all opponents ignoring opponents that are in the process of dying
-			var allOpponents = ur.GetAliveUnitsByType<AllyUnit>().Where(x => x.HP != 0);
-			allOpponents.Print("[SCAN: All Opponents]");
+			var allyUnits = ur.GetAliveUnitsByType<AllyUnit>().Where(x => x.HP > 0).ToList();
+			var crystals = ur.GetAliveUnitsByType<CrystalUnit>().Where(x => x.HP > 0).ToList();
+			targets.AddRange(allyUnits);
+			targets.AddRange(crystals);
 
-			//Scan for opponents from 1x to 3x range
-			for (int scan = 1; scan < maxScanRange; ++scan)
-			{
-				targets.value.Clear();
-
-				//Calculate scan range
-				//NOTE Can't use calculate move tiles because the settings are wrong
-				//Path Blockers: Ignore crystals etc and other teammates
-				var scanTiles = Map.GetPossibleTiles(au.currentTile,
-						au.moveRange * scan + attackRange,
-						typeof(EnemyUnit), typeof(InAnimateUnit));
-
-				//Get opponents in range
-				foreach (var o in allOpponents)
-				{
-					//Add if in range
-					if (scanTiles.Contains(o.currentTile))
-						targets.value.Add(o);
-				}
-
-				//Check if any opponent found
-				if (scan == 1)
-				{
-					//If units within immediate range, stop scanning and start filtering
-					if (targets.value.Count > 0)
-						break;
-				}
-				else if (scan >= 2)
-				{
-					//Units within distant range
-					if (targets.value.Count > 0)
-					{
-						//Set the closest unit as the target
-						//REMEMBER order by descening means low to high ie. first element is lowest, last element is highest
-						this.target = targets.value.
-								OrderByDescending(t => Vector3.SqrMagnitude(t.transform.position - au.transform.position)).
-								First() as AnimateUnit;     //First should be the closest
-						return true;        //TARGET ACQUIRED!
-					}
-				}
-
-			}
-			targets.value.Print("[SCAN: In Range]");
-			//Exit if still nothing in range
-			if (targets.value.Count == 0) return false;
+			targets.Print("[SCAN: All Opponents]");
+			if (targets.Count == 0) return false;
 
 			//----------- PRIORITY 1: Provoke
-			foreach (var o in targets.value)
+			foreach (var u in targets)
 			{
-				var au = o as AnimateUnit;
+				var au = u as AnimateUnit;
 				if (au.isProvoking)
 				{
 					//Provoker found so set as the only target
-					target = o as AnimateUnit;
+					target = u;
 					Debug.LogFormat("[SCAN: Provoke] : {0}", target.name);
 					return true;        //TARGET ACQUIRED!
 				}
 			}
 
 			//------------ PRIORITY 2: Adjacency
-			if (TryGetAdjacentTarget(au.currentTile, out AnimateUnit outTarget))
+			if (TryGetAdjacentTarget(agent.currentTile, out Unit outTarget))
 			{
 				target = outTarget;
 				Debug.LogFormat("[SCAN: Adjacent] : {0}", target.name);
@@ -165,44 +118,49 @@ namespace StormRend.Bhaviours
 
 			//----------- PRIORITY 3: Health
 			//Sort by health
-			targets.value = targets.value.OrderBy(t => t.HP).ToList();  //Lowest to highest
+			targets = targets.OrderBy(t => t.HP).ToList();  //Lowest to highest
 
 			//Check there aren't multiple opponents with low health (hashsets don't allow multiples)
 			HashSet<Unit> lowestHealth = new HashSet<Unit>();
-			foreach (var t in targets.value)
+			foreach (var t in targets)
 				lowestHealth.Add(t);
 			if (lowestHealth.Count != 1)    //If there's only one that means all the units have the same health
 			{
-				target = lowestHealth.ElementAt(0) as AnimateUnit;
+				target = lowestHealth.ElementAt(0);
 				Debug.LogFormat("[SCAN: Health] : {0}", target.name);
 				return true;    //TARGET ACQUIRED!
 			}
 			//Multiple units of the same health detected, continue to filter by ally type
 
 			//----------- PRIORITY 4: Ally Type
-			foreach (var t in targets.value)
+			foreach (var t in targets)
 			{
 				switch (t.tag)
 				{
 					case BerserkerTag b:
-						target = t as AnimateUnit;
+						target = t;
 						Debug.LogFormat("[SCAN: Type] : {0}", target.name);
 						return true;    //TARGET ACQUIRED!
 
 					case ValkyrieTag v:
-						target = t as AnimateUnit;
+						target = t;
 						Debug.LogFormat("[SCAN: Type] : {0}", target.name);
 						return true;    //TARGET ACQUIRED!
 
 					case SageTag s:
-						target = t as AnimateUnit;
+						target = t;
+						Debug.LogFormat("[SCAN: Type] : {0}", target.name);
+						return true;      //TARGET ACQUIRED!
+
+					case CrystalTag c:
+						target = t;
 						Debug.LogFormat("[SCAN: Type] : {0}", target.name);
 						return true;      //TARGET ACQUIRED!
 				}
 			}
 
 			//--------- PRIORITY 5: Default, choose any target
-			target = targets.value[Random.Range(0, targets.value.Count - 1)] as AnimateUnit;
+			target = targets[Random.Range(0, targets.Count - 1)];
 			Debug.LogFormat("[SCAN: Default] : {0}", target.name);
 			return true;    //TARGET FINALLY ACQUIRED!
 		}
@@ -216,7 +174,7 @@ namespace StormRend.Bhaviours
 			if (!moveOn) return false;
 
 			//Can't move if crippled
-			if (au.isImmobilised)
+			if (agent.isImmobilised)
 			{
 				Debug.LogFormat("{0} is crippled!");
 				return false;
@@ -226,20 +184,20 @@ namespace StormRend.Bhaviours
 			if (targetIsAdjacent) return false;
 
 			//Move as close as possible to the closest empty adjacent tile of the target
-			au.CalculateMoveTiles();
+			agent.CalculateMoveTiles();
 
 			//Get in the agent's move range, get the tile that is the closest to the closest adjacent tile of the target while taking into account the unit types that block the path
-			var closestAdjacentTileOfTarget = GetAdjacentTiles(target.currentTile, au.pathBlockingUnitTypes).
-				OrderBy(targetAdjacentTile => Vector3.SqrMagnitude(targetAdjacentTile.transform.position - au.transform.position)).
+			var closestAdjacentTileOfTarget = GetAdjacentTiles(target.currentTile, agent.pathBlockingUnitTypes).
+				OrderBy(targetAdjacentTile => Vector3.SqrMagnitude(targetAdjacentTile.transform.position - agent.transform.position)).
 				First();
-			var closestTileInMoveRange = au.possibleMoveTiles.
+			var closestTileInMoveRange = agent.possibleMoveTiles.
 				OrderBy(mt => Vector3.SqrMagnitude(mt.transform.position - closestAdjacentTileOfTarget.transform.position)).
 				First();
 
 			//Move if tile successfully found
 			if (closestTileInMoveRange)
 			{
-				au.Move(closestTileInMoveRange);
+				agent.Move(closestTileInMoveRange);
 				return true;
 			}
 
@@ -256,31 +214,31 @@ namespace StormRend.Bhaviours
 			if (!attackOn) return false;
 
 			//Can't attack if blind
-			if (au.isBlind)
+			if (agent.isBlind)
 			{
 				Debug.LogFormat("{0} is blind!");
 				return false;
 			}
 
-			Debug.Assert(au.abilities[0], "Enemy not loaded with Ability!");
+			Debug.Assert(agent.abilities[0], "Enemy not loaded with Ability!");
 
 			//Attack immediately if adjacent
 			if (targetIsAdjacent)
 			{
 				//ATTACK
-				au.Act(au.abilities[0], target.currentTile);
+				agent.Act(agent.abilities[0], target.currentTile);
 
 				return true;
 			}
 			else
 			{
 				//This unit would've already moved to the best position possible so if target is within this agent's ability's ATTACK range then attack
-				au.CalculateTargetTiles(au.abilities[0]);               //Attackable tiles
+				agent.CalculateTargetTiles(agent.abilities[0]);               //Attackable tiles
 
-				if (au.possibleTargetTiles.Contains(target.currentTile))
+				if (agent.possibleTargetTiles.Contains(target.currentTile))
 				{
 					//ATTACK
-					au.FilteredAct(au.abilities[0], target.currentTile);        //Attack!
+					agent.FilteredAct(agent.abilities[0], target.currentTile);        //Attack!
 
 					return true;
 				}
@@ -290,13 +248,13 @@ namespace StormRend.Bhaviours
 	#endregion
 
 	#region Assists
-		bool TryGetAdjacentTarget(Tile start, out AnimateUnit adjacentTarget)
+		bool TryGetAdjacentTarget(Tile start, out Unit adjacentTarget)
 		{
 			var adjacentTiles = GetAdjacentTiles(start);
-			foreach (var t in targets.value)
+			foreach (var t in targets)
 				if (adjacentTiles.Contains(t.currentTile))
 				{
-					adjacentTarget = t as AnimateUnit;
+					adjacentTarget = t;
 					return true;       //A target is adjacent
 				}
 
