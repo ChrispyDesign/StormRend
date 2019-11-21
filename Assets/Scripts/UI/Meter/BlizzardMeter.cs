@@ -53,6 +53,8 @@ namespace StormRend.UI
 			//Decrease
 			else if (internalBlizzard > blizzard.value)
 				decrease = true;
+
+			internalBlizzard = blizzard.value;
 		}
 
 		private void UpdatePanel()
