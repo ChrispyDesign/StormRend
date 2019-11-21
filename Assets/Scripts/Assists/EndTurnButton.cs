@@ -41,7 +41,7 @@ namespace StormRend.Assists
 		{
 			anim.SetBool("OnHover", true);
 			audSrc.PlayOneShot(onHover);
-			infoPanel?.ShowPanel(title, 0);
+			infoPanel?.ShowPanel(title, 1);
 		}
 
 		public void OnPointerExit(PointerEventData eventData)
@@ -53,6 +53,7 @@ namespace StormRend.Assists
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
+			infoPanel?.UnShowPanel(true);
 			anim.SetTrigger("OnClick");
 			audSrc.PlayOneShot(onClick);
 			OnClick.Invoke();
