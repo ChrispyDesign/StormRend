@@ -99,6 +99,15 @@ namespace StormRend.Units
 				return false;
 			}
 		}
+		public bool isProtected
+		{
+			get
+			{
+				foreach (var se in statusEffects)
+					if (se is ProtectEffect) return true;
+				return false;
+			}
+		}
 
 		//Members
 		// protected GameObject ghost = null;
