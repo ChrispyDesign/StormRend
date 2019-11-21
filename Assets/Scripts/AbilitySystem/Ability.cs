@@ -66,7 +66,7 @@ namespace StormRend.Abilities
 		public TargetType targetTileTypes => _targetTileTypes;
 
 		//Member
-		internal Vector3 lastTargetPos = new Vector3();
+		public Vector3 lastTargetPos = new Vector3();
 
 	#region Core
 		public bool Perform(Unit owner, params Unit[] units)
@@ -97,6 +97,8 @@ namespace StormRend.Abilities
 				if (e is T)
 				{
 					e.Perform(this, owner, targets);
+
+					RecordLastTargetPosition(targets);
 				}
 			}
 			return true;
