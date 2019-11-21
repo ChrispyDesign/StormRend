@@ -12,11 +12,10 @@ using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 namespace StormRend.Units
 {
-	[SelectionBase] //Avoid clicking on child objects
+    [SelectionBase] //Avoid clicking on child objects
 	public abstract class AnimateUnit : Unit //, IPointerEnterHandler, IPointerExitHandler
 	{
 		//Enums
