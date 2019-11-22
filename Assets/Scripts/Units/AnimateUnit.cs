@@ -12,11 +12,10 @@ using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 namespace StormRend.Units
 {
-	[SelectionBase] //Avoid clicking on child objects
+    [SelectionBase] //Avoid clicking on child objects
 	public abstract class AnimateUnit : Unit //, IPointerEnterHandler, IPointerExitHandler
 	{
 		//Enums
@@ -96,6 +95,15 @@ namespace StormRend.Units
 			{
 				foreach (var se in statusEffects)
 					if (se is BlindEffect) return true;
+				return false;
+			}
+		}
+		public bool isProtected
+		{
+			get
+			{
+				foreach (var se in statusEffects)
+					if (se is ProtectEffect) return true;
 				return false;
 			}
 		}

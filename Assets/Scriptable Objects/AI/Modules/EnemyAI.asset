@@ -29,6 +29,23 @@ MonoBehaviour:
   _eNodes:
   - {fileID: 114101301479098354}
   - {fileID: 114812353847911796}
+--- !u!114 &114016761336581024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd0f58f0bc3203c468af0922319bc1e7, type: 3}
+  m_Name: CompleteAIAction[COPY]
+  m_EditorClassIdentifier: 
+  targets: {fileID: 11400000, guid: c8add33a65b30a347bd1530394bd15fd, type: 2}
+  maxScanRange: 10
+  moveOn: 1
+  attackOn: 1
+  attackRange: 1
 --- !u!114 &114101301479098354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,35 +62,18 @@ MonoBehaviour:
     owner: {fileID: 11400000}
     rect:
       serializedVersion: 2
-      x: 548.5
-      y: 292
+      x: 336.5
+      y: 290
       width: 95
       height: 65
     breakpoint: 0
   ID: 0
   description: 
-  _state: -1
+  _state: 1
   _parent: {fileID: 114812353847911796}
-  _deleg: {fileID: 114631956378052426}
+  _deleg: {fileID: 114016761336581024}
   overrideOn: 0
   stateOverride: 1
---- !u!114 &114631956378052426
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd0f58f0bc3203c468af0922319bc1e7, type: 3}
-  m_Name: FullBasicAIAction[COPY]
-  m_EditorClassIdentifier: 
-  targets: {fileID: 11400000, guid: c8add33a65b30a347bd1530394bd15fd, type: 2}
-  maxScanRange: 10
-  moveOn: 1
-  attackOn: 1
-  attackRange: 1
 --- !u!114 &114812353847911796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,14 +90,14 @@ MonoBehaviour:
     owner: {fileID: 11400000}
     rect:
       serializedVersion: 2
-      x: 548.5
-      y: 166
+      x: 336.5
+      y: 164
       width: 95
       height: 65
     breakpoint: 0
   ID: 1
   description: 
-  _state: -1
+  _state: 1
   _parent: {fileID: 0}
   children:
   - {fileID: 114101301479098354}

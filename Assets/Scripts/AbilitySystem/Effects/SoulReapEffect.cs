@@ -43,7 +43,7 @@ namespace StormRend.Abilities.Effects
 		IEnumerator ReapSoul(Unit owner, Unit killedUnit)
 		{
 			//Inits
-			Vector3 pos;
+			Vector3 vfxPos;
 			float time = 0;
 			float rate = 1f / VFX.totalDuration;
 
@@ -57,14 +57,14 @@ namespace StormRend.Abilities.Effects
 
 				//Towards position
 				var tp = arriveSpeed.Evaluate(time);
-				pos = Vector3.LerpUnclamped(killedUnit.transform.position, owner.transform.position, tp);
+				vfxPos = Vector3.Lerp(killedUnit.transform.position, owner.transform.position, tp);
 
-				//Y position
-				pos.y = yPos.Evaluate(time);
+				//Y position relative to the owner's position
+				vfxPos.y = owner.transform.position.y + yPos.Evaluate(time);
 
 				//Set position of fx
 				if (instance) 	//Keep getting some missing reference exception
-					instance.position = pos;
+					instance.position = vfxPos;
 
 				yield return null;
 			}

@@ -13,6 +13,9 @@ namespace StormRend.Assists
 		[SerializeField] float duration = 5;
 		[SerializeField] AnimationCurve transition = AnimationCurve.Linear(0, 0, 1, 1);
 
+		//Reset the snow shader on start
+		void Start() =>	SetSnowOpacity(0);
+
 		public void Run()
 		{
 			StartCoroutine(RunBlizzardSequence());

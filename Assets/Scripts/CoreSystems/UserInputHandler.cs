@@ -251,9 +251,10 @@ namespace StormRend.Systems
 		//If T object hit then return true and output it
 		bool TryGetRaycast<T>(out T hit) where T : MonoBehaviour
 		{
-			if (IsPointerOverGUIObject())	//Prevent click through
+			//If EventSystem.currentselectedGameObject is null then it's not over a GUI object
+			if (EventSystem.current.currentSelectedGameObject)
 			{
-				// Debug.Log("GUIObjectHit");
+				// Debug.Log("Pointer over UI");
 				hit = null;
 				return false;
 			}
