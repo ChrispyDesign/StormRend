@@ -344,7 +344,7 @@ namespace StormRend.Units
 				if (faceBackward) SnappedLookAt(new Vector3(transform.position.x - direction.x, 0, transform.position.z - direction.y));
 				return PushResult.Nothing;
 			}
-			//PUSHED OF THE EDGE
+			//PUSHED OFF THE EDGE
 			else
 			{
 				//Face backward

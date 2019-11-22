@@ -12,16 +12,21 @@ using StormRend.Tags;
 
 namespace StormRend.Bhaviours
 {
-    /// <summary>
-    /// Moves toward the closest target unit
-    /// </summary>
-    [CreateAssetMenu(menuName = "StormRend/AI/FullBasicAI", fileName = "FullBasicAI")]
+	/// <summary>
+	/// Moves toward the closest target unit
+	/// </summary>
+	[CreateAssetMenu(menuName = "StormRend/AI/FullBasicAI", fileName = "FullBasicAI")]
 	public sealed class FullBasicAI : BhaveAction
 	{
-		//AI now scans infinitely
+		[Header("Scan")]
+		[Tooltip("Essentially the how far this agent is willing to try and look for targets")]
+		[SerializeField] int maxScanIterations = 5;
 
 		[Header("Move")]
 		[SerializeField] bool moveOn = true;
+
+		[Tooltip("Extra scan range around target in case the target has obstacles around it")]
+		[SerializeField] int maxExtraSeekRangeAroundTarget = 2;
 
 		[Header("Attack")]
 		[SerializeField] bool attackOn = true;
@@ -36,7 +41,7 @@ namespace StormRend.Bhaviours
 		List<Unit> targets = new List<Unit>();
 
 
-	#region Core
+		#region Core
 		public override void Initiate(BhaveAgent agent)
 		{
 			ur = UnitRegistry.current;
@@ -57,80 +62,109 @@ namespace StormRend.Bhaviours
 
 			if (!Scan())
 			{
-                Debug.LogFormat("{0} found no opponents", this.agent.name);
+				Debug.LogFormat("{0} found no opponents", this.agent.name);
 				return NodeState.Failure;   //Couldn't find any opponents
 			}
 
 			if (!Move())
-                Debug.LogFormat("{0} didn't move. Obstacle in the way", this.agent.name);
+			{
+				Debug.LogFormat("{0} didn't move", this.agent.name);
+			}
 			else
-                Debug.LogFormat("{0} moved", this.agent.name);
+			{
+				Debug.LogFormat("{0} moved", this.agent.name);
+			}
 
 			if (Attack())
 			{
-                Debug.LogFormat("{0} successfully attacked", this.agent.name);
+				Debug.LogFormat("{0} successfully attacked", this.agent.name);
 				return NodeState.Success;
 			}
 			else
 			{
-                Debug.LogFormat("{0} didn't attack", this.agent.name);
+				Debug.LogFormat("{0} didn't attack", this.agent.name);
 				return NodeState.Pending;
 			}
 		}
-	#endregion
+		#endregion
 
-	#region AI Logic
+		#region AI Logic
 		//---------------------------------------------------------------------------------
 		/// <summary>	
 		/// Scans for targets and runs through a process of elimination to leave with only one final target
 		/// </summary>
 		bool Scan()
 		{
+			//Get all units
 			var allyUnits = ur.GetAliveUnitsByType<AllyUnit>().Where(x => x.HP > 0).ToList();
 			var crystals = ur.GetAliveUnitsByType<CrystalUnit>().Where(x => x.HP > 0).ToList();
 			targets.AddRange(allyUnits);
 			targets.AddRange(crystals);
-
-			targets.Print("[SCAN: All Opponents]");
+			targets.Print("[All Opponents]");
 			if (targets.Count == 0) return false;
+
+			//FILTER REACHABLE TARGETS; Make sure the targets can actually be reached
+			// var maxReachTiles = Map.GetPossibleTiles(agent.currentTile, agent.moveRange * maxScanIterations);
+			// // agent.CalculateMoveTiles((agent.moveRange * maxScanIterations));
+			// maxReachTiles.Print("Max reachable tiles");
+			// // List<Unit> reachableTargets = new List<Unit>();
+			// // foreach (var t in targets)
+			// // {
+			// // 	if (maxReachTiles.Contains(t.currentTile))
+			// // 	reachableTargets.Add(t);
+			// // }
+			// // targets = reachableTargets;
+			// targets = targets.Where(t => maxReachTiles.Contains(t.currentTile)).ToList();
+			// targets.Print("Reachable Units");
 
 			//----------- PRIORITY 1: Provoke
 			foreach (var u in targets)
 			{
 				var au = u as AnimateUnit;
-				if (au.isProvoking)
+				if (au && au.isProvoking)	//Null check and check for provoke
 				{
 					//Provoker found so set as the only target
 					target = u;
-					Debug.LogFormat("[SCAN: Provoke] : {0}", target.name);
+					Debug.LogFormat("[Provoke] : {0}", target.name);
 					return true;        //TARGET ACQUIRED!
 				}
 			}
 
 			//------------ PRIORITY 2: Adjacency
-			if (TryGetAdjacentTarget(agent.currentTile, out Unit outTarget))
+			if (TryGetAdjacentTargets(agent.currentTile, out Unit[] outTargets))
 			{
-				target = outTarget;
-				Debug.LogFormat("[SCAN: Adjacent] : {0}", target.name);
-				targetIsAdjacent = true;      //Attack in place
-				return true;        //TARGET ACQUIRED!
+				if (outTargets.Length == 0)
+				{
+					//Single target found
+					target = outTargets[0];
+					Debug.LogFormat("[Adjacent] : {0}", target.name);
+					targetIsAdjacent = true;      //Attack in place
+					return true;        //TARGET ACQUIRED!
+				}
+				//Multiple adjacent targets found! Continue filtering...
 			}
 
 			//----------- PRIORITY 3: Health
 			//Sort by health
-			targets = targets.OrderBy(t => t.HP).ToList();  //Lowest to highest
-
-			//Check there aren't multiple opponents with low health (hashsets don't allow multiples)
-			HashSet<Unit> lowestHealth = new HashSet<Unit>();
-			foreach (var t in targets)
-				lowestHealth.Add(t);
-			if (lowestHealth.Count != 1)    //If there's only one that means all the units have the same health
+			var animateTargets = targets.
+				Where(t => t is AnimateUnit).		//Where target is an animate unit
+				OrderBy(t => t.HP).ToList();  		//Sort by lowest to highest health
+			
+			//Continue filtering if no animate units found
+			if (animateTargets.Count > 0)
 			{
-				target = lowestHealth.ElementAt(0);
-				Debug.LogFormat("[SCAN: Health] : {0}", target.name);
-				return true;    //TARGET ACQUIRED!
+				//Check there aren't multiple opponents with the same low health (hashsets don't allow multiples)
+				HashSet<Unit> lowestHealth = new HashSet<Unit>();
+				foreach (var t in animateTargets)
+					lowestHealth.Add(t);
+				if (lowestHealth.Count != 1)    //If there's only one that means all the units have the same health
+				{
+					target = lowestHealth.ElementAt(0);
+					Debug.LogFormat("[Health] : {0}", target.name);
+					return true;    //TARGET ACQUIRED!
+				}
+				//Multiple units of the same health detected, continue to filter by ally type
 			}
-			//Multiple units of the same health detected, continue to filter by ally type
 
 			//----------- PRIORITY 4: Ally Type
 			foreach (var t in targets)
@@ -139,29 +173,31 @@ namespace StormRend.Bhaviours
 				{
 					case BerserkerTag b:
 						target = t;
-						Debug.LogFormat("[SCAN: Type] : {0}", target.name);
+						Debug.LogFormat("[Type] : {0}", target.name);
 						return true;    //TARGET ACQUIRED!
 
 					case ValkyrieTag v:
 						target = t;
-						Debug.LogFormat("[SCAN: Type] : {0}", target.name);
+						Debug.LogFormat("[Type] : {0}", target.name);
 						return true;    //TARGET ACQUIRED!
 
 					case SageTag s:
 						target = t;
-						Debug.LogFormat("[SCAN: Type] : {0}", target.name);
+						Debug.LogFormat("[Type] : {0}", target.name);
 						return true;      //TARGET ACQUIRED!
 
 					case CrystalTag c:
 						target = t;
-						Debug.LogFormat("[SCAN: Type] : {0}", target.name);
+						Debug.LogFormat("[Type] : {0}", target.name);
 						return true;      //TARGET ACQUIRED!
 				}
 			}
 
-			//--------- PRIORITY 5: Default, choose any target
-			target = targets[Random.Range(0, targets.Count - 1)];
-			Debug.LogFormat("[SCAN: Default] : {0}", target.name);
+			targets.Print("Final");
+			//--------- PRIORITY 5: Final ditch effort, This is probably a crystal, so just attack it
+			if (targets.Count <= 0) return false;
+			target = targets[Random.Range(0, targets.Count-1)];
+			Debug.LogFormat("[Default] : {0}", target.name);
 			return true;    //TARGET FINALLY ACQUIRED!
 		}
 
@@ -183,25 +219,57 @@ namespace StormRend.Bhaviours
 			//Skip straight to attack if already adjacent
 			if (targetIsAdjacent) return false;
 
-			//Move as close as possible to the closest empty adjacent tile of the target
-			agent.CalculateMoveTiles();
-
-			//Get in the agent's move range, get the tile that is the closest to the closest adjacent tile of the target while taking into account the unit types that block the path
-			var closestAdjacentTileOfTarget = GetAdjacentTiles(target.currentTile, agent.pathBlockingUnitTypes).
-				OrderBy(targetAdjacentTile => Vector3.SqrMagnitude(targetAdjacentTile.transform.position - agent.transform.position)).
-				First();
-			var closestTileInMoveRange = agent.possibleMoveTiles.
-				OrderBy(mt => Vector3.SqrMagnitude(mt.transform.position - closestAdjacentTileOfTarget.transform.position)).
-				First();
-
-			//Move if tile successfully found
-			if (closestTileInMoveRange)
+			//Get the Closest, Empty Tile that intersects Agent's Possible Move Range & Attack Range Sized Area from Target + extra range
+			//--------------- Around Target
+			//Keep iterating until suitable tiles that can be moved to are found around the target
+			Tile[] emptyTilesAroundTarget = null;
+			for (int extraSeekRange = 0; extraSeekRange < maxExtraSeekRangeAroundTarget; ++extraSeekRange)
 			{
-				agent.Move(closestTileInMoveRange);
+				emptyTilesAroundTarget = Map.GetPossibleTiles(target.currentTile, attackRange + extraSeekRange, typeof(Unit));
+			// emptyTilesAroundTarget.Print(string.Format("EmptyTilesAroundTarget({0})", extraSeekRange));
+				if (emptyTilesAroundTarget.Length > 0) break;
+			}
+			//Exit if too many obstacles in the way around target
+			if (emptyTilesAroundTarget.Length == 0) return false;
+
+			//--------------- Around Agent
+			Tile[] emptyTilesInPossibleMoveRange = null, intersectBetweenAgentAndTarget = null;
+			for (int scanIterations = 1; scanIterations < maxScanIterations; ++scanIterations)
+			{
+				agent.CalculateMoveTiles(agent.moveRange * scanIterations);
+			// agent.possibleMoveTiles.Print(string.Format("{0}.possibleMoveTiles", agent.name));
+				if (agent.possibleMoveTiles.Length <= 0) return false;		//This means the unit is locked AND/OR can only attack
+
+				//Filter out the empty tiles; Some tiles could potentially have fellow enemies standing on it as well
+				emptyTilesInPossibleMoveRange = agent.possibleMoveTiles.Where(t => !UnitRegistry.IsAnyUnitOnTile(t)).ToArray();
+			// emptyTilesInPossibleMoveRange.Print(string.Format("emptyTilesInPossibleMoveRange({0})", scanIterations));
+				if (emptyTilesInPossibleMoveRange.Length <= 0) return false;	//agent is locked possibly by other teammates
+
+				//Keep trying to find a path to the target
+				intersectBetweenAgentAndTarget = emptyTilesInPossibleMoveRange.Intersect(emptyTilesAroundTarget).ToArray();
+			// intersectBetweenAgentAndTarget.Print("Intersect");
+				if (intersectBetweenAgentAndTarget.Length > 0) break;
+			}
+			if (intersectBetweenAgentAndTarget.Length <= 0) return false;	//Target too far away
+
+			//The tile to seek towards
+			var seekTile = intersectBetweenAgentAndTarget.
+				OrderBy(t => Vector3.SqrMagnitude(t.transform.position - agent.transform.position)).
+				First();
+
+			//Only move within range
+			var finalMoveToTile = agent.CalculateMoveTiles().
+				OrderBy(t => Vector3.SqrMagnitude(t.transform.position - seekTile.transform.position)).
+				First();
+
+			//Move if tile suitable successfully found
+			if (finalMoveToTile)
+			{
+				agent.Move(finalMoveToTile);
 				return true;
 			}
 
-			//Can't move ie. maybe blocked by crystals or other units etc.
+			//Possibly too many obstacles in general
 			return false;
 		}
 
@@ -245,19 +313,27 @@ namespace StormRend.Bhaviours
 			}
 			return false;
 		}
-	#endregion
+		#endregion
 
-	#region Assists
-		bool TryGetAdjacentTarget(Tile start, out Unit adjacentTarget)
+		#region Assists
+		bool TryGetAdjacentTargets(Tile start, out Unit[] adjacentTarget)
 		{
 			var adjacentTiles = GetAdjacentTiles(start);
-			foreach (var t in targets)
-				if (adjacentTiles.Contains(t.currentTile))
-				{
-					adjacentTarget = t;
-					return true;       //A target is adjacent
-				}
+			var interimAdjacentTargets = new List<Unit>();
 
+			foreach (var t in targets)
+			{
+				if (adjacentTiles.Contains(t.currentTile))
+					interimAdjacentTargets.Add(t);
+			}
+			
+			//Adjacent targets found
+			if (interimAdjacentTargets.Count > 0)
+			{
+				adjacentTarget = interimAdjacentTargets.ToArray();
+				return true;
+			}
+			//No adjacent targets found
 			adjacentTarget = null;
 			return false;   //No adjacent targets
 		}
@@ -267,6 +343,6 @@ namespace StormRend.Bhaviours
 			//Get adjacent empty tiles
 			return Map.GetPossibleTiles(start, 1, pathBlockingUnitTypes);
 		}
-	#endregion
+		#endregion
 	}
 }
