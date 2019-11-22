@@ -26,24 +26,22 @@ namespace StormRend.UI
 			{
 				img.fillAmount = 0f;
 			}
-			internalBlizzard = blizzard.value;
 
 			Debug.Assert(blizzardNodes[0], "There is no slider, please add a panel with filled image component on it. " + typeof(BlizzardMeter));
 			Debug.Assert(infoPanel, string.Format("[{0}] {1} not found!", this.name, typeof(InfoPanel).Name));
 			Debug.Assert(blizzard, "No Blizzard SOV found!");
+		}
+
+		void OnEnable()
+		{
+			internalBlizzard = blizzard.value;
+			blizzard.onChanged += OnChange;
 
 			startCheck = true;
 			UpdatePanel();
 		}
+		void OnDestroy() => blizzard.onChanged -= OnChange;
 
-		void OnEnable() => blizzard.onChanged += OnChange;
-		void OnDisable() => blizzard.onChanged -= OnChange;
-
-		private void Update()
-		{
-			UpdatePanel();
-		}
-		
 		//Register events
 		private void OnChange()
 		{
@@ -55,20 +53,20 @@ namespace StormRend.UI
 				decrease = true;
 
 			internalBlizzard = blizzard.value;
+			UpdatePanel();
 		}
 
 		private void UpdatePanel()
 		{
-			if (increase || startCheck)
+			if (increase || startCheck || Input.GetKeyDown(KeyCode.B))
 			{
 				for (int i = 0; i < blizzard.value; i++)
 					StartCoroutine(FillNode(i));
 			}
 
-			if (decrease)
+			if (decrease || Input.GetKeyDown(KeyCode.C))
 			{
-				for (int i = blizzardNodes.Length - 1; i >= blizzard.value; i--)
-					StartCoroutine(UnfillNode(i));
+				Reset();
 			}
 		}
 
