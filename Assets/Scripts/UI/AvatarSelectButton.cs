@@ -26,6 +26,7 @@ namespace StormRend.UI
 		}
 
 		//Inspector
+		[SerializeField] string title;
 		[SerializeField] AllyType allyType = AllyType.Berserker;
 		[ReadOnlyField, SerializeField] AnimateUnit unit = null;
 		[SerializeField] List<Image> healthNodes = new List<Image>();
@@ -35,8 +36,6 @@ namespace StormRend.UI
 		public UnityEvent onUnhover = null;
 
 		//Members
-		string title = null;
-		string details = null;
 		UserInputHandler userInputHandler = null;
 		InfoPanel infoPanel = null;
 		Button button = null;
@@ -115,7 +114,7 @@ namespace StormRend.UI
 			if (unit)	//Null checks
 			{
 				onHover.Invoke(unit);
-				infoPanel?.ShowPanel(unit.name, 1, unit.description);
+				infoPanel?.ShowPanel(title, 1, unit.description);
 			}
 		}
 		public void OnPointerExit(PointerEventData eventData)

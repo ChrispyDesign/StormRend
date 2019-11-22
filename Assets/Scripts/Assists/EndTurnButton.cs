@@ -13,6 +13,7 @@ namespace StormRend.Assists
 	{
 		//Inspector
 		[SerializeField] string title = "End Turn";
+		[SerializeField] string details;
 
 		[Header("SFX")]
 		[SerializeField] AudioClip onClick = null;
@@ -41,7 +42,7 @@ namespace StormRend.Assists
 		{
 			anim.SetBool("OnHover", true);
 			audSrc.PlayOneShot(onHover);
-			infoPanel?.ShowPanel(title, 1);
+			infoPanel?.ShowPanel(title, 1, details);
 		}
 
 		public void OnPointerExit(PointerEventData eventData)
