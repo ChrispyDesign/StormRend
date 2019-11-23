@@ -10,15 +10,14 @@ namespace StormRend.UI
 {
 	public class GloryMeter : Meter
 	{
+		[SerializeField] string details;
 		//Inspector
 		[SerializeField] BhaveInt glory = null;
 		[Range(0f, 1f), SerializeField] float fillSpeed = 0.03f;
-		[SerializeField] List<AnimateUnit> units = new List<AnimateUnit>();
 		[SerializeField] Image[] gloryNodes = null;
 
 		//Members
 		int internalGlory = 0;
-		string[] details = new string[3];
 		bool increase;
 		bool decrease;
 		bool startCheck;
@@ -26,15 +25,9 @@ namespace StormRend.UI
 		private void Awake()
 		{
 			infoPanel = FindObjectOfType<InfoPanel>();
-			units.AddRange(FindObjectsOfType<AllyUnit>());
 			foreach (Image img in gloryNodes)
 			{
 				img.fillAmount = 0f;
-			}
-
-			for (int i = 0; i < units.Count; i++)
-			{
-				details[i] = units[i].description;
 			}
 
 			//Init old value
@@ -54,7 +47,7 @@ namespace StormRend.UI
 
 		private void Update()
 		{
-			UpdatePanel();
+
 		}
 
 		public void OnChange()
@@ -87,7 +80,6 @@ namespace StormRend.UI
 
 		IEnumerator IncreaseGlory(int _index)
 		{
-
 			if(gloryNodes[_index].fillAmount == 1)
 			{
 				startCheck = false;
@@ -118,7 +110,7 @@ namespace StormRend.UI
 		//Event System Callbacks
 		public override void OnPointerEnter(PointerEventData eventData)
 		{
-			infoPanel?.ShowPanel(title, 3, details);
+			infoPanel?.ShowPanel(title, 1, details);
 		}
 
 		public override void OnPointerExit(PointerEventData eventData)
