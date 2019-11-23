@@ -36,7 +36,7 @@ namespace StormRend.Units
 		[SerializeField] protected int _moveRange = 4;
 		[Tooltip("The unit types of that this unit cannot walk through ie. opponents")]
 		[EnumFlags, SerializeField] TargetType pathBlockers = TargetType.Enemies | TargetType.InAnimates;
-		[SerializeField] internal Ability[] abilities = new Ability[0];
+		[SerializeField] public Ability[] abilities = new Ability[0];
 		[ReadOnlyField, SerializeField] internal List<StatusEffect> statusEffects = new List<StatusEffect>();
 		// [ReadOnlyField, SerializeField] internal HashSet<StatusEffect> statusEffects = new HashSet<StatusEffect>();
 
