@@ -71,23 +71,19 @@ namespace StormRend.Systems
 		/// </summary>
 		void AddTargetTile(Tile t)
 		{
-			if (selectedAbility.IsAcceptableTileType(selectedAnimateUnit, t))       //Check ability can accept this tile type
-			{
-				if (selectedAnimateUnit.possibleTargetTiles.Contains(t))            //Check tile is within possible target tiles
-				{
-					if (!targetTileStack.Contains(t))                               //Can't select the same tile twice
+			if (selectedAbility.IsAcceptableTileType(selectedAnimateUnit, t) &&       //Check ability can accept this tile type
+				selectedAnimateUnit.possibleTargetTiles.Contains(t) &&          	  //Check tile is within possible target tiles
+					!targetTileStack.Contains(t))                      	         //Can't select the same tile twice
 					{
 						//VALID
 						targetTileStack.Push(t);
 						ShowTargetTile(t);
-
 						onTargetTileAdd.Invoke(t);
-					}
-					else onTargetTileInvalid.Invoke();   //ALREADY BEEN SELECTED     //Too tired to write this properly
-				}
-				else onTargetTileInvalid.Invoke();   //OUT OF BOUNDS
-			}
-			else onTargetTileInvalid.Invoke();   //UNACCEPTABLE
+					} 
+					// else onTargetTileInvalid.Invoke();   							//ALREADY BEEN SELECTED 
+				// else onTargetTileInvalid.Invoke();   								//OUT OF BOUNDS
+			else 
+				onTargetTileInvalid.Invoke();   									//UNACCEPTABLE
 
 			//Perform ability once required number of tiles reached
 			if (targetTileStack.Count >= selectedAbility.requiredTiles) SelectedUnitPerformAbility();

@@ -28,8 +28,8 @@ namespace StormRend.Units
 
 		//Inspector
 		[ReadOnlyField] public Tile startTile = null;   //The tile this unit starts from at the beginning of each turn
-		[ReadOnlyField, SerializeField] bool _canMove = true;
-		[ReadOnlyField, SerializeField] bool _canAct = true;
+		[SerializeField] bool _canMove = true;
+		[SerializeField] bool _canAct = true;
 		[SerializeField] LookSnap lookSnap = LookSnap.RightAngle;
 
 		[Header("Abilities & Effects")]
