@@ -52,21 +52,5 @@ namespace StormRend.States
 
             totalStateTime += currentStateTime;
         }
-
-        //Auto handle pause and unpause
-        public override void OnCover(UltraStateMachine sm)
-        {
-            base.OnCover(sm);     //Hides UI
-
-            Time.timeScale = 0;
-        }
-
-        public override void OnUncover(UltraStateMachine sm)
-        {
-            base.OnUncover(sm);   //Unhide UI
-
-            Time.timeScale = 1f;
-        }
-
     }
 }
