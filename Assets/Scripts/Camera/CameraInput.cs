@@ -32,13 +32,12 @@ namespace StormRend.CameraSystem
         {
             PollMoveInput(); // can perform translation
             PollZoomInput(); // can perform zooming
-            
         }
 
         void PollMoveInput()
         {
-            xAxis = Input.GetAxis(xAxisName);
-            yAxis = Input.GetAxis(yAxisName);
+            xAxis = Input.GetAxisRaw(xAxisName);
+            yAxis = Input.GetAxisRaw(yAxisName);
         }
 
         void PollZoomInput()

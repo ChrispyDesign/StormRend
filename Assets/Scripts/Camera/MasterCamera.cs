@@ -10,16 +10,24 @@ namespace StormRend.CameraSystem
 	[RequireComponent(typeof(Camera))]
 	public class MasterCamera : Singleton<MasterCamera>
 	{
+		//Properties
 		public new Camera camera 
 		{
 			get 
 			{
-				if (!_cam) Reset();
 				return _cam;
 			}
-			private set => camera = value;
+			private set => _cam = value;
 		}
-		Camera _cam;
+		public CameraInput cameraInput => _ci;
+		public CameraMover cameraMover => _cm;
+		public CameraZoom cameraZoom => _cz;
+
+		//Members
+		Camera _cam = null;
+		CameraInput _ci = null;
+		CameraMover _cm = null;
+		CameraZoom _cz = null;
 
 		void Reset()
 		{
@@ -29,6 +37,14 @@ namespace StormRend.CameraSystem
 			if (_cam) return;
 			_cam = GetComponentInParent<Camera>();		//Find above
 			Debug.Assert(_cam, "No camera found on this object!");
+		}
+
+		void Awake()
+		{
+			_cam = GetComponent<Camera>();
+			_ci = _cam.GetComponent<CameraInput>();
+			_cm = _cam.GetComponent<CameraMover>();
+			_cz = _cam.GetComponent<CameraZoom>();
 		}
 
 		//Returns the attached camera

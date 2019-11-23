@@ -94,7 +94,7 @@ namespace StormRend.CameraSystem
                 float percentage = (i + 1) / ((float)nearFarSteps + 1);
 
                 // create empty transform
-                GameObject step = new GameObject();
+                GameObject step = new GameObject("Step"+i);
                 step.transform.SetParent(anchorPoints);
 
                 // adjust transform values
