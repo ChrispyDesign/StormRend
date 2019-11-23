@@ -41,7 +41,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0f58f0bc3203c468af0922319bc1e7, type: 3}
   m_Name: CompleteAIAction[COPY]
   m_EditorClassIdentifier: 
-  maxScanIterations: 10
+  enabled: 1
+  maxScanIterations: 6
+  provokeRange: 6
   moveOn: 1
   maxExtraSeekRangeAroundTarget: 2
   attackOn: 1
@@ -69,7 +71,7 @@ MonoBehaviour:
     breakpoint: 0
   ID: 0
   description: 
-  _state: 2
+  _state: 1
   _parent: {fileID: 114812353847911796}
   _deleg: {fileID: 114016761336581024}
   overrideOn: 0
@@ -97,7 +99,7 @@ MonoBehaviour:
     breakpoint: 0
   ID: 1
   description: 
-  _state: 2
+  _state: 1
   _parent: {fileID: 0}
   children:
   - {fileID: 114101301479098354}
