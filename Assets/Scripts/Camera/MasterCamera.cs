@@ -10,7 +10,6 @@ namespace StormRend.CameraSystem
 	[RequireComponent(typeof(Camera))]
 	public class MasterCamera : Singleton<MasterCamera>
 	{
-		public int priority = 10;
 		public new Camera camera 
 		{
 			get 
