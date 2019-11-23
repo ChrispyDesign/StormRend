@@ -8,6 +8,8 @@ namespace StormRend.States
 	{
 		UnitRegistry ur;
 
+		AllyUnit[] allies = null;
+
 		void Awake()
 		{
 			ur = UnitRegistry.current;
@@ -22,9 +24,20 @@ namespace StormRend.States
 		{
 			base.OnEnter(sm);
 
-			//Calculate possible moves
-			ur.RunUnitsBeginTurn(this);
+			//Prep allies
+			allies = ur.GetAliveUnitsByType<AllyUnit>();
+			foreach (var u in allies)
+				u.BeginTurn();
+		}
 
+		public override void OnExit(UltraStateMachine sm)
+		{
+			base.OnExit(sm);
+
+			//Close allies
+			allies = ur.GetAliveUnitsByType<AllyUnit>();
+			foreach (var u in allies)
+				u.EndTurn();
 		}
 
 	}
