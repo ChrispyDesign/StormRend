@@ -81,8 +81,11 @@ namespace StormRend.Units
 				Debug.LogWarningFormat("{0} was not in list of alive units!", deadUnit);
 		}
 
-		public T[] GetAliveUnitsByType<T>() where T : Unit => (from u in aliveUnits where u is T select u as T).ToArray();
-		public T[] GetDeadUnitsByType<T>() where T : Unit => (from u in deadUnits where u is T select u as T).ToArray();
+		public T[] GetAliveUnitsByType<T>() where T : Unit => 
+			(from u in aliveUnits where !u.isDead where u is T select u as T).ToArray();
+				
+		public T[] GetDeadUnitsByType<T>() where T : Unit => 
+			(from u in deadUnits where u.isDead where u is T select u as T).ToArray();
 	#endregion
 
 	#region Turn Enter/Exit logic
