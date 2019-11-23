@@ -7,7 +7,7 @@ namespace StormRend.Systems
 	{
 		#region Clears
 		//Deselects the unit
-		void ClearSelectedUnit()
+		public void ClearSelectedUnit()
 		{
 			if (!isUnitSelected) return;    //A unit should be selected
 
@@ -21,7 +21,7 @@ namespace StormRend.Systems
 			selectedUnit = null;
 		}
 
-		void ClearSelectedAbility(bool redrawMoveTiles = true)
+		public void ClearSelectedAbility(bool redrawMoveTiles = true)
 		{
 			if (!isUnitSelected) return;    //A unit should be selected
 
