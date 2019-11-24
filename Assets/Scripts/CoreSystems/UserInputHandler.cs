@@ -128,7 +128,7 @@ namespace StormRend.Systems
 		{
 			//Inits
 			cam = MasterCamera.current.camera;
-			camMover = cam.GetComponent<CameraMover>();
+			camMover = MasterCamera.current.cameraMover;
 			gr = FindObjectOfType<GraphicRaycaster>();	//On the one and only canvas
 			selectedUnit = null;
 			selectedAbility = null;
@@ -163,7 +163,7 @@ namespace StormRend.Systems
 					//!!! This logic needs to run first otherwise the camera will move on final add target tile
 					//Clicking on any unit will focus camera on it unless in action mode?
 					if (mode != Mode.Action)
-						camMover.MoveTo(interimUnit, cameraSmoothTime);
+						camMover.Move(interimUnit, cameraSmoothTime);
 				}
 
 				switch (mode)
@@ -179,7 +179,7 @@ namespace StormRend.Systems
 						if (isTileHit && isTileHitEmpty)	//Restrict to empty tiles only
 						{
 							if (selectedAnimateUnit.Move(interimTile))	//Try Move unit
-								camMover.MoveTo(interimTile, cameraSmoothTime);	//If move successful then focus camera
+								camMover.Move(interimTile, cameraSmoothTime);	//If move successful then focus camera
 						}
 						goto case Mode.Select;	//Fall through
 

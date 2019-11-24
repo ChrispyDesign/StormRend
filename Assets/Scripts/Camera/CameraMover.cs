@@ -1,4 +1,3 @@
-﻿using System;
 using System.Collections;
 using StormRend.MapSystems.Tiles;
 using StormRend.Units;
@@ -6,90 +5,66 @@ using UnityEngine;
 
 namespace StormRend.CameraSystem
 {
-	/// <summary>
-	/// camera movement class, responsible for the translation of the camera
-	/// </summary>
 	[RequireComponent(typeof(CameraInput))]
 	public class CameraMover : MonoBehaviour
 	{
 		//Inspector
-		[SerializeField] BoxCollider cameraBounds = null;
-		[SerializeField] Transform root = null;
-		[SerializeField] float moveSpeed = 10;
-		[SerializeField] float lerp = 0.1f;
+		[SerializeField] BoxCollider cameraLimits = null;
+		[SerializeField] float linearLerp = 0.2f;
+		[SerializeField] float linearSpeed = 10f;
+
+		[SerializeField] bool rotateOn = false;
+		[SerializeField] float angularLerp = 0.4f;
+		[SerializeField] float angularSpeed = 100f;
 
 		//Members
-		CameraInput cin;
-		private Vector3 desiredPosition;
+		CameraInput input = null;
+		Vector3 desiredPosition = Vector3.zero;
+		float desiredAngle = 0f;
 
-		#region Core
-		void Awake()
+		void Awake() => input = GetComponent<CameraInput>();
+		void Start()
 		{
-			cin = GetComponent<CameraInput>();
+			desiredPosition = transform.position;
+			desiredAngle = transform.rotation.eulerAngles.y;
+		}
+		void Update()
+		{
+			HandleMoveAndRotate(new Vector3(input.xAxis, 0, input.yAxis));
 		}
 
-		void Start() => desiredPosition = root.transform.position;
+		void LateUpdate() => transform.position = Vector3.Lerp(transform.position, desiredPosition, linearLerp);
 
-		void Update() => MoveCameraByInput();
-
-		void LateUpdate() => root.position = Vector3.Lerp(root.position, desiredPosition, lerp);
-
-		void MoveCameraByInput()
+		void HandleMoveAndRotate(Vector3 moveAxis)
 		{
-			//If there's input then override any current moving coroutines
-			var moveAxis = new Vector3(cin.xAxis, 0, cin.yAxis);
-			if (!moveAxis.Equals(Vector3.zero))
-				MoveBy(moveAxis);
-		}
-		#endregion
-		
-		public void MoveBy(Vector3 axis)
-		{
-			//Override any current lerps
+			if (moveAxis.Equals(Vector3.zero)) return;
+
+			//Stop any current move routines
 			StopAllCoroutines();
 
-			//Set desired position to be lerped to
-			desiredPosition += axis.z * root.forward * moveSpeed * Time.unscaledDeltaTime;
-			desiredPosition += axis.y * root.up * moveSpeed * Time.unscaledDeltaTime;
-			desiredPosition += axis.x * root.right * moveSpeed * Time.unscaledDeltaTime;
-			
-			RestrictToBounds(ref desiredPosition);
+			//Move
+			var deltaSpeed = linearSpeed * Time.unscaledDeltaTime;
+			desiredPosition += transform.right * input.xAxis * deltaSpeed;
+			desiredPosition += transform.forward * input.yAxis * deltaSpeed;
+
+			//Rotate
+
+			//Limit to boundary
+			desiredPosition = cameraLimits.ClosestPoint(desiredPosition);
 		}
 
-		/// <summary>
-		/// Camera lerp override for units
-		/// </summary>
-		public void MoveTo(Unit unit, float smoothTime = 0.3f) => MoveTo(unit.transform.position, smoothTime);
-
-		/// <summary>
-		/// Camera lerp override for tiles
-		/// </summary>
-		public void MoveTo(Tile tile, float smoothTime = 0.3f) => MoveTo(tile.transform.position, smoothTime);
-
-		/// <summary>
-		/// Camera lerp
-		/// </summary>
-		public void MoveTo(Vector3 destination, float smoothTime = 0.3f)
+		public void Move(Unit unit, float lerp = 1f) => Move(unit.transform.position, lerp);
+		public void Move(Tile tile , float lerp = 1f) => Move(tile.transform.position, lerp);
+		public void Move(Vector3 destination, float lerp = 1f)
 		{
-			RestrictToBounds(ref destination);
-
-			//Override any current lerps
 			StopAllCoroutines();
-
-			//Clamp within bounds
-			RestrictToBounds(ref destination);
-
-			//Start move
-			StartCoroutine(LerpTo(destination, smoothTime));
+			// StartCoroutine(Lerp(cameraLimits.ClosestPoint(destination), lerp));
+			StartCoroutine(Lerp(cameraLimits.ClosestPoint(destination), lerp));
 		}
 
-		/// <summary>
-		/// Camera lerp coroutine. Will override and set desiredPosition
-		/// </summary>
-		IEnumerator LerpTo(Vector3 destination, float time = 0.3f)
+		IEnumerator Lerp(Vector3 destination, float time = 1f)
 		{
 			float timer = 0;
-
 			while (timer < time)
 			{
 				// get lerp percentage & increment timer
@@ -97,14 +72,9 @@ namespace StormRend.CameraSystem
 				timer += Time.unscaledDeltaTime;
 
 				//Set root position and also override desired position to nullify LateUpdate's lerp logic
-				root.position = desiredPosition = Vector3.Lerp(root.position, destination, t);
+				transform.position = desiredPosition = Vector3.Lerp(transform.position, destination, t);
 				yield return null;
 			}
 		}
-
-		/// <summary>
-		/// Limit camera within to boundary object
-		/// </summary>
-		void RestrictToBounds(ref Vector3 position) => position = cameraBounds.ClosestPoint(position);
 	}
 }

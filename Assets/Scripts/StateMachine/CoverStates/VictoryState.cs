@@ -21,10 +21,10 @@ namespace StormRend.States
 			//Move camera to the average position of all the units
 			var aliveAllies = ur.GetAliveUnitsByType<AllyUnit>();
 			Vector3 avgPos = Vector3.zero;
-			foreach (var a in aliveAllies)
+			foreach (var a in ur.aliveUnits)
 				avgPos += a.transform.position;
-			avgPos /= (float)aliveAllies.Length;
-			cam.cameraMover.MoveTo(avgPos, cameraCenteringSpeed);
+			avgPos /= (float)ur.aliveUnits.Length;
+			cam.cameraMover.Move(avgPos, cameraCenteringSpeed);
 
 			//Prevent user from further moving it
 			cam.cameraInput.enabled = false;	

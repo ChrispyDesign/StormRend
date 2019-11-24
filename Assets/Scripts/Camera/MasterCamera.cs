@@ -7,7 +7,7 @@ namespace StormRend.CameraSystem
 	/// This is used as a tag to find locate the main working camera.
 	/// If you use cinemachine you'd only need one master camera
 	/// </summary>
-	[RequireComponent(typeof(Camera))]
+	[RequireComponent(typeof(CameraInput), typeof(CameraMover), typeof(CameraZoomer))]
 	public class MasterCamera : Singleton<MasterCamera>
 	{
 		//Properties
@@ -21,13 +21,13 @@ namespace StormRend.CameraSystem
 		}
 		public CameraInput cameraInput => _ci;
 		public CameraMover cameraMover => _cm;
-		public CameraZoom cameraZoom => _cz;
+		public CameraZoomer cameraZoom => _cz;
 
 		//Members
 		Camera _cam = null;
 		CameraInput _ci = null;
 		CameraMover _cm = null;
-		CameraZoom _cz = null;
+		CameraZoomer _cz = null;
 
 		void Reset()
 		{
@@ -41,13 +41,10 @@ namespace StormRend.CameraSystem
 
 		void Awake()
 		{
-			_cam = GetComponent<Camera>();
-			_ci = _cam.GetComponent<CameraInput>();
-			_cm = _cam.GetComponent<CameraMover>();
-			_cz = _cam.GetComponent<CameraZoom>();
+			_cam = GetComponentInChildren<Camera>();
+			_ci = GetComponent<CameraInput>();
+			_cm = GetComponent<CameraMover>();
+			_cz = GetComponent<CameraZoomer>();
 		}
-
-		//Returns the attached camera
-		// public static imp licit operator Camera(MasterCamera rhs) => rhs.cam;
 	}
 }

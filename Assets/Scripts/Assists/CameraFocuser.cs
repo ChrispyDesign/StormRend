@@ -14,7 +14,7 @@ namespace StormRend.Assists
 		//Members
 		CameraMover cameraMover = null;
 
-		void Awake() => cameraMover = MasterCamera.current.GetComponent<CameraMover>();
+		void Awake() => cameraMover = MasterCamera.current.cameraMover;
 
 		void Start()
 		{
@@ -25,9 +25,9 @@ namespace StormRend.Assists
 			}
 		}
 
-		public void Focus(Tile target) => cameraMover.MoveTo(target, lerpTime);
-		public void Focus(Unit target) => cameraMover.MoveTo(target, lerpTime);
-		public void Focus(Vector3 target) => cameraMover.MoveTo(target, lerpTime);
-		public void Focus(Ability a) => cameraMover.MoveTo(a.lastTargetPos, lerpTime);
+		public void Focus(Tile target) => cameraMover.Move(target, lerpTime);
+		public void Focus(Unit target) => cameraMover.Move(target, lerpTime);
+		public void Focus(Vector3 target) => cameraMover.Move(target, lerpTime);
+		public void Focus(Ability a) => cameraMover.Move(a.lastTargetPos, lerpTime);
 	}
 }
