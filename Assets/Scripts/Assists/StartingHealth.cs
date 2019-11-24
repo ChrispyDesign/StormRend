@@ -1,24 +1,24 @@
 ﻿using StormRend.Units;
 using UnityEngine;
 
-namespace StormRend.Assists 
-{ 
+namespace StormRend.Assists
+{
 	/// <summary>
 	/// Class to automatically set a unit to a certain starting health
 	/// </summary>
 	public class StartingHealth : MonoBehaviour
 	{
-		[SerializeField] int startingHealth = 3;
+		[SerializeField] int startingHealth = 2;
 		Unit unit = null;
 
-		void Awake() => unit = GetComponent<Unit>();
-
-		void Start()
+		void Awake()
 		{
+			unit = GetComponent<Unit>();
+
 			Debug.Assert(unit, "No unit found! Disabling..");
 			if (!unit) enabled = false;
-
-			unit.HP = startingHealth;
 		}
-   	}
+
+		void Start() => unit.HP = startingHealth;
+	}
 }
