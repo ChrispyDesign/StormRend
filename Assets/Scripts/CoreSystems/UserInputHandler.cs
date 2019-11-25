@@ -54,6 +54,7 @@ namespace StormRend.Systems
 		[SerializeField] AbilityVar _selectedAbilityVar = null;
 
 		[Header("Tile Colors")]
+		[SerializeField] TileHighlightSetting clearHighlight = null;
 		[SerializeField] TileHighlightSetting startHighlight = null;
 		[SerializeField] TileHighlightSetting hoverHighlight = null;
 		[SerializeField] TileHighlightSetting moveHighlight = null;
@@ -139,6 +140,14 @@ namespace StormRend.Systems
 			Debug.Assert(_selectedUnitVar, "No Selected Unit SOV!");
 			Debug.Assert(_selectedAbilityVar, "No Selected Ability SOV!");
 			Debug.Assert(gr, "No graphics raycaster found!");
+
+			//Tile highlights
+			Debug.Assert(clearHighlight, "Highlight not set!");
+			Debug.Assert(startHighlight, "Highlight not set!");
+			Debug.Assert(hoverHighlight, "Highlight not set!");
+			Debug.Assert(moveHighlight, "Highlight not set!");
+			Debug.Assert(actionHighlight, "Highlight not set!");
+			Debug.Assert(targetHighlight, "Highlight not set!");
 		}
 
 		void Update()
@@ -234,8 +243,6 @@ namespace StormRend.Systems
 			//Clear highlights etc if current state changed
 			if (currentTurnState != newTurnState)
 			{
-				ClearSelectedUnit();
-				ClearSelectedAbility();
 				ClearAllTileHighlights();
 				
 				//Set new turn state
@@ -346,8 +353,8 @@ namespace StormRend.Systems
 }
 
 /*
-Main: Start, Update, ProcessEvents, Onstatechanged
-Sets: SelectUnit, SelectAbility, AddTargetTile, PopTargetTile, selectedUnitPeformAbility
+Main: Start, Update, ProcessEvents, OnStateChanged
+Sets: SelectUnit, SelectAbility, AddTargetTile, PopTargetTile, selectedUnitPerformAbility
 TileHighlights: OnHovers, ShowMoveTiles, ShowTargetTiles
 Clears: ClearSelectedUnit, ClearSelectedAbility, ClearSelectedUnitTileHighlights, ClearAllTileHighlights
 Assists: TryGetRayRaycast, IsPointerOverGUIObject, EnoughGlory

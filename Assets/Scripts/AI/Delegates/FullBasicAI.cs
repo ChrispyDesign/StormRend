@@ -278,7 +278,7 @@ namespace StormRend.Bhaviours
 			{
 				unit.CalculateMoveTiles(unit.moveRange * scanIterations);
 				// agent.possibleMoveTiles.Print(string.Format("{0}.possibleMoveTiles", agent.name));
-				if (unit.possibleMoveTiles.Length <= 0) return false;       //agent is locked AND/OR can only attack
+				if (unit.possibleMoveTiles.Count <= 0) return false;       //agent is locked AND/OR can only attack
 
 				//Filter out the empty tiles; Some tiles could potentially have fellow enemies standing on it as well
 				emptyTilesInPossibleMoveRange = unit.possibleMoveTiles.

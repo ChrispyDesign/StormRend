@@ -19,8 +19,8 @@ namespace StormRend.States
         [ReadOnlyField] public float totalStateTime = 0;
 
         [Header("Events")]
-		[SerializeField] protected StateEvent onTurnEnter;
-        [SerializeField] protected StateEvent onTurnExit;
+		public StateEvent onTurnEnter = null;
+        public StateEvent onTurnExit = null;
 
         /// NOTE! All these methods must be called by overridden methods to preserve correct functionality
 

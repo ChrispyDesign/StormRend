@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Stormrend.UI
+namespace StormRend.UI
 {
 	public class UnitUIStatus : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{

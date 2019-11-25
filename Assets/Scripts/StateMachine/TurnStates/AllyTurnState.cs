@@ -22,22 +22,22 @@ namespace StormRend.States
 
 		public override void OnEnter(UltraStateMachine sm)
 		{
-			base.OnEnter(sm);
-
-			//Prep allies
+			//NOTE! This must run first because 
 			allies = ur.GetAliveUnitsByType<AllyUnit>();
 			foreach (var u in allies)
 				u.BeginTurn();
+
+			base.OnEnter(sm);
 		}
 
 		public override void OnExit(UltraStateMachine sm)
 		{
-			base.OnExit(sm);
-
 			//Close allies
 			allies = ur.GetAliveUnitsByType<AllyUnit>();
 			foreach (var u in allies)
 				u.EndTurn();
+
+			base.OnExit(sm);
 		}
 
 	}

@@ -13,6 +13,9 @@ namespace StormRend.Systems
 		//Public; can be called via unity events
 		public void SelectUnit(AnimateUnit au, bool moveCamera = false)
 		{
+			//SMALL OPTIMIZATION: Exit if the same unit is already selected
+			if (selectedAnimateUnit == au) return;
+
 			//Clear tile highlights if a unit was already selected
 			if (isUnitSelected)
 			{
@@ -21,16 +24,16 @@ namespace StormRend.Systems
 				selectedAbility = null;
 			}
 
-			//Set the selected unit
+			//Set
 			selectedUnit = au;
 
-			//Show move tile if unit is able to move
+			//Move tiles
 			ShowMoveTiles();
 
-			//Move camera
-			if (moveCamera) camMover.Move(au, cameraSmoothTime);
+			//Focus camera
+			if (moveCamera)	camMover?.Move(selectedUnit, cameraSmoothTime);
 
-			onUnitSelected.Invoke(au);  //ie. Update UI, Play sounds,
+			onUnitSelected.Invoke(selectedUnit);  //ie. Update UI, Play sounds,
 		}
 
 		public void SelectAbility(Ability a)    //aka. OnAbilityChanged()
@@ -80,10 +83,8 @@ namespace StormRend.Systems
 						ShowTargetTile(t);
 						onTargetTileAdd.Invoke(t);
 					} 
-					// else onTargetTileInvalid.Invoke();   							//ALREADY BEEN SELECTED 
-				// else onTargetTileInvalid.Invoke();   								//OUT OF BOUNDS
 			else 
-				onTargetTileInvalid.Invoke();   									//UNACCEPTABLE
+				onTargetTileInvalid.Invoke();   		
 
 			//Perform ability once required number of tiles reached
 			if (targetTileStack.Count >= selectedAbility.requiredTiles) SelectedUnitPerformAbility();
@@ -123,7 +124,7 @@ namespace StormRend.Systems
 			//Clear target stack
 			targetTileStack.Clear();
 
-			//clear ability
+			//Clear ability
 			ClearSelectedAbility(selectedAnimateUnit.canMove);
 
 			//Events

@@ -53,8 +53,8 @@ namespace StormRend.Units
 
 		//Properties
 		public Tile ghostTile { get; set; } = null;     //The tile the ghost is on
-		public Tile[] possibleMoveTiles;// { get; set; } = new Tile[0];
-		public Tile[] possibleTargetTiles;// { get; set; } = new Tile[0];
+		public List<Tile> possibleMoveTiles = new List<Tile>();// { get; set; } = new Tile[0];
+		public List<Tile> possibleTargetTiles = new List<Tile>();// { get; set; } = new Tile[0];
 		public int moveRange => _moveRange;
 		private float snapAngle
 		{
@@ -111,18 +111,23 @@ namespace StormRend.Units
 		//Members
 		// protected GameObject ghost = null;
 		protected Tile[] currentTargetTiles = null;
-		private Ability currentAbility;
+		Ability currentAbility;
 
-		#region Can Move & Act
+	#region Can Move & Act
 		public bool canMove => _canMove;
 		public void SetCanMove(bool value, float delay = 0) => StartCoroutine(DelaySetMove(value, delay));
-		IEnumerator DelaySetMove(bool value, float delay)       //Used for correct timing of refresh effect
+		/// <summary>
+		/// For Refresh Effect: Set custom delay for correct timing of refresh and unit reselection
+		/// For Immobilise/Blind Effect: Used= normally without delay
+		/// </summary>
+		IEnumerator DelaySetMove(bool value, float delay)   
 		{
 			//Set immediately so that the AllActionsUsedChecker logic runs correctly
 			_canMove = value;
+
+			//If refreshing then reselect so that move tiles will appear
 			yield return new WaitForSeconds(delay);
-			//If move value true then reselect unit so that the move tiles will appear
-			if (_canMove) uih.SelectUnit(this);
+			if (_canMove == true) uih.SelectUnit(this);
 		}
 		public bool canAct => _canAct;  //has performed an ability and hence this unit has completed it's turn and is locked until next turn
 		public void SetCanAct(bool value, float delay = 0) => StartCoroutine(DelaySetAct(value, delay));
@@ -130,15 +135,16 @@ namespace StormRend.Units
 		{
 			//Set immediately so that the AllActionsUsedChecker logic runs correctly
 			_canAct = value;
+			
+			//If refreshing then reselect so that action tiles will appear
 			yield return new WaitForSeconds(delay);
-			//If can act again then show new possible act tiles
-			if (_canAct)
+			if (_canAct == true)
 			{
 				uih.SelectUnit(this);
 				uih.SelectAbility(currentAbility);
 			}
 		}
-		#endregion
+	#endregion
 
 		#region Filtered Gets
 		public List<Ability> GetAbilitiesByType(AbilityType type) => abilities.Where(x => x.type == type).ToList();
@@ -219,21 +225,24 @@ namespace StormRend.Units
 			hasKilledThisTurn = false;
 
 			//Calculate new move tiles
-			startTile = currentTile;
-			CalculateMoveTiles();       //Doesn't work anyways
+			startTile = currentTile;		//Set new origin
+			possibleMoveTiles.Clear();
+			possibleTargetTiles.Clear();
+			CalculateMoveTiles();		//BUGFIXED! This was cancelled by UserInputHandler.OnStateChanged()
 
 			//Prep effects (reset counts etc)
 			foreach (var a in abilities)
 				foreach (var e in a.effects)
 					e.Prepare(a, this);
 
-			//Run Begin Status effects (ie. blind, cripple, etc) 
+			//Run Begin Status effects (ie. sets blind, cripple, etc) 
 			for (int i = statusEffects.Count - 1; i >= 0; --i)
 				if (!statusEffects[i].OnBeginTurn(this))    //Also auto remove expired status effects
 					statusEffects.RemoveAt(i);
 
 			onBeginTurn.Invoke();
 		}
+
 		public void EndTurn()           //Run before next turn
 		{
 			//Status effects (Nothing so far)
@@ -242,12 +251,14 @@ namespace StormRend.Units
 
 			onEndTurn.Invoke();
 		}
+
 		public void AddStatusEffect(StatusEffect statusEffect)
 		{
 			statusEffects.Add(statusEffect);
 
 			onAddStatusEffect.Invoke(statusEffect);
 		}
+
 		public override void Die()
 		{
 			base.Die();     //onDeath will invoke; Should register death on this unityevent
@@ -458,12 +469,12 @@ namespace StormRend.Units
 		/// Filters based on which unit type cannot be traversed through.
 		/// Returns the list of tiles if needed.
 		/// </summary>
-		public Tile[] CalculateMoveTiles(int range = 0)
+		public List<Tile> CalculateMoveTiles(int range = 0)
 		{
 			//Default to this unit's move range if nothing passed in
 			if (range == 0) range = moveRange;
 
-			return possibleMoveTiles = Map.GetPossibleTiles(startTile.owner, startTile, range, pathBlockingUnitTypes);
+			return possibleMoveTiles = Map.GetPossibleTiles(startTile.owner, startTile, range, pathBlockingUnitTypes).ToList();
 		}
 
 		public Type[] pathBlockingUnitTypes
@@ -499,7 +510,7 @@ namespace StormRend.Units
 		/// <summary>
 		/// Get the tiles that can be currently acted upon by this ability
 		/// </summary>
-		public Tile[] CalculateTargetTiles(Ability a, Tile startTile = null, bool onlyGetResults = false)
+		public List<Tile> CalculateTargetTiles(Ability a, Tile startTile = null, bool onlyGetResults = false)
 		{
 			//Defaults
 			if (startTile == null) startTile = currentTile;
@@ -529,12 +540,11 @@ namespace StormRend.Units
 			}
 
 			//Cache
-			var resultToArray = result.ToArray();
-			if (!onlyGetResults) possibleTargetTiles = resultToArray;
-			return resultToArray;
+			if (!onlyGetResults) possibleTargetTiles = result;
+			return result;
 		}
 
-		//------------------ OTHER
+		//------------------ INDICATORS AND UX
 		public void ClearGhost()
 		{
 			ghost.SetActive(false);
