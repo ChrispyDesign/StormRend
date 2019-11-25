@@ -78,14 +78,14 @@ namespace StormRend.Units
 				{
 					var target = u as AnimateUnit;		//Cast
 					var newImmobiliseEffect = ScriptableObject.CreateInstance<ImmobiliseEffect>();	//Factory create
-					newImmobiliseEffect.ImmobiliseUnitImmediately(target);		//Apply effect immediately
+					newImmobiliseEffect.ImmobiliseTargetsImmediately(target);		//Apply effect immediately
 					target.AddStatusEffect(newImmobiliseEffect);				//Add to unit's status effect collection
 				}
 			}
 		}
 		void DamageTargets()
 		{
-			if (damage <= 0) return;    //Slight optimisation
+			if (damage <= 0) return;    //Slight optimization
 
 			foreach (var victim in ur.aliveUnits)
 			{

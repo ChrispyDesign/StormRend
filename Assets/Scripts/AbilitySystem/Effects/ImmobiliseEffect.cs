@@ -1,4 +1,6 @@
-﻿using StormRend.MapSystems.Tiles;
+﻿using System.Linq;
+using StormRend.MapSystems.Tiles;
+using StormRend.Systems;
 using StormRend.Units;
 
 namespace StormRend.Abilities.Effects
@@ -11,7 +13,7 @@ namespace StormRend.Abilities.Effects
 		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
 			AddStatusEffectToAnimateUnits(targetTiles);
-			ImmobiliseTargetUnitsImmediately(targetTiles);
+			ImmobiliseTargetsImmediately(targetTiles);		//Just in case
 		}
 
 		public override bool OnBeginTurn(AnimateUnit affectedUnit)
@@ -25,16 +27,19 @@ namespace StormRend.Abilities.Effects
 			return valid;
 		}
 
-		void ImmobiliseTargetUnitsImmediately(Tile[] targetTiles)
+		public void ImmobiliseTargetsImmediately(params Tile[] targetTiles)
 		{
 			foreach (var tt in targetTiles)
 				if (UnitRegistry.TryGetUnitTypeOnTile<AnimateUnit>(tt, out AnimateUnit au))
 					au.SetCanMove(false);
+			UserInputHandler.current.ClearSelectedUnit();
 		}
 
-		public void ImmobiliseUnitImmediately(AnimateUnit au)
+		public void ImmobiliseTargetsImmediately(params AnimateUnit[] targetUnits)
 		{
-			au.SetCanMove(false);
+			foreach (var au in targetUnits)
+				au.SetCanMove(false);
+			UserInputHandler.current.ClearSelectedUnit();
 		}
 	}
 }
