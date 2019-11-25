@@ -238,7 +238,7 @@ namespace StormRend.Bhaviours
 			targets.Print("Final");
 			//--------- PRIORITY 5: Final ditch effort, This is probably a crystal, so just attack it
 			if (targets.Count <= 0) return false;
-			target = targets[Random.Range(0, targets.Count - 1)];
+			target = targets[Random.Range(0, targets.Count)];
 			Debug.LogFormat("[Default] : {0}", target.name);
 			return true;    //TARGET FINALLY ACQUIRED!
 		}
