@@ -92,7 +92,7 @@ namespace StormRend.Units
 		public void RunUnitsBeginTurn(State state)
 		{
 			var turnState = state as TurnState;
-			AnimateUnit[] currentStateUnits = new AnimateUnit[0];
+			AnimateUnit[] currentStateUnits = null;
 			switch (turnState.unitType)
 			{
 				case TargetType.Allies:
@@ -102,13 +102,14 @@ namespace StormRend.Units
 					currentStateUnits = GetAliveUnitsByType<EnemyUnit>();
 					break;
 			}
+
 			foreach (var u in currentStateUnits)
 				u.BeginTurn();
 		}
 		public void RunUnitsEndTurn(State state)
 		{
 			var turnState = state as TurnState;
-			AnimateUnit[] animateUnits = new AnimateUnit[0];
+			AnimateUnit[] animateUnits = null;
 			switch (turnState.unitType)
 			{
 				case TargetType.Allies:
@@ -118,6 +119,7 @@ namespace StormRend.Units
 					animateUnits = GetAliveUnitsByType<EnemyUnit>();
 					break;
 			}
+
 			foreach (var u in animateUnits)
 				u.EndTurn();
 		}

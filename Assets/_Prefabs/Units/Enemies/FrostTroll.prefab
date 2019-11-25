@@ -1398,9 +1398,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathVFX: {fileID: 11400000, guid: 8a7d399b8029c7d40b091d3d4f1444b8, type: 2}
-  startDelay: 1.5
-  duration: 2.5
-  shaderParam: _DisolveValue
+  startDelay: 0.75
+  duration: 2.25
+  dissolveShaderParam: _DissolveValue
+  startDissolveValue: 1
+  endDissolveValue: 0
+  outlineColorShaderParam: _ASEOutlineColor
+  startColorValue: {r: 0, g: 0, b: 0, a: 0}
+  endColorValue: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1893445955385811285
 MonoBehaviour:
   m_ObjectHideFlags: 0

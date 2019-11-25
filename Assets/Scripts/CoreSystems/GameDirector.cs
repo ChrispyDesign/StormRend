@@ -1,10 +1,12 @@
 ﻿using System.Collections;
+using System.Linq;
 using pokoro.Patterns.Generic;
 using StormRend.Abilities;
 using StormRend.Assists;
 using StormRend.Audio;
 using StormRend.States;
 using StormRend.Systems.StateMachines;
+using StormRend.Tags;
 using StormRend.Units;
 using StormRend.Utility.Events;
 using UnityEngine;
@@ -264,22 +266,39 @@ namespace StormRend.Systems
 			if (!debug) return;
 			if (GUILayout.Button("PrevTurn")) usm.PrevTurn();
 			if (GUILayout.Button("Kill Allies")) KillAllUnitsOfType<AllyUnit>();
+			if (GUILayout.Button("Kill Berserker")) KillUnitByType<BerserkerTag>();
+			if (GUILayout.Button("Kill Valkyrie")) KillUnitByType<ValkyrieTag>();
+			if (GUILayout.Button("Kill Sage")) KillUnitByType<SageTag>();
+
 			if (GUILayout.Button("Kill Enemies")) KillAllUnitsOfType<EnemyUnit>();
+			if (GUILayout.Button("Kill Frost Troll")) KillUnitByType<FrostTrollTag>();
+			if (GUILayout.Button("Kill Frost Hound")) KillUnitByType<FrostHoundTag>();
+
 			if (GUILayout.Button("Destroy All InAnimates")) KillAllUnitsOfType<InAnimateUnit>();
+
+
+			void KillUnitByType<T>() where T : UnitTag
+			{
+				var unitToKill = (from unit in ur.aliveUnits where unit.tag is T select unit).First();
+				if (unitToKill) KillUnit(unitToKill);
+			}
 
 			void KillAllUnitsOfType<T>() where T : Unit
 			{
 				foreach (var u in ur.GetAliveUnitsByType<T>())
-				{
-					var au = u as AnimateUnit;
-					var iau = u as InAnimateUnit;
-					if (au)
-						au.Kill();
-					else if (iau)
-						iau.TakeDamage(new HealthData(null, 9999999));
-					else
-						u.TakeDamage(new HealthData(null, 9999999));
-				}
+					KillUnit(u);
+			}
+
+			void KillUnit(Unit u)
+			{
+				var au = u as AnimateUnit;
+				var iau = u as InAnimateUnit;
+				if (au)
+					au.Kill();
+				else if (iau)
+					iau.TakeDamage(new HealthData(null, 9999999));
+				else
+					u.TakeDamage(new HealthData(null, 9999999));
 			}
 		}
 		#endregion
