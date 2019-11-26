@@ -17,7 +17,7 @@ namespace StormRend.Systems
 		//Inspector
 		[SerializeField] BhaveInt blizzard = null;
 		[SerializeField] Ability immobilise = null;
-		[SerializeField] int maxBlizzardValue = 5;
+		[SerializeField] int blizzardTriggerValue = 5;
 
 		[Header("Damage")]
 		[SerializeField, EnumFlags] TargetType typesToDamage = TargetType.Allies;
@@ -26,12 +26,14 @@ namespace StormRend.Systems
 		[Space]
 		[Header("Events")]
 		public UnityEvent onExecute = null;
-		public UnityEvent onReset = null;
 
-		[Space]
-		[SerializeField] KeyCode testKey = KeyCode.Asterisk;
-
+		//Members
 		UnitRegistry ur = null;
+
+		//Debug
+		[Space]
+		[SerializeField] bool debug = false;
+		[SerializeField] KeyCode tickKey = KeyCode.Equals;
 
 		#region Core
 		void Awake() => ur = UnitRegistry.current;
@@ -45,18 +47,18 @@ namespace StormRend.Systems
 
 		void Update()
 		{
-			if (Input.GetKeyDown(testKey))
+			if (!debug) return;
+
+			if (Input.GetKeyDown(tickKey))
 				Tick();
 		}
 
 		public void Tick()
 		{
-			blizzard.value++;
-			if (blizzard.value > maxBlizzardValue)
-			{
+			if (blizzard.value == blizzardTriggerValue)
 				Execute();
-				Reset();
-			}
+
+			blizzard.value++;
 		}
 
 		/// <summary>
@@ -92,12 +94,6 @@ namespace StormRend.Systems
 
 			//Immobilise
 			immobilise?.Perform(null, unitsToDamage.ToArray());
-		}
-
-		public void Reset()
-		{
-			blizzard.value = 0;
-			onReset.Invoke();
 		}
 		#endregion
 	}

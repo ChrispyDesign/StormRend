@@ -22,7 +22,7 @@ namespace StormRend.Abilities.Effects
 
 			//Play some kind of protect effect/animation?
 			affectedUnit.animator.ResetTrigger("HitReact");		//Prevent HitReact animation from playing
-			affectedUnit.animator.SetTrigger("Parry");		//TODO Maybe play some kind of block?
+			// affectedUnit.animator.SetTrigger("Parry");		//TODO Maybe play some kind of block?
 		}
 	}
 }

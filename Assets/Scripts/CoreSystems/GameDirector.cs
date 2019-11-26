@@ -23,39 +23,43 @@ namespace StormRend.Systems
 	/// Class that helps controls the game state machine as well as other side functionality such as:
 	/// Handling pause, has functions to change scenes, go back to main menu, handling end game, etc
 	/// </summary>
-	[RequireComponent(typeof(UltraStateMachine), typeof(AudioSystem))]
+	[RequireComponent(typeof(UltraStateMachine))]
 	public class GameDirector : Singleton<GameDirector>
 	{
 		//Inspector
-		[Header("Game Pause")]
-		[SerializeField] KeyCode pauseKey = KeyCode.Escape;
-		[SerializeField] PauseMenuState pauseMenuState = null;
+		[Header("Intro")]
+		[SerializeField] NarrativeState introState = null;
 
 		[Header("Turn States")]
 		[SerializeField] EndTurnConfirmState endTurnConfirmationState = null;
 
 		[Header("End States")]
-		[SerializeField] AudioClip victoryNarration = null;
 		[SerializeField] State victoryState = null;
-		[SerializeField] AudioClip defeatNarration = null;
 		[SerializeField] State defeatState = null;
+
+		[Header("Game Pause")]
+		[SerializeField] KeyCode pauseKey = KeyCode.Escape;
+		[SerializeField] PauseMenuState pauseMenuState = null;
 
 		[Header("Scene Management")]
 		public string mainMenuSceneName = null;
-		public string nextSceneName = null;
 
 		[Header("Events")]
-		public UnityEvent onUnitActed = null;
+		public UnityEvent onUnitTakeDamage = null;
 		public UnitEvent onUnitKilled = null;
+		AudioSystem audioSystem = null;
+		AudioSource audioSource = null;
+		
+		[Header("These must be allocated manually")]
+		[SerializeField] AudioSource SFXAudio = null;
+		[SerializeField] AudioSource VocalAudio = null;
 
 		//Properties
 		public State currentState => usm?.currentState;
-		public AudioSource generalAudioSource => audioSource;
-		public AudioSystem generalAudioSystem => audioSystem;
+		public AudioSource SFXAudioSource => SFXAudio;
+		public AudioSource VocalAudioSource => VocalAudio;
 
 		//Members
-		AudioSystem audioSystem = null;
-		AudioSource audioSource = null;
 		UltraStateMachine usm = null;
 		UnitRegistry ur = null;
 		UserInputHandler input = null;
@@ -68,29 +72,35 @@ namespace StormRend.Systems
 		#region Init
 		void Awake()
 		{
-			//Audio
-			audioSystem = GetComponent<AudioSystem>();
-			audioSource = GetComponent<AudioSource>();
-
 			//Systems
 			usm = GetComponent<UltraStateMachine>();
 			ur = UnitRegistry.current;
 			input = FindObjectOfType<UserInputHandler>();
 			actionsUsedChecker = FindObjectOfType<AllActionsUsedChecker>();
+
+			Debug.Assert(input, "No User Input Handler found!");
+			Debug.Assert(actionsUsedChecker, "No All Actions Used Checker Found!");
+
+			//Audio (must be setup manually)
+			Debug.Assert(SFXAudio, "No SFX audio source allocated!");
+			Debug.Assert(VocalAudio, "No Vocal audio source allocated!");
+
+			//States
+			Debug.Assert(pauseMenuState, "No Pause Menu State Found!");
+			Debug.Assert(endTurnConfirmationState, "No End Turn Confirmation State Found!");
 		}
 
 		void Start()
 		{
-			Debug.Assert(pauseMenuState, "No Pause Menu State Found!");
-			Debug.Assert(endTurnConfirmationState, "No End Turn Confirmation State Found!");
-			Debug.Assert(input, "No User Input Handler found!");
-			Debug.Assert(actionsUsedChecker, "No All Actions Used Checker Found!");
-
 			//Register events for check game ending
 			var animateUnits = ur.GetAliveUnitsByType<AnimateUnit>();
 			if (animateUnits.Length > 0)    //Does this need a null check?
 				foreach (var au in animateUnits)
 					au.onTakeDamage.AddListener(OnUnitTakeDamage);
+
+			//Load intro state
+			if (introState)
+				usm.Stack(introState);
 		}
 
 		//Register events
@@ -101,7 +111,7 @@ namespace StormRend.Systems
 		#region Callbacks
 		void OnUnitTakeDamage(HealthData data)
 		{
-			onUnitActed?.Invoke();
+			onUnitTakeDamage?.Invoke();
 
 			CheckAndPerformGameEnding();
 		}
@@ -124,13 +134,11 @@ namespace StormRend.Systems
 			{
 				gameEnded = true;
 				usm.Stack(defeatState);
-				audioSource.PlayOneShot(defeatNarration);
 			}
 			else if (ur.allEnemiesDead)
 			{
 				gameEnded = true;
 				usm.Stack(victoryState);
-				audioSource.PlayOneShot(victoryNarration);
 			}
 		}
 
@@ -139,7 +147,7 @@ namespace StormRend.Systems
 		/// </summary>
 		public void CheckAndPerformGameEnding()
 		{
-			Debug.Log("Check and perform game ending");
+			// Debug.Log("Check and perform game ending");
 			if (ur.allAlliesDead || ur.allEnemiesDead)
 			{
 				//Game is ending so stop user from doing anymore input
@@ -186,9 +194,10 @@ namespace StormRend.Systems
 		{
 			//Can only pause if the game if...
 			if (currentState != pauseMenuState &&               //NOT already paused
-				currentState != endTurnConfirmationState &&     //NOT showing the victory menu
-				currentState != victoryState &&                 //NOT showing the defeat menu
-				currentState != defeatState)                    //NOT showing the end turn confirm dialog
+				currentState != introState &&               	//NOT doing the intro narration
+				currentState != endTurnConfirmationState &&    	//NOT showing the end turn confirm dialog
+				currentState != victoryState &&                 //NOT showing the victory menu
+				currentState != defeatState)                    //NOT showing the defeat menu
 			{
 				usm.Stack(pauseMenuState);
 			}
@@ -215,6 +224,13 @@ namespace StormRend.Systems
 			}
 		}
 
+		public void SafeSkip()
+		{
+			//Can only skip if NOT in one of the end game states
+			if (currentState != victoryState && currentState != defeatState)
+				usm.UnStack();
+		}
+
 		//To be referenced by EndTurnConfirmation.NextTurnButton
 		public void ForcedNextTurn()
 		{
@@ -239,8 +255,9 @@ namespace StormRend.Systems
 		}
 		public void LoadNextScene()
 		{
+			//Make sure there's a next scene go to
 			Time.timeScale = 1f;
-			SceneManager.LoadScene(nextSceneName);
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 		}
 		public void LoadScene(string scene)
 		{
@@ -269,11 +286,11 @@ namespace StormRend.Systems
 			if (GUILayout.Button("Kill Berserker")) KillUnitByType<BerserkerTag>();
 			if (GUILayout.Button("Kill Valkyrie")) KillUnitByType<ValkyrieTag>();
 			if (GUILayout.Button("Kill Sage")) KillUnitByType<SageTag>();
-
+			GUILayout.Space(3);
 			if (GUILayout.Button("Kill Enemies")) KillAllUnitsOfType<EnemyUnit>();
 			if (GUILayout.Button("Kill Frost Troll")) KillUnitByType<FrostTrollTag>();
 			if (GUILayout.Button("Kill Frost Hound")) KillUnitByType<FrostHoundTag>();
-
+			GUILayout.Space(3);
 			if (GUILayout.Button("Destroy All InAnimates")) KillAllUnitsOfType<InAnimateUnit>();
 
 

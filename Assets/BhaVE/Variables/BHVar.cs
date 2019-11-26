@@ -10,8 +10,8 @@ namespace pokoro.BhaVE.Core.Variables
 		[SerializeField] protected T _value;
 
 		//Can utilise both custom BhaveEvents standard events that can use callbacks
-		[SerializeField] protected BhaveEvent OnChanged;
-		public virtual event Action onChanged;
+		[SerializeField] protected BhaveEvent OnChanged = null;
+		public virtual event Action onChanged = null;
 
 		public virtual T value
 		{

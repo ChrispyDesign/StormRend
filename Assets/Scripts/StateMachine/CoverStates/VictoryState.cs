@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace StormRend.States
 {
-	public class VictoryState : CoverState
+	public class VictoryState : NarrativeState
 	{
 		[SerializeField] float cameraCenteringSpeed = 10f;
 		MasterCamera cam;

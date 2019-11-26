@@ -24,7 +24,7 @@ namespace StormRend
 			gameDirector = GameDirector.current;
 			usm = FindObjectOfType<UltraStateMachine>();
 
-			src = gameDirector.generalAudioSource;
+			src = gameDirector.SFXAudioSource;
 		}
 
 		private void Update()

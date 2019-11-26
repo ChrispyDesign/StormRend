@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace StormRend.Assists
 {
-	[RequireComponent(typeof(TurnState))]
 	public class AutoUnitSelector : MonoBehaviour
 	{
 		public enum SelectMethod
@@ -22,7 +21,6 @@ namespace StormRend.Assists
 		//Members
 		UnitRegistry ur = null;
 		UserInputHandler uih = null;
-		TurnState turnState = null;
 		AnimateUnit lastSelected = null;
 
 		//First run only
@@ -33,28 +31,17 @@ namespace StormRend.Assists
 		{
 			ur = UnitRegistry.current;
 			uih = UserInputHandler.current;
-			turnState = GetComponent<TurnState>();
 			isFirstRun = true;
 		}
-		void OnEnable()
-		{
-			turnState.onTurnEnter.AddListener(OnTurnEnter);
-			turnState.onTurnExit.AddListener(OnTurnExit);
-		}
-		void OnDisable()
-		{
-			turnState.onTurnEnter.RemoveListener(OnTurnEnter);
-			turnState.onTurnExit.RemoveListener(OnTurnExit);
-		}
-
 		#endregion
 
 		#region Callbacks
 		public void OnTurnEnter(State state)
 		{
+			//Ignore first run
 			if (isFirstRun)
 			{
-				isFirstRun = false;		//No longer the first run
+				isFirstRun = false;
 				return;
 			}
 
@@ -80,12 +67,14 @@ namespace StormRend.Assists
 							case AllyTurnState a:
 								{
 									var aliveUnits = ur.GetAliveUnitsByType<AllyUnit>();
+									if (aliveUnits.Length <= 0) return;
 									randomAliveUnitToSelect = aliveUnits[Random.Range(0, aliveUnits.Length)];
 									break;
 								}
 							case EnemyTurnState e:
 								{
 									var aliveUnits = ur.GetAliveUnitsByType<EnemyUnit>();
+									if (aliveUnits.Length <= 0) return;
 									randomAliveUnitToSelect = aliveUnits[Random.Range(0, aliveUnits.Length)];
 									break;
 								}
@@ -94,7 +83,7 @@ namespace StormRend.Assists
 								break;
 						}
 
-						Debug.Log("Select unit: " + randomAliveUnitToSelect);
+						// Debug.Log("Select unit: " + randomAliveUnitToSelect);
 						uih.SelectUnit(randomAliveUnitToSelect, true);
 					}
 					break;
