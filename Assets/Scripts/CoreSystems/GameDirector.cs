@@ -45,7 +45,7 @@ namespace StormRend.Systems
 		public string nextSceneName = null;
 
 		[Header("Events")]
-		public UnityEvent onUnitActed = null;
+		public UnityEvent onUnitTakeDamage = null;
 		public UnitEvent onUnitKilled = null;
 
 		//Properties
@@ -101,7 +101,7 @@ namespace StormRend.Systems
 		#region Callbacks
 		void OnUnitTakeDamage(HealthData data)
 		{
-			onUnitActed?.Invoke();
+			onUnitTakeDamage?.Invoke();
 
 			CheckAndPerformGameEnding();
 		}

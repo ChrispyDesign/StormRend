@@ -47,7 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e84cf4037a7a3f46ac423db4b445574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 8
 --- !u!114 &2713858406224050904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,7 +120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cf1896e12b435441ba4d4a58067f2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 8
 --- !u!82 &6022433738191235825
 AudioSource:
   m_ObjectHideFlags: 0
@@ -326,7 +324,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e84cf4037a7a3f46ac423db4b445574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 4
 --- !u!114 &2713858407051939431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,7 +378,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 5620345394586484092}
-        m_MethodName: 
+        m_MethodName: RunStartTurns
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -392,11 +389,22 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 1
+        m_MethodName: OnStateChanged
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6067199282211568936}
+        m_MethodName: OnTurnEnter
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -407,6 +415,17 @@ MonoBehaviour:
   onTurnExit:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 8681897199069238695}
+        m_MethodName: RunEndTurns
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 6067199282211568936}
         m_MethodName: OnTurnExit
         m_Mode: 0
@@ -432,7 +451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cf1896e12b435441ba4d4a58067f2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 4
 --- !u!82 &2502158275984749017
 AudioSource:
   m_ObjectHideFlags: 0
