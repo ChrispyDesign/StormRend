@@ -17,7 +17,17 @@ namespace StormRend.Assists
 		[Header("Designer to tune these values")]
 		[SerializeField] float startDelay = 1.5f;
 		[SerializeField] float duration = 2.5f;
-		[SerializeField] string shaderParam = "_DissolveValue";
+
+		[Header("Dissolve")]
+		[SerializeField] string dissolveShaderParam = "_DissolveValue";
+		[SerializeField] float startDissolveValue = 1f;
+		[SerializeField] float endDissolveValue = 0f;
+
+
+		[Header("Outline Color")]
+		[SerializeField] string outlineColorShaderParam = "_ASEOutlineColor";
+		[SerializeField] Color startColorValue = Color.clear;
+		[SerializeField] Color endColorValue = Color.clear;
 
 		//Members
 		List<Material> materials = new List<Material>();
@@ -59,26 +69,35 @@ namespace StormRend.Assists
 			yield return new WaitForSeconds(startDelay);
 
 			//Dissolve
-			float value = 1f;
+			float time = 0f;
 			float rate = 1f / duration;
-			while (value > 0f)
+			while (time < 1f)
 			{
-				value -= rate * Time.deltaTime;
-				SetDissolve(value);
+				time += rate * Time.deltaTime;
+
+				foreach (var m in materials)
+				{
+					SetDissolveLerp(m, time);
+					SetOutlineColorLerp(m, time);
+				}
 				yield return null;
 			}
 
-			//Zero out dissolve
-			SetDissolve(0f);
+			//Make sure it is zeroed out properly
+			foreach (var m in materials)
+			{
+				SetDissolveLerp(m, 1f);
+				SetOutlineColorLerp(m, 1f);
+			}
 
 			//Finally kill unit
 			au.Die();
 		}
 
-		void SetDissolve(float dissolve)
-		{
-			foreach (var m in materials)
-				m.SetFloat(shaderParam, dissolve);
-		}
+		void SetDissolveLerp(Material m, float t) 
+			=> m.SetFloat(dissolveShaderParam, Mathf.Lerp(startDissolveValue, endDissolveValue, t));
+
+		void SetOutlineColorLerp(Material m, float t) 
+			=> m.SetColor(outlineColorShaderParam, Color.Lerp(startColorValue, endColorValue, t));
 	}
 }

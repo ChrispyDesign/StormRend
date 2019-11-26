@@ -34,16 +34,13 @@ namespace StormRend.States
 		{
 			base.OnEnter(sm);
 
-			//Calculate possible moves
-			ur.RunUnitsBeginTurn(this);
-
-			//Get the current enemies & Run AI
-			enemies = ur.GetAliveUnitsByType<EnemyUnit>();	//Hardcore
-			if (enemies?.Length > 0)
-				StartCoroutine(RunAI(sm));
+			//Run AI
+			enemies = ur.GetAliveUnitsByType<EnemyUnit>();
+			if (enemies.Length > 0)
+				StartCoroutine(EnemySequence(sm));
 		}
 
-		IEnumerator RunAI(UltraStateMachine sm)
+		IEnumerator EnemySequence(UltraStateMachine sm)
 		{
 			//Run through each unit's turn then finish turn
 			foreach (var u in enemies)

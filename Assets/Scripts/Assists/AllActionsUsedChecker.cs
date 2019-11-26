@@ -83,7 +83,7 @@ namespace StormRend.Assists
 		/// <summary>
 		/// Stops the timer immediately
 		/// </summary>
-		public void StopTimer()
+		public void Stop()
 		{
 			StopAllCoroutines();
 			endTurnTimer?.gameObject.SetActive(false);

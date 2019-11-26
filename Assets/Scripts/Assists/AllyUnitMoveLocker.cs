@@ -16,15 +16,14 @@ namespace StormRend.Assists
 		void Start()
 		{
 			foreach (var au in ur.GetAliveUnitsByType<AllyUnit>())
-				au.onActed.AddListener(Lock);
+				au.onActed.AddListener(LockMovedUnits);
 		}
 
 		/// <summary>
 		/// Lock all ally unit movement unless the ability that was just performed has a refresh effect
 		/// </summary>
-		public void Lock(Ability a)
+		public void LockMovedUnits(Ability a)
 		{
-			Debug.Log("Locking Units!");
             //Loop through alive ally units
             foreach (var au in ur.GetAliveUnitsByType<AllyUnit>())		
 				//if the unit has moved from it's starting position

@@ -16,10 +16,7 @@ namespace StormRend.Assists
 		//Reset the snow shader on start
 		void Start() =>	SetSnowOpacity(0);
 
-		public void Run()
-		{
-			StartCoroutine(RunBlizzardSequence());
-		}
+		public void Run() => StartCoroutine(RunBlizzardSequence());
 
 		IEnumerator RunBlizzardSequence()
 		{

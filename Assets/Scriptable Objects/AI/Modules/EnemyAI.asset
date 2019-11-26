@@ -41,9 +41,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0f58f0bc3203c468af0922319bc1e7, type: 3}
   m_Name: CompleteAIAction[COPY]
   m_EditorClassIdentifier: 
-  targets: {fileID: 11400000, guid: c8add33a65b30a347bd1530394bd15fd, type: 2}
-  maxScanRange: 10
+  enabled: 1
+  maxScanIterations: 6
+  provokeRange: 6
   moveOn: 1
+  maxExtraSeekRangeAroundTarget: 2
   attackOn: 1
   attackRange: 1
 --- !u!114 &114101301479098354
@@ -62,7 +64,7 @@ MonoBehaviour:
     owner: {fileID: 11400000}
     rect:
       serializedVersion: 2
-      x: 336.5
+      x: 337.5
       y: 290
       width: 95
       height: 65

@@ -83,17 +83,16 @@ namespace StormRend.MapSystems
 		}
 
 		//Relay that uses singleton map
-		public static Tile[] GetPossibleTiles(Tile start, int range, params Type[] pathblockingUnitTypes)
-			=> GetPossibleTiles(Map.current, start, range, pathblockingUnitTypes);
+		public static Tile[] GetPossibleTiles(Tile start, int range, params Type[] filter)
+			=> GetPossibleTiles(Map.current, start, range, filter);
 		/// <summary>
 		/// Calculates and returns a possible pathfinding solution
 		/// </summary>
 		/// <param name="map">The map</param>
 		/// <param name="start">Starting tile</param>
 		/// <param name="range">The range of movement</param>
-		/// <param name="pathblockingUnitTypes">The type of units on tiles that blocks the path and will be filtered out</param>
-		/// <returns></returns>
-		public static Tile[] GetPossibleTiles(Map map, Tile start, int range, params Type[] pathblockingUnitTypes)
+		/// <param name="filter">The type of units to be filtered out during the search</param>
+		public static Tile[] GetPossibleTiles(Map map, Tile start, int range, params Type[] filter)
 		{
 			Debug.Assert(start, "Invalid Start tile");
 			Debug.Assert(map, "Invalid map parameter");
@@ -125,7 +124,7 @@ namespace StormRend.MapSystems
 						continue;
 
 					//PASS if neighbour tile has a unit on top that needs to be ignored
-					if (UnitRegistry.AreUnitTypesOnTile(n, pathblockingUnitTypes))
+					if (UnitRegistry.AreUnitTypesOnTile(n, filter))
 						continue;
 
 					//connected tile checked

@@ -99,9 +99,7 @@ namespace StormRend.Abilities.Effects
 						break;
 					}
 					else
-					{
 						++i;
-					}
 				}
 			}
 			//NORMAL ATTACK

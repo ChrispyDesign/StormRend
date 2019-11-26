@@ -20,7 +20,7 @@ namespace StormRend.VisualFX
             //Materials
             if (grassMaterials.Count > 0)
             {
-                var randomMaterialIDX = Random.Range(0, grassMaterials.Count - 1);
+                var randomMaterialIDX = Random.Range(0, grassMaterials.Count);
                 GetComponentInChildren<Renderer>().material = grassMaterials[randomMaterialIDX];
             }
         }

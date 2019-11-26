@@ -29,7 +29,6 @@ namespace StormRend.Systems
 		public UnityEvent onReset = null;
 
 		[Space]
-		[Header("Test")]
 		[SerializeField] KeyCode testKey = KeyCode.Asterisk;
 
 		UnitRegistry ur = null;

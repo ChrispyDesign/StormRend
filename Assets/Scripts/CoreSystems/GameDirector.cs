@@ -1,10 +1,16 @@
-﻿using pokoro.Patterns.Generic;
+﻿using System.Collections;
+using System.Linq;
+using pokoro.Patterns.Generic;
+using StormRend.Abilities;
 using StormRend.Assists;
 using StormRend.Audio;
 using StormRend.States;
 using StormRend.Systems.StateMachines;
+using StormRend.Tags;
 using StormRend.Units;
+using StormRend.Utility.Events;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace StormRend.Systems
@@ -38,6 +44,10 @@ namespace StormRend.Systems
 		public string mainMenuSceneName = null;
 		public string nextSceneName = null;
 
+		[Header("Events")]
+		public UnityEvent onUnitActed = null;
+		public UnitEvent onUnitKilled = null;
+
 		//Properties
 		public State currentState => usm?.currentState;
 		public AudioSource generalAudioSource => audioSource;
@@ -48,7 +58,9 @@ namespace StormRend.Systems
 		AudioSource audioSource = null;
 		UltraStateMachine usm = null;
 		UnitRegistry ur = null;
+		UserInputHandler input = null;
 		AllActionsUsedChecker actionsUsedChecker = null;
+		bool gameEnded = false;
 
 		//Debugs
 		[SerializeField, Space(10)] bool debug = false;
@@ -63,6 +75,7 @@ namespace StormRend.Systems
 			//Systems
 			usm = GetComponent<UltraStateMachine>();
 			ur = UnitRegistry.current;
+			input = FindObjectOfType<UserInputHandler>();
 			actionsUsedChecker = FindObjectOfType<AllActionsUsedChecker>();
 		}
 
@@ -70,12 +83,82 @@ namespace StormRend.Systems
 		{
 			Debug.Assert(pauseMenuState, "No Pause Menu State Found!");
 			Debug.Assert(endTurnConfirmationState, "No End Turn Confirmation State Found!");
+			Debug.Assert(input, "No User Input Handler found!");
 			Debug.Assert(actionsUsedChecker, "No All Actions Used Checker Found!");
+
+			//Register events for check game ending
+			var animateUnits = ur.GetAliveUnitsByType<AnimateUnit>();
+			if (animateUnits.Length > 0)    //Does this need a null check?
+				foreach (var au in animateUnits)
+					au.onTakeDamage.AddListener(OnUnitTakeDamage);
 		}
 
 		//Register events
-		void OnEnable() => ur.onUnitKilled.AddListener(CheckEndGame);
-		void OnDisable() => ur.onUnitKilled.RemoveListener(CheckEndGame);
+		void OnEnable() => ur.onUnitKilled.AddListener(OnUnitKilled);
+		void OnDisable() => ur.onUnitKilled.RemoveListener(OnUnitKilled);
+		#endregion
+
+		#region Callbacks
+		void OnUnitTakeDamage(HealthData data)
+		{
+			onUnitActed?.Invoke();
+
+			CheckAndPerformGameEnding();
+		}
+
+		void OnUnitKilled(Unit u)
+		{
+			onUnitKilled?.Invoke(u);
+
+			CheckAndPerformGameEnd();
+		}
+
+		/// <summary>
+		/// Call back to check and run end game sequences
+		/// </summary>
+		public void CheckAndPerformGameEnd()
+		{
+			if (gameEnded) return;
+
+			if (ur.allAlliesDead)
+			{
+				gameEnded = true;
+				usm.Stack(defeatState);
+				audioSource.PlayOneShot(defeatNarration);
+			}
+			else if (ur.allEnemiesDead)
+			{
+				gameEnded = true;
+				usm.Stack(victoryState);
+				audioSource.PlayOneShot(victoryNarration);
+			}
+		}
+
+		/// <summary>
+		/// Checks if game is ending and prepares for it
+		/// </summary>
+		public void CheckAndPerformGameEnding()
+		{
+			Debug.Log("Check and perform game ending");
+			if (ur.allAlliesDead || ur.allEnemiesDead)
+			{
+				//Game is ending so stop user from doing anymore input
+				input.enabled = false;
+				actionsUsedChecker.Stop();
+				actionsUsedChecker.enabled = false;
+			}
+		}
+
+		IEnumerator DelayedCheck(float delay)
+		{
+			yield return new WaitForSeconds(delay);
+			if (ur.allAlliesDead || ur.allEnemiesDead)
+			{
+				//Game is ending so stop user from doing anymore input
+				input.enabled = false;
+				actionsUsedChecker.Stop();
+			}
+		}
 		#endregion
 
 		#region State Management
@@ -92,23 +175,6 @@ namespace StormRend.Systems
 		}
 
 		/// <summary>
-		/// Call back to check and run end game sequences
-		/// </summary>
-		public void CheckEndGame(Unit u)
-		{
-			if (ur.allAlliesDead)
-			{
-				usm.Stack(defeatState);
-				audioSource.PlayOneShot(defeatNarration);
-			}
-			else if (ur.allEnemiesDead)
-			{
-				usm.Stack(victoryState);
-				audioSource.PlayOneShot(victoryNarration);
-			}
-		}
-
-		/// <summary>
 		/// Safe pause game function that can be called anytime, anywhere by anything
 		/// </summary>
 		public void PauseGame() => TryPauseGame();
@@ -120,7 +186,7 @@ namespace StormRend.Systems
 		{
 			//Can only pause if the game if...
 			if (currentState != pauseMenuState &&               //NOT already paused
-				currentState != endTurnConfirmationState &&		//NOT showing the victory menu
+				currentState != endTurnConfirmationState &&     //NOT showing the victory menu
 				currentState != victoryState &&                 //NOT showing the defeat menu
 				currentState != defeatState)                    //NOT showing the end turn confirm dialog
 			{
@@ -138,9 +204,9 @@ namespace StormRend.Systems
 			if (actionsUsedChecker.isAllActionsUsedUp)
 			{
 				//safe to go to next turn
-				actionsUsedChecker.StopTimer();
+				actionsUsedChecker.Stop();
 				usm.ClearStack();
-				usm.NextTurn();	
+				usm.NextTurn();
 			}
 			else
 			{
@@ -200,22 +266,39 @@ namespace StormRend.Systems
 			if (!debug) return;
 			if (GUILayout.Button("PrevTurn")) usm.PrevTurn();
 			if (GUILayout.Button("Kill Allies")) KillAllUnitsOfType<AllyUnit>();
+			if (GUILayout.Button("Kill Berserker")) KillUnitByType<BerserkerTag>();
+			if (GUILayout.Button("Kill Valkyrie")) KillUnitByType<ValkyrieTag>();
+			if (GUILayout.Button("Kill Sage")) KillUnitByType<SageTag>();
+
 			if (GUILayout.Button("Kill Enemies")) KillAllUnitsOfType<EnemyUnit>();
+			if (GUILayout.Button("Kill Frost Troll")) KillUnitByType<FrostTrollTag>();
+			if (GUILayout.Button("Kill Frost Hound")) KillUnitByType<FrostHoundTag>();
+
 			if (GUILayout.Button("Destroy All InAnimates")) KillAllUnitsOfType<InAnimateUnit>();
+
+
+			void KillUnitByType<T>() where T : UnitTag
+			{
+				var unitToKill = (from unit in ur.aliveUnits where unit.tag is T select unit).First();
+				if (unitToKill) KillUnit(unitToKill);
+			}
 
 			void KillAllUnitsOfType<T>() where T : Unit
 			{
 				foreach (var u in ur.GetAliveUnitsByType<T>())
-				{
-					var au = u as AnimateUnit;
-					var iau = u as InAnimateUnit;
-					if (au)
-						au.Kill();
-					else if (iau)
-						iau.TakeDamage(new HealthData(null, 9999999));
-					else
-						u.TakeDamage(new HealthData(null, 9999999));
-				}
+					KillUnit(u);
+			}
+
+			void KillUnit(Unit u)
+			{
+				var au = u as AnimateUnit;
+				var iau = u as InAnimateUnit;
+				if (au)
+					au.Kill();
+				else if (iau)
+					iau.TakeDamage(new HealthData(null, 9999999));
+				else
+					u.TakeDamage(new HealthData(null, 9999999));
 			}
 		}
 		#endregion

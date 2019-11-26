@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using pokoro.Patterns.Generic;
 using StormRend.Assists;
-using StormRend.Enums;
 using StormRend.MapSystems.Tiles;
-using StormRend.States;
-using StormRend.Systems.StateMachines;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using UnityEngine;
@@ -81,43 +78,11 @@ namespace StormRend.Units
 				Debug.LogWarningFormat("{0} was not in list of alive units!", deadUnit);
 		}
 
-		public T[] GetAliveUnitsByType<T>() where T : Unit => (from u in aliveUnits where u is T select u as T).ToArray();
-		public T[] GetDeadUnitsByType<T>() where T : Unit => (from u in deadUnits where u is T select u as T).ToArray();
-	#endregion
-
-	#region Turn Enter/Exit logic
-		public void RunUnitsBeginTurn(State state)
-		{
-			var turnState = state as TurnState;
-			AnimateUnit[] currentStateUnits = new AnimateUnit[0];
-			switch (turnState.unitType)
-			{
-				case TargetType.Allies:
-					currentStateUnits = GetAliveUnitsByType<AllyUnit>();
-					break;
-				case TargetType.Enemies:
-					currentStateUnits = GetAliveUnitsByType<EnemyUnit>();
-					break;
-			}
-			foreach (var u in currentStateUnits)
-				u.BeginTurn();
-		}
-		public void RunUnitsEndTurn(State state)
-		{
-			var turnState = state as TurnState;
-			AnimateUnit[] animateUnits = new AnimateUnit[0];
-			switch (turnState.unitType)
-			{
-				case TargetType.Allies:
-					animateUnits = GetAliveUnitsByType<AllyUnit>();
-					break;
-				case TargetType.Enemies:
-					animateUnits = GetAliveUnitsByType<EnemyUnit>();
-					break;
-			}
-			foreach (var u in animateUnits)
-				u.EndTurn();
-		}
+		public T[] GetAliveUnitsByType<T>() where T : Unit => 
+			(from u in aliveUnits where !u.isDead where u is T select u as T).ToArray();
+				
+		public T[] GetDeadUnitsByType<T>() where T : Unit => 
+			(from u in deadUnits where u.isDead where u is T select u as T).ToArray();
 	#endregion
 
 	#region OnTile Utility Functions

@@ -41,7 +41,7 @@ namespace StormRend.Systems
 		{
 			if (selectedAnimateUnit.canMove)
 			{
-				if (selectedAnimateUnit.possibleMoveTiles.Length <= 0)
+				if (selectedAnimateUnit.possibleMoveTiles.Count <= 0)
 					selectedAnimateUnit.CalculateMoveTiles();
 
 				foreach (var t in selectedAnimateUnit?.possibleMoveTiles)
@@ -60,7 +60,7 @@ namespace StormRend.Systems
 		{
 			//NOTE: Active unit's ACTION highlights should be refreshed
 			// - each time the selected ability is changed
-			if (selectedAnimateUnit.possibleTargetTiles.Length <= 0) return;
+			if (selectedAnimateUnit.possibleTargetTiles.Count <= 0) return;
 
 			//Highlight
 			foreach (var t in selectedAnimateUnit?.possibleTargetTiles)

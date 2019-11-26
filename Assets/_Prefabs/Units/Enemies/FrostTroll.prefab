@@ -106,18 +106,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   onHeal:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8622135843444065802}
-        m_MethodName: OnHealthChange
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: StormRend.Utility.Events.HealthEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   currentTile: {fileID: 0}
@@ -1409,9 +1398,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathVFX: {fileID: 11400000, guid: 8a7d399b8029c7d40b091d3d4f1444b8, type: 2}
-  startDelay: 1.5
-  duration: 2.5
-  shaderParam: _DisolveValue
+  startDelay: 0.75
+  duration: 2.25
+  dissolveShaderParam: _DissolveValue
+  startDissolveValue: 1
+  endDissolveValue: 0
+  outlineColorShaderParam: _ASEOutlineColor
+  startColorValue: {r: 0, g: 0, b: 0, a: 0}
+  endColorValue: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1893445955385811285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2137,6 +2131,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 3937376629430505107, guid: 5ae1c8648f3b0f248add293f77f55a17,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 3.157
+      objectReference: {fileID: 0}
+    - target: {fileID: 9056395100986152547, guid: 5ae1c8648f3b0f248add293f77f55a17,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 3.157
+      objectReference: {fileID: 0}
     - target: {fileID: 75408813256953087, guid: 5ae1c8648f3b0f248add293f77f55a17,
         type: 3}
       propertyPath: m_Layer
@@ -2177,16 +2181,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 3937376629430505107, guid: 5ae1c8648f3b0f248add293f77f55a17,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 3.157
-      objectReference: {fileID: 0}
-    - target: {fileID: 9056395100986152547, guid: 5ae1c8648f3b0f248add293f77f55a17,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 3.157
-      objectReference: {fileID: 0}
     - target: {fileID: 7652903600754378262, guid: 5ae1c8648f3b0f248add293f77f55a17,
         type: 3}
       propertyPath: m_Sprite
@@ -2201,18 +2195,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 60678126255135542}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8622135843444065802 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8606493998006623548, guid: 5ae1c8648f3b0f248add293f77f55a17,
-    type: 3}
-  m_PrefabInstance: {fileID: 60678126255135542}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b7bb8b91af7b6843b2c5832194e42fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &4123105858600475009
 PrefabInstance:
   m_ObjectHideFlags: 0
