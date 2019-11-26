@@ -1665,7 +1665,8 @@ AudioSource:
   m_GameObject: {fileID: 4783116619369055820}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243357206194563174, guid: ea89020ab2e60ae49a21e918d28b307c,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -4351,8 +4352,8 @@ GameObject:
   - component: {fileID: 688204287768951882}
   - component: {fileID: 1369498550873307249}
   - component: {fileID: 8547758622612656737}
-  - component: {fileID: 3132190640876183000}
   - component: {fileID: 3841930061851047593}
+  - component: {fileID: 3132190640876183000}
   - component: {fileID: 4588662592721858016}
   - component: {fileID: 9108019807441497519}
   m_Layer: 12
@@ -4417,21 +4418,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpTime: 1
---- !u!114 &3132190640876183000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9108019807441497518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  description: Plays a remark when a enemy is killed by this unit
-  chance: 100
-  magazine: {fileID: 11400000, guid: 6734e99dc55624e839ee19b1f42152a1, type: 2}
 --- !u!114 &3841930061851047593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4543,6 +4529,21 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   possibleMoveTiles: []
   possibleTargetTiles: []
+--- !u!114 &3132190640876183000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108019807441497518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Plays a remark when a enemy is killed by this unit
+  chance: 100
+  magazine: {fileID: 11400000, guid: 6734e99dc55624e839ee19b1f42152a1, type: 2}
 --- !u!82 &4588662592721858016
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4552,7 +4553,8 @@ AudioSource:
   m_GameObject: {fileID: 9108019807441497518}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243701484172788794, guid: ea89020ab2e60ae49a21e918d28b307c,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
