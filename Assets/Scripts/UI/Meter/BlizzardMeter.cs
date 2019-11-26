@@ -27,6 +27,7 @@ namespace StormRend.UI
 				img.fillAmount = 0f;
 			}
 
+            blizzard.value = 0;
 			Debug.Assert(blizzardNodes[0], "There is no slider, please add a panel with filled image component on it. " + typeof(BlizzardMeter));
 			Debug.Assert(infoPanel, string.Format("[{0}] {1} not found!", this.name, typeof(InfoPanel).Name));
 			Debug.Assert(blizzard, "No Blizzard SOV found!");
@@ -40,7 +41,10 @@ namespace StormRend.UI
 			startCheck = true;
 			UpdatePanel();
 		}
-		void OnDestroy() => blizzard.onChanged -= OnChange;
+        void OnDestroy()
+        {
+            blizzard.onChanged -= OnChange;
+        }
 
 		//Register events
 		private void OnChange()

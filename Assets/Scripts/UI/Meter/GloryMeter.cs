@@ -43,7 +43,7 @@ namespace StormRend.UI
 
 		//Register events
 		void OnEnable() => glory.onChanged += OnChange;
-		void OnDisable() => glory.onChanged -= OnChange;
+		void OnDestroy() => glory.onChanged -= OnChange;
 
 		private void Update()
 		{
@@ -61,7 +61,9 @@ namespace StormRend.UI
 				decrease = true;
 			
 			internalGlory = glory.value;
-		}
+            UpdatePanel();
+
+        }
 
 		public void UpdatePanel()
 		{
