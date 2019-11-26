@@ -51,16 +51,22 @@ namespace StormRend.Abilities.Effects
 				//Only get the first target
 				var target = targetTiles[0];
 
-				//Round the coords it to the nearest 1 or zero
-				Vector3 dirVector = (target.transform.position - owner.currentTile.transform.position).normalized;  //Get normalized direction
-				Vector2Int attackDirection = new Vector2Int(Mathf.CeilToInt(dirVector.x), Mathf.CeilToInt(dirVector.z));
+				//Round the coords it to the nearest 1 or zero. Make sure to flatten so that they're all on the same playing field
+				var flatTargetTilePos = new Vector3(target.transform.position.x, 0, target.transform.position.z);
+				var flatOwnerTilePos = new Vector3(owner.currentTile.transform.position.x, 0, owner.currentTile.transform.position.z);
 
-				Debug.Log("Attack Direction: " + attackDirection);
+				Vector3 dirVector = (flatTargetTilePos - flatOwnerTilePos).normalized;
+				Vector2Int attackDirection = new Vector2Int(Mathf.RoundToInt(dirVector.x), Mathf.RoundToInt(dirVector.z));
+
+				// Debug.Log("Attack Direction: " + attackDirection);
 
 				//Detect 0,0 error
 				if (attackDirection.x == 0 && attackDirection.y == 0)
 				{
 					Debug.LogWarning("Invalid attack direction (0, 0)! Exiting...");
+					Debug.Log("dirVector: " + dirVector);
+					Debug.Log("target.transform.position: " + target.transform.position);
+					Debug.Log("owner.currentTile.transform.position: " + owner.currentTile.transform.position);
 					return;
 				}
 
