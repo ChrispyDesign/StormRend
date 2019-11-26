@@ -140,8 +140,9 @@ namespace StormRend.Units
 			yield return new WaitForSeconds(delay);
 			if (_canAct == true)
 			{
+				//Just show that the unit can move
 				uih.SelectUnit(this);
-				uih.SelectAbility(currentAbility);
+				// uih.SelectAbility(currentAbility);
 			}
 		}
 	#endregion
@@ -218,8 +219,6 @@ namespace StormRend.Units
 		//Unit Turn Starter
 		public void StartTurn()     //Reset necessary stats and get unit ready for the next turn
 		{
-			Debug.Log("StartTurn()");
-
 			//Can take action again (This doesn't reselect the units)
 			_canMove = true;
 			_canAct = true;

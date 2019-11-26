@@ -139,7 +139,7 @@ namespace StormRend.Systems
 		/// </summary>
 		public void CheckAndPerformGameEnding()
 		{
-			Debug.Log("Check and perform game ending");
+			// Debug.Log("Check and perform game ending");
 			if (ur.allAlliesDead || ur.allEnemiesDead)
 			{
 				//Game is ending so stop user from doing anymore input
