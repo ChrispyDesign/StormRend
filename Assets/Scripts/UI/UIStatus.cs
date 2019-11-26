@@ -10,10 +10,11 @@ using UnityEngine.EventSystems;
 
 namespace StormRend.UI
 {
-	public class UnitUIStatus : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+	public class UIStatus : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
+		[SerializeField] string name;
 		[SerializeField] string details;
-		[ReadOnlyField] AllyType allyType;
+        [SerializeField] AllyType allyType;
 		[ReadOnlyField] AnimateUnit unit;
 
 		InfoPanel infoPanel;
@@ -28,8 +29,21 @@ namespace StormRend.UI
 			Sage
 		}
 
-		//AllyUnit unit
-		private void Start()
+        public enum StatusType
+        {
+            Off,
+            Protection,
+            Valkyrie,
+            Sage
+        }
+
+        private void Awake()
+        {
+			infoPanel = FindObjectOfType<InfoPanel>();            
+        }
+
+        //AllyUnit unit
+        private void Start()
 		{
 			Type typeToFind = null;
 			switch (allyType)
@@ -46,7 +60,6 @@ namespace StormRend.UI
 			}
 			var tag = FindObjectOfType(typeToFind) as Tag;
 			unit = tag?.GetComponent<AnimateUnit>();
-			infoPanel = FindObjectOfType<InfoPanel>();
 
 			for(int i = 0; i < transform.childCount; i++)
 			{
@@ -56,7 +69,7 @@ namespace StormRend.UI
 
 		public void OnPointerEnter(PointerEventData eventData)
 		{
-			infoPanel?.ShowPanel(gameObject.name, 1, details);
+			infoPanel?.ShowPanel(name, 1, details);
 		}
 
 		public void OnPointerExit(PointerEventData eventData)
