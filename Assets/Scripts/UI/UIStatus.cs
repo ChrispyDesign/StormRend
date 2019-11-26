@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace StormRend.UI
 {
@@ -15,7 +16,9 @@ namespace StormRend.UI
 		[SerializeField] string name;
 		[SerializeField] string details;
         [SerializeField] AllyType allyType;
-		[ReadOnlyField] AnimateUnit unit;
+        [SerializeField] StatusType statusType;
+		[SerializeField, ReadOnlyField] List<Image> icon = new List<Image>();
+		[SerializeField, ReadOnlyField] AnimateUnit unit;
 
 		InfoPanel infoPanel;
 		List<GameObject> icons = new List<GameObject>();
@@ -33,8 +36,8 @@ namespace StormRend.UI
         {
             Off,
             Protection,
-            Valkyrie,
-            Sage
+            Immobilised,
+            Blinded
         }
 
         private void Awake()
@@ -64,6 +67,43 @@ namespace StormRend.UI
 			for(int i = 0; i < transform.childCount; i++)
 			{
 				icons.Add(transform.GetChild(i).gameObject);
+			}
+
+			icon.AddRange(GetComponentsInChildren<Image>());
+			CheckStatus(statusType);
+		}
+
+		public void CheckStatus(StatusType _type)
+		{
+			switch (_type)
+			{
+				case StatusType.Protection:
+					TurnIconOnAndOff(unit.isProtected);
+					break;
+				case StatusType.Immobilised:
+					TurnIconOnAndOff(unit.isImmobilised);
+					break;
+				case StatusType.Blinded:
+					TurnIconOnAndOff(unit.isBlind);
+					break;
+			}
+		}
+
+		void TurnIconOnAndOff(bool _isOn)
+		{
+			if (!_isOn)
+			{
+				foreach (Image img in icon)
+				{
+					img.fillAmount = 0;
+				}
+			}
+			else
+			{
+				foreach (Image img in icon)
+				{
+					img.fillAmount = 1;
+				}
 			}
 		}
 
