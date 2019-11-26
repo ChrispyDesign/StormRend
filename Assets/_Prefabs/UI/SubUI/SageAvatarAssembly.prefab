@@ -444,6 +444,7 @@ GameObject:
   - component: {fileID: 5172427188959492559}
   - component: {fileID: 5172427188959492557}
   - component: {fileID: 5172427188959492558}
+  - component: {fileID: 1426370412977339978}
   m_Layer: 5
   m_Name: Protection
   m_TagString: Untagged
@@ -500,14 +501,32 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300002, guid: 987ecaf37045a354ba641c24453f3b8a, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &1426370412977339978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5172427188959492544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948262b86eab0484185ba774d0e58f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: PROTECTION
+  details: Block the next instance of damage you take
+  allyType: 3
+  statusType: 1
+  icon: []
+  unit: {fileID: 0}
 --- !u!1 &5172427188995375795
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,6 +622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb371683530931048bb1561c8df7e4e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 
   allyType: 3
   unit: {fileID: 0}
   healthNodes:
@@ -1091,6 +1111,7 @@ GameObject:
   - component: {fileID: 5172427189953135024}
   - component: {fileID: 5172427189953135038}
   - component: {fileID: 5172427189953135039}
+  - component: {fileID: 1028744931391339780}
   m_Layer: 5
   m_Name: Imobilised
   m_TagString: Untagged
@@ -1147,14 +1168,32 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300002, guid: 987ecaf37045a354ba641c24453f3b8a, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &1028744931391339780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5172427189953135025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948262b86eab0484185ba774d0e58f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: IMMOBILISED
+  details: You cannot move
+  allyType: 3
+  statusType: 2
+  icon: []
+  unit: {fileID: 0}
 --- !u!1 &5172427190233362942
 GameObject:
   m_ObjectHideFlags: 0
