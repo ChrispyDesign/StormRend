@@ -1,4 +1,5 @@
-﻿using StormRend.Systems.StateMachines;
+﻿using System;
+using StormRend.Systems.StateMachines;
 using UnityEngine;
 
 namespace StormRend.States
@@ -8,18 +9,41 @@ namespace StormRend.States
 	/// </summary>
 	public class CoverState : State
 	{
-		[Tooltip("Objects that will cover the current state on state enter")]
-		[SerializeField] GameObject[] coveringObjects = null;
+		[Tooltip("Objects that will be activated to 'cover' the previous state")]
+		[SerializeField] GameObject[] activateObjects = null;
+		[Tooltip("Objects that will be deactivated on entering this state")]
+		[SerializeField] GameObject[] deactivateObjects = null;
 
 		///NOTE! All these methods must be called from override methods to preserve correct functionality
-		public override void OnEnter(UltraStateMachine sm) => SetObjectsActive(true);
-		public override void OnUncover(UltraStateMachine sm) => SetObjectsActive(true);
-		public override void OnExit(UltraStateMachine sm) => SetObjectsActive(false);
-		public override void OnCover(UltraStateMachine sm) => SetObjectsActive(false);
-
-		void SetObjectsActive(bool active)
+		public override void OnEnter(UltraStateMachine sm)
 		{
-			foreach (var i in coveringObjects)
+			SetActivateObjects(true);
+			SetDeactivateObjects(false);
+		}
+		public override void OnUncover(UltraStateMachine sm)
+		{
+			SetActivateObjects(true);
+			SetDeactivateObjects(false);
+		}
+		public override void OnExit(UltraStateMachine sm)
+		{
+			SetActivateObjects(false);
+			SetDeactivateObjects(true);
+		}
+		public override void OnCover(UltraStateMachine sm)
+		{
+			SetActivateObjects(false);
+			SetDeactivateObjects(true);
+		}
+
+		void SetActivateObjects(bool active)
+		{
+			foreach (var i in activateObjects)
+				i?.SetActive(active);
+		}
+		void SetDeactivateObjects(bool active)
+		{
+			foreach (var i in deactivateObjects)
 				i?.SetActive(active);
 		}
 	}

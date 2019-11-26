@@ -59,15 +59,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b24f3f079e30a451c83be6e74e438739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Description: 'ObjectsToActivate:
-
-    - Gameplay
-
-    - Controllers'
-  coveringObjects:
+  Description: 'Activate: AI, EnemyTurnFlag, AvatarsAndStates, InfoPanel, PauseButton'
+  activateObjects:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  deactivateObjects: []
   unitType: 8
   hasUserControllableUnits: 0
   turnCount: 0
@@ -336,26 +335,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2575ff513460d468c89ec104a13268a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Description: 'ObjectsToActivate:
-
-    - Gameplay UI Items
-
-    - Controllers ie. UIH, UR, BhaVE
-
-    OnTurnEnter:
-
-    - NextTurnButton.button.interactable = true
-
-    - PreCalculateMovetiles.Run()
-
-    OnTurnExit:
-
-    - NextTurnButton.Button.interactable = false'
-  coveringObjects:
+  Description: 'Activate: PlayerTurnFlag, AvatarsAndStats, AbilityPanel, InfoPanel,
+    NextTurnButton, PauseButton, UserInputHandler'
+  activateObjects:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  deactivateObjects: []
   unitType: 4
   hasUserControllableUnits: 1
   turnCount: 0

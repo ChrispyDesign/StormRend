@@ -34,9 +34,7 @@ namespace StormRend.Systems
 		[SerializeField] EndTurnConfirmState endTurnConfirmationState = null;
 
 		[Header("End States")]
-		// [SerializeField] AudioClip victoryNarration = null;
 		[SerializeField] State victoryState = null;
-		// [SerializeField] AudioClip defeatNarration = null;
 		[SerializeField] State defeatState = null;
 
 		[Header("Game Pause")]
@@ -80,18 +78,20 @@ namespace StormRend.Systems
 			input = FindObjectOfType<UserInputHandler>();
 			actionsUsedChecker = FindObjectOfType<AllActionsUsedChecker>();
 
+			Debug.Assert(input, "No User Input Handler found!");
+			Debug.Assert(actionsUsedChecker, "No All Actions Used Checker Found!");
+
 			//Audio (must be setup manually)
 			Debug.Assert(SFXAudio, "No SFX audio source allocated!");
 			Debug.Assert(VocalAudio, "No Vocal audio source allocated!");
+
+			//States
+			Debug.Assert(pauseMenuState, "No Pause Menu State Found!");
+			Debug.Assert(endTurnConfirmationState, "No End Turn Confirmation State Found!");
 		}
 
 		void Start()
 		{
-			Debug.Assert(pauseMenuState, "No Pause Menu State Found!");
-			Debug.Assert(endTurnConfirmationState, "No End Turn Confirmation State Found!");
-			Debug.Assert(input, "No User Input Handler found!");
-			Debug.Assert(actionsUsedChecker, "No All Actions Used Checker Found!");
-
 			//Register events for check game ending
 			var animateUnits = ur.GetAliveUnitsByType<AnimateUnit>();
 			if (animateUnits.Length > 0)    //Does this need a null check?

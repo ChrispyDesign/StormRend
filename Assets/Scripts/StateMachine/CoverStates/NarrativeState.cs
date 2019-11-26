@@ -11,12 +11,12 @@ namespace StormRend.States
 	public class NarrativeState : CoverState
 	{
 		//Inspector
+		[Header("Narration")]
 		[SerializeField] protected AudioClip narrativeClip = null;
 		[SerializeField] protected KeyCode skipKey = KeyCode.Space;
 
 		//Members
 		GameDirector gd = null;
-		UltraStateMachine usm = null;
 		AudioSource audioSrc;
 
 		void OnEnable()
@@ -29,7 +29,6 @@ namespace StormRend.States
 		public override void OnEnter(UltraStateMachine sm)
 		{
 			base.OnEnter(sm);
-			usm = sm;
 			audioSrc = GetComponent<AudioSource>();
 			audioSrc.PlayOneShot(narrativeClip);
 		}
