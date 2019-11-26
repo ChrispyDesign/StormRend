@@ -19,6 +19,9 @@ namespace StormRend.Abilities.Effects
 		/// <returns>[false] if this status effect has expired and needs to be removed. [true] if normal operation</returns>/ 	
 		public virtual bool OnBeginTurn(AnimateUnit affectedUnit)
 		{
+			//Increment number of turns this effect has operated
+			++turnCount;
+
 			//Check if this status effect has expired
 			if (affectedTurns > 0   //NOTE: If affectedturns set to 0 then status effect will never expire
 				&& turnCount >= affectedTurns)
@@ -26,9 +29,6 @@ namespace StormRend.Abilities.Effects
 				//Expired. Flag to be removed in AnimateUnit
 				return false;
 			}
-
-			//Increment number of turns this effect has operated
-			++turnCount;
 			return true;
 		}
 

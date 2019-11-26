@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using pokoro.Patterns.Generic;
 using StormRend.Assists;
-using StormRend.Enums;
 using StormRend.MapSystems.Tiles;
-using StormRend.States;
-using StormRend.Systems.StateMachines;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using UnityEngine;
@@ -86,43 +83,6 @@ namespace StormRend.Units
 				
 		public T[] GetDeadUnitsByType<T>() where T : Unit => 
 			(from u in deadUnits where u.isDead where u is T select u as T).ToArray();
-	#endregion
-
-	#region Turn Enter/Exit logic
-		public void RunUnitsBeginTurn(State state)
-		{
-			var turnState = state as TurnState;
-			AnimateUnit[] currentStateUnits = null;
-			switch (turnState.unitType)
-			{
-				case TargetType.Allies:
-					currentStateUnits = GetAliveUnitsByType<AllyUnit>();
-					break;
-				case TargetType.Enemies:
-					currentStateUnits = GetAliveUnitsByType<EnemyUnit>();
-					break;
-			}
-
-			foreach (var u in currentStateUnits)
-				u.BeginTurn();
-		}
-		public void RunUnitsEndTurn(State state)
-		{
-			var turnState = state as TurnState;
-			AnimateUnit[] animateUnits = null;
-			switch (turnState.unitType)
-			{
-				case TargetType.Allies:
-					animateUnits = GetAliveUnitsByType<AllyUnit>();
-					break;
-				case TargetType.Enemies:
-					animateUnits = GetAliveUnitsByType<EnemyUnit>();
-					break;
-			}
-
-			foreach (var u in animateUnits)
-				u.EndTurn();
-		}
 	#endregion
 
 	#region OnTile Utility Functions

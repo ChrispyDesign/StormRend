@@ -20,7 +20,6 @@ namespace StormRend.Abilities.Effects
 		public override bool OnBeginTurn(AnimateUnit affectedUnit)
 		{
 			var valid = base.OnBeginTurn(affectedUnit);
-
 			if (!valid)     //If this status effect has expired
 			{
 				//HARDCODE If this effect has expired then also deactivate relevant VFX

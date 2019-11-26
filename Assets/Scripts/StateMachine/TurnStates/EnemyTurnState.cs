@@ -34,24 +34,10 @@ namespace StormRend.States
 		{
 			base.OnEnter(sm);
 
-			//Prep enemies
-			enemies = ur.GetAliveUnitsByType<EnemyUnit>();
-			foreach (var u in enemies)
-				u.BeginTurn();
-
 			//Run AI
+			enemies = ur.GetAliveUnitsByType<EnemyUnit>();
 			if (enemies.Length > 0)
 				StartCoroutine(EnemySequence(sm));
-		}
-
-		public override void OnExit(UltraStateMachine sm)
-		{
-			base.OnExit(sm);
-
-			//Prep enemies
-			enemies = ur.GetAliveUnitsByType<EnemyUnit>();
-			foreach (var u in enemies)
-				u.EndTurn();
 		}
 
 		IEnumerator EnemySequence(UltraStateMachine sm)

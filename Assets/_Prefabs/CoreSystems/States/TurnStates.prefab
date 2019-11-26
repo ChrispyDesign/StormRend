@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2713858406224050905}
+  - component: {fileID: 5462942352485043593}
   - component: {fileID: 2713858406224050904}
+  - component: {fileID: 5709297634901889915}
   - component: {fileID: 6022433738191235825}
   - component: {fileID: 1347993421827253086}
   m_Layer: 0
@@ -33,6 +35,19 @@ Transform:
   m_Father: {fileID: 2713858406244353825}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5462942352485043593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2713858406224050910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e84cf4037a7a3f46ac423db4b445574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: 8
 --- !u!114 &2713858406224050904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +109,19 @@ MonoBehaviour:
     m_TypeName: StormRend.Utility.Events.StateEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   AITurnTime: 2
+--- !u!114 &5709297634901889915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2713858406224050910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cf1896e12b435441ba4d4a58067f2cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: 8
 --- !u!82 &6022433738191235825
 AudioSource:
   m_ObjectHideFlags: 0
@@ -247,7 +275,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2713858407051939428}
   - component: {fileID: 6067199282211568936}
+  - component: {fileID: 5620345394586484092}
   - component: {fileID: 2713858407051939431}
+  - component: {fileID: 8681897199069238695}
   - component: {fileID: 2502158275984749017}
   - component: {fileID: 2772662109874990885}
   m_Layer: 0
@@ -284,6 +314,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectMethod: 1
+--- !u!114 &5620345394586484092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2713858407051939429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e84cf4037a7a3f46ac423db4b445574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: 4
 --- !u!114 &2713858407051939431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,12 +380,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 6067199282211568936}
-        m_MethodName: OnTurnEnter
+      - m_Target: {fileID: 5620345394586484092}
+        m_MethodName: 
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -366,6 +420,19 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: StormRend.Utility.Events.StateEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &8681897199069238695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2713858407051939429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cf1896e12b435441ba4d4a58067f2cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: 4
 --- !u!82 &2502158275984749017
 AudioSource:
   m_ObjectHideFlags: 0
