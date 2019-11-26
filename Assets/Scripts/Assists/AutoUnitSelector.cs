@@ -67,12 +67,14 @@ namespace StormRend.Assists
 							case AllyTurnState a:
 								{
 									var aliveUnits = ur.GetAliveUnitsByType<AllyUnit>();
+									if (aliveUnits.Length <= 0) return;
 									randomAliveUnitToSelect = aliveUnits[Random.Range(0, aliveUnits.Length)];
 									break;
 								}
 							case EnemyTurnState e:
 								{
 									var aliveUnits = ur.GetAliveUnitsByType<EnemyUnit>();
+									if (aliveUnits.Length <= 0) return;
 									randomAliveUnitToSelect = aliveUnits[Random.Range(0, aliveUnits.Length)];
 									break;
 								}

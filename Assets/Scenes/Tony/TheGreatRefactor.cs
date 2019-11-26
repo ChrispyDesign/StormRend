@@ -59,6 +59,28 @@ namespace The.Great.Refactor.Brainstorm
 	TickCrystals()
 
 	------------------ Execution Order of Critical Game Methods
+	Critical methods:
+	- AnimateUnit.CalculateMoveTiles()
+	- UserInputHandler.OnStateChanged()
+	- AutoUnitSelector.OnTurnEnter
+	- GameDirector.SafeNextTurn()
+	- GameDirector.CheckAndPerformGameEnd()
+	- GameDirector.CheckAndPerformGameEnding()
+	- USM.NextTurn()
+	- USM.Stack()
+	- USM.UnStack()
+	- AllyTurnState
+
+	AllyTurnState.OnTurnEnter(State)
+	- AudioSource.PlayOneShot
+	- UnitTurnStarter.RunStartTurn
+	- UIH.Onstatechanged
+	- AutoUnitSelector.Onturnenter
+
+	//Blizzard
+	1. BlizzardController.Tick(), blizzard.value++, blizzard.onChange!
+	2. BlizzardMeter.OnChange(), internalValue: 5, SOV: 6
+
 	AnimateUnit.CalculateMoveTiles()
 	Needs to be executed:
 	- At the start of a turn for that turn's unit type ie. allyTurnState will calculate all AllyUnit's possible moves

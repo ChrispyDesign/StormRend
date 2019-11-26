@@ -16,7 +16,7 @@ using UnityEngine.Events;
 namespace StormRend.Units
 {
     [SelectionBase] //Avoid clicking on child objects
-	public abstract class AnimateUnit : Unit //, IPointerEnterHandler, IPointerExitHandler
+	public abstract class AnimateUnit : Unit
 	{
 		//Enums
 		public enum LookSnap
@@ -552,18 +552,6 @@ namespace StormRend.Units
 			ghost.SetActive(false);
 			ghost.transform.position = transform.position;
 		}
-		#endregion
-
-		#region Event System Interface Implementations
-		// public override void OnPointerEnter(PointerEventData eventData)
-		// {
-		// 	base.OnPointerEnter(eventData);
-		// 	//InfoPanel.current.SetText()
-		// }
-		// public override void OnPointerExit(PointerEventData eventData)
-		// {
-		// 	base.OnPointerExit(eventData);
-		// }
 		#endregion
 	}
 }
