@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 328110563357484235}
-  - component: {fileID: 2650875760488130891}
   - component: {fileID: 1985736633484383828}
   - component: {fileID: 3267380040487526950}
-  - component: {fileID: 8529129324128786958}
+  - component: {fileID: 2682373199852894648}
+  - component: {fileID: 2650875760488130891}
   - component: {fileID: 9066520899716302933}
   - component: {fileID: 685666856665655358}
   m_Layer: 0
@@ -36,7 +36,67 @@ Transform:
   m_Father: {fileID: 6841392900819925574}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &2650875760488130891
+--- !u!114 &1985736633484383828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5256963834050745516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb72efd620d3908448e1e0f9295d0fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  introState: {fileID: 1405600897197754268}
+  endTurnConfirmationState: {fileID: 5315961823952343736}
+  victoryState: {fileID: 1632894722443614900}
+  defeatState: {fileID: 145822735915659268}
+  pauseKey: 27
+  pauseMenuState: {fileID: 7843071864342637222}
+  mainMenuSceneName: 00_MainMenu_TonyEpicIntro
+  onUnitTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onUnitKilled:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  SFXAudio: {fileID: 2682373199852894648}
+  VocalAudio: {fileID: 2650875760488130891}
+  debug: 0
+--- !u!114 &3267380040487526950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5256963834050745516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41950817f2682cd4291b229d39387c34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentStateIDX: 0
+  entryState: {fileID: 6841392901105898438}
+  turnStates:
+  - {fileID: 6841392901105898438}
+  - {fileID: 6841392900814874489}
+  onExitCurrentTurn:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StormRend.Utility.Events.StateEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onEnterNextTurn:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StormRend.Utility.Events.StateEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  debug: 0
+--- !u!82 &2682373199852894648
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,7 +105,8 @@ AudioSource:
   m_GameObject: {fileID: 5256963834050745516}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243357206194563174, guid: ea89020ab2e60ae49a21e918d28b307c,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -132,84 +193,103 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1985736633484383828
-MonoBehaviour:
+--- !u!82 &2650875760488130891
+AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5256963834050745516}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb72efd620d3908448e1e0f9295d0fd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseKey: 27
-  pauseMenuState: {fileID: 7843071864342637222}
-  endTurnConfirmationState: {fileID: 5315961823952343736}
-  victoryNarration: {fileID: 0}
-  victoryState: {fileID: 1632894722443614900}
-  defeatNarration: {fileID: 0}
-  defeatState: {fileID: 145822735915659268}
-  mainMenuSceneName: 00_MainMenu_TonyEpicIntro
-  nextSceneName: 
-  onUnitTakeDamage:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  onUnitKilled:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  debug: 0
---- !u!114 &3267380040487526950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5256963834050745516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41950817f2682cd4291b229d39387c34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _currentStateIDX: 0
-  entryState: {fileID: 6841392901105898438}
-  turnStates:
-  - {fileID: 6841392901105898438}
-  - {fileID: 6841392900814874489}
-  onExitCurrentTurn:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: StormRend.Utility.Events.StateEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  onEnterNextTurn:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: StormRend.Utility.Events.StateEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  debug: 0
---- !u!114 &8529129324128786958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5256963834050745516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  description: 'This is a general purpose audio system
-
-    ie. for tiles to reference into on startup instead of each tile having it''s own
-    audio source'
-  chance: 50
-  magazine: {fileID: 0}
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 243701484172788794, guid: ea89020ab2e60ae49a21e918d28b307c,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &9066520899716302933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,6 +451,12 @@ PrefabInstance:
       propertyPath: debug
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2143451645671053436, guid: 786793039d27eff41ba4b1ecbf199fc2,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 243357206194563174, guid: ea89020ab2e60ae49a21e918d28b307c,
+        type: 2}
     - target: {fileID: 4523736375203269019, guid: 786793039d27eff41ba4b1ecbf199fc2,
         type: 3}
       propertyPath: onReset.m_PersistentCalls.m_Calls.Array.size
@@ -385,6 +471,11 @@ PrefabInstance:
         type: 3}
       propertyPath: testKey
       value: 61
+      objectReference: {fileID: 0}
+    - target: {fileID: 1307225259723560438, guid: 786793039d27eff41ba4b1ecbf199fc2,
+        type: 3}
+      propertyPath: debug
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 786793039d27eff41ba4b1ecbf199fc2, type: 3}
@@ -556,11 +647,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4862490217053532661, guid: dea4249421e618249a1122e83dcebecd,
+        type: 3}
+      propertyPath: m_Name
+      value: VictoryState
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403089396892597336, guid: dea4249421e618249a1122e83dcebecd,
+        type: 3}
+      propertyPath: m_Name
+      value: DefeatState
+      objectReference: {fileID: 0}
     - target: {fileID: 3382576198979583970, guid: dea4249421e618249a1122e83dcebecd,
         type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6013626923318496643, guid: dea4249421e618249a1122e83dcebecd,
+        type: 3}
+      propertyPath: narrativeClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e4e77c3a008d61a4a9b48ec8f30d2cca, type: 3}
     - target: {fileID: 6658782336058111668, guid: dea4249421e618249a1122e83dcebecd,
         type: 3}
       propertyPath: m_Name
@@ -1901,17 +2007,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1508496074064269142, guid: dea4249421e618249a1122e83dcebecd,
+        type: 3}
+      propertyPath: m_Name
+      value: IntroState
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dea4249421e618249a1122e83dcebecd, type: 3}
---- !u!1 &7722784868370207320 stripped
+--- !u!1 &7722784867514400505 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 3382576199773750639, guid: dea4249421e618249a1122e83dcebecd,
-    type: 3}
-  m_PrefabInstance: {fileID: 5034325963715073847}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7722784869035402170 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3382576199105426573, guid: dea4249421e618249a1122e83dcebecd,
+  m_CorrespondingSourceObject: {fileID: 3382576200595958222, guid: dea4249421e618249a1122e83dcebecd,
     type: 3}
   m_PrefabInstance: {fileID: 5034325963715073847}
   m_PrefabAsset: {fileID: 0}
@@ -1939,6 +2044,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2e6e9fe2d9a07642b71ca7524886b4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1405600897197754268 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6222908553409204395, guid: dea4249421e618249a1122e83dcebecd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5034325963715073847}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc74fd58278f14e479f36b2994cf2394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1632894722443614900 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6013626923318496643, guid: dea4249421e618249a1122e83dcebecd,
@@ -1951,9 +2068,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b20664e108f75b4e8cdeb264442f08a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &7722784867514400505 stripped
+--- !u!1 &7722784869035402170 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 3382576200595958222, guid: dea4249421e618249a1122e83dcebecd,
+  m_CorrespondingSourceObject: {fileID: 3382576199105426573, guid: dea4249421e618249a1122e83dcebecd,
     type: 3}
   m_PrefabInstance: {fileID: 5034325963715073847}
   m_PrefabAsset: {fileID: 0}
@@ -2047,6 +2164,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1af76db25159c894989257e0c000da18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &7722784868370207320 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3382576199773750639, guid: dea4249421e618249a1122e83dcebecd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5034325963715073847}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5561836097276829601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2119,17 +2242,6 @@ PrefabInstance:
       propertyPath: onUnitSelected.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 7722784867993751568}
-    - target: {fileID: 4845289873623901478, guid: baffdcba5ee2b5d48811cc048e4f8c9f,
-        type: 3}
-      propertyPath: clearHighlight
-      value: 
-      objectReference: {fileID: 11400000, guid: 38aa1c61d16f40b498dbe3e63d3b5bb8,
-        type: 2}
-    - target: {fileID: 3380549698042277280, guid: baffdcba5ee2b5d48811cc048e4f8c9f,
-        type: 3}
-      propertyPath: endTurnCountdown
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3380549698042277280, guid: baffdcba5ee2b5d48811cc048e4f8c9f,
         type: 3}
       propertyPath: endTurnTimer
@@ -2140,12 +2252,6 @@ PrefabInstance:
 --- !u!4 &4554733815266476741 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8221943664743177572, guid: baffdcba5ee2b5d48811cc048e4f8c9f,
-    type: 3}
-  m_PrefabInstance: {fileID: 5561836097276829601}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8356202850674552730 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4528561076772630587, guid: baffdcba5ee2b5d48811cc048e4f8c9f,
     type: 3}
   m_PrefabInstance: {fileID: 5561836097276829601}
   m_PrefabAsset: {fileID: 0}
@@ -2164,6 +2270,12 @@ MonoBehaviour:
 --- !u!1 &3260328891646769650 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6922208189168297555, guid: baffdcba5ee2b5d48811cc048e4f8c9f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5561836097276829601}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8356202850674552730 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4528561076772630587, guid: baffdcba5ee2b5d48811cc048e4f8c9f,
     type: 3}
   m_PrefabInstance: {fileID: 5561836097276829601}
   m_PrefabAsset: {fileID: 0}
@@ -2234,6 +2346,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6022433738191235825, guid: 7c81b709aed3f1c47b686b7718b587ac,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 243357206194563174, guid: ea89020ab2e60ae49a21e918d28b307c,
+        type: 2}
+    - target: {fileID: 2502158275984749017, guid: 7c81b709aed3f1c47b686b7718b587ac,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 243357206194563174, guid: ea89020ab2e60ae49a21e918d28b307c,
+        type: 2}
     - target: {fileID: 2713858406224050904, guid: 7c81b709aed3f1c47b686b7718b587ac,
         type: 3}
       propertyPath: onTurnEnter.m_PersistentCalls.m_Calls.Array.size

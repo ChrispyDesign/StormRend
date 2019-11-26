@@ -18,7 +18,7 @@ namespace StormRend
 			if (startClip)
 			{
 				gameDirector = GameDirector.current;
-				AudioSource src = gameDirector.generalAudioSource;
+				AudioSource src = gameDirector.SFXAudioSource;
 				src.loop = false;
 
 				src.clip = startClip;
