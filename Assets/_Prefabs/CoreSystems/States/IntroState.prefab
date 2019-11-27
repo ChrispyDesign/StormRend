@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3807468260259413153}
   - component: {fileID: 3738753932609840883}
+  - component: {fileID: 6239213028615474034}
   - component: {fileID: 6516155242535745376}
+  - component: {fileID: 1160123724387814178}
   m_Layer: 5
   m_Name: IntroState
   m_TagString: Untagged
@@ -53,8 +55,25 @@ MonoBehaviour:
   Description: Intro narration
   activateObjects:
   - {fileID: 8165535819664455950}
-  narrativeClip: {fileID: 8300000, guid: 12ec5a9a03d64c743bd0edede706302d, type: 3}
+  deactivateObjects: []
   skipKey: 32
+--- !u!320 &6239213028615474034
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8165535819664455950}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 0}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings: []
+  m_ExposedReferences:
+    m_References: []
 --- !u!82 &6516155242535745376
 AudioSource:
   m_ObjectHideFlags: 0
@@ -152,6 +171,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &1160123724387814178
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8165535819664455950}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1297059565843645582
 PrefabInstance:
   m_ObjectHideFlags: 0

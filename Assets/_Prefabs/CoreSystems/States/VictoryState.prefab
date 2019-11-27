@@ -116,7 +116,9 @@ GameObject:
   - component: {fileID: 7187292656054854426}
   - component: {fileID: 1103239028614033396}
   - component: {fileID: 8183343629777813430}
+  - component: {fileID: 4248403630088980452}
   - component: {fileID: 1249771546353244451}
+  - component: {fileID: 3162215334344398178}
   m_Layer: 5
   m_Name: VictoryState
   m_TagString: Untagged
@@ -197,9 +199,26 @@ MonoBehaviour:
   Description: Cannot pause during this state
   activateObjects:
   - {fileID: 7034248136273609664}
-  narrativeClip: {fileID: 0}
+  deactivateObjects: []
   skipKey: 32
   cameraCenteringSpeed: 10
+--- !u!320 &4248403630088980452
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7034248136273609664}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 0}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings: []
+  m_ExposedReferences:
+    m_References: []
 --- !u!82 &1249771546353244451
 AudioSource:
   m_ObjectHideFlags: 0
@@ -297,6 +316,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &3162215334344398178
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7034248136273609664}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9118976975013201025
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,49 +1,53 @@
 using StormRend.Systems;
 using StormRend.Systems.StateMachines;
 using UnityEngine;
+using UnityEngine.Playables;
 
 namespace StormRend.States
 {
 	/// <summary>
 	/// A state for playing narration and vocals etc
 	/// </summary>
-	[RequireComponent(typeof(AudioSource))]
+	[RequireComponent(typeof(PlayableDirector))]
 	public class NarrativeState : CoverState
 	{
 		//Inspector
 		[Header("Narration")]
-		[SerializeField] protected AudioClip narrativeClip = null;
 		[SerializeField] protected KeyCode skipKey = KeyCode.Space;
 
 		//Members
 		GameDirector gd = null;
-		AudioSource audioSrc;
+		PlayableDirector pd = null;
 
 		void OnEnable()
 		{
 			gd = GameDirector.current;
-			audioSrc = GetComponent<AudioSource>();
-			if (!narrativeClip) Debug.LogWarningFormat("No narrative clip found in {0}", this.name);
+			pd = GetComponent<PlayableDirector>();
+
+			pd.paused += SkipRelay;
+		}
+		void OnDisable()
+		{
+			pd.paused -= SkipRelay;
 		}
 
 		public override void OnEnter(UltraStateMachine sm)
 		{
-			base.OnEnter(sm);
-			audioSrc = GetComponent<AudioSource>();
-			audioSrc.PlayOneShot(narrativeClip);
+			base.OnEnter(sm);	//Runs activate/deactivate logic
+
+			pd.Play();
 		}
 
 		public override void OnUpdate(UltraStateMachine sm)
 		{
-			base.OnUpdate(sm);
-			
-			//Unstack if audio finished
-			if (!audioSrc.isPlaying) Skip();
+			base.OnUpdate(sm);	//Runs activate/deactivate logic
 
+			//Check for manual exit
 			if (Input.GetKeyDown(skipKey)) Skip();
 		}
 
-		//For button callbacks
+		//Callback
+		void SkipRelay(PlayableDirector pd) => Skip();
 		public void Skip() => gd.SafeSkip();
 	}
 } 
