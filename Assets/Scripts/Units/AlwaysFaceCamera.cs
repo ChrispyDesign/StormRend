@@ -24,10 +24,9 @@ namespace StormRend.Units
             {
                 au.onMoved.AddListener(UpdateFacing);
             }
-            //Other
 
             //Initial face
-            UpdateFacing(null);
+            UpdateFacing();
         }
 
         void OnDisable()
@@ -35,9 +34,8 @@ namespace StormRend.Units
             if (au) au.onMoved.RemoveAllListeners();
         }
 
-        void UpdateFacing(Tile t)
+        void UpdateFacing(Tile t = null)
         {
-            print("On move");
             transform.rotation = Quaternion.AngleAxis(cam.transform.rotation.eulerAngles.y - 180f, Vector3.up);
         }
     }

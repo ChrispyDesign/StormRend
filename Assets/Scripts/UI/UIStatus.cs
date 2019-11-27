@@ -14,7 +14,7 @@ namespace StormRend.UI
 {
 	public class UIStatus : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
-		[SerializeField] string name;
+		[SerializeField] new string name;
 		[SerializeField] string details;
         [SerializeField] UnitType allyType;
         [SerializeField] StatusType statusType;

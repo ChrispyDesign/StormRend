@@ -1,4 +1,5 @@
 ﻿using StormRend.CameraSystem;
+using StormRend.MapSystems.Tiles;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,35 +9,40 @@ namespace StormRend.Units
 	{
 		public Image bar;
 		Camera cam;
-		Unit unit;
+		AnimateUnit au;
 
 		void Awake()
 		{
 			cam = MasterCamera.current.camera;
-			unit = GetComponentInParent<Unit>();
+			au = GetComponentInParent<AnimateUnit>();
+
+			Debug.Assert(au, "Animate unit not found!");
 		}
 
 		//Register callbacks
 		void OnEnable()
 		{
-			unit.onHeal.AddListener(OnHealthChange);
-			unit.onTakeDamage.AddListener(OnHealthChange);
+			au.onHeal.AddListener(OnHealthChange);
+			au.onTakeDamage.AddListener(OnHealthChange);
+			au.onMoved.AddListener(UpdateFacing);
+
+			UpdateFacing();
 		}
 		void OnDisable()
 		{
-			unit.onHeal.RemoveListener(OnHealthChange);
-			unit.onTakeDamage.RemoveListener(OnHealthChange);
+			au.onHeal.RemoveAllListeners();
+			au.onTakeDamage.RemoveAllListeners();
+			au.onMoved.RemoveAllListeners();
 		}
 
 		//Init bar at start
-		void Start() => bar.fillAmount = (float)unit.HP / unit.maxHP;
+		void Start() => bar.fillAmount = (float)au.HP / au.maxHP;
 
 		//Always face toward the camera
-		void Update() => transform.rotation = Quaternion.AngleAxis(MasterCamera.current.transform.rotation.eulerAngles.y - 180f, Vector3.up);
+		void UpdateFacing(Tile t = null) => transform.rotation = Quaternion.AngleAxis(MasterCamera.current.transform.rotation.eulerAngles.y - 180f, Vector3.up);
 
 		//Callbacks
 		public void OnHealthChange(HealthData damageData) => OnHealthChange();
-		public void OnHealthChange() => bar.fillAmount = (float)unit.HP / unit.maxHP;
-
+		public void OnHealthChange() => bar.fillAmount = (float)au.HP / au.maxHP;
 	}
 }
