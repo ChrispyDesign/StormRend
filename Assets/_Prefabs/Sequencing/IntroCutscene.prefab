@@ -164,8 +164,8 @@ MonoBehaviour:
     -- SubtitleText
 
     -- SkipButton'
-  coveringObjects:
-  - {fileID: 6673063460708682495}
+  activateObjects: []
+  deactivateObjects: []
 --- !u!114 &6673063460708682433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -650,6 +650,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4711535973071801793}
     m_Modifications:
+    - target: {fileID: 2245440806929396730, guid: 88f4134379e817b4c9f4223ef8f70d4e,
+        type: 3}
+      propertyPath: m_EffectColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2245440806929396730, guid: 88f4134379e817b4c9f4223ef8f70d4e,
+        type: 3}
+      propertyPath: m_EffectColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2245440806929396730, guid: 88f4134379e817b4c9f4223ef8f70d4e,
+        type: 3}
+      propertyPath: m_EffectColor.b
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2806485504611911282, guid: 88f4134379e817b4c9f4223ef8f70d4e,
         type: 3}
       propertyPath: m_Name
@@ -712,16 +727,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4711535973071801793}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: SkipButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -826,6 +831,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: SkipButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3560625987373109755, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}

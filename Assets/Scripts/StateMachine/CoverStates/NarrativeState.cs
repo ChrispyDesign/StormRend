@@ -24,11 +24,11 @@ namespace StormRend.States
 			gd = GameDirector.current;
 			pd = GetComponent<PlayableDirector>();
 
-			pd.paused += SkipRelay;
+			pd.stopped += SkipRelay;
 		}
 		void OnDisable()
 		{
-			pd.paused -= SkipRelay;
+			pd.stopped -= SkipRelay;
 		}
 
 		public override void OnEnter(UltraStateMachine sm)

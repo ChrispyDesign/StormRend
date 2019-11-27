@@ -65,8 +65,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  SFXAudio: {fileID: 2682373199852894648}
-  VocalAudio: {fileID: 2650875760488130891}
+  sfxAudio: {fileID: 2682373199852894648}
+  vocalAudio: {fileID: 2650875760488130891}
+  confirmationSFX: {fileID: 8300000, guid: 35bc94c790f867d47b4a3f7fc98d89a6, type: 3}
   debug: 0
 --- !u!114 &3267380040487526950
 MonoBehaviour:
@@ -656,6 +657,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DefeatState
+      objectReference: {fileID: 0}
+    - target: {fileID: 573981490013301151, guid: dea4249421e618249a1122e83dcebecd,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1013.3
       objectReference: {fileID: 0}
     - target: {fileID: 1508496074064269142, guid: dea4249421e618249a1122e83dcebecd,
         type: 3}

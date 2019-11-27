@@ -40,6 +40,8 @@ namespace StormRend.Systems
 
 		public void SelectAbility(Ability a)    //aka. OnAbilityChanged()
 		{
+			if (!a) return;	//Null
+
 			//Checks
 			if (!isUnitSelected)
 			{

@@ -59,7 +59,7 @@ namespace StormRend.MapSystems.Tiles
 			SetupInternalColours();
 
 			//Get the general purpose
-			audioSource = GameDirector.current.SFXAudioSource;
+			audioSource = GameDirector.current.sfxAudioSource;
 		}
 
 		public void Connect(Tile to) => connections.Add(to);
