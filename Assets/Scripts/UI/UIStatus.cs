@@ -29,7 +29,9 @@ namespace StormRend.UI
 			Off,
 			Berserker,
 			Valkyrie,
-			Sage
+			Sage,
+			FrostHound,
+			FrostTroll
 		}
 
         public enum StatusType
@@ -59,6 +61,12 @@ namespace StormRend.UI
 					break;
 				case AllyType.Sage:
 					typeToFind = typeof(SageTag);
+					break;
+				case AllyType.FrostHound:
+					typeToFind = typeof(FrostHoundTag);
+					break;
+				case AllyType.FrostTroll:
+					typeToFind = typeof(FrostTrollTag);
 					break;
 			}
 			var tag = FindObjectOfType(typeToFind) as Tag;
