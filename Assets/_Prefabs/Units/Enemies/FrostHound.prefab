@@ -213,6 +213,42 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5697536595670988193}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &633569271777621569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7215685460576032887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948262b86eab0484185ba774d0e58f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: IMMOBILISED
+  details: This unit cannot move
+  allyType: 4
+  statusType: 2
+  icon: []
+  unit: {fileID: 0}
+--- !u!114 &5229274059958547137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8560658273241404226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948262b86eab0484185ba774d0e58f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: BLIND
+  details: This unit cannot attack
+  allyType: 4
+  statusType: 3
+  icon: []
+  unit: {fileID: 0}
 --- !u!1 &8586060833677220357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1780,11 +1816,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5697536595670988253}
     m_Modifications:
-    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar3
-      objectReference: {fileID: 0}
     - target: {fileID: 8649027571778799567, guid: e1fbb2b94b8040740927f9ac8f85e701,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1840,6 +1871,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1686234625732892387, guid: e1fbb2b94b8040740927f9ac8f85e701,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar3
+      objectReference: {fileID: 0}
     - target: {fileID: 65141292864950029, guid: e1fbb2b94b8040740927f9ac8f85e701,
         type: 3}
       propertyPath: m_Name
@@ -1871,3 +1907,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7bb8b91af7b6843b2c5832194e42fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8560658273241404226 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 65141292864950029, guid: e1fbb2b94b8040740927f9ac8f85e701,
+    type: 3}
+  m_PrefabInstance: {fileID: 8514896217534946383}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7215685460576032887 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1299780303999009848, guid: e1fbb2b94b8040740927f9ac8f85e701,
+    type: 3}
+  m_PrefabInstance: {fileID: 8514896217534946383}
+  m_PrefabAsset: {fileID: 0}

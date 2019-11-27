@@ -1,5 +1,41 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &8248368597772615243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266276957064170072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948262b86eab0484185ba774d0e58f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: IMMOBILISED
+  details: You cannot move
+  allyType: 2
+  statusType: 2
+  icon: []
+  unit: {fileID: 0}
+--- !u!114 &8841721685595570905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251107474764415341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948262b86eab0484185ba774d0e58f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: PROTECTION
+  details: Block the next instance of damage you take
+  allyType: 2
+  statusType: 1
+  icon: []
+  unit: {fileID: 0}
 --- !u!1 &1496867505816220577
 GameObject:
   m_ObjectHideFlags: 0
@@ -5830,6 +5866,18 @@ PrefabInstance:
 --- !u!4 &7619029502138042799 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6294605004338951426, guid: 769e3706f04550d489e1ccf20501a363,
+    type: 3}
+  m_PrefabInstance: {fileID: 4532546546048973997}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1251107474764415341 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3439066278013664704, guid: 769e3706f04550d489e1ccf20501a363,
+    type: 3}
+  m_PrefabInstance: {fileID: 4532546546048973997}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &266276957064170072 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4419392889281492725, guid: 769e3706f04550d489e1ccf20501a363,
     type: 3}
   m_PrefabInstance: {fileID: 4532546546048973997}
   m_PrefabAsset: {fileID: 0}
