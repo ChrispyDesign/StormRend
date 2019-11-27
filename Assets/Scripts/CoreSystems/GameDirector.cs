@@ -47,17 +47,16 @@ namespace StormRend.Systems
 		[Header("Events")]
 		public UnityEvent onUnitTakeDamage = null;
 		public UnitEvent onUnitKilled = null;
-		AudioSystem audioSystem = null;
-		AudioSource audioSource = null;
 		
 		[Header("These must be allocated manually")]
-		[SerializeField] AudioSource SFXAudio = null;
-		[SerializeField] AudioSource VocalAudio = null;
+		[SerializeField] AudioSource sfxAudio = null;
+		[SerializeField] AudioSource vocalAudio = null;
+		[Tooltip("General confirmation SFX"), SerializeField] AudioClip confirmationSFX = null;
 
 		//Properties
 		public State currentState => usm?.currentState;
-		public AudioSource SFXAudioSource => SFXAudio;
-		public AudioSource VocalAudioSource => VocalAudio;
+		public AudioSource sfxAudioSource => sfxAudio;
+		public AudioSource vocalAudioSource => vocalAudio;
 
 		//Members
 		UltraStateMachine usm = null;
@@ -82,8 +81,8 @@ namespace StormRend.Systems
 			Debug.Assert(actionsUsedChecker, "No All Actions Used Checker Found!");
 
 			//Audio (must be setup manually)
-			Debug.Assert(SFXAudio, "No SFX audio source allocated!");
-			Debug.Assert(VocalAudio, "No Vocal audio source allocated!");
+			Debug.Assert(sfxAudio, "No SFX audio source allocated!");
+			Debug.Assert(vocalAudio, "No Vocal audio source allocated!");
 
 			//States
 			Debug.Assert(pauseMenuState, "No Pause Menu State Found!");
@@ -226,6 +225,7 @@ namespace StormRend.Systems
 
 		public void SafeSkip()
 		{
+			sfxAudioSource.PlayOneShot(confirmationSFX);
 			//Can only skip if NOT in one of the end game states
 			if (currentState != victoryState && currentState != defeatState)
 				usm.UnStack();

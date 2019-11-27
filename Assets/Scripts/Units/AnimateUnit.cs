@@ -7,7 +7,6 @@ using StormRend.Abilities.Effects;
 using StormRend.Enums;
 using StormRend.MapSystems;
 using StormRend.MapSystems.Tiles;
-using StormRend.Utility;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using UnityEngine;
@@ -209,9 +208,10 @@ namespace StormRend.Units
 			//Animate
 			animator.SetTrigger("HitReact");
 
-			//Status effect
-			foreach (var se in statusEffects)
-				se.OnTakeDamage(this, damageData);
+			//Run and auto move status effect on take damage
+			for (int i = statusEffects.Count - 1; i >= 0; --i)
+				if (statusEffects[i].OnTakeDamage(this, damageData) == false)	//False means effect has expired
+					statusEffects.RemoveAt(i);
 		}
 
 		//------------------- STATS
@@ -239,7 +239,7 @@ namespace StormRend.Units
 
 			//Run Begin Status effects (ie. sets blind, cripple, etc) 
 			for (int i = statusEffects.Count - 1; i >= 0; --i)
-				if (!statusEffects[i].OnBeginTurn(this))    //Also auto remove expired status effects
+				if (statusEffects[i].OnBeginTurn(this) == false)    //Also auto remove expired status effects
 					statusEffects.RemoveAt(i);
 
 			onBeginTurn.Invoke();
