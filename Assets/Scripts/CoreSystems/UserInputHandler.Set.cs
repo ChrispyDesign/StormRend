@@ -13,6 +13,8 @@ namespace StormRend.Systems
 		//Public; can be called via unity events
 		public void SelectUnit(AnimateUnit au, bool moveCamera = false)
 		{
+			if (au.isDead) return;		//Can't select a dead horse XD
+
 			//SMALL OPTIMIZATION: Exit if the same unit is already selected
 			if (selectedAnimateUnit == au) return;
 
