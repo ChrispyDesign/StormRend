@@ -1,5 +1,41 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &7923022027822210132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2775648765746114666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948262b86eab0484185ba774d0e58f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: PROTECTION
+  details: Block the next instance of damage you take
+  allyType: 1
+  statusType: 1
+  icon: []
+  unit: {fileID: 0}
+--- !u!114 &8383186798698610637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3777331778411936607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948262b86eab0484185ba774d0e58f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: IMMOBILISED
+  details: You cannot move
+  allyType: 1
+  statusType: 2
+  icon: []
+  unit: {fileID: 0}
 --- !u!1 &4783116619369055780
 GameObject:
   m_ObjectHideFlags: 0
@@ -1617,8 +1653,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inbuiltVFX:
   - {fileID: 6204670219089982759}
-  - {fileID: 762952831125926723}
-  - {fileID: 6516076221891532754}
+  - {fileID: 0}
+  - {fileID: 0}
   inbuiltVFXLifetime: 0.5
 --- !u!114 &8161624325957890806
 MonoBehaviour:
@@ -4661,22 +4697,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4783116619369225118}
     m_Modifications:
-    - target: {fileID: 6205012047602493075, guid: 280650df191977342833de9ada19cba3,
-        type: 3}
-      propertyPath: m_Name
-      value: Axe
-      objectReference: {fileID: 0}
-    - target: {fileID: 6205012047602493075, guid: 280650df191977342833de9ada19cba3,
-        type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000,
-        type: 0}
-    - target: {fileID: 6205012047602493075, guid: 280650df191977342833de9ada19cba3,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6205012047602268851, guid: 280650df191977342833de9ada19cba3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4732,6 +4752,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6205012047602493075, guid: 280650df191977342833de9ada19cba3,
+        type: 3}
+      propertyPath: m_Name
+      value: Axe
+      objectReference: {fileID: 0}
+    - target: {fileID: 6205012047602493075, guid: 280650df191977342833de9ada19cba3,
+        type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000,
+        type: 0}
+    - target: {fileID: 6205012047602493075, guid: 280650df191977342833de9ada19cba3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4240961506015433639, guid: 280650df191977342833de9ada19cba3,
         type: 3}
       propertyPath: m_Layer
@@ -4772,12 +4808,6 @@ PrefabInstance:
 --- !u!4 &8108094594187678610 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6205012047602268851, guid: 280650df191977342833de9ada19cba3,
-    type: 3}
-  m_PrefabInstance: {fileID: 2781285614371760417}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6516076221891532754 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9004063769982058227, guid: 280650df191977342833de9ada19cba3,
     type: 3}
   m_PrefabInstance: {fileID: 2781285614371760417}
   m_PrefabAsset: {fileID: 0}
@@ -4901,6 +4931,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3846110192854169504}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2775648765746114666 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1433610396733310922, guid: 5ae1c8648f3b0f248add293f77f55a17,
+    type: 3}
+  m_PrefabInstance: {fileID: 3846110192854169504}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3777331778411936607 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 75408813256953087, guid: 5ae1c8648f3b0f248add293f77f55a17,
+    type: 3}
+  m_PrefabInstance: {fileID: 3846110192854169504}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8530470553681464752
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4908,16 +4950,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4783116619369225116}
     m_Modifications:
-    - target: {fileID: 6205012047602493075, guid: 280650df191977342833de9ada19cba3,
-        type: 3}
-      propertyPath: m_Name
-      value: Axe
-      objectReference: {fileID: 0}
-    - target: {fileID: 6205012047602493075, guid: 280650df191977342833de9ada19cba3,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6205012047602268851, guid: 280650df191977342833de9ada19cba3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4973,6 +5005,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6205012047602493075, guid: 280650df191977342833de9ada19cba3,
+        type: 3}
+      propertyPath: m_Name
+      value: Axe
+      objectReference: {fileID: 0}
+    - target: {fileID: 6205012047602493075, guid: 280650df191977342833de9ada19cba3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4240961506015433639, guid: 280650df191977342833de9ada19cba3,
         type: 3}
       propertyPath: m_Layer
@@ -5013,12 +5055,6 @@ PrefabInstance:
 --- !u!4 &2341573088090994435 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6205012047602268851, guid: 280650df191977342833de9ada19cba3,
-    type: 3}
-  m_PrefabInstance: {fileID: 8530470553681464752}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &762952831125926723 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9004063769982058227, guid: 280650df191977342833de9ada19cba3,
     type: 3}
   m_PrefabInstance: {fileID: 8530470553681464752}
   m_PrefabAsset: {fileID: 0}
