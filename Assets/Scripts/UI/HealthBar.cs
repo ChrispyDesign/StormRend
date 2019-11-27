@@ -1,15 +1,16 @@
 ﻿using StormRend.CameraSystem;
 using StormRend.MapSystems.Tiles;
+using StormRend.Units;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace StormRend.Units
+namespace StormRend.UI
 {
 	public class HealthBar : MonoBehaviour
 	{
-		public Image bar;
-		Camera cam;
-		AnimateUnit au;
+		public Image bar = null;
+		Camera cam = null;
+		AnimateUnit au = null;
 
 		void Awake()
 		{

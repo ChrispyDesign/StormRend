@@ -1,8 +1,9 @@
 using StormRend.CameraSystem;
 using StormRend.MapSystems.Tiles;
+using StormRend.Units;
 using UnityEngine;
 
-namespace StormRend.Units
+namespace StormRend.UI
 {
     public class AlwaysFaceCamera : MonoBehaviour
     {

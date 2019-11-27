@@ -2702,7 +2702,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   onTakeDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3168180242362361152}
+        m_MethodName: SetIntFromHealthData
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: StormRend.Utility.Events.HealthEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onEnemyKilled:
@@ -2869,6 +2880,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1921712719574519066}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3168180242362361152 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3556973632775104602, guid: 0afa6dc8175f3b74a9d2ed19b2d543e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1921712719574519066}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd77db43694ab54ab1f66d16c6e8a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2361123511665102712
 PrefabInstance:
   m_ObjectHideFlags: 0

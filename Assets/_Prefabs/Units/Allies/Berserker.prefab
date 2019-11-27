@@ -4478,7 +4478,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   onTakeDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1219396223944619234}
+        m_MethodName: SetIntFromHealthData
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: StormRend.Utility.Events.HealthEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onEnemyKilled:
@@ -4773,6 +4784,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2427654379782167736}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1219396223944619234 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3556973632775104602, guid: 0afa6dc8175f3b74a9d2ed19b2d543e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 2427654379782167736}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7534199329252911258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd77db43694ab54ab1f66d16c6e8a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2781285614371760417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4842,15 +4865,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 280650df191977342833de9ada19cba3, type: 3}
---- !u!4 &8108094594187678610 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6205012047602268851, guid: 280650df191977342833de9ada19cba3,
-    type: 3}
-  m_PrefabInstance: {fileID: 2781285614371760417}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6144706939393806498 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8349531734789486979, guid: 280650df191977342833de9ada19cba3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2781285614371760417}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8108094594187678610 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6205012047602268851, guid: 280650df191977342833de9ada19cba3,
     type: 3}
   m_PrefabInstance: {fileID: 2781285614371760417}
   m_PrefabAsset: {fileID: 0}
@@ -4921,7 +4944,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8606493998006623548, guid: 5ae1c8648f3b0f248add293f77f55a17, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5ae1c8648f3b0f248add293f77f55a17, type: 3}
 --- !u!4 &6802120649596729512 stripped
 Transform:
