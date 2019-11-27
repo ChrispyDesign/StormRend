@@ -36,7 +36,13 @@ namespace StormRend.Abilities.Effects
 		public virtual void OnActed(AnimateUnit affectedUnit) {}
 
 		/// "Inflict" status effect on victim when taking damage
-		public virtual void OnTakeDamage(Unit affectedUnit, HealthData damageData) {}	//Unit type because crystals and blizzard can also apply damage
+		public virtual bool OnTakeDamage(Unit affectedUnit, HealthData damageData)	//Unit type because crystals and blizzard can also apply damage
+		{
+			++turnCount;
+			if (affectedTurns > 0 && turnCount >= affectedTurns)
+				return false;	//This effect has expired. Flag to be removed in AnimateUnit
+			return true;
+		}
 
 		/// "Inflict" status effect on victim when taking damage
 		public virtual void OnDeath(AnimateUnit affectedUnit) {}
