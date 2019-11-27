@@ -76,24 +76,24 @@ namespace StormRend.UI
 			unit.onAddStatusEffect.AddListener(CheckStatus);
 			unit.onBeginTurn.AddListener(CheckStatus);
 		}
-		private void Update()
-		{
-			switch (statusType)
-			{
-				case StatusType.Protection:
-					if(unit.isProtected)
-						Debug.LogWarning(unit.name + " Protection " + unit.isProtected);
-					break;
-				case StatusType.Immobilised:
-					if (unit.isImmobilised)
-						Debug.LogWarning(unit.name + " Immobilised " + unit.isImmobilised);
-					break;
-				case StatusType.Blinded:
-					if (unit.isBlind)
-						Debug.LogWarning(unit.name + " Blinded " + unit.isBlind);
-					break;
-			}
-		}
+		// private void Update()
+		// {
+		// 	switch (statusType)
+		// 	{
+		// 		case StatusType.Protection:
+		// 			if(unit.isProtected)
+		// 				Debug.LogWarning(unit.name + " Protection " + unit.isProtected);
+		// 			break;
+		// 		case StatusType.Immobilised:
+		// 			if (unit.isImmobilised)
+		// 				Debug.LogWarning(unit.name + " Immobilised " + unit.isImmobilised);
+		// 			break;
+		// 		case StatusType.Blinded:
+		// 			if (unit.isBlind)
+		// 				Debug.LogWarning(unit.name + " Blinded " + unit.isBlind);
+		// 			break;
+		// 	}
+		// }
 
 		void CheckStatus() => CheckStatus(null);
 

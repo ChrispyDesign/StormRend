@@ -295,25 +295,13 @@ namespace StormRend.Systems
 			void KillUnitByType<T>() where T : UnitTag
 			{
 				var unitToKill = (from unit in ur.aliveUnits where unit.tag is T select unit).First();
-				if (unitToKill) KillUnit(unitToKill);
+				if (unitToKill) unitToKill.Kill();
 			}
 
 			void KillAllUnitsOfType<T>() where T : Unit
 			{
 				foreach (var u in ur.GetAliveUnitsByType<T>())
-					KillUnit(u);
-			}
-
-			void KillUnit(Unit u)
-			{
-				var au = u as AnimateUnit;
-				var iau = u as InAnimateUnit;
-				if (au)
-					au.Kill();
-				else if (iau)
-					iau.TakeDamage(new HealthData(null, 9999999));
-				else
-					u.TakeDamage(new HealthData(null, 9999999));
+					u.Kill();
 			}
 		}
 		#endregion

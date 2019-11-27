@@ -17,19 +17,19 @@ namespace StormRend.Abilities.Effects
 		/// </summary>
 		/// <param name="affectedUnit"></param>
 		/// <returns>[false] if this status effect has expired and needs to be removed. [true] if normal operation</returns>/ 	
-		public virtual bool OnBeginTurn(AnimateUnit affectedUnit)
+		public virtual void OnStartTurn(AnimateUnit affectedUnit)
 		{
-			//Increment number of turns this effect has operated
-			++turnCount;
+			// //Increment number of turns this effect has operated
+			// ++turnCount;
 
-			//Check if this status effect has expired
-			if (affectedTurns > 0   //NOTE: If affectedturns set to 0 then status effect will never expire
-				&& turnCount >= affectedTurns)
-			{
-				//Expired. Flag to be removed in AnimateUnit
-				return false;
-			}
-			return true;
+			// //Check if this status effect has expired
+			// if (affectedTurns > 0   //NOTE: If affectedturns set to 0 then status effect will never expire
+			// 	&& turnCount >= affectedTurns)
+			// {
+			// 	//Expired. Flag to be removed in AnimateUnit
+			// 	return false;
+			// }
+			// return true;
 		}
 
 		/// "Inflict" status effect on victim right after it performed it's ability
@@ -48,11 +48,24 @@ namespace StormRend.Abilities.Effects
 		public virtual void OnDeath(AnimateUnit affectedUnit) {}
 
 		/// "Inflict" status effect on victim
-		public virtual void OnEndTurn(AnimateUnit affectedUnit) {}
+		public virtual bool OnEndTurn(AnimateUnit affectedUnit)
+		{
+			//Increment number of turns this effect has operated
+			++turnCount;
+
+			//Check if this status effect has expired
+			if (affectedTurns > 0   //NOTE: If affectedturns set to 0 then status effect will never expire
+				&& turnCount >= affectedTurns)
+			{
+				//Expired. Flag to be removed in AnimateUnit
+				return false;
+			}
+			return true;
+		}
 	#endregion
 
 		//Assist
-		protected void AddStatusEffectToAnimateUnits(Tile[] targetTiles)
+		protected void AddStatusEffectToTargets(Tile[] targetTiles)
 		{
 			//Apply this status effect to ONLY animate units on the targeted tiles
 			foreach (var t in targetTiles)
