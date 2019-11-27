@@ -51,7 +51,6 @@ namespace StormRend.Systems
 		[Header("These must be allocated manually")]
 		[SerializeField] AudioSource sfxAudio = null;
 		[SerializeField] AudioSource vocalAudio = null;
-		[Tooltip("General confirmation SFX"), SerializeField] AudioClip confirmationSFX = null;
 
 		//Properties
 		public State currentState => usm?.currentState;
@@ -225,7 +224,6 @@ namespace StormRend.Systems
 
 		public void SafeSkip()
 		{
-			sfxAudioSource.PlayOneShot(confirmationSFX);
 			//Can only skip if NOT in one of the end game states
 			if (currentState != victoryState && currentState != defeatState)
 				usm.UnStack();
