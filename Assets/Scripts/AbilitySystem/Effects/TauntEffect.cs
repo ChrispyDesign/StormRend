@@ -28,10 +28,12 @@ namespace StormRend.Abilities.Effects
 			return valid;
 		}
 
-		public override void OnTakeDamage(Unit affectedUnit, HealthData damageData)
+		public override bool OnTakeDamage(Unit affectedUnit, HealthData damageData)
 		{
 			//Apply reflex damage; The victim attacks back
 			damageData.vendor.TakeDamage(new HealthData(affectedUnit, reflexDamage));
+
+			return true;
 		}
 	}
 }

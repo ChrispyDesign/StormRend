@@ -13,10 +13,12 @@ namespace StormRend.Abilities.Effects
         [SerializeField] int amount = 1;
         [SerializeField] BhaveInt glory = null;
 
-        public override void OnTakeDamage(Unit affectedUnit, HealthData damageData)
+        public override bool OnTakeDamage(Unit affectedUnit, HealthData damageData)
         {
             Debug.Assert(glory, "No glory SOV found!");
             if (glory) glory.value += amount;
+
+            return true;    //No expiry
         }
 
         public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
