@@ -4844,11 +4844,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5277682841273857056}
-  - component: {fileID: 5277682841273857059}
-  - component: {fileID: 3556973632775104602}
   - component: {fileID: 1433432217058448721}
+  - component: {fileID: 7224898900411460403}
+  - component: {fileID: 5277682841273857059}
   m_Layer: 0
-  m_Name: FX_Damage
+  m_Name: FX_Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4870,6 +4870,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1433432217058448721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5277682841273857058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 772eedd14dd44714bb6f7e80b0e77f04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7224898900411460403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5277682841273857058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c642c63ac1baec843ae9fa96e233cfc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animDamageParam: Damage
+  animHealParam: Heal
 --- !u!95 &5277682841273857059
 Animator:
   serializedVersion: 3
@@ -4889,28 +4915,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3556973632775104602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5277682841273857058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbd77db43694ab54ab1f66d16c6e8a0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animParam: Damage
---- !u!114 &1433432217058448721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5277682841273857058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 772eedd14dd44714bb6f7e80b0e77f04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
