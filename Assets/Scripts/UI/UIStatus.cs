@@ -1,4 +1,5 @@
-﻿using StormRend.Tags;
+﻿using StormRend.Abilities;
+using StormRend.Tags;
 using StormRend.UI;
 using StormRend.Units;
 using StormRend.Utility.Attributes;
@@ -15,16 +16,15 @@ namespace StormRend.UI
 	{
 		[SerializeField] string name;
 		[SerializeField] string details;
-        [SerializeField] AllyType allyType;
+        [SerializeField] UnitType allyType;
         [SerializeField] StatusType statusType;
 		[SerializeField, ReadOnlyField] List<Image> icon = new List<Image>();
 		[SerializeField, ReadOnlyField] AnimateUnit unit;
 
 		InfoPanel infoPanel;
-		List<GameObject> icons = new List<GameObject>();
 
 		//Enums
-		public enum AllyType
+		public enum UnitType
 		{
 			Off,
 			Berserker,
@@ -41,49 +41,65 @@ namespace StormRend.UI
             Immobilised,
             Blinded
         }
-
-        private void Awake()
-        {
-			infoPanel = FindObjectOfType<InfoPanel>();            
-        }
-
-        //AllyUnit unit
-        private void Start()
+		private void OnDestroy()
 		{
+			unit.onAddStatusEffect.RemoveListener(CheckStatus);			
+		}
+
+		private void Awake()
+        {
+			infoPanel = FindObjectOfType<InfoPanel>();
+			icon.AddRange(GetComponentsInChildren<Image>());
+
 			Type typeToFind = null;
 			switch (allyType)
 			{
-				case AllyType.Berserker:
+				case UnitType.Berserker:
 					typeToFind = typeof(BerserkerTag);
 					break;
-				case AllyType.Valkyrie:
+				case UnitType.Valkyrie:
 					typeToFind = typeof(ValkyrieTag);
 					break;
-				case AllyType.Sage:
+				case UnitType.Sage:
 					typeToFind = typeof(SageTag);
 					break;
-				case AllyType.FrostHound:
+				case UnitType.FrostHound:
 					typeToFind = typeof(FrostHoundTag);
 					break;
-				case AllyType.FrostTroll:
+				case UnitType.FrostTroll:
 					typeToFind = typeof(FrostTrollTag);
 					break;
 			}
 			var tag = FindObjectOfType(typeToFind) as Tag;
 			unit = tag?.GetComponent<AnimateUnit>();
 
-			for(int i = 0; i < transform.childCount; i++)
+			unit.onAddStatusEffect.AddListener(CheckStatus);
+			unit.onBeginTurn.AddListener(CheckStatus);
+		}
+		private void Update()
+		{
+			switch (statusType)
 			{
-				icons.Add(transform.GetChild(i).gameObject);
+				case StatusType.Protection:
+					if(unit.isProtected)
+						Debug.LogWarning(unit.name + " Protection " + unit.isProtected);
+					break;
+				case StatusType.Immobilised:
+					if (unit.isImmobilised)
+						Debug.LogWarning(unit.name + " Immobilised " + unit.isImmobilised);
+					break;
+				case StatusType.Blinded:
+					if (unit.isBlind)
+						Debug.LogWarning(unit.name + " Blinded " + unit.isBlind);
+					break;
 			}
-
-			icon.AddRange(GetComponentsInChildren<Image>());
-			CheckStatus(statusType);
 		}
 
-		public void CheckStatus(StatusType _type)
+		void CheckStatus() => CheckStatus(null);
+
+		void CheckStatus(Effect effect)
 		{
-			switch (_type)
+			switch (statusType)
 			{
 				case StatusType.Protection:
 					TurnIconOnAndOff(unit.isProtected);
