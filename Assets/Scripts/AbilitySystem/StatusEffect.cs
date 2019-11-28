@@ -1,3 +1,4 @@
+using System.Linq;
 using StormRend.MapSystems.Tiles;
 using StormRend.Units;
 using StormRend.Utility.Attributes;
@@ -65,7 +66,10 @@ namespace StormRend.Abilities.Effects
 	#endregion
 
 		//Assist
-		protected void AddStatusEffectToTargets(Tile[] targetTiles)
+		protected void AddStatusEffectToTargets(params Unit[] targetUnits)
+			=> AddStatusEffectToTargets(targetUnits.Select(u => u.currentTile).ToArray());
+		
+		protected void AddStatusEffectToTargets(params Tile[] targetTiles)
 		{
 			//Apply this status effect to ONLY animate units on the targeted tiles
 			foreach (var t in targetTiles)

@@ -1,13 +1,19 @@
 ﻿using StormRend.MapSystems.Tiles;
 using StormRend.Units;
+using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
     public class ProtectEffect : StatusEffect
     {
+        [SerializeField] bool applyToSelf = false;
+
         public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
         {
-            AddStatusEffectToTargets(targetTiles);		//This also should apply the effect immediately
+            if (applyToSelf)
+                AddStatusEffectToTargets(owner);
+            else
+                AddStatusEffectToTargets(targetTiles);		//This also should apply the effect immediately
         }
 
         // public override bool OnStartTurn(AnimateUnit affectedUnit)
