@@ -6,24 +6,16 @@ using StormRend.Units;
 using StormRend.Utility.Events;
 using UnityEngine.Events;
 using StormRend.Systems;
-using StormRend.Assists;
 using StormRend.Tags;
 using System;
 using StormRend.Utility.Attributes;
+using StormRend.Enums;
 
 namespace StormRend.UI
 {
-	[RequireComponent(typeof(Button))]
+    [RequireComponent(typeof(Button))]
 	public class AvatarSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
-		//Enums
-		public enum AllyType
-		{
-			Off,
-			Berserker,
-			Valkyrie,
-			Sage
-		}
 
 		//Inspector
 		[SerializeField] string title;
@@ -54,7 +46,8 @@ namespace StormRend.UI
 			if (!unit)
 			{
 				Debug.LogWarningFormat("[{0}] Unit not found! Shutting down...", this.name);
-				gameObject.SetActive(false);
+
+				transform.parent.gameObject.SetActive(false);
 			}
 		}
 		void OnEnable()

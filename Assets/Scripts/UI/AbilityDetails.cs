@@ -5,11 +5,10 @@ using StormRend.Abilities;
 using StormRend.Utility.Events;
 using UnityEngine.Events;
 using StormRend.Utility.Attributes;
-using StormRend.Assists;
 
 namespace StormRend.UI
 {
-	public class AbilityDetails : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class AbilityDetails : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		//Inspector
 		[ReadOnlyField, SerializeField] Ability ability = null;
