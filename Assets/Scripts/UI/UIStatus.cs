@@ -18,8 +18,9 @@ namespace StormRend.UI
 		[SerializeField] string details;
         [SerializeField] UnitType allyType;
         [SerializeField] StatusType statusType;
+		[SerializeField] AnimateUnit unit;
+
 		[SerializeField, ReadOnlyField] List<Image> icon = new List<Image>();
-		[SerializeField, ReadOnlyField] AnimateUnit unit;
 
 		InfoPanel infoPanel;
 
@@ -52,6 +53,7 @@ namespace StormRend.UI
 			icon.AddRange(GetComponentsInChildren<Image>());
 
 			Type typeToFind = null;
+			bool isEnemy = false;
 			switch (allyType)
 			{
 				case UnitType.Berserker:
@@ -65,13 +67,19 @@ namespace StormRend.UI
 					break;
 				case UnitType.FrostHound:
 					typeToFind = typeof(FrostHoundTag);
+					isEnemy = true;
 					break;
 				case UnitType.FrostTroll:
 					typeToFind = typeof(FrostTrollTag);
+					isEnemy = true;
 					break;
 			}
+
 			var tag = FindObjectOfType(typeToFind) as Tag;
-			unit = tag?.GetComponent<AnimateUnit>();
+			if (!isEnemy)
+				unit = tag?.GetComponent<AnimateUnit>();
+			else
+				CheckStatus();
 
 			unit.onAddStatusEffect.AddListener(CheckStatus);
 			unit.onBeginTurn.AddListener(CheckStatus);
@@ -133,7 +141,8 @@ namespace StormRend.UI
 
 		public void OnPointerEnter(PointerEventData eventData)
 		{
-			infoPanel?.ShowPanel(name, 1, details);
+			if(icon[0].fillAmount >= 0.5f)
+				infoPanel?.ShowPanel(name, 1, details);
 		}
 
 		public void OnPointerExit(PointerEventData eventData)
