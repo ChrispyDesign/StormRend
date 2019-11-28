@@ -254,7 +254,7 @@ namespace StormRend.Bhaviours
 			//Can't move if crippled
 			if (unit.isImmobilised)
 			{
-				Debug.LogFormat("{0} is crippled!");
+				Debug.LogFormat("{0} is crippled!", unit.name);
 				return false;
 			}
 
@@ -326,7 +326,7 @@ namespace StormRend.Bhaviours
 			//Can't attack if blind
 			if (unit.isBlind)
 			{
-				Debug.LogFormat("{0} is blind!");
+				Debug.LogFormat("{0} is blind!", unit.name);
 				return false;
 			}
 

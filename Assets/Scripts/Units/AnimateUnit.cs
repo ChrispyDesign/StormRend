@@ -14,7 +14,7 @@ using UnityEngine.Events;
 
 namespace StormRend.Units
 {
-    [SelectionBase] //Avoid clicking on child objects
+	[SelectionBase] //Avoid clicking on child objects
 	public abstract class AnimateUnit : Unit
 	{
 		//Enums
@@ -112,21 +112,23 @@ namespace StormRend.Units
 		protected Tile[] currentTargetTiles = null;
 		Ability currentAbility;
 
-	#region Can Move & Act
+		#region Can Move & Act
 		public bool canMove => _canMove;
 		public void SetCanMove(bool value, float delay = 0) => StartCoroutine(DelaySetMove(value, delay));
 		/// <summary>
 		/// For Refresh Effect: Set custom delay for correct timing of refresh and unit reselection
 		/// For Immobilise/Blind Effect: Used= normally without delay
 		/// </summary>
-		IEnumerator DelaySetMove(bool value, float delay)   
+		IEnumerator DelaySetMove(bool value, float delay)
 		{
 			//Set immediately so that the AllActionsUsedChecker logic runs correctly
 			_canMove = value;
 
-			//If refreshing then reselect so that move tiles will appear
 			yield return new WaitForSeconds(delay);
-			if (_canMove == true) uih.SelectUnit(this);
+
+			//Will usually only run if refreshing; reselect so that tiles will appear
+			if (_canMove == true) 
+				uih.SelectUnit(this);	//Go into MOVE mode
 		}
 		public bool canAct => _canAct;  //has performed an ability and hence this unit has completed it's turn and is locked until next turn
 		public void SetCanAct(bool value, float delay = 0) => StartCoroutine(DelaySetAct(value, delay));
@@ -134,17 +136,17 @@ namespace StormRend.Units
 		{
 			//Set immediately so that the AllActionsUsedChecker logic runs correctly
 			_canAct = value;
-			
-			//If refreshing then reselect so that action tiles will appear
+
 			yield return new WaitForSeconds(delay);
+
+			//Will usually only run if refreshing; reselect so that tiles will appear
 			if (_canAct == true)
 			{
-				//Just show that the unit can move
+				uih.ClearSelectedAbility();		//Must clear selected ability to go into MOVE mode
 				uih.SelectUnit(this);
-				// uih.SelectAbility(currentAbility);
 			}
 		}
-	#endregion
+		#endregion
 
 		#region Filtered Gets
 		public List<Ability> GetAbilitiesByType(AbilityType type) => abilities.Where(x => x.type == type).ToList();
@@ -188,29 +190,23 @@ namespace StormRend.Units
 
 		#region Core
 		//------------------ CALLBACKS
-		/// <summary>
-		/// Kills the unit. No need to send in a huge value etc.
-		/// </summary>
-		public void Kill(Unit vendor = null)
-		{
-			//Just set the damage amount to match unit's current health
-			TakeDamage(new HealthData(vendor, HP));
-		}
-
 		public override void TakeDamage(HealthData damageData)
 		{
 			base.TakeDamage(damageData);
 
 			//Face attacker if available
 			if (damageData.vendor)
+			{
 				transform.rotation = GetSnappedRotation(damageData.vendor.transform.position, snapAngle);
+				onMoved.Invoke(currentTile);
+			}
 
 			//Animate
 			animator.SetTrigger("HitReact");
 
 			//Run and auto move status effect on take damage
 			for (int i = statusEffects.Count - 1; i >= 0; --i)
-				if (statusEffects[i].OnTakeDamage(this, damageData) == false)	//False means effect has expired
+				if (statusEffects[i].OnTakeDamage(this, damageData) == false)   //False means effect has expired
 					statusEffects.RemoveAt(i);
 		}
 
@@ -227,10 +223,10 @@ namespace StormRend.Units
 			hasKilledThisTurn = false;
 
 			//Calculate new move tiles
-			startTile = currentTile;		//Set new origin
+			startTile = currentTile;        //Set new origin
 			possibleMoveTiles.Clear();
 			possibleTargetTiles.Clear();
-			CalculateMoveTiles();		//BUGFIXED! This was cancelled by UserInputHandler.OnStateChanged()
+			CalculateMoveTiles();       //BUGFIXED! This was cancelled by UserInputHandler.OnStateChanged()
 
 			//Prep effects (reset counts etc)
 			foreach (var a in abilities)
@@ -238,9 +234,11 @@ namespace StormRend.Units
 					e.Prepare(a, this);
 
 			//Run Begin Status effects (ie. sets blind, cripple, etc) 
-			for (int i = statusEffects.Count - 1; i >= 0; --i)
-				if (statusEffects[i].OnBeginTurn(this) == false)    //Also auto remove expired status effects
-					statusEffects.RemoveAt(i);
+			foreach (var se in statusEffects)
+				se.OnStartTurn(this);
+			// for (int i = statusEffects.Count - 1; i >= 0; --i)
+			// 	if (statusEffects[i].OnBeginTurn(this) == false)    //Also auto remove expired status effects
+			// 		statusEffects.RemoveAt(i);
 
 			onBeginTurn.Invoke();
 		}
@@ -248,8 +246,9 @@ namespace StormRend.Units
 		public void EndTurn()           //Run before next turn
 		{
 			//Status effects (Nothing so far)
-			foreach (var se in statusEffects)
-				se.OnEndTurn(this);
+			for (int i = statusEffects.Count - 1; i >= 0; --i)
+				if (statusEffects[i].OnEndTurn(this) == false)    //Also auto remove expired status effects
+					statusEffects.RemoveAt(i);
 
 			onEndTurn.Invoke();
 		}
@@ -290,26 +289,25 @@ namespace StormRend.Units
 			//Only set the position of the ghost
 			if (useGhost)
 			{
-				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;		//Filter
-				ghostTile = destination;	//Set
-				ghost?.SetActive(true);		//Activate
-				ghost.transform.rotation = GetSnappedRotation(ghostTile.transform.position, snapAngle);		//Look
+				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;      //Filter
+				ghostTile = destination;    //Set
+				ghost?.SetActive(true);     //Activate
+				ghost.transform.rotation = GetSnappedRotation(ghostTile.transform.position, snapAngle);     //Look
 				// StartCoroutine(LerpMove(ghost.transform, ghostTile.transform.position));		//Lerp
-				ghost.transform.position = ghostTile.transform.position;		//Move Ghost
+				ghost.transform.position = ghostTile.transform.position;        //Move Ghost
 			}
 			//Move the actual unit
 			else
 			{
 				//Ghost was probably just active so deactivate ghost ??? Should this be here?
 				if (ghost != null) ghost.SetActive(false);
-				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;		//Filter
-				currentTile = destination;		//Set
-				transform.rotation = GetSnappedRotation(currentTile.transform.position, snapAngle);		//Look
+				if (restrictToPossibleMoveTiles && !possibleMoveTiles.Contains(destination)) return false;      //Filter
+				currentTile = destination;      //Set
+				transform.rotation = GetSnappedRotation(currentTile.transform.position, snapAngle);     //Look
 				// StartCoroutine(LerpMove(transform, currentTile.transform.position));		//Lerp
-				transform.position = currentTile.transform.position;		//Move
-				onMoved.Invoke(currentTile);	//Events
+				transform.position = currentTile.transform.position;        //Move
+				onMoved.Invoke(currentTile);    //Events
 			}
-
 
 			//NOTE: Unit can still move
 			return true;    //Successful move
@@ -369,7 +367,12 @@ namespace StormRend.Units
 			}
 		}
 
-		public void SnappedLookAt(Vector3 lookAt) => transform.rotation = GetSnappedRotation(lookAt, snapAngle);
+		public void SnappedLookAt(Vector3 lookAt)
+		{
+			transform.rotation = GetSnappedRotation(lookAt, snapAngle);
+			onMoved.Invoke(currentTile);
+		}
+		
 		Quaternion GetSnappedRotation(Vector3 lookTarget, float snapAng)
 		{
 			var dir = lookTarget - transform.position;
@@ -419,15 +422,15 @@ namespace StormRend.Units
 			//Only take action if able to ie. not affected by status effects
 			if (!canAct) return;
 
-			//Cache
+			//Record
 			currentAbility = ability;
 			currentTargetTiles = targetTiles;
 
-			//Lock in movement and action
+			//Lock
 			_canAct = false;
 			_canMove = false;
 
-			//Face the the last tile that was passed in
+			//Facing
 			if (targetTiles.Length > 0)
 				SnappedLookAt(targetTiles[targetTiles.Length - 1].transform.position);
 
@@ -435,7 +438,7 @@ namespace StormRend.Units
 			//animations events to be executed with precision timing
 			animator.SetTrigger(ability.animationTrigger);
 
-			//Status effects
+			//Run status effect's on acted
 			foreach (var se in statusEffects)
 				se.OnActed(this);
 		}
@@ -454,7 +457,7 @@ namespace StormRend.Units
 		}
 
 		/// <summary>
-		/// Performs a specific effect in the current ability; Use to time effects with animation
+		/// Performs a specific effect in the current ability; Use to time effects with animation events
 		/// </summary>
 		public void Act<T>() where T : Effect
 		{

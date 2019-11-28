@@ -14,14 +14,13 @@ namespace StormRend.States
 		//Inspector
 		[Header("Narration")]
 		[SerializeField] protected KeyCode skipKey = KeyCode.Space;
+		[SerializeField] protected AudioClip skipSFX = null;
 
 		//Members
-		GameDirector gd = null;
 		PlayableDirector pd = null;
 
 		void OnEnable()
 		{
-			gd = GameDirector.current;
 			pd = GetComponent<PlayableDirector>();
 
 			pd.stopped += SkipRelay;
@@ -48,6 +47,10 @@ namespace StormRend.States
 
 		//Callback
 		void SkipRelay(PlayableDirector pd) => Skip();
-		public void Skip() => gd.SafeSkip();
+		public void Skip()
+		{
+			GameDirector.current.sfxAudioSource.PlayOneShot(skipSFX);
+			GameDirector.current.SafeSkip();
+		}
 	}
 } 

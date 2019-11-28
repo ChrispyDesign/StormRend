@@ -11,19 +11,20 @@ namespace StormRend.Abilities.Effects
 	{
 		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
-			AddStatusEffectToAnimateUnits(targetTiles);
+			AddStatusEffectToTargets(targetTiles);
 			BlindTargetsImmediately(targetTiles);
 		}
 
-		public override bool OnBeginTurn(AnimateUnit affectedUnit)
+		public override void OnStartTurn(AnimateUnit affectedUnit)
 		{
-			var valid = base.OnBeginTurn(affectedUnit);
-			if (valid)
-			{
-				//Prevent from performing abilities
-				affectedUnit.SetCanAct(false);
-			}
-			return valid;
+			affectedUnit.SetCanAct(false);
+			// var valid = base.OnStartTurn(affectedUnit);
+			// if (valid)
+			// {
+			// 	//Prevent from performing abilities
+			// 	affectedUnit.SetCanAct(false);
+			// }
+			// return valid;
 		}
 
 		void BlindTargetsImmediately(params Tile[] targetTiles)
@@ -34,10 +35,10 @@ namespace StormRend.Abilities.Effects
 			UserInputHandler.current.ClearSelectedUnit();
 		}
 
-		public void ImmobiliseTargetsImmediately(params AnimateUnit[] targetUnits)
+		public void BlindTargetsImmediately(params AnimateUnit[] targetUnits)
 		{
 			foreach (var au in targetUnits)
-				au.SetCanAct(false);
+				au.SetCanAct(false);    //Maybe this should just set au.canact it directly
 			UserInputHandler.current.ClearSelectedUnit();
 		}
 	}

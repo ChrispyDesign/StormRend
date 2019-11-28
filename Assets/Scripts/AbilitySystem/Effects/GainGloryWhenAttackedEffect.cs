@@ -13,18 +13,18 @@ namespace StormRend.Abilities.Effects
         [SerializeField] int amount = 1;
         [SerializeField] BhaveInt glory = null;
 
+        public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
+        {
+            //ie. If this is on the Provoke ability, it should apply to self
+            AddStatusEffectToTargets(targetTiles);
+        }
+
         public override bool OnTakeDamage(Unit affectedUnit, HealthData damageData)
         {
             Debug.Assert(glory, "No glory SOV found!");
             if (glory) glory.value += amount;
 
-            return true;    //No expiry
-        }
-
-        public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
-        {
-            //ie. If this is on the Provoke ability, it should apply to self
-            AddStatusEffectToAnimateUnits(targetTiles);
+            return true;    //Nevers expires
         }
     }
 }
