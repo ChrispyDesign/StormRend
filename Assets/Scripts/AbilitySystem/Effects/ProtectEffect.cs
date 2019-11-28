@@ -7,13 +7,13 @@ namespace StormRend.Abilities.Effects
     {
         public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
         {
-            AddStatusEffectToAnimateUnits(targetTiles);		//This also should apply the effect immediately
+            AddStatusEffectToTargets(targetTiles);		//This also should apply the effect immediately
         }
 
-        public override bool OnBeginTurn(AnimateUnit affectedUnit)
-        {
-            return base.OnBeginTurn(affectedUnit);      //Housekeeping
-        }
+        // public override bool OnStartTurn(AnimateUnit affectedUnit)
+        // {
+        //     return base.OnStartTurn(affectedUnit);      //Housekeeping
+        // }
 
         public override bool OnTakeDamage(Unit affectedUnit, HealthData damageData)
         {

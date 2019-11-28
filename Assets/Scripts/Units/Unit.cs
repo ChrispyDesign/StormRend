@@ -89,7 +89,14 @@ namespace StormRend.Units
 		}
 		#endregion
 
-	#region Health
+		#region Health
+		/// <summary>
+		/// Kills the unit. No need to send in a huge value etc.
+		/// </summary>
+		public virtual void Kill(Unit vendor = null)
+		{
+			TakeDamage(new HealthData(vendor, HP));
+		}
 		public virtual void TakeDamage(HealthData healthData)
 		{
 			if (isDead) return;     //Can't beat a dead horse :P

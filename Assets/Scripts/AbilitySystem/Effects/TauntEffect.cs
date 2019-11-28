@@ -14,18 +14,19 @@ namespace StormRend.Abilities.Effects
 
 		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
-			AddStatusEffectToAnimateUnits(targetTiles);
+			AddStatusEffectToTargets(targetTiles);
 		}
 
-		public override bool OnBeginTurn(AnimateUnit affectedUnit)
+		public override void OnStartTurn(AnimateUnit affectedUnit)
 		{
-			var valid = base.OnBeginTurn(affectedUnit);
-			if (!valid)     //If this status effect has expired
-			{
-				//HARDCODE If this effect has expired then also deactivate relevant VFX
-				affectedUnit.animEventHandlers.DeactivateInbuiltVFX(inbuiltVFXName);
-			}
-			return valid;
+			affectedUnit.animEventHandlers.DeactivateInbuiltVFX(inbuiltVFXName);
+			// var valid = base.OnStartTurn(affectedUnit);
+			// if (!valid)     //If this status effect has expired
+			// {
+			// 	//HARDCODE If this effect has expired then also deactivate relevant VFX
+			// 	affectedUnit.animEventHandlers.DeactivateInbuiltVFX(inbuiltVFXName);
+			// }
+			// return valid;
 		}
 
 		public override bool OnTakeDamage(Unit affectedUnit, HealthData damageData)

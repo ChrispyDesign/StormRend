@@ -14,7 +14,7 @@ namespace StormRend.UI
 {
 	public class UIStatus : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
-		[SerializeField] string name;
+		[SerializeField] new string name;
 		[SerializeField] string details;
         [SerializeField] UnitType allyType;
         [SerializeField] StatusType statusType;
@@ -73,14 +73,29 @@ namespace StormRend.UI
 			var tag = FindObjectOfType(typeToFind) as Tag;
 			unit = tag?.GetComponent<AnimateUnit>();
 
-			unit.onTakeDamage.AddListener(CheckStatus);
 			unit.onAddStatusEffect.AddListener(CheckStatus);
 			unit.onBeginTurn.AddListener(CheckStatus);
 		}
+		// private void Update()
+		// {
+		// 	switch (statusType)
+		// 	{
+		// 		case StatusType.Protection:
+		// 			if(unit.isProtected)
+		// 				Debug.LogWarning(unit.name + " Protection " + unit.isProtected);
+		// 			break;
+		// 		case StatusType.Immobilised:
+		// 			if (unit.isImmobilised)
+		// 				Debug.LogWarning(unit.name + " Immobilised " + unit.isImmobilised);
+		// 			break;
+		// 		case StatusType.Blinded:
+		// 			if (unit.isBlind)
+		// 				Debug.LogWarning(unit.name + " Blinded " + unit.isBlind);
+		// 			break;
+		// 	}
+		// }
 
 		void CheckStatus() => CheckStatus(null);
-
-		void CheckStatus(HealthData _data) => CheckStatus(null);
 
 		void CheckStatus(Effect effect)
 		{
