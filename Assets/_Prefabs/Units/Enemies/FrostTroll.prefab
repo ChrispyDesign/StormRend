@@ -57,7 +57,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3093552309022210659
 Transform:
   m_ObjectHideFlags: 0
@@ -134,8 +134,8 @@ MonoBehaviour:
   onTakeDamage:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9033792465737119238}
-        m_MethodName: SetIntFromHealthData
+      - m_Target: {fileID: 2900720080365253999}
+        m_MethodName: OnTakeDamage
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2185,32 +2185,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Blind
       objectReference: {fileID: 0}
-    - target: {fileID: 2600571906816581895, guid: 5ae1c8648f3b0f248add293f77f55a17,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7403254374630882181, guid: 5ae1c8648f3b0f248add293f77f55a17,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7324758906837020213, guid: 5ae1c8648f3b0f248add293f77f55a17,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7652903600754378262, guid: 5ae1c8648f3b0f248add293f77f55a17,
         type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 97dbf551a3dd38342a4db73bd591f261,
         type: 3}
-    - target: {fileID: 7652903600754378262, guid: 5ae1c8648f3b0f248add293f77f55a17,
-        type: 3}
-      propertyPath: m_FillAmount
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ae1c8648f3b0f248add293f77f55a17, type: 3}
 --- !u!4 &7769358111949313086 stripped
@@ -2392,15 +2372,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5477101510533963356}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9033792465737119238 stripped
+--- !u!114 &2900720080365253999 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3556973632775104602, guid: 0afa6dc8175f3b74a9d2ed19b2d543e2,
+  m_CorrespondingSourceObject: {fileID: 7224898900411460403, guid: 0afa6dc8175f3b74a9d2ed19b2d543e2,
     type: 3}
   m_PrefabInstance: {fileID: 5477101510533963356}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbd77db43694ab54ab1f66d16c6e8a0d, type: 3}
+  m_Script: {fileID: 11500000, guid: c642c63ac1baec843ae9fa96e233cfc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
