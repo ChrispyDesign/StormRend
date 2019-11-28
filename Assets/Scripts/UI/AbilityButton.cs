@@ -1,10 +1,8 @@
 using System.Linq;
 using pokoro.BhaVE.Core.Variables;
 using StormRend.Abilities;
-using StormRend.Enums;
 using StormRend.Systems;
 using StormRend.Units;
-using StormRend.Utility.Attributes;
 using StormRend.Variables;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -43,44 +41,45 @@ namespace StormRend.UI
             button = GetComponent<Button>();
 
             //Asserts
-            if (!inputHandler) {
+            if (!inputHandler)
+            {
                 Debug.LogWarningFormat("No user input handler found. Disabling {0}", this.name);
                 this.enabled = false;
             }
 
+            Debug.Assert(buttonIcon, "Button icon reference required!");
+            Debug.Assert(buttonAssembly, "Button assembly reference required!");
+
             Debug.Assert(glory, "No Glory SOV found!");
             Debug.Assert(selectedUnit, "No Unit SOV found!");
-
-            Debug.Assert(buttonAssembly, "Button assembly reference required!");
-            Debug.Assert(buttonIcon, "Button icon reference required!");
         }
+        void Start() => UpdateAbility();    //First init
 
-        void Start()
-        {
-            UpdateAbility();
-        }
-        
+        //Register events
         void OnEnable()
         {
             button.onClick.AddListener(OnClick);
             selectedUnit.onChanged += UpdateAbility;
+            glory.onChanged += SetInteractabilityIfEnoughGlory;
         }
         void OnDisable()
         {
             button.onClick.RemoveAllListeners();
             selectedUnit.onChanged -= UpdateAbility;
+            glory.onChanged -= SetInteractabilityIfEnoughGlory;
         }
 
+        //Core
         void UpdateAbility()
         {
             var au = selectedUnit.value as AnimateUnit;
 
-            //Unselected
+            //Unselected: Hide
             if (!au)
             {
                 buttonAssembly?.SetActive(false);
             }
-            //Selected
+            //Selected: Show
             else
             {
                 buttonAssembly?.SetActive(true);
@@ -93,7 +92,26 @@ namespace StormRend.UI
 
                 //Update icon
                 if (buttonIcon) buttonIcon.sprite = ability.icon;
+
+                SetInteractabilityIfEnoughGlory();
             }
+        }
+
+        void SetInteractabilityIfEnoughGlory()
+        {
+            if (!ability) return;
+
+            if (glory.value < ability.gloryCost)
+            {
+                //NOTE!
+                //Minor Unity caveat:
+                //If an uninteractable button is deactivated, and then reactivated... it's disabled color would be reset to the normal color.
+                //Hence why you have to make it interactable and then uninteractable to reset the colors
+                button.interactable = true;
+                button.interactable = false;
+            }
+            else
+                button.interactable = true;
         }
 
         //Core
