@@ -47,7 +47,7 @@ namespace StormRend.Systems
 		}
 
 		//Inspector
-        [SerializeField] BhaveInt glory = null;
+		[SerializeField] BhaveInt glory = null;
 		[Header("State")]
 		[ReadOnlyField, SerializeField] TurnState currentTurnState = null;
 		[Space(10), SerializeField] UnitVar _selectedUnitVar = null;
@@ -99,14 +99,14 @@ namespace StormRend.Systems
 
 		//Events
 		[Space(5)]
-		[Tooltip("When a unit is successfully selected")] public UnitEvent onUnitSelected = null;		
+		[Tooltip("When a unit is successfully selected")] public UnitEvent onUnitSelected = null;
 		[Tooltip("When a unit is deselected")] public UnityEvent onUnitCleared = null;
 		[Tooltip("When an ability is chosen")] public AbilityEvent onAbilitySelected = null;
 		[Tooltip("When an ability is cleared")] public UnityEvent onAbilityCleared = null;
 		[Tooltip("When a valid target tile is selected, adding it to the target stack")] public TileEvent onTargetTileAdd = null;
 		[Tooltip("When an invalid tile is selected")] public UnityEvent onTargetTileInvalid = null;
 		[Tooltip("When a tile is popped from the target stack ie. user right clicks")] public TileEvent onTargetTileCancel = null;
-        [Tooltip("When an there's not enough glory to perform ability")] public UnityEvent onNotEnoughGlory = null;
+		[Tooltip("When an there's not enough glory to perform ability")] public UnityEvent onNotEnoughGlory = null;
 		[Tooltip("When an ability is performed")] public AbilityEvent onAbilityPerformed = null;
 
 		//Members
@@ -122,15 +122,15 @@ namespace StormRend.Systems
 		bool isTileHitEmpty = false;
 		GraphicRaycaster gr = null;
 		List<RaycastResult> GUIhits = new List<RaycastResult>();
-		List<Type> currentControllableUnitTypes = new List<Type>();		//Holds the list of types that can be controlled for this game turn
+		List<Type> currentControllableUnitTypes = new List<Type>();     //Holds the list of types that can be controlled for this game turn
 
-	#region Core
+		#region Core
 		void Start()
 		{
 			//Inits
 			cam = MasterCamera.current.camera;
 			camMover = MasterCamera.current.cameraMover;
-			gr = FindObjectOfType<GraphicRaycaster>();	//On the one and only canvas
+			gr = FindObjectOfType<GraphicRaycaster>();  //On the one and only canvas
 			selectedUnit = null;
 			selectedAbility = null;
 
@@ -154,12 +154,12 @@ namespace StormRend.Systems
 		{
 			ProcessEvents();
 		}
-	
+
 		void ProcessEvents()
 		{
-			e.Refresh();	//Refresh all input events
+			e.Refresh();    //Refresh all input events
 
-			if (e.leftClicked)	//LEFT CLICKED
+			if (e.leftClicked)  //LEFT CLICKED
 			{
 				//Poll events
 				isUnitHit = TryGetRaycast<Unit>(out interimUnit);
@@ -180,48 +180,48 @@ namespace StormRend.Systems
 					case Mode.Action:   //ACTION MODE
 						if (isUnitHit)
 							AddTargetTile(interimUnit);
-						else if (isTileHit)					//Maybe this needs to be an else if so that only one add target tile gets passed through
+						else if (isTileHit)                 //Maybe this needs to be an else if so that only one add target tile gets passed through
 							AddTargetTile(interimTile);
 						break;
 
 					case Mode.Move:     //MOVE MODE
-						if (isTileHit && isTileHitEmpty)	//Restrict to empty tiles only
+						if (isTileHit && isTileHitEmpty)    //Restrict to empty tiles only
 						{
-							if (selectedAnimateUnit.Move(interimTile))	//Try Move unit
-								camMover.Move(interimTile, cameraSmoothTime);	//If move successful then focus camera
+							if (selectedAnimateUnit.Move(interimTile))  //Try Move unit
+								camMover.Move(interimTile, cameraSmoothTime);   //If move successful then focus camera
 						}
-						goto case Mode.Select;	//Fall through
+						goto case Mode.Select;  //Fall through
 
 					case Mode.Select:     //SELECT MODE
-						if (isUnitHit && currentControllableUnitTypes.Contains(interimUnit.GetType()))	//Filter controllable units
+						if (isUnitHit && currentControllableUnitTypes.Contains(interimUnit.GetType()))  //Filter controllable units
 							SelectUnit(interimUnit as AnimateUnit);
 						break;
 				}
 
 			}
-			else if (e.rightReleased)	//RIGHT CLICK RELEASED
+			else if (e.rightReleased)   //RIGHT CLICK RELEASED
 			{
 				switch (mode)
 				{
-					case Mode.Action:	//ACTION MODE
+					case Mode.Action:   //ACTION MODE
 						if (notEnoughTargetTilesSelected && targetTileStack.Count > 0)
-							PopTargetTile();	//UNDO 1 TARGET TILE SELECT
+							PopTargetTile();    //UNDO 1 TARGET TILE SELECT
 						else
-							ClearSelectedAbility();	//CLEAR ABILITY
+							ClearSelectedAbility(); //CLEAR ABILITY
 						break;
-					case Mode.Move:		//MOVE MODE
-						ClearSelectedUnit();		//CLEAR UNIT
+					case Mode.Move:     //MOVE MODE
+						ClearSelectedUnit();        //CLEAR UNIT
 						break;
 				}
 			}
-			else 	//HOVER
+			else    //HOVER
 			{
 				switch (mode)
 				{
-					case Mode.Move:		//MOVE
-						//Poll events
+					case Mode.Move:     //MOVE
+										//Poll events
 						isTileHit = TryGetRaycast<Tile>(out interimTile); //!!! MAKE SURE THE RAYCAST LAYERS ARE CORRECTLY SET !!!
-						if (isTileHit) isTileHitEmpty = !UnitRegistry.IsAnyUnitOnTile(interimTile);	//Check tile is empty
+						if (isTileHit) isTileHitEmpty = !UnitRegistry.IsAnyUnitOnTile(interimTile); //Check tile is empty
 
 						//Move ghost on hover if the tile is empty
 						if (isTileHit && isTileHitEmpty)
@@ -235,7 +235,7 @@ namespace StormRend.Systems
 		}
 		#endregion
 
-	#region Callbacks
+		#region Callbacks
 		public void OnStateChanged(State newState)
 		{
 			var newTurnState = newState as TurnState;
@@ -244,7 +244,7 @@ namespace StormRend.Systems
 			if (currentTurnState != newTurnState)
 			{
 				ClearAllTileHighlights();
-				
+
 				//Set new turn state
 				currentTurnState = newTurnState;
 
@@ -252,16 +252,15 @@ namespace StormRend.Systems
 				PopulateControllableUnitTypes();
 			}
 		}
-	#endregion
+		#endregion
 
-	#region Assists
+		#region Assists
 		//If T object hit then return true and output it
 		bool TryGetRaycast<T>(out T hit) where T : MonoBehaviour
 		{
 			//If EventSystem.currentselectedGameObject is null then it's not over a GUI object
-			if (EventSystem.current.currentSelectedGameObject)
+			if (IsPointerOverGUIObject())
 			{
-				// Debug.Log("Pointer over UI");
 				hit = null;
 				return false;
 			}
@@ -289,6 +288,19 @@ namespace StormRend.Systems
 			GUIhits.Clear();
 			gr.Raycast(pointerEventData, GUIhits);
 
+			//TESTING!
+			for (int i = 0; i < GUIhits.Count; i++)
+			{
+				Debug.LogFormat("Hit {0}: {1}, layer: {2}", i, GUIhits[i].gameObject, GUIhits[i].gameObject.layer);
+				if (GUIhits[i].gameObject.layer == 5)
+					return true;
+			}
+			return false;
+
+			// foreach (var h in GUIhits)
+			// {
+			// 	print("hit")
+			// }
 			return (GUIhits.Count > 0) ? true : false;
 		}
 
@@ -308,9 +320,9 @@ namespace StormRend.Systems
 			}
 		}
 
-        public bool EnoughGlory()
+		public bool EnoughGlory()
 		{
-			if (glory)	//Null check
+			if (glory)  //Null check
 			{
 				//Return whether or not there's enough glory available for current ability
 				return glory.value >= selectedAbility.gloryCost;
@@ -318,13 +330,13 @@ namespace StormRend.Systems
 			Debug.LogWarning("No glory SOV allocated!");
 			return false;
 		}
-	#endregion
+		#endregion
 
-	#region Debug
+		#region Debug
 		void OnGUI()
 		{
 			if (!debug) return;
-			
+
 			GUILayout.Label("Glory: " + glory.value);
 
 			GUILayout.Label("ActivityMode: " + mode);
@@ -348,7 +360,7 @@ namespace StormRend.Systems
 			foreach (var t in targetTileStack)
 				GUILayout.Label(t.name);
 		}
-	#endregion
+		#endregion
 	}
 }
 
