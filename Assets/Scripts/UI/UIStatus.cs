@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -81,31 +82,19 @@ namespace StormRend.UI
 			else
 				CheckStatus();
 
+			RegisterEvents();
+		}
+
+		void RegisterEvents()
+		{
+			if (!unit) return;
+
 			unit.onAddStatusEffect.AddListener(CheckStatus);
 			unit.onBeginTurn.AddListener(CheckStatus);
 		}
-		// private void Update()
-		// {
-		// 	switch (statusType)
-		// 	{
-		// 		case StatusType.Protection:
-		// 			if(unit.isProtected)
-		// 				Debug.LogWarning(unit.name + " Protection " + unit.isProtected);
-		// 			break;
-		// 		case StatusType.Immobilised:
-		// 			if (unit.isImmobilised)
-		// 				Debug.LogWarning(unit.name + " Immobilised " + unit.isImmobilised);
-		// 			break;
-		// 		case StatusType.Blinded:
-		// 			if (unit.isBlind)
-		// 				Debug.LogWarning(unit.name + " Blinded " + unit.isBlind);
-		// 			break;
-		// 	}
-		// }
 
-		void CheckStatus() => CheckStatus(null);
-
-		void CheckStatus(Effect effect)
+		void CheckStatus() => CheckStatus(null);	//Relay
+		void CheckStatus(Effect effect = null)
 		{
 			switch (statusType)
 			{

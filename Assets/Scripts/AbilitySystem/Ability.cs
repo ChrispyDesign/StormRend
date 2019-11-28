@@ -17,9 +17,18 @@ namespace StormRend.Abilities
 {
 	public enum AbilityType
 	{
+		None,
 		Passive,
 		Primary,
 		Secondary
+	}
+
+	public enum AbilityLevel
+	{
+		None = 0,
+		One = 1, 
+		Two = 2, 
+		Three = 3
 	}
 
 	[Serializable, CreateAssetMenu(menuName = "StormRend/Ability", fileName = "Ability")]
