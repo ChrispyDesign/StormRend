@@ -241,9 +241,8 @@ namespace StormRend.Units
 			for (int i = statusEffects.Count - 1; i >= 0; --i)
 				if (statusEffects[i].OnTakeDamage(this, damageData) == false)   //False means effect has expired
 					statusEffects.RemoveAt(i);
-
-				// if (statusEffects.ElementAt(i).OnTakeDamage(this, damageData) == false)
-				// 	statusEffects.RemoveWhere()
+			// if (statusEffects.ElementAt(i).OnTakeDamage(this, damageData) == false)
+			// 	statusEffects.RemoveWhere()
 		}
 
 		//------------------- STATS

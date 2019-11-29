@@ -26,6 +26,8 @@ namespace StormRend.Abilities.Effects
         {
             //Reverse the damage done
             affectedUnit.HP += damageData.amount;
+            //This needs to trigger so that the health bars update properly
+            affectedUnit.onTakeDamage.Invoke(damageData); 
 
             //Play some kind of protect effect/animation?
             affectedUnit.animator.ResetTrigger("HitReact");     //Prevent HitReact animation from playing
