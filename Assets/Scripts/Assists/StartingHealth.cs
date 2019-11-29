@@ -19,6 +19,10 @@ namespace StormRend.Assists
 			if (!unit) enabled = false;
 		}
 
-		void Start() => unit.HP = startingHealth;
+		void Start()
+		{
+			unit.HP = startingHealth;
+			unit.onTakeDamage.Invoke(new HealthData(null, startingHealth));
+		}
 	}
 }
