@@ -55,7 +55,36 @@ namespace StormRend.Units
 		public List<Tile> possibleMoveTiles = new List<Tile>();// { get; set; } = new Tile[0];
 		public List<Tile> possibleTargetTiles = new List<Tile>();// { get; set; } = new Tile[0];
 		public int moveRange => _moveRange;
-		private float snapAngle
+		public Type[] pathBlockingUnitTypes
+		{
+			get
+			{
+				var results = new List<Type>();
+
+				//Allies
+				if ((pathBlockers & TargetType.Allies) == TargetType.Allies)
+					results.Add(typeof(AllyUnit));
+
+				//Enemies
+				if ((pathBlockers & TargetType.Enemies) == TargetType.Enemies)
+					results.Add(typeof(EnemyUnit));
+
+				//Crystals
+				if ((pathBlockers & TargetType.Crystals) == TargetType.Crystals)
+					results.Add(typeof(CrystalUnit));
+
+				//InAnimates
+				if ((pathBlockers & TargetType.InAnimates) == TargetType.InAnimates)
+					results.Add(typeof(InAnimateUnit));
+
+				//Animates
+				if ((pathBlockers & TargetType.Animates) == TargetType.Animates)
+					results.Add(typeof(AnimateUnit));
+
+				return results.ToArray();
+			}
+		}
+		float snapAngle
 		{
 			get
 			{
@@ -161,6 +190,8 @@ namespace StormRend.Units
 			startTile = currentTile;
 
 			PrepGhost();
+
+			// InitiateAbilities();		//TODO
 		}
 
 		void PrepGhost()
@@ -482,71 +513,43 @@ namespace StormRend.Units
 			return possibleMoveTiles = Map.GetPossibleTiles(startTile.owner, startTile, range, pathBlockingUnitTypes).ToList();
 		}
 
-		public Type[] pathBlockingUnitTypes
-		{
-			get
-			{
-				var results = new List<Type>();
-
-				//Allies
-				if ((pathBlockers & TargetType.Allies) == TargetType.Allies)
-					results.Add(typeof(AllyUnit));
-
-				//Enemies
-				if ((pathBlockers & TargetType.Enemies) == TargetType.Enemies)
-					results.Add(typeof(EnemyUnit));
-
-				//Crystals
-				if ((pathBlockers & TargetType.Crystals) == TargetType.Crystals)
-					results.Add(typeof(CrystalUnit));
-
-				//InAnimates
-				if ((pathBlockers & TargetType.InAnimates) == TargetType.InAnimates)
-					results.Add(typeof(InAnimateUnit));
-
-				//Animates
-				if ((pathBlockers & TargetType.Animates) == TargetType.Animates)
-					results.Add(typeof(AnimateUnit));
-
-				return results.ToArray();
-			}
-		}
-
 		/// <summary>
 		/// Get the tiles that can be currently acted upon by this ability
 		/// </summary>
-		public List<Tile> CalculateTargetTiles(Ability a, Tile startTile = null, bool onlyGetResults = false)
+		public List<Tile> CalculateTargetTiles(Ability a)
 		{
-			//Defaults
-			if (startTile == null) startTile = currentTile;
+			return possibleTargetTiles = a.GetTargetTiles(currentTile);
 
-			var result = new List<Tile>();
-			var sqrLen = Ability.caSize;
+			// //Defaults
+			// if (startTile == null) startTile = currentTile;
 
-			//Find the center of the cast area
-			Vector2Int center = new Vector2Int(sqrLen / 2, sqrLen / 2);
+			// var result = new List<Tile>();
+			// var sqrLen = Ability.castAreaSqrLen;
 
-			//Go through castArea
-			for (int row = 0; row < sqrLen; row++)  //rows
-			{
-				for (int col = 0; col < sqrLen; col++)  //columns
-				{
-					if (a.castArea[row * sqrLen + col])
-					{
-						Vector2Int offset = new Vector2Int(row, col) - center;
+			// //Find the center of the cast area
+			// Vector2Int center = new Vector2Int(sqrLen / 2, sqrLen / 2);
 
-						if (startTile.TryGetTile(offset, out Tile t))
-						{
-							if (!(t is UnWalkableTile))
-								result.Add(t);
-						}
-					}
-				}
-			}
+			// //Go through castArea
+			// for (int row = 0; row < sqrLen; row++)  //rows
+			// {
+			// 	for (int col = 0; col < sqrLen; col++)  //columns
+			// 	{
+			// 		if (a.castArea[row * sqrLen + col])
+			// 		{
+			// 			Vector2Int offset = new Vector2Int(row, col) - center;
 
-			//Cache
-			if (!onlyGetResults) possibleTargetTiles = result;
-			return result;
+			// 			if (startTile.TryGetTile(offset, out Tile t))
+			// 			{
+			// 				if (!(t is UnWalkableTile))
+			// 					result.Add(t);
+			// 			}
+			// 		}
+			// 	}
+			// }
+
+			// //Cache
+			// if (!onlyGetResults) possibleTargetTiles = result;
+			// return result;
 		}
 
 		//------------------ INDICATORS AND UX
