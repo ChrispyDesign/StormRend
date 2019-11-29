@@ -835,8 +835,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Alan, Nik, Kip, Blythe, Simon, Ben, Daniel, Ben, James, Jaris, Nick, David,
-    Barney, Alison, Jack, Thomas, Darcy, Sam, Murray, Wenpo, Adam, Shane, Jade
+  m_text: 'Alan, Nik, Kip, Blythe, Simon, Ben, Daniel, Dillon, Ben, James, Jaris,
+    Nick, David, Barney, Alison, Jack, Thomas, Darcy, Sam, Murray, Wenpo, Adam, Shane,
+    Jade
 
 
     Bar SK
@@ -1141,8 +1142,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Description: 
-  coveringObjects:
+  activateObjects:
   - {fileID: 6371859478392718521}
+  deactivateObjects: []
 --- !u!222 &6371859478392718525
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1228,15 +1230,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb72efd620d3908448e1e0f9295d0fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  introState: {fileID: 0}
+  endTurnConfirmationState: {fileID: 0}
+  victoryState: {fileID: 0}
+  defeatState: {fileID: 0}
   pauseKey: 27
   pauseMenuState: {fileID: 0}
-  endTurnConfirmationState: {fileID: 0}
-  victoryNarration: {fileID: 0}
-  victoryState: {fileID: 0}
-  defeatNarration: {fileID: 0}
-  defeatState: {fileID: 0}
   mainMenuSceneName: 00_MainMenu
-  nextSceneName: 
+  onUnitTakeDamage:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onUnitKilled:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  sfxAudio: {fileID: 0}
+  vocalAudio: {fileID: 0}
   debug: 0
 --- !u!114 &6371859478461778960
 MonoBehaviour:
@@ -1263,6 +1275,11 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: StormRend.Utility.Events.StateEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  onStartRound:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   debug: 0
 --- !u!114 &6082780339995712426
 MonoBehaviour:
@@ -1288,7 +1305,8 @@ AudioSource:
   m_GameObject: {fileID: 6371859478461778972}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: ea89020ab2e60ae49a21e918d28b307c,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -2866,8 +2884,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Description: 
-  coveringObjects:
+  activateObjects:
   - {fileID: 6371859479057566120}
+  deactivateObjects: []
 --- !u!222 &1061114005513647777
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2985,9 +3004,7 @@ MonoBehaviour:
 
     Gabe Muhammad
 
-    Tony Le
-
-    Dillon Handyside'
+    Tony Le'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4355df66fd2cffb4786beb81199de9c8, type: 2}
   m_sharedMaterial: {fileID: 21821184131524424, guid: 4355df66fd2cffb4786beb81199de9c8,
@@ -3398,9 +3415,7 @@ MonoBehaviour:
 
     @fellowguardian
 
-    @tnyLe
-
-    @DillonHandyside'
+    @tnyLe'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4355df66fd2cffb4786beb81199de9c8, type: 2}
   m_sharedMaterial: {fileID: 21821184131524424, guid: 4355df66fd2cffb4786beb81199de9c8,
@@ -4085,11 +4100,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6371859478085168770}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: BackButton
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4195,6 +4205,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: BackButton
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4225,11 +4240,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6371859478392718520}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: CreditsButton
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4335,6 +4345,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: CreditsButton
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4380,11 +4395,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6371859478392718520}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: QuitButton
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4490,6 +4500,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: QuitButton
+      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4520,11 +4535,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6371859478392718520}
     m_Modifications:
-    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
-        type: 3}
-      propertyPath: m_Name
-      value: PlayButton
-      objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344793, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4629,6 +4639,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3560625987002344790, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayButton
       objectReference: {fileID: 0}
     - target: {fileID: 3560625987002344792, guid: aa8e7e943f44aef4f8e4db6fb7a6d975,
         type: 3}

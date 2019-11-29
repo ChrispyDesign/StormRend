@@ -45,7 +45,7 @@ namespace StormRend.UI
         }
 		private void OnDestroy()
 		{
-			unit.onAddStatusEffect.RemoveListener(CheckStatus);			
+			unit?.onAddStatusEffect.RemoveListener(CheckStatus);			
 		}
 
 		private void Awake()

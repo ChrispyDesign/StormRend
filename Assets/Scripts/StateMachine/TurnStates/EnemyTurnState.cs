@@ -32,12 +32,13 @@ namespace StormRend.States
 
 		public override void OnEnter(UltraStateMachine sm)
 		{
+			StopAllCoroutines();
+
 			base.OnEnter(sm);
 
-			//Run AI
+			//If there are enemies run AI
 			enemies = ur.GetAliveUnitsByType<EnemyUnit>();
-			if (enemies.Length > 0)
-				StartCoroutine(EnemySequence(sm));
+			if (enemies.Length > 0) StartCoroutine(EnemySequence(sm));
 		}
 
 		IEnumerator EnemySequence(UltraStateMachine sm)
