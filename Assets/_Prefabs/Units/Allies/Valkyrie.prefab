@@ -16,8 +16,8 @@ MonoBehaviour:
   details: You cannot move
   allyType: 2
   statusType: 2
-  icon: []
   unit: {fileID: 0}
+  icon: []
 --- !u!114 &8841721685595570905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34,8 +34,8 @@ MonoBehaviour:
   details: Block the next instance of damage you take
   allyType: 2
   statusType: 1
-  icon: []
   unit: {fileID: 0}
+  icon: []
 --- !u!1 &1496867505816220577
 GameObject:
   m_ObjectHideFlags: 0
@@ -5878,6 +5878,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5504548682881856144, guid: c94e2f9d34e28c346af6f4325e96c8df,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c94e2f9d34e28c346af6f4325e96c8df, type: 3}
 --- !u!4 &4935494861390800539 stripped
@@ -5986,11 +5991,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 653011552559127036}
     m_Modifications:
-    - target: {fileID: 5277682841273857058, guid: 0afa6dc8175f3b74a9d2ed19b2d543e2,
-        type: 3}
-      propertyPath: m_Name
-      value: FX_Health
-      objectReference: {fileID: 0}
     - target: {fileID: 5277682841273857056, guid: 0afa6dc8175f3b74a9d2ed19b2d543e2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6045,6 +6045,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5277682841273857058, guid: 0afa6dc8175f3b74a9d2ed19b2d543e2,
+        type: 3}
+      propertyPath: m_Name
+      value: FX_Health
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0afa6dc8175f3b74a9d2ed19b2d543e2, type: 3}
