@@ -17,9 +17,18 @@ namespace StormRend.Abilities
 {
 	public enum AbilityType
 	{
+		None,
 		Passive,
 		Primary,
 		Secondary
+	}
+
+	public enum AbilityLevel
+	{
+		None = 0,
+		One = 1, 
+		Two = 2, 
+		Three = 3
 	}
 
 	[Serializable, CreateAssetMenu(menuName = "StormRend/Ability", fileName = "Ability")]
@@ -27,7 +36,7 @@ namespace StormRend.Abilities
 	{
 		//Constants
 		const int descriptionCount = 3;
-		public const int caSize = 7;    //Cast Area Size Squared
+		public const int castAreaSqrLen = 7;    //Cast Area Size Squared
 
 		//Inspector
 		[SerializeField] Sprite _icon = null;
@@ -52,7 +61,7 @@ namespace StormRend.Abilities
 		//Members
 		[HideInInspector]
 		public List<Effect> effects = new List<Effect>();
-		[HideInInspector] public bool[] castArea = new bool[caSize * caSize];		//this sometimes resets
+		[HideInInspector] public bool[] castArea = new bool[castAreaSqrLen * castAreaSqrLen];		//this sometimes resets
 
 		//Properties
 		public Sprite icon => _icon;
@@ -105,25 +114,6 @@ namespace StormRend.Abilities
 		}
 
 		/// <summary>
-		/// Perform passive effects contained in this ability when a unit is killed
-		/// </summary>
-		public void PerformOnUnitKilled(Unit owner, Unit killed)
-		{
-			foreach (var e in effects)
-			{
-				var pe = e as PassiveEffect;
-				if (pe)
-				{
-					if (pe.OnUnitKilled(this, owner, killed))
-					{
-						//Passive effect successful; perform animation
-						owner.animator.SetTrigger(animationTrigger);
-					}
-				}
-			}
-		}
-
-		/// <summary>
 		/// Perform passive effects contained in this ability when a unit is created or spawned in
 		/// </summary>
 		public void PerformOnUnitCreated(Unit owner, Unit created)
@@ -134,6 +124,44 @@ namespace StormRend.Abilities
 				if (pe)
 				{
 					if (pe.OnUnitCreated(this, owner, created))
+					{
+						//Passive effect successful; perform animation
+						owner.animator.SetTrigger(animationTrigger);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Perform passive effects contained in this ability when a unit is killed
+		/// </summary>
+		public void PerformOnUnitMoved(Unit owner, Unit moved)
+		{
+			foreach (var e in effects)
+			{
+				var pe = e as PassiveEffect;
+				if (pe)
+				{
+					if (pe.OnUnitMoved(this, owner, moved))
+					{
+						//Passive effect successful; perform animation
+						owner.animator.SetTrigger(animationTrigger);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Perform passive effects contained in this ability when a unit is killed
+		/// </summary>
+		public void PerformOnUnitKilled(Unit owner, Unit killed)
+		{
+			foreach (var e in effects)
+			{
+				var pe = e as PassiveEffect;
+				if (pe)
+				{
+					if (pe.OnUnitKilled(this, owner, killed))
 					{
 						//Passive effect successful; perform animation
 						owner.animator.SetTrigger(animationTrigger);
@@ -192,6 +220,33 @@ namespace StormRend.Abilities
 					if (unit.currentTile == tile && owner.currentTile != tile) return true;
 			}
 			return false;
+		}
+
+		public List<Tile> GetTargetTiles(Tile origin)
+		{
+			var result = new List<Tile>();
+
+			//Find the center of the cast area
+			Vector2Int center = new Vector2Int(Ability.castAreaSqrLen / 2, Ability.castAreaSqrLen / 2);
+
+			//Go through castArea
+			for (int row = 0; row < Ability.castAreaSqrLen; row++)  //rows
+			{
+				for (int col = 0; col < Ability.castAreaSqrLen; col++)  //columns
+				{
+					if (castArea[row * Ability.castAreaSqrLen + col])
+					{
+						Vector2Int offset = new Vector2Int(row, col) - center;
+
+						if (origin.TryGetTile(offset, out Tile t))
+						{
+							if (!(t is UnWalkableTile))
+								result.Add(t);
+						}
+					}
+				}
+			}
+			return result;
 		}
 
 		//Add an effect to this ability (Has editor code)

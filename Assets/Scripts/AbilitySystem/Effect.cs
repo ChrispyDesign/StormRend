@@ -10,7 +10,13 @@ namespace StormRend.Abilities
 		public bool isFoldOut { get; set; } = true;
 		
 	#region Core
+		//Run at Awake() time
+		public virtual void Initiate(Ability ability, Unit owner) { }
+
+		//Run once at the begining of each turn
 		public virtual void Prepare(Ability ability, Unit owner) { /*Debug.LogFormat("{0}.Effect.Prepare()", this.name);*/ }
+		
+		//Run to perform the ability
 		public abstract void Perform(Ability ability, Unit owner, Tile[] targetTiles);
 	#endregion
 	}

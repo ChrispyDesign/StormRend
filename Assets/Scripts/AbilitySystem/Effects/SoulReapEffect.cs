@@ -21,6 +21,7 @@ namespace StormRend.Abilities.Effects
 		[SerializeField] VFX VFX = null;
 		[SerializeField] AnimationCurve yPos = AnimationCurve.EaseInOut(0, 1f, 1f, 0.5f);
 		[SerializeField] AnimationCurve arriveSpeed = AnimationCurve.EaseInOut(0, 1f, 1f, 0.5f);
+
 		public override bool OnUnitKilled(Ability ability, Unit owner, Unit killedUnit)
 		{
 			//SEMI-HARDCODE
@@ -28,11 +29,11 @@ namespace StormRend.Abilities.Effects
 			if (killedUnit is EnemyUnit)	//Make sure unit killed is an enemy
 			{
 				//Calculate soul commune from owner's CURRENT TILE not STARTING TILE ie. once a unit has acted it will lock all team member's position
-				var tilesInRange = au.CalculateTargetTiles(ability, owner.currentTile, true);
+				var tilesInRange = ability.GetTargetTiles(au.currentTile);
 				if (tilesInRange.Contains(killedUnit.currentTile))
 				{
 					//Trigger VFX to lerp from killed unit to sage
-					owner.StartCoroutine(ReapSoul(owner, killedUnit));
+					owner.StartCoroutine(ReapSoul(owner, killedUnit));	//Ima Genius!
 					return true;
 				}
 			}

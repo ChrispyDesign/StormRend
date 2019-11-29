@@ -11,21 +11,20 @@ namespace StormRend.Systems
 		{
 			if (!isUnitSelected) return;    //A unit should be selected
 
-			onUnitCleared.Invoke();
-
 			//Clear tile highlights and ghost
 			ClearAllTileHighlights();
 			selectedAnimateUnit.ClearGhost();
 
 			//Clear
 			selectedUnit = null;
+
+			//Events
+			onUnitCleared.Invoke();
 		}
 
 		public void ClearSelectedAbility(bool redrawMoveTiles = true)
 		{
 			if (!isUnitSelected) return;    //A unit should be selected
-
-			onAbilityCleared.Invoke();
 
 			//Clear
 			selectedAbility = null;
@@ -37,6 +36,9 @@ namespace StormRend.Systems
 			//Redraw move highlights
 			if (redrawMoveTiles)
 				ShowMoveTiles();
+
+			//Events
+			onAbilityCleared.Invoke();
 		}
 
 		void ClearSelectedUnitTileHighlights()

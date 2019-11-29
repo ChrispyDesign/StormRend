@@ -17,7 +17,7 @@ namespace StormRend.Editors
 		- Icon : Sprite
 		- Animation Number : int
 		- Level : int
-		- Type : AbiltyType
+		- Type : AbilityType
 		- Description : string
 
 		Casting
@@ -84,7 +84,7 @@ namespace StormRend.Editors
             if (!areaOfEffectFoldout) return;
 
             Color oldGUICol = GUI.color;
-            int sqrLen = Ability.caSize;
+            int sqrLen = Ability.castAreaSqrLen;
 
             using (new EditorGUILayout.HorizontalScope())
             {

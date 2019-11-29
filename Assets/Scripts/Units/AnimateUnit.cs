@@ -55,7 +55,36 @@ namespace StormRend.Units
 		public List<Tile> possibleMoveTiles = new List<Tile>();// { get; set; } = new Tile[0];
 		public List<Tile> possibleTargetTiles = new List<Tile>();// { get; set; } = new Tile[0];
 		public int moveRange => _moveRange;
-		private float snapAngle
+		public Type[] pathBlockingUnitTypes
+		{
+			get
+			{
+				var results = new List<Type>();
+
+				//Allies
+				if ((pathBlockers & TargetType.Allies) == TargetType.Allies)
+					results.Add(typeof(AllyUnit));
+
+				//Enemies
+				if ((pathBlockers & TargetType.Enemies) == TargetType.Enemies)
+					results.Add(typeof(EnemyUnit));
+
+				//Crystals
+				if ((pathBlockers & TargetType.Crystals) == TargetType.Crystals)
+					results.Add(typeof(CrystalUnit));
+
+				//InAnimates
+				if ((pathBlockers & TargetType.InAnimates) == TargetType.InAnimates)
+					results.Add(typeof(InAnimateUnit));
+
+				//Animates
+				if ((pathBlockers & TargetType.Animates) == TargetType.Animates)
+					results.Add(typeof(AnimateUnit));
+
+				return results.ToArray();
+			}
+		}
+		float snapAngle
 		{
 			get
 			{
@@ -114,6 +143,7 @@ namespace StormRend.Units
 
 		#region Can Move & Act
 		public bool canMove => _canMove;
+		public void SetCanMove(bool value) => _canMove = value;
 		public void SetCanMove(bool value, float delay = 0) => StartCoroutine(DelaySetMove(value, delay));
 		/// <summary>
 		/// For Refresh Effect: Set custom delay for correct timing of refresh and unit reselection
@@ -131,7 +161,8 @@ namespace StormRend.Units
 				uih.SelectUnit(this);	//Go into MOVE mode
 		}
 		public bool canAct => _canAct;  //has performed an ability and hence this unit has completed it's turn and is locked until next turn
-		public void SetCanAct(bool value, float delay = 0) => StartCoroutine(DelaySetAct(value, delay));
+		public void SetCanAct(bool value) => _canAct = value;	//No select
+		public void SetCanAct(bool value, float delay) => StartCoroutine(DelaySetAct(value, delay));
 		IEnumerator DelaySetAct(bool value, float delay)        //Used for correct timing of refresh effect
 		{
 			//Set immediately so that the AllActionsUsedChecker logic runs correctly
@@ -161,6 +192,8 @@ namespace StormRend.Units
 			startTile = currentTile;
 
 			PrepGhost();
+
+			// InitiateAbilities();		//TODO
 		}
 
 		void PrepGhost()
@@ -208,6 +241,9 @@ namespace StormRend.Units
 			for (int i = statusEffects.Count - 1; i >= 0; --i)
 				if (statusEffects[i].OnTakeDamage(this, damageData) == false)   //False means effect has expired
 					statusEffects.RemoveAt(i);
+
+				// if (statusEffects.ElementAt(i).OnTakeDamage(this, damageData) == false)
+				// 	statusEffects.RemoveWhere()
 		}
 
 		//------------------- STATS
@@ -234,11 +270,11 @@ namespace StormRend.Units
 					e.Prepare(a, this);
 
 			//Run Begin Status effects (ie. sets blind, cripple, etc) 
-			foreach (var se in statusEffects)
-				se.OnStartTurn(this);
-			// for (int i = statusEffects.Count - 1; i >= 0; --i)
-			// 	if (statusEffects[i].OnBeginTurn(this) == false)    //Also auto remove expired status effects
-			// 		statusEffects.RemoveAt(i);
+			// foreach (var se in statusEffects)
+				// se.OnStartTurn(this);
+			for (int i = statusEffects.Count - 1; i >= 0; --i)
+				if (statusEffects[i].OnStartTurn(this) == false)    //Also auto remove expired status effects
+					statusEffects.RemoveAt(i);
 
 			onBeginTurn.Invoke();
 		}
@@ -482,71 +518,43 @@ namespace StormRend.Units
 			return possibleMoveTiles = Map.GetPossibleTiles(startTile.owner, startTile, range, pathBlockingUnitTypes).ToList();
 		}
 
-		public Type[] pathBlockingUnitTypes
-		{
-			get
-			{
-				var results = new List<Type>();
-
-				//Allies
-				if ((pathBlockers & TargetType.Allies) == TargetType.Allies)
-					results.Add(typeof(AllyUnit));
-
-				//Enemies
-				if ((pathBlockers & TargetType.Enemies) == TargetType.Enemies)
-					results.Add(typeof(EnemyUnit));
-
-				//Crystals
-				if ((pathBlockers & TargetType.Crystals) == TargetType.Crystals)
-					results.Add(typeof(CrystalUnit));
-
-				//InAnimates
-				if ((pathBlockers & TargetType.InAnimates) == TargetType.InAnimates)
-					results.Add(typeof(InAnimateUnit));
-
-				//Animates
-				if ((pathBlockers & TargetType.Animates) == TargetType.Animates)
-					results.Add(typeof(AnimateUnit));
-
-				return results.ToArray();
-			}
-		}
-
 		/// <summary>
 		/// Get the tiles that can be currently acted upon by this ability
 		/// </summary>
-		public List<Tile> CalculateTargetTiles(Ability a, Tile startTile = null, bool onlyGetResults = false)
+		public List<Tile> CalculateTargetTiles(Ability a)
 		{
-			//Defaults
-			if (startTile == null) startTile = currentTile;
+			return possibleTargetTiles = a.GetTargetTiles(currentTile);
 
-			var result = new List<Tile>();
-			var sqrLen = Ability.caSize;
+			// //Defaults
+			// if (startTile == null) startTile = currentTile;
 
-			//Find the center of the cast area
-			Vector2Int center = new Vector2Int(sqrLen / 2, sqrLen / 2);
+			// var result = new List<Tile>();
+			// var sqrLen = Ability.castAreaSqrLen;
 
-			//Go through castArea
-			for (int row = 0; row < sqrLen; row++)  //rows
-			{
-				for (int col = 0; col < sqrLen; col++)  //columns
-				{
-					if (a.castArea[row * sqrLen + col])
-					{
-						Vector2Int offset = new Vector2Int(row, col) - center;
+			// //Find the center of the cast area
+			// Vector2Int center = new Vector2Int(sqrLen / 2, sqrLen / 2);
 
-						if (startTile.TryGetTile(offset, out Tile t))
-						{
-							if (!(t is UnWalkableTile))
-								result.Add(t);
-						}
-					}
-				}
-			}
+			// //Go through castArea
+			// for (int row = 0; row < sqrLen; row++)  //rows
+			// {
+			// 	for (int col = 0; col < sqrLen; col++)  //columns
+			// 	{
+			// 		if (a.castArea[row * sqrLen + col])
+			// 		{
+			// 			Vector2Int offset = new Vector2Int(row, col) - center;
 
-			//Cache
-			if (!onlyGetResults) possibleTargetTiles = result;
-			return result;
+			// 			if (startTile.TryGetTile(offset, out Tile t))
+			// 			{
+			// 				if (!(t is UnWalkableTile))
+			// 					result.Add(t);
+			// 			}
+			// 		}
+			// 	}
+			// }
+
+			// //Cache
+			// if (!onlyGetResults) possibleTargetTiles = result;
+			// return result;
 		}
 
 		//------------------ INDICATORS AND UX

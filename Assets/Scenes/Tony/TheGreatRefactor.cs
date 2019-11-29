@@ -74,7 +74,7 @@ namespace The.Great.Refactor.Brainstorm
 	AllyTurnState.OnTurnEnter(State)
 	- AudioSource.PlayOneShot
 	- UnitTurnStarter.RunStartTurn
-	- UIH.Onstatechanged
+	- UIH.OnStateChanged
 	- AutoUnitSelector.Onturnenter
 
 	//Blizzard
@@ -204,7 +204,7 @@ namespace The.Great.Refactor.Brainstorm
 		try
 		{
 			if (blah)
-			else if (bleh)
+			else if (something)
 			else
 				throw new InvalidOperationException("This is illegal!");
 		}
