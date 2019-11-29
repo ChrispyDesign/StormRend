@@ -66,8 +66,8 @@ namespace StormRend.Systems
 		[Tooltip("The layer the raycast would hit")]
 		[SerializeField] LayerMask raycastFilterIn = ~0;
 		[Tooltip("The layer for the raycast to ignore")]
-		[SerializeField] int raycastFilterOutLayer = 5;  //ie. UI layer
-
+		[SerializeField] LayerMask raycastFilterOut = 1 << 5;  //ie. UI layer
+		
 		//Properties
 		Mode mode
 		{
@@ -262,7 +262,7 @@ namespace StormRend.Systems
 		bool TryGetRaycast<T>(out T hit) where T : MonoBehaviour
 		{
 			//GUI hit
-			if (IsPointerOverGUIObject(raycastFilterOutLayer))
+			if (IsPointerOverGUIObject(raycastFilterOut))
 			{
 				hit = null;
 				return false;
@@ -284,6 +284,8 @@ namespace StormRend.Systems
 		//Is there a better more reliable way of doing this?
 		bool IsPointerOverGUIObject(LayerMask mask)
 		{
+			// print("x: " + (Mathf.RoundToInt(Mathf.Log(mask.value, 2))));
+
 			//Set up the new Pointer Event
 			var pointerEventData = new PointerEventData(EventSystem.current);
 
@@ -293,10 +295,9 @@ namespace StormRend.Systems
 			//Raycast using the Graphics Raycaster and mouse click position
 			GUIhits.Clear();
 			gr.Raycast(pointerEventData, GUIhits);
-
 			foreach (var h in GUIhits)
 			{
-				if (h.gameObject.layer == raycastFilterOutLayer)	//TEMP
+				if (h.gameObject.layer == Mathf.RoundToInt(Mathf.Log(mask.value, 2)))	//TEMP
 					return true;
 			}
 
