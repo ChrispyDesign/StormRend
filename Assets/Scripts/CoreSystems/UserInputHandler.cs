@@ -63,7 +63,10 @@ namespace StormRend.Systems
 
 		[Header("Camera")]
 		[SerializeField] float cameraSmoothTime = 1.75f;
-		[SerializeField] LayerMask raycastLayerMask = ~0;
+		[Tooltip("The layer the raycast would hit")]
+		[SerializeField] LayerMask raycastFilterIn = ~0;
+		[Tooltip("The layer for the raycast to ignore")]
+		[SerializeField] int raycastFilterOutLayer = 5;  //ie. UI layer
 
 		//Properties
 		Mode mode
@@ -258,25 +261,28 @@ namespace StormRend.Systems
 		//If T object hit then return true and output it
 		bool TryGetRaycast<T>(out T hit) where T : MonoBehaviour
 		{
-			//If EventSystem.currentselectedGameObject is null then it's not over a GUI object
-			if (IsPointerOverGUIObject())
+			//GUI hit
+			if (IsPointerOverGUIObject(raycastFilterOutLayer))
 			{
 				hit = null;
 				return false;
 			}
 
+			//Try hit 3d game object
 			Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out RaycastHit hitInfo, 5000f, raycastLayerMask.value))
+			if (Physics.Raycast(ray, out RaycastHit hitInfo, 9999f, raycastFilterIn.value))
 			{
 				hit = hitInfo.collider.GetComponent<T>();
 				return (hit != null) ? true : false;
 			}
+
+			//Nothing hit
 			hit = null;
 			return false;
 		}
 
 		//Is there a better more reliable way of doing this?
-		bool IsPointerOverGUIObject()
+		bool IsPointerOverGUIObject(LayerMask mask)
 		{
 			//Set up the new Pointer Event
 			var pointerEventData = new PointerEventData(EventSystem.current);
@@ -288,20 +294,13 @@ namespace StormRend.Systems
 			GUIhits.Clear();
 			gr.Raycast(pointerEventData, GUIhits);
 
-			//TESTING!
-			for (int i = 0; i < GUIhits.Count; i++)
+			foreach (var h in GUIhits)
 			{
-				Debug.LogFormat("Hit {0}: {1}, layer: {2}", i, GUIhits[i].gameObject, GUIhits[i].gameObject.layer);
-				if (GUIhits[i].gameObject.layer == 5)
+				if (h.gameObject.layer == raycastFilterOutLayer)	//TEMP
 					return true;
 			}
-			return false;
 
-			// foreach (var h in GUIhits)
-			// {
-			// 	print("hit")
-			// }
-			return (GUIhits.Count > 0) ? true : false;
+			return false;
 		}
 
 		void PopulateControllableUnitTypes()
