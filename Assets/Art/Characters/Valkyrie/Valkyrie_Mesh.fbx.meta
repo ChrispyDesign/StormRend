@@ -363,7 +363,7 @@ ModelImporter:
     7400006: Valkyrie_LightFallLand
     7400008: Valkyrie_HitReact
     7400010: Valkyrie_Death
-    7400012: Take 001
+    7400012: Valkyrie_PiercingLight-Blind
     9500000: //RootNode
     13700000: Valk_Rigging_01:BellyGuard
     13700002: Valk_Rigging_01:Belt
@@ -500,7 +500,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
+      - time: 0.004219409
         functionName: ChancePlayMagazine
         data: 
         objectReferenceParameter: {fileID: 11400000, guid: af67b119dcbe3f84d95d58bd9f9935a3,
@@ -516,11 +516,18 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.32348505
-        functionName: PlayOnce
+      - time: 0.04943418
+        functionName: PlayInbuiltVFX
+        data: FX_PiercingLight
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.21308017
+        functionName: ChancePlayMagazine
         data: 
-        objectReferenceParameter: {fileID: 8300000, guid: 3fb983c67a8528e439e087ba985bc597,
-          type: 3}
+        objectReferenceParameter: {fileID: 11400000, guid: f0762391740edf440be8b851a0a6226e,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -531,10 +538,11 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.056818146
-        functionName: PlayInbuiltVFX
-        data: FX_PiercingLight
-        objectReferenceParameter: {instanceID: 0}
+      - time: 0.5945622
+        functionName: ChancePlayMagazine
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: 7d11e87ee1f66fc459bddafe3387ef86,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -701,6 +709,80 @@ ModelImporter:
         functionName: Die
         data: 
         objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Valkyrie_PiercingLight-Blind
+      takeName: Take 001
+      firstFrame: 82
+      lastFrame: 137
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.0020407937
+        functionName: ChancePlayMagazine
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: af67b119dcbe3f84d95d58bd9f9935a3,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.05816324
+        functionName: PlayOnce
+        data: 
+        objectReferenceParameter: {fileID: 8300000, guid: 26e4a90188c294a47a53f4d928d11ac0,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.05816324
+        functionName: PlayInbuiltVFX
+        data: FX_PiercingLight
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.2255102
+        functionName: ChancePlayMagazine
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: f0762391740edf440be8b851a0a6226e,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.4387755
+        functionName: PerformAbility
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.5887755
+        functionName: ChancePlayMagazine
+        data: 
+        objectReferenceParameter: {fileID: 11400000, guid: 54e52bfd7bf1abe4fb4d7ca4e6613982,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
