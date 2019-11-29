@@ -11,8 +11,10 @@ namespace StormRend.Editors
     public class AudioSystemEditor : SmartEditor
     {
 		string help =
-            "[Callbacks]\n" +
+			"*ChancePlay()\n" +
+			"*ChancePlay(AudioClip)\n" +
             "PlayOnce(AudioClip)\n" +
+			"ChancePlayClip(AudioClip)\n" +
             "ChancePlayMagazine(AudioMagazine)";
 
         public override string[] propertiesToExclude => new[]{ "m_Script" };
@@ -24,10 +26,10 @@ namespace StormRend.Editors
         [MenuItem("GameObject/StormRend/AudioSystem", false, 10)]
         static void CreateGameObject(MenuCommand menuCommand)
         {
-            var newo = new GameObject("AudioSystem", typeof(AudioSystem));
-            GameObjectUtility.SetParentAndAlign(newo, menuCommand.context as GameObject);
-            Undo.RegisterCreatedObjectUndo(newo, "Create StormRend AudioSystem");
-            Selection.activeObject = newo;
+            var go = new GameObject("AudioSystem", typeof(AudioSystem));
+            GameObjectUtility.SetParentAndAlign(go, menuCommand.context as GameObject);
+            Undo.RegisterCreatedObjectUndo(go, "Create StormRend AudioSystem");
+            Selection.activeObject = go;
         }
     }
 }

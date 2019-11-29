@@ -7,11 +7,13 @@ namespace StormRend.Editors
 	public class UnitAnimEventHandlersInspector : SmartEditor
 	{
 		string help =
-			"[Callbacks]\n" +
 			"PerformAbility()\n" +
 			"Die()\n" +
-			"PlayVFX(Object)\n" +
-			"PlayOnboardVFX(string)";
+			"ActivateInbuiltVFX(string)\n" +
+			"CycleInbuiltVFX(string)\n" +
+			"DeactivateInbuiltVFX(string)\n" +
+			"PlayVFX(VFX)\n" +
+			"MountVFX(VFX)";
 		public override void OnPreInspector()
 		{
 			EditorGUILayout.HelpBox(help, MessageType.Info);

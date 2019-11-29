@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1309101092, guid: 0c25f2ed055db00489974bd6dd51f2cd, type: 3}
+  m_Name: EnemyAI
+  m_EditorClassIdentifier: 
+  _eData:
+    owner: {fileID: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    breakpoint: 0
+  ID: 0
+  description: 
+  _state: -1
+  _parent: {fileID: 0}
+  root: {fileID: 114812353847911796}
+  _eNodes:
+  - {fileID: 114101301479098354}
+  - {fileID: 114812353847911796}
+--- !u!114 &114016761336581024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd0f58f0bc3203c468af0922319bc1e7, type: 3}
+  m_Name: CompleteAIAction[COPY]
+  m_EditorClassIdentifier: 
+  enabled: 1
+  maxScanIterations: 6
+  provokeRange: 6
+  moveOn: 1
+  maxExtraSeekRangeAroundTarget: 2
+  attackOn: 1
+  attackRange: 1
+--- !u!114 &114101301479098354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -710837390, guid: 0c25f2ed055db00489974bd6dd51f2cd, type: 3}
+  m_Name: Action:0
+  m_EditorClassIdentifier: 
+  _eData:
+    owner: {fileID: 11400000}
+    rect:
+      serializedVersion: 2
+      x: 337.5
+      y: 290
+      width: 95
+      height: 65
+    breakpoint: 0
+  ID: 0
+  description: 
+  _state: 1
+  _parent: {fileID: 114812353847911796}
+  _deleg: {fileID: 114016761336581024}
+  overrideOn: 0
+  stateOverride: 1
+--- !u!114 &114812353847911796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -818739291, guid: 0c25f2ed055db00489974bd6dd51f2cd, type: 3}
+  m_Name: Selector:1
+  m_EditorClassIdentifier: 
+  _eData:
+    owner: {fileID: 11400000}
+    rect:
+      serializedVersion: 2
+      x: 336.5
+      y: 164
+      width: 95
+      height: 65
+    breakpoint: 0
+  ID: 1
+  description: 
+  _state: 1
+  _parent: {fileID: 0}
+  children:
+  - {fileID: 114101301479098354}

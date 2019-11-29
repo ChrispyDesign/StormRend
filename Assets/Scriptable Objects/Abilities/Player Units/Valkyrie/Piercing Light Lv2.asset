@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: Piercing Light Lv2
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 38c8c8fed3fa0284882b7b81665b33c2, type: 3}
+  _icon: {fileID: 21300000, guid: 0667f2eca42654d4aafdb7aee296e4cb, type: 3}
   _animationTrigger: PiercingLight
   _type: 2
   _level: 2
-  _title: Piercing Light
+  _title: Piercing Light Lv2
   _descriptions:
   - Deal 1 damage to up to 3 units in a line
   - Deal +1 damage
@@ -26,6 +26,7 @@ MonoBehaviour:
   _targetTileTypes: 125
   effects:
   - {fileID: 114556254263289880}
+  - {fileID: 114865280380308446}
   castArea: 00000001000000000000010000000000000100000001010100010101000000010000000000000100000000000001000000
 --- !u!114 &114415901351157682
 MonoBehaviour:
@@ -61,3 +62,18 @@ MonoBehaviour:
   gainGlory: 1
   gloryAmount: 0
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
+--- !u!114 &114865280380308446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0340ba18f4cdb44a632086657e9e90, type: 3}
+  m_Name: ProtectEffect
+  m_EditorClassIdentifier: 
+  turnCount: 0
+  affectedTurns: 1
+  applyToSelf: 0

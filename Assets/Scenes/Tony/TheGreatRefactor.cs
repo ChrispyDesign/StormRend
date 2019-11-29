@@ -3,6 +3,38 @@
 namespace The.Great.Refactor.Brainstorm
 {
 	/*
+	--------------------- Structure and Architecture
+	Core
+		Masters
+		- GameDirector
+		- UltraStateMachine
+		- AudioSystem, AudioSource
+		- EventSystem, StandaloneInputModule
+		TurnStates
+			AllyState
+			- AllyTurnState
+			- AudioSource, AudioSystem
+			EnemyState
+			- EnemyTurnState
+			- AudioSource, AudioSystem
+		Controllers
+			UserInputHandler
+			- UserInputHandler
+			- UnitSelectAudioRelay
+			- AudioSystem, AudioSource
+			UnitRegistry
+
+			BhaVE
+		Data
+			Blizzard
+			Glory
+			TileHighlights
+		[UI]
+
+	GameDirector:
+	- Helps control the UltraStateMachine as well as other side functionality ie. handling pause, scene management
+	-  
+
 	------------------- Brainstorm
 	- Glory and Blizzard are essentially just integer numbers
 		Implementation Ideas:
@@ -27,6 +59,28 @@ namespace The.Great.Refactor.Brainstorm
 	TickCrystals()
 
 	------------------ Execution Order of Critical Game Methods
+	Critical methods:
+	- AnimateUnit.CalculateMoveTiles()
+	- UserInputHandler.OnStateChanged()
+	- AutoUnitSelector.OnTurnEnter
+	- GameDirector.SafeNextTurn()
+	- GameDirector.CheckAndPerformGameEnd()
+	- GameDirector.CheckAndPerformGameEnding()
+	- USM.NextTurn()
+	- USM.Stack()
+	- USM.UnStack()
+	- AllyTurnState
+
+	AllyTurnState.OnTurnEnter(State)
+	- AudioSource.PlayOneShot
+	- UnitTurnStarter.RunStartTurn
+	- UIH.OnStateChanged
+	- AutoUnitSelector.Onturnenter
+
+	//Blizzard
+	1. BlizzardController.Tick(), blizzard.value++, blizzard.onChange!
+	2. BlizzardMeter.OnChange(), internalValue: 5, SOV: 6
+
 	AnimateUnit.CalculateMoveTiles()
 	Needs to be executed:
 	- At the start of a turn for that turn's unit type ie. allyTurnState will calculate all AllyUnit's possible moves
@@ -109,6 +163,9 @@ namespace The.Great.Refactor.Brainstorm
 
 	3. If not in double range check for triple range 
 			Move toward the closest
+
+	End Player Turn when all unit's have moved
+	- If all units of assigned type 
 	*/
 
 	#region Conventions
@@ -147,7 +204,7 @@ namespace The.Great.Refactor.Brainstorm
 		try
 		{
 			if (blah)
-			else if (bleh)
+			else if (something)
 			else
 				throw new InvalidOperationException("This is illegal!");
 		}

@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: Furious Swing Lv2
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 4e9a5d1b7a4960d4687558a2d3b95a57, type: 3}
+  _icon: {fileID: 21300000, guid: 4c19355fd17083149a82a99a06577f57, type: 3}
   _animationTrigger: FuriousSwing
-  _type: 1
+  _type: 2
   _level: 2
-  _title: Furious Swing
+  _title: Furious Swing Lv2
   _descriptions:
-  - Deal 2 damage
-  - If you kill an enemy, you may move and attack again
+  - Deal 2 Damage
+  - Move and Attack again if enemy killed
   _gloryCost: 2
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 1
-  _targetTileTypes: 64
+  _targetTileTypes: 96
   effects:
   - {fileID: 114178195148735544}
   - {fileID: 114473816250434770}
@@ -40,9 +40,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
-  refreshCount: 0
-  refreshType: 0
   delay: 1
+  refreshCount: 0
+  onlyIfHaveKilledThisTurn: 0
+  refreshType: 0
   allowedRefreshes: 1
 --- !u!114 &114178195148735544
 MonoBehaviour:
@@ -60,7 +61,7 @@ MonoBehaviour:
   piercing: 0
   gainGlory: 1
   gloryAmount: 0
-  glory: {fileID: 0}
+  glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
 --- !u!114 &114186159587013604
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -90,9 +91,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
-  refreshCount: 0
-  refreshType: 0
   delay: 1
+  refreshCount: 0
+  onlyIfHaveKilledThisTurn: 0
+  refreshType: 0
   allowedRefreshes: 1
 --- !u!114 &114473816250434770
 MonoBehaviour:
@@ -106,7 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
   m_Name: RefreshEffect
   m_EditorClassIdentifier: 
-  refreshCount: 0
-  refreshType: -1
   delay: 1
+  refreshCount: 0
+  onlyIfHaveKilledThisTurn: 1
+  refreshType: -1
   allowedRefreshes: 1

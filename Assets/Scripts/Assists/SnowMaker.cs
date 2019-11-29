@@ -13,10 +13,10 @@ namespace StormRend.Assists
 		[SerializeField] float duration = 5;
 		[SerializeField] AnimationCurve transition = AnimationCurve.Linear(0, 0, 1, 1);
 
-		public void Run()
-		{
-			StartCoroutine(RunBlizzardSequence());
-		}
+		//Reset the snow shader on start
+		void Start() =>	SetSnowOpacity(0);
+
+		public void Run() => StartCoroutine(RunBlizzardSequence());
 
 		IEnumerator RunBlizzardSequence()
 		{
@@ -28,6 +28,9 @@ namespace StormRend.Assists
 				SetSnowOpacity(transition.Evaluate(time));
 				yield return null;
 			}
+			
+			//Reset snow opacity on finish to avoid annoying unstaged files in git 
+			SetSnowOpacity(0);
 		}
 
 		void SetSnowOpacity(float value)

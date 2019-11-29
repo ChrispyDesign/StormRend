@@ -6,14 +6,12 @@ using StormRend.Tags;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 namespace StormRend.Units
 {
 	[SelectionBase]
 	[RequireComponent(typeof(UnitTag))]
-	public abstract class Unit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+	public abstract class Unit : MonoBehaviour	//, IPointerEnterHandler, IPointerExitHandler
 	{
 		[TextArea(0,2)] public string description = null;
 
@@ -40,15 +38,17 @@ namespace StormRend.Units
 		}
 		public int maxHP => _maxHP;
 		public bool isDead => HP <= 0;
-		public Animator animator { get; private set; }
-		public UnitAnimEventHandlers animEventHandlers { get; private set; }
-		public new Tag tag { get; private set; }
+		public Animator animator { get; private set; } = null;
+		public UnitAnimEventHandlers animEventHandlers { get; private set; } = null;
+		public new Tag tag { get; private set; } = null;
+		internal bool hasKilledThisTurn { get; set; } = false;
 
 		//Members
-		protected UnitRegistry ur;
-		protected UserInputHandler uih;
+		protected UnitRegistry ur = null;
+		protected UserInputHandler uih = null;
 
-	#region Startup
+
+		#region Startup
 		protected virtual void Awake()
 		{
 			//Reset health
@@ -89,7 +89,14 @@ namespace StormRend.Units
 		}
 		#endregion
 
-	#region Health
+		#region Health
+		/// <summary>
+		/// Kills the unit. No need to send in a huge value etc.
+		/// </summary>
+		public virtual void Kill(Unit vendor = null)
+		{
+			TakeDamage(new HealthData(vendor, HP));
+		}
 		public virtual void TakeDamage(HealthData healthData)
 		{
 			if (isDead) return;     //Can't beat a dead horse :P
@@ -118,13 +125,12 @@ namespace StormRend.Units
 	#endregion
 
 	#region Event System
-		public virtual void OnPointerEnter(PointerEventData eventData)
-		{
-		}
-
-		public virtual void OnPointerExit(PointerEventData eventData)
-		{
-		}
+		// public virtual void OnPointerEnter(PointerEventData eventData)
+		// {
+		// }
+		// public virtual void OnPointerExit(PointerEventData eventData)
+		// {
+		// }
 	#endregion
 	}
 }

@@ -12,15 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: Soul Commune
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: c4d12d6fcf8352249b48129162618955, type: 3}
+  _icon: {fileID: 21300000, guid: fd660c7b634a25544a8406d41b0e4736, type: 3}
   _animationTrigger: SoulCommune
-  _type: 0
+  _type: 1
   _level: 1
   _title: Soul Commune
   _descriptions:
-  - When an enemy dies within range, gain 1 Glory
-  - 
-  - 
+  - Gain 1 Glory upon death of an enemy in soul commune range
   _gloryCost: 0
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 0
@@ -42,3 +40,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gloryGainAmount: 1
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
+  VFX: {fileID: 11400000, guid: 18ae53cfcfa164441838571696cd693e, type: 2}
+  yPos:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.0099487305
+      inSlope: 25.239485
+      outSlope: 25.239485
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0.34942275
+    - serializedVersion: 3
+      time: 1
+      value: 1.2
+      inSlope: 0.31398672
+      outSlope: 0.31398672
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.52004063
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  arriveSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.001083374
+      value: 0
+      inSlope: 0.12521565
+      outSlope: 0.12521565
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1
+      value: 1.2
+      inSlope: 0.5362272
+      outSlope: 0.5362272
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.4103685
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

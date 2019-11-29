@@ -1,28 +1,39 @@
 ﻿using StormRend.MapSystems.Tiles;
 using StormRend.Units;
+using UnityEngine;
 
 namespace StormRend.Abilities.Effects
 {
-	public class ProtectEffect : StatusEffect
+    public class ProtectEffect : RuneStatusEffect
     {
-		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
-		{
-			AddStatusEffectToAnimateUnits(targetTiles);
-		}
+        [SerializeField] bool applyToSelf = false;
 
-		public override void OnBeginTurn(AnimateUnit affectedUnit)
-		{
-			base.OnBeginTurn(affectedUnit);		//Housekeeping
-		}
+        public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
+        {
+            if (applyToSelf)
+                AddStatusEffectToTargets(owner);
+            else
+                AddStatusEffectToTargets(targetTiles);		//This also should apply the effect immediately
+        }
 
-		public override void OnTakeDamage(Unit affectedUnit, HealthData damageData)
-		{
-			//Reverse the damage done
-			affectedUnit.HP += damageData.amount;
+        public override bool OnStartTurn(AnimateUnit affectedUnit)
+        {
+            //Tick this effect
+            return base.OnStartTurn(affectedUnit);
+        }
 
-			//Play some kind of protect effect/animation?
-			affectedUnit.animator.ResetTrigger("HitReact");		//Prevent HitReact animation from playing
-			affectedUnit.animator.SetTrigger("Parry");		//Maybe play some kind of block?
-		}
-	}
+        public override bool OnTakeDamage(Unit affectedUnit, HealthData damageData)
+        {
+            //Reverse the damage done
+            affectedUnit.HP += damageData.amount;
+            //This needs to trigger so that the health bars update properly
+            affectedUnit.onTakeDamage.Invoke(damageData); 
+
+            //Play some kind of protect effect/animation?
+            affectedUnit.animator.ResetTrigger("HitReact");     //Prevent HitReact animation from playing
+            // affectedUnit.animator.SetTrigger("Parry");		//TODO Maybe play some kind of block?
+
+            return base.OnTakeDamage(affectedUnit, damageData);
+        }
+    }
 }

@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: Safe Passage Lv2
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: 2a0769b09c609cc44b7bc4bc3554b728, type: 3}
+  _icon: {fileID: 21300000, guid: 8c55dad53e2e36948b356fecbed70f67, type: 3}
   _animationTrigger: SafePassage
-  _type: 1
+  _type: 3
   _level: 2
-  _title: Safe Passage
+  _title: Safe Passage Lv2
   _descriptions:
-  - Choose 2 tiles. Swap units on those tiles
-  - Restore 2 Health to those units
+  - Swap or Teleport units on 2 chosen tiles
+  - Restore 2 Health to chosen units
   _gloryCost: 1
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
   _requiredTiles: 2
@@ -53,5 +53,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8276f40f4bf260f4e92f11193e47668e, type: 3}
   m_Name: SwapUnitEffect
   m_EditorClassIdentifier: 
-  VFX: {fileID: 4117061634930817748, guid: adf789cff06a6384f8b171f86f4d4a00, type: 3}
-  VFXDuration: 3
+  vfx: {fileID: 11400000, guid: ffe2b23d6478e934a8449d5213546ce0, type: 2}
+  swapTiming: 1

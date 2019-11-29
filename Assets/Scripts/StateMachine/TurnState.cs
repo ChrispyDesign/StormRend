@@ -1,14 +1,12 @@
 using StormRend.Enums;
-using StormRend.States.UI;
 using StormRend.Systems.StateMachines;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace StormRend.States
 {
-    public class TurnState : OnState
+	public class TurnState : CoverState
     {
 		[Header("Unit Filtering"), Tooltip("The unit type that can be controlled when game is in this state")]
 		public TargetType unitType;
@@ -21,8 +19,8 @@ namespace StormRend.States
         [ReadOnlyField] public float totalStateTime = 0;
 
         [Header("Events")]
-		[SerializeField] protected StateEvent onTurnEnter;
-        [SerializeField] protected StateEvent onTurnExit;
+		public StateEvent onTurnEnter = null;
+        public StateEvent onTurnExit = null;
 
         /// NOTE! All these methods must be called by overridden methods to preserve correct functionality
 
@@ -54,21 +52,5 @@ namespace StormRend.States
 
             totalStateTime += currentStateTime;
         }
-
-        //Auto handle pause and unpause
-        public override void OnCover(UltraStateMachine sm)
-        {
-            base.OnCover(sm);     //Hides UI
-
-            Time.timeScale = 0;
-        }
-
-        public override void OnUncover(UltraStateMachine sm)
-        {
-            base.OnUncover(sm);   //Unhide UI
-
-            Time.timeScale = 1f;
-        }
-
     }
 }

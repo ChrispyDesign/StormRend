@@ -7,32 +7,35 @@ namespace StormRend.Abilities.Effects
 	/// <summary>
 	/// Deals reflex damage when affectunit is attacked
 	/// </summary>
-	public class TauntEffect : StatusEffect
+	public class TauntEffect : RuneStatusEffect
 	{
 		[SerializeField] int reflexDamage = 1;
 		[SerializeField] string inbuiltVFXName = "FX_Provoke";
 
 		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
-			AddStatusEffectToAnimateUnits(targetTiles);
+			AddStatusEffectToTargets(targetTiles);
 		}
 
-		public override void OnBeginTurn(AnimateUnit affectedUnit)
+		public override bool OnStartTurn(AnimateUnit affectedUnit)
 		{
-			base.OnBeginTurn(affectedUnit);     //Housekeeping
+			//Tick this effect
+			var valid = base.OnStartTurn(affectedUnit);
 
-			if (affectedTurns > 0 
-				&& turnCount >= affectedTurns)
-			{
-				//HARDCODE If this effect has expired then also deactivate relevant VFX
+			if (valid)
+				affectedUnit.animEventHandlers.ActivateInbuiltVFX(inbuiltVFXName);
+			else
 				affectedUnit.animEventHandlers.DeactivateInbuiltVFX(inbuiltVFXName);
-			}
+				
+			return valid;
 		}
 
-		public override void OnTakeDamage(Unit affectedUnit, HealthData damageData)
+		public override bool OnTakeDamage(Unit affectedUnit, HealthData damageData)
 		{
 			//Apply reflex damage; The victim attacks back
 			damageData.vendor.TakeDamage(new HealthData(affectedUnit, reflexDamage));
+
+			return true;
 		}
 	}
 }

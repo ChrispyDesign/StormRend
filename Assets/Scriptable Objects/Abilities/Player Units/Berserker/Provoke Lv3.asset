@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab7a01e76e20fd4bb539b1c0788b678, type: 3}
   m_Name: Provoke Lv3
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: e34b8fdafce09d745b83c1e4e769bc8f, type: 3}
+  _icon: {fileID: 21300000, guid: dbd5c1e525d136d4da72e90d090300e3, type: 3}
   _animationTrigger: Provoke
-  _type: 2
+  _type: 3
   _level: 3
-  _title: Provoke
+  _title: Provoke Lv3
   _descriptions:
-  - Enemies must attack you next turn. When attacked reflect 1 damage
-  - Reflect +1 damage
+  - Forces enemies to attack you next turn, reflecting 1 Damage
+  - Reflect +1 Damage
   - Gain Protection
   _gloryCost: 2
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
-  _requiredTiles: 1
+  _requiredTiles: 0
   _targetTileTypes: 2
   effects:
   - {fileID: 114432857213518202}
@@ -43,6 +43,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnCount: 0
   affectedTurns: 1
+  applyToSelf: 0
 --- !u!114 &114202355932698588
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -58,6 +59,7 @@ MonoBehaviour:
   turnCount: 0
   affectedTurns: 1
   reflexDamage: 1
+  inbuiltVFXName: FX_Provoke
 --- !u!114 &114286334617455646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,6 +75,7 @@ MonoBehaviour:
   turnCount: 0
   affectedTurns: 1
   reflexDamage: 1
+  inbuiltVFXName: FX_Provoke
 --- !u!114 &114432857213518202
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -88,6 +91,7 @@ MonoBehaviour:
   turnCount: 0
   affectedTurns: 1
   reflexDamage: 2
+  inbuiltVFXName: FX_Provoke
 --- !u!114 &114656497702361800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,6 +107,7 @@ MonoBehaviour:
   turnCount: 0
   affectedTurns: 1
   reflexDamage: 1
+  inbuiltVFXName: FX_Provoke
 --- !u!114 &114978099270114264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -117,3 +122,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnCount: 0
   affectedTurns: 1
+  applyToSelf: 1

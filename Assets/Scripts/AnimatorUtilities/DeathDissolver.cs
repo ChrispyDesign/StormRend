@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using StormRend.Units;
+using StormRend.VisualFX;
 using UnityEngine;
 
 namespace StormRend.Assists
@@ -11,20 +12,30 @@ namespace StormRend.Assists
 	public class DeathDissolver : MonoBehaviour
 	{
 		//Inspector
+		[SerializeField] VFX deathVFX = null;
+
 		[Header("Designer to tune these values")]
 		[SerializeField] float startDelay = 1.5f;
 		[SerializeField] float duration = 2.5f;
-		[SerializeField] string shaderParam = "_DissolveValue";
+
+		[Header("Dissolve")]
+		[SerializeField] string dissolveShaderParam = "_DissolveValue";
+		[SerializeField] float startDissolveValue = 1f;
+		[SerializeField] float endDissolveValue = 0f;
+
+
+		[Header("Outline Color")]
+		[SerializeField] string outlineColorShaderParam = "_ASEOutlineColor";
+		[SerializeField] Color startColorValue = Color.clear;
+		[SerializeField] Color endColorValue = Color.clear;
 
 		//Members
 		List<Material> materials = new List<Material>();
 		Unit u;
-		AnimateUnit au;
 
 		void Awake()
 		{
 			u = GetComponentInParent<Unit>();
-			au = u as AnimateUnit;
 
 			//Get materials from each child renderers
 			var renderers = GetComponentsInChildren<Renderer>();
@@ -35,38 +46,58 @@ namespace StormRend.Assists
 		public void Execute()
 		{
 			//Dissolve animate units. Instantly kill anything else
-			if (au)
-				StartCoroutine(RunDeathDissolve());
-			else
-				u.Die();    //ie. Crystals
+			switch (u)
+			{
+				case AnimateUnit au:
+					StartCoroutine(RunDeathDissolve(au));
+					break;
+				case InAnimateUnit iu:
+					iu.Die();
+					break;
+				default:
+					u.Die();
+					break;
+			}
 		}
 
-		IEnumerator RunDeathDissolve()
+		IEnumerator RunDeathDissolve(AnimateUnit au)
 		{
+			//Create VFX
+			deathVFX?.Play(au.transform.position, au.transform.rotation);
+
 			//Initial delay
 			yield return new WaitForSeconds(startDelay);
 
 			//Dissolve
-			float value = 1f;
+			float time = 0f;
 			float rate = 1f / duration;
-			while (value > 0f)
+			while (time < 1f)
 			{
-				value -= rate * Time.deltaTime;
-				SetDissolve(value);
+				time += rate * Time.deltaTime;
+
+				foreach (var m in materials)
+				{
+					SetDissolveLerp(m, time);
+					SetOutlineColorLerp(m, time);
+				}
 				yield return null;
 			}
 
-			//Zero out dissolve
-			SetDissolve(0f);
+			//Make sure it is zeroed out properly
+			foreach (var m in materials)
+			{
+				SetDissolveLerp(m, 1f);
+				SetOutlineColorLerp(m, 1f);
+			}
 
 			//Finally kill unit
 			au.Die();
 		}
 
-		void SetDissolve(float dissolve)
-		{
-			foreach (var m in materials)
-				m.SetFloat(shaderParam, dissolve);
-		}
+		void SetDissolveLerp(Material m, float t) 
+			=> m.SetFloat(dissolveShaderParam, Mathf.Lerp(startDissolveValue, endDissolveValue, t));
+
+		void SetOutlineColorLerp(Material m, float t) 
+			=> m.SetColor(outlineColorShaderParam, Color.Lerp(startColorValue, endColorValue, t));
 	}
 }

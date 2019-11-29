@@ -22,7 +22,6 @@ namespace StormRend.Audio
 		{
 			//No need to check for null because a audio source should always be attached to this gameobject
 			audioSource = GetComponent<AudioSource>();
-			audioSource.playOnAwake = false;
 			audioSource.mute = false;
 			audioSource.loop = false;
 		}

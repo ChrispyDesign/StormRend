@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using pokoro.Patterns.Generic;
-using StormRend.Enums;
+using StormRend.Assists;
 using StormRend.MapSystems.Tiles;
-using StormRend.States;
-using StormRend.Systems.StateMachines;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using UnityEngine;
 
 namespace StormRend.Units
 {
+	[RequireComponent(typeof(MoveTileRecalculator))]
 	public class UnitRegistry : Singleton<UnitRegistry>
 	{
 		//Hookups
@@ -20,7 +19,6 @@ namespace StormRend.Units
 		onUnitCreated += PreCalculateMoveTiles.Run
 		onUnitKilled += PreCalculateMoveTiles.Run
 		*/
-
 		//Inspector
 		[Header("Units loaded in automatically. DO NOT load in manually")]
 		[ReadOnlyField, SerializeField] List<Unit> _aliveUnits = new List<Unit>();
@@ -29,18 +27,24 @@ namespace StormRend.Units
 		//Properties
 		public Unit[] aliveUnits => _aliveUnits.ToArray();
 		public Unit[] deadUnits => _deadUnits.ToArray();
-		public bool allAlliesDead => GetUnitsByType<AllyUnit>().Length <= 0;
-		public bool allEnemiesDead => GetUnitsByType<EnemyUnit>().Length <= 0;
+		public bool allAlliesDead => GetAliveUnitsByType<AllyUnit>().Length <= 0;
+		public bool allEnemiesDead => GetAliveUnitsByType<EnemyUnit>().Length <= 0;
+		public MoveTileRecalculator moveTileRecalculator => _moveTileRecalculator;
 
 		//Events
 		[Header("Events")]
-		public UnitEvent onUnitCreated;
-		public UnitEvent onUnitKilled;
+		public UnitEvent onUnitCreated = null;
+		public UnitEvent onUnitKilled = null;
+
+		//Members
+		MoveTileRecalculator _moveTileRecalculator;
 
 		void Start()
 		{
 			_deadUnits.Clear();
 			FindAllUnits();
+
+			_moveTileRecalculator = GetComponent<MoveTileRecalculator>();
 		}
 		
 		//Finds all units and sorts them based on whether they're dead or not
@@ -74,42 +78,11 @@ namespace StormRend.Units
 				Debug.LogWarningFormat("{0} was not in list of alive units!", deadUnit);
 		}
 
-		public T[] GetUnitsByType<T>() where T : Unit => (from u in aliveUnits where u is T select u as T).ToArray();
-	#endregion
-
-	#region Turn Enter/Exit logic
-		public void RunUnitsBeginTurn(State state)
-		{
-			var turnState = state as TurnState;
-			AnimateUnit[] currentStateUnits = new AnimateUnit[0];
-			switch (turnState.unitType)
-			{
-				case TargetType.Allies:
-					currentStateUnits = GetUnitsByType<AllyUnit>();
-					break;
-				case TargetType.Enemies:
-					currentStateUnits = GetUnitsByType<EnemyUnit>();
-					break;
-			}
-			foreach (var u in currentStateUnits)
-				u.BeginTurn();
-		}
-		public void RunUnitsEndTurn(State state)
-		{
-			var turnState = state as TurnState;
-			AnimateUnit[] animateUnits = new AnimateUnit[0];
-			switch (turnState.unitType)
-			{
-				case TargetType.Allies:
-					animateUnits = GetUnitsByType<AllyUnit>();
-					break;
-				case TargetType.Enemies:
-					animateUnits = GetUnitsByType<EnemyUnit>();
-					break;
-			}
-			foreach (var u in animateUnits)
-				u.EndTurn();
-		}
+		public T[] GetAliveUnitsByType<T>() where T : Unit => 
+			(from u in aliveUnits where !u.isDead where u is T select u as T).ToArray();
+				
+		public T[] GetDeadUnitsByType<T>() where T : Unit => 
+			(from u in deadUnits where u.isDead where u is T select u as T).ToArray();
 	#endregion
 
 	#region OnTile Utility Functions
