@@ -76,16 +76,16 @@ namespace StormRend.Systems
 			input = FindObjectOfType<UserInputHandler>();
 			actionsUsedChecker = FindObjectOfType<AllActionsUsedChecker>();
 
-			Debug.Assert(input, "No User Input Handler found!");
-			Debug.Assert(actionsUsedChecker, "No All Actions Used Checker Found!");
+			if (!input) Debug.LogWarning("No User Input Handler found!");
+			if (!actionsUsedChecker) Debug.LogWarning("No All Actions Used Checker Found!");
 
 			//Audio (must be setup manually)
-			Debug.Assert(sfxAudio, "No SFX audio source allocated!");
-			Debug.Assert(vocalAudio, "No Vocal audio source allocated!");
+			if (!sfxAudio) Debug.LogWarning("No SFX audio source allocated!");
+			if (!vocalAudio) Debug.LogWarning("No Vocal audio source allocated!");
 
 			//States
-			Debug.Assert(pauseMenuState, "No Pause Menu State Found!");
-			Debug.Assert(endTurnConfirmationState, "No End Turn Confirmation State Found!");
+			if (!pauseMenuState) Debug.LogWarning("No Pause Menu State Found!");
+			if (!endTurnConfirmationState) Debug.LogWarning("No End Turn Confirmation State Found!");
 		}
 
 		void Start()
