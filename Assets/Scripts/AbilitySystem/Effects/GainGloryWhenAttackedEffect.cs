@@ -8,7 +8,7 @@ namespace StormRend.Abilities.Effects
     /// <summary>
     /// Gains the specified glory amount when affected unit takes damage
     /// </summary>
-    public sealed class GainGloryWhenAttackedEffect : StatusEffect
+    public sealed class GainGloryWhenAttackedEffect : RuneStatusEffect
     {
         [SerializeField] int amount = 1;
         [SerializeField] BhaveInt glory = null;

@@ -143,6 +143,7 @@ namespace StormRend.Units
 
 		#region Can Move & Act
 		public bool canMove => _canMove;
+		public void SetCanMove(bool value) => _canMove = value;
 		public void SetCanMove(bool value, float delay = 0) => StartCoroutine(DelaySetMove(value, delay));
 		/// <summary>
 		/// For Refresh Effect: Set custom delay for correct timing of refresh and unit reselection
@@ -160,7 +161,8 @@ namespace StormRend.Units
 				uih.SelectUnit(this);	//Go into MOVE mode
 		}
 		public bool canAct => _canAct;  //has performed an ability and hence this unit has completed it's turn and is locked until next turn
-		public void SetCanAct(bool value, float delay = 0) => StartCoroutine(DelaySetAct(value, delay));
+		public void SetCanAct(bool value) => _canAct = value;	//No select
+		public void SetCanAct(bool value, float delay) => StartCoroutine(DelaySetAct(value, delay));
 		IEnumerator DelaySetAct(bool value, float delay)        //Used for correct timing of refresh effect
 		{
 			//Set immediately so that the AllActionsUsedChecker logic runs correctly
@@ -239,6 +241,9 @@ namespace StormRend.Units
 			for (int i = statusEffects.Count - 1; i >= 0; --i)
 				if (statusEffects[i].OnTakeDamage(this, damageData) == false)   //False means effect has expired
 					statusEffects.RemoveAt(i);
+
+				// if (statusEffects.ElementAt(i).OnTakeDamage(this, damageData) == false)
+				// 	statusEffects.RemoveWhere()
 		}
 
 		//------------------- STATS
@@ -265,11 +270,11 @@ namespace StormRend.Units
 					e.Prepare(a, this);
 
 			//Run Begin Status effects (ie. sets blind, cripple, etc) 
-			foreach (var se in statusEffects)
-				se.OnStartTurn(this);
-			// for (int i = statusEffects.Count - 1; i >= 0; --i)
-			// 	if (statusEffects[i].OnBeginTurn(this) == false)    //Also auto remove expired status effects
-			// 		statusEffects.RemoveAt(i);
+			// foreach (var se in statusEffects)
+				// se.OnStartTurn(this);
+			for (int i = statusEffects.Count - 1; i >= 0; --i)
+				if (statusEffects[i].OnStartTurn(this) == false)    //Also auto remove expired status effects
+					statusEffects.RemoveAt(i);
 
 			onBeginTurn.Invoke();
 		}

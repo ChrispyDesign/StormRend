@@ -8,7 +8,7 @@ namespace StormRend.Abilities.Effects
 	/// <summary>
 	/// Prevents the unit from moving
 	/// </summary>
-	public class ImmobiliseEffect : StatusEffect
+	public class ImmobiliseEffect : CursedStatusEffect
     {
 		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
@@ -16,16 +16,18 @@ namespace StormRend.Abilities.Effects
 			ImmobiliseTargetsImmediately(targetTiles);		//Just in case
 		}
 
-		public override void OnStartTurn(AnimateUnit affectedUnit)
+		public override bool OnStartTurn(AnimateUnit affectedUnit)
 		{
-				affectedUnit.SetCanMove(false);
-			// var valid = base.OnStartTurn(affectedUnit);
-			// if (valid)
-			// {
-			// 	//Cripple the bearer for this turn
-			// 	affectedUnit.SetCanMove(false);
-			// }
-			// return valid;
+			var valid = base.OnStartTurn(affectedUnit);
+			affectedUnit.SetCanMove(!valid);
+			return valid;
+		}
+
+		public override bool OnEndTurn(AnimateUnit affectedUnit)
+		{
+			var valid = base.OnEndTurn(affectedUnit);
+			affectedUnit.SetCanMove(!valid);
+			return valid;
 		}
 
 		public void ImmobiliseTargetsImmediately(params Tile[] targetTiles)

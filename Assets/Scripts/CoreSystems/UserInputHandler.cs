@@ -297,7 +297,7 @@ namespace StormRend.Systems
 			gr.Raycast(pointerEventData, GUIhits);
 			foreach (var h in GUIhits)
 			{
-				if (h.gameObject.layer == Mathf.RoundToInt(Mathf.Log(mask.value, 2)))	//TEMP
+				if (h.gameObject.layer == Mathf.FloorToInt(Mathf.Log((float)mask.value, 2f)))	//HACKY
 					return true;
 			}
 

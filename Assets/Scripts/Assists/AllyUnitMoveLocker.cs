@@ -16,7 +16,7 @@ namespace StormRend.Assists
 		void Start()
 		{
 			foreach (var au in ur.GetAliveUnitsByType<AllyUnit>())
-				au.onActed.AddListener(LockMovedUnits);
+				au.onActed.AddListener(LockMovedUnits);		//Probably don't need to unregister
 		}
 
 		/// <summary>

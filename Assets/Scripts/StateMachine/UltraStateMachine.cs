@@ -2,6 +2,7 @@
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace StormRend.Systems.StateMachines
 {
@@ -10,7 +11,7 @@ namespace StormRend.Systems.StateMachines
 	/// Turn states for turn based games.
 	/// Stacks for Pause menus etc.
 	/// </summary>
-	public sealed class UltraStateMachine : MonoBehaviour //: Singleton<UltraStateMachine>
+	public sealed class UltraStateMachine : MonoBehaviour
 	{
 		//Normally this state machine starts of running states in turnStates
 		//If a state is stacked, then the current state is saved to be returned to later
@@ -19,17 +20,14 @@ namespace StormRend.Systems.StateMachines
 
 		//Inspector
 		[ReadOnlyField, SerializeField] int _currentStateIDX = 0;
-		[SerializeField] State entryState = null;
+        [SerializeField] State entryState = null;
 		[SerializeField] List<State> turnStates = new List<State>();  //They have to be StackStates because they can be covered/uncovered
 
 		//Events
 		[Space]
-		public StateEvent onExitCurrentTurn;
-		public StateEvent onEnterNextTurn;
-
-		//Members
-		Stack<State> stackStates = new Stack<State>();
-		[SerializeField] bool debug = false;
+		public StateEvent onExitCurrentTurn = null;
+		public StateEvent onEnterNextTurn = null;
+		public UnityEvent onStartRound = null;
 
 		#region Properties
 		public int turnsCount => turnStates.Count;
@@ -58,7 +56,15 @@ namespace StormRend.Systems.StateMachines
 
 				//Wrap around
 				if (_currentStateIDX > turnStates.Count - 1)
+				{
 					_currentStateIDX = 0;
+
+					//NEW ROUND
+					//When the current turn state is wrapped around to the start 
+					//it is almost always the case that this is the start of the round
+					//hence trigger event
+					onStartRound.Invoke();
+				}
 				else if (_currentStateIDX < 0)
 					_currentStateIDX = turnStates.Count - 1;
 			}
@@ -67,6 +73,11 @@ namespace StormRend.Systems.StateMachines
 		public bool isInStackMode => stackStates.Count > 0;
 		public bool isInTurnBasedMode => !isInStackMode && turnStates.Count > 0;
 	#endregion
+
+		//Members
+		Stack<State> stackStates = new Stack<State>();
+		[SerializeField] bool debug = false;
+
 	#region Core
 		void Start()
 		{
@@ -81,6 +92,8 @@ namespace StormRend.Systems.StateMachines
 				Insert(entryState);
 				//Enter entry state
 				entryState.OnEnter(this);
+				//If entry state matches the first turn state then flag to start a new round
+				onStartRound.Invoke();
 				//Set initial turn index
 				currentStateIDX = turnStates.IndexOf(entryState);
 				//Events
@@ -88,15 +101,12 @@ namespace StormRend.Systems.StateMachines
 			}
 		}
 
-		void Update()
-		{
-			currentState?.OnUpdate(this);
-		}
+        void Update() => currentState?.OnUpdate(this);
 
-		/// <summary>
-		/// Switch current turn state with a new one
-		/// </summary>
-		public void Switch(State state)
+        /// <summary>
+        /// Switch current turn state with a new one
+        /// </summary>
+        public void Switch(State state)
 		{
 			if (isInTurnBasedMode)
 			{
