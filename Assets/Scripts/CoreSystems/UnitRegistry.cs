@@ -21,8 +21,8 @@ namespace StormRend.Units
 		*/
 		//Inspector
 		[Header("Units loaded in automatically. DO NOT load in manually")]
-		[ReadOnlyField, SerializeField] List<Unit> _aliveUnits = new List<Unit>();
-		[ReadOnlyField, SerializeField] List<Unit> _deadUnits = new List<Unit>();
+		[ReadOnlyField, SerializeField] HashSet<Unit> _aliveUnits = new HashSet<Unit>();	//Use hash sets to prevent duplicate logical errors
+		[ReadOnlyField, SerializeField] HashSet<Unit> _deadUnits = new HashSet<Unit>();
 
 		//Properties
 		public Unit[] aliveUnits => _aliveUnits.ToArray();
@@ -50,7 +50,9 @@ namespace StormRend.Units
 		//Finds all units and sorts them based on whether they're dead or not
 		public void FindAllUnits()
 		{
-			_aliveUnits = FindObjectsOfType<Unit>().ToList();
+			foreach (var u in FindObjectsOfType<Unit>())
+				_aliveUnits.Add(u);
+				
 			if (_aliveUnits.Count > 0)
 				foreach (var a in _aliveUnits)
 					if (a.isDead)

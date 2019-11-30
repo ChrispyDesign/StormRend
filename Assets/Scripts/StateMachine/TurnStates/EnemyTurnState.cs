@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using pokoro.BhaVE.Core;
 using StormRend.Systems.StateMachines;
 using StormRend.Units;
@@ -15,7 +16,7 @@ namespace StormRend.States
 		[Header("AI"), Tooltip("Time between each enemy unit's turn in seconds")]
 		[SerializeField] float AITurnTime = 2f;
 
-		EnemyUnit[] enemies = new EnemyUnit[0];
+		HashSet<EnemyUnit> enemies = new HashSet<EnemyUnit>();
 		BhaveDirector ai;
 		UnitRegistry ur;
 
@@ -36,9 +37,15 @@ namespace StormRend.States
 
 			base.OnEnter(sm);
 
-			//If there are enemies run AI
-			enemies = ur.GetAliveUnitsByType<EnemyUnit>();
-			if (enemies.Length > 0) StartCoroutine(EnemySequence(sm));
+			/* BUG REPORT: AI logic occasionally runs twice in a row
+			Preventative measures:
+			- Clear the collection of enemies each turn. There might have been lingering duplicates from the last turn
+			- Use a hashset to further prevent duplicates
+			*/
+			enemies.Clear();
+			foreach (var enemy in ur.GetAliveUnitsByType<EnemyUnit>())
+				enemies.Add(enemy);	
+			if (enemies.Count > 0) StartCoroutine(EnemySequence(sm));
 		}
 
 		IEnumerator EnemySequence(UltraStateMachine sm)
