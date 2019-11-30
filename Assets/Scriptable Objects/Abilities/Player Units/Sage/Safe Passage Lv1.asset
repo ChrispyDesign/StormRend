@@ -25,6 +25,7 @@ MonoBehaviour:
   _targetTileTypes: 65
   effects:
   - {fileID: 114504868100922726}
+  - {fileID: 114615159726134448}
   castArea: 00000001000000000001010100000001010101010001010100010101000101010101000000010101000000000001000000
 --- !u!114 &114504868100922726
 MonoBehaviour:
@@ -40,3 +41,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vfx: {fileID: 11400000, guid: ffe2b23d6478e934a8449d5213546ce0, type: 2}
   swapTiming: 1
+--- !u!114 &114615159726134448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ea9a2ddcac9794a83850ec611180eb, type: 3}
+  m_Name: RefreshEffect
+  m_EditorClassIdentifier: 
+  delay: 1
+  refreshCount: 31
+  onlyIfHaveKilledThisTurn: 0
+  refreshType: -1
+  allowedRefreshes: 365
