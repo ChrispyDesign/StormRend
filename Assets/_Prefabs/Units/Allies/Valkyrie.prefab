@@ -4267,9 +4267,8 @@ MonoBehaviour:
   dissolveShaderParam: _DissolveValue
   startDissolveValue: 1
   endDissolveValue: 0
-  outlineColorShaderParam: _ASEOutlineColor
-  startColorValue: {r: 0, g: 0, b: 0, a: 0}
-  endColorValue: {r: 0, g: 0, b: 0, a: 0}
+  noOutlinedDissolvable: {fileID: 4800000, guid: f5f7e01ec93e6aa4987396e49a13bac8,
+    type: 3}
 --- !u!114 &45244116352507459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5986,6 +5985,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 653011552559127036}
     m_Modifications:
+    - target: {fileID: 5277682841273857058, guid: 0afa6dc8175f3b74a9d2ed19b2d543e2,
+        type: 3}
+      propertyPath: m_Name
+      value: FX_Health
+      objectReference: {fileID: 0}
     - target: {fileID: 5277682841273857056, guid: 0afa6dc8175f3b74a9d2ed19b2d543e2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6040,11 +6044,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5277682841273857058, guid: 0afa6dc8175f3b74a9d2ed19b2d543e2,
-        type: 3}
-      propertyPath: m_Name
-      value: FX_Health
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0afa6dc8175f3b74a9d2ed19b2d543e2, type: 3}

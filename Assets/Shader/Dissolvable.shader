@@ -1,11 +1,11 @@
 // Made with Amplify Shader Editor
 // Available at the Unity Asset Store - http://u3d.as/y3X 
-Shader "Character/Character"
+Shader "Characters/Dissolvable"
 {
 	Properties
 	{
-		_ASEOutlineColor( "Outline Color", Color ) = (0,0,0,0)
-		_ASEOutlineWidth( "Outline Width", Float ) = 0.3
+		// _ASEOutlineColor( "Outline Color", Color ) = (0,0,0,0)
+		// _ASEOutlineWidth( "Outline Width", Float ) = 0.3
 		_Cutoff( "Mask Clip Value", Float ) = 1
 		_TextureSample0("Texture Sample 0", 2D) = "white" {}
 		_DissolveValue("DissolveValue", Range( 0 , 1)) = 1
@@ -15,31 +15,31 @@ Shader "Character/Character"
 
 	SubShader
 	{
-		Tags{ }
-		Cull Front
-		CGPROGRAM
-		#pragma target 3.0
-		#pragma surface outlineSurf Outline nofog  keepalpha noshadow noambient novertexlights nolightmap nodynlightmap nodirlightmap nometa noforwardadd vertex:outlineVertexDataFunc 
+		// Tags{ }
+		// Cull Front
+		// CGPROGRAM
+		// #pragma target 3.0
+		// #pragma surface outlineSurf Outline nofog  keepalpha noshadow noambient novertexlights nolightmap nodynlightmap nodirlightmap nometa noforwardadd vertex:outlineVertexDataFunc 
 		
 		
 		
-		struct Input {
-			half filler;
-		};
-		uniform half4 _ASEOutlineColor;
-		uniform half _ASEOutlineWidth;
-		void outlineVertexDataFunc( inout appdata_full v, out Input o )
-		{
-			UNITY_INITIALIZE_OUTPUT( Input, o );
-			v.vertex.xyz += ( v.normal * _ASEOutlineWidth );
-		}
-		inline half4 LightingOutline( SurfaceOutput s, half3 lightDir, half atten ) { return half4 ( 0,0,0, s.Alpha); }
-		void outlineSurf( Input i, inout SurfaceOutput o )
-		{
-			o.Emission = _ASEOutlineColor.rgb;
-			o.Alpha = 1;
-		}
-		ENDCG
+		// struct Input {
+		// 	half filler;
+		// };
+		// uniform half4 _ASEOutlineColor;
+		// uniform half _ASEOutlineWidth;
+		// void outlineVertexDataFunc( inout appdata_full v, out Input o )
+		// {
+		// 	UNITY_INITIALIZE_OUTPUT( Input, o );
+		// 	v.vertex.xyz += ( v.normal * _ASEOutlineWidth );
+		// }
+		// inline half4 LightingOutline( SurfaceOutput s, half3 lightDir, half atten ) { return half4 ( 0,0,0, s.Alpha); }
+		// void outlineSurf( Input i, inout SurfaceOutput o )
+		// {
+		// 	o.Emission = _ASEOutlineColor.rgb;
+		// 	o.Alpha = 1;
+		// }
+		// ENDCG
 		
 
 		Tags{ "RenderType" = "TransparentCutout"  "Queue" = "Geometry+0" }
@@ -109,7 +109,7 @@ Shader "Character/Character"
 }
 /*ASEBEGIN
 Version=17101
--1;23;1906;1050;2331.971;330.9117;1.337033;True;True
+1927;1;1906;1050;2331.971;330.9117;1.337033;True;True
 Node;AmplifyShaderEditor.Vector2Node;4;-1988.609,-17.66493;Inherit;False;Constant;_Vector0;Vector 0;1;0;Create;True;0;0;False;0;50,50;0,0;0;3;FLOAT2;0;FLOAT;1;FLOAT;2
 Node;AmplifyShaderEditor.TextureCoordinatesNode;5;-1709.411,-35.90862;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.NoiseGeneratorNode;3;-1397.033,-42.18892;Inherit;True;Simplex2D;True;False;2;0;FLOAT2;0,0;False;1;FLOAT;10;False;1;FLOAT;0
@@ -127,4 +127,4 @@ WireConnection;21;1;14;0
 WireConnection;0;0;2;0
 WireConnection;0;10;21;0
 ASEEND*/
-//CHKSM=B44FF3E663C41D29BFA4785A8F8E66A904F18382
+//CHKSM=B44FF3E663C41D29BFA478//CHKSM=6B5DF1883CB111DD1B77F1AAC6BCAC7223D6C8ED5A8F8E66A904F18382
