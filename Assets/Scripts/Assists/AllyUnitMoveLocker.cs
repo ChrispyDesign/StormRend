@@ -24,6 +24,8 @@ namespace StormRend.Assists
 		/// </summary>
 		public void LockMovedUnits(Ability a)
 		{
+			print("[AllyUnitMoveLocker] Locking moved units");
+
             //Loop through alive ally units
             foreach (var au in ur.GetAliveUnitsByType<AllyUnit>())		
 				//if the unit has moved from it's starting position

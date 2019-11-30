@@ -50,7 +50,7 @@ namespace StormRend.Abilities.Utilities
                     passiveAbilities.Add(a, au);
             }
 
-            print("Passive Abilities found: " + passiveAbilities.Count);
+            print("[PassiveAbilityRunner] Passive Abilities found: " + passiveAbilities.Count);
         }
 
         public void OnUnitCreate(Unit created)

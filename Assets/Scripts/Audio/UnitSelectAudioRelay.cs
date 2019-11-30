@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace StormRend.Audio
 {
+	/// <summary>
+	/// Relay to play unit select sounds
+	/// </summary>
 	public class UnitSelectAudioRelay : AudioRelay
 	{
 

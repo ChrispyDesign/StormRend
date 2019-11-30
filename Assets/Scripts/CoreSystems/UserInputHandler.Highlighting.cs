@@ -18,7 +18,7 @@ namespace StormRend.Systems
 
 			selectedAnimateUnit.CalculateTargetTiles(a);
 			selectedAnimateUnit.ClearGhost();
-			ShowActionTiles();
+			ShowActionTiles(a);
 		}
 		public void OnUnhoverPreview()
 		{
@@ -56,7 +56,7 @@ namespace StormRend.Systems
 			selectedAnimateUnit.startTile.SetHighlight(startHighlight);
 		}
 
-		void ShowActionTiles()
+		void ShowActionTiles(Ability a)
 		{
 			//NOTE: Active unit's ACTION highlights should be refreshed
 			// - each time the selected ability is changed
@@ -64,7 +64,10 @@ namespace StormRend.Systems
 
 			//Highlight
 			foreach (var t in selectedAnimateUnit?.possibleTargetTiles)
-				t.SetHighlight(actionHighlight);
+			{
+				if (a.IsAcceptableTileType(selectedAnimateUnit, t))	
+					t.SetHighlight(actionHighlight);
+			}
 		}
 
 		void ShowTargetTile(Tile target)

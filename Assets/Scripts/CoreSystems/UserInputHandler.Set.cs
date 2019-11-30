@@ -63,7 +63,7 @@ namespace StormRend.Systems
 			//Clear move tiles + Show target tiles + clear ghosts
 			selectedAnimateUnit.ClearGhost();
 			ClearAllTileHighlights();
-			ShowActionTiles();
+			ShowActionTiles(selectedAbility);
 
 			//Auto perform ability on self if required tiles set to 0
 			if (selectedAbility.requiredTiles == 0)

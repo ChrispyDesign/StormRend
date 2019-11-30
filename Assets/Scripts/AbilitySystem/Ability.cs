@@ -26,8 +26,8 @@ namespace StormRend.Abilities
 	public enum AbilityLevel
 	{
 		None = 0,
-		One = 1, 
-		Two = 2, 
+		One = 1,
+		Two = 2,
 		Three = 3
 	}
 
@@ -61,7 +61,7 @@ namespace StormRend.Abilities
 		//Members
 		[HideInInspector]
 		public List<Effect> effects = new List<Effect>();
-		[HideInInspector] public bool[] castArea = new bool[castAreaSqrLen * castAreaSqrLen];		//this sometimes resets
+		[HideInInspector] public bool[] castArea = new bool[castAreaSqrLen * castAreaSqrLen];       //this sometimes resets
 
 		//Properties
 		public Sprite icon => _icon;
@@ -77,7 +77,7 @@ namespace StormRend.Abilities
 
 		//Member
 
-	#region Core
+		#region Core
 		public bool Perform(Unit owner, params Unit[] units)
 			=> Perform(owner, units.Select(x => x.currentTile).ToArray());
 
@@ -92,13 +92,14 @@ namespace StormRend.Abilities
 
 				RecordLastTargetPosition(targets);
 			}
-			return true;	//Successful ability execution
+			return true;    //Successful ability execution
 		}
 
 		/// <summary>
 		/// Perform a certain effect contained in this ability
 		/// </summary>
 		/// <typeparam name="T">Effect type to specifically perform</typeparam>
+		/// <returns>Returns true if effect was found and performed</returns>
 		public bool Perform<T>(Unit owner, params Tile[] targets) where T : Effect
 		{
 			foreach (var e in effects)
@@ -108,9 +109,11 @@ namespace StormRend.Abilities
 					e.Perform(this, owner, targets);
 
 					RecordLastTargetPosition(targets);
+
+					return true;	//Effect was successfully found and performed
 				}
 			}
-			return true;
+			return false;	//Specified effect was not found
 		}
 
 		/// <summary>
@@ -169,7 +172,7 @@ namespace StormRend.Abilities
 				}
 			}
 		}
-	#endregion
+		#endregion
 
 		/// <summary>
 		/// Return true if the tile is valid according to this ability's targeting settings
