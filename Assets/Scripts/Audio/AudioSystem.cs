@@ -32,8 +32,22 @@ namespace StormRend.Audio
 		/// </summary>
 		public void ChancePlay()
 		{
-			if (magazine && Random.Range(0, 100) < chance)      //null checked
-				audioSource.PlayOneShot(magazine.clips[Random.Range(0, magazine.clips.Count)]);
+			if (!magazine) return;
+
+			//Don't play the same sound over and over again
+			while (true)
+			{
+				AudioClip clipToPlay = magazine.clips[Random.Range(0, magazine.clips.Count)];
+				if (clipToPlay == magazine.lastPlayed) continue;
+
+				//Play by chance
+				if (Random.Range(0, 100) < magazine.chance)
+				{
+					audioSource.PlayOneShot(clipToPlay, magazine.volume);
+					magazine.lastPlayed = clipToPlay;
+				}
+				break;
+			}
 		}
 		/// <summary>
 		/// Plays the selected clip according to the chance setting of this audio system
@@ -58,9 +72,29 @@ namespace StormRend.Audio
 		/// <param name="audioMagazine">AudioMagazine scriptable object</param>
 		public void ChancePlayMagazine(Object audioMagazine)
 		{
+			//Cast
 			AudioMagazine am = audioMagazine as AudioMagazine;
-			if (am && Random.Range(0, 100) < am.chance)     //null checked
-				audioSource.PlayOneShot(am.clips[Random.Range(0, am.clips.Count)], am.volume);
+			if (!am)
+			{
+				print("Not an audio magazine!");
+				return;
+			}
+
+			//Don't play the same sound over and over again
+			//NOTE: With brief testing, the max iterations was 3. Usually 1 or 2. Performance is fine
+			while (true)
+			{
+				AudioClip clipToPlay = am.clips[Random.Range(0, am.clips.Count)];
+				if (clipToPlay == am.lastPlayed) continue;
+
+				//Play by chance
+				if (Random.Range(0, 100) < am.chance)
+				{
+					audioSource.PlayOneShot(clipToPlay, am.volume);
+					am.lastPlayed = clipToPlay;
+				}
+				break;
+			}
 		}
 
 		/// <summary> Play one audio clip once </summary>
