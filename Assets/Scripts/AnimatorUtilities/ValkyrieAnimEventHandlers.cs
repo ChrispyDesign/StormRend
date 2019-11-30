@@ -8,16 +8,23 @@ namespace StormRend.Anim.EventHandlers
 	/// </summary>
 	public class ValkyrieAnimEventHandlers : UnitAnimEventHandlers
 	{
-		public void PerformTeleport()
+		/// <summary>
+		/// Call at the end of the jump animation
+		/// </summary>
+		public void PerformJump()
 		{
 			animateUnit?.Act<TeleportEffect>();
 		}
 
-		public void PerformPush()
+		/// <summary>
+		/// Perform actions at the point where lightfall lands ie. push
+		/// </summary>
+		public void PerformLand()
 		{
+			//Covers all 3 levels of lightfall
 			animateUnit?.Act<PushEffect>();
-
-			animateUnit?.Act<RefreshEffect>();    //TODO Temporary. Delete later
+			animateUnit?.Act<RefreshEffect>();
+			animateUnit?.Act<ProtectEffect>();
 		}
    	}
 }

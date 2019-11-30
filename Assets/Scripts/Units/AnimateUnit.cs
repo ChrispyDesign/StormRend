@@ -497,10 +497,10 @@ namespace StormRend.Units
 		public void Act<T>() where T : Effect
 		{
 			if (currentTargetTiles.Length == 0 || currentAbility == null) return;
-			currentAbility.Perform<T>(this, currentTargetTiles);
+			var isSuccessfullyPerformed = currentAbility.Perform<T>(this, currentTargetTiles);
 
 			//Event (This needs to go here in case refresh effect)
-			onActed.Invoke(currentAbility);
+			if (isSuccessfullyPerformed) onActed.Invoke(currentAbility);
 		}
 
 		//------------------- CALCULATE TILES
