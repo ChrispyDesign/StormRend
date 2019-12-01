@@ -11,9 +11,9 @@ namespace StormRend.Units
 {
 	[SelectionBase]
 	[RequireComponent(typeof(UnitTag))]
-	public abstract class Unit : MonoBehaviour	//, IPointerEnterHandler, IPointerExitHandler
+	public abstract class Unit : MonoBehaviour  //, IPointerEnterHandler, IPointerExitHandler
 	{
-		[TextArea(0,2)] public string description = null;
+		[TextArea(0, 2)] public string description = null;
 
 		//Inspector
 		[Header("Stats")]
@@ -24,7 +24,7 @@ namespace StormRend.Units
 		[Header("Unit Events")]
 		public UnitEvent onDeath = null;
 		public HealthEvent onTakeDamage = null;
-        public UnitEvent onEnemyKilled = null;
+		public UnitEvent onEnemyKilled = null;
 		public HealthEvent onHeal = null;
 
 		[Header("Movement")]
@@ -106,7 +106,7 @@ namespace StormRend.Units
 			//Die() needs to be called at the end of the death animation using an animation event
 			// if (HP <= 0) Die();
 
-			onTakeDamage.Invoke(healthData);	//ie. Update health bar etc
+			onTakeDamage.Invoke(healthData);    //ie. Update health bar etc
 		}
 		public void Heal(HealthData healthData)
 		{
@@ -122,15 +122,21 @@ namespace StormRend.Units
 			onDeath.Invoke(this);
 		}
 
-	#endregion
+		public void OnOpponentKilled(Unit opponent)
+		{
+			//Invoke onOpponentKilled once the opponent has died for correct timing
+			
+		}
 
-	#region Event System
+		#endregion
+
+		#region Event System
 		// public virtual void OnPointerEnter(PointerEventData eventData)
 		// {
 		// }
 		// public virtual void OnPointerExit(PointerEventData eventData)
 		// {
 		// }
-	#endregion
+		#endregion
 	}
 }
