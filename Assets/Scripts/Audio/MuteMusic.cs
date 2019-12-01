@@ -6,26 +6,15 @@ namespace StormRend.Audio
 {
     public class MuteMusic : MonoBehaviour
     {
-        public KeyCode mute = KeyCode.M;
-        public AudioSource music;
-        void Start()
+        [SerializeField] KeyCode muteKey = KeyCode.M;
+        [SerializeField] AudioSource audioSource;
+
+		void Awake() => audioSource = GetComponent<AudioSource>();
+		void Update()
         {
-            music = gameObject.GetComponent(typeof(AudioSource)) as AudioSource;
+			if (Input.GetKeyUp(muteKey))
+            	ToggleMusic();
         }
-        void ToggleMusic()
-        {
-            // toggle this off/on
-            if (Input.GetKeyUp(mute))
-                // if (gameObject.active == true)
-                //     gameObject.SetActive(false);
-                // else
-                //     gameObject.SetActive(true);
-                // gameObject.SetActive(!gameObject.activeInHierarchy);
-                music.enabled = !music.enabled;
-        }
-        void Update()
-        {
-            ToggleMusic();
-        }
+		void ToggleMusic() => audioSource.mute = !audioSource.mute;
     }
 }

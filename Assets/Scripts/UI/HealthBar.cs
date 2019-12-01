@@ -8,7 +8,7 @@ namespace StormRend.UI
 {
 	public class HealthBar : MonoBehaviour
 	{
-		public Image bar = null;
+		[SerializeField] Image bar = null;
 		Camera cam = null;
 		AnimateUnit au = null;
 
@@ -18,31 +18,34 @@ namespace StormRend.UI
 			au = GetComponentInParent<AnimateUnit>();
 
 			Debug.Assert(au, "Animate unit not found!");
-		}
 
-		//Register callbacks
-		void OnEnable()
-		{
+			//Register callbacks
 			au.onHeal.AddListener(OnHealthChange);
 			au.onTakeDamage.AddListener(OnHealthChange);
-			au.onMoved.AddListener(UpdateFacing);
+			// au.onMoved.AddListener(UpdateFacing);
+			au.onDeath.AddListener(OnDeath);
 
 			UpdateFacing();
 		}
-		void OnDisable()
+
+		void OnDestroy()
 		{
-			au.onHeal.RemoveAllListeners();
-			au.onTakeDamage.RemoveAllListeners();
-			au.onMoved.RemoveAllListeners();
+			au.onHeal.RemoveListener(OnHealthChange);
+			au.onTakeDamage.RemoveListener(OnHealthChange);
+			// au.onMoved.RemoveListener(UpdateFacing);
+			au.onDeath.RemoveListener(OnDeath);
 		}
 
 		//Init bar at start
 		void Start() => bar.fillAmount = (float)au.HP / au.maxHP;
 
+		void Update() => UpdateFacing();
+
 		//Always face toward the camera
 		void UpdateFacing(Tile t = null) => transform.rotation = Quaternion.AngleAxis(MasterCamera.current.transform.rotation.eulerAngles.y - 180f, Vector3.up);
 
 		//Callbacks
+		void OnDeath(Unit u) => gameObject.SetActive(false);
 		public void OnHealthChange(HealthData damageData) => OnHealthChange();
 		public void OnHealthChange() => bar.fillAmount = (float)au.HP / au.maxHP;
 	}
