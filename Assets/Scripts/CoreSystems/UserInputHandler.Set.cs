@@ -33,7 +33,7 @@ namespace StormRend.Systems
 			ShowMoveTiles();
 
 			//Focus camera
-			if (moveCamera)	camMover?.Move(selectedUnit, cameraSmoothTime);
+			if (moveCamera)	camMover?.Move(selectedUnit, cameraLerpTime);
 
 			onUnitSelected.Invoke(selectedUnit);  //ie. Update UI, Play sounds,
 		}
@@ -123,7 +123,7 @@ namespace StormRend.Systems
 			foreach (var t in targetTileStack)
 				averageTarget += t.transform.position;
 			averageTarget /= (float)targetTileStack.Count;
-			camMover.Move(averageTarget, cameraSmoothTime);
+			camMover.Move(averageTarget, cameraLerpTime);
 
 			//Clear target stack
 			targetTileStack.Clear();

@@ -65,7 +65,11 @@ namespace StormRend.Systems
 			//Highlight
 			foreach (var t in selectedAnimateUnit?.possibleTargetTiles)
 			{
+				//If targetable
 				if (a.IsAcceptableTileType(selectedAnimateUnit, t))	
+					t.SetHighlight(targetableHighlight);
+				//Show action range
+				else
 					t.SetHighlight(actionHighlight);
 			}
 		}
@@ -79,7 +83,7 @@ namespace StormRend.Systems
 		Tile ClearTargetTile(Tile target)
 		{
 			//it should be action highlight
-			target.SetHighlight(actionHighlight);
+			target.SetHighlight(targetableHighlight);
 			return target;
 		}
 		#endregion

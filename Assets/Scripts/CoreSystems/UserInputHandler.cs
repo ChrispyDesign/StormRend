@@ -47,22 +47,25 @@ namespace StormRend.Systems
 		}
 
 		//Inspector
+		[Header("SOVs")]
 		[SerializeField] BhaveInt glory = null;
+		[SerializeField] UnitVar _selectedUnitVar = null;
+		[SerializeField] AbilityVar _selectedAbilityVar = null;
+
 		[Header("State")]
 		[ReadOnlyField, SerializeField] TurnState currentTurnState = null;
-		[Space(10), SerializeField] UnitVar _selectedUnitVar = null;
-		[SerializeField] AbilityVar _selectedAbilityVar = null;
 
 		[Header("Tile Colors")]
 		[SerializeField] TileHighlightSetting clearHighlight = null;
 		[SerializeField] TileHighlightSetting startHighlight = null;
 		[SerializeField] TileHighlightSetting hoverHighlight = null;
 		[SerializeField] TileHighlightSetting moveHighlight = null;
-		[SerializeField] TileHighlightSetting actionHighlight = null;
-		[SerializeField] TileHighlightSetting targetHighlight = null;
+		[SerializeField] TileHighlightSetting actionHighlight = null;		//Action tiles
+		[SerializeField] TileHighlightSetting targetableHighlight = null;	//Action tiles that can actually be targeted by the player
+		[SerializeField] TileHighlightSetting targetHighlight = null;		//Actions tiles that have been selected by the player
 
 		[Header("Camera")]
-		[SerializeField] float cameraSmoothTime = 1.75f;
+		[SerializeField] float cameraLerpTime = 1.75f;
 		[Tooltip("The layer the raycast would hit")]
 		[SerializeField] LayerMask raycastFilterIn = ~0;
 		[Tooltip("The layer for the raycast to ignore")]
@@ -175,7 +178,7 @@ namespace StormRend.Systems
 					//!!! This logic needs to run first otherwise the camera will move on final add target tile
 					//Clicking on any unit will focus camera on it unless in action mode?
 					if (mode != Mode.Action)
-						camMover.Move(interimUnit, cameraSmoothTime);
+						camMover.Move(interimUnit, cameraLerpTime);
 				}
 
 				switch (mode)
@@ -191,7 +194,7 @@ namespace StormRend.Systems
 						if (isTileHit && isTileHitEmpty)    //Restrict to empty tiles only
 						{
 							if (selectedAnimateUnit.Move(interimTile))  //Try Move unit
-								camMover.Move(interimTile, cameraSmoothTime);   //If move successful then focus camera
+								camMover.Move(interimTile, cameraLerpTime);   //If move successful then focus camera
 						}
 						goto case Mode.Select;  //Fall through
 
