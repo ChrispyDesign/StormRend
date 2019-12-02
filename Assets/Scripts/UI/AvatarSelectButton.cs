@@ -58,21 +58,24 @@ namespace StormRend.UI
 
 		void RegisterEvents()
 		{
+			//Dont register anything if unit not found
+			if (!unit) return;
+
 			//Button
 			button.onClick.AddListener(SelectUnit);
 
 			//Health pips
-			unit?.onHeal.AddListener(UpdateHealthGUI);
-			unit?.onTakeDamage.AddListener(UpdateHealthGUI);
-			unit?.onDeath.AddListener(UpdateHealthGUIRelay);
+			unit.onHeal.AddListener(UpdateHealthGUI);
+			unit.onTakeDamage.AddListener(UpdateHealthGUI);
+			unit.onDeath.AddListener(UpdateHealthGUIRelay);
 
 			//Active
 			userInputHandler.onUnitSelected.AddListener(OnActedRelay);
-			unit?.onActed.AddListener(OnActed);
-			unit?.onBeginTurn.AddListener(OnActedRelay);
+			unit.onActed.AddListener(OnActed);
+			unit.onBeginTurn.AddListener(OnActedRelay);
 
 			//Death
-			unit?.onDeath.AddListener(OnDeath);
+			unit.onDeath.AddListener(OnDeath);
 		}
 
 		void OnDestroy()
@@ -133,7 +136,7 @@ namespace StormRend.UI
 		{
 			if (unit.isDead) return;
 			
-			//Grey out if the unit cannot act anymore and cannot move anymore
+			//Grey out if the unit cannot act anymore AND cannot move anymore
 			SetGreyOut(!unit.canMove && !unit.canAct);
 		}
 
