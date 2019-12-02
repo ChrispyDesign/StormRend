@@ -3,7 +3,7 @@
 namespace The.Great.Refactor.Brainstorm
 {
 	/*
-	--------------------- Structure and Architecture
+
 	Core
 		Masters
 		- GameDirector
@@ -44,6 +44,11 @@ namespace The.Great.Refactor.Brainstorm
 		- SO variable
 	- Current active units
 		- Just find all units at start of scene
+
+	------------------- Notification system
+	What to notify about:
+	- Invalid action/move
+	- 
 
 	------------------- Next Turn Sequence
 	NextTurnButton.OnClick() => UltraStateMachine.NextTurn()
