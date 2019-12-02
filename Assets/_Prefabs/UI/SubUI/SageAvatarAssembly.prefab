@@ -918,26 +918,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb371683530931048bb1561c8df7e4e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: SAGE
   allyType: 3
-  avatarSprites: []
-  greyOut: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  blackOut: {r: 0, g: 0, b: 0, a: 1}
+  greyOut: {r: 0.5, g: 0.5, b: 0.5, a: 0.8}
+  blackOut: {r: 0.042, g: 0.042, b: 0.042, a: 0.54509807}
+  avatarSprites:
+  - {fileID: 286398579062195863}
+  - {fileID: 286398581171933508}
   healthNodes:
   - {fileID: 286398580175463682}
   - {fileID: 286398580336137357}
   - {fileID: 286398580721416979}
-  unit: {fileID: 0}
-  onHover:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  onUnhover:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!1 &286398580703716818
 GameObject:
   m_ObjectHideFlags: 0

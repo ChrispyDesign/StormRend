@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace StormRend.UI
 {
+	[RequireComponent(typeof(AbilityButton))]
 	public class AbilityButtonTooltipInfo : TooltipInfo
 	{
 		//Properties

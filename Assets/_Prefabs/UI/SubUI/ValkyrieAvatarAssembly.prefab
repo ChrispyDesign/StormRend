@@ -1162,27 +1162,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb371683530931048bb1561c8df7e4e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: VALKYRIE
   allyType: 2
-  avatarSprites: []
-  greyOut: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  blackOut: {r: 0, g: 0, b: 0, a: 1}
+  greyOut: {r: 0.5, g: 0.5, b: 0.5, a: 0.8}
+  blackOut: {r: 0.042, g: 0.042, b: 0.042, a: 0.42745098}
+  avatarSprites:
+  - {fileID: 2856836770543660450}
+  - {fileID: 2856836772118551114}
   healthNodes:
   - {fileID: 2856836771371768904}
   - {fileID: 2856836771293906847}
   - {fileID: 2856836771931084753}
   - {fileID: 2856836771108434000}
-  unit: {fileID: 0}
-  onHover:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: StormRend.Utility.Events.UnitEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  onUnhover:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!1 &2856836771931084759
 GameObject:
   m_ObjectHideFlags: 0
