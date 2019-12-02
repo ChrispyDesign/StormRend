@@ -41,7 +41,7 @@ namespace StormRend.CameraSystem
 			camera = GetComponentInChildren<Camera>();
 			desiredZoomPos = cameraInitLocalOffset = camera.transform.localPosition;
 			camera.transform.LookAt(transform.position, Vector3.up);
-			ppp = GetComponent<PostProcessVolume>().profile;
+			ppp = FindObjectOfType<PostProcessVolume>().profile;
 			if (!ppp.TryGetSettings<DepthOfField>(out dof))
 				Debug.LogWarning("No Depth of Field found on Post Processing Stack!");
 
