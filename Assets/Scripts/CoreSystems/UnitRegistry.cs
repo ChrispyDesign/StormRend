@@ -13,12 +13,6 @@ namespace StormRend.Units
 	[RequireComponent(typeof(MoveTileRecalculator))]
 	public class UnitRegistry : Singleton<UnitRegistry>
 	{
-		//Hookups
-		/*
-		//Not sure about these
-		onUnitCreated += PreCalculateMoveTiles.Run
-		onUnitKilled += PreCalculateMoveTiles.Run
-		*/
 		//Inspector
 		[Header("Units loaded in automatically. DO NOT load in manually")]
 		[ReadOnlyField, SerializeField] HashSet<Unit> _aliveUnits = new HashSet<Unit>();	//Use hash sets to prevent duplicate logical errors
