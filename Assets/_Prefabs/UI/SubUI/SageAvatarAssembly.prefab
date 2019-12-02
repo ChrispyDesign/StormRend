@@ -920,11 +920,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: SAGE
   allyType: 3
-  unit: {fileID: 0}
+  avatarSprites: []
+  greyOut: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  blackOut: {r: 0, g: 0, b: 0, a: 1}
   healthNodes:
   - {fileID: 286398580175463682}
   - {fileID: 286398580336137357}
   - {fileID: 286398580721416979}
+  unit: {fileID: 0}
   onHover:
     m_PersistentCalls:
       m_Calls: []
@@ -1262,6 +1265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3933424598766002821}
   - component: {fileID: 992035406177972760}
+  - component: {fileID: 3210555608008817345}
   m_Layer: 5
   m_Name: SageAvatarAssembly
   m_TagString: Untagged
@@ -1300,3 +1304,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6253043662237863409}
   m_CullTransparentMesh: 0
+--- !u!114 &3210555608008817345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6253043662237863409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: 'Sage
+
+    - Has exploding crystals'
+  delayOverride: 0

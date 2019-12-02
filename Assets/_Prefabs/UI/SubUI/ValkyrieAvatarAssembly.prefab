@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1942679855617895520}
   - component: {fileID: 6029303776424829603}
+  - component: {fileID: 6004557394783912457}
   m_Layer: 5
   m_Name: ValkyrieAvatarAssembly
   m_TagString: Untagged
@@ -48,6 +49,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2146246903445924226}
   m_CullTransparentMesh: 0
+--- !u!114 &6004557394783912457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146246903445924226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: Valkyrie
+  delayOverride: 0
 --- !u!1 &2856836770216405562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1149,12 +1164,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: VALKYRIE
   allyType: 2
-  unit: {fileID: 0}
+  avatarSprites: []
+  greyOut: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  blackOut: {r: 0, g: 0, b: 0, a: 1}
   healthNodes:
   - {fileID: 2856836771371768904}
   - {fileID: 2856836771293906847}
   - {fileID: 2856836771931084753}
   - {fileID: 2856836771108434000}
+  unit: {fileID: 0}
   onHover:
     m_PersistentCalls:
       m_Calls: []

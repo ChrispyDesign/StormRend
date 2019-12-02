@@ -11,11 +11,6 @@ namespace StormRend.Editors
 		public Ability owner;
 		GUIStyle boldFoldoutStyle;
 
-		// public EffectInspector(Ability ability)
-		// {
-		// 	owner = ability;
-		// }
-
 		public void DrawGUI()
 		{
 			foreach (var e in owner.effects)

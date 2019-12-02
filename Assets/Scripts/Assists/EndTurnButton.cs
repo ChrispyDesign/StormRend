@@ -34,7 +34,7 @@ namespace StormRend.Assists
 
 			infoPanel = FindObjectOfType<InfoPanel>();
 
-			Debug.Assert(infoPanel, string.Format("[{0}] {1} not found!", this.name, typeof(InfoPanel).Name));
+			// Debug.Assert(infoPanel, string.Format("[{0}] {1} not found!", this.name, typeof(InfoPanel).Name));
 		}
 
 		//Event system callbacks

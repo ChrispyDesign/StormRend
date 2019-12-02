@@ -244,13 +244,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: BERSERKER
   allyType: 1
-  unit: {fileID: 0}
+  avatarSprites: []
+  greyOut: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  blackOut: {r: 0, g: 0, b: 0, a: 1}
   healthNodes:
   - {fileID: 1847486828085962561}
   - {fileID: 1847486828356967646}
   - {fileID: 1847486827064209095}
   - {fileID: 1847486826795869306}
   - {fileID: 1847486828524383220}
+  unit: {fileID: 0}
   onHover:
     m_PersistentCalls:
       m_Calls: []
@@ -1565,6 +1568,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7751422152662597092}
   - component: {fileID: 4952920259237964768}
+  - component: {fileID: 110398168266057101}
   m_Layer: 5
   m_Name: BerserkerAvatarAssembly
   m_TagString: Untagged
@@ -1602,3 +1606,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5033782776311542993}
   m_CullTransparentMesh: 0
+--- !u!114 &110398168266057101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5033782776311542993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: Berserker
+  delayOverride: 0

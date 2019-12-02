@@ -27,7 +27,7 @@ namespace StormRend.UI
 
         //Members
         Button button = null;
-        Ability ability = null;
+        internal Ability ability = null;
         UserInputHandler inputHandler = null;
 
         //Temp
