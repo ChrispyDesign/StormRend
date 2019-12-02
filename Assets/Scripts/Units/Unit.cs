@@ -41,7 +41,7 @@ namespace StormRend.Units
 		public Animator animator { get; private set; } = null;
 		public UnitAnimEventHandlers animEventHandlers { get; private set; } = null;
 		public new Tag tag { get; private set; } = null;
-		internal bool hasKilledThisTurn { get; set; } = false;
+		internal bool hasJustKilled { get; set; } = false;
 
 		//Members
 		protected UnitRegistry ur = null;

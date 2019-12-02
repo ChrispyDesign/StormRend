@@ -147,7 +147,7 @@ namespace StormRend.Abilities.Effects
 
 		void SetJustKilled(Unit owner, Unit victim)
 		{
-			owner.hasKilledThisTurn = true;
+			owner.hasJustKilled = true;
 			owner.onEnemyKilled.Invoke(victim);
 		}
 	}

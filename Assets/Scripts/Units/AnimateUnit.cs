@@ -253,7 +253,7 @@ namespace StormRend.Units
 			canAct = true;
 
 			//Other resets
-			hasKilledThisTurn = false;
+			hasJustKilled = false;
 
 			//Calculate new move tiles
 			startTile = currentTile;        //Set new origin
