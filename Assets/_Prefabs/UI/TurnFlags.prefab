@@ -342,6 +342,7 @@ GameObject:
   - component: {fileID: 851333102377941021}
   - component: {fileID: 851333102377941474}
   - component: {fileID: 851333102377941475}
+  - component: {fileID: 4597101163329778595}
   m_Layer: 5
   m_Name: PlayerFlag
   m_TagString: Untagged
@@ -425,6 +426,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4597101163329778595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851333102377941473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: This is your turn
+  delayOverride: 0
 --- !u!1 &851333102808069999
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,6 +709,7 @@ GameObject:
   - component: {fileID: 851333103127474131}
   - component: {fileID: 851333103127474128}
   - component: {fileID: 851333103127474129}
+  - component: {fileID: 1547418422388592010}
   m_Layer: 5
   m_Name: EnemyFlag
   m_TagString: Untagged
@@ -777,6 +793,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1547418422388592010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851333103127474135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: It's the enemy's turn
+  delayOverride: 0
 --- !u!1 &851333103294169045
 GameObject:
   m_ObjectHideFlags: 0

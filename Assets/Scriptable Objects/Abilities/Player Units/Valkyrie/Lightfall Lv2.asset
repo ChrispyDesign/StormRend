@@ -18,7 +18,9 @@ MonoBehaviour:
   _level: 2
   _title: Light Fall Lv2
   _descriptions:
-  - Leap to a tile, then push units away
+  - 'Perform leaping spear attack
+
+    Pushing units away on landing'
   - Gain Protection
   _gloryCost: 1
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
@@ -61,9 +63,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 1
   refreshCount: 0
-  onlyIfHaveKilledThisTurn: 0
-  refreshType: 0
   allowedRefreshes: 1
+  refreshType: 0
+  onlyIfHaveKilled: 0
+  allowChainRefreshes: 1
 --- !u!114 &114724056751522650
 MonoBehaviour:
   m_ObjectHideFlags: 1

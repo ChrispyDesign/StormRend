@@ -18,7 +18,9 @@ MonoBehaviour:
   _level: 3
   _title: Light Fall Lv3
   _descriptions:
-  - Leap to a tile, then push units away
+  - 'Perform leaping spear attack
+
+    Pushing units away on landing'
   - Gain Protection
   - Deal 2 damage
   _gloryCost: 3
@@ -92,9 +94,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 1
   refreshCount: 0
-  onlyIfHaveKilledThisTurn: 0
-  refreshType: 0
   allowedRefreshes: 1
+  refreshType: 0
+  onlyIfHaveKilled: 0
+  allowChainRefreshes: 1
 --- !u!114 &114865798732700746
 MonoBehaviour:
   m_ObjectHideFlags: 1

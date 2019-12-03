@@ -15,7 +15,7 @@ namespace StormRend.UI
 				string messageResult = null;
 				foreach (var txt in ab.ability.descriptions)
 				{
-					messageResult += txt + "\n";
+					messageResult += (txt == "") ? "" : (txt + "\n");
 				}
 				return messageResult;
 			}

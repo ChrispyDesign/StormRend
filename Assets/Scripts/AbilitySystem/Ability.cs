@@ -45,7 +45,7 @@ namespace StormRend.Abilities
 		[SerializeField] AbilityType _type = AbilityType.Primary;
 		[Range(1, 3), SerializeField] int _level = 1;
 		[SerializeField] string _title = null;
-		[TextArea(0, 2), SerializeField] string[] _descriptions = new string[descriptionCount];
+		[TextArea(0, 3), SerializeField] string[] _descriptions = new string[descriptionCount];
 
 		[Header("Casting"), Tooltip("Glory cost required to perform this ability")]
 		[SerializeField] int _gloryCost = 1;
