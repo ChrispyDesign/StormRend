@@ -8,6 +8,7 @@ using StormRend.Enums;
 using StormRend.MapSystems.Tiles;
 using StormRend.States;
 using StormRend.Systems.StateMachines;
+using StormRend.UI;
 using StormRend.Units;
 using StormRend.Utility.Attributes;
 using StormRend.Utility.Events;
@@ -66,10 +67,10 @@ namespace StormRend.Systems
 
 		[Header("Camera")]
 		[SerializeField] float cameraLerpTime = 1.75f;
-		[Tooltip("The layer the raycast would hit")]
-		[SerializeField] LayerMask raycastFilterIn = ~0;
-		[Tooltip("The layer for the raycast to ignore")]
-		[SerializeField] LayerMask raycastFilterOut = 1 << 5;  //ie. UI layer
+		// [Tooltip("The layer the raycast would hit")]
+		// [SerializeField] LayerMask raycastFilterIn = ~0;
+		// [Tooltip("The layer for the raycast to ignore")]
+		// [SerializeField] LayerMask raycastFilterOut = 1 << 5;  //ie. UI layer
 		
 		//Properties
 		Mode mode
@@ -126,8 +127,8 @@ namespace StormRend.Systems
 		Unit interimUnit = null;
 		Tile interimTile = null;
 		bool isTileHitEmpty = false;
-		GraphicRaycaster gr = null;
-		List<RaycastResult> raycastResults = new List<RaycastResult>();
+		GraphicRaycaster gRaycaster = null;
+		PhysicsRaycaster pRaycaster = null;
 		List<Type> currentControllableUnitTypes = new List<Type>();     //Holds the list of types that can be controlled for this game turn
 
 		#region Core
@@ -136,7 +137,8 @@ namespace StormRend.Systems
 			//Inits
 			cam = MasterCamera.current.camera;
 			camMover = MasterCamera.current.cameraMover;
-			gr = FindObjectOfType<GraphicRaycaster>();  //On the one and only canvas
+			gRaycaster = MasterCanvas.current.graphicRaycaster;
+			pRaycaster = MasterCamera.current.physicsRaycaster;
 			selectedUnit = null;
 			selectedAbility = null;
 
@@ -145,7 +147,8 @@ namespace StormRend.Systems
 			Debug.Assert(camMover, "CameraMover could not be located!");
 			Debug.Assert(_selectedUnitVar, "No Selected Unit SOV!");
 			Debug.Assert(_selectedAbilityVar, "No Selected Ability SOV!");
-			Debug.Assert(gr, "No graphics raycaster found!");
+			Debug.Assert(gRaycaster, "No graphics raycaster found!");
+			Debug.Assert(pRaycaster, "No physics raycaster found!");
 
 			//Tile highlights
 			Debug.Assert(clearHighlight, "Highlight not set!");
@@ -156,10 +159,7 @@ namespace StormRend.Systems
 			Debug.Assert(targetHighlight, "Highlight not set!");
 		}
 
-		void Update()
-		{
-			ProcessEvents();
-		}
+		void Update() => ProcessEvents();
 
 		void ProcessEvents()
 		{
@@ -264,31 +264,43 @@ namespace StormRend.Systems
 		//If T object hit then return true and output it
 		bool TryGetRaycast<T>(out T hit) where T : MonoBehaviour
 		{
-			//GUI hit
-			if (IsPointerOverGUIObject(raycastFilterOut))
+			//Prevent click through
+			if (IsPointerOverUI())
 			{
 				hit = null;
 				return false;
 			}
 
-			//Try hit 3d game object
-			Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out RaycastHit hitInfo, 9999f, raycastFilterIn.value))
+			//Raycast
+			var pointerEventData = new PointerEventData(EventSystem.current);
+			pointerEventData.position = Input.mousePosition;
+			var rcResults = new List<RaycastResult>();
+			pRaycaster.Raycast(pointerEventData, rcResults);
+
+			//Return hit
+			foreach (var h in rcResults)
 			{
-				hit = hitInfo.collider.GetComponent<T>();
+				hit = h.gameObject.GetComponent<T>();
 				return (hit != null) ? true : false;
 			}
 
 			//Nothing hit
 			hit = null;
 			return false;
+
+			// //-----------------------------------------------------
+			// //Try hit 3d game object
+			// Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+			// if (Physics.Raycast(ray, out RaycastHit hitInfo, 9999f, raycastFilterIn.value))
+			// {
+			// 	hit = hitInfo.collider.GetComponent<T>();
+			// 	return (hit != null) ? true : false;
+			// }
 		}
 
 		//Is there a better more reliable way of doing this?
-		bool IsPointerOverGUIObject(LayerMask mask)
+		bool IsPointerOverUI()
 		{
-			// print("x: " + (Mathf.RoundToInt(Mathf.Log(mask.value, 2))));
-
 			//Set up the new Pointer Event
 			var pointerEventData = new PointerEventData(EventSystem.current);
 
@@ -296,17 +308,15 @@ namespace StormRend.Systems
 			pointerEventData.position = Input.mousePosition;
 
 			//Raycast using the Graphics Raycaster and mouse click position
-			raycastResults.Clear();
-			gr.Raycast(pointerEventData, raycastResults);
+			var raycastResults = new List<RaycastResult>();
+			gRaycaster.Raycast(pointerEventData, raycastResults);
 
+			//Anything hit means mouse if over UI
+			return raycastResults.Count > 0;
 
 			// foreach (var h in GUIhits)
-			// {
 			// 	if (h.gameObject.layer == Mathf.FloorToInt(Mathf.Log((float)mask.value, 2f)))	//HACKY
 			// 		return true;
-			// }
-
-			return false;
 		}
 
 		void PopulateControllableUnitTypes()
@@ -358,8 +368,6 @@ namespace StormRend.Systems
 			// if (_selectedAbility != null) 
 			GUILayout.Label("Selected Ability: " + selectedAbility?.name);
 			// if (_selectedAbilityVar.value != null) GUILayout.Label("Selected Ability: " + _selectedAbilityVar.value.name);
-
-			GUILayout.Label("GUI hits count: " + raycastResults.Count);
 
 			GUILayout.Label(string.Format("targetTileStack ({0}):", targetTileStack.Count));
 			foreach (var t in targetTileStack)
