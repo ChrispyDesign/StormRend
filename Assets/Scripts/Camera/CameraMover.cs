@@ -1,4 +1,5 @@
 using System.Collections;
+using pokoro.BhaVE.Core.Variables;
 using StormRend.MapSystems.Tiles;
 using StormRend.Units;
 using UnityEngine;
@@ -9,10 +10,16 @@ namespace StormRend.CameraSystem
 	public class CameraMover : MonoBehaviour
 	{
 		//Inspector
-		[SerializeField] BoxCollider cameraLimits = null;
+		[Header("Movement")]
 		[SerializeField] float linearLerp = 0.2f;
 		[SerializeField] float linearSpeed = 10f;
+		[SerializeField] BoxCollider cameraLimits = null;
 
+		[Header("Edge Panning")]
+		[SerializeField] BhaveBool edgePanningOn = null;
+		[Tooltip("Pixels"), SerializeField] float edgePanBorderSize = 20f;
+
+		[Header("Rotate")]
 		[SerializeField] bool rotateOn = false;
 		[SerializeField] float angularLerp = 0.4f;
 		[SerializeField] float angularSpeed = 100f;
@@ -27,17 +34,20 @@ namespace StormRend.CameraSystem
 		{
 			desiredPosition = transform.position;
 			desiredAngle = transform.rotation.eulerAngles.y;
+
+			Debug.Assert(edgePanningOn, "SOV not found!");
 		}
 		void Update()
 		{
-			HandleMoveAndRotate(new Vector3(input.xAxis, 0, input.yAxis));
+			HandleMoveAndRotate();
+			HandleEdgePanning();
 		}
 
 		void LateUpdate() => transform.position = Vector3.Lerp(transform.position, desiredPosition, linearLerp);
 
-		void HandleMoveAndRotate(Vector3 moveAxis)
+		void HandleMoveAndRotate()
 		{
-			if (moveAxis.Equals(Vector3.zero)) return;
+			if (Mathf.Approximately(0, input.xAxis) && Mathf.Approximately(0, input.yAxis)) return;
 
 			//Stop any current move routines
 			StopAllCoroutines();
@@ -53,8 +63,32 @@ namespace StormRend.CameraSystem
 			desiredPosition = cameraLimits.ClosestPoint(desiredPosition);
 		}
 
+		void HandleEdgePanning()
+		{
+			if (!edgePanningOn.value) return;
+
+			Vector2Int direction = Vector2Int.zero;
+
+			if (input.mousePosition.x < edgePanBorderSize) direction += Vector2Int.left;
+			if (input.mousePosition.x > Screen.width - edgePanBorderSize) direction += Vector2Int.right;
+			if (input.mousePosition.y < edgePanBorderSize) direction += Vector2Int.down;
+			if (input.mousePosition.y > Screen.height - edgePanBorderSize) direction += Vector2Int.up;
+
+			//Check
+			if (direction == Vector2Int.zero) return;
+
+			//Move
+			StopAllCoroutines();
+			var deltaSpeed = linearSpeed * Time.unscaledDeltaTime;  //Reduce being affected by pause
+			desiredPosition += direction.x * transform.right * deltaSpeed;
+			desiredPosition += direction.y * transform.forward * deltaSpeed;
+
+			//Limit
+			desiredPosition = cameraLimits.ClosestPoint(desiredPosition);
+		}
+
 		public void Move(Unit unit, float lerp = 1f) => Move(unit.transform.position, lerp);
-		public void Move(Tile tile , float lerp = 1f) => Move(tile.transform.position, lerp);
+		public void Move(Tile tile, float lerp = 1f) => Move(tile.transform.position, lerp);
 		public void Move(Vector3 destination, float lerp = 1f)
 		{
 			StopAllCoroutines();

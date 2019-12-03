@@ -1,5 +1,6 @@
 using pokoro.Patterns.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace StormRend.CameraSystem
 {
@@ -11,40 +12,29 @@ namespace StormRend.CameraSystem
 	public class MasterCamera : Singleton<MasterCamera>
 	{
 		//Properties
-		public new Camera camera 
-		{
-			get 
-			{
-				return _cam;
-			}
-			private set => _cam = value;
-		}
-		public CameraInput cameraInput => _ci;
-		public CameraMover cameraMover => _cm;
-		public CameraZoomer cameraZoom => _cz;
-
-		//Members
-		Camera _cam = null;
-		CameraInput _ci = null;
-		CameraMover _cm = null;
-		CameraZoomer _cz = null;
+		public new Camera camera { get; private set; }
+		public CameraInput cameraInput { get; private set; }
+		public CameraMover cameraMover { get; private set; }
+		public CameraZoomer cameraZoom { get; private set; }
+		public PhysicsRaycaster physicsRaycaster { get; private set; }
 
 		void Reset()
 		{
-			_cam = GetComponent<Camera>();
-			if (_cam) return;
-			_cam = GetComponentInChildren<Camera>();	//Find below
-			if (_cam) return;
-			_cam = GetComponentInParent<Camera>();		//Find above
-			Debug.Assert(_cam, "No camera found on this object!");
+			camera = GetComponent<Camera>();
+			if (camera) return;
+			camera = GetComponentInChildren<Camera>();	//Find below
+			if (camera) return;
+			camera = GetComponentInParent<Camera>();		//Find above
+			Debug.Assert(camera, "No camera found on this object!");
 		}
 
 		void Awake()
 		{
-			_cam = GetComponentInChildren<Camera>();
-			_ci = GetComponent<CameraInput>();
-			_cm = GetComponent<CameraMover>();
-			_cz = GetComponent<CameraZoomer>();
+			camera = GetComponentInChildren<Camera>();
+			cameraInput = GetComponent<CameraInput>();
+			cameraMover = GetComponent<CameraMover>();
+			cameraZoom = GetComponent<CameraZoomer>();
+			physicsRaycaster = GetComponentInChildren<PhysicsRaycaster>();
 		}
 	}
 }

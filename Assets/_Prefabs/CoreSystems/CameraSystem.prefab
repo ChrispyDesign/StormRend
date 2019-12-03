@@ -252,7 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_EventMask:
     serializedVersion: 2
-    m_Bits: 32
+    m_Bits: 4608
   m_MaxRayIntersections: 0
 --- !u!114 &3117456327012948443
 MonoBehaviour:
@@ -378,7 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15b233bfe4b31a646ad594e710f3718f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetFPS: 100
+  targetFPS: 90
 --- !u!1 &2145422009120967061
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,9 +452,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3efb3b1dfa9405a4090a6f771fe524ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraLimits: {fileID: 2941809505071786014}
   linearLerp: 0.1
   linearSpeed: 15
+  cameraLimits: {fileID: 2941809505071786014}
+  edgePanningOn: {fileID: 11400000, guid: af33d9de84ab2c74281286d4607a4602, type: 2}
+  edgePanBorderSize: 10
   rotateOn: 0
   angularLerp: 0.4
   angularSpeed: 100

@@ -9,29 +9,16 @@ namespace StormRend.CameraSystem
         [SerializeField] string yAxisName = "Vertical";
 
         //Properties
-        public float xAxis
-        {
-            get => _xAxis;
-            private set => _xAxis = value;
-        }
-        public float yAxis
-        {
-            get => _yAxis;
-            private set => _yAxis = value;
-        }
-        public float zoomAxis
-        {
-            get => _zoomAxis;
-            private set => _zoomAxis = value;
-        }
-
-        //Members
-        float _xAxis, _yAxis, _zoomAxis;
+        public float xAxis { get ; private set; }
+        public float yAxis { get; private set; }
+        public float zoomAxis { get; private set; }
+		public Vector2 mousePosition { get; private set; }
 
         void Update()
         {
             PollMoveInput(); // can perform translation
             PollZoomInput(); // can perform zooming
+			PollMousePosition();	//Edge panning
         }
 
         void PollMoveInput()
@@ -44,5 +31,15 @@ namespace StormRend.CameraSystem
         {
             zoomAxis = Input.mouseScrollDelta.y;
         }
+
+		void PollMousePosition()
+		{
+			mousePosition = Input.mousePosition;
+		}
+
+		void PollMouseDrag()
+		{
+
+		}
     }
 }

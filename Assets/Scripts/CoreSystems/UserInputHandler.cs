@@ -127,7 +127,7 @@ namespace StormRend.Systems
 		Tile interimTile = null;
 		bool isTileHitEmpty = false;
 		GraphicRaycaster gr = null;
-		List<RaycastResult> GUIhits = new List<RaycastResult>();
+		List<RaycastResult> raycastResults = new List<RaycastResult>();
 		List<Type> currentControllableUnitTypes = new List<Type>();     //Holds the list of types that can be controlled for this game turn
 
 		#region Core
@@ -296,13 +296,15 @@ namespace StormRend.Systems
 			pointerEventData.position = Input.mousePosition;
 
 			//Raycast using the Graphics Raycaster and mouse click position
-			GUIhits.Clear();
-			gr.Raycast(pointerEventData, GUIhits);
-			foreach (var h in GUIhits)
-			{
-				if (h.gameObject.layer == Mathf.FloorToInt(Mathf.Log((float)mask.value, 2f)))	//HACKY
-					return true;
-			}
+			raycastResults.Clear();
+			gr.Raycast(pointerEventData, raycastResults);
+
+
+			// foreach (var h in GUIhits)
+			// {
+			// 	if (h.gameObject.layer == Mathf.FloorToInt(Mathf.Log((float)mask.value, 2f)))	//HACKY
+			// 		return true;
+			// }
 
 			return false;
 		}
@@ -357,7 +359,7 @@ namespace StormRend.Systems
 			GUILayout.Label("Selected Ability: " + selectedAbility?.name);
 			// if (_selectedAbilityVar.value != null) GUILayout.Label("Selected Ability: " + _selectedAbilityVar.value.name);
 
-			GUILayout.Label("GUI hits count: " + GUIhits.Count);
+			GUILayout.Label("GUI hits count: " + raycastResults.Count);
 
 			GUILayout.Label(string.Format("targetTileStack ({0}):", targetTileStack.Count));
 			foreach (var t in targetTileStack)

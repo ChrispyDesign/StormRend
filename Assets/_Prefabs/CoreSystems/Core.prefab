@@ -1,17 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &3864298644854069020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7722784869361562018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1614686b49776249bbe159881a0e308, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5256963834050745516
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +92,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   onEnterNextTurn:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 71110882921943952}
+        m_MethodName: InternalHide
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: StormRend.Utility.Events.StateEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onStartRound:
@@ -1325,12 +1324,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5034325963715073847}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7722784869361562018 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3382576198777169557, guid: dea4249421e618249a1122e83dcebecd,
-    type: 3}
-  m_PrefabInstance: {fileID: 5034325963715073847}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7722784868370207320 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3382576199773750639, guid: dea4249421e618249a1122e83dcebecd,
@@ -1407,6 +1400,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fd9b162b2574ce4eafd09ef52ec6d89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &71110882921943952 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4981304662712468647, guid: dea4249421e618249a1122e83dcebecd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5034325963715073847}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95c6f2f92006e8e46853908b58bbb6cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5561836097276829601
@@ -1495,12 +1500,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5561836097276829601}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8356202850674552730 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4528561076772630587, guid: baffdcba5ee2b5d48811cc048e4f8c9f,
-    type: 3}
-  m_PrefabInstance: {fileID: 5561836097276829601}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1013997117804853895 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4845289873623901478, guid: baffdcba5ee2b5d48811cc048e4f8c9f,
@@ -1513,6 +1512,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dd5973eca1604d438ca776501c72aad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8356202850674552730 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4528561076772630587, guid: baffdcba5ee2b5d48811cc048e4f8c9f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5561836097276829601}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8887868497909128609
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -91,7 +91,7 @@ namespace StormRend.UI
 			// tooltipText.color = origTextColor;
 			// tooltipPanel.color = origPanelColor;
 		}
-		void InternalHide()
+		public void InternalHide()
 		{
 			tooltipPanel.gameObject.SetActive(false);
 		}
