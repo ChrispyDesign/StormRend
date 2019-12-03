@@ -34,11 +34,11 @@ namespace StormRend.MapSystems.Tiles
 		public Map owner => Map.current;
 
 		//Members
-		[ReadOnlyField] public List<Tile> connections = new List<Tile>();	//List because HashSets don't serialize
+		[ReadOnlyField] public List<Tile> connections = new List<Tile>();   //List because HashSets don't serialize
 		[HideInInspector, SerializeField] protected Renderer rend = null;
 
 		//This avoids tile highlight issues when cursor unhovers
-		TileHighlightSetting defaultColor = null;		//The current default normal color of this tile
+		TileHighlightSetting defaultColor = null;       //The current default normal color of this tile
 		TileHighlight highlight = null;
 		AudioSource audioSource = null;
 
@@ -48,15 +48,15 @@ namespace StormRend.MapSystems.Tiles
 		internal float F = 0;
 
 		#region Core
-		void OnValidate()	//Need to get the renderer in editor for gizmos to work
+		void OnValidate()   //Need to get the renderer in editor for gizmos to work
 		{
 			rend = GetComponent<Renderer>();
 		}
 		void Awake()
 		{
 			LoadStaticHighlightColors();    //NOTE! Awake is too early sometimes? Which means it doesn't always grab all the Tile Highlight Colors
-			SetupTileHighlightObject();
-			SetupInternalColours();
+			SetupTileHighlightObjects();
+			SetupDefaultHighlightSettings();
 
 			//Get the general purpose
 			audioSource = GameDirector.current.sfxAudioSource;
@@ -84,9 +84,9 @@ namespace StormRend.MapSystems.Tiles
 			defaultColor = ScriptableObject.CreateInstance<TileHighlightSetting>();
 			highlight.Set(defaultColor);
 		}
-	#endregion
+		#endregion
 
-	#region Inits
+		#region Inits
 		/// <summary>
 		/// To create extra tile highlights: Create Asset Menu >>> Tile Highlight Color.
 		/// The can be placed anywhere in the project and this function will find them on Awake()
@@ -105,25 +105,36 @@ namespace StormRend.MapSystems.Tiles
 				highlightsScanned = true;
 			}
 		}
-		void SetupTileHighlightObject()
+		void SetupTileHighlightObjects()
 		{
 			highlight = GetComponentInChildren<TileHighlight>();
+			if (highlight) return;
 
 			//Create a highlight object if nothing found
-			if (highlight) return;
-			var go = new GameObject("Highlight");
-			highlight = go.AddComponent<TileHighlight>();
-			go.transform.SetParent(this.transform);
+			//MAIN
+			var mainHighlight = new GameObject("MainHighlight", typeof(TileHighlight));
+			highlight = mainHighlight.GetComponent<TileHighlight>();
+			mainHighlight.transform.SetParent(this.transform);
+				//HOVER
+				var hoverHighlight = new GameObject("HoverHighlight", typeof(TileHighlight));
+				highlight.hover = hoverHighlight.GetComponent<TileHighlight>();
+				hoverHighlight.transform.SetParent(mainHighlight.transform);
 		}
 
-		void SetupInternalColours()
+		void SetupDefaultHighlightSettings()
 		{
-			//Setup internal tile highlight color
+			//Setup initial inernal tile highlight color
 			defaultColor = ScriptableObject.CreateInstance<TileHighlightSetting>();
-		}
-	#endregion
 
-	#region Utility
+			//MAIN
+			highlight.Set(defaultColor);
+
+			//HOVER
+			highlight.hover.Set(defaultColor);
+		}
+		#endregion
+
+		#region Utility
 		/// <summary>
 		/// Get an imaginary projected tile position from this tile
 		/// </summary>
@@ -193,26 +204,34 @@ namespace StormRend.MapSystems.Tiles
 			tile = null;
 			return false;
 		}
-	#endregion
+		#endregion
 
-	#region Event System Interface Implementations
+		#region Event System Interface Implementations
+
+		//HOVER HIGHLIGHTING ONLY
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			//Set default if no color specifically set at startup
 			if (!hoverHighlight && highlightColors.TryGetValue("Hover", out TileHighlightSetting color))
 				hoverHighlight = color;
 
-			//Set hover
-			highlight.Set(hoverHighlight);
+			//Only set Hover if the current tile's main highlight is not set to a default color ie. the tile is not being active ??
 
-			//Hover sound
-			audioSource.PlayOneShot(onHoverSFX, SFXVolume);
+			//Set hover
+			if (highlight != defaultColor)
+			{
+				highlight.hover.Set(hoverHighlight);
+
+				//Hover sound
+				audioSource.PlayOneShot(onHoverSFX, SFXVolume);
+			}
+
 		}
 		public void OnPointerExit(PointerEventData eventData)
 		{
 			//Reset back
-			highlight.Set(defaultColor);
+			highlight.hover.Set(defaultColor);
 		}
-	#endregion
+		#endregion
 	}
 }

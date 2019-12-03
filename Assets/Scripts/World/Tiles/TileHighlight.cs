@@ -7,7 +7,7 @@ namespace StormRend.MapSystems.Tiles
 	public class TileHighlight : MonoBehaviour
 	{
 		//Properties
-		public Color color 
+		public Color color
 		{
 			get => sr.color;
 			set => sr.color = value;
@@ -19,6 +19,8 @@ namespace StormRend.MapSystems.Tiles
 			set => sr.sprite = value;
 		}
 
+		public TileHighlight hover { get; set; }
+
 		//Members
 		SpriteRenderer sr;
 
@@ -26,6 +28,13 @@ namespace StormRend.MapSystems.Tiles
 		{
 			sr = GetComponent<SpriteRenderer>();
 			Debug.Assert(sr, "Sprite renderer not found!");
+
+			//Get refernce to the hover highlight
+			if (transform.childCount > 0)
+				hover = transform.GetChild(0).GetComponent<TileHighlight>();
+			//If this object has no children it means THIS is the hover highlight
+			else
+				hover = this;
 		}
 
 		public void Set(TileHighlightSetting setting)
