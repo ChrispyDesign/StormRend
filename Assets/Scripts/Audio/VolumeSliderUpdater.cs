@@ -2,13 +2,13 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-namespace StormRend.Audio
+namespace StormRend.UI
 {
 	/// <summary>
 	/// Small class to update the volume sliders upon entering the options menu
 	/// </summary>
 	[RequireComponent(typeof(Slider))]
-	public class VolumeSliderUpdater : MonoBehaviour
+	public class VolumeSliderUpdater : UIUpdater
 	{
 		[SerializeField] AudioMixer mixer = null;
 		[SerializeField] string paramName = "MasterVol";
@@ -18,7 +18,6 @@ namespace StormRend.Audio
 		void Awake()
 		{
 			slider = GetComponent<Slider>();
-			
 			Debug.Assert(mixer, "No mixer found!");
 		}
 
