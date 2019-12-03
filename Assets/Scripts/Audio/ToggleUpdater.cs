@@ -13,7 +13,7 @@ namespace StormRend.UI
 		void Awake()
 		{
 			toggle = GetComponent<Toggle>();
-			Debug.Assert(sov, "SOV not found!");
+			Debug.Assert(sov != null, "SOV not found!");
 		}
 
 		void OnEnable() => toggle.isOn = sov.value;
