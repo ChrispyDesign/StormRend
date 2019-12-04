@@ -22,7 +22,8 @@ namespace StormRend.Assists
 		void Start()
 		{
 			unit.HP = startingHealth;
-			unit.onTakeDamage.Invoke(new HealthData(null, startingHealth));
+			var nullHealthData = new HealthData(null, 0);
+			unit.onTakeDamage.Invoke(nullHealthData);
 		}
 	}
 }
