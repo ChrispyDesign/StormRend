@@ -186,6 +186,8 @@ namespace StormRend.Bhaviours
 				}
 			}
 
+			// var targetsByDistance = from t in targets 
+
 			//----------- PRIORITY 3: Health
 			//Sort by health
 			var animateTargets = targets.

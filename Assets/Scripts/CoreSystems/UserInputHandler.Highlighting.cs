@@ -70,7 +70,7 @@ namespace StormRend.Systems
 					t.SetHighlight(targetableHighlight);
 				//Show action range
 				else
-					t.SetHighlight(actionHighlight);
+					t.SetHighlight(untargetableHighlight);
 			}
 		}
 

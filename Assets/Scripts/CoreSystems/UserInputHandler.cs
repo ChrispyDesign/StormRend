@@ -57,13 +57,11 @@ namespace StormRend.Systems
 		[ReadOnlyField, SerializeField] TurnState currentTurnState = null;
 
 		[Header("Tile Colors")]
-		[SerializeField] TileHighlightSetting clearHighlight = null;
-		[SerializeField] TileHighlightSetting startHighlight = null;
-		[SerializeField] TileHighlightSetting hoverHighlight = null;
-		[SerializeField] TileHighlightSetting moveHighlight = null;
-		[SerializeField] TileHighlightSetting actionHighlight = null;		//Action tiles
-		[SerializeField] TileHighlightSetting targetableHighlight = null;	//Action tiles that can actually be targeted by the player
-		[SerializeField] TileHighlightSetting targetHighlight = null;		//Actions tiles that have been selected by the player
+		[SerializeField] TileColor startHighlight = null;
+		[SerializeField] TileColor moveHighlight = null;
+		[SerializeField] TileColor untargetableHighlight = null;	//Action tiles
+		[SerializeField] TileColor targetableHighlight = null;		//Action tiles that can actually be targeted by the player
+		[SerializeField] TileColor targetHighlight = null;			//Actions tiles that have been selected by the player
 
 		[Header("Camera")]
 		[SerializeField] float cameraLerpTime = 1.75f;
@@ -151,11 +149,9 @@ namespace StormRend.Systems
 			Debug.Assert(pRaycaster, "No physics raycaster found!");
 
 			//Tile highlights
-			Debug.Assert(clearHighlight, "Highlight not set!");
 			Debug.Assert(startHighlight, "Highlight not set!");
-			Debug.Assert(hoverHighlight, "Highlight not set!");
 			Debug.Assert(moveHighlight, "Highlight not set!");
-			Debug.Assert(actionHighlight, "Highlight not set!");
+			Debug.Assert(untargetableHighlight, "Highlight not set!");
 			Debug.Assert(targetHighlight, "Highlight not set!");
 		}
 

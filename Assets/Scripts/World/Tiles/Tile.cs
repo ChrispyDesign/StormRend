@@ -20,14 +20,14 @@ namespace StormRend.MapSystems.Tiles
 	{
 		//Highlights
 		static bool highlightsScanned = false;
-		public static Dictionary<string, TileHighlightSetting> highlightColors { get; private set; } = new Dictionary<string, TileHighlightSetting>();
+		public static Dictionary<string, TileColor> highlightColors { get; private set; } = new Dictionary<string, TileColor>();
 
 		//Inspector
 		[SerializeField] AudioClip onHoverSFX = null;
 		[Range(0f, 1f), SerializeField] float SFXVolume = 0.25f;
 
 		[Tooltip("If not set will default to 'Hover' highlight or clear")]
-		[SerializeField] TileHighlightSetting hoverHighlight = null;
+		[SerializeField] TileColor hoverHighlight = null;
 		public float cost = 1;
 
 		//Properties
@@ -38,7 +38,8 @@ namespace StormRend.MapSystems.Tiles
 		[HideInInspector, SerializeField] protected Renderer rend = null;
 
 		//This avoids tile highlight issues when cursor unhovers
-		TileHighlightSetting defaultColor = null;       //The current default normal color of this tile
+		TileColor mainColor = null;       //The current default normal color of this tile
+		TileColor clearColor = null;
 		TileHighlight highlight = null;
 		AudioSource audioSource = null;
 
@@ -47,7 +48,7 @@ namespace StormRend.MapSystems.Tiles
 		internal float H = float.MaxValue;
 		internal float F = 0;
 
-		#region Core
+		//Inits
 		void OnValidate()   //Need to get the renderer in editor for gizmos to work
 		{
 			rend = GetComponent<Renderer>();
@@ -61,32 +62,6 @@ namespace StormRend.MapSystems.Tiles
 			//Get the general purpose
 			audioSource = GameDirector.current.sfxAudioSource;
 		}
-
-		public void Connect(Tile to) => connections.Add(to);
-		public bool Disconnect(Tile from) => connections.Remove(from);
-		public bool Contains(Tile t) => connections.Contains(t);
-		public void DisconnectAll() => connections.Clear();
-
-		/// <summary>
-		/// Sets this tile's temporary highlight while remembering the default color
-		/// </summary>
-		public void SetHighlight(TileHighlightSetting tileHighlightColor)
-		{
-			defaultColor = tileHighlightColor;
-			highlight.Set(defaultColor);
-		}
-
-		/// <summary>
-		/// Returns the tile back to it's default color
-		/// </summary>
-		public void ClearColor()
-		{
-			defaultColor = ScriptableObject.CreateInstance<TileHighlightSetting>();
-			highlight.Set(defaultColor);
-		}
-		#endregion
-
-		#region Inits
 		/// <summary>
 		/// To create extra tile highlights: Create Asset Menu >>> Tile Highlight Color.
 		/// The can be placed anywhere in the project and this function will find them on Awake()
@@ -95,7 +70,7 @@ namespace StormRend.MapSystems.Tiles
 		{
 			if (!highlightsScanned)
 			{
-				var foundHighlights = Resources.FindObjectsOfTypeAll<TileHighlightSetting>();
+				var foundHighlights = Resources.FindObjectsOfTypeAll<TileColor>();
 				// var foundHighlights = Resources.LoadAll("", typeof(TileHighlightColor)) as TileHighlightColor[];
 				foreach (var fh in foundHighlights)
 				{
@@ -115,24 +90,46 @@ namespace StormRend.MapSystems.Tiles
 			var mainHighlight = new GameObject("MainHighlight", typeof(TileHighlight));
 			highlight = mainHighlight.GetComponent<TileHighlight>();
 			mainHighlight.transform.SetParent(this.transform);
-				//HOVER
-				var hoverHighlight = new GameObject("HoverHighlight", typeof(TileHighlight));
-				highlight.hover = hoverHighlight.GetComponent<TileHighlight>();
-				hoverHighlight.transform.SetParent(mainHighlight.transform);
+			//HOVER
+			var hoverHighlight = new GameObject("HoverHighlight", typeof(TileHighlight));
+			highlight.hover = hoverHighlight.GetComponent<TileHighlight>();
+			hoverHighlight.transform.SetParent(mainHighlight.transform);
 		}
-
 		void SetupDefaultHighlightSettings()
 		{
 			//Setup initial inernal tile highlight color
-			defaultColor = ScriptableObject.CreateInstance<TileHighlightSetting>();
+			mainColor = clearColor = ScriptableObject.CreateInstance<TileColor>();
 
 			//MAIN
-			highlight.Set(defaultColor);
+			highlight.Set(mainColor);
 
 			//HOVER
-			highlight.hover.Set(defaultColor);
+			highlight.hover.Set(mainColor);
 		}
-		#endregion
+
+		//Connections
+		public void Connect(Tile to) => connections.Add(to);
+		public bool Disconnect(Tile from) => connections.Remove(from);
+		public bool Contains(Tile t) => connections.Contains(t);
+		public void DisconnectAll() => connections.Clear();
+
+		//Highlights
+		/// <summary>
+		/// Sets this tile's temporary highlight while remembering the default color
+		/// </summary>
+		public void SetHighlight(TileColor thlSetting)
+		{
+			mainColor = thlSetting;
+			highlight.Set(mainColor);
+		}
+		/// <summary>
+		/// Returns the tile back to it's default color
+		/// </summary>
+		public void ClearHighlight()
+		{
+			mainColor = clearColor;
+			highlight.Set(mainColor);
+		}
 
 		#region Utility
 		/// <summary>
@@ -212,13 +209,13 @@ namespace StormRend.MapSystems.Tiles
 		public void OnPointerEnter(PointerEventData eventData)
 		{
 			//Set default if no color specifically set at startup
-			if (!hoverHighlight && highlightColors.TryGetValue("Hover", out TileHighlightSetting color))
+			if (!hoverHighlight && highlightColors.TryGetValue("Hover", out TileColor color))
 				hoverHighlight = color;
 
 			//Only set Hover if the current tile's main highlight is not set to a default color ie. the tile is not being active ??
 
 			//Set hover
-			if (highlight != defaultColor)
+			if (highlight.color != clearColor)
 			{
 				highlight.hover.Set(hoverHighlight);
 
@@ -230,7 +227,7 @@ namespace StormRend.MapSystems.Tiles
 		public void OnPointerExit(PointerEventData eventData)
 		{
 			//Reset back
-			highlight.hover.Set(defaultColor);
+			highlight.hover.Set(clearColor);
 		}
 		#endregion
 	}

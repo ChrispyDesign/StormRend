@@ -48,21 +48,21 @@ namespace StormRend.Systems
 			//Clear move highlights
 			if (selectedAnimateUnit.possibleMoveTiles != null)
 				foreach (var t in selectedAnimateUnit.possibleMoveTiles)
-					t.SetHighlight(clearHighlight);
+					t.ClearHighlight();
+					// t.SetHighlight(clearHighlight);
 
 			//Clear target highlights
 			if (selectedAnimateUnit.possibleTargetTiles != null)
 				foreach (var t in selectedAnimateUnit.possibleTargetTiles)
-					t.SetHighlight(clearHighlight);
+					t.ClearHighlight();
+					// t.SetHighlight(clearHighlight);
 		}
 
 		//Trying to avoid the accidental unhover glitch but still doesn't solve it
-		void ClearAllTileHighlights()
+		void  ClearAllTileHighlights()
 		{
 			foreach (var t in Map.current.tiles)
-			{
-				t.SetHighlight(clearHighlight);
-			}
+				t.ClearHighlight();
 		}
 		#endregion
 	}

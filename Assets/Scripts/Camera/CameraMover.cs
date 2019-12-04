@@ -35,7 +35,7 @@ namespace StormRend.CameraSystem
 			desiredPosition = transform.position;
 			desiredAngle = transform.rotation.eulerAngles.y;
 
-			Debug.Assert(edgePanningOn, "SOV not found!");
+			Debug.Assert(edgePanningOn != null, "SOV not found!");
 		}
 		void Update()
 		{

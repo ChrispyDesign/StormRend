@@ -7,19 +7,8 @@ namespace StormRend.MapSystems.Tiles
 	public class TileHighlight : MonoBehaviour
 	{
 		//Properties
-		public Color color
-		{
-			get => sr.color;
-			set => sr.color = value;
-		}
-
-		public Sprite sprite
-		{
-			get => sr.sprite;
-			set => sr.sprite = value;
-		}
-
 		public TileHighlight hover { get; set; }
+		internal TileColor color { get; private set; }
 
 		//Members
 		SpriteRenderer sr;
@@ -37,10 +26,11 @@ namespace StormRend.MapSystems.Tiles
 				hover = this;
 		}
 
-		public void Set(TileHighlightSetting setting)
+		public void Set(TileColor color)
 		{
-			sr.color = setting.color;
-			sr.sprite = setting.sprite;
+			this.color = color;
+			sr.color = color.color;
+			sr.sprite = color.sprite;
 		}
 	}
 }
