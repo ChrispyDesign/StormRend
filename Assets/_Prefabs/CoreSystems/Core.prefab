@@ -1333,9 +1333,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a743716488447a447b9396ba89cf550e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &7722784869035402170 stripped
+--- !u!1 &1236526408306522043 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 3382576199105426573, guid: dea4249421e618249a1122e83dcebecd,
+  m_CorrespondingSourceObject: {fileID: 6121661820747686028, guid: dea4249421e618249a1122e83dcebecd,
     type: 3}
   m_PrefabInstance: {fileID: 5034325963715073847}
   m_PrefabAsset: {fileID: 0}
@@ -1405,15 +1405,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5034325963715073847}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7722784868370207320 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3382576199773750639, guid: dea4249421e618249a1122e83dcebecd,
-    type: 3}
-  m_PrefabInstance: {fileID: 5034325963715073847}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7722784867514400505 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3382576200595958222, guid: dea4249421e618249a1122e83dcebecd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5034325963715073847}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7722784869035402170 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3382576199105426573, guid: dea4249421e618249a1122e83dcebecd,
     type: 3}
   m_PrefabInstance: {fileID: 5034325963715073847}
   m_PrefabAsset: {fileID: 0}
@@ -1620,6 +1620,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2713858406224050904, guid: 7c81b709aed3f1c47b686b7718b587ac,
         type: 3}
+      propertyPath: activateObjects.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2713858406224050904, guid: 7c81b709aed3f1c47b686b7718b587ac,
+        type: 3}
       propertyPath: activateObjects.Array.data[0]
       value: 
       objectReference: {fileID: 8356202850674552730}
@@ -1637,12 +1642,12 @@ PrefabInstance:
         type: 3}
       propertyPath: activateObjects.Array.data[3]
       value: 
-      objectReference: {fileID: 7722784868370207320}
+      objectReference: {fileID: 7722784869035402170}
     - target: {fileID: 2713858406224050904, guid: 7c81b709aed3f1c47b686b7718b587ac,
         type: 3}
       propertyPath: activateObjects.Array.data[4]
       value: 
-      objectReference: {fileID: 7722784869035402170}
+      objectReference: {fileID: 1236526408306522043}
     - target: {fileID: 2713858406224050904, guid: 7c81b709aed3f1c47b686b7718b587ac,
         type: 3}
       propertyPath: onTurnEnter.m_PersistentCalls.m_Calls.Array.data[2].m_Target
@@ -1653,6 +1658,11 @@ PrefabInstance:
       propertyPath: onTurnExit.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 3785408489521488377}
+    - target: {fileID: 2713858407051939431, guid: 7c81b709aed3f1c47b686b7718b587ac,
+        type: 3}
+      propertyPath: activateObjects.Array.size
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2713858407051939431, guid: 7c81b709aed3f1c47b686b7718b587ac,
         type: 3}
       propertyPath: activateObjects.Array.data[0]
@@ -1672,22 +1682,22 @@ PrefabInstance:
         type: 3}
       propertyPath: activateObjects.Array.data[3]
       value: 
-      objectReference: {fileID: 7722784868370207320}
+      objectReference: {fileID: 7722784867514400505}
     - target: {fileID: 2713858407051939431, guid: 7c81b709aed3f1c47b686b7718b587ac,
         type: 3}
       propertyPath: activateObjects.Array.data[4]
       value: 
-      objectReference: {fileID: 7722784867514400505}
+      objectReference: {fileID: 7722784869035402170}
     - target: {fileID: 2713858407051939431, guid: 7c81b709aed3f1c47b686b7718b587ac,
         type: 3}
       propertyPath: activateObjects.Array.data[5]
       value: 
-      objectReference: {fileID: 7722784869035402170}
+      objectReference: {fileID: 3260328891646769650}
     - target: {fileID: 2713858407051939431, guid: 7c81b709aed3f1c47b686b7718b587ac,
         type: 3}
       propertyPath: activateObjects.Array.data[6]
       value: 
-      objectReference: {fileID: 3260328891646769650}
+      objectReference: {fileID: 1236526408306522043}
     - target: {fileID: 2713858407051939431, guid: 7c81b709aed3f1c47b686b7718b587ac,
         type: 3}
       propertyPath: onTurnEnter.m_PersistentCalls.m_Calls.Array.data[2].m_Target

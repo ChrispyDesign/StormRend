@@ -9,13 +9,6 @@ namespace StormRend.UI
 {
     public class BlizzardMeter : Meter
 	{
-		// void Start() => SOV.onChanged += Test;
-
-		void Test()
-		{
-			Debug.Log("Blizzard OnChange");
-		}
-
 		void OnGUI()
 		{
 			if (!debug) return;
@@ -27,7 +20,6 @@ namespace StormRend.UI
 
 		//NOTE!
 		//BhaveInt clamp and wrap function should be inbuilt into the variable. GloryController is too slow
-
 		public override void OnChange()
 		{
 			if (internalValue < SOV.value)

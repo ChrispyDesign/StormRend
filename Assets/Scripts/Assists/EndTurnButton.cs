@@ -12,9 +12,6 @@ namespace StormRend.Assists
 	public class EndTurnButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 	{
 		//Inspector
-		[SerializeField] string title = "End Turn";
-		[SerializeField] string details;
-
 		[Header("SFX")]
 		[SerializeField] AudioClip onClick = null;
 		[SerializeField] AudioClip onHover = null;
@@ -25,16 +22,11 @@ namespace StormRend.Assists
 		//Members
 		Animator anim = null;
 		AudioSource audSrc = null;
-		InfoPanel infoPanel = null;
 
 		void Awake()
 		{
 			anim = GetComponent<Animator>();
 			audSrc = GetComponent<AudioSource>();
-
-			infoPanel = FindObjectOfType<InfoPanel>();
-
-			// Debug.Assert(infoPanel, string.Format("[{0}] {1} not found!", this.name, typeof(InfoPanel).Name));
 		}
 
 		//Event system callbacks
@@ -42,19 +34,16 @@ namespace StormRend.Assists
 		{
 			anim.SetBool("OnHover", true);
 			audSrc.PlayOneShot(onHover);
-			infoPanel?.ShowPanel(title, 1, details);
 		}
 
 		public void OnPointerExit(PointerEventData eventData)
 		{
 			anim.SetBool("OnHover", false);
 			audSrc.PlayOneShot(onUnhover);
-			infoPanel?.UnShowPanel();
 		}
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
-			infoPanel?.UnShowPanel(true);
 			anim.SetTrigger("OnClick");
 			audSrc.PlayOneShot(onClick);
 			OnClick.Invoke();

@@ -1,23 +1,18 @@
 ﻿using System.Collections;
 using pokoro.BhaVE.Core.Variables;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace StormRend.UI
-{ 
-	public class Meter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+{
+	public class Meter : MonoBehaviour
 	{
-		[SerializeField] protected string title;
-		[SerializeField] protected string details;
-
 		//Inspector
 		[SerializeField] protected BhaveInt SOV = null;
 		[SerializeField] protected Image[] meterPips = null;
 		[Range(0f, 2f), SerializeField] float fillDuration = 0.3f; //seconds
 
 		//Members
-		protected InfoPanel infoPanel;
 		protected int internalValue
 		{
 			get => _internalValue;
@@ -31,8 +26,6 @@ namespace StormRend.UI
 
 		void Awake()
 		{
-			infoPanel = FindObjectOfType<InfoPanel>();
-
 			Debug.Assert(SOV, "No SOV found!");
 		}
 
@@ -119,16 +112,6 @@ namespace StormRend.UI
 				yield return null;
 			}
 			meterPips[internalValue - 1].fillAmount = 0f;
-		}
-
-		public void OnPointerEnter(PointerEventData eventData)
-		{
-			infoPanel?.ShowPanel(title, 1, details);
-		}
-
-		public void OnPointerExit(PointerEventData eventData)
-		{
-			infoPanel?.UnShowPanel();
 		}
 	}
 }
