@@ -118,10 +118,8 @@ namespace StormRend.Bhaviours
 			- if one
 		- FINAL CASE
 			- Just pick one at random
-
 		MOVE
 		- 
-
 		*/
 
 		//---------------------------------------------------------------------------------
@@ -153,6 +151,11 @@ namespace StormRend.Bhaviours
 					{
 						//Provoker found!
 						target = u;
+
+						//Test for adjacency so the unit doesn't move around pointlessly
+						if (TryGetAdjacentTargets(unit.currentTile, out Unit[] adjTargets))
+							targetIsAdjacent = true;
+
 						Debug.LogFormat("[Provoke] : {0}", target.name);
 						return true;        //TARGET ACQUIRED!
 					}
