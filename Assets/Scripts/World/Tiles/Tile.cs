@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using StormRend.Systems;
+using StormRend.Tags;
 using StormRend.Utility.Attributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,7 +17,7 @@ namespace StormRend.MapSystems.Tiles
 	/// </summary>
 	[SelectionBase]
 	[RequireComponent(typeof(Collider))]
-	public abstract class Tile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+	public abstract class Tile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ITaggable
 	{
 		//Highlights
 		static bool highlightsScanned = false;
@@ -32,6 +33,8 @@ namespace StormRend.MapSystems.Tiles
 
 		//Properties
 		public Map owner => Map.current;
+		public new Tag tag { get; private set; } = null;
+
 
 		//Members
 		[ReadOnlyField] public List<Tile> connections = new List<Tile>();   //List because HashSets don't serialize
@@ -61,6 +64,8 @@ namespace StormRend.MapSystems.Tiles
 
 			//Get the general purpose
 			audioSource = GameDirector.current.sfxAudioSource;
+
+			tag = GetComponent<Tag>();
 		}
 		/// <summary>
 		/// To create extra tile highlights: Create Asset Menu >>> Tile Highlight Color.

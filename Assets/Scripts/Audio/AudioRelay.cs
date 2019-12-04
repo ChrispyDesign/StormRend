@@ -2,16 +2,18 @@ using UnityEngine;
 
 namespace StormRend.Audio
 {
+
 	[RequireComponent(typeof(AudioSystem))]
     public abstract class AudioRelay : MonoBehaviour
     {
-		protected AudioSystem audioSystem;
-		protected AudioSource audioSource;
+		[Header("Will auto find if these components aren't specified")]
+		[SerializeField] protected AudioSystem audioSystem = null;
+		[SerializeField] protected AudioSource audioSource = null;
 
 		void Awake()
 		{
-			audioSystem = GetComponent<AudioSystem>();
-			audioSource = GetComponent<AudioSource>();
+			if (!audioSystem) audioSystem = GetComponent<AudioSystem>();
+			if (!audioSource) audioSource = GetComponent<AudioSource>();
 		}
     }
 }

@@ -85,12 +85,39 @@ namespace StormRend.Audio
 			while (true)
 			{
 				AudioClip clipToPlay = am.clips[Random.Range(0, am.clips.Count)];
-				if (clipToPlay == am.lastPlayed) continue;
+				if (am.avoidRepetitions &&
+					am.clips.Count > 1 &&     //Need at least 2 clips to avoid repetitions
+					clipToPlay == am.lastPlayed) continue;
 
 				//Play by chance
 				if (Random.Range(0, 100) < am.chance)
 				{
 					audioSource.PlayOneShot(clipToPlay, am.volume);
+					am.lastPlayed = clipToPlay;
+				}
+				break;
+			}
+		}
+
+		/// <summary>
+		/// Play a random clip in a magazine by chance using passed in audiosource
+		/// ie. in case the sounds need to be routed through a different mixer
+		/// </summary>
+		public void ChancePlayMagazineByAudioSource(AudioMagazine am, AudioSource source)
+		{
+			//Don't play the same sound over and over again
+			//NOTE: With brief testing, the max iterations was 3. Usually 1 or 2. Performance is fine
+			while (true)
+			{
+				AudioClip clipToPlay = am.clips[Random.Range(0, am.clips.Count)];
+				if (am.avoidRepetitions &&
+					am.clips.Count > 1 &&		//Need at least 2 clips to avoid repetitions, otherwise infinity loop
+					clipToPlay == am.lastPlayed) continue;
+
+				//Play by chance
+				if (Random.Range(0, 100) < am.chance)
+				{
+					source.PlayOneShot(clipToPlay, am.volume);
 					am.lastPlayed = clipToPlay;
 				}
 				break;

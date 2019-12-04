@@ -11,7 +11,7 @@ namespace StormRend.Units
 {
 	[SelectionBase]
 	[RequireComponent(typeof(UnitTag))]
-	public abstract class Unit : MonoBehaviour  //, IPointerEnterHandler, IPointerExitHandler
+	public abstract class Unit : MonoBehaviour, ITaggable  //, IPointerEnterHandler, IPointerExitHandler
 	{
 		[TextArea(0, 2)] public string description = null;
 
@@ -58,7 +58,7 @@ namespace StormRend.Units
 			ScanTileBelow();
 
 			//Tag
-			tag = GetComponent<UnitTag>();
+			tag = GetComponent<Tag>();
 
 			//Singletons
 			ur = UnitRegistry.current;

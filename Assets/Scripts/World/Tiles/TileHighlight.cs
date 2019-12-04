@@ -29,6 +29,11 @@ namespace StormRend.MapSystems.Tiles
 		public void Set(TileColor color)
 		{
 			this.color = color;
+
+			//A BIT HACKY BUT OK:
+			//On clicking retry for some reason .Set() is called before this class is fully initialized so sr is null
+			if (!sr) Awake();		
+			
 			sr.color = color.color;
 			sr.sprite = color.sprite;
 		}

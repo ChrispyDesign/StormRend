@@ -4389,8 +4389,10 @@ GameObject:
   - component: {fileID: 1369498550873307249}
   - component: {fileID: 8547758622612656737}
   - component: {fileID: 3841930061851047593}
-  - component: {fileID: 3132190640876183000}
+  - component: {fileID: 1828337949373039259}
   - component: {fileID: 4588662592721858016}
+  - component: {fileID: 613582561756817571}
+  - component: {fileID: 3132190640876183000}
   - component: {fileID: 9108019807441497519}
   m_Layer: 12
   m_Name: Berserker
@@ -4552,6 +4554,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1828337949373039259}
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: StormRend.Utility.Events.TileEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onActed:
@@ -4578,7 +4591,7 @@ MonoBehaviour:
   possibleMoveTiles: []
   possibleTargetTiles: []
   debug: 0
---- !u!114 &3132190640876183000
+--- !u!114 &1828337949373039259
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4587,12 +4600,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 9108019807441497518}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
+  m_Script: {fileID: 11500000, guid: 0407d80666517024693223bce23aff40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: Plays a remark when a enemy is killed by this unit
-  chance: 100
-  magazine: {fileID: 11400000, guid: 6734e99dc55624e839ee19b1f42152a1, type: 2}
+  audioSystem: {fileID: 0}
+  audioSource: {fileID: 613582561756817571}
+  grassWalkSounds: {fileID: 11400000, guid: b747cc021c23c6b4fac92847875828e6, type: 2}
+  paveWalkSounds: {fileID: 11400000, guid: c771e5c73cd8fcd478f932153e1f529d, type: 2}
 --- !u!82 &4588662592721858016
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4690,6 +4704,118 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!82 &613582561756817571
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108019807441497518}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 243357206194563174, guid: ea89020ab2e60ae49a21e918d28b307c,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &3132190640876183000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108019807441497518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7bf266e7f478c540a5afa7a35d92582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Plays a remark when a enemy is killed by this unit
+  chance: 100
+  magazine: {fileID: 11400000, guid: 6734e99dc55624e839ee19b1f42152a1, type: 2}
 --- !u!65 &9108019807441497519
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4778,12 +4904,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2427654379782167736}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &7534199329252911256 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5277682841273857056, guid: 0afa6dc8175f3b74a9d2ed19b2d543e2,
-    type: 3}
-  m_PrefabInstance: {fileID: 2427654379782167736}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5040440090224293771 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7224898900411460403, guid: 0afa6dc8175f3b74a9d2ed19b2d543e2,
@@ -4796,6 +4916,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c642c63ac1baec843ae9fa96e233cfc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &7534199329252911256 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5277682841273857056, guid: 0afa6dc8175f3b74a9d2ed19b2d543e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 2427654379782167736}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2781285614371760417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4865,15 +4991,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 280650df191977342833de9ada19cba3, type: 3}
---- !u!1 &250239159340423884 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2729211848303358957, guid: 280650df191977342833de9ada19cba3,
-    type: 3}
-  m_PrefabInstance: {fileID: 2781285614371760417}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8108094594187678610 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6205012047602268851, guid: 280650df191977342833de9ada19cba3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2781285614371760417}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &250239159340423884 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2729211848303358957, guid: 280650df191977342833de9ada19cba3,
     type: 3}
   m_PrefabInstance: {fileID: 2781285614371760417}
   m_PrefabAsset: {fileID: 0}
