@@ -71,9 +71,9 @@ MonoBehaviour:
     breakpoint: 0
   ID: 0
   description: 
-  _state: 1
+  _state: -1
   _parent: {fileID: 114812353847911796}
-  _deleg: {fileID: 114016761336581024}
+  _deleg: {fileID: 114823607038287790}
   overrideOn: 0
   stateOverride: 1
 --- !u!114 &114812353847911796
@@ -99,7 +99,26 @@ MonoBehaviour:
     breakpoint: 0
   ID: 1
   description: 
-  _state: 1
+  _state: -1
   _parent: {fileID: 0}
   children:
   - {fileID: 114101301479098354}
+--- !u!114 &114823607038287790
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd0f58f0bc3203c468af0922319bc1e7, type: 3}
+  m_Name: CompleteAIAction[COPY]
+  m_EditorClassIdentifier: 
+  enabled: 1
+  maxScanIterations: 5
+  provokeRange: 6
+  moveOn: 1
+  maxExtraSeekRangeAroundTarget: 2
+  attackOn: 1
+  attackRange: 1

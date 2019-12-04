@@ -19,17 +19,30 @@ namespace StormRend.CameraSystem
 		[SerializeField] BhaveBool edgePanningOn = null;
 		[Tooltip("Pixels"), SerializeField] float edgePanBorderSize = 20f;
 
-		[Header("Rotate")]
-		[SerializeField] bool rotateOn = false;
-		[SerializeField] float angularLerp = 0.4f;
-		[SerializeField] float angularSpeed = 100f;
+		[Header("Drag")]
+		[SerializeField] float dragSpeed = 450f;
+		[SerializeField] float dragLerp = 0.2f;
+		// [SerializeField] float zoomTemperingFactor = 0.5f;
+
+		// [Header("Rotate")]
+		// [SerializeField] bool rotateOn = false;
+		// [SerializeField] float angularLerp = 0.4f;
+		// [SerializeField] float angularSpeed = 100f;
+
+		//Properties
+		public bool isInDragMode => input.drag != null;	//If input.drag is valid then that means we're dragging
 
 		//Members
+		Camera cam = null;
 		CameraInput input = null;
 		Vector3 desiredPosition = Vector3.zero;
 		float desiredAngle = 0f;
 
-		void Awake() => input = GetComponent<CameraInput>();
+		void Awake()
+		{
+			cam = MasterCamera.current.camera;
+			input = GetComponent<CameraInput>();
+		}
 		void Start()
 		{
 			desiredPosition = transform.position;
@@ -40,10 +53,11 @@ namespace StormRend.CameraSystem
 		void Update()
 		{
 			HandleMoveAndRotate();
+			HandleDragMove();
 			HandleEdgePanning();
 		}
 
-		void LateUpdate() => transform.position = Vector3.Lerp(transform.position, desiredPosition, linearLerp);
+		void LateUpdate() => transform.position = Vector3.Lerp(transform.position, desiredPosition, (input.drag != null) ? dragLerp : linearLerp);
 
 		void HandleMoveAndRotate()
 		{
@@ -57,9 +71,18 @@ namespace StormRend.CameraSystem
 			desiredPosition += transform.right * input.xAxis * deltaSpeed;
 			desiredPosition += transform.forward * input.yAxis * deltaSpeed;
 
-			//Rotate
-
 			//Limit to boundary
+			desiredPosition = cameraLimits.ClosestPoint(desiredPosition);
+		}
+
+		void HandleDragMove()
+		{
+			if (input.drag == null) return;
+
+			StopAllCoroutines();
+			var deltaSpeed = dragSpeed * Time.unscaledDeltaTime;
+			desiredPosition += transform.right * -input.drag.Value.x * deltaSpeed;
+			desiredPosition += transform.forward * -input.drag.Value.y * deltaSpeed;
 			desiredPosition = cameraLimits.ClosestPoint(desiredPosition);
 		}
 
@@ -92,7 +115,6 @@ namespace StormRend.CameraSystem
 		public void Move(Vector3 destination, float lerp = 1f)
 		{
 			StopAllCoroutines();
-			// StartCoroutine(Lerp(cameraLimits.ClosestPoint(destination), lerp));
 			StartCoroutine(Lerp(cameraLimits.ClosestPoint(destination), lerp));
 		}
 

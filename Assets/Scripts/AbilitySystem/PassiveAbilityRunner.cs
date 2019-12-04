@@ -51,6 +51,8 @@ namespace StormRend.Abilities.Utilities
 
 		public void OnUnitCreate(Unit created)
 		{
+			print("PassiveAbilityRunner.OnUnitCreate()");
+
 			if (passiveAbilities.Count <= 0) return;
 
 			//Clear
@@ -75,7 +77,8 @@ namespace StormRend.Abilities.Utilities
 
 		public void OnUnitKilled(Unit killed)
 		{
-			print("PassiveAbilityRunner.OnUnitKilled");
+			print("PassiveAbilityRunner.OnUnitKilled()");
+
 			if (passiveAbilities.Count <= 0) return;
 			var toKeep = new Dictionary<Ability, Unit>();
 			foreach (var pa in passiveAbilities)

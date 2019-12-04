@@ -440,6 +440,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xAxisName: Horizontal
   yAxisName: Vertical
+  dragThreshold: 5
+  dragMouseButton: 0
 --- !u!114 &8859884643030491930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,14 +454,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3efb3b1dfa9405a4090a6f771fe524ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linearLerp: 0.1
+  linearLerp: 0.2
   linearSpeed: 15
   cameraLimits: {fileID: 2941809505071786014}
   edgePanningOn: {fileID: 11400000, guid: af33d9de84ab2c74281286d4607a4602, type: 2}
   edgePanBorderSize: 10
-  rotateOn: 0
-  angularLerp: 0.4
-  angularSpeed: 100
+  dragSpeed: 1.3
+  dragLerp: 0.5
 --- !u!114 &262666507664677671
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -59,9 +59,9 @@ namespace StormRend.Systems
 		[Header("Tile Colors")]
 		[SerializeField] TileColor startHighlight = null;
 		[SerializeField] TileColor moveHighlight = null;
-		[SerializeField] TileColor untargetableHighlight = null;	//Action tiles
-		[SerializeField] TileColor targetableHighlight = null;		//Action tiles that can actually be targeted by the player
-		[SerializeField] TileColor targetHighlight = null;			//Actions tiles that have been selected by the player
+		[SerializeField] TileColor untargetableHighlight = null;    //Action tiles
+		[SerializeField] TileColor targetableHighlight = null;      //Action tiles that can actually be targeted by the player
+		[SerializeField] TileColor targetHighlight = null;          //Actions tiles that have been selected by the player
 
 		[Header("Camera")]
 		[SerializeField] float cameraLerpTime = 1.75f;
@@ -69,7 +69,7 @@ namespace StormRend.Systems
 		// [SerializeField] LayerMask raycastFilterIn = ~0;
 		// [Tooltip("The layer for the raycast to ignore")]
 		// [SerializeField] LayerMask raycastFilterOut = 1 << 5;  //ie. UI layer
-		
+
 		//Properties
 		Mode mode
 		{
@@ -203,17 +203,20 @@ namespace StormRend.Systems
 			}
 			else if (e.rightReleased)   //RIGHT CLICK RELEASED
 			{
-				switch (mode)
+				if (!camMover.isInDragMode)		//PREVENT CONFLICTS WITH CAMERA DRAGGING
 				{
-					case Mode.Action:   //ACTION MODE
-						if (notEnoughTargetTilesSelected && targetTileStack.Count > 0)
-							PopTargetTile();    //UNDO 1 TARGET TILE SELECT
-						else
-							ClearSelectedAbility(); //CLEAR ABILITY
-						break;
-					case Mode.Move:     //MOVE MODE
-						ClearSelectedUnit();        //CLEAR UNIT
-						break;
+					switch (mode)
+					{
+						case Mode.Action:   //ACTION MODE
+							if (notEnoughTargetTilesSelected && targetTileStack.Count > 0)
+								PopTargetTile();    //UNDO 1 TARGET TILE SELECT
+							else
+								ClearSelectedAbility(); //CLEAR ABILITY
+							break;
+						case Mode.Move:     //MOVE MODE
+							ClearSelectedUnit();        //CLEAR UNIT
+							break;
+					}
 				}
 			}
 			else    //HOVER

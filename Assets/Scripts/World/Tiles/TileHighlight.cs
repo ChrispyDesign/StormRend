@@ -18,7 +18,7 @@ namespace StormRend.MapSystems.Tiles
 			sr = GetComponent<SpriteRenderer>();
 			Debug.Assert(sr, "Sprite renderer not found!");
 
-			//Get refernce to the hover highlight
+			//Get reference to the hover highlight
 			if (transform.childCount > 0)
 				hover = transform.GetChild(0).GetComponent<TileHighlight>();
 			//If this object has no children it means THIS is the hover highlight
