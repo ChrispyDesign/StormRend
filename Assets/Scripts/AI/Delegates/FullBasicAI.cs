@@ -154,7 +154,8 @@ namespace StormRend.Bhaviours
 
 						//Test for adjacency so the unit doesn't move around pointlessly
 						if (TryGetAdjacentTargets(unit.currentTile, out Unit[] adjTargets))
-							targetIsAdjacent = true;
+							if (adjTargets.Contains(target))
+								targetIsAdjacent = true;
 
 						// Debug.LogFormat("[Provoke] : {0}", target.name);
 						return true;        //TARGET ACQUIRED!
