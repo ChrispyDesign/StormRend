@@ -21,7 +21,7 @@ MonoBehaviour:
   - Force Enemies to target you next turn, Reflecting 1 Damage and Gaining 1 Glory
   _gloryCost: 0
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
-  _requiredTiles: 0
+  _requiredTiles: 1
   _targetTileTypes: 2
   effects:
   - {fileID: 114679432023497332}
@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb98316954a83240a4ea5d6fca238d2, type: 3}
   m_Name: GainGloryWhenAttackedEffect
   m_EditorClassIdentifier: 
-  turnCount: 0
+  turnCount: 1
   affectedTurns: 1
   amount: 1
   glory: {fileID: 11400000, guid: d54c733a5843e1e4b8ba2974125accdd, type: 2}
@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e228292b9fdf4e8693c78fbdd1b5e, type: 3}
   m_Name: TauntEffect
   m_EditorClassIdentifier: 
-  turnCount: 0
+  turnCount: 1
   affectedTurns: 1
   reflexDamage: 1
   inbuiltVFXName: FX_Provoke
