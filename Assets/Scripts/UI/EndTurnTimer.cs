@@ -15,12 +15,15 @@ namespace StormRend.UI
 		//Members
 		Text text = null;
 
-		void Start() => text = transform.GetChild(0).GetComponent<Text>();
+		void Start() => this.text = transform.GetChild(0).GetComponent<Text>();
 
 		public void SetTime(float seconds)
 		{
 			TimeSpan counter = TimeSpan.FromSeconds(seconds);
-			text.text = counter.ToString(format);
+
+			if (!this.text) Start();
+
+			this.text.text = counter.ToString(format);
 		}
 	}
 }
