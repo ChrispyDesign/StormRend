@@ -1,23 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &5593270616047869169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7820173718327036090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fced283e8c52a54d8619c658661c7d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onHoverSFX: {fileID: 0}
-  SFXVolume: 0.25
-  hoverHighlight: {fileID: 0}
-  cost: 1
-  connections: []
-  rend: {fileID: 752735931729428343}
 --- !u!1 &4660605354022460310
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,7 +87,7 @@ MeshCollider:
   m_GameObject: {fileID: 4660605354022460310}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -197,7 +179,7 @@ MeshCollider:
   m_GameObject: {fileID: 8098444775616099021}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -213,6 +195,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RiverTile
+      objectReference: {fileID: 0}
+    - target: {fileID: 3158283129481071947, guid: 825759d6350b5c34e8ddee39bd360144,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4758049521519935278, guid: 825759d6350b5c34e8ddee39bd360144,
         type: 3}
@@ -236,21 +223,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 825759d6350b5c34e8ddee39bd360144, type: 3}
---- !u!1 &7820173718327036090 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4758049521519935274, guid: 825759d6350b5c34e8ddee39bd360144,
-    type: 3}
-  m_PrefabInstance: {fileID: 3351006073368819600}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7820173718327036094 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4758049521519935278, guid: 825759d6350b5c34e8ddee39bd360144,
-    type: 3}
-  m_PrefabInstance: {fileID: 3351006073368819600}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &752735931729428343 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 2662589536457230567, guid: 825759d6350b5c34e8ddee39bd360144,
     type: 3}
   m_PrefabInstance: {fileID: 3351006073368819600}
   m_PrefabAsset: {fileID: 0}
