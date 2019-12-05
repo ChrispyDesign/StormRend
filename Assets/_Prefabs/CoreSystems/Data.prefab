@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2686832855348011919}
-  - component: {fileID: 5446397609682520274}
   m_Layer: 0
   m_Name: TileHighlights
   m_TagString: Untagged
@@ -31,26 +30,6 @@ Transform:
   m_Father: {fileID: 4083791712177820041}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5446397609682520274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519584499050080997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d213c6fda2771304fb4f132b6c5a372e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  highlights:
-  - {fileID: 11400000, guid: c3b5eb7cf9110aa4f8fd6df77c46a201, type: 2}
-  - {fileID: 11400000, guid: 8226109b55850404196ade2270a0179c, type: 2}
-  - {fileID: 11400000, guid: 8ff7ac589205a8b4eb85db0a2ff65150, type: 2}
-  - {fileID: 11400000, guid: d4d7da28a08d1254d8d7abdd2e343be2, type: 2}
-  - {fileID: 11400000, guid: 61428b9cf681eef4ab582b8edcef41aa, type: 2}
-  - {fileID: 11400000, guid: 976855d328142054d8887c30f063de3d, type: 2}
-  - {fileID: 11400000, guid: 38aa1c61d16f40b498dbe3e63d3b5bb8, type: 2}
 --- !u!1 &5775901737860375023
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,7 +190,8 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  testKey: 9
+  debug: 0
+  tickKey: 61
 --- !u!114 &3975550175555812239
 MonoBehaviour:
   m_ObjectHideFlags: 0

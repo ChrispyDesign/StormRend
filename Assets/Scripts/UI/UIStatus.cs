@@ -9,6 +9,9 @@ namespace StormRend.UI
 {
     public class UIStatus : MonoBehaviour
     {
+        //Rename to status effect icon controller
+        //This should do only one thing not handle both UI status effect icons AND unit status effect icons
+
         //Enums
         public enum UnitType
         {
@@ -28,19 +31,19 @@ namespace StormRend.UI
         }
 
         //Inspector
-        [SerializeField] UnitType unitType;
-        [SerializeField] StatusType statusType;
+        [SerializeField] UnitType unitType = UnitType.Off;     //Unit type is required for UI
+        [SerializeField] StatusType statusType = StatusType.Off;
 
         //Members
         Image icon = null;
-        AnimateUnit unit;
+        AnimateUnit unit = null;
 
         void Awake()
         {
-			//Get Icon
+            //Get Icon
             icon = GetComponentInChildren<Image>();
 
-			//Determine type to find
+            //Determine type to find
             Type typeToFind = null;
             switch (unitType)
             {
@@ -55,32 +58,32 @@ namespace StormRend.UI
                     break;
                 case UnitType.FrostHound:
                     typeToFind = typeof(FrostHoundTag);
-                    // isEnemy = true;
                     break;
                 case UnitType.FrostTroll:
                     typeToFind = typeof(FrostTrollTag);
-                    // isEnemy = true;
                     break;
             }
 
-			//First try getting unit from up the hierarchy
-			var tag = GetComponentInParent(typeToFind) as Tag;
-			unit = tag?.GetComponent<AnimateUnit>();
-			
-			//Second, this is probably a UI element. Just find
-			if (!unit) unit = (FindObjectOfType(typeToFind) as Tag).GetComponent<AnimateUnit>();
+            if (TrySetUnit(typeToFind))
+            {
+                RegisterEvents();
+                CheckStatus();
+            }
+        }
 
-			Debug.Assert(unit, "Unit could not be found for UI status");
+        bool TrySetUnit(Type typeToFind)
+        {
+            //First try getting unit from up the hierarchy
+            var tag = GetComponentInParent(typeToFind) as Tag;
+            unit = tag?.GetComponent<AnimateUnit>();
+            if (unit) return true;
 
-            // var tag = FindObjectOfType(typeToFind) as Tag;
-            // if (!isEnemy)
-            //     unit = tag?.GetComponent<AnimateUnit>();
-            // // else
-            //     // CheckStatus();
+            //Second, this is probably a UI element. Just find
+            tag = (FindObjectOfType(typeToFind) as Tag);
+            unit = tag?.GetComponent<AnimateUnit>();
+            if (unit) return true;
 
-            RegisterEvents();
-
-			CheckStatus();
+            return false;
         }
 
         void RegisterEvents()

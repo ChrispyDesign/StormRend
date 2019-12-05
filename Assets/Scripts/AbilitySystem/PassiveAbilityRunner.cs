@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using StormRend.MapSystems;
-using StormRend.MapSystems.Tiles;
 using StormRend.Units;
 using UnityEngine;
 
 namespace StormRend.Abilities.Utilities
 {
-	/// <summary>
-	/// This runs passive abilities on all unit creation and death
-	/// </summary>
-	[RequireComponent(typeof(UnitRegistry))]
+    /// <summary>
+    /// This runs passive abilities on all unit creation and death
+    /// </summary>
+    [RequireComponent(typeof(UnitRegistry))]
 	public class PassiveAbilityRunner : MonoBehaviour
 	{
 		UnitRegistry ur;
@@ -46,12 +44,12 @@ namespace StormRend.Abilities.Utilities
 					passiveAbilities.Add(a, au);
 			}
 
-			print("[PassiveAbilityRunner] Passive Abilities found: " + passiveAbilities.Count);
+			// print("[PassiveAbilityRunner] Passive Abilities found: " + passiveAbilities.Count);
 		}
 
 		public void OnUnitCreate(Unit created)
 		{
-			print("PassiveAbilityRunner.OnUnitCreate()");
+			// print("PassiveAbilityRunner.OnUnitCreate()");
 
 			if (passiveAbilities.Count <= 0) return;
 
@@ -77,7 +75,7 @@ namespace StormRend.Abilities.Utilities
 
 		public void OnUnitKilled(Unit killed)
 		{
-			print("PassiveAbilityRunner.OnUnitKilled()");
+			// print("PassiveAbilityRunner.OnUnitKilled()");
 
 			if (passiveAbilities.Count <= 0) return;
 			var toKeep = new Dictionary<Ability, Unit>();
