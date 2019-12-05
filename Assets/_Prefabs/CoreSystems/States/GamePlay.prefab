@@ -114,6 +114,62 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
+--- !u!114 &1635705372444815026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5117357278366574216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: 'VALKYRIE
+
+    Gain Glory by dealing damage with
+
+    PIERCING LIGHT LV1'
+  delayOverride: 0
+--- !u!114 &4950690208092429306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5117357278530082370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: 'SAGE
+
+    Gain Glory when enemies
+
+    die within a range of 3 Tiles'
+  delayOverride: 0
+--- !u!114 &5186266746805352997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5117357278615285841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: 'BERSERKER
+
+    Gain Glory by dealing damage with
+
+    FURIOUS SWING LV1
+
+    PROVOKE LV1'
+  delayOverride: 0
 --- !u!1001 &944168744947729817
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -876,11 +932,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3210555608008817345, guid: 4f6900496a925224383c502066bfca30, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4f6900496a925224383c502066bfca30, type: 3}
 --- !u!224 &8244868793605630566 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3933424598766002821, guid: 4f6900496a925224383c502066bfca30,
+    type: 3}
+  m_PrefabInstance: {fileID: 4971407366846810339}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5117357278530082370 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 286398580672011937, guid: 4f6900496a925224383c502066bfca30,
     type: 3}
   m_PrefabInstance: {fileID: 4971407366846810339}
   m_PrefabAsset: {fileID: 0}
@@ -891,11 +954,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4960958277858849687}
     m_Modifications:
-    - target: {fileID: 851333103294169045, guid: 494d42d736cd9634fb2fb4afb73e53dc,
-        type: 3}
-      propertyPath: m_Name
-      value: TurnFlags
-      objectReference: {fileID: 0}
     - target: {fileID: 851333103294169044, guid: 494d42d736cd9634fb2fb4afb73e53dc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1001,10 +1059,20 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 851333103294169045, guid: 494d42d736cd9634fb2fb4afb73e53dc,
+        type: 3}
+      propertyPath: m_Name
+      value: TurnFlags
+      objectReference: {fileID: 0}
     - target: {fileID: 3881236614834869896, guid: 494d42d736cd9634fb2fb4afb73e53dc,
         type: 3}
       propertyPath: m_Name
       value: EndTurnTimer
+      objectReference: {fileID: 0}
+    - target: {fileID: 4597101163329778595, guid: 494d42d736cd9634fb2fb4afb73e53dc,
+        type: 3}
+      propertyPath: _message
+      value: It is your turn
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 494d42d736cd9634fb2fb4afb73e53dc, type: 3}
@@ -1021,11 +1089,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4960958277858849687}
     m_Modifications:
-    - target: {fileID: 1213462104148368353, guid: 00e16583c7af89c4dbbbdc00449b106f,
-        type: 3}
-      propertyPath: m_Name
-      value: AbilityPanel
-      objectReference: {fileID: 0}
     - target: {fileID: 1213462104148368354, guid: 00e16583c7af89c4dbbbdc00449b106f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1131,6 +1194,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1213462104148368353, guid: 00e16583c7af89c4dbbbdc00449b106f,
+        type: 3}
+      propertyPath: m_Name
+      value: AbilityPanel
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00e16583c7af89c4dbbbdc00449b106f, type: 3}
 --- !u!224 &5117357277853744244 stripped
@@ -1146,11 +1214,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5117357277429115119}
     m_Modifications:
-    - target: {fileID: 5033782776311542993, guid: 75b4e48582e294549a8f23c7ad06c2b1,
-        type: 3}
-      propertyPath: m_Name
-      value: BerserkerAvatarAssembly
-      objectReference: {fileID: 0}
     - target: {fileID: 7751422152662597092, guid: 75b4e48582e294549a8f23c7ad06c2b1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1255,6 +1318,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5033782776311542993, guid: 75b4e48582e294549a8f23c7ad06c2b1,
+        type: 3}
+      propertyPath: m_Name
+      value: BerserkerAvatarAssembly
       objectReference: {fileID: 0}
     - target: {fileID: 1847486826958049921, guid: 75b4e48582e294549a8f23c7ad06c2b1,
         type: 3}
@@ -1371,11 +1439,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 110398168266057101, guid: 75b4e48582e294549a8f23c7ad06c2b1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 75b4e48582e294549a8f23c7ad06c2b1, type: 3}
 --- !u!224 &3834115032650604347 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7751422152662597092, guid: 75b4e48582e294549a8f23c7ad06c2b1,
+    type: 3}
+  m_PrefabInstance: {fileID: 6820444555764294367}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5117357278615285841 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1847486826958049934, guid: 75b4e48582e294549a8f23c7ad06c2b1,
     type: 3}
   m_PrefabInstance: {fileID: 6820444555764294367}
   m_PrefabAsset: {fileID: 0}
@@ -1596,11 +1671,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6004557394783912457, guid: 792767a434939574ea310e60c9fe0205, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 792767a434939574ea310e60c9fe0205, type: 3}
 --- !u!224 &8814896550342600379 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1942679855617895520, guid: 792767a434939574ea310e60c9fe0205,
+    type: 3}
+  m_PrefabInstance: {fileID: 6962851707555793627}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5117357278366574216 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2856836771480169555, guid: 792767a434939574ea310e60c9fe0205,
     type: 3}
   m_PrefabInstance: {fileID: 6962851707555793627}
   m_PrefabAsset: {fileID: 0}
@@ -1611,11 +1693,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4960958277858849687}
     m_Modifications:
-    - target: {fileID: 3325525434828939305, guid: 334c589242dfe2943916daf9c5a663c4,
-        type: 3}
-      propertyPath: m_Name
-      value: GloryMeter
-      objectReference: {fileID: 0}
     - target: {fileID: 3325525434828939310, guid: 334c589242dfe2943916daf9c5a663c4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1721,6 +1798,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3325525434828939305, guid: 334c589242dfe2943916daf9c5a663c4,
+        type: 3}
+      propertyPath: m_Name
+      value: GloryMeter
+      objectReference: {fileID: 0}
     - target: {fileID: 3325525434771389386, guid: 334c589242dfe2943916daf9c5a663c4,
         type: 3}
       propertyPath: m_Name
@@ -1741,11 +1823,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4960958277858849687}
     m_Modifications:
-    - target: {fileID: 3296131047492097649, guid: 7b70a8b4468edf946a148130c38125e0,
-        type: 3}
-      propertyPath: m_Name
-      value: PauseButton
-      objectReference: {fileID: 0}
     - target: {fileID: 3296131047492097650, guid: 7b70a8b4468edf946a148130c38125e0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1850,6 +1927,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3296131047492097649, guid: 7b70a8b4468edf946a148130c38125e0,
+        type: 3}
+      propertyPath: m_Name
+      value: PauseButton
       objectReference: {fileID: 0}
     - target: {fileID: 7417892579683955877, guid: 7b70a8b4468edf946a148130c38125e0,
         type: 3}
