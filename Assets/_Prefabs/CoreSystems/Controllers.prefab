@@ -123,6 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c72d4a39a587a0845b9b4b34e1d5f385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSystem: {fileID: 0}
+  audioSource: {fileID: 0}
   berserkerVocals: {fileID: 11400000, guid: de5c6ecc322544f04995e6d40b5a4942, type: 2}
   valkyrieVocals: {fileID: 11400000, guid: 5a0b0b5456e48c04a9409e7535dcfecc, type: 2}
   sageVocals: {fileID: 11400000, guid: 60889ac0ba33a1145b8075674ac68974, type: 2}
@@ -247,6 +249,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5766323339539706998}
+  - component: {fileID: 5419095882552411978}
   - component: {fileID: 4845289873623901478}
   - component: {fileID: 4503866934422287140}
   - component: {fileID: 4498868860244098218}
@@ -272,6 +275,18 @@ Transform:
   m_Father: {fileID: 8221943664743177572}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5419095882552411978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6922208189168297555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107cec8e447b35a42a6442a9aa750cae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4845289873623901478
 MonoBehaviour:
   m_ObjectHideFlags: 0
