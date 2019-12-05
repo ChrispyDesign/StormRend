@@ -135,10 +135,10 @@ namespace StormRend.Bhaviours
 			targets.AddRange(crystals);
 			if (targets.Count <= 0)
 			{
-				Debug.Log("No targets found");
+				// Debug.Log("No targets found");
 				return false;
 			}
-			targets.Print("[All Opponents]");
+			// targets.Print("[All Opponents]");
 
 			//----------- PRIORITY 1: Provoke [Filter: IN, Provoke]
 			var provokeScanResult = Map.GetPossibleTiles(unit.currentTile, provokeRange + attackRange);
@@ -156,7 +156,7 @@ namespace StormRend.Bhaviours
 						if (TryGetAdjacentTargets(unit.currentTile, out Unit[] adjTargets))
 							targetIsAdjacent = true;
 
-						Debug.LogFormat("[Provoke] : {0}", target.name);
+						// Debug.LogFormat("[Provoke] : {0}", target.name);
 						return true;        //TARGET ACQUIRED!
 					}
 				}
@@ -165,7 +165,7 @@ namespace StormRend.Bhaviours
 			//----------- FILTER OUT UNREACHABLE TARGETS [Filter: IN, Reachable Targets]
 			var scanResult = Map.GetPossibleTiles(unit.currentTile, unit.moveRange * maxScanIterations + attackRange);
 			targets = (from t in targets where scanResult.Contains(t.currentTile) select t).ToList();
-			targets.Print("Reachable Units");
+			// targets.Print("Reachable Units");
 
 
 			//------------ PRIORITY 2: Adjacency
@@ -177,7 +177,7 @@ namespace StormRend.Bhaviours
 				{
 					//Single target found
 					target = adjacentTargets[0];
-					Debug.LogFormat("[Adjacent] : {0}", target.name);
+					// Debug.LogFormat("[Adjacent] : {0}", target.name);
 
 					return true;        //TARGET ACQUIRED!
 				}
@@ -185,11 +185,20 @@ namespace StormRend.Bhaviours
 				else
 				{
 					targets = adjacentTargets.ToList();
-					Debug.LogFormat("[Adjacent] : {0}", adjacentTargets);
+					// Debug.LogFormat("[Adjacent] : {0}", adjacentTargets);
 				}
 			}
 
-			// var targetsByDistance = from t in targets 
+			//--------- Priority 2.5: Distance
+			var targetsByDistance = targets.
+				Where(t => t is AnimateUnit).
+				OrderBy(t => Vector3.SqrMagnitude(t.transform.position - unit.transform.position)).ToList();
+
+			if (targetsByDistance.Count > 0)
+			{
+				target = targetsByDistance[0];
+				return true;	//TARGET ACQUIRED!
+			}
 
 			//----------- PRIORITY 3: Health
 			//Sort by health
@@ -207,7 +216,7 @@ namespace StormRend.Bhaviours
 				if (lowestHealth.Count != 1)    //If there's only one that means all the units have the same health
 				{
 					target = lowestHealth.ElementAt(0);
-					Debug.LogFormat("[Health] : {0}", target.name);
+					// Debug.LogFormat("[Health] : {0}", target.name);
 					return true;    //TARGET ACQUIRED!
 				}
 				//Multiple units of the same health detected, continue to filter by ally type
@@ -220,22 +229,22 @@ namespace StormRend.Bhaviours
 				{
 					case BerserkerTag b:
 						target = t;
-						Debug.LogFormat("[Type] : {0}", target.name);
+						// Debug.LogFormat("[Type] : {0}", target.name);
 						return true;    //TARGET ACQUIRED!
 
 					case ValkyrieTag v:
 						target = t;
-						Debug.LogFormat("[Type] : {0}", target.name);
+						// Debug.LogFormat("[Type] : {0}", target.name);
 						return true;    //TARGET ACQUIRED!
 
 					case SageTag s:
 						target = t;
-						Debug.LogFormat("[Type] : {0}", target.name);
+						// Debug.LogFormat("[Type] : {0}", target.name);
 						return true;      //TARGET ACQUIRED!
 
 					case CrystalTag c:
 						target = t;
-						Debug.LogFormat("[Type] : {0}", target.name);
+						// Debug.LogFormat("[Type] : {0}", target.name);
 						return true;      //TARGET ACQUIRED!
 				}
 			}
