@@ -418,9 +418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _message: 'IMMOBILISED
 
-    Can''t move until next turn
-
-'
+    Until your next turn, you cannot Move'
   delayOverride: 0
 --- !u!1 &286398580114828780
 GameObject:
@@ -853,6 +851,7 @@ GameObject:
   - component: {fileID: 286398580672011936}
   - component: {fileID: 286398580672011938}
   - component: {fileID: 286398580672011939}
+  - component: {fileID: 4950690208092429306}
   m_Layer: 5
   m_Name: Sage-AvatarSelectButton
   m_TagString: Untagged
@@ -875,9 +874,9 @@ RectTransform:
   m_Father: {fileID: 3933424598766002821}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 68.5, y: -68.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 68.5, y: 68.50003}
   m_SizeDelta: {x: 137, y: 137}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &286398580672011938
@@ -944,6 +943,24 @@ MonoBehaviour:
   - {fileID: 286398580175463682}
   - {fileID: 286398580336137357}
   - {fileID: 286398580721416979}
+--- !u!114 &4950690208092429306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286398580672011937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: 'SAGE
+
+    Gain Glory when enemies
+
+    die within a range of 3 Tiles'
+  delayOverride: 0
 --- !u!1 &286398580703716818
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,7 +1066,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _message: 'PROTECTION
 
-    Block damage from the next hit'
+    Until your next turn, Block the Damage from the next Attack that hits you'
   delayOverride: 0
 --- !u!1 &286398580721416977
 GameObject:
@@ -1286,6 +1303,7 @@ GameObject:
   - component: {fileID: 5143942855167812834}
   - component: {fileID: 8515169369272916984}
   - component: {fileID: 4708656178883605925}
+  - component: {fileID: 1683785104041279294}
   m_Layer: 5
   m_Name: Blind
   m_TagString: Untagged
@@ -1364,6 +1382,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: 3
   statusType: 3
+--- !u!114 &1683785104041279294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964000756927717754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: 'BLIND
+
+    Until your next turn, you can''t Attack'
+  delayOverride: 0
 --- !u!1 &6253043662237863409
 GameObject:
   m_ObjectHideFlags: 0

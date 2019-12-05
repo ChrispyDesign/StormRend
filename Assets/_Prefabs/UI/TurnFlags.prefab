@@ -438,7 +438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _message: This is your turn
+  _message: It is your turn
   delayOverride: 0
 --- !u!1 &851333102808069999
 GameObject:
@@ -805,7 +805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _message: It's the enemy's turn
+  _message: It is the Enemy's turn
   delayOverride: 0
 --- !u!1 &851333103294169045
 GameObject:
@@ -1075,16 +1075,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 851333103294169044}
     m_Modifications:
-    - target: {fileID: 8192842259949404084, guid: e55ea082110920e41a7ee3c56cd7ffc3,
-        type: 3}
-      propertyPath: m_Name
-      value: EndTurnCountdown
-      objectReference: {fileID: 0}
-    - target: {fileID: 8192842259949404084, guid: e55ea082110920e41a7ee3c56cd7ffc3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8192842259949403723, guid: e55ea082110920e41a7ee3c56cd7ffc3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1189,6 +1179,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8192842259949404084, guid: e55ea082110920e41a7ee3c56cd7ffc3,
+        type: 3}
+      propertyPath: m_Name
+      value: EndTurnCountdown
+      objectReference: {fileID: 0}
+    - target: {fileID: 8192842259949404084, guid: e55ea082110920e41a7ee3c56cd7ffc3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e55ea082110920e41a7ee3c56cd7ffc3, type: 3}

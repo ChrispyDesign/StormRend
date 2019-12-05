@@ -61,7 +61,6 @@ GameObject:
   - component: {fileID: 2856836770216405556}
   - component: {fileID: 8114399210671508344}
   - component: {fileID: 8863578881308077018}
-  - component: {fileID: 2149752453377019399}
   m_Layer: 5
   m_Name: Protection
   m_TagString: Untagged
@@ -154,23 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _message: 'PROTECTION
 
-    Block damage from the next hit'
-  delayOverride: 0
---- !u!114 &2149752453377019399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2856836770216405562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _message: 'PROTECTION
-
-    Block damage from the next hit'
+    Until your next turn, Block the Damage from the next Attack that hits you'
   delayOverride: 0
 --- !u!1 &2856836770357994416
 GameObject:
@@ -185,7 +168,6 @@ GameObject:
   - component: {fileID: 2856836770357994418}
   - component: {fileID: 1245004868589571047}
   - component: {fileID: 7026015906983808079}
-  - component: {fileID: 5391829358898637460}
   m_Layer: 5
   m_Name: Imobilised
   m_TagString: Untagged
@@ -278,25 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _message: 'IMMOBILISED
 
-    Can''t move until next turn'
-  delayOverride: 0
---- !u!114 &5391829358898637460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2856836770357994416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _message: 'IMMOBILISED
-
-    Can''t move unitil next turn
-
-'
+    Until your next turn, you cannot Move'
   delayOverride: 0
 --- !u!1 &2856836770543660449
 GameObject:
@@ -1631,7 +1595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _message: 'BLIND
 
-    Can''t take action until next turn'
+    Until your next turn, you can''t Attack'
   delayOverride: 0
 --- !u!1 &8223427620115891288
 GameObject:

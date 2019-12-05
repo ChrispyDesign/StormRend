@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allyType: 1
-  greyOut: {r: 0.5, g: 0.5, b: 0.5, a: 0.69803923}
+  greyOut: {r: 0.5, g: 0.5, b: 0.5019608, a: 0.38431373}
   blackOut: {r: 0.049000002, g: 0.049000002, b: 0.049000002, a: 0.5294118}
   avatarSprites:
   - {fileID: 1847486828051294215}
@@ -501,7 +501,6 @@ GameObject:
   - component: {fileID: 1847486827181436181}
   - component: {fileID: 8838866512482172985}
   - component: {fileID: 2563937279960365343}
-  - component: {fileID: 427676768272953567}
   m_Layer: 5
   m_Name: Protection
   m_TagString: Untagged
@@ -594,23 +593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _message: 'PROTECTION
 
-    Block damage from the next hit'
-  delayOverride: 0
---- !u!114 &427676768272953567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1847486827181436179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _message: 'PROTECTION
-
-    Block damage from the next hit'
+    Until your next turn, Block the Damage from the next Attack that hits you'
   delayOverride: 0
 --- !u!1 &1847486827223004205
 GameObject:
@@ -1148,7 +1131,6 @@ GameObject:
   - component: {fileID: 1847486828346737599}
   - component: {fileID: 4794259418457191879}
   - component: {fileID: 2358717828395332035}
-  - component: {fileID: 8521430695198573917}
   m_Layer: 5
   m_Name: Imobilised
   m_TagString: Untagged
@@ -1241,25 +1223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _message: 'IMMOBILISED
 
-    Can''t move until next turn'
-  delayOverride: 0
---- !u!114 &8521430695198573917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1847486828346737597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _message: 'IMMOBILISED
-
-    Can''t move until next turn
-
-'
+    Until your next turn, you cannot Move'
   delayOverride: 0
 --- !u!1 &1847486828356967644
 GameObject:
@@ -1858,5 +1822,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _message: 'BLIND
 
-    Can''t take action until next turn'
+    Until your next turn, you can''t Attack'
   delayOverride: 0
