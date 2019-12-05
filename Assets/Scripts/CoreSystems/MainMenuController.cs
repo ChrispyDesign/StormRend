@@ -1,37 +1,30 @@
-using pokoro.BhaVE.Core.Variables;
 using StormRend.Systems.StateMachines;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace StormRend.MainMenus
 {
-	[RequireComponent(typeof(UltraStateMachine))]
+    [RequireComponent(typeof(UltraStateMachine))]
 	public class MainMenuController : MonoBehaviour
 	{
 		//Inspector
-		[SerializeField] BhaveBool isPlayTonysCutscene = null;
 		[SerializeField] State introState = null;
 		[SerializeField] State tonysIntroState = null;
 
 		//Members
 		UltraStateMachine usm;
-		void Awake()
-		{
-			usm = GetComponent<UltraStateMachine>();
-			Debug.Assert(isPlayTonysCutscene != null, "No SOV found!");
-		}
+        void Awake() => usm = GetComponent<UltraStateMachine>();
 
-		void Start() => isPlayTonysCutscene.value = false;  //Default to play normal cutscene
-
-		public void Play()
+        void Update()
 		{
-			if (isPlayTonysCutscene.value == true)
+			//Konami :D
+			if (Input.GetKeyDown(KeyCode.T))
 				usm.Stack(tonysIntroState);
-			else
-				usm.Stack(introState);
 		}
 
-		public void LoadSceneIDX(int buildIDX)
+        public void Play() => usm.Stack(introState);
+
+        public void LoadSceneIDX(int buildIDX)
 		{
 			Time.timeScale = 1f;
 			SceneManager.LoadScene(buildIDX);
