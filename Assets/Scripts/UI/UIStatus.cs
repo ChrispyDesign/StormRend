@@ -116,14 +116,14 @@ namespace StormRend.UI
 			{
 				foreach (Image img in icon)
 				{
-					img.fillAmount = 0;
+					img.gameObject.SetActive(false);
 				}
 			}
 			else
 			{
 				foreach (Image img in icon)
 				{
-					img.fillAmount = 1;
+					img.gameObject.SetActive(true);
 				}
 			}
 		}
