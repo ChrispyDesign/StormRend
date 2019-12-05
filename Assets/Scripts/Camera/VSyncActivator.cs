@@ -6,10 +6,12 @@ namespace StormRend.CameraSystem
 	{
 		[SerializeField] int targetFPS = 60;
 
-		void Start()
+        void Start()
 		{
 			QualitySettings.vSyncCount = 0;
 			Application.targetFrameRate = targetFPS;
+
+            Cursor.lockState = CursorLockMode.Confined;
 		}
    	}
 }
