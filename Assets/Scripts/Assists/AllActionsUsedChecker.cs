@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using StormRend.Abilities;
+using StormRend.Systems;
 using StormRend.Systems.StateMachines;
 using StormRend.UI;
 using StormRend.Units;
@@ -39,11 +40,13 @@ namespace StormRend.Assists
 		//Members
 		UltraStateMachine usm = null;
 		UnitRegistry ur = null;
+		GameDirector gd = null;
 
 		void Awake()
 		{
 			ur = GetComponent<UnitRegistry>();
 			usm = FindObjectOfType<UltraStateMachine>();
+			gd = GameDirector.current;
 			if (!endTurnTimer) endTurnTimer = FindObjectOfType<EndTurnTimer>();
 
 			Debug.Assert(usm, "No Ultra State Machine found!");
@@ -58,7 +61,7 @@ namespace StormRend.Assists
 			foreach (var u in ur.GetAliveUnitsByType<AllyUnit>())
 			{
 				var au = u as AnimateUnit;
-				au.onActed.AddListener(Check);
+				au.onActed.AddListener(CheckCompletedActions);
 			}
 		}
 		void OnDisable()
@@ -66,14 +69,14 @@ namespace StormRend.Assists
 			foreach (var u in ur.GetAliveUnitsByType<AllyUnit>())
 			{
 				var au = u as AnimateUnit;
-				au.onActed.RemoveListener(Check);
+				au.onActed.RemoveListener(CheckCompletedActions);
 			}
 		}
 
 		/// <summary>
 		/// Checks if all the actions have been used up
 		/// </summary>
-		public void Check(Ability a)
+		public void CheckCompletedActions(Ability a)
 		{
 			if (isAllActionsUsedUp) 
 				//No units can no longer act > all actions used up > end turn
@@ -105,7 +108,13 @@ namespace StormRend.Assists
 				yield return null;
 			}
 
-			usm.NextTurn();
+			//NOTE!!! This might be the reason why enemies sometimes "double hit"
+			//If the last ally attack pushed an enemy off the edge, 
+			//"usm.NextTurn()" would trigger too early and somehow cause an extra turn to happen
+			//Bloody coroutines
+
+			gd.SafeNextTurn();		
+			// usm.NextTurn();
 
 			//Deactivate counter
 			endTurnTimer?.gameObject.SetActive(false);

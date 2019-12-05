@@ -83,7 +83,7 @@ namespace StormRend.Abilities.Effects
 									rb.AddTorque(direction.y * rand, 0, -direction.x * rand, ForceMode.Impulse);
 
 									//Unit to finish it's death sequence and automatically deactivate after a few seconds
-									au.Kill(owner);
+									au.Kill(owner);		//This SHOULD let the system know that this unit is dead or dying, so don't let it do AI stuff for instance
 								}
                             }		
                             //Do damage (where needed)

@@ -15,10 +15,7 @@ namespace StormRend.UI
 		//Members
 		Text text = null;
 
-		void Awake()
-		{
-			text = transform.GetChild(0).GetComponent<Text>();
-		}
+		void Start() => text = transform.GetChild(0).GetComponent<Text>();
 
 		public void SetTime(float seconds)
 		{
