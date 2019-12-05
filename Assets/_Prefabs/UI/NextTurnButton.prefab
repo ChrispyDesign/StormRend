@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 8954116454796846221}
   - component: {fileID: 8954116454796846219}
   - component: {fileID: 3091856513215046328}
-  - component: {fileID: 3082110157261874167}
   - component: {fileID: 8954116454796846217}
   - component: {fileID: 8954116454796846216}
   - component: {fileID: 260277702831293655}
+  - component: {fileID: 4438266636455493669}
   m_Layer: 5
   m_Name: EndTurnButton
   m_TagString: Untagged
@@ -72,8 +72,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fce0d9a568ab34e4daf849bde4a7db74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: 
-  details: 
   onClick: {fileID: 0}
   onHover: {fileID: 0}
   onUnhover: {fileID: 0}
@@ -82,20 +80,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &3082110157261874167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8954116454796846222}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _message: End Turn
-  delayOverride: 1
 --- !u!114 &8954116454796846217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +213,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4438266636455493669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8954116454796846222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: Skip to next turn
+  delayOverride: 0
 --- !u!1 &8954116456799820589
 GameObject:
   m_ObjectHideFlags: 0
