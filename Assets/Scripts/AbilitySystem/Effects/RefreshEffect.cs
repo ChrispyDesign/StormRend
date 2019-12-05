@@ -41,7 +41,7 @@ namespace StormRend.Abilities.Effects
 			if (onlyIfHaveKilled)
 				owner.hasJustKilled = false;
 
-			Debug.Log("Refreshing!");
+			// Debug.Log("Refreshing!");
 			
 			//MoveAgain
 			if ((refreshType & RefreshType.MoveAgain) == RefreshType.MoveAgain)

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1942679855617895520}
   - component: {fileID: 6029303776424829603}
-  - component: {fileID: 6004557394783912457}
   m_Layer: 5
   m_Name: ValkyrieAvatarAssembly
   m_TagString: Untagged
@@ -49,22 +48,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2146246903445924226}
   m_CullTransparentMesh: 0
---- !u!114 &6004557394783912457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146246903445924226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _message: 'Valkyrie
-
-    Gain glory by performing Piercing Light on enemies'
-  delayOverride: 0
 --- !u!1 &2856836770216405562
 GameObject:
   m_ObjectHideFlags: 0
@@ -77,6 +60,7 @@ GameObject:
   - component: {fileID: 2856836770216405559}
   - component: {fileID: 2856836770216405556}
   - component: {fileID: 8114399210671508344}
+  - component: {fileID: 8863578881308077018}
   m_Layer: 5
   m_Name: Protection
   m_TagString: Untagged
@@ -99,9 +83,9 @@ RectTransform:
   m_Father: {fileID: 2856836771102550687}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 25, y: -36}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2856836770216405559
@@ -153,12 +137,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948262b86eab0484185ba774d0e58f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: PROTECTION
-  details: Block the next instance of damage you take
-  allyType: 2
+  unitType: 2
   statusType: 1
-  unit: {fileID: 0}
-  icon: []
+--- !u!114 &8863578881308077018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2856836770216405562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: 'PROTECTION
+
+    Block damage from the next hit'
+  delayOverride: 0
 --- !u!1 &2856836770357994416
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,6 +167,7 @@ GameObject:
   - component: {fileID: 2856836770357994381}
   - component: {fileID: 2856836770357994418}
   - component: {fileID: 1245004868589571047}
+  - component: {fileID: 7026015906983808079}
   m_Layer: 5
   m_Name: Imobilised
   m_TagString: Untagged
@@ -193,9 +190,9 @@ RectTransform:
   m_Father: {fileID: 2856836771102550687}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 85, y: -36}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2856836770357994381
@@ -247,12 +244,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948262b86eab0484185ba774d0e58f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: IMMOBILISED
-  details: You cannot move
-  allyType: 2
+  unitType: 2
   statusType: 2
-  unit: {fileID: 0}
-  icon: []
+--- !u!114 &7026015906983808079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2856836770357994416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: 'IMMOBILISED
+
+    Can''t move until next turn'
+  delayOverride: 0
 --- !u!1 &2856836770543660449
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,6 +753,7 @@ RectTransform:
   m_Children:
   - {fileID: 2856836770216405557}
   - {fileID: 2856836770357994419}
+  - {fileID: 3902364728748365722}
   m_Father: {fileID: 1942679855617895520}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -759,7 +769,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2856836771102550684}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -405508275, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -1083,6 +1093,7 @@ GameObject:
   - component: {fileID: 2856836771480169644}
   - component: {fileID: 2856836771480169645}
   - component: {fileID: 2856836771480169554}
+  - component: {fileID: 1635705372444815026}
   m_Layer: 5
   m_Name: Valkyrie-AvatarSelectButton
   m_TagString: Untagged
@@ -1107,7 +1118,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 68.5, y: -68.5}
+  m_AnchoredPosition: {x: 68.5, y: -68.50006}
   m_SizeDelta: {x: 137, y: 137}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2856836771480169645
@@ -1175,6 +1186,24 @@ MonoBehaviour:
   - {fileID: 2856836771293906847}
   - {fileID: 2856836771931084753}
   - {fileID: 2856836771108434000}
+--- !u!114 &1635705372444815026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2856836771480169555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: 'VALKYRIE
+
+    Gain Glory by dealing damage with
+
+    PIERCING LIGHT LV1'
+  delayOverride: 0
 --- !u!1 &2856836771931084759
 GameObject:
   m_ObjectHideFlags: 0
@@ -1461,3 +1490,184 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
+--- !u!1 &4002293609746907470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3902364728748365722}
+  - component: {fileID: 9146072826059490276}
+  - component: {fileID: 8534180211124028799}
+  - component: {fileID: 597269353448141185}
+  - component: {fileID: 653927789385195793}
+  m_Layer: 5
+  m_Name: Blind
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3902364728748365722
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4002293609746907470}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1315165605400448790}
+  m_Father: {fileID: 2856836771102550687}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 145, y: -36}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &9146072826059490276
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4002293609746907470}
+  m_CullTransparentMesh: 0
+--- !u!114 &8534180211124028799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4002293609746907470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.29411766, g: 0.29411766, b: 0.29411766, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300002, guid: 987ecaf37045a354ba641c24453f3b8a, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!114 &597269353448141185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4002293609746907470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948262b86eab0484185ba774d0e58f32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: 2
+  statusType: 3
+--- !u!114 &653927789385195793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4002293609746907470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9344534ea9f2df4082b61ab015b7cce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: 'BLIND
+
+    Can''t take action until next turn'
+  delayOverride: 0
+--- !u!1 &8223427620115891288
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1315165605400448790}
+  - component: {fileID: 7168868772471242265}
+  - component: {fileID: 79293990341133948}
+  m_Layer: 5
+  m_Name: Icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1315165605400448790
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8223427620115891288}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3902364728748365722}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 30, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7168868772471242265
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8223427620115891288}
+  m_CullTransparentMesh: 0
+--- !u!114 &79293990341133948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8223427620115891288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 97dbf551a3dd38342a4db73bd591f261, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0

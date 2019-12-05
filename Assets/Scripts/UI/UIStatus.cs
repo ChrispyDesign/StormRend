@@ -1,41 +1,24 @@
 ﻿using StormRend.Abilities;
 using StormRend.Tags;
-using StormRend.UI;
 using StormRend.Units;
-using StormRend.Utility.Attributes;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace StormRend.UI
 {
-	public class UIStatus : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
-	{
-		[SerializeField] new string name;
-		[SerializeField] string details;
-        [SerializeField] UnitType allyType;
-        [SerializeField] StatusType statusType;
-		[SerializeField] AnimateUnit unit;
-
-		[SerializeField, ReadOnlyField] List<Image> icon = new List<Image>();
-
-		InfoPanel infoPanel;
-
-		//Enums
-		public enum UnitType
-		{
-			Off,
-			Berserker,
-			Valkyrie,
-			Sage,
-			FrostHound,
-			FrostTroll
-		}
-
+    public class UIStatus : MonoBehaviour
+    {
+        //Enums
+        public enum UnitType
+        {
+            Off,
+            Berserker,
+            Valkyrie,
+            Sage,
+            FrostHound,
+            FrostTroll
+        }
         public enum StatusType
         {
             Off,
@@ -43,100 +26,93 @@ namespace StormRend.UI
             Immobilised,
             Blinded
         }
-		private void OnDestroy()
-		{
-			unit?.onAddStatusEffect.RemoveListener(CheckStatus);			
-		}
 
-		private void Awake()
+        //Inspector
+        [SerializeField] UnitType unitType;
+        [SerializeField] StatusType statusType;
+
+        //Members
+        Image icon = null;
+        AnimateUnit unit;
+
+        void Awake()
         {
-			infoPanel = FindObjectOfType<InfoPanel>();
-			icon.AddRange(GetComponentsInChildren<Image>());
+			//Get Icon
+            icon = GetComponentInChildren<Image>();
 
-			Type typeToFind = null;
-			bool isEnemy = false;
-			switch (allyType)
-			{
-				case UnitType.Berserker:
-					typeToFind = typeof(BerserkerTag);
-					break;
-				case UnitType.Valkyrie:
-					typeToFind = typeof(ValkyrieTag);
-					break;
-				case UnitType.Sage:
-					typeToFind = typeof(SageTag);
-					break;
-				case UnitType.FrostHound:
-					typeToFind = typeof(FrostHoundTag);
-					isEnemy = true;
-					break;
-				case UnitType.FrostTroll:
-					typeToFind = typeof(FrostTrollTag);
-					isEnemy = true;
-					break;
-			}
+			//Determine type to find
+            Type typeToFind = null;
+            switch (unitType)
+            {
+                case UnitType.Berserker:
+                    typeToFind = typeof(BerserkerTag);
+                    break;
+                case UnitType.Valkyrie:
+                    typeToFind = typeof(ValkyrieTag);
+                    break;
+                case UnitType.Sage:
+                    typeToFind = typeof(SageTag);
+                    break;
+                case UnitType.FrostHound:
+                    typeToFind = typeof(FrostHoundTag);
+                    // isEnemy = true;
+                    break;
+                case UnitType.FrostTroll:
+                    typeToFind = typeof(FrostTrollTag);
+                    // isEnemy = true;
+                    break;
+            }
 
-			var tag = FindObjectOfType(typeToFind) as Tag;
-			if (!isEnemy)
-				unit = tag?.GetComponent<AnimateUnit>();
-			else
-				CheckStatus();
+			//First try getting unit from up the hierarchy
+			var tag = GetComponentInParent(typeToFind) as Tag;
+			unit = tag?.GetComponent<AnimateUnit>();
+			
+			//Second, this is probably a UI element. Just find
+			if (!unit) unit = (FindObjectOfType(typeToFind) as Tag).GetComponent<AnimateUnit>();
 
-			RegisterEvents();
-		}
+			Debug.Assert(unit, "Unit could not be found for UI status");
 
-		void RegisterEvents()
-		{
-			if (!unit) return;
+            // var tag = FindObjectOfType(typeToFind) as Tag;
+            // if (!isEnemy)
+            //     unit = tag?.GetComponent<AnimateUnit>();
+            // // else
+            //     // CheckStatus();
 
-			unit.onAddStatusEffect.AddListener(CheckStatus);
-			unit.onBeginTurn.AddListener(CheckStatus);
-		}
+            RegisterEvents();
 
-		void CheckStatus() => CheckStatus(null);	//Relay
-		void CheckStatus(Effect effect = null)
-		{
-			switch (statusType)
-			{
-				case StatusType.Protection:
-					TurnIconOnAndOff(unit.isProtected);
-					break;
-				case StatusType.Immobilised:
-					TurnIconOnAndOff(unit.isImmobilised);
-					break;
-				case StatusType.Blinded:
-					TurnIconOnAndOff(unit.isBlind);
-					break;
-			}
-		}
+			CheckStatus();
+        }
 
-		void TurnIconOnAndOff(bool _isOn)
-		{
-			if (!_isOn)
-			{
-				foreach (Image img in icon)
-				{
-					img.gameObject.SetActive(false);
-				}
-			}
-			else
-			{
-				foreach (Image img in icon)
-				{
-					img.gameObject.SetActive(true);
-				}
-			}
-		}
+        void RegisterEvents()
+        {
+            if (!unit) return;
 
-		public void OnPointerEnter(PointerEventData eventData)
-		{
-			if(icon[0].fillAmount >= 0.5f)
-				infoPanel?.ShowPanel(name, 1, details);
-		}
+            unit.onAddStatusEffect.AddListener(CheckStatus);
+            unit.onBeginTurn.AddListener(CheckStatus);
+        }
+        void OnDestroy()
+        {
+            unit?.onAddStatusEffect.RemoveListener(CheckStatus);
+            unit?.onBeginTurn.RemoveListener(CheckStatus);
+        }
 
-		public void OnPointerExit(PointerEventData eventData)
-		{
-			infoPanel?.UnShowPanel();
-		}
-	}
+        void CheckStatus() => CheckStatus(null);    //Relay
+        void CheckStatus(Effect effect = null)
+        {
+            switch (statusType)
+            {
+                case StatusType.Protection:
+                    TurnIconOnAndOff(unit.isProtected);
+                    break;
+                case StatusType.Immobilised:
+                    TurnIconOnAndOff(unit.isImmobilised);
+                    break;
+                case StatusType.Blinded:
+                    TurnIconOnAndOff(unit.isBlind);
+                    break;
+            }
+        }
+
+        void TurnIconOnAndOff(bool _isOn) => icon.gameObject.SetActive(_isOn);
+    }
 }
