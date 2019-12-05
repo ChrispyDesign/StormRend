@@ -249,11 +249,11 @@ namespace StormRend.Bhaviours
 				}
 			}
 
-			targets.Print("Final");
+			// targets.Print("Final");
 			//--------- PRIORITY 5: Final ditch effort, This is probably a crystal, so just attack it
 			if (targets.Count <= 0) return false;
 			target = targets[Random.Range(0, targets.Count)];
-			Debug.LogFormat("[Default] : {0}", target.name);
+			// Debug.LogFormat("[Default] : {0}", target.name);
 			return true;    //TARGET FINALLY ACQUIRED!
 		}
 
@@ -268,7 +268,7 @@ namespace StormRend.Bhaviours
 			//Can't move if crippled
 			if (unit.isImmobilised)
 			{
-				Debug.LogFormat("{0} is crippled!", unit.name);
+				// Debug.LogFormat("{0} is crippled!", unit.name);
 				return false;
 			}
 
@@ -340,11 +340,11 @@ namespace StormRend.Bhaviours
 			//Can't attack if blind
 			if (unit.isBlind)
 			{
-				Debug.LogFormat("{0} is blind!", unit.name);
+				// Debug.LogFormat("{0} is blind!", unit.name);
 				return false;
 			}
 
-			Debug.Assert(unit.abilities[0], "Enemy not loaded with Ability!");
+			// Debug.Assert(unit.abilities[0], "Enemy not loaded with Ability!");
 
 			//Attack immediately if adjacent
 			if (targetIsAdjacent)
