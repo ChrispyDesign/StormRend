@@ -2235,7 +2235,7 @@ Cloth:
   m_BendingStiffness: 0.4
   m_UseTethers: 1
   m_UseGravity: 1
-  m_Damping: 0
+  m_Damping: 0.5
   m_ExternalAcceleration: {x: 0, y: 0, z: 0}
   m_RandomAcceleration: {x: 0, y: 0, z: 0}
   m_WorldVelocityScale: 0.5
@@ -3080,11 +3080,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9108019807441497514}
     m_Modifications:
-    - target: {fileID: 1425585255658676351, guid: dc1cdf6353b0f9a4090b6318d514740c,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar3-Ally
-      objectReference: {fileID: 0}
     - target: {fileID: 8982855558050312531, guid: dc1cdf6353b0f9a4090b6318d514740c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3139,6 +3134,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1425585255658676351, guid: dc1cdf6353b0f9a4090b6318d514740c,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar3-Ally
       objectReference: {fileID: 0}
     - target: {fileID: 2380153233411748040, guid: dc1cdf6353b0f9a4090b6318d514740c,
         type: 3}
