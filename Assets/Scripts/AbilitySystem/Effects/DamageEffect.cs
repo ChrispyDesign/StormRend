@@ -31,6 +31,9 @@ namespace StormRend.Abilities.Effects
 		[SerializeField] int gloryAmount = 1;
 		[SerializeField] BhaveInt glory = null;
 
+		//To send to blinding effect
+		public bool isPiercing => piercing;
+
 		public override void Perform(Ability ability, Unit owner, Tile[] targetTiles)
 		{
 			var au = owner as AnimateUnit;
@@ -71,6 +74,7 @@ namespace StormRend.Abilities.Effects
 				}
 
 				//Attack all units in that direction
+				var newLastTargets = new List<Tile>();
 				var workingTile = owner.currentTile;        //Start at owner's tile
 				int i = 0;
 				while (workingTile.TryGetTile(attackDirection, out Tile t, true))   //Keep getting tile in direction of the attack
@@ -78,6 +82,9 @@ namespace StormRend.Abilities.Effects
 					//Check is in the list of possible targets
 					if (au.possibleTargetTiles.Contains(t))
 					{
+						//Valid tile, add to list of last targets
+						newLastTargets.Add(t);
+
 						//If a unit is on top then attack
 						foreach (var victim in units)
 						{
@@ -107,6 +114,9 @@ namespace StormRend.Abilities.Effects
 					else
 						++i;
 				}
+
+				//Update last targets of parent ability
+				ability.userObject = newLastTargets.ToArray();
 			}
 			//NORMAL ATTACK
 			else

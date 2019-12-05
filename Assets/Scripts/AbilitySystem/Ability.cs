@@ -76,6 +76,8 @@ namespace StormRend.Abilities
 		public Vector3 lastTargetPos { get; set; } = new Vector3();
 
 		//Member
+		internal object userObject = null;		//Using this to transfer data from damage effect to blind effect for piercing light lv3 blind effect
+		// internal Tile[] internalTargetTiles = null;
 
 		#region Core
 		public bool Perform(Unit owner, params Unit[] units)
@@ -266,7 +268,7 @@ namespace StormRend.Abilities
 #if UNITY_EDITOR
 			//Save
 			AssetDatabase.AddObjectToAsset(newEffect, this);
-			AssetDatabase.SaveAssets();
+			AssetDatabase.SaveAssets();		//If you don't do this the effect SO doesn't persist
 #endif
 		}
 
