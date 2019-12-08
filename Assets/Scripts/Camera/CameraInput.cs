@@ -65,7 +65,7 @@ namespace StormRend.CameraSystem
 				// print("Begin dragging");
 				lastPos = Input.mousePosition;
 			}
-			//MouseHold: Update drag amount 
+			//MouseHold: Update drag amount
 			else if (Input.GetMouseButton((int)dragMouseButton))
 			{
 				// print("Dragging");
